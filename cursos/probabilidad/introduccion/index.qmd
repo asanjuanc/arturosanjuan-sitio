@@ -32,10 +32,10 @@ $$\Omega = \{c, s\} \qquad c: \text{cara}, \quad s: \text{sello}$$
 
 El experimento aleatorio es: *el número de veces que es necesario lanzar una moneda hasta obtener por primera vez cara*. El espacio muestral natural es
 
-$$\Omega = \mathbb{N} = \{1, 2, 3, \ldots\} cup \{\infty\}$$
+$$\Omega = \mathbb{N} = \{1, 2, 3, \ldots\} \cup \{\infty\}$$
 
 ::: {.callout-note title="Ejercicio"}
-¿Por qué $\Omega=\mathbb N$ es un espacio muestral adecuado para este experimento? ¿Cómo se interpreta cada elemento $n\in\Omega$?
+¿Por qué $\Omega=\mathbb N\cup \{\infty\}$ es un espacio muestral adecuado para este experimento? ¿Cómo se interpreta cada elemento $n\in\Omega$?
 :::
 
 Note que un mismo experimento puede tener distintos espacios muestrales. Por ejemplo,
