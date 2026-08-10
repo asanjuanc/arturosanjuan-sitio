@@ -1,0 +1,14 @@
+[
+  {
+    "listing": "/cursos/index.html",
+    "items": [
+      "/cursos/numerico/index.html"
+    ]
+  },
+  {
+    "listing": "/cursos/numerico/index.html",
+    "items": [
+      "/cursos/numerico/introduccion/index.html"
+    ]
+  }
+]

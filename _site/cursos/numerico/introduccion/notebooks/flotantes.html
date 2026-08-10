@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>El conjunto F de números de punto flotante</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<style>
+  :root{
+    --bg:#ffffff; --fg:#1a1a1a; --muted:#666; --line:#e3e3e3;
+    --accent:#2c6e91; --panel:#f7f8f9;
+  }
+  body{
+    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+    max-width:920px; margin:0 auto; padding:2.2em 1.4em 4em;
+    color:var(--fg); line-height:1.55; background:var(--bg);
+  }
+  h1{font-size:1.7em; border-bottom:1px solid var(--line); padding-bottom:.3em;}
+  h2{font-size:1.25em; margin-top:2em; color:#222;}
+  .note{
+    background:#eef6fb; border-left:4px solid var(--accent);
+    padding:.8em 1em; border-radius:4px; margin:1.2em 0; font-size:.95em;
+  }
+  .panel{
+    background:var(--panel); border:1px solid var(--line); border-radius:10px;
+    padding:1.2em 1.4em; margin:1.4em 0;
+  }
+  .ctrl{display:flex; align-items:center; gap:.8em; margin:.7em 0; flex-wrap:wrap;}
+  .ctrl label{min-width:190px; font-size:.95em;}
+  .ctrl input[type=range]{flex:1; min-width:160px;}
+  .ctrl .val{
+    font-variant-numeric:tabular-nums; min-width:2.4em; text-align:right;
+    font-weight:600; color:var(--accent);
+  }
+  .ctrl input[type=checkbox]{width:17px; height:17px;}
+  svg{width:100%; height:auto; display:block; background:#fff; border-radius:8px;}
+  table{border-collapse:collapse; width:100%; margin:1em 0; font-size:.92em;}
+  th,td{border:1px solid var(--line); padding:.45em .7em; text-align:center;}
+  th{background:#f0f2f4;}
+  .total{font-weight:600; margin-top:.6em;}
+  .exact-block{margin:.5em 0; font-size:.93em;}
+  .exact-block b{color:var(--accent);}
+  .checks li{margin:.35em 0;}
+  code{background:#f0f2f4; padding:.1em .35em; border-radius:4px; font-size:.9em;}
+  .empty{color:var(--muted); font-style:italic;}
+</style>
+</head>
+<body>
+
+<h1>El conjunto \(\mathbb{F}\) de números de punto flotante</h1>
+
+<p><strong>Definición 1.1.1.</strong> \(\mathbb{F}\) consta del cero y de todos los números de la forma</p>
+
+<p>\[\pm(1+f)\times 2^n, \qquad f=\sum_{i=1}^{d} b_i\,2^{-i},\quad b_i\in\{0,1\}.\]</p>
+
+<p>Para un \(d\) fijo hay \(2^d\) valores posibles de \(f\), es decir \(2^d\) puntos dentro de cada
+<em>binade</em> \([2^n,\,2^{n+1})\). Esos puntos subdividen el binade en \(2^d\) partes iguales de
+longitud \(2^{n-d}\).</p>
+
+<div class="note">
+<strong>Nota de exportación.</strong> Esta página reproduce el notebook de Pluto
+<code>flotantes_F_sin_plots.jl</code> en HTML/JavaScript puro, sin depender de Julia. La red de este
+entorno no tiene acceso a <code>julialang-s3.julialang.org</code> ni al servidor de paquetes de Julia,
+así que no fue posible instalar Julia/Pluto para generar el export nativo
+(<code>Pluto.generate_html</code>). El comportamiento —controles, fórmulas y tabla— es idéntico al del
+notebook original.
+</div>
+
+<h2>Controles</h2>
+<div class="panel">
+  <div class="ctrl">
+    <label for="d">Precisión \(d\)</label>
+    <input type="range" id="d" min="0" max="6" step="1" value="2">
+    <span class="val" id="d-val">2</span>
+  </div>
+  <div class="ctrl">
+    <label for="nmin">Exponente mínimo \(n_{\min}\)</label>
+    <input type="range" id="nmin" min="-8" max="8" step="1" value="0">
+    <span class="val" id="nmin-val">0</span>
+  </div>
+  <div class="ctrl">
+    <label for="nmax">Exponente máximo \(n_{\max}\)</label>
+    <input type="range" id="nmax" min="-8" max="8" step="1" value="3">
+    <span class="val" id="nmax-val">3</span>
+  </div>
+  <div class="ctrl">
+    <label for="uselog">Escala \(\log_2\) en el eje horizontal</label>
+    <input type="checkbox" id="uselog">
+  </div>
+  <div class="ctrl">
+    <label for="negativos">Incluir la parte negativa</label>
+    <input type="checkbox" id="negativos">
+  </div>
+  <div class="ctrl">
+    <label for="reticula">Mostrar la retícula de subdivisión</label>
+    <input type="checkbox" id="reticula" checked>
+  </div>
+</div>
+
+<div id="grafico"></div>
+
+<h2>Espaciado por binade</h2>
+<p>El espaciado entre puntos consecutivos dentro de \([2^n, 2^{n+1})\) es \(2^{n-d}\): crece con \(n\).
+\(\mathbb{F}\) es denso cerca de cero y disperso lejos de cero, aunque el error <em>relativo</em>
+permanece acotado por \(2^{-d}\).</p>
+<div id="tabla-espaciado"></div>
+
+<h2>Valores exactos (como fracciones)</h2>
+<p>Se muestran si \(2^d \le 16\) y hay a lo sumo 6 exponentes.</p>
+<div id="valores-exactos"></div>
+
+<h2>Comprobaciones sugeridas</h2>
+<ul class="checks">
+  <li>\(d = 2\), \(n_{\min}=n_{\max}=0\): se obtienen \(1,\ 5/4,\ 6/4,\ 7/4\).</li>
+  <li>\(d = 1\), \(n_{\min}=n_{\max}=0\): solo \(1\) y \(3/2\).</li>
+  <li>\(d = 2\), \(n\) de \(2\) a \(3\): en \([4,8)\) aparecen \(4,5,6,7\); en \([8,16)\) solo \(8,10,12,14\).</li>
+  <li>Con escala \(\log_2\) el patrón se vuelve exactamente periódico: cada binade contiene los
+      mismos \(2^d\) puntos reescalados.</li>
+</ul>
+
+<script>
+const PALETA = ["#1f77b4", "#d62728", "#2ca02c", "#ff7f0e", "#9467bd",
+                "#8c564b", "#e377c2", "#17becf", "#bcbd22", "#7f7f7f"];
+
+function colorDe(i){ return PALETA[i % PALETA.length]; }
+
+// 2^d puntos positivos de F con exponente n y precision d
+function puntosF(d, n){
+  const pts = [];
+  const nd = Math.pow(2, d);
+  for(let k=0;k<nd;k++) pts.push((1 + k/nd) * Math.pow(2,n));
+  return pts;
+}
+
+// MCD para simplificar fracciones (valores exactos)
+function gcd(a,b){ return b===0n ? a : gcd(b, a % b); }
+function fracStr(num, den){
+  if(den < 0n){ num=-num; den=-den; }
+  const g = gcd(num<0n?-num:num, den) || 1n;
+  num/=g; den/=g;
+  return den===1n ? num.toString() : `${num}/${den}`;
+}
+
+function svgF(d, nmin, nmax, uselog, negativos, reticula){
+  const ns = [];
+  for(let n=nmin;n<=nmax;n++) ns.push(n);
+  if(ns.length===0) return '<p class="empty">Rango vacío: elija n_min ≤ n_max.</p>';
+
+  const W=920, H=250, ml=45, mr=45, ejeY=170, semi=26, semib=42;
+  const mostrarNeg = negativos && !uselog;
+  const u = x => uselog ? Math.log2(x) : x;
+
+  const lo = Math.pow(2, ns[0]), hi = Math.pow(2, ns[ns.length-1]+1);
+  let umin = mostrarNeg ? -hi : u(lo);
+  let umax = mostrarNeg ?  hi : u(hi);
+  if(umax===umin) umax = umin+1;
+  const px = v => ml + (v-umin)/(umax-umin) * (W-ml-mr);
+
+  let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="font-family:system-ui,sans-serif">`;
+
+  // leyenda
+  let xleg = ml;
+  ns.forEach((n,i)=>{
+    const c = colorDe(i);
+    svg += `<circle cx="${xleg+6}" cy="26" r="5" fill="${c}"/>`;
+    svg += `<text x="${xleg+18}" y="31" font-size="13" fill="#333">n = ${n}</text>`;
+    xleg += 34 + 9*String(n).length;
+  });
+
+  // la recta
+  svg += `<line x1="${px(umin)}" y1="${ejeY}" x2="${px(umax)}" y2="${ejeY}" stroke="#555" stroke-width="1.5"/>`;
+
+  ns.forEach((n,i)=>{
+    const c = colorDe(i);
+    const xs = puntosF(d,n);
+    const lados = mostrarNeg ? [1,-1] : [1];
+    lados.forEach(s=>{
+      if(reticula){
+        xs.forEach(x=>{
+          const X = px(s===1 ? u(x) : -x);
+          svg += `<line x1="${X}" y1="${ejeY-semi}" x2="${X}" y2="${ejeY+semi}" stroke="${c}" stroke-width="0.8" opacity="0.35"/>`;
+        });
+      }
+      const Xb = px(s===1 ? u(Math.pow(2,n)) : -Math.pow(2,n));
+      svg += `<line x1="${Xb}" y1="${ejeY-semib}" x2="${Xb}" y2="${ejeY+semib}" stroke="${c}" stroke-width="1.2" stroke-dasharray="4,3" opacity="0.8"/>`;
+      const etiq = s===1 ? `2^${n}` : `-2^${n}`;
+      svg += `<text x="${Xb}" y="${ejeY+semib+16}" font-size="11" fill="${c}" text-anchor="middle">${etiq}</text>`;
+      xs.forEach(x=>{
+        const X = px(s===1 ? u(x) : -x);
+        svg += `<circle cx="${X}" cy="${ejeY}" r="4.5" fill="${c}"/>`;
+      });
+    });
+  });
+
+  // cierre del ultimo binade
+  const Xf = px(mostrarNeg ? hi : u(hi));
+  svg += `<line x1="${Xf}" y1="${ejeY-semib}" x2="${Xf}" y2="${ejeY+semib}" stroke="#555" stroke-width="1.2" stroke-dasharray="4,3" opacity="0.8"/>`;
+  svg += `<text x="${Xf}" y="${ejeY+semib+16}" font-size="11" fill="#555" text-anchor="middle">2^${ns[ns.length-1]+1}</text>`;
+
+  const eje = uselog ? "log2(x)" : "x";
+  svg += `<text x="${W-mr}" y="${ejeY-12}" font-size="12" fill="#777" text-anchor="end">${eje}</text>`;
+  svg += `<text x="${ml}" y="${H-8}" font-size="12" fill="#333">d = ${d} &#8594; ${Math.pow(2,d)} puntos por binade</text>`;
+  svg += `</svg>`;
+  return svg;
+}
+
+function tablaEspaciado(d, nmin, nmax){
+  const ns = [];
+  for(let n=nmin;n<=nmax;n++) ns.push(n);
+  if(ns.length===0) return '<p class="empty">(rango vacío)</p>';
+  let rows = ns.map(n=>{
+    const binIni = Math.pow(2,n), binFin = Math.pow(2,n+1), esp = Math.pow(2,n-d);
+    return `<tr><td>${n}</td><td>[${binIni}, ${binFin})</td><td>${esp}</td><td>${Math.pow(2,d)}</td></tr>`;
+  }).join('');
+  return `<table><thead><tr><th>n</th><th>binade</th><th>espaciado 2^(n-d)</th><th>puntos</th></tr></thead>
+          <tbody>${rows}</tbody></table>
+          <p class="total">Total de puntos positivos: ${ns.length * Math.pow(2,d)}</p>`;
+}
+
+function valoresExactos(d, nmin, nmax){
+  const ns = [];
+  for(let n=nmin;n<=nmax;n++) ns.push(n);
+  if(ns.length===0) return '<p class="empty">(rango vacío)</p>';
+  if(!(Math.pow(2,d)<=16 && ns.length<=6)){
+    return '<p class="empty">(demasiados valores: reduzca d o el rango de n)</p>';
+  }
+  const nd = BigInt(Math.pow(2,d));
+  const blocks = ns.map(n=>{
+    const vals = [];
+    for(let k=0;k<Number(nd);k++){
+      const num = nd + BigInt(k);
+      let outNum = num, outDen = nd;
+      if(n>=0){ outNum = num * (2n ** BigInt(n)); }
+      else { outDen = outDen * (2n ** BigInt(-n)); }
+      vals.push(fracStr(outNum, outDen));
+    }
+    return `<div class="exact-block"><b>n = ${n}:</b> ${vals.join(',  ')}</div>`;
+  });
+  return blocks.join('');
+}
+
+function render(){
+  const d = +document.getElementById('d').value;
+  const nmin = +document.getElementById('nmin').value;
+  const nmax = +document.getElementById('nmax').value;
+  const uselog = document.getElementById('uselog').checked;
+  const negativos = document.getElementById('negativos').checked;
+  const reticula = document.getElementById('reticula').checked;
+
+  document.getElementById('d-val').textContent = d;
+  document.getElementById('nmin-val').textContent = nmin;
+  document.getElementById('nmax-val').textContent = nmax;
+
+  document.getElementById('grafico').innerHTML = svgF(d,nmin,nmax,uselog,negativos,reticula);
+  document.getElementById('tabla-espaciado').innerHTML = tablaEspaciado(d,nmin,nmax);
+  document.getElementById('valores-exactos').innerHTML = valoresExactos(d,nmin,nmax);
+
+  if(window.MathJax && MathJax.typesetPromise){
+    MathJax.typesetPromise([document.getElementById('valores-exactos')]).catch(()=>{});
+  }
+}
+
+['d','nmin','nmax','uselog','negativos','reticula'].forEach(id=>{
+  document.getElementById(id).addEventListener('input', render);
+});
+
+render();
+</script>
+
+</body>
+</html>

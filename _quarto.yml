@@ -1,18 +1,21 @@
 project:
   type: website
 
+lang: es 
+
 website:
-  title: "arturosanjuan-sitio"
+  title: "Página Personal de Arturo Sanjuán"
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
+      - href: cursos/index.qmd
+        text: Cursos
 
 format:
   html:
     theme:
-      - cosmo
+      - yeti
       - brand
     css: styles.css
     toc: true

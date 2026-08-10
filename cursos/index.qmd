@@ -1,0 +1,8 @@
+---
+title: "Cursos"
+author: "Arturo Sanjuán"
+listing:
+  contents:
+    - numerico/index.qmd
+  type: table
+---
