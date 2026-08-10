@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Simulación: frecuencia relativa de caras</title>
+<style>
+  :root{
+    --bg:#ffffff;
+    --surface:#f6f7f5;
+    --border:#dfe3e2;
+    --text:#1c1e1c;
+    --text-secondary:#5c5f5c;
+    --cara:#0f6e56;
+    --sello:#c8541f;
+    --line-p:#1c1e1c;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--text);
+    background:var(--bg);
+    padding:1rem;
+  }
+  .mono{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-variant-numeric:tabular-nums;
+  }
+  .widget{
+    max-width:760px;
+    margin:0 auto;
+  }
+  .controls{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:0.75rem 1.25rem;
+    padding-bottom:0.9rem;
+    border-bottom:1px solid var(--border);
+    margin-bottom:0.9rem;
+  }
+  .control-group{
+    display:flex;
+    align-items:center;
+    gap:0.5rem;
+  }
+  label{
+    font-size:0.85rem;
+    color:var(--text-secondary);
+    white-space:nowrap;
+  }
+  input[type="range"]{
+    width:120px;
+    accent-color:var(--cara);
+  }
+  button{
+    font-size:0.85rem;
+    padding:0.4rem 0.75rem;
+    border:1px solid var(--border);
+    background:var(--bg);
+    color:var(--text);
+    border-radius:5px;
+    cursor:pointer;
+  }
+  button:hover{ background:var(--surface); }
+  button:active{ transform:scale(0.98); }
+  button.primary{
+    background:var(--cara);
+    color:#fff;
+    border-color:var(--cara);
+  }
+  button.primary:hover{ opacity:0.9; }
+  button:disabled{ opacity:0.5; cursor:default; }
+  .stats{
+    display:flex;
+    flex-wrap:wrap;
+    gap:1.25rem;
+    margin-bottom:0.75rem;
+    font-size:0.85rem;
+  }
+  .stat-label{ color:var(--text-secondary); margin-right:0.35rem; }
+  .stat-value{ font-weight:600; }
+  .cara-color{ color:var(--cara); }
+  .sello-color{ color:var(--sello); }
+  .chart-wrap{
+    position:relative;
+    width:100%;
+    height:260px;
+    margin-bottom:0.6rem;
+  }
+  canvas{ width:100%; height:100%; display:block; }
+  .sequence{
+    display:flex;
+    gap:2px;
+    overflow-x:auto;
+    padding:0.5rem;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:5px;
+    min-height:34px;
+  }
+  .seq-cell{
+    flex:0 0 auto;
+    width:16px;
+    height:16px;
+    border-radius:3px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:10px;
+    font-weight:600;
+    color:#fff;
+  }
+  .seq-cara{ background:var(--cara); }
+  .seq-sello{ background:var(--sello); }
+  .caption{
+    font-size:0.78rem;
+    color:var(--text-secondary);
+    margin-top:0.5rem;
+  }
+  .checkbox-group{
+    display:flex;
+    align-items:center;
+    gap:0.4rem;
+  }
+  .checkbox-group input{ accent-color:var(--cara); }
+</style>
+</head>
+<body>
+
+<div class="widget">
+
+  <div class="controls">
+    <div class="control-group">
+      <label for="p-input">p (P(cara))</label>
+      <input type="range" id="p-input" min="0.05" max="0.95" step="0.01" value="0.5" />
+      <span id="p-out" class="mono">0.50</span>
+    </div>
+    <div class="control-group">
+      <label class="checkbox-group">
+        <input type="checkbox" id="compare-input" />
+        comparar 5 corridas
+      </label>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button id="btn-1">Lanzar 1</button>
+    <button id="btn-20">Lanzar 20</button>
+    <button id="btn-200">Lanzar 200</button>
+    <button id="btn-auto" class="primary">Reproducir</button>
+    <button id="btn-reset">Reiniciar</button>
+  </div>
+
+  <div class="stats">
+    <span><span class="stat-label">n</span><span id="stat-n" class="stat-value mono">0</span></span>
+    <span class="cara-color"><span class="stat-label">caras</span><span id="stat-cara" class="stat-value mono">0</span></span>
+    <span class="sello-color"><span class="stat-label">sellos</span><span id="stat-sello" class="stat-value mono">0</span></span>
+    <span><span class="stat-label">frecuencia</span><span id="stat-freq" class="stat-value mono">—</span></span>
+  </div>
+
+  <div class="chart-wrap">
+    <canvas id="chart" role="img" aria-label="Gráfica de la frecuencia relativa de caras contra el número de lanzamientos, convergiendo a p"></canvas>
+  </div>
+
+  <div class="sequence" id="sequence" aria-label="Secuencia de lanzamientos: C es cara, S es sello"></div>
+
+  <p class="caption">Cada casilla es un elemento de la sucesión de lanzamientos (un punto de <span class="mono">{0,1}<sup>N</sup></span>). La línea punteada marca <span class="mono">p</span>; la curva es la frecuencia relativa acumulada, que converge a <span class="mono">p</span> por la Ley de los Grandes Números — la simulación exhibe la convergencia, no la demuestra.</p>
+
+</div>
+
+<script>
+(function(){
+  var N_MAX = 3000;
+  var canvas = document.getElementById('chart');
+  var ctx = canvas.getContext('2d');
+  var seqEl = document.getElementById('sequence');
+  var pInput = document.getElementById('p-input');
+  var pOut = document.getElementById('p-out');
+  var compareInput = document.getElementById('compare-input');
+  var statN = document.getElementById('stat-n');
+  var statCara = document.getElementById('stat-cara');
+  var statSello = document.getElementById('stat-sello');
+  var statFreq = document.getElementById('stat-freq');
+  var btnAuto = document.getElementById('btn-auto');
+
+  var p = 0.5;
+  var outcomes = [];
+  var freqPath = [];
+  var caraCount = 0;
+  var compareRuns = [];
+  var autoTimer = null;
+
+  function makeCompareRun(len, prob){
+    var run = new Array(len);
+    var c = 0;
+    for (var i = 0; i < len; i++){
+      if (Math.random() < prob) c++;
+      run[i] = c / (i + 1);
+    }
+    return run;
+  }
+
+  function regenerateCompareRuns(){
+    compareRuns = [];
+    if (!compareInput.checked) return;
+    var len = Math.max(outcomes.length, 200);
+    for (var k = 0; k < 5; k++){
+      compareRuns.push(makeCompareRun(len, p));
+    }
+  }
+
+  function resizeCanvas(){
+    var rect = canvas.parentElement.getBoundingClientRect();
+    var dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    draw();
+  }
+
+  function draw(){
+    var rect = canvas.parentElement.getBoundingClientRect();
+    var w = rect.width, h = rect.height;
+    ctx.clearRect(0, 0, w, h);
+
+    var padL = 34, padR = 12, padT = 10, padB = 24;
+    var plotW = w - padL - padR;
+    var plotH = h - padT - padB;
+
+    ctx.strokeStyle = '#e6e8e5';
+    ctx.lineWidth = 1;
+    for (var gy = 0; gy <= 4; gy++){
+      var y = padT + plotH * (gy / 4);
+      ctx.beginPath();
+      ctx.moveTo(padL, y);
+      ctx.lineTo(padL + plotW, y);
+      ctx.stroke();
+    }
+
+    ctx.fillStyle = '#8a8d89';
+    ctx.font = '10px ui-monospace, monospace';
+    ctx.textAlign = 'right';
+    for (var gy2 = 0; gy2 <= 4; gy2++){
+      var val = 1 - gy2 / 4;
+      var yy = padT + plotH * (gy2 / 4);
+      ctx.fillText(val.toFixed(2), padL - 6, yy + 3);
+    }
+
+    ctx.strokeStyle = '#c3c6c1';
+    ctx.beginPath();
+    ctx.moveTo(padL, padT);
+    ctx.lineTo(padL, padT + plotH);
+    ctx.lineTo(padL + plotW, padT + plotH);
+    ctx.stroke();
+
+    var n = Math.max(freqPath.length, 1);
+    var xScale = plotW / n;
+
+    var pY = padT + plotH * (1 - p);
+    ctx.strokeStyle = '#1c1e1c';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.moveTo(padL, pY);
+    ctx.lineTo(padL + plotW, pY);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#1c1e1c';
+    ctx.textAlign = 'left';
+    ctx.fillText('p = ' + p.toFixed(2), padL + plotW - 58, pY - 4);
+
+    ctx.strokeStyle = '#d7dad5';
+    ctx.lineWidth = 1;
+    compareRuns.forEach(function(run){
+      ctx.beginPath();
+      for (var i = 0; i < run.length; i++){
+        var x = padL + i * xScale;
+        var y = padT + plotH * (1 - run[i]);
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    });
+
+    if (freqPath.length > 0){
+      ctx.strokeStyle = '#0f6e56';
+      ctx.lineWidth = 1.8;
+      ctx.beginPath();
+      for (var j = 0; j < freqPath.length; j++){
+        var xx = padL + j * xScale;
+        var yy2 = padT + plotH * (1 - freqPath[j]);
+        if (j === 0) ctx.moveTo(xx, yy2); else ctx.lineTo(xx, yy2);
+      }
+      ctx.stroke();
+    }
+
+    ctx.fillStyle = '#8a8d89';
+    ctx.textAlign = 'center';
+    ctx.fillText('n = ' + freqPath.length, padL + plotW - 30, padT + plotH + 16);
+  }
+
+  function updateStats(){
+    var n = outcomes.length;
+    statN.textContent = n;
+    statCara.textContent = caraCount;
+    statSello.textContent = n - caraCount;
+    statFreq.textContent = n === 0 ? '—' : (caraCount / n).toFixed(3);
+  }
+
+  function updateSequence(){
+    var frag = document.createDocumentFragment();
+    var start = Math.max(0, outcomes.length - 150);
+    for (var i = start; i < outcomes.length; i++){
+      var cell = document.createElement('div');
+      cell.className = 'seq-cell ' + (outcomes[i] ? 'seq-cara' : 'seq-sello');
+      cell.textContent = outcomes[i] ? 'C' : 'S';
+      frag.appendChild(cell);
+    }
+    seqEl.innerHTML = '';
+    seqEl.appendChild(frag);
+    seqEl.scrollLeft = seqEl.scrollWidth;
+  }
+
+  function toss(count){
+    if (compareRuns.length === 0 && compareInput.checked) regenerateCompareRuns();
+    for (var i = 0; i < count && outcomes.length < N_MAX; i++){
+      var isCara = Math.random() < p;
+      if (isCara) caraCount++;
+      outcomes.push(isCara);
+      freqPath.push(caraCount / outcomes.length);
+    }
+    updateStats();
+    updateSequence();
+    draw();
+    if (outcomes.length >= N_MAX) stopAuto();
+  }
+
+  function reset(){
+    outcomes = [];
+    freqPath = [];
+    caraCount = 0;
+    regenerateCompareRuns();
+    updateStats();
+    updateSequence();
+    draw();
+    stopAuto();
+  }
+
+  function stopAuto(){
+    if (autoTimer){
+      clearInterval(autoTimer);
+      autoTimer = null;
+    }
+    btnAuto.textContent = 'Reproducir';
+  }
+
+  function toggleAuto(){
+    if (autoTimer){
+      stopAuto();
+    } else {
+      btnAuto.textContent = 'Detener';
+      autoTimer = setInterval(function(){ toss(5); }, 60);
+    }
+  }
+
+  pInput.addEventListener('input', function(){
+    p = parseFloat(pInput.value);
+    pOut.textContent = p.toFixed(2);
+    regenerateCompareRuns();
+    draw();
+  });
+
+  compareInput.addEventListener('change', function(){
+    regenerateCompareRuns();
+    draw();
+  });
+
+  document.getElementById('btn-1').addEventListener('click', function(){ toss(1); });
+  document.getElementById('btn-20').addEventListener('click', function(){ toss(20); });
+  document.getElementById('btn-200').addEventListener('click', function(){ toss(200); });
+  document.getElementById('btn-reset').addEventListener('click', reset);
+  btnAuto.addEventListener('click', toggleAuto);
+
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+  updateStats();
+})();
+</script>
+
+</body>
+</html>

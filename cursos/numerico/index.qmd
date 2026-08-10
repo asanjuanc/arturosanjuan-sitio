@@ -1,5 +1,7 @@
 ---
 title: "Análisis Numérico"
+author: "Arturo Sanjuán"
+image: "lorenz.png"
 listing:
   contents: .
   sort: "order"

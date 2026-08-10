@@ -1,7 +1,9 @@
 ---
 title: "Probabilidad"
+author: "Arturo Sanjuán"
+image: "normal.png"
 listing:
   contents: .
   sort: "order"
-  categories: true
+  categories: false
 ---

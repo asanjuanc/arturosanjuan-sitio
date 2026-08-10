@@ -69,7 +69,7 @@ $$\left(\frac{1}{10}\right)_{(10)} = (0{,}0\overline{2})_{(3)}$$
 **Alfabetos según la base:**
 
 - Binario: $\{0,1\}$ → un dígito es un **bit**
-- Octal: $\{0,1,\ldots,7\}$ → un dígito octal representa **3 bits**
+- Octal: $\{0,1,\ldots,7\}$ → un dígito octal (byte) representa **3 bits**
 - Hexadecimal: $\{0,1,\ldots,9,A,B,C,D,E,F\}$ → un dígito hexadecimal (**nibble**) representa **4 bits**
 
 **Correspondencia binario ↔ octal (3 bits):**
@@ -120,11 +120,13 @@ $$\frac13=(1+f)\cdot2^{-1}\Rightarrow 1+f=\frac23\Rightarrow f=-\frac13\ \text{�
 
 $$\frac13=(1+f)\cdot2^{-2}\Rightarrow 1+f=\frac43\Rightarrow f=\frac13\ \checkmark$$
 
-En decimal, $f=0{,}\overline{3}=\dfrac{3}{10}+\dfrac{3}{10^2}+\cdots$
-
+En decimal, $f=0{,}\overline{3}=\dfrac{3}{10}+\dfrac{3}{10^2}+\cdots$. 
 **En binario**, usando la serie geométrica:
 
 $$\frac13=\frac{1/4}{1-1/4}=\frac14\sum_{k=0}^{\infty}\left(\frac14\right)^k=\sum_{k=1}^{\infty}\frac{1}{4^{k}}=\sum_{k=1}^{\infty}\frac{1}{2^{2k}}=0{,}010101\ldots_2$$
+
+Por tanto se puede aproximar por un número de $\mathbb {F}$ pero $\tfrac13\notin \mathbb{F}$ para ningunos $d$ y $n$.  
+
 
 ## Cuántos elementos de 𝔽 hay por binade
 
@@ -156,9 +158,9 @@ $$n=-1:\ \pm\tfrac32\cdot\tfrac12=\pm\tfrac34 \qquad\qquad n=2:\ \pm\tfrac32\cdo
 
 ### Simulación de $\mathbb{F}$ en Julia
 
- **Recta numérica** (colores por exponente):
+ **Recta numérica** (colores por exponente, simulación):
 
-[Ver simulación de $\mathbb{F}$](notebooks/flotantes.html)
+<iframe src="notebooks/flotantes.html" width="100%" height="650px" style="border:none;"></iframe>
 
 [Ver código fuente de la simulación de $\mathbb{F}$](notebooks/flotantes-codigo.html)
 

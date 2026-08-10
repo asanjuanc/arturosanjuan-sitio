@@ -156,7 +156,10 @@ window.Quarto = {
   <li><a href="#ejemplo-2-tiempo-de-espera-hasta-la-primera-cara" id="toc-ejemplo-2-tiempo-de-espera-hasta-la-primera-cara" class="nav-link" data-scroll-target="#ejemplo-2-tiempo-de-espera-hasta-la-primera-cara"><span class="header-section-number">1.2</span> Ejemplo 2 — Tiempo de espera hasta la primera cara</a></li>
   <li><a href="#ejemplo-3-lanzar-dos-dados" id="toc-ejemplo-3-lanzar-dos-dados" class="nav-link" data-scroll-target="#ejemplo-3-lanzar-dos-dados"><span class="header-section-number">1.3</span> Ejemplo 3 — Lanzar dos dados</a></li>
   </ul></li>
-  <li><a href="#σ-álgebras" id="toc-σ-álgebras" class="nav-link" data-scroll-target="#σ-álgebras"><span class="header-section-number">2</span> σ-álgebras</a></li>
+  <li><a href="#σ-álgebras" id="toc-σ-álgebras" class="nav-link" data-scroll-target="#σ-álgebras"><span class="header-section-number">2</span> σ-álgebras</a>
+  <ul class="collapse">
+  <li><a href="#la-siguiente-es-una-simulación-de-la-frecuencia-de-lanzamiento-de-monedas." id="toc-la-siguiente-es-una-simulación-de-la-frecuencia-de-lanzamiento-de-monedas." class="nav-link" data-scroll-target="#la-siguiente-es-una-simulación-de-la-frecuencia-de-lanzamiento-de-monedas."><span class="header-section-number">2.1</span> La siguiente es una simulación de la frecuencia de lanzamiento de monedas.</a></li>
+  </ul></li>
   <li><a href="#continuidad-de-la-probabilidad" id="toc-continuidad-de-la-probabilidad" class="nav-link" data-scroll-target="#continuidad-de-la-probabilidad"><span class="header-section-number">3</span> Continuidad de la probabilidad</a></li>
   <li><a href="#por-qué-la-probabilidad-puntual-falla-en-espacios-no-numerables" id="toc-por-qué-la-probabilidad-puntual-falla-en-espacios-no-numerables" class="nav-link" data-scroll-target="#por-qué-la-probabilidad-puntual-falla-en-espacios-no-numerables"><span class="header-section-number">4</span> ¿Por qué la probabilidad puntual falla en espacios no numerables?</a></li>
   <li><a href="#probabilidad-de-laplace" id="toc-probabilidad-de-laplace" class="nav-link" data-scroll-target="#probabilidad-de-laplace"><span class="header-section-number">5</span> Probabilidad de Laplace</a></li>
@@ -230,7 +233,7 @@ window.Quarto = {
 <section id="ejemplo-2-tiempo-de-espera-hasta-la-primera-cara" class="level3" data-number="1.2">
 <h3 data-number="1.2" class="anchored" data-anchor-id="ejemplo-2-tiempo-de-espera-hasta-la-primera-cara"><span class="header-section-number">1.2</span> Ejemplo 2 — Tiempo de espera hasta la primera cara</h3>
 <p>El experimento aleatorio es: <em>el número de veces que es necesario lanzar una moneda hasta obtener por primera vez cara</em>. El espacio muestral natural es</p>
-<p><span class="math display">\[\Omega = \mathbb{N} = \{1, 2, 3, \ldots\}\]</span></p>
+<p><span class="math display">\[\Omega = \mathbb{N} = \{1, 2, 3, \ldots\} cup \{\infty\}\]</span></p>
 <div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -346,7 +349,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Demuestre rigurosamente que en <span class="math inline">\((\mathbb{R}, \mathfrak{B}(\mathbb{R}))\)</span> (la σ-álgebra de Borel), los conjuntos de la forma <span class="math inline">\((a,b]\)</span> pertenecen a <span class="math inline">\(\mathfrak{B}(\mathbb{R})\)</span>, y que de hecho generan la misma σ-álgebra que los intervalos abiertos.</p>
+<p>Demuestre que la <span class="math inline">\(\sigma\)</span>-algebra generada de una familia de subconjuntos de <span class="math inline">\(\Omega\)</span> es, en efecto, <span class="math inline">\(\sigma\)</span>-algebra. Demuestre rigurosamente que en <span class="math inline">\((\mathbb{R}, \mathfrak{B}(\mathbb{R}))\)</span> (la σ-álgebra de Borel), los conjuntos de la forma <span class="math inline">\((a,b)\)</span> pertenecen a <span class="math inline">\(\mathfrak{B}(\mathbb{R})\)</span>, y que de hecho generan la misma σ-álgebra que los intervalos abiertos.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled" title="Recordatorio">
@@ -376,6 +379,11 @@ window.Quarto = {
 <p>¿Qué debería pasar con la espera de un seis al lanzar repetidamente un dado? ¿Cómo se puede simular esto en R?</p>
 </div>
 </div>
+<section id="la-siguiente-es-una-simulación-de-la-frecuencia-de-lanzamiento-de-monedas." class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="la-siguiente-es-una-simulación-de-la-frecuencia-de-lanzamiento-de-monedas."><span class="header-section-number">2.1</span> La siguiente es una simulación de la frecuencia de lanzamiento de monedas.</h3>
+<iframe src="notebooks/moneda.html" width="100%" height="600px" style="border:none;">
+</iframe>
+</section>
 </section>
 <section id="continuidad-de-la-probabilidad" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="continuidad-de-la-probabilidad"><span class="header-section-number">3</span> Continuidad de la probabilidad</h2>
@@ -401,7 +409,7 @@ P(A) = P\Big(\bigcup_i A_i\Big) = P\Big(\bigcup_i B_i\Big) = \sum_i P(B_i) = P(A
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>¿Por qué los <span class="math inline">\(B_n\)</span> son disyuntos dos a dos? ¿Por qué la suma anterior es una <strong>serie telescópica</strong>?</p>
+<p>¿Por qué los <span class="math inline">\(B_n\)</span> son disyuntos dos a dos? Justifique cada paso en la demostración anterior.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled" title="La paradoja de Méré">
@@ -414,7 +422,7 @@ P(A) = P\Big(\bigcup_i A_i\Big) = P\Big(\bigcup_i B_i\Big) = \sum_i P(B_i) = P(A
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Diseñe un experimento aleatorio que le permita resolver la paradoja de Méré: él creía que era igualmente probable obtener un seis en cuatro lanzamientos de un dado que obtener un doble seis en veinticuatro lanzamientos de dos dados. Revise en internet en qué estaba pensando (y en qué se equivocaba). Él creyó esto hasta que empezó a perder dinero.</p>
+<p>Diseñe un experimento aleatorio que le permita resolver la Paradoja de Méré: él creía que era igualmente probable obtener un seis en cuatro lanzamientos de un dado que obtener un doble seis en veinticuatro lanzamientos de dos dados. Revise en internet en qué estaba pensando (y en qué se equivocaba). Él creyó esto hasta que empezó a perder dinero.</p>
 <p>Recoja los datos de una simulación y compare con la solución formal (calculando las probabilidades exactas de cada evento).</p>
 </div>
 </div>
@@ -425,7 +433,7 @@ P(A) = P\Big(\bigcup_i A_i\Big) = P\Big(\bigcup_i B_i\Big) = \sum_i P(B_i) = P(A
 <p><span class="math display">\[P(A) = \sum_{\omega \in A} P(\{\omega\})\]</span></p>
 <p>Pero veamos que <strong>no</strong> podemos definir la probabilidad así si el conjunto no es numerable (por ejemplo, <span class="math inline">\([0,1]\)</span> o <span class="math inline">\(\mathbb{R}\)</span>).</p>
 <p>Supongamos que sí se pudiera. Sea</p>
-<p><span class="math display">\[T_n = \Big\{\omega \in \Omega : P(\{\omega\}) &gt; \tfrac{1}{n}\Big\}\]</span></p>
+<p><span class="math display">\[T_n = \Big\{\omega \in \Omega : \tfrac{1}{n}\geq P(\{\omega\}) &gt; \tfrac{1}{n+1}\Big\}\]</span></p>
 <p>Es claro que <span class="math inline">\(T = \bigcup_n T_n = \{\omega \in \Omega : P(\{\omega\})&gt;0\}\)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
 <div class="callout-header d-flex align-content-center">
@@ -438,19 +446,6 @@ P(A) = P\Big(\bigcup_i A_i\Big) = P\Big(\bigcup_i B_i\Big) = \sum_i P(B_i) = P(A
 </div>
 <div class="callout-body-container callout-body">
 <p>¿Es claro por qué <span class="math inline">\(T=\bigcup_n T_n\)</span>? Ahora, cada <span class="math inline">\(T_n\)</span> contiene a lo sumo <span class="math inline">\(n\)</span> puntos — ¿por qué? ¿Qué implica esto sobre <span class="math inline">\(T\)</span>? ¿Cómo se interpreta el resultado?</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled" title="Consecuencia">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Consecuencia
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Como cada <span class="math inline">\(T_n\)</span> es finito (<span class="math inline">\(|T_n|\le n\)</span>), <span class="math inline">\(T\)</span> es una unión numerable de conjuntos finitos, y por lo tanto <strong>numerable</strong>. Esto significa que a lo sumo una cantidad numerable de puntos de <span class="math inline">\(\Omega\)</span> pueden tener masa puntual positiva — en un espacio no numerable como <span class="math inline">\([0,1]\)</span>, “sumar masas” no puede reproducir, por ejemplo, la probabilidad uniforme.</p>
 </div>
 </div>
 </section>

@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>El conjunto F de números de punto flotante</title>
+<title></title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
 <style>
   :root{
@@ -46,25 +46,6 @@
 </head>
 <body>
 
-<h1>El conjunto \(\mathbb{F}\) de números de punto flotante</h1>
-
-<p><strong>Definición 1.1.1.</strong> \(\mathbb{F}\) consta del cero y de todos los números de la forma</p>
-
-<p>\[\pm(1+f)\times 2^n, \qquad f=\sum_{i=1}^{d} b_i\,2^{-i},\quad b_i\in\{0,1\}.\]</p>
-
-<p>Para un \(d\) fijo hay \(2^d\) valores posibles de \(f\), es decir \(2^d\) puntos dentro de cada
-<em>binade</em> \([2^n,\,2^{n+1})\). Esos puntos subdividen el binade en \(2^d\) partes iguales de
-longitud \(2^{n-d}\).</p>
-
-<div class="note">
-<strong>Nota de exportación.</strong> Esta página reproduce el notebook de Pluto
-<code>flotantes_F_sin_plots.jl</code> en HTML/JavaScript puro, sin depender de Julia. La red de este
-entorno no tiene acceso a <code>julialang-s3.julialang.org</code> ni al servidor de paquetes de Julia,
-así que no fue posible instalar Julia/Pluto para generar el export nativo
-(<code>Pluto.generate_html</code>). El comportamiento —controles, fórmulas y tabla— es idéntico al del
-notebook original.
-</div>
-
 <h2>Controles</h2>
 <div class="panel">
   <div class="ctrl">
@@ -97,25 +78,6 @@ notebook original.
 </div>
 
 <div id="grafico"></div>
-
-<h2>Espaciado por binade</h2>
-<p>El espaciado entre puntos consecutivos dentro de \([2^n, 2^{n+1})\) es \(2^{n-d}\): crece con \(n\).
-\(\mathbb{F}\) es denso cerca de cero y disperso lejos de cero, aunque el error <em>relativo</em>
-permanece acotado por \(2^{-d}\).</p>
-<div id="tabla-espaciado"></div>
-
-<h2>Valores exactos (como fracciones)</h2>
-<p>Se muestran si \(2^d \le 16\) y hay a lo sumo 6 exponentes.</p>
-<div id="valores-exactos"></div>
-
-<h2>Comprobaciones sugeridas</h2>
-<ul class="checks">
-  <li>\(d = 2\), \(n_{\min}=n_{\max}=0\): se obtienen \(1,\ 5/4,\ 6/4,\ 7/4\).</li>
-  <li>\(d = 1\), \(n_{\min}=n_{\max}=0\): solo \(1\) y \(3/2\).</li>
-  <li>\(d = 2\), \(n\) de \(2\) a \(3\): en \([4,8)\) aparecen \(4,5,6,7\); en \([8,16)\) solo \(8,10,12,14\).</li>
-  <li>Con escala \(\log_2\) el patrón se vuelve exactamente periódico: cada binade contiene los
-      mismos \(2^d\) puntos reescalados.</li>
-</ul>
 
 <script>
 const PALETA = ["#1f77b4", "#d62728", "#2ca02c", "#ff7f0e", "#9467bd",

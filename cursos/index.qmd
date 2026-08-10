@@ -5,5 +5,5 @@ listing:
   contents:
     - numerico/index.qmd
     - probabilidad/index.qmd
-  type: table
+  type: grid
 ---

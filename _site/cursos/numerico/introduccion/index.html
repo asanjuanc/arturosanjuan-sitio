@@ -316,7 +316,7 @@ window.Quarto = {
 <p><strong>Alfabetos según la base:</strong></p>
 <ul>
 <li>Binario: <span class="math inline">\(\{0,1\}\)</span> → un dígito es un <strong>bit</strong></li>
-<li>Octal: <span class="math inline">\(\{0,1,\ldots,7\}\)</span> → un dígito octal representa <strong>3 bits</strong></li>
+<li>Octal: <span class="math inline">\(\{0,1,\ldots,7\}\)</span> → un dígito octal (byte) representa <strong>3 bits</strong></li>
 <li>Hexadecimal: <span class="math inline">\(\{0,1,\ldots,9,A,B,C,D,E,F\}\)</span> → un dígito hexadecimal (<strong>nibble</strong>) representa <strong>4 bits</strong></li>
 </ul>
 <p><strong>Correspondencia binario ↔︎ octal (3 bits):</strong></p>
@@ -408,9 +408,9 @@ window.Quarto = {
 </div>
 <p><span class="math display">\[\frac13=(1+f)\cdot2^{-1}\Rightarrow 1+f=\frac23\Rightarrow f=-\frac13\ \text{✗ (}f&lt;0\text{)}\]</span></p>
 <p><span class="math display">\[\frac13=(1+f)\cdot2^{-2}\Rightarrow 1+f=\frac43\Rightarrow f=\frac13\ \checkmark\]</span></p>
-<p>En decimal, <span class="math inline">\(f=0{,}\overline{3}=\dfrac{3}{10}+\dfrac{3}{10^2}+\cdots\)</span></p>
-<p><strong>En binario</strong>, usando la serie geométrica:</p>
+<p>En decimal, <span class="math inline">\(f=0{,}\overline{3}=\dfrac{3}{10}+\dfrac{3}{10^2}+\cdots\)</span>. <strong>En binario</strong>, usando la serie geométrica:</p>
 <p><span class="math display">\[\frac13=\frac{1/4}{1-1/4}=\frac14\sum_{k=0}^{\infty}\left(\frac14\right)^k=\sum_{k=1}^{\infty}\frac{1}{4^{k}}=\sum_{k=1}^{\infty}\frac{1}{2^{2k}}=0{,}010101\ldots_2\]</span></p>
+<p>Por tanto se puede aproximar por un número de <span class="math inline">\(\mathbb {F}\)</span> pero <span class="math inline">\(\tfrac13\notin \mathbb{F}\)</span> para ningunos <span class="math inline">\(d\)</span> y <span class="math inline">\(n\)</span>.</p>
 </section>
 </section>
 <section id="cuántos-elementos-de-𝔽-hay-por-binade" class="level2" data-number="5">
@@ -447,8 +447,9 @@ window.Quarto = {
 </section>
 <section id="simulación-de-mathbbf-en-julia" class="level3" data-number="5.3">
 <h3 data-number="5.3" class="anchored" data-anchor-id="simulación-de-mathbbf-en-julia"><span class="header-section-number">5.3</span> Simulación de <span class="math inline">\(\mathbb{F}\)</span> en Julia</h3>
-<p><strong>Recta numérica</strong> (colores por exponente):</p>
-<p><a href="notebooks/flotantes.html">Ver simulación de <span class="math inline">\(\mathbb{F}\)</span></a></p>
+<p><strong>Recta numérica</strong> (colores por exponente, simulación):</p>
+<iframe src="notebooks/flotantes.html" width="100%" height="650px" style="border:none;">
+</iframe>
 <p><a href="notebooks/flotantes-codigo.html">Ver código fuente de la simulación de <span class="math inline">\(\mathbb{F}\)</span></a></p>
 <p><a href="notebooks/flotantes_F.jl">Descargar el código fuente la simulación de <span class="math inline">\(\mathbb{F}\)</span></a></p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo motivador de lo que viene">
