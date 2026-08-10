@@ -1,0 +1,181 @@
+---
+title: "Introducción"
+subtitle: "Apuntes de clase: espacios de probabilidad y σ-álgebras"
+description: "Experimentos aleatorios, espacios muestrales, σ-álgebras, continuidad de la probabilidad y probabilidad de Laplace."
+author: "Arturo Sanjuán"
+date: today
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 1
+---
+
+## Experimentos aleatorios y espacios muestrales
+
+En el texto de Liliana Blanco se define **experimento aleatorio** como un experimento en el que no podemos determinar su resultado de antemano, y **espacio muestral** $\Omega$ como el conjunto de todos los resultados posibles de un experimento aleatorio.
+
+::: {.callout-note title="Ejercicio 1"}
+Discuta esta definición desde lo que se entiende por *definir* en matemáticas.
+:::
+
+### Ejemplo 1 — Lanzar una moneda
+
+$$\Omega = \{c, s\} \qquad c: \text{cara}, \quad s: \text{sello}$$
+
+### Ejemplo 2 — Tiempo de espera hasta la primera cara
+
+El experimento aleatorio es: *el número de veces que es necesario lanzar una moneda hasta obtener por primera vez cara*. El espacio muestral natural es
+
+$$\Omega = \mathbb{N} = \{1, 2, 3, \ldots\}$$
+
+::: {.callout-note title="Ejercicio"}
+¿Por qué $\Omega=\mathbb N$ es un espacio muestral adecuado para este experimento? ¿Cómo se interpreta cada elemento $n\in\Omega$?
+:::
+
+Note que un mismo experimento puede tener distintos espacios muestrales. Por ejemplo,
+
+$$\Omega' = \{0,1\}^{\mathbb{N}} = \{(a_1,a_2,\ldots) : a_i \in \{0,1\}\}$$
+
+también funciona (registrando la sucesión *completa* de lanzamientos, con $1=$ cara y $0=$ sello, en lugar de solo el tiempo de espera).
+
+::: {.callout-note title="Ejercicio"}
+¿Por qué $\Omega'$ también sirve como espacio muestral de este experimento? ¿Cómo se interpreta cada elemento de $\Omega'$? ¿Qué relación hay entre $\Omega$ y $\Omega'$?
+:::
+
+### Ejemplo 3 — Lanzar dos dados
+
+$$
+\Omega = \big\{(i,j) : i,j \in \{1,\ldots,6\}\big\} =
+\begin{aligned}
+&\{(1,1),(1,2),(1,3),(1,4),(1,5),(1,6),\\
+&\ (2,1),(2,2),(2,3),(2,4),(2,5),(2,6),\\
+&\ (3,1),(3,2),(3,3),(3,4),(3,5),(3,6),\\
+&\ (4,1),(4,2),(4,3),(4,4),(4,5),(4,6),\\
+&\ (5,1),(5,2),(5,3),(5,4),(5,5),(5,6),\\
+&\ (6,1),(6,2),(6,3),(6,4),(6,5),(6,6)\}
+\end{aligned}
+$$
+
+::: {.callout-note title="Ejercicio"}
+Si lo que nos interesa es la **suma** de los dados, ¿cómo podemos simplificar el espacio muestral? Determine por extensión, en el espacio muestral inicial $\Omega$, el evento "la suma da 6":
+
+$$A = \{(a,b) \in \{1,\ldots,6\}^2 : a+b = 6\}$$
+:::
+
+## σ-álgebras
+
+::: {.callout-note title="Ejercicio 4.1 — La traza de una σ-álgebra"}
+Si $\mathfrak{B}$ es una σ-álgebra sobre $\Omega$ y $\Lambda \subset \Omega$, demuestre que la **huella** (o traza) de $\mathfrak{B}$ sobre $\Lambda$,
+
+$$\mathfrak{B}\big|_\Lambda = \{A \cap \Lambda : A \in \mathfrak{B}\},$$
+
+es también una σ-álgebra, pero sobre $\Lambda$.
+:::
+
+::: {.callout-note title="Ejercicio 4.2 — Preimagen de una σ-álgebra"}
+Si $f:\Omega \to \Omega'$ y $\mathfrak{B}'$ es una σ-álgebra sobre $\Omega'$, demuestre que
+
+$$f^{-1}(\mathfrak{B}') = \{f^{-1}(A) : A \in \mathfrak{B}'\}$$
+
+es una σ-álgebra sobre $\Omega$.
+:::
+
+::: {.callout-note title="Ejercicio 4.3 — Intersección de σ-álgebras"}
+Demuestre que la intersección de dos σ-álgebras sobre $\Omega$ es una σ-álgebra sobre $\Omega$.
+
+¿Qué pasa con la intersección **arbitraria** de σ-álgebras? ¿Y con la **unión**?
+:::
+
+::: {.callout-note title="Ejercicio 4.4 — Generadores de la σ-álgebra de Borel"}
+Demuestre rigurosamente que en $(\mathbb{R}, \mathfrak{B}(\mathbb{R}))$ (la σ-álgebra de Borel), los conjuntos de la forma $(a,b]$ pertenecen a $\mathfrak{B}(\mathbb{R})$, y que de hecho generan la misma σ-álgebra que los intervalos abiertos.
+:::
+
+::: {.callout-important title="Recordatorio"}
+Aprenda de memoria todas las definiciones: sepa **negarlas**, sepa **ejemplificarlas** y sepa **ejemplificar la negación**.
+:::
+
+::: {.callout-note title="Ejercicio — frecuencia vs. probabilidad"}
+Lance una moneda 20 veces y calcule la frecuencia relativa de caras. ¿Qué relación tiene esto con la definición formal de probabilidad?
+
+¿Qué debería pasar con la espera de un seis al lanzar repetidamente un dado? ¿Cómo se puede simular esto en R?
+:::
+
+## Continuidad de la probabilidad
+
+A continuación vamos a explicar cómo se demuestra que si $(A_n)_{n\in\mathbb N}$ es una sucesión **creciente** de elementos de $\mathfrak{F}$, con $(\Omega,\mathfrak{F},P)$ un espacio de probabilidad, entonces
+
+$$P\Big(\lim_n A_n\Big) = \lim_n P(A_n)$$
+
+Cuando tenemos una sucesión creciente de conjuntos, escribimos $\lim_n A_n = \bigcup_n A_n$.
+
+La estrategia consiste en escribir $\bigcup_n A_n$ como la unión de una familia **disyunta**:
+
+$$B_1 = A_1, \qquad B_n = A_n \setminus A_{n-1} \ \ (n\ge 2)$$
+
+de modo que $\bigcup_n B_n = \bigcup_n A_n$, y los $B_n$ son disyuntos dos a dos (usamos que si $A\subset B$ entonces $P(B\setminus A)=P(B)-P(A)$).
+
+Como $A_n \subset A_{n+1}$, entonces
+
+$$P(A_{n+1}\setminus A_n) = P(A_{n+1}) - P(A_n)$$
+
+Resumiendo:
+
+$$
+P(A) = P\Big(\bigcup_i A_i\Big) = P\Big(\bigcup_i B_i\Big) = \sum_i P(B_i) = P(A_1) + \sum_{n\ge 1}\big(P(A_{n+1})-P(A_n)\big) = \lim_n P(A_n)
+$$
+
+::: {.callout-note title="Ejercicio"}
+¿Por qué los $B_n$ son disyuntos dos a dos? ¿Por qué la suma anterior es una **serie telescópica**?
+:::
+
+::: {.callout-tip title="La paradoja de Méré"}
+Diseñe un experimento aleatorio que le permita resolver la paradoja de Méré: él creía que era igualmente probable obtener un seis en cuatro lanzamientos de un dado que obtener un doble seis en veinticuatro lanzamientos de dos dados. Revise en internet en qué estaba pensando (y en qué se equivocaba). Él creyó esto hasta que empezó a perder dinero.
+
+Recoja los datos de una simulación y compare con la solución formal (calculando las probabilidades exactas de cada evento).
+:::
+
+## ¿Por qué la probabilidad puntual falla en espacios no numerables?
+
+En un espacio de probabilidad **discreto** podemos determinar la probabilidad sumando masas puntuales:
+
+$$P(A) = \sum_{\omega \in A} P(\{\omega\})$$
+
+Pero veamos que **no** podemos definir la probabilidad así si el conjunto no es numerable (por ejemplo, $[0,1]$ o $\mathbb{R}$).
+
+Supongamos que sí se pudiera. Sea
+
+$$T_n = \Big\{\omega \in \Omega : P(\{\omega\}) > \tfrac{1}{n}\Big\}$$
+
+Es claro que $T = \bigcup_n T_n = \{\omega \in \Omega : P(\{\omega\})>0\}$.
+
+::: {.callout-note title="Ejercicio"}
+¿Es claro por qué $T=\bigcup_n T_n$? Ahora, cada $T_n$ contiene a lo sumo $n$ puntos — ¿por qué? ¿Qué implica esto sobre $T$? ¿Cómo se interpreta el resultado?
+:::
+
+::: {.callout-important title="Consecuencia"}
+Como cada $T_n$ es finito ($|T_n|\le n$), $T$ es una unión numerable de conjuntos finitos, y por lo tanto **numerable**. Esto significa que a lo sumo una cantidad numerable de puntos de $\Omega$ pueden tener masa puntual positiva — en un espacio no numerable como $[0,1]$, "sumar masas" no puede reproducir, por ejemplo, la probabilidad uniforme.
+:::
+
+## Probabilidad de Laplace
+
+::: {.callout-tip title="Ejemplo"}
+En un curso con 17 niñas y 15 niños (32 estudiantes en total), se seleccionan al azar 5 estudiantes para representar al curso. Explique por qué la probabilidad de que las 5 seleccionadas sean **todas niñas** es
+
+$$P(A) = \frac{\binom{17}{5}}{\binom{32}{5}} \approx 3.07\times10^{-2}$$
+:::
+
+::: {.callout-note title="Ejercicio"}
+¿Cuál sería la probabilidad de que **al menos una niña** sea seleccionada?
+
+¿Cuál es la probabilidad de ganarse el Baloto? ¿el chance? ¿la lotería?
+:::
+
+::: {.callout-note title="Ejercicios del libro"}
+Haga los ejercicios 1.1–1.26 (Blanco Castañeda, *Probabilidad*).
+:::

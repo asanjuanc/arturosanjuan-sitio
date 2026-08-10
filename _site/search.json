@@ -1,10 +1,17 @@
 [
   {
+    "objectID": "cursos/probabilidad/index.html",
+    "href": "cursos/probabilidad/index.html",
+    "title": "Probabilidad",
+    "section": "",
+    "text": "Introducción\n\n\nApuntes de clase: espacios de probabilidad y σ-álgebras\n\n\nExperimentos aleatorios, espacios muestrales, σ-álgebras, continuidad de la probabilidad y probabilidad de Laplace.\n\n\n\n\n\n10 ago 2026\n\n\nArturo Sanjuán\n\n\n\n\n\nNo hay resultados"
+  },
+  {
     "objectID": "cursos/index.html",
     "href": "cursos/index.html",
     "title": "Cursos",
     "section": "",
-    "text": "Ordenar por\n      Por defecto\n      \n        Título\n      \n      \n        Autor/a\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTítulo\n\n\n\nAutor/a\n\n\n\n\n\n\n\n\nAnálisis Numérico\n\n\n \n\n\n\n\n\n\nNo hay resultados"
+    "text": "Ordenar por\n      Por defecto\n      \n        Título\n      \n      \n        Autor/a\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTítulo\n\n\n\nAutor/a\n\n\n\n\n\n\n\n\nAnálisis Numérico\n\n\n \n\n\n\n\n\n\nProbabilidad\n\n\n \n\n\n\n\n\n\nNo hay resultados"
   },
   {
     "objectID": "cursos/numerico/introduccion/index.html",
@@ -88,6 +95,48 @@
     "href": "cursos/numerico/index.html",
     "title": "Análisis Numérico",
     "section": "",
-    "text": "Introducción\n\n\nApuntes de clase: sistemas de numeración y punto flotante\n\n\nSistemas de numeración, bases, y la construcción del conjunto de números de punto flotante 𝔽.\n\n\n\n\n\n9 ago 2026\n\n\nArturo Sanjuán\n\n\n\n\n\nNo hay resultados"
+    "text": "Introducción\n\n\nApuntes de clase: sistemas de numeración y punto flotante\n\n\nSistemas de numeración, bases, y la construcción del conjunto de números de punto flotante 𝔽.\n\n\n\n\n\n10 ago 2026\n\n\nArturo Sanjuán\n\n\n\n\n\nNo hay resultados"
+  },
+  {
+    "objectID": "cursos/probabilidad/introduccion/index.html",
+    "href": "cursos/probabilidad/introduccion/index.html",
+    "title": "Introducción",
+    "section": "",
+    "text": "En el texto de Liliana Blanco se define experimento aleatorio como un experimento en el que no podemos determinar su resultado de antemano, y espacio muestral \\(\\Omega\\) como el conjunto de todos los resultados posibles de un experimento aleatorio.\n\n\n\n\n\n\nNotaEjercicio 1\n\n\n\nDiscuta esta definición desde lo que se entiende por definir en matemáticas.\n\n\n\n\n\\[\\Omega = \\{c, s\\} \\qquad c: \\text{cara}, \\quad s: \\text{sello}\\]\n\n\n\nEl experimento aleatorio es: el número de veces que es necesario lanzar una moneda hasta obtener por primera vez cara. El espacio muestral natural es\n\\[\\Omega = \\mathbb{N} = \\{1, 2, 3, \\ldots\\}\\]\n\n\n\n\n\n\nNotaEjercicio\n\n\n\n¿Por qué \\(\\Omega=\\mathbb N\\) es un espacio muestral adecuado para este experimento? ¿Cómo se interpreta cada elemento \\(n\\in\\Omega\\)?\n\n\nNote que un mismo experimento puede tener distintos espacios muestrales. Por ejemplo,\n\\[\\Omega' = \\{0,1\\}^{\\mathbb{N}} = \\{(a_1,a_2,\\ldots) : a_i \\in \\{0,1\\}\\}\\]\ntambién funciona (registrando la sucesión completa de lanzamientos, con \\(1=\\) cara y \\(0=\\) sello, en lugar de solo el tiempo de espera).\n\n\n\n\n\n\nNotaEjercicio\n\n\n\n¿Por qué \\(\\Omega'\\) también sirve como espacio muestral de este experimento? ¿Cómo se interpreta cada elemento de \\(\\Omega'\\)? ¿Qué relación hay entre \\(\\Omega\\) y \\(\\Omega'\\)?\n\n\n\n\n\n\\[\n\\Omega = \\big\\{(i,j) : i,j \\in \\{1,\\ldots,6\\}\\big\\} =\n\\begin{aligned}\n&\\{(1,1),(1,2),(1,3),(1,4),(1,5),(1,6),\\\\\n&\\ (2,1),(2,2),(2,3),(2,4),(2,5),(2,6),\\\\\n&\\ (3,1),(3,2),(3,3),(3,4),(3,5),(3,6),\\\\\n&\\ (4,1),(4,2),(4,3),(4,4),(4,5),(4,6),\\\\\n&\\ (5,1),(5,2),(5,3),(5,4),(5,5),(5,6),\\\\\n&\\ (6,1),(6,2),(6,3),(6,4),(6,5),(6,6)\\}\n\\end{aligned}\n\\]\n\n\n\n\n\n\nNotaEjercicio\n\n\n\nSi lo que nos interesa es la suma de los dados, ¿cómo podemos simplificar el espacio muestral? Determine por extensión, en el espacio muestral inicial \\(\\Omega\\), el evento “la suma da 6”:\n\\[A = \\{(a,b) \\in \\{1,\\ldots,6\\}^2 : a+b = 6\\}\\]"
+  },
+  {
+    "objectID": "cursos/probabilidad/introduccion/index.html#experimentos-aleatorios-y-espacios-muestrales",
+    "href": "cursos/probabilidad/introduccion/index.html#experimentos-aleatorios-y-espacios-muestrales",
+    "title": "Introducción",
+    "section": "",
+    "text": "En el texto de Liliana Blanco se define experimento aleatorio como un experimento en el que no podemos determinar su resultado de antemano, y espacio muestral \\(\\Omega\\) como el conjunto de todos los resultados posibles de un experimento aleatorio.\n\n\n\n\n\n\nNotaEjercicio 1\n\n\n\nDiscuta esta definición desde lo que se entiende por definir en matemáticas.\n\n\n\n\n\\[\\Omega = \\{c, s\\} \\qquad c: \\text{cara}, \\quad s: \\text{sello}\\]\n\n\n\nEl experimento aleatorio es: el número de veces que es necesario lanzar una moneda hasta obtener por primera vez cara. El espacio muestral natural es\n\\[\\Omega = \\mathbb{N} = \\{1, 2, 3, \\ldots\\}\\]\n\n\n\n\n\n\nNotaEjercicio\n\n\n\n¿Por qué \\(\\Omega=\\mathbb N\\) es un espacio muestral adecuado para este experimento? ¿Cómo se interpreta cada elemento \\(n\\in\\Omega\\)?\n\n\nNote que un mismo experimento puede tener distintos espacios muestrales. Por ejemplo,\n\\[\\Omega' = \\{0,1\\}^{\\mathbb{N}} = \\{(a_1,a_2,\\ldots) : a_i \\in \\{0,1\\}\\}\\]\ntambién funciona (registrando la sucesión completa de lanzamientos, con \\(1=\\) cara y \\(0=\\) sello, en lugar de solo el tiempo de espera).\n\n\n\n\n\n\nNotaEjercicio\n\n\n\n¿Por qué \\(\\Omega'\\) también sirve como espacio muestral de este experimento? ¿Cómo se interpreta cada elemento de \\(\\Omega'\\)? ¿Qué relación hay entre \\(\\Omega\\) y \\(\\Omega'\\)?\n\n\n\n\n\n\\[\n\\Omega = \\big\\{(i,j) : i,j \\in \\{1,\\ldots,6\\}\\big\\} =\n\\begin{aligned}\n&\\{(1,1),(1,2),(1,3),(1,4),(1,5),(1,6),\\\\\n&\\ (2,1),(2,2),(2,3),(2,4),(2,5),(2,6),\\\\\n&\\ (3,1),(3,2),(3,3),(3,4),(3,5),(3,6),\\\\\n&\\ (4,1),(4,2),(4,3),(4,4),(4,5),(4,6),\\\\\n&\\ (5,1),(5,2),(5,3),(5,4),(5,5),(5,6),\\\\\n&\\ (6,1),(6,2),(6,3),(6,4),(6,5),(6,6)\\}\n\\end{aligned}\n\\]\n\n\n\n\n\n\nNotaEjercicio\n\n\n\nSi lo que nos interesa es la suma de los dados, ¿cómo podemos simplificar el espacio muestral? Determine por extensión, en el espacio muestral inicial \\(\\Omega\\), el evento “la suma da 6”:\n\\[A = \\{(a,b) \\in \\{1,\\ldots,6\\}^2 : a+b = 6\\}\\]"
+  },
+  {
+    "objectID": "cursos/probabilidad/introduccion/index.html#σ-álgebras",
+    "href": "cursos/probabilidad/introduccion/index.html#σ-álgebras",
+    "title": "Introducción",
+    "section": "2 σ-álgebras",
+    "text": "2 σ-álgebras\n\n\n\n\n\n\nNotaEjercicio 4.1 — La traza de una σ-álgebra\n\n\n\nSi \\(\\mathfrak{B}\\) es una σ-álgebra sobre \\(\\Omega\\) y \\(\\Lambda \\subset \\Omega\\), demuestre que la huella (o traza) de \\(\\mathfrak{B}\\) sobre \\(\\Lambda\\),\n\\[\\mathfrak{B}\\big|_\\Lambda = \\{A \\cap \\Lambda : A \\in \\mathfrak{B}\\},\\]\nes también una σ-álgebra, pero sobre \\(\\Lambda\\).\n\n\n\n\n\n\n\n\nNotaEjercicio 4.2 — Preimagen de una σ-álgebra\n\n\n\nSi \\(f:\\Omega \\to \\Omega'\\) y \\(\\mathfrak{B}'\\) es una σ-álgebra sobre \\(\\Omega'\\), demuestre que\n\\[f^{-1}(\\mathfrak{B}') = \\{f^{-1}(A) : A \\in \\mathfrak{B}'\\}\\]\nes una σ-álgebra sobre \\(\\Omega\\).\n\n\n\n\n\n\n\n\nNotaEjercicio 4.3 — Intersección de σ-álgebras\n\n\n\nDemuestre que la intersección de dos σ-álgebras sobre \\(\\Omega\\) es una σ-álgebra sobre \\(\\Omega\\).\n¿Qué pasa con la intersección arbitraria de σ-álgebras? ¿Y con la unión?\n\n\n\n\n\n\n\n\nNotaEjercicio 4.4 — Generadores de la σ-álgebra de Borel\n\n\n\nDemuestre rigurosamente que en \\((\\mathbb{R}, \\mathfrak{B}(\\mathbb{R}))\\) (la σ-álgebra de Borel), los conjuntos de la forma \\((a,b]\\) pertenecen a \\(\\mathfrak{B}(\\mathbb{R})\\), y que de hecho generan la misma σ-álgebra que los intervalos abiertos.\n\n\n\n\n\n\n\n\nImportanteRecordatorio\n\n\n\nAprenda de memoria todas las definiciones: sepa negarlas, sepa ejemplificarlas y sepa ejemplificar la negación.\n\n\n\n\n\n\n\n\nNotaEjercicio — frecuencia vs. probabilidad\n\n\n\nLance una moneda 20 veces y calcule la frecuencia relativa de caras. ¿Qué relación tiene esto con la definición formal de probabilidad?\n¿Qué debería pasar con la espera de un seis al lanzar repetidamente un dado? ¿Cómo se puede simular esto en R?"
+  },
+  {
+    "objectID": "cursos/probabilidad/introduccion/index.html#continuidad-de-la-probabilidad",
+    "href": "cursos/probabilidad/introduccion/index.html#continuidad-de-la-probabilidad",
+    "title": "Introducción",
+    "section": "3 Continuidad de la probabilidad",
+    "text": "3 Continuidad de la probabilidad\nA continuación vamos a explicar cómo se demuestra que si \\((A_n)_{n\\in\\mathbb N}\\) es una sucesión creciente de elementos de \\(\\mathfrak{F}\\), con \\((\\Omega,\\mathfrak{F},P)\\) un espacio de probabilidad, entonces\n\\[P\\Big(\\lim_n A_n\\Big) = \\lim_n P(A_n)\\]\nCuando tenemos una sucesión creciente de conjuntos, escribimos \\(\\lim_n A_n = \\bigcup_n A_n\\).\nLa estrategia consiste en escribir \\(\\bigcup_n A_n\\) como la unión de una familia disyunta:\n\\[B_1 = A_1, \\qquad B_n = A_n \\setminus A_{n-1} \\ \\ (n\\ge 2)\\]\nde modo que \\(\\bigcup_n B_n = \\bigcup_n A_n\\), y los \\(B_n\\) son disyuntos dos a dos (usamos que si \\(A\\subset B\\) entonces \\(P(B\\setminus A)=P(B)-P(A)\\)).\nComo \\(A_n \\subset A_{n+1}\\), entonces\n\\[P(A_{n+1}\\setminus A_n) = P(A_{n+1}) - P(A_n)\\]\nResumiendo:\n\\[\nP(A) = P\\Big(\\bigcup_i A_i\\Big) = P\\Big(\\bigcup_i B_i\\Big) = \\sum_i P(B_i) = P(A_1) + \\sum_{n\\ge 1}\\big(P(A_{n+1})-P(A_n)\\big) = \\lim_n P(A_n)\n\\]\n\n\n\n\n\n\nNotaEjercicio\n\n\n\n¿Por qué los \\(B_n\\) son disyuntos dos a dos? ¿Por qué la suma anterior es una serie telescópica?\n\n\n\n\n\n\n\n\nTipLa paradoja de Méré\n\n\n\nDiseñe un experimento aleatorio que le permita resolver la paradoja de Méré: él creía que era igualmente probable obtener un seis en cuatro lanzamientos de un dado que obtener un doble seis en veinticuatro lanzamientos de dos dados. Revise en internet en qué estaba pensando (y en qué se equivocaba). Él creyó esto hasta que empezó a perder dinero.\nRecoja los datos de una simulación y compare con la solución formal (calculando las probabilidades exactas de cada evento)."
+  },
+  {
+    "objectID": "cursos/probabilidad/introduccion/index.html#por-qué-la-probabilidad-puntual-falla-en-espacios-no-numerables",
+    "href": "cursos/probabilidad/introduccion/index.html#por-qué-la-probabilidad-puntual-falla-en-espacios-no-numerables",
+    "title": "Introducción",
+    "section": "4 ¿Por qué la probabilidad puntual falla en espacios no numerables?",
+    "text": "4 ¿Por qué la probabilidad puntual falla en espacios no numerables?\nEn un espacio de probabilidad discreto podemos determinar la probabilidad sumando masas puntuales:\n\\[P(A) = \\sum_{\\omega \\in A} P(\\{\\omega\\})\\]\nPero veamos que no podemos definir la probabilidad así si el conjunto no es numerable (por ejemplo, \\([0,1]\\) o \\(\\mathbb{R}\\)).\nSupongamos que sí se pudiera. Sea\n\\[T_n = \\Big\\{\\omega \\in \\Omega : P(\\{\\omega\\}) &gt; \\tfrac{1}{n}\\Big\\}\\]\nEs claro que \\(T = \\bigcup_n T_n = \\{\\omega \\in \\Omega : P(\\{\\omega\\})&gt;0\\}\\).\n\n\n\n\n\n\nNotaEjercicio\n\n\n\n¿Es claro por qué \\(T=\\bigcup_n T_n\\)? Ahora, cada \\(T_n\\) contiene a lo sumo \\(n\\) puntos — ¿por qué? ¿Qué implica esto sobre \\(T\\)? ¿Cómo se interpreta el resultado?\n\n\n\n\n\n\n\n\nImportanteConsecuencia\n\n\n\nComo cada \\(T_n\\) es finito (\\(|T_n|\\le n\\)), \\(T\\) es una unión numerable de conjuntos finitos, y por lo tanto numerable. Esto significa que a lo sumo una cantidad numerable de puntos de \\(\\Omega\\) pueden tener masa puntual positiva — en un espacio no numerable como \\([0,1]\\), “sumar masas” no puede reproducir, por ejemplo, la probabilidad uniforme."
+  },
+  {
+    "objectID": "cursos/probabilidad/introduccion/index.html#probabilidad-de-laplace",
+    "href": "cursos/probabilidad/introduccion/index.html#probabilidad-de-laplace",
+    "title": "Introducción",
+    "section": "5 Probabilidad de Laplace",
+    "text": "5 Probabilidad de Laplace\n\n\n\n\n\n\nTipEjemplo\n\n\n\nEn un curso con 17 niñas y 15 niños (32 estudiantes en total), se seleccionan al azar 5 estudiantes para representar al curso. Explique por qué la probabilidad de que las 5 seleccionadas sean todas niñas es\n\\[P(A) = \\frac{\\binom{17}{5}}{\\binom{32}{5}} \\approx 3.07\\times10^{-2}\\]\n\n\n\n\n\n\n\n\nNotaEjercicio\n\n\n\n¿Cuál sería la probabilidad de que al menos una niña sea seleccionada?\n¿Cuál es la probabilidad de ganarse el Baloto? ¿el chance? ¿la lotería?\n\n\n\n\n\n\n\n\nNotaEjercicios del libro\n\n\n\nHaga los ejercicios 1.1–1.26 (Blanco Castañeda, Probabilidad)."
   }
 ]

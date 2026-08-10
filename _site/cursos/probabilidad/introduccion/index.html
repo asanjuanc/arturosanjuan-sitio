@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Arturo Sanjuán">
-<meta name="description" content="Sistemas de numeración, bases, y la construcción del conjunto de números de punto flotante 𝔽.">
+<meta name="description" content="Experimentos aleatorios, espacios muestrales, σ-álgebras, continuidad de la probabilidad y probabilidad de Laplace.">
 
 <title>Introducción – Página Personal de Arturo Sanjuán</title>
 <style>
@@ -150,22 +150,16 @@ window.Quarto = {
     <h2 id="toc-title">Contenido</h2>
    
   <ul>
-  <li><a href="#breve-historia-de-los-sistemas-de-numeración" id="toc-breve-historia-de-los-sistemas-de-numeración" class="nav-link active" data-scroll-target="#breve-historia-de-los-sistemas-de-numeración"><span class="header-section-number">1</span> Breve historia de los sistemas de numeración</a></li>
-  <li><a href="#el-sistema-posicional-decimal" id="toc-el-sistema-posicional-decimal" class="nav-link" data-scroll-target="#el-sistema-posicional-decimal"><span class="header-section-number">2</span> El sistema posicional decimal</a></li>
-  <li><a href="#otras-bases" id="toc-otras-bases" class="nav-link" data-scroll-target="#otras-bases"><span class="header-section-number">3</span> Otras bases</a></li>
-  <li><a href="#sec-def-F" id="toc-sec-def-F" class="nav-link" data-scroll-target="#sec-def-F"><span class="header-section-number">4</span> El conjunto 𝔽 de números de punto flotante</a>
+  <li><a href="#experimentos-aleatorios-y-espacios-muestrales" id="toc-experimentos-aleatorios-y-espacios-muestrales" class="nav-link active" data-scroll-target="#experimentos-aleatorios-y-espacios-muestrales"><span class="header-section-number">1</span> Experimentos aleatorios y espacios muestrales</a>
   <ul class="collapse">
-  <li><a href="#ejemplos-de-normalización" id="toc-ejemplos-de-normalización" class="nav-link" data-scroll-target="#ejemplos-de-normalización"><span class="header-section-number">4.1</span> Ejemplos de normalización</a></li>
+  <li><a href="#ejemplo-1-lanzar-una-moneda" id="toc-ejemplo-1-lanzar-una-moneda" class="nav-link" data-scroll-target="#ejemplo-1-lanzar-una-moneda"><span class="header-section-number">1.1</span> Ejemplo 1 — Lanzar una moneda</a></li>
+  <li><a href="#ejemplo-2-tiempo-de-espera-hasta-la-primera-cara" id="toc-ejemplo-2-tiempo-de-espera-hasta-la-primera-cara" class="nav-link" data-scroll-target="#ejemplo-2-tiempo-de-espera-hasta-la-primera-cara"><span class="header-section-number">1.2</span> Ejemplo 2 — Tiempo de espera hasta la primera cara</a></li>
+  <li><a href="#ejemplo-3-lanzar-dos-dados" id="toc-ejemplo-3-lanzar-dos-dados" class="nav-link" data-scroll-target="#ejemplo-3-lanzar-dos-dados"><span class="header-section-number">1.3</span> Ejemplo 3 — Lanzar dos dados</a></li>
   </ul></li>
-  <li><a href="#cuántos-elementos-de-𝔽-hay-por-binade" id="toc-cuántos-elementos-de-𝔽-hay-por-binade" class="nav-link" data-scroll-target="#cuántos-elementos-de-𝔽-hay-por-binade"><span class="header-section-number">5</span> Cuántos elementos de 𝔽 hay por binade</a>
-  <ul class="collapse">
-  <li><a href="#caso-d0" id="toc-caso-d0" class="nav-link" data-scroll-target="#caso-d0"><span class="header-section-number">5.1</span> Caso <span class="math inline">\(d=0\)</span></a></li>
-  <li><a href="#caso-d1" id="toc-caso-d1" class="nav-link" data-scroll-target="#caso-d1"><span class="header-section-number">5.2</span> Caso <span class="math inline">\(d=1\)</span></a></li>
-  <li><a href="#simulación-de-mathbbf-en-julia" id="toc-simulación-de-mathbbf-en-julia" class="nav-link" data-scroll-target="#simulación-de-mathbbf-en-julia"><span class="header-section-number">5.3</span> Simulación de <span class="math inline">\(\mathbb{F}\)</span> en Julia</a></li>
-  </ul></li>
-  <li><a href="#espaciado-dentro-de-un-binade" id="toc-espaciado-dentro-de-un-binade" class="nav-link" data-scroll-target="#espaciado-dentro-de-un-binade"><span class="header-section-number">6</span> Espaciado dentro de un binade</a></li>
-  <li><a href="#machine-epsilon" id="toc-machine-epsilon" class="nav-link" data-scroll-target="#machine-epsilon"><span class="header-section-number">7</span> Machine epsilon</a></li>
-  <li><a href="#de-error-absoluto-a-error-relativo" id="toc-de-error-absoluto-a-error-relativo" class="nav-link" data-scroll-target="#de-error-absoluto-a-error-relativo"><span class="header-section-number">8</span> De error absoluto a error relativo</a></li>
+  <li><a href="#σ-álgebras" id="toc-σ-álgebras" class="nav-link" data-scroll-target="#σ-álgebras"><span class="header-section-number">2</span> σ-álgebras</a></li>
+  <li><a href="#continuidad-de-la-probabilidad" id="toc-continuidad-de-la-probabilidad" class="nav-link" data-scroll-target="#continuidad-de-la-probabilidad"><span class="header-section-number">3</span> Continuidad de la probabilidad</a></li>
+  <li><a href="#por-qué-la-probabilidad-puntual-falla-en-espacios-no-numerables" id="toc-por-qué-la-probabilidad-puntual-falla-en-espacios-no-numerables" class="nav-link" data-scroll-target="#por-qué-la-probabilidad-puntual-falla-en-espacios-no-numerables"><span class="header-section-number">4</span> ¿Por qué la probabilidad puntual falla en espacios no numerables?</a></li>
+  <li><a href="#probabilidad-de-laplace" id="toc-probabilidad-de-laplace" class="nav-link" data-scroll-target="#probabilidad-de-laplace"><span class="header-section-number">5</span> Probabilidad de Laplace</a></li>
   </ul>
 </nav>
 </nav>
@@ -179,12 +173,12 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Introducción</h1>
-<p class="subtitle lead">Apuntes de clase: sistemas de numeración y punto flotante</p>
+<p class="subtitle lead">Apuntes de clase: espacios de probabilidad y σ-álgebras</p>
 </div>
 
 <div>
   <div class="description">
-    Sistemas de numeración, bases, y la construcción del conjunto de números de punto flotante 𝔽.
+    Experimentos aleatorios, espacios muestrales, σ-álgebras, continuidad de la probabilidad y probabilidad de Laplace.
   </div>
 </div>
 
@@ -213,89 +207,30 @@ window.Quarto = {
 </header>
 
 
-<section id="breve-historia-de-los-sistemas-de-numeración" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="breve-historia-de-los-sistemas-de-numeración"><span class="header-section-number">1</span> Breve historia de los sistemas de numeración</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Época</th>
-<th>Sistema</th>
-<th>Características</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>~30 000 a.C.</td>
-<td>Sistemas de conteo primitivos (unarios)</td>
-<td>Hueso de Lebombo y hueso de Ishango — muescas talladas en hueso</td>
-</tr>
-<tr class="even">
-<td>~2500 a.C.</td>
-<td>Babilonios</td>
-<td>Base 60, <strong>posicional</strong> (avance decisivo)</td>
-</tr>
-<tr class="odd">
-<td>~500 a.C.</td>
-<td>Griegos</td>
-<td>Numeración con letras</td>
-</tr>
-<tr class="even">
-<td>500 a.C. – s. XIV</td>
-<td>Romanos</td>
-<td>Aditivo: <code>CXCIV = 194</code>, <code>XLVIII = 48</code></td>
-</tr>
-<tr class="odd">
-<td>~s. VIII</td>
-<td>Chinos</td>
-<td>Multiplicativo, basado en potencias de 10: 一 二 三 四 五 六 七 八 九 十</td>
-</tr>
-<tr class="even">
-<td>36 a.e.c. – ~350 a.e.c.</td>
-<td>Mayas</td>
-<td>Base 20, con un símbolo para el cero</td>
-</tr>
-<tr class="odd">
-<td>628 d.C. → ~800 → s. XIII</td>
-<td>Indo-arábigo</td>
-<td>India (Brahmagupta) → Arabia (Al-Juarismi / Al-Khwarizmi) → Europa (Fibonacci)</td>
-</tr>
-<tr class="even">
-<td>S. XVII</td>
-<td>Pascal</td>
-<td>Otras bases</td>
-</tr>
-<tr class="odd">
-<td>S. XVII</td>
-<td>Leibniz</td>
-<td>Base 2</td>
-</tr>
-<tr class="even">
-<td>S. XIX (finales)</td>
-<td>Peano y Dedekind</td>
-<td>Fundamentación formal</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Ejemplo unario:</strong> <code>II + III = IIIII</code></p>
+<section id="experimentos-aleatorios-y-espacios-muestrales" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="experimentos-aleatorios-y-espacios-muestrales"><span class="header-section-number">1</span> Experimentos aleatorios y espacios muestrales</h2>
+<p>En el texto de Liliana Blanco se define <strong>experimento aleatorio</strong> como un experimento en el que no podemos determinar su resultado de antemano, y <strong>espacio muestral</strong> <span class="math inline">\(\Omega\)</span> como el conjunto de todos los resultados posibles de un experimento aleatorio.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio 1">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Discuta esta definición desde lo que se entiende por <em>definir</em> en matemáticas.</p>
+</div>
+</div>
+<section id="ejemplo-1-lanzar-una-moneda" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="ejemplo-1-lanzar-una-moneda"><span class="header-section-number">1.1</span> Ejemplo 1 — Lanzar una moneda</h3>
+<p><span class="math display">\[\Omega = \{c, s\} \qquad c: \text{cara}, \quad s: \text{sello}\]</span></p>
 </section>
-<section id="el-sistema-posicional-decimal" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="el-sistema-posicional-decimal"><span class="header-section-number">2</span> El sistema posicional decimal</h2>
-<p><span class="math display">\[243 = 2\cdot100+4\cdot10+3 = 2\cdot10^2+4\cdot10^1+3\cdot10^0\]</span></p>
-<p>Fracciones simples:</p>
-<p><span class="math display">\[\frac{3}{2}=\frac{6}{4} \qquad 1{,}5 = 1+\frac{5}{10}=1\frac{5}{10}=1\frac12\]</span></p>
-<p><span class="math display">\[\frac{7}{6}=1{,}1\overline{6}=1\cdot10^0+1\cdot10^{-1}+6\cdot10^{-2}+\cdots\]</span></p>
-<p><strong>Forma general de un número posicional</strong>, con dígitos <span class="math inline">\(a_i \in \{0,1,\ldots,9\}\)</span>:</p>
-<p><span class="math display">\[a_n a_{n-1}\cdots a_0,\, a_{-1}\, a_{-2}\, a_{-3}\cdots\]</span></p>
-<p><span class="math display">\[= a_n\cdot10^n + a_{n-1}\cdot10^{n-1}+\cdots+a_0\cdot10^0+a_{-1}\cdot10^{-1}+a_{-2}\cdot10^{-2}+\cdots\]</span></p>
-<p><span class="math display">\[=\underbrace{\sum_{k=0}^{n} a_k\,10^k}_{\text{parte entera}} + \underbrace{\sum_{k=1}^{\infty} a_{-k}\,10^{-k}}_{\text{parte decimal o mantisa}}\]</span></p>
-</section>
-<section id="otras-bases" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="otras-bases"><span class="header-section-number">3</span> Otras bases</h2>
+<section id="ejemplo-2-tiempo-de-espera-hasta-la-primera-cara" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="ejemplo-2-tiempo-de-espera-hasta-la-primera-cara"><span class="header-section-number">1.2</span> Ejemplo 2 — Tiempo de espera hasta la primera cara</h3>
+<p>El experimento aleatorio es: <em>el número de veces que es necesario lanzar una moneda hasta obtener por primera vez cara</em>. El espacio muestral natural es</p>
+<p><span class="math display">\[\Omega = \mathbb{N} = \{1, 2, 3, \ldots\}\]</span></p>
 <div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -306,213 +241,260 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Convertir <span class="math inline">\(\left(\dfrac13\right)_{10}\)</span> a base 3.</p>
+<p>¿Por qué <span class="math inline">\(\Omega=\mathbb N\)</span> es un espacio muestral adecuado para este experimento? ¿Cómo se interpreta cada elemento <span class="math inline">\(n\in\Omega\)</span>?</p>
 </div>
 </div>
-<p><span class="math display">\[\left(\frac13\right)_{(10)} = (0{,}1)_{(3)}\]</span></p>
-<p>la expansión termina exactamente, porque <span class="math inline">\(3^{-1}=1/3\)</span>.</p>
-<p>Para contraste, <span class="math inline">\((1/10)_{10}\)</span> en base 3 <strong>no</strong> termina:</p>
-<p><span class="math display">\[\left(\frac{1}{10}\right)_{(10)} = (0{,}0\overline{2})_{(3)}\]</span></p>
-<p><strong>Alfabetos según la base:</strong></p>
-<ul>
-<li>Binario: <span class="math inline">\(\{0,1\}\)</span> → un dígito es un <strong>bit</strong></li>
-<li>Octal: <span class="math inline">\(\{0,1,\ldots,7\}\)</span> → un dígito octal representa <strong>3 bits</strong></li>
-<li>Hexadecimal: <span class="math inline">\(\{0,1,\ldots,9,A,B,C,D,E,F\}\)</span> → un dígito hexadecimal (<strong>nibble</strong>) representa <strong>4 bits</strong></li>
-</ul>
-<p><strong>Correspondencia binario ↔︎ octal (3 bits):</strong></p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th style="text-align: center;">Binario</th>
-<th style="text-align: center;">Octal</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">000</td>
-<td style="text-align: center;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">001</td>
-<td style="text-align: center;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">010</td>
-<td style="text-align: center;">2</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">011</td>
-<td style="text-align: center;">3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">100</td>
-<td style="text-align: center;">4</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">101</td>
-<td style="text-align: center;">5</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">110</td>
-<td style="text-align: center;">6</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">111</td>
-<td style="text-align: center;">7</td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo — multiplicación en hexadecimal">
+<p>Note que un mismo experimento puede tener distintos espacios muestrales. Por ejemplo,</p>
+<p><span class="math display">\[\Omega' = \{0,1\}^{\mathbb{N}} = \{(a_1,a_2,\ldots) : a_i \in \{0,1\}\}\]</span></p>
+<p>también funciona (registrando la sucesión <em>completa</em> de lanzamientos, con <span class="math inline">\(1=\)</span> cara y <span class="math inline">\(0=\)</span> sello, en lugar de solo el tiempo de espera).</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Ejemplo — multiplicación en hexadecimal
+<span class="screen-reader-only">Nota</span>Ejercicio
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><span class="math display">\[12_{16} \times F_{16} = 10E_{16}\]</span></p>
-<p>Verificación pasando a decimal:</p>
-<p><span class="math display">\[12_{16}=1\cdot16+2=18 \qquad F_{16}=15 \qquad 18\times15=270\]</span></p>
-<p><span class="math display">\[270 = 1\cdot16^2+0\cdot16+14 \;\Longrightarrow\; 10E_{16}\ \checkmark\]</span></p>
+<p>¿Por qué <span class="math inline">\(\Omega'\)</span> también sirve como espacio muestral de este experimento? ¿Cómo se interpreta cada elemento de <span class="math inline">\(\Omega'\)</span>? ¿Qué relación hay entre <span class="math inline">\(\Omega\)</span> y <span class="math inline">\(\Omega'\)</span>?</p>
 </div>
 </div>
 </section>
-<section id="sec-def-F" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="sec-def-F"><span class="header-section-number">4</span> El conjunto 𝔽 de números de punto flotante</h2>
-<p><span class="math display">\[\mathbb{F} = \{\,0,\ \pm(1+f)\,2^{\,n}\,\}\]</span></p>
-<ul>
-<li><span class="math inline">\(n\to\)</span> <strong>exponente</strong></li>
-<li><span class="math inline">\(1+f \to\)</span> <strong>significando</strong> (mantisa)</li>
-<li><span class="math inline">\(\displaystyle f=\sum_{i=1}^{d} b_i\,2^{-i}, \quad b_i\in\{0,1\}\)</span></li>
-<li><span class="math inline">\(d\)</span> se llama la <strong>precisión binaria</strong></li>
-</ul>
-<section id="ejemplos-de-normalización" class="level3" data-number="4.1">
-<h3 data-number="4.1" class="anchored" data-anchor-id="ejemplos-de-normalización"><span class="header-section-number">4.1</span> Ejemplos de normalización</h3>
-<p><span class="math display">\[4=(1+0)\cdot2^2 \qquad\qquad 4=(1+f)\cdot2^1 \;\Rightarrow\; 1+f=2 \Rightarrow f=1\ \text{✗ (fuera de }[0,1))\]</span></p>
-<p><span class="math display">\[5=(1+x)\cdot2^1 \Rightarrow 1+x=\tfrac52=2{,}5 \Rightarrow x=\tfrac32\ \text{✗ (fuera de }[0,1))\]</span></p>
-<p><span class="math display">\[5=(1+f)\cdot2^2 \Rightarrow 1+f=\frac54 \Rightarrow f=\frac14=0{,}25=0{,}01_2\ \checkmark\]</span></p>
-<div class="callout callout-style-default callout-important callout-titled" title="Por qué falla el primer intento">
+<section id="ejemplo-3-lanzar-dos-dados" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="ejemplo-3-lanzar-dos-dados"><span class="header-section-number">1.3</span> Ejemplo 3 — Lanzar dos dados</h3>
+<p><span class="math display">\[
+\Omega = \big\{(i,j) : i,j \in \{1,\ldots,6\}\big\} =
+\begin{aligned}
+&amp;\{(1,1),(1,2),(1,3),(1,4),(1,5),(1,6),\\
+&amp;\ (2,1),(2,2),(2,3),(2,4),(2,5),(2,6),\\
+&amp;\ (3,1),(3,2),(3,3),(3,4),(3,5),(3,6),\\
+&amp;\ (4,1),(4,2),(4,3),(4,4),(4,5),(4,6),\\
+&amp;\ (5,1),(5,2),(5,3),(5,4),(5,5),(5,6),\\
+&amp;\ (6,1),(6,2),(6,3),(6,4),(6,5),(6,6)\}
+\end{aligned}
+\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Por qué falla el primer intento
+<span class="screen-reader-only">Nota</span>Ejercicio
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>La normalización exige <span class="math inline">\(1+f\in[1,2)\)</span>; por eso el exponente correcto para 5 es <span class="math inline">\(n=2\)</span>, no <span class="math inline">\(n=1\)</span>.</p>
+<p>Si lo que nos interesa es la <strong>suma</strong> de los dados, ¿cómo podemos simplificar el espacio muestral? Determine por extensión, en el espacio muestral inicial <span class="math inline">\(\Omega\)</span>, el evento “la suma da 6”:</p>
+<p><span class="math display">\[A = \{(a,b) \in \{1,\ldots,6\}^2 : a+b = 6\}\]</span></p>
 </div>
 </div>
-<p><span class="math display">\[\frac13=(1+f)\cdot2^{-1}\Rightarrow 1+f=\frac23\Rightarrow f=-\frac13\ \text{✗ (}f&lt;0\text{)}\]</span></p>
-<p><span class="math display">\[\frac13=(1+f)\cdot2^{-2}\Rightarrow 1+f=\frac43\Rightarrow f=\frac13\ \checkmark\]</span></p>
-<p>En decimal, <span class="math inline">\(f=0{,}\overline{3}=\dfrac{3}{10}+\dfrac{3}{10^2}+\cdots\)</span></p>
-<p><strong>En binario</strong>, usando la serie geométrica:</p>
-<p><span class="math display">\[\frac13=\frac{1/4}{1-1/4}=\frac14\sum_{k=0}^{\infty}\left(\frac14\right)^k=\sum_{k=1}^{\infty}\frac{1}{4^{k}}=\sum_{k=1}^{\infty}\frac{1}{2^{2k}}=0{,}010101\ldots_2\]</span></p>
 </section>
 </section>
-<section id="cuántos-elementos-de-𝔽-hay-por-binade" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="cuántos-elementos-de-𝔽-hay-por-binade"><span class="header-section-number">5</span> Cuántos elementos de 𝔽 hay por binade</h2>
-<p><span class="math display">\[f=\sum_{i=1}^{d}b_i\,2^{-i}=2^{-d}\sum_{i=1}^{d}b_i\,2^{\,d-i}=2^{-d}z\]</span></p>
-<p><span class="math display">\[1+f\in[1,2)\quad\text{para } z\in\{0,1,2,\ldots,2^d-1\}\]</span></p>
-<div class="callout callout-style-default callout-important callout-titled" title="Resultado clave">
+<section id="σ-álgebras" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="σ-álgebras"><span class="header-section-number">2</span> σ-álgebras</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio 4.1 — La traza de una σ-álgebra">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Resultado clave
+<span class="screen-reader-only">Nota</span>Ejercicio 4.1 — La traza de una σ-álgebra
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Entre <span class="math inline">\(2^n\)</span> y <span class="math inline">\(2^{n+1}\)</span> hay <span class="math inline">\(2^d\)</span> números que pertenecen a <span class="math inline">\(\mathbb{F}\)</span>.</p>
+<p>Si <span class="math inline">\(\mathfrak{B}\)</span> es una σ-álgebra sobre <span class="math inline">\(\Omega\)</span> y <span class="math inline">\(\Lambda \subset \Omega\)</span>, demuestre que la <strong>huella</strong> (o traza) de <span class="math inline">\(\mathfrak{B}\)</span> sobre <span class="math inline">\(\Lambda\)</span>,</p>
+<p><span class="math display">\[\mathfrak{B}\big|_\Lambda = \{A \cap \Lambda : A \in \mathfrak{B}\},\]</span></p>
+<p>es también una σ-álgebra, pero sobre <span class="math inline">\(\Lambda\)</span>.</p>
 </div>
 </div>
-<blockquote class="blockquote">
-<p>Referencia de las notas: <code>float32/float</code> → <span class="math inline">\(d=23\)</span>; <code>float64/double</code> → <span class="math inline">\(d=52\)</span> (IEEE 754).</p>
-</blockquote>
-<section id="caso-d0" class="level3" data-number="5.1">
-<h3 data-number="5.1" class="anchored" data-anchor-id="caso-d0"><span class="header-section-number">5.1</span> Caso <span class="math inline">\(d=0\)</span></h3>
-<p>Solo hay un valor de <span class="math inline">\(f\)</span> (<span class="math inline">\(f=0\)</span>), así que cada binade aporta un único punto:</p>
-<p><span class="math display">\[n=0:\ \pm(1+0)2^0=\pm1 \qquad n=1:\ \pm2 \qquad n=2:\ \pm4 \qquad n=3:\ \pm8\]</span></p>
-<p><strong>Con <span class="math inline">\(d=0\)</span>, los únicos números posibles son <span class="math inline">\(\pm2^n\)</span>.</strong></p>
-</section>
-<section id="caso-d1" class="level3" data-number="5.2">
-<h3 data-number="5.2" class="anchored" data-anchor-id="caso-d1"><span class="header-section-number">5.2</span> Caso <span class="math inline">\(d=1\)</span></h3>
-<p>Con <span class="math inline">\(b_1\in\{0,1\}\)</span>: <span class="math inline">\(1+f\in\{1,\ 3/2\}\)</span>. Tomando el valor <span class="math inline">\(3/2\)</span> como ejemplo representativo en cada exponente:</p>
-<p><span class="math display">\[n=0:\ \pm\left(1+\tfrac12\right)2^0=\pm\tfrac32 \qquad\qquad n=1:\ \pm\tfrac32\cdot2=\pm3\]</span></p>
-<p><span class="math display">\[n=-1:\ \pm\tfrac32\cdot\tfrac12=\pm\tfrac34 \qquad\qquad n=2:\ \pm\tfrac32\cdot4=\pm6 \qquad\qquad n=-2:\ \pm\tfrac32\cdot\tfrac14=\pm\tfrac38\]</span></p>
-</section>
-<section id="simulación-de-mathbbf-en-julia" class="level3" data-number="5.3">
-<h3 data-number="5.3" class="anchored" data-anchor-id="simulación-de-mathbbf-en-julia"><span class="header-section-number">5.3</span> Simulación de <span class="math inline">\(\mathbb{F}\)</span> en Julia</h3>
-<p><strong>Recta numérica</strong> (colores por exponente):</p>
-<p><a href="notebooks/flotantes.html">Ver simulación de <span class="math inline">\(\mathbb{F}\)</span></a></p>
-<p><a href="notebooks/flotantes-codigo.html">Ver código fuente de la simulación de <span class="math inline">\(\mathbb{F}\)</span></a></p>
-<p><a href="notebooks/flotantes_F.jl">Descargar el código fuente la simulación de <span class="math inline">\(\mathbb{F}\)</span></a></p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo motivador de lo que viene">
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio 4.2 — Preimagen de una σ-álgebra">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Ejemplo motivador de lo que viene
+<span class="screen-reader-only">Nota</span>Ejercicio 4.2 — Preimagen de una σ-álgebra
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><span class="math display">\[0{,}1+0{,}2\neq0{,}3\]</span></p>
+<p>Si <span class="math inline">\(f:\Omega \to \Omega'\)</span> y <span class="math inline">\(\mathfrak{B}'\)</span> es una σ-álgebra sobre <span class="math inline">\(\Omega'\)</span>, demuestre que</p>
+<p><span class="math display">\[f^{-1}(\mathfrak{B}') = \{f^{-1}(A) : A \in \mathfrak{B}'\}\]</span></p>
+<p>es una σ-álgebra sobre <span class="math inline">\(\Omega\)</span>.</p>
 </div>
 </div>
-</section>
-</section>
-<section id="espaciado-dentro-de-un-binade" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="espaciado-dentro-de-un-binade"><span class="header-section-number">6</span> Espaciado dentro de un binade</h2>
-<p>Retomando <span class="math inline">\(f=2^{-d}z\)</span> con <span class="math inline">\(z\in\{0,\ldots,2^d-1\}\)</span>, si <span class="math inline">\(x_k=(1+2^{-d}k)\,2^n\)</span>:</p>
-<p><span class="math display">\[x_{k+1}-x_k=\big(1+2^{-d}(k+1)\big)2^n-\big(1+2^{-d}k\big)2^n=2^n\,2^{-d}=2^{n-d}\]</span></p>
-<p><strong>— el mismo espacio; hay <span class="math inline">\(2^d\)</span> números.</strong></p>
-<p>El binade <strong>empieza</strong> en <span class="math inline">\(f=0\)</span> (es decir, en <span class="math inline">\(2^n\)</span>) y <strong>termina</strong> en <span class="math inline">\(f_{\max}=\sum_{i=1}^{d}2^{-i}\)</span>:</p>
-<p><span class="math display">\[(1+f)2^n=\big(1+(2^d-1)2^{-d}\big)2^n=\big(1+1-2^{-d}\big)2^n=2^{\,n+1}-2^{\,n-d}\]</span></p>
-</section>
-<section id="machine-epsilon" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="machine-epsilon"><span class="header-section-number">7</span> Machine epsilon</h2>
-<p>El número que le sigue a 1 es <span class="math inline">\(1+2^{-d}\)</span>, entonces el <strong>épsilon de máquina</strong> es</p>
-<p><span class="math display">\[\varepsilon_{\text{mach}}=2^{-d}\]</span></p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio 4.3 — Intersección de σ-álgebras">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Nota
+<span class="screen-reader-only">Nota</span>Ejercicio 4.3 — Intersección de σ-álgebras
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>En Julia, <code>eps()</code> para <code>Float64</code> da <span class="math inline">\(2^{-52}\)</span>.</p>
+<p>Demuestre que la intersección de dos σ-álgebras sobre <span class="math inline">\(\Omega\)</span> es una σ-álgebra sobre <span class="math inline">\(\Omega\)</span>.</p>
+<p>¿Qué pasa con la intersección <strong>arbitraria</strong> de σ-álgebras? ¿Y con la <strong>unión</strong>?</p>
 </div>
 </div>
-<p><strong>Definimos</strong> <span class="math inline">\(\text{fl}(x)=\operatorname*{argmin}_{y\in\mathbb{F}}|x-y|\)</span>.</p>
-<p>La distancia en cada binade <span class="math inline">\([2^n,2^{n+1})\)</span> es <span class="math inline">\(2^{n-d}=2^n\varepsilon_{\text{mach}}\)</span>.</p>
-<p>Cada número real <span class="math inline">\(x\)</span> está a una distancia a lo más</p>
-<p><span class="math display">\[2^{\,n-d-1}=\frac{2^{n}\varepsilon_{\text{mach}}}{2}\qquad\text{de }\mathbb{F}, \qquad\text{es decir,}\qquad |\text{fl}(x)-x|\le2^{\,n-d-1}\]</span></p>
-</section>
-<section id="de-error-absoluto-a-error-relativo" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="de-error-absoluto-a-error-relativo"><span class="header-section-number">8</span> De error absoluto a error relativo</h2>
-<p>Al dividir por <span class="math inline">\(|x|\ge2^n\)</span>:</p>
-<p><span class="math display">\[\frac{|\text{fl}(x)-x|}{|x|}\le\frac12\,\varepsilon_{\text{mach}}\]</span></p>
-<p><span class="math display">\[|\text{fl}(x)-x|\le\frac12\,\varepsilon_{\text{mach}}\,|x|\]</span></p>
-<p><span class="math display">\[\text{fl}(x)=x+\frac12\,\varepsilon_{\text{mach}}\,|x|=x\left(1+\frac12\,\varepsilon_{\text{mach}}\,\operatorname{sgn}(x)\right)=x(1+\epsilon)\quad\text{con }|\epsilon|\le\tfrac12\varepsilon_{\text{mach}}\]</span></p>
-<div class="callout callout-style-default callout-important callout-titled" title="Pregunta abierta de las notas">
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio 4.4 — Generadores de la σ-álgebra de Borel">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Pregunta abierta de las notas
+<span class="screen-reader-only">Nota</span>Ejercicio 4.4 — Generadores de la σ-álgebra de Borel
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>¿Qué quiere decir que el error absoluto puede ser grande y el relativo no?</p>
+<p>Demuestre rigurosamente que en <span class="math inline">\((\mathbb{R}, \mathfrak{B}(\mathbb{R}))\)</span> (la σ-álgebra de Borel), los conjuntos de la forma <span class="math inline">\((a,b]\)</span> pertenecen a <span class="math inline">\(\mathfrak{B}(\mathbb{R})\)</span>, y que de hecho generan la misma σ-álgebra que los intervalos abiertos.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Recordatorio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Recordatorio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Aprenda de memoria todas las definiciones: sepa <strong>negarlas</strong>, sepa <strong>ejemplificarlas</strong> y sepa <strong>ejemplificar la negación</strong>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio — frecuencia vs. probabilidad">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio — frecuencia vs.&nbsp;probabilidad
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Lance una moneda 20 veces y calcule la frecuencia relativa de caras. ¿Qué relación tiene esto con la definición formal de probabilidad?</p>
+<p>¿Qué debería pasar con la espera de un seis al lanzar repetidamente un dado? ¿Cómo se puede simular esto en R?</p>
+</div>
+</div>
+</section>
+<section id="continuidad-de-la-probabilidad" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="continuidad-de-la-probabilidad"><span class="header-section-number">3</span> Continuidad de la probabilidad</h2>
+<p>A continuación vamos a explicar cómo se demuestra que si <span class="math inline">\((A_n)_{n\in\mathbb N}\)</span> es una sucesión <strong>creciente</strong> de elementos de <span class="math inline">\(\mathfrak{F}\)</span>, con <span class="math inline">\((\Omega,\mathfrak{F},P)\)</span> un espacio de probabilidad, entonces</p>
+<p><span class="math display">\[P\Big(\lim_n A_n\Big) = \lim_n P(A_n)\]</span></p>
+<p>Cuando tenemos una sucesión creciente de conjuntos, escribimos <span class="math inline">\(\lim_n A_n = \bigcup_n A_n\)</span>.</p>
+<p>La estrategia consiste en escribir <span class="math inline">\(\bigcup_n A_n\)</span> como la unión de una familia <strong>disyunta</strong>:</p>
+<p><span class="math display">\[B_1 = A_1, \qquad B_n = A_n \setminus A_{n-1} \ \ (n\ge 2)\]</span></p>
+<p>de modo que <span class="math inline">\(\bigcup_n B_n = \bigcup_n A_n\)</span>, y los <span class="math inline">\(B_n\)</span> son disyuntos dos a dos (usamos que si <span class="math inline">\(A\subset B\)</span> entonces <span class="math inline">\(P(B\setminus A)=P(B)-P(A)\)</span>).</p>
+<p>Como <span class="math inline">\(A_n \subset A_{n+1}\)</span>, entonces</p>
+<p><span class="math display">\[P(A_{n+1}\setminus A_n) = P(A_{n+1}) - P(A_n)\]</span></p>
+<p>Resumiendo:</p>
+<p><span class="math display">\[
+P(A) = P\Big(\bigcup_i A_i\Big) = P\Big(\bigcup_i B_i\Big) = \sum_i P(B_i) = P(A_1) + \sum_{n\ge 1}\big(P(A_{n+1})-P(A_n)\big) = \lim_n P(A_n)
+\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Por qué los <span class="math inline">\(B_n\)</span> son disyuntos dos a dos? ¿Por qué la suma anterior es una <strong>serie telescópica</strong>?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="La paradoja de Méré">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>La paradoja de Méré
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Diseñe un experimento aleatorio que le permita resolver la paradoja de Méré: él creía que era igualmente probable obtener un seis en cuatro lanzamientos de un dado que obtener un doble seis en veinticuatro lanzamientos de dos dados. Revise en internet en qué estaba pensando (y en qué se equivocaba). Él creyó esto hasta que empezó a perder dinero.</p>
+<p>Recoja los datos de una simulación y compare con la solución formal (calculando las probabilidades exactas de cada evento).</p>
+</div>
+</div>
+</section>
+<section id="por-qué-la-probabilidad-puntual-falla-en-espacios-no-numerables" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="por-qué-la-probabilidad-puntual-falla-en-espacios-no-numerables"><span class="header-section-number">4</span> ¿Por qué la probabilidad puntual falla en espacios no numerables?</h2>
+<p>En un espacio de probabilidad <strong>discreto</strong> podemos determinar la probabilidad sumando masas puntuales:</p>
+<p><span class="math display">\[P(A) = \sum_{\omega \in A} P(\{\omega\})\]</span></p>
+<p>Pero veamos que <strong>no</strong> podemos definir la probabilidad así si el conjunto no es numerable (por ejemplo, <span class="math inline">\([0,1]\)</span> o <span class="math inline">\(\mathbb{R}\)</span>).</p>
+<p>Supongamos que sí se pudiera. Sea</p>
+<p><span class="math display">\[T_n = \Big\{\omega \in \Omega : P(\{\omega\}) &gt; \tfrac{1}{n}\Big\}\]</span></p>
+<p>Es claro que <span class="math inline">\(T = \bigcup_n T_n = \{\omega \in \Omega : P(\{\omega\})&gt;0\}\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Es claro por qué <span class="math inline">\(T=\bigcup_n T_n\)</span>? Ahora, cada <span class="math inline">\(T_n\)</span> contiene a lo sumo <span class="math inline">\(n\)</span> puntos — ¿por qué? ¿Qué implica esto sobre <span class="math inline">\(T\)</span>? ¿Cómo se interpreta el resultado?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Consecuencia">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Consecuencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Como cada <span class="math inline">\(T_n\)</span> es finito (<span class="math inline">\(|T_n|\le n\)</span>), <span class="math inline">\(T\)</span> es una unión numerable de conjuntos finitos, y por lo tanto <strong>numerable</strong>. Esto significa que a lo sumo una cantidad numerable de puntos de <span class="math inline">\(\Omega\)</span> pueden tener masa puntual positiva — en un espacio no numerable como <span class="math inline">\([0,1]\)</span>, “sumar masas” no puede reproducir, por ejemplo, la probabilidad uniforme.</p>
+</div>
+</div>
+</section>
+<section id="probabilidad-de-laplace" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="probabilidad-de-laplace"><span class="header-section-number">5</span> Probabilidad de Laplace</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En un curso con 17 niñas y 15 niños (32 estudiantes en total), se seleccionan al azar 5 estudiantes para representar al curso. Explique por qué la probabilidad de que las 5 seleccionadas sean <strong>todas niñas</strong> es</p>
+<p><span class="math display">\[P(A) = \frac{\binom{17}{5}}{\binom{32}{5}} \approx 3.07\times10^{-2}\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Cuál sería la probabilidad de que <strong>al menos una niña</strong> sea seleccionada?</p>
+<p>¿Cuál es la probabilidad de ganarse el Baloto? ¿el chance? ¿la lotería?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicios del libro">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicios del libro
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Haga los ejercicios 1.1–1.26 (Blanco Castañeda, <em>Probabilidad</em>).</p>
 </div>
 </div>
 

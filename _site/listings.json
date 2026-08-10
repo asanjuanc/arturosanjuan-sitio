@@ -1,8 +1,15 @@
 [
   {
+    "listing": "/cursos/probabilidad/index.html",
+    "items": [
+      "/cursos/probabilidad/introduccion/index.html"
+    ]
+  },
+  {
     "listing": "/cursos/index.html",
     "items": [
-      "/cursos/numerico/index.html"
+      "/cursos/numerico/index.html",
+      "/cursos/probabilidad/index.html"
     ]
   },
   {

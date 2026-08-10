@@ -1,0 +1,7 @@
+---
+title: "Probabilidad"
+listing:
+  contents: .
+  sort: "order"
+  categories: true
+---
