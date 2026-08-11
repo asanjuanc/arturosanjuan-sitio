@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Arturo Sanjuán">
+<meta name="description" content="De Zenón al caos: por qué nació el cálculo diferencial para describir el cambio, y ejercicios resueltos del Simmons sobre ecuaciones separables e implícitas.">
 
-<title>Cursos – Página Personal de Arturo Sanjuán</title>
+<title>Introducción – Página Personal de Arturo Sanjuán</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -30,25 +31,23 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<script src="../site_libs/quarto-listing/list.min.js"></script>
-<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-e00bbffe2814debeaac65826d0d3fd62.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-a627f686d9537b343e7f3fb245a59876.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -76,35 +75,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Buscar"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-author','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author","listing-image","listing-description"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
+<style>html{ scroll-behavior: smooth; }</style>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
@@ -136,17 +107,17 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../../../styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="floating nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">Página Personal de Arturo Sanjuán</span>
     </a>
   </div>
@@ -157,11 +128,11 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
+    <a class="nav-link" href="../../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../cursos/index.html" aria-current="page"> 
+    <a class="nav-link" href="../../../cursos/index.html"> 
 <span class="menu-text">Cursos</span></a>
   </li>  
 </ul>
@@ -174,18 +145,34 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#algo-de-historia" id="toc-algo-de-historia" class="nav-link active" data-scroll-target="#algo-de-historia"><span class="header-section-number">1</span> Algo de historia</a></li>
+  <li><a href="#ejercicios-resueltos-del-simmons" id="toc-ejercicios-resueltos-del-simmons" class="nav-link" data-scroll-target="#ejercicios-resueltos-del-simmons"><span class="header-section-number">2</span> Ejercicios resueltos del Simmons</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Cursos</h1>
+<h1 class="title">Introducción</h1>
+<p class="subtitle lead">Apuntes de clase: breve historia de las ecuaciones diferenciales y ejercicios resueltos</p>
 </div>
 
+<div>
+  <div class="description">
+    De Zenón al caos: por qué nació el cálculo diferencial para describir el cambio, y ejercicios resueltos del Simmons sobre ecuaciones separables e implícitas.
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
@@ -197,6 +184,12 @@ window.Quarto = {
           </div>
   </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">10 de agosto de 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -206,78 +199,196 @@ window.Quarto = {
 </header>
 
 
+<section id="algo-de-historia" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="algo-de-historia"><span class="header-section-number">1</span> Algo de historia</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Época</th>
+<th>Autor(es)</th>
+<th>Aporte</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>~450 a.e.c.</td>
+<td>Zenón</td>
+<td>El movimiento es una ilusión</td>
+</tr>
+<tr class="even">
+<td>~350 a.e.c.</td>
+<td>Aristóteles</td>
+<td>Teleología del movimiento: todo se mueve <em>por otro</em> — el primer motor inmóvil</td>
+</tr>
+<tr class="odd">
+<td>S. XVII</td>
+<td>Newton (<em>Principia</em>, 1687)</td>
+<td>Quiere describir el movimiento, el cambio. Para eso inventa el cálculo y las ecuaciones diferenciales: <strong>cómo cambian las cosas</strong>, en lugar de dónde están o por qué cambian</td>
+</tr>
+<tr class="even">
+<td>S. XVIII</td>
+<td>Bernoulli (Jacob, Johann, Daniel)</td>
+<td>La braquistócrona, la catenaria y la ecuación de onda</td>
+</tr>
+<tr class="odd">
+<td>S. XVIII</td>
+<td>Euler y Lagrange</td>
+<td>Reformulan toda la mecánica</td>
+</tr>
+<tr class="even">
+<td>S. XIX</td>
+<td>Laplace</td>
+<td>El determinismo</td>
+</tr>
+<tr class="odd">
+<td>S. XIX</td>
+<td>Fourier</td>
+<td>La ecuación del calor (teoría de funciones)</td>
+</tr>
+<tr class="even">
+<td>S. XIX</td>
+<td>Picard–Lindelöf</td>
+<td>La imposibilidad de encontrar, en general, una solución exacta</td>
+</tr>
+<tr class="odd">
+<td>S. XIX</td>
+<td>Poincaré</td>
+<td>El estudio cualitativo de las ecuaciones</td>
+</tr>
+<tr class="even">
+<td>S. XX</td>
+<td>Lorenz y Smale</td>
+<td>Aparecen los sistemas dinámicos y la teoría del caos</td>
+</tr>
+<tr class="odd">
+<td>S. XX</td>
+<td>—</td>
+<td>Aplicaciones a biología (poblaciones, crecimiento celular), economía, neurociencia (Hodgkin–Huxley–Nagumo), epidemiología (modelo SIR), química (quimiotaxis), física cuántica, formación de estrellas y agujeros negros</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled" title="La idea central">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>La idea central
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El giro de Newton es el que define el curso: en lugar de preguntar <strong>dónde</strong> está algo o <strong>por qué</strong> cambia, una ecuación diferencial pregunta <strong>cómo</strong> cambia — y de ahí se reconstruye todo lo demás.</p>
+</div>
+</div>
+</section>
+<section id="ejercicios-resueltos-del-simmons" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="ejercicios-resueltos-del-simmons"><span class="header-section-number">2</span> Ejercicios resueltos del Simmons</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejercicio 1-j — Verificar una solución implícita">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejercicio 1-j — Verificar una solución implícita
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Verificar que <span class="math inline">\(x^2 = 2y^2\log y\)</span> es solución de</p>
+<p><span class="math display">\[y' = \frac{xy}{x^2+y^2}\]</span></p>
+</div>
+</div>
+<p>Derivamos implícitamente, pensando a <span class="math inline">\(y\)</span> como función de <span class="math inline">\(x\)</span>:</p>
+<p><span class="math display">\[2x = 4y\,y'\log y + 2y^2\cdot\frac{y'}{y} = 4y\,y'\log y + 2y\,y' = 2y\,y'\big(2\log y + 1\big)\]</span></p>
+<p><span class="math display">\[\Rightarrow\quad x = y\,y'\big(2\log y + 1\big)\]</span></p>
+<p>De la ecuación original, <span class="math inline">\(\log y = \dfrac{x^2}{2y^2}\)</span>. Reemplazando:</p>
+<p><span class="math display">\[x = y\,y'\left(\frac{x^2}{y^2}+1\right) = y\,y'\cdot\frac{x^2+y^2}{y^2} \quad\Longrightarrow\quad xy = y'(x^2+y^2)\]</span></p>
+<p><span class="math display">\[\Longrightarrow\quad y' = \frac{xy}{x^2+y^2}\ \checkmark\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejercicio 2-q — Solución general de una ecuación separable">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejercicio 2-q — Solución general de una ecuación separable
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Encuentre la solución general de</p>
+<p><span class="math display">\[(1+x^2)\,dy + (1+y^2)\,dx = 0\]</span></p>
+</div>
+</div>
+<p>Se puede escribir como <span class="math inline">\((1+x^2)y' + (1+y^2) = 0\)</span>, de donde</p>
+<p><span class="math display">\[y' = -\frac{1+y^2}{1+x^2} \quad\Longrightarrow\quad \frac{dy}{1+y^2} = -\frac{dx}{1+x^2}\]</span></p>
+<p>Integrando ambos lados:</p>
+<p><span class="math display">\[\arctan y = -\arctan x + C \quad\Longrightarrow\quad y = \tan\big(C - \arctan x\big)\]</span></p>
+<p>Usando la identidad <span class="math inline">\(\tan(A-B) = \dfrac{\tan A - \tan B}{1+\tan A\tan B}\)</span> con <span class="math inline">\(k=\tan C\)</span>:</p>
+<p><span class="math display">\[y = \frac{k - x}{1 + kx}\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejercicio 3-f — Problema de valor inicial con fracciones parciales">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejercicio 3-f — Problema de valor inicial con fracciones parciales
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Encuentre la solución particular de</p>
+<p><span class="math display">\[(x+1)(x^2+1)\,y' = 2x^2+2, \qquad y(0)=1\]</span></p>
+</div>
+</div>
+<p><span class="math display">\[y' = \frac{2x^2+2}{(x+1)(x^2+1)}\]</span></p>
+<p>Hacemos fracciones parciales: <span class="math inline">\(\dfrac{2x^2+2}{(x+1)(x^2+1)} = \dfrac{A}{x+1} + \dfrac{Bx+C}{x^2+1}\)</span></p>
+<p><span class="math display">\[2x^2+2 = A(x^2+1) + (Bx+C)(x+1) = (A+B)x^2 + (B+C)x + (A+C)\]</span></p>
+<p>Igualando coeficientes:</p>
+<p><span class="math display">\[(1)\ A+B=2 \qquad (2)\ B+C=1 \qquad (3)\ A+C=0\]</span></p>
+<p>De (3), <span class="math inline">\(A=-C\)</span>. Sustituyendo en (1): <span class="math inline">\(B = 2+C\)</span>. Sustituyendo en (2): <span class="math inline">\((2+C)+C=1 \Rightarrow C=-\tfrac12\)</span>, luego <span class="math inline">\(B=\tfrac32\)</span> y <span class="math inline">\(A=\tfrac12\)</span>.</p>
+<p><span class="math display">\[y' = \frac{1/2}{x+1} + \frac{\tfrac32 x - \tfrac12}{x^2+1} = \frac{1/2}{x+1} + \frac{3}{2}\cdot\frac{x}{x^2+1} - \frac{1/2}{x^2+1}\]</span></p>
+<p>Integrando:</p>
+<p><span class="math display">\[y = \frac12\log|x+1| + \frac34\log(x^2+1) - \frac12\arctan x + K\]</span></p>
+<p>Con la condición <span class="math inline">\(y(0)=1\)</span>: <span class="math inline">\(1 = 0+0-0+K \Rightarrow K=1\)</span>. Por tanto,</p>
+<p><span class="math display">\[y = \frac12\log|x+1| + \frac34\log(x^2+1) - \frac12\arctan x + 1\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejercicio 4-b — Curva integral por un punto dado">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejercicio 4-b — Curva integral por un punto dado
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Encuentre la curva integral que pasa por el punto <span class="math inline">\((1,1)\)</span>, sabiendo que</p>
+<p><span class="math display">\[dy = \left(2x+\frac1x\right)dx\]</span></p>
+</div>
+</div>
+<p>Integrando directamente:</p>
+<p><span class="math display">\[y = x^2 + \log x + C\]</span></p>
+<p>Con la condición <span class="math inline">\(y(1)=1\)</span>: <span class="math inline">\(1 = 1^2+\log 1 + C \Rightarrow C=0\)</span>. La curva es</p>
+<p><span class="math display">\[y = x^2 + \log x\]</span></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Hacer los demás ejercicios de tarea, en especial el número 8.</p>
+</div>
+</div>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-listing-file-modified-sort="1786400299806" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
-<a href="../cursos/numerico/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="../cursos/numerico/lorenz.png" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Análisis Numérico
-</h5>
-<div class="card-text listing-description delink">
-Sistemas de numeración, bases, y la construcción del conjunto de números de punto flotante 𝔽.
-</div>
-<div class="card-attribution card-text-small start">
-<div class="listing-author">
-Arturo Sanjuán
-</div>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="1" data-listing-file-modified-sort="1786419133693" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
-<a href="../cursos/odes/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="../cursos/odes/vector.png" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Ecuaciones Diferenciales
-</h5>
-<div class="card-text listing-description delink">
-De Zenón al caos: por qué nació el cálculo diferencial para describir el cambio, y ejercicios resueltos del Simmons sobre ecuaciones separables e implícitas.
-</div>
-<div class="card-attribution card-text-small start">
-<div class="listing-author">
-Arturo Sanjuán
-</div>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="2" data-listing-file-modified-sort="1786400510590" data-listing-reading-time-sort="1" data-listing-word-count-sort="1">
-<a href="../cursos/probabilidad/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="../cursos/probabilidad/normal.png" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Probabilidad
-</h5>
-<div class="card-text listing-description delink">
-Experimentos aleatorios, espacios muestrales, σ-álgebras, continuidad de la probabilidad y probabilidad de Laplace.
-</div>
-<div class="card-attribution card-text-small start">
-<div class="listing-author">
-Arturo Sanjuán
-</div>
-</div>
-</div>
-</div></a>
-</div>
-</div>
-<div class="listing-no-matching d-none">No hay resultados</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -683,4 +794,5 @@ Arturo Sanjuán
 
 
 
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

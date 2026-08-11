@@ -11,7 +11,28 @@
     "href": "cursos/index.html",
     "title": "Cursos",
     "section": "",
-    "text": "Análisis Numérico\n\n\n\n\n\n\nArturo Sanjuán\n\n\n\n\n\n\n\n\n\n\n\n\n\nProbabilidad\n\n\n\n\n\n\nArturo Sanjuán\n\n\n\n\n\n\nNo hay resultados"
+    "text": "Análisis Numérico\n\n\n\n\n\n\nArturo Sanjuán\n\n\n\n\n\n\n\n\n\n\n\n\n\nEcuaciones Diferenciales\n\n\n\n\n\n\nArturo Sanjuán\n\n\n\n\n\n\n\n\n\n\n\n\n\nProbabilidad\n\n\n\n\n\n\nArturo Sanjuán\n\n\n\n\n\n\nNo hay resultados"
+  },
+  {
+    "objectID": "cursos/odes/introduccion/index.html",
+    "href": "cursos/odes/introduccion/index.html",
+    "title": "Introducción",
+    "section": "",
+    "text": "Época\nAutor(es)\nAporte\n\n\n\n\n~450 a.e.c.\nZenón\nEl movimiento es una ilusión\n\n\n~350 a.e.c.\nAristóteles\nTeleología del movimiento: todo se mueve por otro — el primer motor inmóvil\n\n\nS. XVII\nNewton (Principia, 1687)\nQuiere describir el movimiento, el cambio. Para eso inventa el cálculo y las ecuaciones diferenciales: cómo cambian las cosas, en lugar de dónde están o por qué cambian\n\n\nS. XVIII\nBernoulli (Jacob, Johann, Daniel)\nLa braquistócrona, la catenaria y la ecuación de onda\n\n\nS. XVIII\nEuler y Lagrange\nReformulan toda la mecánica\n\n\nS. XIX\nLaplace\nEl determinismo\n\n\nS. XIX\nFourier\nLa ecuación del calor (teoría de funciones)\n\n\nS. XIX\nPicard–Lindelöf\nLa imposibilidad de encontrar, en general, una solución exacta\n\n\nS. XIX\nPoincaré\nEl estudio cualitativo de las ecuaciones\n\n\nS. XX\nLorenz y Smale\nAparecen los sistemas dinámicos y la teoría del caos\n\n\nS. XX\n—\nAplicaciones a biología (poblaciones, crecimiento celular), economía, neurociencia (Hodgkin–Huxley–Nagumo), epidemiología (modelo SIR), química (quimiotaxis), física cuántica, formación de estrellas y agujeros negros\n\n\n\n\n\n\n\n\n\nImportanteLa idea central\n\n\n\nEl giro de Newton es el que define el curso: en lugar de preguntar dónde está algo o por qué cambia, una ecuación diferencial pregunta cómo cambia — y de ahí se reconstruye todo lo demás."
+  },
+  {
+    "objectID": "cursos/odes/introduccion/index.html#algo-de-historia",
+    "href": "cursos/odes/introduccion/index.html#algo-de-historia",
+    "title": "Introducción",
+    "section": "",
+    "text": "Época\nAutor(es)\nAporte\n\n\n\n\n~450 a.e.c.\nZenón\nEl movimiento es una ilusión\n\n\n~350 a.e.c.\nAristóteles\nTeleología del movimiento: todo se mueve por otro — el primer motor inmóvil\n\n\nS. XVII\nNewton (Principia, 1687)\nQuiere describir el movimiento, el cambio. Para eso inventa el cálculo y las ecuaciones diferenciales: cómo cambian las cosas, en lugar de dónde están o por qué cambian\n\n\nS. XVIII\nBernoulli (Jacob, Johann, Daniel)\nLa braquistócrona, la catenaria y la ecuación de onda\n\n\nS. XVIII\nEuler y Lagrange\nReformulan toda la mecánica\n\n\nS. XIX\nLaplace\nEl determinismo\n\n\nS. XIX\nFourier\nLa ecuación del calor (teoría de funciones)\n\n\nS. XIX\nPicard–Lindelöf\nLa imposibilidad de encontrar, en general, una solución exacta\n\n\nS. XIX\nPoincaré\nEl estudio cualitativo de las ecuaciones\n\n\nS. XX\nLorenz y Smale\nAparecen los sistemas dinámicos y la teoría del caos\n\n\nS. XX\n—\nAplicaciones a biología (poblaciones, crecimiento celular), economía, neurociencia (Hodgkin–Huxley–Nagumo), epidemiología (modelo SIR), química (quimiotaxis), física cuántica, formación de estrellas y agujeros negros\n\n\n\n\n\n\n\n\n\nImportanteLa idea central\n\n\n\nEl giro de Newton es el que define el curso: en lugar de preguntar dónde está algo o por qué cambia, una ecuación diferencial pregunta cómo cambia — y de ahí se reconstruye todo lo demás."
+  },
+  {
+    "objectID": "cursos/odes/introduccion/index.html#ejercicios-resueltos-del-simmons",
+    "href": "cursos/odes/introduccion/index.html#ejercicios-resueltos-del-simmons",
+    "title": "Introducción",
+    "section": "2 Ejercicios resueltos del Simmons",
+    "text": "2 Ejercicios resueltos del Simmons\n\n\n\n\n\n\nTipEjercicio 1-j — Verificar una solución implícita\n\n\n\nVerificar que \\(x^2 = 2y^2\\log y\\) es solución de\n\\[y' = \\frac{xy}{x^2+y^2}\\]\n\n\nDerivamos implícitamente, pensando a \\(y\\) como función de \\(x\\):\n\\[2x = 4y\\,y'\\log y + 2y^2\\cdot\\frac{y'}{y} = 4y\\,y'\\log y + 2y\\,y' = 2y\\,y'\\big(2\\log y + 1\\big)\\]\n\\[\\Rightarrow\\quad x = y\\,y'\\big(2\\log y + 1\\big)\\]\nDe la ecuación original, \\(\\log y = \\dfrac{x^2}{2y^2}\\). Reemplazando:\n\\[x = y\\,y'\\left(\\frac{x^2}{y^2}+1\\right) = y\\,y'\\cdot\\frac{x^2+y^2}{y^2} \\quad\\Longrightarrow\\quad xy = y'(x^2+y^2)\\]\n\\[\\Longrightarrow\\quad y' = \\frac{xy}{x^2+y^2}\\ \\checkmark\\]\n\n\n\n\n\n\nTipEjercicio 2-q — Solución general de una ecuación separable\n\n\n\nEncuentre la solución general de\n\\[(1+x^2)\\,dy + (1+y^2)\\,dx = 0\\]\n\n\nSe puede escribir como \\((1+x^2)y' + (1+y^2) = 0\\), de donde\n\\[y' = -\\frac{1+y^2}{1+x^2} \\quad\\Longrightarrow\\quad \\frac{dy}{1+y^2} = -\\frac{dx}{1+x^2}\\]\nIntegrando ambos lados:\n\\[\\arctan y = -\\arctan x + C \\quad\\Longrightarrow\\quad y = \\tan\\big(C - \\arctan x\\big)\\]\nUsando la identidad \\(\\tan(A-B) = \\dfrac{\\tan A - \\tan B}{1+\\tan A\\tan B}\\) con \\(k=\\tan C\\):\n\\[y = \\frac{k - x}{1 + kx}\\]\n\n\n\n\n\n\nTipEjercicio 3-f — Problema de valor inicial con fracciones parciales\n\n\n\nEncuentre la solución particular de\n\\[(x+1)(x^2+1)\\,y' = 2x^2+2, \\qquad y(0)=1\\]\n\n\n\\[y' = \\frac{2x^2+2}{(x+1)(x^2+1)}\\]\nHacemos fracciones parciales: \\(\\dfrac{2x^2+2}{(x+1)(x^2+1)} = \\dfrac{A}{x+1} + \\dfrac{Bx+C}{x^2+1}\\)\n\\[2x^2+2 = A(x^2+1) + (Bx+C)(x+1) = (A+B)x^2 + (B+C)x + (A+C)\\]\nIgualando coeficientes:\n\\[(1)\\ A+B=2 \\qquad (2)\\ B+C=1 \\qquad (3)\\ A+C=0\\]\nDe (3), \\(A=-C\\). Sustituyendo en (1): \\(B = 2+C\\). Sustituyendo en (2): \\((2+C)+C=1 \\Rightarrow C=-\\tfrac12\\), luego \\(B=\\tfrac32\\) y \\(A=\\tfrac12\\).\n\\[y' = \\frac{1/2}{x+1} + \\frac{\\tfrac32 x - \\tfrac12}{x^2+1} = \\frac{1/2}{x+1} + \\frac{3}{2}\\cdot\\frac{x}{x^2+1} - \\frac{1/2}{x^2+1}\\]\nIntegrando:\n\\[y = \\frac12\\log|x+1| + \\frac34\\log(x^2+1) - \\frac12\\arctan x + K\\]\nCon la condición \\(y(0)=1\\): \\(1 = 0+0-0+K \\Rightarrow K=1\\). Por tanto,\n\\[y = \\frac12\\log|x+1| + \\frac34\\log(x^2+1) - \\frac12\\arctan x + 1\\]\n\n\n\n\n\n\nTipEjercicio 4-b — Curva integral por un punto dado\n\n\n\nEncuentre la curva integral que pasa por el punto \\((1,1)\\), sabiendo que\n\\[dy = \\left(2x+\\frac1x\\right)dx\\]\n\n\nIntegrando directamente:\n\\[y = x^2 + \\log x + C\\]\nCon la condición \\(y(1)=1\\): \\(1 = 1^2+\\log 1 + C \\Rightarrow C=0\\). La curva es\n\\[y = x^2 + \\log x\\]\n\n\n\n\n\n\nImportanteTarea\n\n\n\nHacer los demás ejercicios de tarea, en especial el número 8."
   },
   {
     "objectID": "cursos/numerico/introduccion/index.html",
@@ -96,6 +117,13 @@
     "title": "Análisis Numérico",
     "section": "",
     "text": "Introducción\n\n\nApuntes de clase: sistemas de numeración y punto flotante\n\n\nSistemas de numeración, bases, y la construcción del conjunto de números de punto flotante 𝔽.\n\n\n\n\n\n10 ago 2026\n\n\nArturo Sanjuán\n\n\n\n\n\nNo hay resultados"
+  },
+  {
+    "objectID": "cursos/odes/index.html",
+    "href": "cursos/odes/index.html",
+    "title": "Ecuaciones Diferenciales",
+    "section": "",
+    "text": "Introducción\n\n\nApuntes de clase: breve historia de las ecuaciones diferenciales y ejercicios resueltos\n\n\nDe Zenón al caos: por qué nació el cálculo diferencial para describir el cambio, y ejercicios resueltos del Simmons sobre ecuaciones separables e implícitas.\n\n\n\n\n\n10 ago 2026\n\n\nArturo Sanjuán\n\n\n\n\n\nNo hay resultados"
   },
   {
     "objectID": "cursos/probabilidad/introduccion/index.html",

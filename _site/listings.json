@@ -9,6 +9,7 @@
     "listing": "/cursos/index.html",
     "items": [
       "/cursos/numerico/index.html",
+      "/cursos/odes/index.html",
       "/cursos/probabilidad/index.html"
     ]
   },
@@ -16,6 +17,12 @@
     "listing": "/cursos/numerico/index.html",
     "items": [
       "/cursos/numerico/introduccion/index.html"
+    ]
+  },
+  {
+    "listing": "/cursos/odes/index.html",
+    "items": [
+      "/cursos/odes/introduccion/index.html"
     ]
   }
 ]

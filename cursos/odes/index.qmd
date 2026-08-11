@@ -1,0 +1,9 @@
+---
+title: "Ecuaciones Diferenciales"
+author: "Arturo Sanjuán"
+image: "vector.png"
+listing:
+  contents: .
+  sort: "order"
+  categories: false
+---
