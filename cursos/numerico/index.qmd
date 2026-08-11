@@ -5,5 +5,5 @@ image: "lorenz.png"
 listing:
   contents: .
   sort: "order"
-  categories: true
+  categories: false
 ---

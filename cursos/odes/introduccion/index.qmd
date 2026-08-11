@@ -56,6 +56,16 @@ $$x = y\,y'\left(\frac{x^2}{y^2}+1\right) = y\,y'\cdot\frac{x^2+y^2}{y^2} \quad\
 
 $$\Longrightarrow\quad y' = \frac{xy}{x^2+y^2}\ \checkmark$$
 
+::: {.callout-note title="Chequeo con Maxima"}
+```maxima
+kill(all);
+depends(y, x);
+eq: x^2 = 2*y^2*log(y);
+deq: diff(eq, x);
+solve(deq, diff(y,x));
+```
+:::
+
 ::: {.callout-tip title="Ejercicio 2-q — Solución general de una ecuación separable"}
 Encuentre la solución general de
 
@@ -74,33 +84,51 @@ Usando la identidad $\tan(A-B) = \dfrac{\tan A - \tan B}{1+\tan A\tan B}$ con $k
 
 $$y = \frac{k - x}{1 + kx}$$
 
+::: {.callout-note title="Chequeo con Maxima"}
+```maxima
+kill(all);
+ode: 'diff(y,x) = -(1+y^2)/(1+x^2);
+sol: ode2(ode, y, x);
+```
+:::
+
 ::: {.callout-tip title="Ejercicio 3-f — Problema de valor inicial con fracciones parciales"}
 Encuentre la solución particular de
 
-$$(x+1)(x^2+1)\,y' = 2x^2+2, \qquad y(0)=1$$
+$$(x+1)(x^2+1)\,y' = 2x^2+1, \qquad y(0)=1$$
 :::
 
-$$y' = \frac{2x^2+2}{(x+1)(x^2+1)}$$
+$$y' = \frac{2x^2+1}{(x+1)(x^2+1)}$$
 
-Hacemos fracciones parciales: $\dfrac{2x^2+2}{(x+1)(x^2+1)} = \dfrac{A}{x+1} + \dfrac{Bx+C}{x^2+1}$
+Hacemos fracciones parciales: $\dfrac{2x^2+1}{(x+1)(x^2+1)} = \dfrac{A}{x+1} + \dfrac{Bx+C}{x^2+1}$
 
-$$2x^2+2 = A(x^2+1) + (Bx+C)(x+1) = (A+B)x^2 + (B+C)x + (A+C)$$
+$$2x^2+1 = A(x^2+1) + (Bx+C)(x+1) = (A+B)x^2 + (B+C)x + (A+C)$$
 
 Igualando coeficientes:
 
-$$(1)\ A+B=2 \qquad (2)\ B+C=1 \qquad (3)\ A+C=0$$
+$$(1)\ A+B=2 \qquad (2)\ B+C=0 \qquad (3)\ A+C=1$$
 
-De (3), $A=-C$. Sustituyendo en (1): $B = 2+C$. Sustituyendo en (2): $(2+C)+C=1 \Rightarrow C=-\tfrac12$, luego $B=\tfrac32$ y $A=\tfrac12$.
+De (2), $C=-B$. Sustituyendo en (3): $A-B=1$. Sumando con (1): $2A=3 \Rightarrow A=\tfrac32$, luego $B=\tfrac12$ y $C=-\tfrac12$.
 
-$$y' = \frac{1/2}{x+1} + \frac{\tfrac32 x - \tfrac12}{x^2+1} = \frac{1/2}{x+1} + \frac{3}{2}\cdot\frac{x}{x^2+1} - \frac{1/2}{x^2+1}$$
+$$y' = \frac{3/2}{x+1} + \frac{1}{2}\cdot\frac{x}{x^2+1} - \frac{1/2}{x^2+1}$$
+
+::: {.callout-note title="Chequeo con Maxima"}
+```maxima
+kill(all);
+ode: (x+1)*(x^2+1)*'diff(y,x) = 2*x^2+1;
+sol: ode2(ode, y, x);
+ic1(sol, x=0, y=1);
+```
+Como la ecuación es de **primer orden**, la condición inicial se fija con `ic1`, no con `ic2` (esa es para ecuaciones de segundo orden, que necesitan $y$ y $y'$ en el punto).
+:::
 
 Integrando:
 
-$$y = \frac12\log|x+1| + \frac34\log(x^2+1) - \frac12\arctan x + K$$
+$$y = \frac32\log|x+1| + \frac14\log(x^2+1) - \frac12\arctan x + K$$
 
 Con la condición $y(0)=1$: $1 = 0+0-0+K \Rightarrow K=1$. Por tanto,
 
-$$y = \frac12\log|x+1| + \frac34\log(x^2+1) - \frac12\arctan x + 1$$
+$$y = \frac32\log(x+1) + \frac14\log(x^2+1) - \frac12\arctan x + 1$$
 
 ::: {.callout-tip title="Ejercicio 4-b — Curva integral por un punto dado"}
 Encuentre la curva integral que pasa por el punto $(1,1)$, sabiendo que
@@ -115,6 +143,29 @@ $$y = x^2 + \log x + C$$
 Con la condición $y(1)=1$: $1 = 1^2+\log 1 + C \Rightarrow C=0$. La curva es
 
 $$y = x^2 + \log x$$
+
+::: {.callout-note title="Chequeo con Maxima"}
+```maxima
+kill(all);
+ode: 'diff(y,x) = 2*x + 1/x;
+sol: ode2(ode, y, x);
+ic1(sol, x=1, y=1);
+```
+:::
+
+::: {.callout-note title="Gráfica con Maxima"}
+```maxima
+kill(all);
+y(x) := x^2 + log(x);
+
+plot2d([y(x), [discrete, [[1,1]]]], [x, 0.05, 3],
+       [style, [lines,2], [points,3,7]],
+       [legend, "curva", "(1,1)"],
+       [xlabel, "x"], [ylabel, "y"]);
+```
+:::
+
+![Solucion que pasa por (1,1)](sol.png)
 
 ::: {.callout-important title="Tarea"}
 Hacer los demás ejercicios de tarea, en especial el número 8.

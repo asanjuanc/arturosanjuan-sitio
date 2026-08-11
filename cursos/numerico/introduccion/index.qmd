@@ -166,6 +166,8 @@ $$n=-1:\ \pm\tfrac32\cdot\tfrac12=\pm\tfrac34 \qquad\qquad n=2:\ \pm\tfrac32\cdo
 
 [Descargar el código  fuente  la simulación de $\mathbb{F}$](notebooks/flotantes_F.jl)
 
+![Representación de $\mathbb{F}$ de Moise rushanika](floatingpointline.webp)
+
 ::: {.callout-tip title="Ejemplo motivador de lo que viene"}
 $$0{,}1+0{,}2\neq0{,}3$$
 :::

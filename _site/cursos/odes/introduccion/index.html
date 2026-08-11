@@ -28,6 +28,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -308,6 +343,23 @@ window.Quarto = {
 <p>De la ecuación original, <span class="math inline">\(\log y = \dfrac{x^2}{2y^2}\)</span>. Reemplazando:</p>
 <p><span class="math display">\[x = y\,y'\left(\frac{x^2}{y^2}+1\right) = y\,y'\cdot\frac{x^2+y^2}{y^2} \quad\Longrightarrow\quad xy = y'(x^2+y^2)\]</span></p>
 <p><span class="math display">\[\Longrightarrow\quad y' = \frac{xy}{x^2+y^2}\ \checkmark\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Chequeo con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Chequeo con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">depends</span>(<span class="cn">y</span>, <span class="cn">x</span>);</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cn">eq</span>: <span class="cn">x</span>^<span class="dv">2</span> = <span class="dv">2</span>*<span class="cn">y</span>^<span class="dv">2</span>*<span class="fu">log</span>(<span class="cn">y</span>);</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cn">deq</span>: <span class="fu">diff</span>(<span class="cn">eq</span>, <span class="cn">x</span>);</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">solve</span>(<span class="cn">deq</span>, <span class="fu">diff</span>(<span class="cn">y</span>,<span class="cn">x</span>));</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Ejercicio 2-q — Solución general de una ecuación separable">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -328,6 +380,21 @@ window.Quarto = {
 <p><span class="math display">\[\arctan y = -\arctan x + C \quad\Longrightarrow\quad y = \tan\big(C - \arctan x\big)\]</span></p>
 <p>Usando la identidad <span class="math inline">\(\tan(A-B) = \dfrac{\tan A - \tan B}{1+\tan A\tan B}\)</span> con <span class="math inline">\(k=\tan C\)</span>:</p>
 <p><span class="math display">\[y = \frac{k - x}{1 + kx}\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Chequeo con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Chequeo con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cn">ode</span>: <span class="do">'</span><span class="cn">diff</span>(<span class="cn">y</span>,<span class="cn">x</span>) = -(<span class="dv">1</span>+<span class="cn">y</span>^<span class="dv">2</span>)/(<span class="dv">1</span>+<span class="cn">x</span>^<span class="dv">2</span>);</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cn">sol</span>: <span class="fu">ode2</span>(<span class="cn">ode</span>, <span class="cn">y</span>, <span class="cn">x</span>);</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
 <div class="callout callout-style-default callout-tip callout-titled" title="Ejercicio 3-f — Problema de valor inicial con fracciones parciales">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -339,20 +406,37 @@ window.Quarto = {
 </div>
 <div class="callout-body-container callout-body">
 <p>Encuentre la solución particular de</p>
-<p><span class="math display">\[(x+1)(x^2+1)\,y' = 2x^2+2, \qquad y(0)=1\]</span></p>
+<p><span class="math display">\[(x+1)(x^2+1)\,y' = 2x^2+1, \qquad y(0)=1\]</span></p>
 </div>
 </div>
-<p><span class="math display">\[y' = \frac{2x^2+2}{(x+1)(x^2+1)}\]</span></p>
-<p>Hacemos fracciones parciales: <span class="math inline">\(\dfrac{2x^2+2}{(x+1)(x^2+1)} = \dfrac{A}{x+1} + \dfrac{Bx+C}{x^2+1}\)</span></p>
-<p><span class="math display">\[2x^2+2 = A(x^2+1) + (Bx+C)(x+1) = (A+B)x^2 + (B+C)x + (A+C)\]</span></p>
+<p><span class="math display">\[y' = \frac{2x^2+1}{(x+1)(x^2+1)}\]</span></p>
+<p>Hacemos fracciones parciales: <span class="math inline">\(\dfrac{2x^2+1}{(x+1)(x^2+1)} = \dfrac{A}{x+1} + \dfrac{Bx+C}{x^2+1}\)</span></p>
+<p><span class="math display">\[2x^2+1 = A(x^2+1) + (Bx+C)(x+1) = (A+B)x^2 + (B+C)x + (A+C)\]</span></p>
 <p>Igualando coeficientes:</p>
-<p><span class="math display">\[(1)\ A+B=2 \qquad (2)\ B+C=1 \qquad (3)\ A+C=0\]</span></p>
-<p>De (3), <span class="math inline">\(A=-C\)</span>. Sustituyendo en (1): <span class="math inline">\(B = 2+C\)</span>. Sustituyendo en (2): <span class="math inline">\((2+C)+C=1 \Rightarrow C=-\tfrac12\)</span>, luego <span class="math inline">\(B=\tfrac32\)</span> y <span class="math inline">\(A=\tfrac12\)</span>.</p>
-<p><span class="math display">\[y' = \frac{1/2}{x+1} + \frac{\tfrac32 x - \tfrac12}{x^2+1} = \frac{1/2}{x+1} + \frac{3}{2}\cdot\frac{x}{x^2+1} - \frac{1/2}{x^2+1}\]</span></p>
+<p><span class="math display">\[(1)\ A+B=2 \qquad (2)\ B+C=0 \qquad (3)\ A+C=1\]</span></p>
+<p>De (2), <span class="math inline">\(C=-B\)</span>. Sustituyendo en (3): <span class="math inline">\(A-B=1\)</span>. Sumando con (1): <span class="math inline">\(2A=3 \Rightarrow A=\tfrac32\)</span>, luego <span class="math inline">\(B=\tfrac12\)</span> y <span class="math inline">\(C=-\tfrac12\)</span>.</p>
+<p><span class="math display">\[y' = \frac{3/2}{x+1} + \frac{1}{2}\cdot\frac{x}{x^2+1} - \frac{1/2}{x^2+1}\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Chequeo con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Chequeo con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cn">ode</span>: (<span class="cn">x</span><span class="dv">+1</span>)*(<span class="cn">x</span>^<span class="dv">2+1</span>)*<span class="do">'</span><span class="cn">diff</span>(<span class="cn">y</span>,<span class="cn">x</span>) = <span class="dv">2</span>*<span class="cn">x</span>^<span class="dv">2+1</span>;</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cn">sol</span>: <span class="fu">ode2</span>(<span class="cn">ode</span>, <span class="cn">y</span>, <span class="cn">x</span>);</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ic1</span>(<span class="cn">sol</span>, <span class="cn">x</span>=<span class="dv">0</span>, <span class="cn">y</span>=<span class="dv">1</span>);</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Como la ecuación es de <strong>primer orden</strong>, la condición inicial se fija con <code>ic1</code>, no con <code>ic2</code> (esa es para ecuaciones de segundo orden, que necesitan <span class="math inline">\(y\)</span> y <span class="math inline">\(y'\)</span> en el punto).</p>
+</div>
+</div>
 <p>Integrando:</p>
-<p><span class="math display">\[y = \frac12\log|x+1| + \frac34\log(x^2+1) - \frac12\arctan x + K\]</span></p>
+<p><span class="math display">\[y = \frac32\log|x+1| + \frac14\log(x^2+1) - \frac12\arctan x + K\]</span></p>
 <p>Con la condición <span class="math inline">\(y(0)=1\)</span>: <span class="math inline">\(1 = 0+0-0+K \Rightarrow K=1\)</span>. Por tanto,</p>
-<p><span class="math display">\[y = \frac12\log|x+1| + \frac34\log(x^2+1) - \frac12\arctan x + 1\]</span></p>
+<p><span class="math display">\[y = \frac32\log(x+1) + \frac14\log(x^2+1) - \frac12\arctan x + 1\]</span></p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Ejercicio 4-b — Curva integral por un punto dado">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -371,6 +455,47 @@ window.Quarto = {
 <p><span class="math display">\[y = x^2 + \log x + C\]</span></p>
 <p>Con la condición <span class="math inline">\(y(1)=1\)</span>: <span class="math inline">\(1 = 1^2+\log 1 + C \Rightarrow C=0\)</span>. La curva es</p>
 <p><span class="math display">\[y = x^2 + \log x\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Chequeo con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Chequeo con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cn">ode</span>: <span class="do">'</span><span class="cn">diff</span>(<span class="cn">y</span>,<span class="cn">x</span>) = <span class="dv">2</span>*<span class="cn">x</span> + <span class="dv">1</span>/<span class="cn">x</span>;</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cn">sol</span>: <span class="fu">ode2</span>(<span class="cn">ode</span>, <span class="cn">y</span>, <span class="cn">x</span>);</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ic1</span>(<span class="cn">sol</span>, <span class="cn">x</span>=<span class="dv">1</span>, <span class="cn">y</span>=<span class="dv">1</span>);</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Gráfica con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Gráfica con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cn">y</span>(<span class="cn">x</span>) := <span class="cn">x</span>^<span class="dv">2</span> + <span class="fu">log</span>(<span class="cn">x</span>);</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot2d</span>([<span class="cn">y</span>(<span class="cn">x</span>), [<span class="cn">discrete</span>, [[<span class="dv">1</span>,<span class="dv">1</span>]]]], [<span class="cn">x</span>, <span class="fl">0.05</span>, <span class="dv">3</span>],</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>       [<span class="cn">style</span>, [<span class="cn">lines</span>,<span class="dv">2</span>], [<span class="cn">points</span>,<span class="dv">3</span>,<span class="dv">7</span>]],</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>       [<span class="cn">legend</span>, <span class="st">"curva"</span>, <span class="st">"(1,1)"</span>],</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>       [<span class="cn">xlabel</span>, <span class="st">"x"</span>], [<span class="cn">ylabel</span>, <span class="st">"y"</span>]);</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="sol.png" class="img-fluid figure-img"></p>
+<figcaption>Solucion que pasa por (1,1)</figcaption>
+</figure>
+</div>
 <div class="callout callout-style-default callout-important callout-titled" title="Tarea">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
