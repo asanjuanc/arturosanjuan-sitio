@@ -1,5 +1,5 @@
 ---
-title: "Cursos"
+title: "Apuntes de clase"
 author: "Arturo Sanjuán"
 listing:
   contents:

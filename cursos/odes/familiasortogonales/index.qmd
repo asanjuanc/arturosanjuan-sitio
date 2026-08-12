@@ -375,5 +375,5 @@ ratsimp(rhs(xx) - x0);       /* debe dar exactamente 1 */
 :::
 
 ::: {.callout-important title="Tarea"}
-Página 17–18: 1-a), 1-d), 2, 5, 6 a,d,e,f. 7, 8. Página 49–6. "Demuestre" sus respuestas en Geogebra.
+Página 17–18: 1-a, 1-d, 2, 5, 6-a,d,e,f. 7, 8. Página 49–6. "Demuestre" sus respuestas en Geogebra.
 :::
