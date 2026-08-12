@@ -1,0 +1,379 @@
+---
+title: "Familias Ortogonales"
+subtitle: "Apuntes de clase: geometría de las ecuaciones diferenciales"
+description: "Cómo una familia de curvas define su propia ecuación diferencial, y cómo esa ecuación revela la familia ortogonal: dos ejemplos resueltos con applets interactivos y código Maxima."
+author: "Arturo Sanjuán"
+date: today
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 2
+---
+
+## Algo de geometría con ecuaciones diferenciales
+
+Una familia paramétrica de curvas $F(x,y,C)=0$ (un parámetro $C$) tiene, escondida, una ecuación diferencial: basta con derivar implícitamente y usar la ecuación original para **eliminar el parámetro**. Lo que queda es una ecuación $y'=f(x,y)$ que satisface *cada* curva de la familia — no importa cuál sea el valor de $C$.
+
+Esto es interesante porque la pendiente $y'=f(x,y)$ en un punto $(x,y)$ es un dato puramente geométrico. Y si conocemos la pendiente de una familia de curvas en cada punto del plano, también conocemos la pendiente de la familia **perpendicular** en cada punto: si una recta tiene pendiente $m$, la perpendicular tiene pendiente $-1/m$. Entonces:
+
+$$\text{familia original: } y' = f(x,y) \qquad\Longrightarrow\qquad \text{familia ortogonal: } y' = -\frac{1}{f(x,y)}$$
+
+Resolver esta segunda ecuación diferencial da la familia de curvas que cruza a la primera **siempre en ángulo recto**, en cualquier punto donde se toquen.
+
+::: {.callout-note title="Applet — el ejemplo más simple: circunferencias y rectas radiales"}
+```{=html}
+<div style="border:1px solid #ddd;border-radius:8px;padding:16px;max-width:560px;margin:1em auto;font-family:sans-serif;">
+  <canvas id="fo-generic-canvas" width="520" height="420" style="width:100%;height:auto;background:#fff;"></canvas>
+  <div style="display:flex;gap:16px;margin-top:8px;flex-wrap:wrap;">
+    <label>Radio r: <input type="range" id="fo-generic-r" min="1" max="5" step="0.1" value="2"></label>
+    <label>Ángulo θ: <input type="range" id="fo-generic-theta" min="0" max="360" step="1" value="40"></label>
+  </div>
+  <p style="font-size:0.9em;color:#555;margin-top:8px;">
+    Las circunferencias $x^2+y^2=r^2$ (gris) son ortogonales a las rectas $y=mx$ que pasan por el origen (azul claro): el radio y la tangente a la circunferencia siempre son perpendiculares. Mueve los controles y observa el ángulo recto (verde) donde se cruzan.
+  </p>
+</div>
+<script>
+(function(){
+  const canvas = document.getElementById('fo-generic-canvas');
+  const ctx = canvas.getContext('2d');
+  const rSlider = document.getElementById('fo-generic-r');
+  const thetaSlider = document.getElementById('fo-generic-theta');
+  const W = canvas.width, H = canvas.height, scale = 35;
+  function toPx(x,y){ return [W/2 + x*scale, H/2 - y*scale]; }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle = '#ccc'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(0,H/2); ctx.lineTo(W,H/2);
+    ctx.moveTo(W/2,0); ctx.lineTo(W/2,H); ctx.stroke();
+
+    ctx.strokeStyle = '#bbb';
+    for (let rr = 1; rr <= 5; rr++) {
+      ctx.beginPath(); ctx.arc(W/2, H/2, rr*scale, 0, 2*Math.PI); ctx.stroke();
+    }
+    ctx.strokeStyle = '#a8c8f0';
+    for (let deg = 0; deg < 360; deg += 30) {
+      const rad = deg*Math.PI/180;
+      const [x1,y1] = toPx(6*Math.cos(rad), 6*Math.sin(rad));
+      const [x2,y2] = toPx(-6*Math.cos(rad), -6*Math.sin(rad));
+      ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+    }
+
+    const r = parseFloat(rSlider.value);
+    const theta = parseFloat(thetaSlider.value)*Math.PI/180;
+
+    ctx.strokeStyle = '#d62728'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(W/2, H/2, r*scale, 0, 2*Math.PI); ctx.stroke();
+
+    ctx.strokeStyle = '#1f77b4'; ctx.lineWidth = 2;
+    const [lx1,ly1] = toPx(6*Math.cos(theta), 6*Math.sin(theta));
+    const [lx2,ly2] = toPx(-6*Math.cos(theta), -6*Math.sin(theta));
+    ctx.beginPath(); ctx.moveTo(lx1,ly1); ctx.lineTo(lx2,ly2); ctx.stroke();
+
+    const px = r*Math.cos(theta), py = r*Math.sin(theta);
+    const [ppx,ppy] = toPx(px,py);
+    ctx.fillStyle = '#333';
+    ctx.beginPath(); ctx.arc(ppx,ppy,4,0,2*Math.PI); ctx.fill();
+
+    const s = 12;
+    const tx = -Math.sin(theta), ty = Math.cos(theta);
+    const lxn = Math.cos(theta), lyn = Math.sin(theta);
+    ctx.strokeStyle = '#2ca02c'; ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(ppx, ppy);
+    ctx.lineTo(ppx + tx*s, ppy - ty*s);
+    ctx.lineTo(ppx + tx*s + lxn*s, ppy - ty*s - lyn*s);
+    ctx.lineTo(ppx + lxn*s, ppy - lyn*s);
+    ctx.closePath(); ctx.stroke();
+
+    ctx.fillStyle = '#000'; ctx.font = '13px sans-serif';
+    ctx.fillText('r = ' + r.toFixed(2) + ',  θ = ' + (theta*180/Math.PI).toFixed(0) + '°', 10, 18);
+  }
+  rSlider.addEventListener('input', draw);
+  thetaSlider.addEventListener('input', draw);
+  draw();
+})();
+</script>
+```
+:::
+
+## Ejemplo 1 — Trayectorias ortogonales de una familia de parábolas (Ejercicio 1-b)
+
+Esboce la familia $y = Cx^2$ y encuentre sus trayectorias ortogonales.
+
+Por geometría analítica, cada curva de la familia es una parábola con vértice en el origen: si $C>0$ abre hacia arriba, si $C<0$ abre hacia abajo, si $C=0$ es el eje $x$, y entre más grande $|C|$ más rápido crece (más "cerrada" la parábola).
+
+**Paso 1 — encontrar la ecuación diferencial de la familia.** Derivamos $y=Cx^2$ implícitamente:
+
+$$y' = 2Cx$$
+
+Esta ecuación todavía tiene el parámetro $C$; lo eliminamos usando la familia original, $C = y/x^2$:
+
+$$y' = 2x\cdot\frac{y}{x^2} = \frac{2y}{x}$$
+
+**Paso 2 — familia ortogonal.** Cambiamos $y'$ por $-1/y'$:
+
+$$y' = -\frac{x}{2y}$$
+
+Es de variables separables:
+
+$$2y\,dy = -x\,dx \quad\Longrightarrow\quad y^2 = -\frac{x^2}{2}+C \quad\Longrightarrow\quad x^2+2y^2 = k \qquad (k=2C\geq 0)$$
+
+Es una familia de **elipses** centradas en el origen, con semieje mayor $\sqrt{k}$ (en $x$) y semieje menor $\sqrt{k/2}$ (en $y$). Lo bonito: la excentricidad **no depende de $k$** — todas las elipses de la familia son semejantes:
+
+$$e = \sqrt{1-\frac{k/2}{k}} = \frac{1}{\sqrt2}\approx 0.707$$
+
+::: {.callout-note title="Haciendo las cuentas con Maxima"}
+```maxima
+kill(all);
+depends(y, x);
+
+/* Familia original y su derivada implícita */
+fam: y = C*x^2;
+dfam: diff(fam, x);                    /* diff(y,x) = 2*C*x */
+
+/* Eliminamos C usando la familia original */
+Cval: solve(fam, C)[1];
+ode_familia: ratsimp(subst(Cval, dfam));   /* diff(y,x) = 2*y/x */
+
+/* Ecuación de la familia ortogonal: y' -> -1/y' */
+ode_ortho: 'diff(y,x) = -x/(2*y);
+
+/* Resolvemos (variables separables) */
+sol: ode2(ode_ortho, y, x);
+
+/* Excentricidad de la familia de elipses x^2 + 2y^2 = k,
+   escrita como x^2/k + y^2/(k/2) = 1 */
+a2: k; b2: k/2;
+e: ratsimp(sqrt(1 - b2/a2));   /* -> 1/sqrt(2), no depende de k */
+```
+:::
+
+::: {.callout-note title="Applet — parábolas y elipses ortogonales"}
+```{=html}
+<div style="border:1px solid #ddd;border-radius:8px;padding:16px;max-width:560px;margin:1em auto;font-family:sans-serif;">
+  <canvas id="fo-ex1-canvas" width="520" height="420" style="width:100%;height:auto;background:#fff;"></canvas>
+  <div style="display:flex;gap:16px;margin-top:8px;flex-wrap:wrap;">
+    <label>C (parábola $y=Cx^2$): <input type="range" id="fo-ex1-C" min="-2" max="2" step="0.1" value="1"></label>
+    <label>k (elipse $x^2+2y^2=k$): <input type="range" id="fo-ex1-k" min="0.5" max="8" step="0.1" value="3"></label>
+  </div>
+  <p style="font-size:0.9em;color:#555;margin-top:8px;">
+    Parábolas de la familia (azul/gris) y elipses de la familia ortogonal (rojo/rosado). El marcador verde muestra el ángulo recto donde la parábola y la elipse seleccionadas se cruzan.
+  </p>
+</div>
+<script>
+(function(){
+  const canvas = document.getElementById('fo-ex1-canvas');
+  const ctx = canvas.getContext('2d');
+  const Cs = document.getElementById('fo-ex1-C');
+  const ks = document.getElementById('fo-ex1-k');
+  const W = canvas.width, H = canvas.height, scale = 35;
+  function toPx(x,y){ return [W/2 + x*scale, H/2 - y*scale]; }
+
+  function drawParabola(C, color, lw){
+    ctx.strokeStyle = color; ctx.lineWidth = lw;
+    ctx.beginPath();
+    let first = true;
+    for (let x = -6; x <= 6; x += 0.05) {
+      const y = C*x*x;
+      if (Math.abs(y) > 8) { first = true; continue; }
+      const [px,py] = toPx(x,y);
+      if (first) { ctx.moveTo(px,py); first = false; } else ctx.lineTo(px,py);
+    }
+    ctx.stroke();
+  }
+  function drawEllipse(k, color, lw){
+    ctx.strokeStyle = color; ctx.lineWidth = lw;
+    ctx.beginPath();
+    const a = Math.sqrt(k), b = Math.sqrt(k/2);
+    for (let t = 0; t <= 2*Math.PI+0.01; t += 0.02) {
+      const [px,py] = toPx(a*Math.cos(t), b*Math.sin(t));
+      if (t === 0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+    }
+    ctx.stroke();
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle = '#ccc'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(0,H/2); ctx.lineTo(W,H/2);
+    ctx.moveTo(W/2,0); ctx.lineTo(W/2,H); ctx.stroke();
+
+    [-2,-1,-0.5,0.5,1,2].forEach(c => drawParabola(c, '#ddd', 1));
+    [1,2,4,6,8].forEach(kk => drawEllipse(kk, '#f3c6c6', 1));
+
+    const C = parseFloat(Cs.value), k = parseFloat(ks.value);
+    drawParabola(C, '#1f77b4', 2.5);
+    drawEllipse(k, '#d62728', 2.5);
+
+    let bestX = null, bestErr = Infinity;
+    for (let x = 0.01; x <= Math.sqrt(k)+0.5; x += 0.01) {
+      const yP = C*x*x, rhs = k - x*x;
+      if (rhs < 0) continue;
+      const yE = Math.sqrt(rhs/2);
+      const err = Math.abs(yP-yE);
+      if (err < bestErr) { bestErr = err; bestX = x; }
+    }
+    if (bestX !== null && bestErr < 0.05) {
+      const x0 = bestX, y0 = C*x0*x0;
+      const [ppx,ppy] = toPx(x0,y0);
+      ctx.fillStyle = '#333';
+      ctx.beginPath(); ctx.arc(ppx,ppy,4,0,2*Math.PI); ctx.fill();
+
+      const mP = 2*C*x0;
+      const mE = y0 !== 0 ? -x0/(2*y0) : 1e9;
+      function unit(m){ const n = Math.sqrt(1+m*m); return [1/n, m/n]; }
+      const [ux1,uy1] = unit(mP), [ux2,uy2] = unit(mE);
+      const s = 12;
+      ctx.strokeStyle = '#2ca02c'; ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(ppx,ppy);
+      ctx.lineTo(ppx+ux1*s, ppy-uy1*s);
+      ctx.lineTo(ppx+ux1*s+ux2*s, ppy-uy1*s-uy2*s);
+      ctx.lineTo(ppx+ux2*s, ppy-uy2*s);
+      ctx.closePath(); ctx.stroke();
+    }
+
+    ctx.fillStyle = '#000'; ctx.font = '13px sans-serif';
+    ctx.fillText('C = ' + C.toFixed(2) + ',  k = ' + k.toFixed(2), 10, 18);
+  }
+  Cs.addEventListener('input', draw);
+  ks.addEventListener('input', draw);
+  draw();
+})();
+</script>
+```
+:::
+
+::: {.callout-tip title="Ejercicio"}
+"Demuestre" con GeoGebra que la respuesta es correcta.
+:::
+
+## Ejemplo 2 — Una condición geométrica sobre la normal (Ejercicio 6-b)
+
+Encuentre la familia de curvas tal que **la proyección sobre el eje $x$ del segmento de la normal entre el punto $(x_0,y_0)$ de la curva y el eje $x$ tiene longitud 1**.
+
+**Planteamiento.** Si la curva satisface $y'=f(x,y)$, la recta normal en $(x_0,y_0)$ tiene pendiente $-1/f(x_0,y_0)$ y ecuación
+
+$$y - y_0 = -\frac{1}{f(x_0,y_0)}(x-x_0)$$
+
+Esta recta corta al eje $x$ (donde $y=0$) en el punto $x_1$ que se despeja de
+
+$$-y_0 = -\frac{1}{f(x_0,y_0)}(x_1-x_0) \quad\Longrightarrow\quad x_1-x_0 = y_0\,f(x_0,y_0)$$
+
+La proyección sobre el eje $x$ del segmento normal es justamente $|x_1-x_0| = |y_0\,f(x_0,y_0)|$. Por hipótesis esto vale $1$, y como $f(x,y)=y'$:
+
+$$y\,y' = \pm 1$$
+
+**Resolviendo:** separando variables, $y\,dy = \pm dx$, así
+
+$$\frac{y^2}{2} = \pm x + C \quad\Longrightarrow\quad y^2 = \pm 2x + C$$
+
+Es una familia de parábolas que abren hacia la derecha o hacia la izquierda.
+
+::: {.callout-note title="Haciendo las cuentas con Maxima"}
+```maxima
+kill(all);
+depends(y, x);
+
+/* La ecuación diferencial de la familia */
+ode: y*'diff(y,x) = 1;
+sol: ode2(ode, y, x);        /* y^2 = 2x + %c */
+
+/* Verificación geométrica: para un punto (x0,y0) sobre y^2 = 2x,
+   comprobamos que la normal corta al eje x exactamente en x0+1 */
+curva: y^2 = 2*x;
+pend: rhs(solve(diff(curva, x), diff(y,x))[1]);   /* pendiente y' = 1/y en general */
+pend0: subst([x=x0, y=sqrt(2*x0)], pend);
+pend_normal: -1/pend0;
+
+/* Recta normal: 0 - y0 = pend_normal*(xx - x0), despejamos xx */
+y0: sqrt(2*x0);
+xx: solve(0 - y0 = pend_normal*(xxvar - x0), xxvar)[1];
+ratsimp(rhs(xx) - x0);       /* debe dar exactamente 1 */
+```
+:::
+
+::: {.callout-note title="Applet — la condición geométrica en acción"}
+```{=html}
+<div style="border:1px solid #ddd;border-radius:8px;padding:16px;max-width:560px;margin:1em auto;font-family:sans-serif;">
+  <canvas id="fo-ex2-canvas" width="520" height="360" style="width:100%;height:auto;background:#fff;"></canvas>
+  <label>Posición del punto $x_0$: <input type="range" id="fo-ex2-x0" min="0.2" max="4" step="0.05" value="1.5" style="width:100%;"></label>
+  <p style="font-size:0.9em;color:#555;margin-top:8px;">
+    Curva $y^2=2x$ (azul), segmento normal en $(x_0,y_0)$ hasta el eje $x$ (rojo) y su proyección horizontal (verde). Mueve el control: la proyección mide siempre <strong>1</strong>, sin importar dónde esté el punto — así es como se construyó la ecuación diferencial.
+  </p>
+</div>
+<script>
+(function(){
+  const canvas = document.getElementById('fo-ex2-canvas');
+  const ctx = canvas.getContext('2d');
+  const x0s = document.getElementById('fo-ex2-x0');
+  const W = canvas.width, H = canvas.height, scale = 60;
+  const originX = 60, originY = H - 40;
+  function toPx(x,y){ return [originX + x*scale, originY - y*scale]; }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle = '#ccc'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(0,originY); ctx.lineTo(W,originY);
+    ctx.moveTo(originX,0); ctx.lineTo(originX,H); ctx.stroke();
+
+    ctx.strokeStyle = '#1f77b4'; ctx.lineWidth = 2;
+    ctx.beginPath();
+    let first = true;
+    for (let x = 0; x <= 6.5; x += 0.03) {
+      const y = Math.sqrt(2*x);
+      const [px,py] = toPx(x,y);
+      if (first) { ctx.moveTo(px,py); first = false; } else ctx.lineTo(px,py);
+    }
+    ctx.stroke();
+
+    const x0 = parseFloat(x0s.value);
+    const y0 = Math.sqrt(2*x0);
+    const x1 = x0 + 1;
+
+    const [P0x,P0y] = toPx(x0,y0);
+    const [P1x,P1y] = toPx(x1,0);
+    const [Ax,Ay] = toPx(x0,0);
+
+    ctx.strokeStyle = '#d62728'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(P0x,P0y); ctx.lineTo(P1x,P1y); ctx.stroke();
+
+    ctx.strokeStyle = '#2ca02c'; ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.moveTo(Ax,Ay); ctx.lineTo(P1x,P1y); ctx.stroke();
+
+    ctx.strokeStyle = '#999'; ctx.setLineDash([4,3]); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(P0x,P0y); ctx.lineTo(Ax,Ay); ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.fillStyle = '#333';
+    [[P0x,P0y],[P1x,P1y],[Ax,Ay]].forEach(p => {
+      ctx.beginPath(); ctx.arc(p[0],p[1],3.5,0,2*Math.PI); ctx.fill();
+    });
+
+    ctx.font = '13px sans-serif'; ctx.fillStyle = '#000';
+    ctx.fillText('(x₀, y₀)', P0x+6, P0y-6);
+    ctx.fillText('(x₀,0)', Ax-10, Ay+16);
+    ctx.fillText('(x₀+1, 0)', P1x-10, P1y+16);
+    ctx.fillText('proyección = 1', (Ax+P1x)/2-30, Ay+32);
+  }
+  x0s.addEventListener('input', draw);
+  draw();
+})();
+</script>
+```
+:::
+
+::: {.callout-tip title="Ejercicio"}
+"Demuestre" en GeoGebra que esta es la respuesta correcta.
+:::
+
+::: {.callout-important title="Tarea"}
+Página 17–18: 1-a), 1-d), 2, 5, 6 a,d,e,f. 7, 8. Página 49–6. "Demuestre" sus respuestas en Geogebra.
+:::
