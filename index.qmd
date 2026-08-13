@@ -1,7 +1,13 @@
 ---
-title: "arturosanjuan-sitio"
+title: "Home"
 ---
 
-This is a Quarto website.
+![Laguna Negra Mongua, Boyacá Colombia](laguna.jpeg)
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+
+
+Soy profesor titular en la Universidad Distrital Francisco José de Caldas, donde participo en los grupos de investigación [MESCUD](https://pi.udistrital.edu.co/MESCUD/) y CMyT. Realicé también mi pregrado, maestría y doctorado en matemáticas en la Universidad Nacional de Colombia, bajo la dirección de los profesores [Alfonso Castro](https://www.hmc.edu/mathematics/faculty-staff/castro/) (Harvey Mudd College) y Francisco Caicedo (Universidad Nacional de Colombia). Previamente fui docente de planta en la Universidad de los Andes en Bogotá (2003–2006). 
+
+Mi investigación se centra en ecuaciones diferenciales parciales y diferenciales-funcionales, abordadas con métodos topológicos, con especial énfasis en la ecuación de onda semilineal con condiciones Dirichlet-periódicas.
+
+Correo: [aasanjuanc@udistrital.edu.co](mailto:aasanjuanc@udistrital.edu.co)

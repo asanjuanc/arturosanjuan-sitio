@@ -9,7 +9,7 @@
 <meta name="author" content="Arturo Sanjuán">
 <meta name="description" content="Sistemas de numeración, bases, y la construcción del conjunto de números de punto flotante 𝔽.">
 
-<title>Introducción – Página Personal de Arturo Sanjuán</title>
+<title>Introducción – Arturo Sanjuán</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -118,7 +118,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../../index.html">
-    <span class="navbar-title">Página Personal de Arturo Sanjuán</span>
+    <span class="navbar-title">Arturo Sanjuán</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Buscar"></div>
@@ -166,6 +166,12 @@ window.Quarto = {
   <li><a href="#espaciado-dentro-de-un-binade" id="toc-espaciado-dentro-de-un-binade" class="nav-link" data-scroll-target="#espaciado-dentro-de-un-binade"><span class="header-section-number">6</span> Espaciado dentro de un binade</a></li>
   <li><a href="#machine-epsilon" id="toc-machine-epsilon" class="nav-link" data-scroll-target="#machine-epsilon"><span class="header-section-number">7</span> Machine epsilon</a></li>
   <li><a href="#de-error-absoluto-a-error-relativo" id="toc-de-error-absoluto-a-error-relativo" class="nav-link" data-scroll-target="#de-error-absoluto-a-error-relativo"><span class="header-section-number">8</span> De error absoluto a error relativo</a></li>
+  <li><a href="#precisión-y-exactitud" id="toc-precisión-y-exactitud" class="nav-link" data-scroll-target="#precisión-y-exactitud"><span class="header-section-number">9</span> Precisión y exactitud</a>
+  <ul class="collapse">
+  <li><a href="#el-estándar-ieee-754" id="toc-el-estándar-ieee-754" class="nav-link" data-scroll-target="#el-estándar-ieee-754"><span class="header-section-number">9.1</span> El estándar IEEE 754</a></li>
+  </ul></li>
+  <li><a href="#aritmética-de-máquina" id="toc-aritmética-de-máquina" class="nav-link" data-scroll-target="#aritmética-de-máquina"><span class="header-section-number">10</span> Aritmética de máquina</a></li>
+  <li><a href="#tarea" id="toc-tarea" class="nav-link" data-scroll-target="#tarea"><span class="header-section-number">11</span> Tarea</a></li>
   </ul>
 </nav>
 </nav>
@@ -201,7 +207,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">11 de agosto de 2026</p>
+      <p class="date">12 de agosto de 2026</p>
     </div>
   </div>
   
@@ -522,6 +528,91 @@ Nota
 <p>¿Qué quiere decir que el error absoluto puede ser grande y el relativo no?</p>
 </div>
 </div>
+</section>
+<section id="precisión-y-exactitud" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="precisión-y-exactitud"><span class="header-section-number">9</span> Precisión y exactitud</h2>
+<p>Si expresamos</p>
+<p><span class="math display">\[\pm(1+f)\,2^n = \pm\left(1+\sum_{i=1}^{d} b_i\,2^{-i}\right)2^n\]</span></p>
+<p>en base 10, se convierte en</p>
+<p><span class="math display">\[\pm(b_0+f_{10})\,10^n = \pm\left(b_0+\sum_{i=1}^{d} b_i\,10^{-i}\right)10^n\]</span></p>
+<p>donde cada <span class="math inline">\(b_i\in\{0,\ldots,9\}\)</span> y <span class="math inline">\(b_0\neq0\)</span>. Esto no es otra cosa que la <strong>notación científica</strong>, con <span class="math inline">\(d+1\)</span> cifras significativas.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejemplo — constante de Planck">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejemplo — constante de Planck
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[h = 6.626068\times10^{-34}\ \mathrm{m^2\,kg/s}\]</span></p>
+<p>Supongamos que ajustamos el último dígito de 8 a 9. Entonces el cambio relativo es</p>
+<p><span class="math display">\[\frac{|\text{valor inicial}-\text{valor final}|}{|\text{valor inicial}|}=\frac{0{,}000001\times10^{-34}}{6{,}626068\times10^{-34}}\approx1{,}51\times10^{-7}\]</span></p>
+<p>Decimos entonces que la constante está dada con <strong>7 dígitos de precisión</strong>.</p>
+</div>
+</div>
+<p><strong>La precisión</strong> de un número flotante son los <span class="math inline">\(d\)</span> dígitos binarios. <strong>La exactitud</strong> es qué tan lejos está la aproximación del resultado.</p>
+<p>Si <span class="math inline">\(\tilde{x}\)</span> es la aproximación de <span class="math inline">\(x\)</span>:</p>
+<ul>
+<li><strong>Exactitud absoluta:</strong> <span class="math inline">\(|\tilde{x}-x|\)</span> — mismas unidades que <span class="math inline">\(x\)</span>.</li>
+<li><strong>Exactitud relativa:</strong> <span class="math inline">\(\dfrac{|\tilde{x}-x|}{|x|}\)</span> — adimensional.</li>
+</ul>
+<p>Por ejemplo, si la exactitud de la aproximación anterior es <span class="math inline">\(1{,}51\times10^{-7}=0{,}0000001\underbrace{51}_{\text{7 cifras signif.}}\)</span>, el entero más cercano a</p>
+<p><span class="math display">\[-\log_{10}\left|\frac{\tilde{x}-x}{x}\right|\]</span></p>
+<p>da la <strong>“cantidad de dígitos de exactitud”</strong>, sin necesidad de aproximarlo al entero:</p>
+<p><span class="math display">\[-\log_{10}(1{,}51\times10^{-7}) = -\log_{10}(1{,}51)+7 \approx 6{,}82\]</span></p>
+<p><em>(el logaritmo cuenta esa cadena inicial de ceros).</em> Ejemplo clásico: <span class="math inline">\(\rho=22/7\)</span> frente a <span class="math inline">\(\pi\)</span>.</p>
+<section id="el-estándar-ieee-754" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="el-estándar-ieee-754"><span class="header-section-number">9.1</span> El estándar IEEE 754</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tipo</th>
+<th><span class="math inline">\(d\)</span> (bits de significando)</th>
+<th><span class="math inline">\(n\)</span> (bits de exponente)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Float32</code> (precisión sencilla)</td>
+<td>23</td>
+<td>8</td>
+</tr>
+<tr class="even">
+<td><code>Float64</code> (precisión doble)</td>
+<td>52</td>
+<td>11</td>
+</tr>
+</tbody>
+</table>
+<p>Con las funciones <code>sign</code>, <code>exponent</code> y <code>significand</code> podemos extraer las partes de un <span class="math inline">\(x\in\mathbb{F}\)</span>.</p>
+</section>
+</section>
+<section id="aritmética-de-máquina" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="aritmética-de-máquina"><span class="header-section-number">10</span> Aritmética de máquina</h2>
+<p>La aritmética se calcula de tal manera que si <span class="math inline">\(x,y\in\mathbb{F}\)</span>, entonces <span class="math inline">\(x\oplus y\in\mathbb{F}\)</span> de tal manera que</p>
+<p><span class="math display">\[\frac{|(x\oplus y)-(x+y)|}{|x+y|}\le\frac12\,\varepsilon_{\text{mach}}\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplos">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[(1{,}0+\texttt{eps()}/2)-1 = 0\]</span></p>
+<p><span class="math display">\[1{,}0+(\texttt{eps()}/2-1) \neq 0\]</span></p>
+<p><span class="math display">\[0{,}1+0{,}2\neq0{,}3\]</span></p>
+</div>
+</div>
+<p>Estos ejemplos muestran que la <strong>ley asociativa de la suma se rompe</strong> en aritmética de punto flotante: el orden en que se agrupan las operaciones puede cambiar el resultado.</p>
+</section>
+<section id="tarea" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="tarea"><span class="header-section-number">11</span> Tarea</h2>
+<p>Resolver <strong>todos los ejercicios de la sección 1.1.4</strong> (“Exercises”) de <em>Fundamentals of Numerical Computation</em>, disponibles en <a href="https://fncbook.com/julia/floating-point/#exercises" class="uri">https://fncbook.com/julia/floating-point/#exercises</a>: los ejercicios 1.1.1 a 1.1.5, sobre el conjunto <span class="math inline">\(\mathbb{F}\)</span>, la equivalencia de las cotas de error, aproximaciones racionales a <span class="math inline">\(\pi\)</span>, precisión sencilla IEEE 754, y <code>nextfloat</code>.</p>
 
 
 </section>

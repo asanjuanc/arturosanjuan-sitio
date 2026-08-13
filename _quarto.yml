@@ -4,7 +4,7 @@ project:
 lang: es 
 
 website:
-  title: "Página Personal de Arturo Sanjuán"
+  title: "Arturo Sanjuán"
   navbar:
     left:
       - href: index.qmd
@@ -19,6 +19,7 @@ format:
       - brand
     css: styles.css
     toc: true
+
 
 
 

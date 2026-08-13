@@ -215,3 +215,71 @@ $$\text{fl}(x)=x+\frac12\,\varepsilon_{\text{mach}}\,|x|=x\left(1+\frac12\,\vare
 ::: {.callout-important title="Pregunta abierta de las notas"}
 ¿Qué quiere decir que el error absoluto puede ser grande y el relativo no?
 :::
+
+## Precisión y exactitud
+
+Si expresamos
+
+$$\pm(1+f)\,2^n = \pm\left(1+\sum_{i=1}^{d} b_i\,2^{-i}\right)2^n$$
+
+en base 10, se convierte en
+
+$$\pm(b_0+f_{10})\,10^n = \pm\left(b_0+\sum_{i=1}^{d} b_i\,10^{-i}\right)10^n$$
+
+donde cada $b_i\in\{0,\ldots,9\}$ y $b_0\neq0$. Esto no es otra cosa que la **notación científica**, con $d+1$ cifras significativas.
+
+::: {.callout-note title="Ejemplo — constante de Planck"}
+$$h = 6.626068\times10^{-34}\ \mathrm{m^2\,kg/s}$$
+
+Supongamos que ajustamos el último dígito de 8 a 9. Entonces el cambio relativo es
+
+$$\frac{|\text{valor inicial}-\text{valor final}|}{|\text{valor inicial}|}=\frac{0{,}000001\times10^{-34}}{6{,}626068\times10^{-34}}\approx1{,}51\times10^{-7}$$
+
+Decimos entonces que la constante está dada con **7 dígitos de precisión**.
+:::
+
+**La precisión** de un número flotante son los $d$ dígitos binarios. **La exactitud** es qué tan lejos está la aproximación del resultado.
+
+Si $\tilde{x}$ es la aproximación de $x$:
+
+- **Exactitud absoluta:** $|\tilde{x}-x|$ — mismas unidades que $x$.
+- **Exactitud relativa:** $\dfrac{|\tilde{x}-x|}{|x|}$ — adimensional.
+
+Por ejemplo, si la exactitud de la aproximación anterior es $1{,}51\times10^{-7}=0{,}0000001\underbrace{51}_{\text{7 cifras signif.}}$, el entero más cercano a
+
+$$-\log_{10}\left|\frac{\tilde{x}-x}{x}\right|$$
+
+da la **"cantidad de dígitos de exactitud"**, sin necesidad de aproximarlo al entero:
+
+$$-\log_{10}(1{,}51\times10^{-7}) = -\log_{10}(1{,}51)+7 \approx 6{,}82$$
+
+*(el logaritmo cuenta esa cadena inicial de ceros).* Ejemplo clásico: $\rho=22/7$ frente a $\pi$.
+
+### El estándar IEEE 754
+
+| Tipo | $d$ (bits de significando) | $n$ (bits de exponente) |
+|---|---|---|
+| `Float32` (precisión sencilla) | 23 | 8 |
+| `Float64` (precisión doble) | 52 | 11 |
+
+Con las funciones `sign`, `exponent` y `significand` podemos extraer las partes de un $x\in\mathbb{F}$.
+
+## Aritmética de máquina
+
+La aritmética se calcula de tal manera que si $x,y\in\mathbb{F}$, entonces $x\oplus y\in\mathbb{F}$ de tal manera que
+
+$$\frac{|(x\oplus y)-(x+y)|}{|x+y|}\le\frac12\,\varepsilon_{\text{mach}}$$
+
+::: {.callout-tip title="Ejemplos"}
+$$(1{,}0+\texttt{eps()}/2)-1 = 0$$
+
+$$1{,}0+(\texttt{eps()}/2-1) \neq 0$$
+
+$$0{,}1+0{,}2\neq0{,}3$$
+:::
+
+Estos ejemplos muestran que la **ley asociativa de la suma se rompe** en aritmética de punto flotante: el orden en que se agrupan las operaciones puede cambiar el resultado.
+
+## Tarea
+
+Resolver **todos los ejercicios de la sección 1.1.4** ("Exercises") de *Fundamentals of Numerical Computation*, disponibles en <https://fncbook.com/julia/floating-point/#exercises>: los ejercicios 1.1.1 a 1.1.5, sobre el conjunto $\mathbb{F}$, la equivalencia de las cotas de error, aproximaciones racionales a $\pi$, precisión sencilla IEEE 754, y `nextfloat`.

@@ -4,7 +4,7 @@
     "href": "cursos/probabilidad/index.html",
     "title": "Probabilidad",
     "section": "",
-    "text": "Introducción\n\n\nApuntes de clase: espacios de probabilidad y σ-álgebras\n\n\nExperimentos aleatorios, espacios muestrales, σ-álgebras, continuidad de la probabilidad y probabilidad de Laplace.\n\n\n\n\n\n11 ago 2026\n\n\nArturo Sanjuán\n\n\n\n\n\nNo hay resultados"
+    "text": "Introducción\n\n\nApuntes de clase: espacios de probabilidad y σ-álgebras\n\n\nExperimentos aleatorios, espacios muestrales, σ-álgebras, continuidad de la probabilidad y probabilidad de Laplace.\n\n\n\n\n\n12 ago 2026\n\n\nArturo Sanjuán\n\n\n\n\n\nNo hay resultados"
   },
   {
     "objectID": "cursos/index.html",
@@ -46,14 +46,14 @@
     "href": "cursos/numerico/index.html",
     "title": "Análisis Numérico",
     "section": "",
-    "text": "Introducción\n\n\nApuntes de clase: sistemas de numeración y punto flotante\n\n\nSistemas de numeración, bases, y la construcción del conjunto de números de punto flotante 𝔽.\n\n\n\n\n\n11 ago 2026\n\n\nArturo Sanjuán\n\n\n\n\n\nNo hay resultados"
+    "text": "Introducción\n\n\nApuntes de clase: sistemas de numeración y punto flotante\n\n\nSistemas de numeración, bases, y la construcción del conjunto de números de punto flotante 𝔽.\n\n\n\n\n\n12 ago 2026\n\n\nArturo Sanjuán\n\n\n\n\n\nNo hay resultados"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "arturosanjuan-sitio",
+    "title": "Home",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+    "text": "Laguna Negra Mongua, Boyacá Colombia\n\n\nSoy profesor titular en la Universidad Distrital Francisco José de Caldas, donde participo en los grupos de investigación MESCUD y CMyT. Realicé también mi pregrado, maestría y doctorado en matemáticas en la Universidad Nacional de Colombia, bajo la dirección de los profesores Alfonso Castro (Harvey Mudd College) y Francisco Caicedo (Universidad Nacional de Colombia). Previamente fui docente de planta en la Universidad de los Andes en Bogotá (2003–2006).\nMi investigación se centra en ecuaciones diferenciales parciales y diferenciales-funcionales, abordadas con métodos topológicos, con especial énfasis en la ecuación de onda semilineal con condiciones Dirichlet-periódicas.\nCorreo: aasanjuanc@udistrital.edu.co"
   },
   {
     "objectID": "about.html",
@@ -126,6 +126,27 @@
     "text": "8 De error absoluto a error relativo\nAl dividir por \\(|x|\\ge2^n\\):\n\\[\\frac{|\\text{fl}(x)-x|}{|x|}\\le\\frac12\\,\\varepsilon_{\\text{mach}}\\]\n\\[|\\text{fl}(x)-x|\\le\\frac12\\,\\varepsilon_{\\text{mach}}\\,|x|\\]\n\\[\\text{fl}(x)=x+\\frac12\\,\\varepsilon_{\\text{mach}}\\,|x|=x\\left(1+\\frac12\\,\\varepsilon_{\\text{mach}}\\,\\operatorname{sgn}(x)\\right)=x(1+\\epsilon)\\quad\\text{con }|\\epsilon|\\le\\tfrac12\\varepsilon_{\\text{mach}}\\]\n\n\n\n\n\n\nImportantePregunta abierta de las notas\n\n\n\n¿Qué quiere decir que el error absoluto puede ser grande y el relativo no?"
   },
   {
+    "objectID": "cursos/numerico/introduccion/index.html#precisión-y-exactitud",
+    "href": "cursos/numerico/introduccion/index.html#precisión-y-exactitud",
+    "title": "Introducción",
+    "section": "9 Precisión y exactitud",
+    "text": "9 Precisión y exactitud\nSi expresamos\n\\[\\pm(1+f)\\,2^n = \\pm\\left(1+\\sum_{i=1}^{d} b_i\\,2^{-i}\\right)2^n\\]\nen base 10, se convierte en\n\\[\\pm(b_0+f_{10})\\,10^n = \\pm\\left(b_0+\\sum_{i=1}^{d} b_i\\,10^{-i}\\right)10^n\\]\ndonde cada \\(b_i\\in\\{0,\\ldots,9\\}\\) y \\(b_0\\neq0\\). Esto no es otra cosa que la notación científica, con \\(d+1\\) cifras significativas.\n\n\n\n\n\n\nNotaEjemplo — constante de Planck\n\n\n\n\\[h = 6.626068\\times10^{-34}\\ \\mathrm{m^2\\,kg/s}\\]\nSupongamos que ajustamos el último dígito de 8 a 9. Entonces el cambio relativo es\n\\[\\frac{|\\text{valor inicial}-\\text{valor final}|}{|\\text{valor inicial}|}=\\frac{0{,}000001\\times10^{-34}}{6{,}626068\\times10^{-34}}\\approx1{,}51\\times10^{-7}\\]\nDecimos entonces que la constante está dada con 7 dígitos de precisión.\n\n\nLa precisión de un número flotante son los \\(d\\) dígitos binarios. La exactitud es qué tan lejos está la aproximación del resultado.\nSi \\(\\tilde{x}\\) es la aproximación de \\(x\\):\n\nExactitud absoluta: \\(|\\tilde{x}-x|\\) — mismas unidades que \\(x\\).\nExactitud relativa: \\(\\dfrac{|\\tilde{x}-x|}{|x|}\\) — adimensional.\n\nPor ejemplo, si la exactitud de la aproximación anterior es \\(1{,}51\\times10^{-7}=0{,}0000001\\underbrace{51}_{\\text{7 cifras signif.}}\\), el entero más cercano a\n\\[-\\log_{10}\\left|\\frac{\\tilde{x}-x}{x}\\right|\\]\nda la “cantidad de dígitos de exactitud”, sin necesidad de aproximarlo al entero:\n\\[-\\log_{10}(1{,}51\\times10^{-7}) = -\\log_{10}(1{,}51)+7 \\approx 6{,}82\\]\n(el logaritmo cuenta esa cadena inicial de ceros). Ejemplo clásico: \\(\\rho=22/7\\) frente a \\(\\pi\\).\n\n9.1 El estándar IEEE 754\n\n\n\nTipo\n\\(d\\) (bits de significando)\n\\(n\\) (bits de exponente)\n\n\n\n\nFloat32 (precisión sencilla)\n23\n8\n\n\nFloat64 (precisión doble)\n52\n11\n\n\n\nCon las funciones sign, exponent y significand podemos extraer las partes de un \\(x\\in\\mathbb{F}\\)."
+  },
+  {
+    "objectID": "cursos/numerico/introduccion/index.html#aritmética-de-máquina",
+    "href": "cursos/numerico/introduccion/index.html#aritmética-de-máquina",
+    "title": "Introducción",
+    "section": "10 Aritmética de máquina",
+    "text": "10 Aritmética de máquina\nLa aritmética se calcula de tal manera que si \\(x,y\\in\\mathbb{F}\\), entonces \\(x\\oplus y\\in\\mathbb{F}\\) de tal manera que\n\\[\\frac{|(x\\oplus y)-(x+y)|}{|x+y|}\\le\\frac12\\,\\varepsilon_{\\text{mach}}\\]\n\n\n\n\n\n\nTipEjemplos\n\n\n\n\\[(1{,}0+\\texttt{eps()}/2)-1 = 0\\]\n\\[1{,}0+(\\texttt{eps()}/2-1) \\neq 0\\]\n\\[0{,}1+0{,}2\\neq0{,}3\\]\n\n\nEstos ejemplos muestran que la ley asociativa de la suma se rompe en aritmética de punto flotante: el orden en que se agrupan las operaciones puede cambiar el resultado."
+  },
+  {
+    "objectID": "cursos/numerico/introduccion/index.html#tarea",
+    "href": "cursos/numerico/introduccion/index.html#tarea",
+    "title": "Introducción",
+    "section": "11 Tarea",
+    "text": "11 Tarea\nResolver todos los ejercicios de la sección 1.1.4 (“Exercises”) de Fundamentals of Numerical Computation, disponibles en https://fncbook.com/julia/floating-point/#exercises: los ejercicios 1.1.1 a 1.1.5, sobre el conjunto \\(\\mathbb{F}\\), la equivalencia de las cotas de error, aproximaciones racionales a \\(\\pi\\), precisión sencilla IEEE 754, y nextfloat."
+  },
+  {
     "objectID": "cursos/odes/introduccion/index.html",
     "href": "cursos/odes/introduccion/index.html",
     "title": "Introducción",
@@ -151,7 +172,7 @@
     "href": "cursos/odes/index.html",
     "title": "Ecuaciones Diferenciales",
     "section": "",
-    "text": "Introducción\n\n\nApuntes de clase: breve historia de las ecuaciones diferenciales y ejercicios resueltos\n\n\nDe Zenón al caos: por qué nació el cálculo diferencial para describir el cambio, y ejercicios resueltos del Simmons sobre ecuaciones separables e implícitas.\n\n\n\n\n\n11 ago 2026\n\n\nArturo Sanjuán\n\n\n\n\n\n\n\n\n\n\n\n\nFamilias Ortogonales\n\n\nApuntes de clase: geometría de las ecuaciones diferenciales\n\n\nCómo una familia de curvas define su propia ecuación diferencial, y cómo esa ecuación revela la familia ortogonal: dos ejemplos resueltos con applets interactivos y código Maxima.\n\n\n\n\n\n11 ago 2026\n\n\nArturo Sanjuán\n\n\n\n\n\nNo hay resultados"
+    "text": "Introducción\n\n\nApuntes de clase: breve historia de las ecuaciones diferenciales y ejercicios resueltos\n\n\nDe Zenón al caos: por qué nació el cálculo diferencial para describir el cambio, y ejercicios resueltos del Simmons sobre ecuaciones separables e implícitas.\n\n\n\n\n\n12 ago 2026\n\n\nArturo Sanjuán\n\n\n\n\n\n\n\n\n\n\n\n\nFamilias Ortogonales\n\n\nApuntes de clase: geometría de las ecuaciones diferenciales\n\n\nCómo una familia de curvas define su propia ecuación diferencial, y cómo esa ecuación revela la familia ortogonal: dos ejemplos resueltos con applets interactivos y código Maxima.\n\n\n\n\n\n12 ago 2026\n\n\nArturo Sanjuán\n\n\n\n\n\nNo hay resultados"
   },
   {
     "objectID": "cursos/probabilidad/introduccion/index.html",
