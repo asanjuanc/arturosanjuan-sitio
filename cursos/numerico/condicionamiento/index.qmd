@@ -1,0 +1,191 @@
+---
+title: "Condicionamiento"
+subtitle: "Apuntes de clase: cancelación catastrófica, pérdida de significancia y número de condición"
+description: "Cancelación catastrófica, pérdida de significancia, y la definición formal del número de condición relativo de un problema."
+author: "Arturo Sanjuán"
+date: today
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 2
+---
+
+## Cancelación catastrófica o pérdida de significancia
+
+Consideremos la sucesión
+
+$$x_{n+1} = 10x_n - 9$$
+
+Desde el punto de vista del análisis matemático puro, si $x_0=1$ entonces $x_n=1$ para todo $n$: es la sucesión constante, porque $x=1$ es el único punto fijo de $g(x)=10x-9$.
+
+Supongamos ahora que en punto flotante solo tenemos $d=2$ cifras significativas, y que el dato $x_0=1$ se representa como $\tilde x_0=0{,}99$ — un error relativo de apenas el $1\%$, del orden de cualquier redondeo típico. Aplicamos la recurrencia tal cual, redondeando a 2 cifras en cada paso:
+
+| $n$ | $\tilde x_n$ | error absoluto $e_n=\tilde x_n-1$ | error relativo | dígitos perdidos |
+|:---:|:---:|:---:|:---:|:---:|
+| 0 | 0,99 | $-0{,}01=-1\times10^{-2}$ | $1\%$ | 0 |
+| 1 | 0,90 | $-0{,}10=-1\times10^{-1}$ | $10\%$ | 1 |
+| 2 | 0,00 | $-1{,}00=-1\times10^{0}$ | $100\%$ | 2 |
+| 3 | $-9{,}00$ | $-10{,}00=-1\times10^{1}$ | $1000\%$ | 3 |
+
+En tres pasos el error relativo pasó de $1\%$ a $1000\%$ — la respuesta calculada ($-9$) no tiene **ninguna** relación con el valor verdadero ($1$).
+
+::: {.callout-important title="Por qué ocurre esto"}
+Escribiendo $\tilde x_n = 1+e_n$ y sustituyendo en la recurrencia:
+
+$$1+e_{n+1}=10(1+e_n)-9=1+10e_n \;\Longrightarrow\; e_{n+1}=10\,e_n \;\Longrightarrow\; e_n=10^n e_0$$
+
+El error se **multiplica por 10 en cada paso**, sin importar qué tan pequeño sea $e_0$. Tomar un dato más aproximado, como $x_0=0{,}99999$, **no resuelve el problema, solo lo retrasa**: el problema está mal condicionado. El algoritmo y el computador dan una respuesta, pero esa respuesta no está cerca de "la realidad".
+:::
+
+Este es exactamente el mecanismo que hace *silenciosa* la pérdida de significancia: ninguna operación individual (multiplicar por 10, restar 9) tiene nada de alarmante — el resultado final simplemente deja de tener sentido, sin ningún símbolo de error que lo anuncie.
+
+El mismo fenómeno aparece cuando restamos dos números cercanos:
+
+$$2{,}1357 - 2{,}1356 = 0{,}0001 = 1\times10^{-4}$$
+
+Cada operando tiene 5 cifras significativas, pero el resultado solo tiene 1 — **perdimos 4 cifras significativas** en una sola resta.
+
+
+## El número de condición relativo
+
+La pregunta natural es: **¿qué tan sensible es un problema, independientemente del algoritmo o la máquina que se use para resolverlo?**
+
+### Un ejemplo de calentamiento
+
+Sea $f(x)=x+1$. En la máquina, $x$ se representa como $\text{fl}(x)=x(1+\epsilon)$ con $|\epsilon|\le \epsilon_{\text{mach}}/2$. Si la suma se hace exacta:
+
+$$y = \text{fl}(x)+1 = x(1+\epsilon)+1$$
+
+El error relativo del resultado es
+
+$$\frac{|y-f(x)|}{|f(x)|} = \frac{|x(1+\epsilon)+1-(x+1)|}{|x+1|} = \frac{|\epsilon x|}{|x+1|}$$
+
+Este error puede ser arbitrariamente grande si $x\approx -1$ — aunque $\epsilon$ sea minúsculo. El problema "sumar 1" es benigno lejos de $x=-1$, mal condicionado cerca de ahí.
+
+### Definición formal
+
+Queremos generalizar esta idea: dado un problema $f$ y un dato $a$, ¿cuánto se amplifica el error relativo de $a$ al pasar por $f$?
+
+::: {.callout-important title="Definición — número de condición relativo"}
+$$\kappa_f(a) = \lim_{\epsilon\to 0} \frac{\left|f(a)-f(a(1+\epsilon))\right|/|f(a)|}{|\epsilon|}$$
+
+Es la razón entre el cambio relativo en el resultado y el cambio relativo en el dato, en el límite de perturbaciones pequeñas. Si $f$ es diferenciable en $a$:
+
+$$\kappa_f(a) = \left|\frac{a\,f'(a)}{f(a)}\right|$$
+:::
+
+Si $\kappa_f(a)$ es muy grande, el problema está **mal condicionado** en $a$: cualquier perturbación de los datos — así sea del tamaño de $\epsilon_{\text{mach}}$ — se amplifica hasta volver el resultado inútil. Esto **no depende del algoritmo ni de la máquina**: es una propiedad del problema mismo.
+
+### Ejemplos elementales
+
+$$f(x)=x-c \;\Longrightarrow\; \kappa_f(x)=\left|\frac{x}{x-c}\right|$$
+
+Puede ser muy grande si $|x|\gg|x-c|$, por ejemplo si $x\approx c$ — esta es exactamente la resta cancelante de la sección anterior.
+
+$$f(x)=cx \;\Longrightarrow\; \kappa_f(x)=1$$
+
+La multiplicación por una constante nunca amplifica el error relativo: siempre funciona bien.
+
+$$f(x)=x^p \;\Longrightarrow\; \kappa_f(x)=|p|$$
+
+$$f(x)=\cos(x) \;\Longrightarrow\; \kappa_f(x)=|x\tan(x)|$$
+
+Puede ser grande si $x$ está cerca de un múltiplo impar de $\pi/2$ (ahí $f(x)\approx 0$) o si $|x|\gg 1$.
+
+## Ejercicio 1.2.3 — $f(x)=\dfrac{e^x-1}{x}$
+
+Calculemos $\kappa_f(x)$ para $f(x)=\dfrac{e^x-1}{x}$ (extendida por continuidad a $f(0)=1$).
+
+$$f'(x)=\frac{xe^x-(e^x-1)}{x^2}=\frac{(x-1)e^x+1}{x^2}$$
+
+$$\kappa_f(x)=\left|x\cdot\frac{f'(x)}{f(x)}\right| = \left|\frac{(x-1)e^x+1}{e^x-1}\right|$$
+
+Expandiendo en serie de Taylor alrededor de $x=0$:
+
+$$(x-1)e^x+1 = \frac{x^2}{2}+\frac{x^3}{3}+\cdots \qquad e^x-1=x+\frac{x^2}{2}+\cdots$$
+
+$$\kappa_f(x) \approx \frac{x^2/2}{x} = \frac{|x|}{2} \;\xrightarrow[x\to 0]{}\; 0$$
+
+Numéricamente: $\kappa_f(10^{-6})\approx 5\times10^{-7}$, $\kappa_f(1)\approx 0{,}58$, $\kappa_f(10)\approx 9$, $\kappa_f(20)\approx 19$ — crece linealmente solo para $x$ grande, nunca "explota". El **problema** $f(x)=(e^x-1)/x$ es entonces muy bien condicionado cerca de $x=0$: $\kappa_f(0)=0$.
+
+Y sin embargo, si evalúas $f$ en una máquina con esta fórmula tal cual —calcular $e^x$, restarle 1, dividir por $x$— para $x$ pequeño el resultado es basura. Esto no es una contradicción: es la distinción central del capítulo entre **condicionamiento del problema** y **estabilidad del algoritmo**.
+
+### Qué pasa exactamente en la resta $e^x-1$
+
+Cuando $x$ es pequeño, $e^x$ está muy cerca de $1$ — por ejemplo $e^{10^{-8}} = 1{,}00000000999999994\ldots$ En doble precisión ($\approx16$ cifras significativas), ese número se guarda con toda su precisión disponible, pero al restarle $1$ ocurre exactamente la cancelación de la primera sección: los primeros 8 dígitos (el "$1{,}0000000$" que comparten $e^x$ y $1$) se cancelan exactamente, y lo único que sobrevive son los dígitos que ya estaban cerca del límite de precisión de la máquina. El resultado hereda el ruido de redondeo de $e^x$ como si fuera señal.
+
+Comparemos, para $x=10^{-8}$, la fórmula naíf y la función segura `expm1` (diseñada para evitar la resta):
+
+| cantidad | valor calculado |
+|---|---|
+| $e^x$ (doble precisión) | $1{,}00000000999999994$ |
+| $e^x-1$ (naíf) | $9{,}99999993922529\times10^{-9}$ |
+| `expm1(x)` (seguro) | $1{,}00000000500000\times10^{-8}$ |
+| valor de referencia | $1{,}00000000500000\times10^{-8}$ |
+
+El resultado naíf tiene error relativo $\approx 1{,}1\times10^{-8}$ — apenas **8 dígitos correctos**, cuando la máquina en principio te puede dar 16. `expm1` da el valor exacto hasta el redondeo de máquina. Con $x=10^{-12}$ la cosa empeora: la fórmula naíf se queda con solo **4 dígitos correctos**, mientras `expm1` sigue exacta.
+
+
+
+
+## Ejercicio 1.2.5 — condición del inverso
+
+Sea $f$ con número de condición $\kappa_f$, y $f^{-1}$ su inversa. Queremos mostrar
+
+$$\kappa_{f^{-1}}(x) = \frac{1}{\kappa_f\big(f^{-1}(x)\big)}$$
+
+**Demostración**, sin invocar el teorema de la función inversa: sea $h = f\circ f^{-1} = \text{id}$.
+
+Primero, $\kappa_{\text{id}}(x)=1$: con $\text{id}'(x)=1$, $\kappa_{\text{id}}(x)=|x\cdot 1/x|=1$.
+
+Por la regla de la cadena para números de condición (ejercicio 1.2.4), aplicada a $h=f\circ f^{-1}$:
+
+$$\kappa_h(x) = \kappa_f\big(f^{-1}(x)\big)\cdot\kappa_{f^{-1}}(x)$$
+
+Como $h=\text{id}$, $\kappa_h(x)=\kappa_{\text{id}}(x)=1$. Despejando:
+
+$$1 = \kappa_f\big(f^{-1}(x)\big)\cdot\kappa_{f^{-1}}(x) \;\Longrightarrow\; \kappa_{f^{-1}}(x)=\frac{1}{\kappa_f\big(f^{-1}(x)\big)} \qquad \blacksquare$$
+
+Esta ruta es más corta que aplicar el teorema de la función inversa directamente, y no exige demostrar por separado que $f^{-1}$ es derivable.
+
+## Raíces de un polinomio cuadrático
+
+Consideremos $ax^2+bx+c=0$. Los datos son los coeficientes $(a,b,c)$; el resultado son las raíces $r_1,r_2$ (posiblemente complejas). Formalmente, $f(a,b,c)=(r_1,r_2)$.
+
+Fijamos $b,c$ y perturbamos solo el coeficiente principal $a$, para ver cómo responde $r_1$: $f(a)=r_1$. Partiendo de la identidad $ar_1^2+br_1+c=0$ y derivando implícitamente respecto a $a$ (con $b,c$ fijos):
+
+$$r_1^2+2ar_1\frac{dr_1}{da}+b\,\frac{dr_1}{da}=0 \;\Longrightarrow\; \frac{dr_1}{da}=\frac{-r_1^2}{2ar_1+b}$$
+
+$$\kappa_f(a) = \left|\frac{a}{r_1}\cdot\frac{dr_1}{da}\right| = \left|\frac{a\,r_1}{2ar_1+b}\right|$$
+
+Usando la fórmula cuadrática, $|2ar_1+b|=\left|\sqrt{b^2-4ac}\right|=|a(r_1-r_2)|$:
+
+$$\boxed{\kappa_f(a) = \left|\frac{r_1}{r_1-r_2}\right|}$$
+
+El problema está mal condicionado exactamente cuando $|r_1|\gg|r_1-r_2|$ — es decir, cuando las raíces están mucho más cerca entre sí que del origen. En el caso extremo de una raíz doble ($r_1=r_2$), $\kappa_f\to\infty$.
+
+## Simulación — sensibilidad de las raíces de $p(x)=a(x-c)(x-d)$
+
+Para hacer tangible la fórmula anterior, parametrizamos el polinomio directamente por sus raíces $c,d$ y su coeficiente principal $a$:
+
+$$p(x) = a(x-c)(x-d) = a\,x^2 \underbrace{-\,a(c+d)}_{B}\,x + \underbrace{a\,c\,d}_{C}$$
+
+de modo que, en ausencia de redondeo, las raíces son exactamente $r_1=c$ y $r_2=d$ para cualquier $a\ne 0$. La simulación perturba **solo** el coeficiente $a\to a(1+\varepsilon)$, mantiene $B,C$ fijos (tal como en la derivación de $\kappa_f(a)$), recalcula las raíces con la fórmula cuadrática, y compara:
+
+- el error relativo **predicho** por la teoría: $\kappa_f(a)\cdot|\varepsilon| = \left|\dfrac{r_1}{r_1-r_2}\right|\cdot|\varepsilon|$
+- el error relativo **real**, medido directamente sobre la raíz recalculada
+
+Mueve los controles y observa qué pasa con $\kappa_f$ cuando $c$ y $d$ se acercan.
+
+<iframe src="notebooks/condicionamiento-simulacion.html" width="100%" height="1400px" style="border:none;"></iframe>
+
+
+## Tarea
+
+Resolver los siguientes ejercicios de la sección 1.2 ("Exercises") de *Fundamentals of Numerical Computation*, disponibles en <https://fncbook.com/julia/conditioning/#exercises>:

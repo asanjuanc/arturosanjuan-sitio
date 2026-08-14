@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Sensibilidad de raíces — p(x) = a(x-c)(x-d)</title>
+<style>
+  :root{
+    --ink:#1e2327; --muted:#5a6570; --line:#dde3e8; --bg:#fbfcfd;
+    --accent:#2563a8; --accent2:#c1440e; --good:#1a7f5a; --bad:#c1440e;
+    --panel:#ffffff;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; padding:18px 20px 26px; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:14.5px; line-height:1.45;
+  }
+  h2{font-size:16px; margin:0 0 4px;}
+  .sub{color:var(--muted); margin:0 0 16px; font-size:13px;}
+  .layout{display:flex; gap:22px; flex-wrap:wrap; align-items:flex-start;}
+  .panel{
+    background:var(--panel); border:1px solid var(--line); border-radius:10px;
+    padding:16px 18px; flex:1 1 300px;
+  }
+  .panel h3{margin:0 0 12px; font-size:13.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.03em;}
+  .ctrl{margin-bottom:14px;}
+  .ctrl label{display:flex; justify-content:space-between; font-size:13px; margin-bottom:4px;}
+  .ctrl label span.val{font-variant-numeric:tabular-nums; color:var(--accent); font-weight:600;}
+  .ctrl input[type=range]{width:100%; accent-color:var(--accent);}
+  .formula{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    background:#f2f5f7; border:1px solid var(--line); border-radius:6px;
+    padding:8px 10px; font-size:13px; margin:6px 0 14px; color:#333;
+  }
+  table{width:100%; border-collapse:collapse; font-size:13.5px;}
+  th,td{padding:6px 8px; text-align:right; border-bottom:1px solid var(--line);}
+  th:first-child,td:first-child{text-align:left;}
+  th{color:var(--muted); font-weight:600; font-size:12px; text-transform:uppercase;}
+  td.num{font-variant-numeric:tabular-nums;}
+  .badge{
+    display:inline-block; padding:1px 8px; border-radius:20px; font-size:11.5px;
+    font-weight:600;
+  }
+  .badge.good{background:#e4f4ec; color:var(--good);}
+  .badge.bad{background:#fbe9e2; color:var(--bad);}
+  .kappa-box{
+    display:flex; align-items:baseline; gap:10px; margin:10px 0 16px;
+    padding:12px 14px; border-radius:8px; background:#f2f5f7; border:1px solid var(--line);
+  }
+  .kappa-box .k{font-size:26px; font-weight:700; color:var(--accent2); font-variant-numeric:tabular-nums;}
+  .kappa-box .lbl{color:var(--muted); font-size:12.5px;}
+  canvas{width:100%; height:150px; display:block; margin-top:6px;}
+  .footnote{font-size:12px; color:var(--muted); margin-top:10px;}
+  .warn{color:var(--bad); font-weight:600;}
+</style>
+</head>
+<body>
+
+<h2>Sensibilidad de las raíces de <i>p(x) = a(x&minus;c)(x&minus;d)</i></h2>
+<p class="sub">Perturbamos únicamente el coeficiente principal <i>a</i> &rarr; <i>a</i>(1+&epsilon;), manteniendo <i>B</i> y <i>C</i> fijos, y comparamos el error relativo real de la raíz <i>r&#8321;</i> contra la predicción teórica &kappa;<sub>f</sub>(a)&middot;|&epsilon;|.</p>
+
+<div class="layout">
+
+  <div class="panel" style="flex:1 1 280px;">
+    <h3>Controles</h3>
+
+    <div class="ctrl">
+      <label>Coeficiente principal <i>a</i> <span class="val" id="val-a">1.00</span></label>
+      <input type="range" id="a" min="0.1" max="5" step="0.01" value="1">
+    </div>
+
+    <div class="ctrl">
+      <label>Raíz <i>c</i> <span class="val" id="val-c">1.00</span></label>
+      <input type="range" id="c" min="-5" max="5" step="0.01" value="1">
+    </div>
+
+    <div class="ctrl">
+      <label>Raíz <i>d</i> <span class="val" id="val-d">3.00</span></label>
+      <input type="range" id="d" min="-5" max="5" step="0.01" value="3">
+    </div>
+
+    <div class="ctrl">
+      <label>Perturbación relativa &epsilon; en <i>a</i> <span class="val" id="val-eps">1.0%</span></label>
+      <input type="range" id="eps" min="-5" max="5" step="0.01" value="1">
+    </div>
+
+    <div class="formula" id="poly-display">p(x) = 1.00 (x &minus; 1.00)(x &minus; 3.00)</div>
+    <div class="formula" id="std-display">= 1.00 x&sup2; + (&minus;4.00) x + 3.00</div>
+  </div>
+
+  <div class="panel" style="flex:1.3 1 380px;">
+    <h3>Número de condición &amp; error</h3>
+
+    <div class="kappa-box">
+      <div class="k" id="kappa-val">2.00</div>
+      <div class="lbl">&kappa;<sub>f</sub>(a) = |r&#8321;/(r&#8321;&minus;r&#8322;)|<br>= |c/(c&minus;d)|</div>
+      <span class="badge good" id="kappa-badge" style="margin-left:auto;">bien condicionado</span>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th></th><th>valor</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>r&#8321; (exacta)</td><td class="num" id="r1-exact">—</td></tr>
+        <tr><td>r&#8322; (exacta)</td><td class="num" id="r2-exact">—</td></tr>
+        <tr><td>a perturbada</td><td class="num" id="a-pert">—</td></tr>
+        <tr><td>r&#8321; recalculada</td><td class="num" id="r1-pert">—</td></tr>
+        <tr><td>error relativo <b>real</b> de r&#8321;</td><td class="num" id="err-real">—</td></tr>
+        <tr><td>error relativo <b>predicho</b> (&kappa;&middot;|&epsilon;|)</td><td class="num" id="err-pred">—</td></tr>
+        <tr><td>razón real / predicho</td><td class="num" id="ratio">—</td></tr>
+      </tbody>
+    </table>
+
+    <div class="footnote">La razón real/predicho debe acercarse a 1 cuando |&epsilon;| &rarr; 0 (el número de condición es un límite). Para &epsilon; grande, la aproximación lineal se degrada — normal.</div>
+  </div>
+
+  <div class="panel" style="flex:1 1 100%;">
+    <h3>&kappa;<sub>f</sub>(a) en función de la separación de raíces |c&minus;d|, con c fijo</h3>
+    <canvas id="chart"></canvas>
+    <div class="footnote">La curva muestra cómo &kappa;<sub>f</sub> explota cuando <i>d</i> se acerca a <i>c</i> (raíz doble) y se aplana cuando las raíces están lejos entre sí. El punto rojo marca la configuración actual.</div>
+  </div>
+
+</div>
+
+<script>
+const els = {
+  a: document.getElementById('a'), c: document.getElementById('c'),
+  d: document.getElementById('d'), eps: document.getElementById('eps'),
+  valA: document.getElementById('val-a'), valC: document.getElementById('val-c'),
+  valD: document.getElementById('val-d'), valEps: document.getElementById('val-eps'),
+  polyDisplay: document.getElementById('poly-display'),
+  stdDisplay: document.getElementById('std-display'),
+  kappaVal: document.getElementById('kappa-val'),
+  kappaBadge: document.getElementById('kappa-badge'),
+  r1Exact: document.getElementById('r1-exact'),
+  r2Exact: document.getElementById('r2-exact'),
+  aPert: document.getElementById('a-pert'),
+  r1Pert: document.getElementById('r1-pert'),
+  errReal: document.getElementById('err-real'),
+  errPred: document.getElementById('err-pred'),
+  ratio: document.getElementById('ratio'),
+  chart: document.getElementById('chart'),
+};
+
+function fmt(x, digits=4){
+  if (!isFinite(x)) return '∞';
+  return x.toLocaleString('en-US', {minimumFractionDigits:digits, maximumFractionDigits:digits});
+}
+function pct(x, digits=4){
+  if (!isFinite(x)) return '∞';
+  return (x*100).toLocaleString('en-US', {minimumFractionDigits:digits, maximumFractionDigits:digits}) + '%';
+}
+
+// Resuelve A x^2 + B x + C0 = 0 devolviendo [r1, r2] con la convención
+// r1 = (-B - sqrt(disc))/(2A),  r2 = (-B + sqrt(disc))/(2A)
+function solveQuadratic(A, B, C0){
+  const disc = B*B - 4*A*C0;
+  const sq = Math.sqrt(Math.max(disc, 0));
+  const r1 = (-B - sq) / (2*A);
+  const r2 = (-B + sq) / (2*A);
+  return [r1, r2];
+}
+
+function update(){
+  const a = parseFloat(els.a.value);
+  const c = parseFloat(els.c.value);
+  const d = parseFloat(els.d.value);
+  const epsPct = parseFloat(els.eps.value);
+  const eps = epsPct / 100;
+
+  els.valA.textContent = fmt(a, 2);
+  els.valC.textContent = fmt(c, 2);
+  els.valD.textContent = fmt(d, 2);
+  els.valEps.textContent = pct(eps, 2);
+
+  // coeficientes estándar: A x^2 + B x + C0
+  const A = a, B = -a*(c+d), C0 = a*c*d;
+
+  els.polyDisplay.innerHTML = `p(x) = ${fmt(a,2)} (x &minus; ${fmt(c,2)})(x &minus; ${fmt(d,2)})`;
+  els.stdDisplay.innerHTML = `= ${fmt(A,2)} x&sup2; + (${B>=0?'+':'&minus;'}${fmt(Math.abs(B),2)}) x + ${fmt(C0,2)}`;
+
+  // raíces exactas (deberían coincidir con c, d salvo orden)
+  const [r1, r2] = solveQuadratic(A, B, C0);
+
+  // kappa_f(a) = |r1/(r1-r2)|
+  const kappa = Math.abs(r1/(r1-r2));
+
+  els.kappaVal.textContent = isFinite(kappa) ? fmt(kappa, 3) : '∞';
+  if (kappa > 20 || !isFinite(kappa)){
+    els.kappaBadge.textContent = 'muy mal condicionado';
+    els.kappaBadge.className = 'badge bad';
+  } else if (kappa > 3){
+    els.kappaBadge.textContent = 'mal condicionado';
+    els.kappaBadge.className = 'badge bad';
+  } else {
+    els.kappaBadge.textContent = 'bien condicionado';
+    els.kappaBadge.className = 'badge good';
+  }
+
+  // perturbación de a, con B, C0 fijos
+  const aPert = a*(1+eps);
+  const [r1Pert, r2Pert] = solveQuadratic(aPert, B, C0);
+
+  const errReal = Math.abs((r1Pert - r1)/r1);
+  const errPred = kappa * Math.abs(eps);
+
+  els.r1Exact.textContent = fmt(r1, 4);
+  els.r2Exact.textContent = fmt(r2, 4);
+  els.aPert.textContent = fmt(aPert, 4);
+  els.r1Pert.textContent = fmt(r1Pert, 4);
+  els.errReal.textContent = pct(errReal, 4);
+  els.errPred.textContent = pct(errPred, 4);
+  els.ratio.textContent = fmt(errReal/errPred, 3);
+
+  drawChart(a, c);
+}
+
+function drawChart(a, c){
+  const canvas = els.chart;
+  const dpr = window.devicePixelRatio || 1;
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  canvas.width = w*dpr; canvas.height = h*dpr;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0,0,w,h);
+
+  const margin = {left:44, right:14, top:10, bottom:26};
+  const plotW = w - margin.left - margin.right;
+  const plotH = h - margin.top - margin.bottom;
+
+  // dominio: separacion s = |c-d| de 0.02 a 6, kappa = |c|/s  (r1=c fijo aqui)
+  const sMin = 0.02, sMax = 6;
+  const kappaOf = s => Math.abs(c)/s;
+
+  // eje y en escala log, recortado a un rango razonable
+  const kMin = 0.1, kMax = 200;
+  const xOf = s => margin.left + plotW * (Math.log(s)-Math.log(sMin))/(Math.log(sMax)-Math.log(sMin));
+  const yOf = k => margin.top + plotH * (1 - (Math.log(Math.min(Math.max(k,kMin),kMax))-Math.log(kMin))/(Math.log(kMax)-Math.log(kMin)));
+
+  // ejes
+  ctx.strokeStyle = '#dde3e8';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(margin.left, margin.top);
+  ctx.lineTo(margin.left, h-margin.bottom);
+  ctx.lineTo(w-margin.right, h-margin.bottom);
+  ctx.stroke();
+
+  ctx.fillStyle = '#5a6570';
+  ctx.font = '11px -apple-system,Helvetica,Arial,sans-serif';
+  ctx.fillText('κ(a)', 4, margin.top+10);
+  ctx.fillText('|c − d|', w-margin.right-38, h-6);
+
+  // curva
+  ctx.strokeStyle = '#2563a8';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  const N = 200;
+  for (let i=0;i<=N;i++){
+    const s = sMin * Math.pow(sMax/sMin, i/N);
+    const k = kappaOf(s);
+    const x = xOf(s), y = yOf(k);
+    if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+
+  // punto actual
+  const sCurrent = Math.max(Math.abs(document.getElementById('d').value - c), sMin);
+  const kCurrent = kappaOf(sCurrent);
+  ctx.fillStyle = '#c1440e';
+  ctx.beginPath();
+  ctx.arc(xOf(sCurrent), yOf(kCurrent), 4.5, 0, 2*Math.PI);
+  ctx.fill();
+}
+
+[els.a, els.c, els.d, els.eps].forEach(el => el.addEventListener('input', update));
+window.addEventListener('resize', () => update());
+update();
+</script>
+
+</body>
+</html>

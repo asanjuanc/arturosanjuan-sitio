@@ -4,7 +4,7 @@
     "href": "cursos/probabilidad/index.html",
     "title": "Probabilidad",
     "section": "",
-    "text": "Introducción\n\n\nApuntes de clase: espacios de probabilidad y σ-álgebras\n\n\nExperimentos aleatorios, espacios muestrales, σ-álgebras, continuidad de la probabilidad y probabilidad de Laplace.\n\n\n\n\n\n12 ago 2026\n\n\nArturo Sanjuán\n\n\n\n\n\nNo hay resultados"
+    "text": "Introducción\n\n\nApuntes de clase: espacios de probabilidad y σ-álgebras\n\n\nExperimentos aleatorios, espacios muestrales, σ-álgebras, continuidad de la probabilidad y probabilidad de Laplace.\n\n\n\n\n\n13 ago 2026\n\n\nArturo Sanjuán\n\n\n\n\n\nNo hay resultados"
   },
   {
     "objectID": "cursos/index.html",
@@ -46,21 +46,7 @@
     "href": "cursos/numerico/index.html",
     "title": "Análisis Numérico",
     "section": "",
-    "text": "Introducción\n\n\nApuntes de clase: sistemas de numeración y punto flotante\n\n\nSistemas de numeración, bases, y la construcción del conjunto de números de punto flotante 𝔽.\n\n\n\n\n\n12 ago 2026\n\n\nArturo Sanjuán\n\n\n\n\n\nNo hay resultados"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Home",
-    "section": "",
-    "text": "Laguna Negra Mongua, Boyacá Colombia\n\n\nSoy profesor titular en la Universidad Distrital Francisco José de Caldas, donde participo en los grupos de investigación MESCUD y CMyT. Realicé también mi pregrado, maestría y doctorado en matemáticas en la Universidad Nacional de Colombia bajo la dirección de los profesores Alfonso Castro (Harvey Mudd College) y Francisco Caicedo (Universidad Nacional de Colombia). Previamente fui docente de planta en la Universidad de los Andes en Bogotá (2003–2006).\nMi investigación se centra en ecuaciones diferenciales parciales y diferenciales-funcionales, abordadas con métodos topológicos, con especial énfasis en la ecuación de onda semilineal con condiciones Dirichlet-periódicas.\nCorreo: aasanjuanc@udistrital.edu.co"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site"
+    "text": "Introducción\n\n\nApuntes de clase: sistemas de numeración y punto flotante\n\n\nSistemas de numeración, bases, y la construcción del conjunto de números de punto flotante 𝔽.\n\n\n\n\n\n13 ago 2026\n\n\nArturo Sanjuán\n\n\n\n\n\n\n\n\n\n\n\n\nCondicionamiento\n\n\nApuntes de clase: cancelación catastrófica, pérdida de significancia y número de condición\n\n\nCancelación catastrófica, pérdida de significancia, y la definición formal del número de condición relativo de un problema.\n\n\n\n\n\n13 ago 2026\n\n\nArturo Sanjuán\n\n\n\n\n\nNo hay resultados"
   },
   {
     "objectID": "cursos/numerico/introduccion/index.html",
@@ -147,6 +133,76 @@
     "text": "11 Tarea\nResolver todos los ejercicios de la sección 1.1.4 (“Exercises”) de Fundamentals of Numerical Computation, disponibles en https://fncbook.com/julia/floating-point/#exercises: los ejercicios 1.1.1 a 1.1.5, sobre el conjunto \\(\\mathbb{F}\\), la equivalencia de las cotas de error, aproximaciones racionales a \\(\\pi\\), precisión sencilla IEEE 754, y nextfloat."
   },
   {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Home",
+    "section": "",
+    "text": "Laguna Negra Mongua, Boyacá Colombia\n\n\nSoy profesor titular en la Universidad Distrital Francisco José de Caldas y hago parte de los grupos de investigación MESCUD y CMyT. Realicé mis estudios de pregrado, maestría y doctorado en Matemáticas en la Universidad Nacional de Colombia, bajo la dirección de los profesores Alfonso Castro (Harvey Mudd College) y Francisco Caicedo (Universidad Nacional de Colombia). Anteriormente, fui docente de planta en la Universidad de los Andes en Bogotá.\nMi investigación se centra en ecuaciones diferenciales parciales y funcional-diferenciales mediante métodos topológicos, con especial énfasis en la ecuación de onda semilineal con condiciones de Dirichlet-periódicas.\nCorreo: aasanjuanc@udistrital.edu.co"
+  },
+  {
+    "objectID": "cursos/numerico/condicionamiento/index.html",
+    "href": "cursos/numerico/condicionamiento/index.html",
+    "title": "Condicionamiento",
+    "section": "",
+    "text": "Consideremos la sucesión\n\\[x_{n+1} = 10x_n - 9\\]\nDesde el punto de vista del análisis matemático puro, si \\(x_0=1\\) entonces \\(x_n=1\\) para todo \\(n\\): es la sucesión constante, porque \\(x=1\\) es el único punto fijo de \\(g(x)=10x-9\\).\nSupongamos ahora que en punto flotante solo tenemos \\(d=2\\) cifras significativas, y que el dato \\(x_0=1\\) se representa como \\(\\tilde x_0=0{,}99\\) — un error relativo de apenas el \\(1\\%\\), del orden de cualquier redondeo típico. Aplicamos la recurrencia tal cual, redondeando a 2 cifras en cada paso:\n\n\n\n\n\n\n\n\n\n\n\\(n\\)\n\\(\\tilde x_n\\)\nerror absoluto \\(e_n=\\tilde x_n-1\\)\nerror relativo\ndígitos perdidos\n\n\n\n\n0\n0,99\n\\(-0{,}01=-1\\times10^{-2}\\)\n\\(1\\%\\)\n0\n\n\n1\n0,90\n\\(-0{,}10=-1\\times10^{-1}\\)\n\\(10\\%\\)\n1\n\n\n2\n0,00\n\\(-1{,}00=-1\\times10^{0}\\)\n\\(100\\%\\)\n2\n\n\n3\n\\(-9{,}00\\)\n\\(-10{,}00=-1\\times10^{1}\\)\n\\(1000\\%\\)\n3\n\n\n\nEn tres pasos el error relativo pasó de \\(1\\%\\) a \\(1000\\%\\) — la respuesta calculada (\\(-9\\)) no tiene ninguna relación con el valor verdadero (\\(1\\)).\n\n\n\n\n\n\nImportantePor qué ocurre esto\n\n\n\nEscribiendo \\(\\tilde x_n = 1+e_n\\) y sustituyendo en la recurrencia:\n\\[1+e_{n+1}=10(1+e_n)-9=1+10e_n \\;\\Longrightarrow\\; e_{n+1}=10\\,e_n \\;\\Longrightarrow\\; e_n=10^n e_0\\]\nEl error se multiplica por 10 en cada paso, sin importar qué tan pequeño sea \\(e_0\\). Tomar un dato más aproximado, como \\(x_0=0{,}99999\\), no resuelve el problema, solo lo retrasa: el problema está mal condicionado. El algoritmo y el computador dan una respuesta, pero esa respuesta no está cerca de “la realidad”.\n\n\nEste es exactamente el mecanismo que hace silenciosa la pérdida de significancia: ninguna operación individual (multiplicar por 10, restar 9) tiene nada de alarmante — el resultado final simplemente deja de tener sentido, sin ningún símbolo de error que lo anuncie.\nEl mismo fenómeno aparece cuando restamos dos números cercanos:\n\\[2{,}1357 - 2{,}1356 = 0{,}0001 = 1\\times10^{-4}\\]\nCada operando tiene 5 cifras significativas, pero el resultado solo tiene 1 — perdimos 4 cifras significativas en una sola resta."
+  },
+  {
+    "objectID": "cursos/numerico/condicionamiento/index.html#cancelación-catastrófica-o-pérdida-de-significancia",
+    "href": "cursos/numerico/condicionamiento/index.html#cancelación-catastrófica-o-pérdida-de-significancia",
+    "title": "Condicionamiento",
+    "section": "",
+    "text": "Consideremos la sucesión\n\\[x_{n+1} = 10x_n - 9\\]\nDesde el punto de vista del análisis matemático puro, si \\(x_0=1\\) entonces \\(x_n=1\\) para todo \\(n\\): es la sucesión constante, porque \\(x=1\\) es el único punto fijo de \\(g(x)=10x-9\\).\nSupongamos ahora que en punto flotante solo tenemos \\(d=2\\) cifras significativas, y que el dato \\(x_0=1\\) se representa como \\(\\tilde x_0=0{,}99\\) — un error relativo de apenas el \\(1\\%\\), del orden de cualquier redondeo típico. Aplicamos la recurrencia tal cual, redondeando a 2 cifras en cada paso:\n\n\n\n\n\n\n\n\n\n\n\\(n\\)\n\\(\\tilde x_n\\)\nerror absoluto \\(e_n=\\tilde x_n-1\\)\nerror relativo\ndígitos perdidos\n\n\n\n\n0\n0,99\n\\(-0{,}01=-1\\times10^{-2}\\)\n\\(1\\%\\)\n0\n\n\n1\n0,90\n\\(-0{,}10=-1\\times10^{-1}\\)\n\\(10\\%\\)\n1\n\n\n2\n0,00\n\\(-1{,}00=-1\\times10^{0}\\)\n\\(100\\%\\)\n2\n\n\n3\n\\(-9{,}00\\)\n\\(-10{,}00=-1\\times10^{1}\\)\n\\(1000\\%\\)\n3\n\n\n\nEn tres pasos el error relativo pasó de \\(1\\%\\) a \\(1000\\%\\) — la respuesta calculada (\\(-9\\)) no tiene ninguna relación con el valor verdadero (\\(1\\)).\n\n\n\n\n\n\nImportantePor qué ocurre esto\n\n\n\nEscribiendo \\(\\tilde x_n = 1+e_n\\) y sustituyendo en la recurrencia:\n\\[1+e_{n+1}=10(1+e_n)-9=1+10e_n \\;\\Longrightarrow\\; e_{n+1}=10\\,e_n \\;\\Longrightarrow\\; e_n=10^n e_0\\]\nEl error se multiplica por 10 en cada paso, sin importar qué tan pequeño sea \\(e_0\\). Tomar un dato más aproximado, como \\(x_0=0{,}99999\\), no resuelve el problema, solo lo retrasa: el problema está mal condicionado. El algoritmo y el computador dan una respuesta, pero esa respuesta no está cerca de “la realidad”.\n\n\nEste es exactamente el mecanismo que hace silenciosa la pérdida de significancia: ninguna operación individual (multiplicar por 10, restar 9) tiene nada de alarmante — el resultado final simplemente deja de tener sentido, sin ningún símbolo de error que lo anuncie.\nEl mismo fenómeno aparece cuando restamos dos números cercanos:\n\\[2{,}1357 - 2{,}1356 = 0{,}0001 = 1\\times10^{-4}\\]\nCada operando tiene 5 cifras significativas, pero el resultado solo tiene 1 — perdimos 4 cifras significativas en una sola resta."
+  },
+  {
+    "objectID": "cursos/numerico/condicionamiento/index.html#el-número-de-condición-relativo",
+    "href": "cursos/numerico/condicionamiento/index.html#el-número-de-condición-relativo",
+    "title": "Condicionamiento",
+    "section": "2 El número de condición relativo",
+    "text": "2 El número de condición relativo\nLa pregunta natural es: ¿qué tan sensible es un problema, independientemente del algoritmo o la máquina que se use para resolverlo?\n\n2.1 Un ejemplo de calentamiento\nSea \\(f(x)=x+1\\). En la máquina, \\(x\\) se representa como \\(\\text{fl}(x)=x(1+\\epsilon)\\) con \\(|\\epsilon|\\le \\epsilon_{\\text{mach}}/2\\). Si la suma se hace exacta:\n\\[y = \\text{fl}(x)+1 = x(1+\\epsilon)+1\\]\nEl error relativo del resultado es\n\\[\\frac{|y-f(x)|}{|f(x)|} = \\frac{|x(1+\\epsilon)+1-(x+1)|}{|x+1|} = \\frac{|\\epsilon x|}{|x+1|}\\]\nEste error puede ser arbitrariamente grande si \\(x\\approx -1\\) — aunque \\(\\epsilon\\) sea minúsculo. El problema “sumar 1” es benigno lejos de \\(x=-1\\), mal condicionado cerca de ahí.\n\n\n2.2 Definición formal\nQueremos generalizar esta idea: dado un problema \\(f\\) y un dato \\(a\\), ¿cuánto se amplifica el error relativo de \\(a\\) al pasar por \\(f\\)?\n\n\n\n\n\n\nImportanteDefinición — número de condición relativo\n\n\n\n\\[\\kappa_f(a) = \\lim_{\\epsilon\\to 0} \\frac{\\left|f(a)-f(a(1+\\epsilon))\\right|/|f(a)|}{|\\epsilon|}\\]\nEs la razón entre el cambio relativo en el resultado y el cambio relativo en el dato, en el límite de perturbaciones pequeñas. Si \\(f\\) es diferenciable en \\(a\\):\n\\[\\kappa_f(a) = \\left|\\frac{a\\,f'(a)}{f(a)}\\right|\\]\n\n\nSi \\(\\kappa_f(a)\\) es muy grande, el problema está mal condicionado en \\(a\\): cualquier perturbación de los datos — así sea del tamaño de \\(\\epsilon_{\\text{mach}}\\) — se amplifica hasta volver el resultado inútil. Esto no depende del algoritmo ni de la máquina: es una propiedad del problema mismo.\n\n\n2.3 Ejemplos elementales\n\\[f(x)=x-c \\;\\Longrightarrow\\; \\kappa_f(x)=\\left|\\frac{x}{x-c}\\right|\\]\nPuede ser muy grande si \\(|x|\\gg|x-c|\\), por ejemplo si \\(x\\approx c\\) — esta es exactamente la resta cancelante de la sección anterior.\n\\[f(x)=cx \\;\\Longrightarrow\\; \\kappa_f(x)=1\\]\nLa multiplicación por una constante nunca amplifica el error relativo: siempre funciona bien.\n\\[f(x)=x^p \\;\\Longrightarrow\\; \\kappa_f(x)=|p|\\]\n\\[f(x)=\\cos(x) \\;\\Longrightarrow\\; \\kappa_f(x)=|x\\tan(x)|\\]\nPuede ser grande si \\(x\\) está cerca de un múltiplo impar de \\(\\pi/2\\) (ahí \\(f(x)\\approx 0\\)) o si \\(|x|\\gg 1\\)."
+  },
+  {
+    "objectID": "cursos/numerico/condicionamiento/index.html#ejercicio-1.2.3-fxdfracex-1x",
+    "href": "cursos/numerico/condicionamiento/index.html#ejercicio-1.2.3-fxdfracex-1x",
+    "title": "Condicionamiento",
+    "section": "3 Ejercicio 1.2.3 — \\(f(x)=\\dfrac{e^x-1}{x}\\)",
+    "text": "3 Ejercicio 1.2.3 — \\(f(x)=\\dfrac{e^x-1}{x}\\)\nCalculemos \\(\\kappa_f(x)\\) para \\(f(x)=\\dfrac{e^x-1}{x}\\) (extendida por continuidad a \\(f(0)=1\\)).\n\\[f'(x)=\\frac{xe^x-(e^x-1)}{x^2}=\\frac{(x-1)e^x+1}{x^2}\\]\n\\[\\kappa_f(x)=\\left|x\\cdot\\frac{f'(x)}{f(x)}\\right| = \\left|\\frac{(x-1)e^x+1}{e^x-1}\\right|\\]\nExpandiendo en serie de Taylor alrededor de \\(x=0\\):\n\\[(x-1)e^x+1 = \\frac{x^2}{2}+\\frac{x^3}{3}+\\cdots \\qquad e^x-1=x+\\frac{x^2}{2}+\\cdots\\]\n\\[\\kappa_f(x) \\approx \\frac{x^2/2}{x} = \\frac{|x|}{2} \\;\\xrightarrow[x\\to 0]{}\\; 0\\]\nNuméricamente: \\(\\kappa_f(10^{-6})\\approx 5\\times10^{-7}\\), \\(\\kappa_f(1)\\approx 0{,}58\\), \\(\\kappa_f(10)\\approx 9\\), \\(\\kappa_f(20)\\approx 19\\) — crece linealmente solo para \\(x\\) grande, nunca “explota”. El problema \\(f(x)=(e^x-1)/x\\) es entonces muy bien condicionado cerca de \\(x=0\\): \\(\\kappa_f(0)=0\\).\nY sin embargo, si evalúas \\(f\\) en una máquina con esta fórmula tal cual —calcular \\(e^x\\), restarle 1, dividir por \\(x\\)— para \\(x\\) pequeño el resultado es basura. Esto no es una contradicción: es la distinción central del capítulo entre condicionamiento del problema y estabilidad del algoritmo.\n\n3.1 Qué pasa exactamente en la resta \\(e^x-1\\)\nCuando \\(x\\) es pequeño, \\(e^x\\) está muy cerca de \\(1\\) — por ejemplo \\(e^{10^{-8}} = 1{,}00000000999999994\\ldots\\) En doble precisión (\\(\\approx16\\) cifras significativas), ese número se guarda con toda su precisión disponible, pero al restarle \\(1\\) ocurre exactamente la cancelación de la primera sección: los primeros 8 dígitos (el “\\(1{,}0000000\\)” que comparten \\(e^x\\) y \\(1\\)) se cancelan exactamente, y lo único que sobrevive son los dígitos que ya estaban cerca del límite de precisión de la máquina. El resultado hereda el ruido de redondeo de \\(e^x\\) como si fuera señal.\nComparemos, para \\(x=10^{-8}\\), la fórmula naíf y la función segura expm1 (diseñada para evitar la resta):\n\n\n\ncantidad\nvalor calculado\n\n\n\n\n\\(e^x\\) (doble precisión)\n\\(1{,}00000000999999994\\)\n\n\n\\(e^x-1\\) (naíf)\n\\(9{,}99999993922529\\times10^{-9}\\)\n\n\nexpm1(x) (seguro)\n\\(1{,}00000000500000\\times10^{-8}\\)\n\n\nvalor de referencia\n\\(1{,}00000000500000\\times10^{-8}\\)\n\n\n\nEl resultado naíf tiene error relativo \\(\\approx 1{,}1\\times10^{-8}\\) — apenas 8 dígitos correctos, cuando la máquina en principio te puede dar 16. expm1 da el valor exacto hasta el redondeo de máquina. Con \\(x=10^{-12}\\) la cosa empeora: la fórmula naíf se queda con solo 4 dígitos correctos, mientras expm1 sigue exacta."
+  },
+  {
+    "objectID": "cursos/numerico/condicionamiento/index.html#ejercicio-1.2.5-condición-del-inverso",
+    "href": "cursos/numerico/condicionamiento/index.html#ejercicio-1.2.5-condición-del-inverso",
+    "title": "Condicionamiento",
+    "section": "4 Ejercicio 1.2.5 — condición del inverso",
+    "text": "4 Ejercicio 1.2.5 — condición del inverso\nSea \\(f\\) con número de condición \\(\\kappa_f\\), y \\(f^{-1}\\) su inversa. Queremos mostrar\n\\[\\kappa_{f^{-1}}(x) = \\frac{1}{\\kappa_f\\big(f^{-1}(x)\\big)}\\]\nDemostración, sin invocar el teorema de la función inversa: sea \\(h = f\\circ f^{-1} = \\text{id}\\).\nPrimero, \\(\\kappa_{\\text{id}}(x)=1\\): con \\(\\text{id}'(x)=1\\), \\(\\kappa_{\\text{id}}(x)=|x\\cdot 1/x|=1\\).\nPor la regla de la cadena para números de condición (ejercicio 1.2.4), aplicada a \\(h=f\\circ f^{-1}\\):\n\\[\\kappa_h(x) = \\kappa_f\\big(f^{-1}(x)\\big)\\cdot\\kappa_{f^{-1}}(x)\\]\nComo \\(h=\\text{id}\\), \\(\\kappa_h(x)=\\kappa_{\\text{id}}(x)=1\\). Despejando:\n\\[1 = \\kappa_f\\big(f^{-1}(x)\\big)\\cdot\\kappa_{f^{-1}}(x) \\;\\Longrightarrow\\; \\kappa_{f^{-1}}(x)=\\frac{1}{\\kappa_f\\big(f^{-1}(x)\\big)} \\qquad \\blacksquare\\]\nEsta ruta es más corta que aplicar el teorema de la función inversa directamente, y no exige demostrar por separado que \\(f^{-1}\\) es derivable."
+  },
+  {
+    "objectID": "cursos/numerico/condicionamiento/index.html#raíces-de-un-polinomio-cuadrático",
+    "href": "cursos/numerico/condicionamiento/index.html#raíces-de-un-polinomio-cuadrático",
+    "title": "Condicionamiento",
+    "section": "5 Raíces de un polinomio cuadrático",
+    "text": "5 Raíces de un polinomio cuadrático\nConsideremos \\(ax^2+bx+c=0\\). Los datos son los coeficientes \\((a,b,c)\\); el resultado son las raíces \\(r_1,r_2\\) (posiblemente complejas). Formalmente, \\(f(a,b,c)=(r_1,r_2)\\).\nFijamos \\(b,c\\) y perturbamos solo el coeficiente principal \\(a\\), para ver cómo responde \\(r_1\\): \\(f(a)=r_1\\). Partiendo de la identidad \\(ar_1^2+br_1+c=0\\) y derivando implícitamente respecto a \\(a\\) (con \\(b,c\\) fijos):\n\\[r_1^2+2ar_1\\frac{dr_1}{da}+b\\,\\frac{dr_1}{da}=0 \\;\\Longrightarrow\\; \\frac{dr_1}{da}=\\frac{-r_1^2}{2ar_1+b}\\]\n\\[\\kappa_f(a) = \\left|\\frac{a}{r_1}\\cdot\\frac{dr_1}{da}\\right| = \\left|\\frac{a\\,r_1}{2ar_1+b}\\right|\\]\nUsando la fórmula cuadrática, \\(|2ar_1+b|=\\left|\\sqrt{b^2-4ac}\\right|=|a(r_1-r_2)|\\):\n\\[\\boxed{\\kappa_f(a) = \\left|\\frac{r_1}{r_1-r_2}\\right|}\\]\nEl problema está mal condicionado exactamente cuando \\(|r_1|\\gg|r_1-r_2|\\) — es decir, cuando las raíces están mucho más cerca entre sí que del origen. En el caso extremo de una raíz doble (\\(r_1=r_2\\)), \\(\\kappa_f\\to\\infty\\)."
+  },
+  {
+    "objectID": "cursos/numerico/condicionamiento/index.html#simulación-sensibilidad-de-las-raíces-de-pxax-cx-d",
+    "href": "cursos/numerico/condicionamiento/index.html#simulación-sensibilidad-de-las-raíces-de-pxax-cx-d",
+    "title": "Condicionamiento",
+    "section": "6 Simulación — sensibilidad de las raíces de \\(p(x)=a(x-c)(x-d)\\)",
+    "text": "6 Simulación — sensibilidad de las raíces de \\(p(x)=a(x-c)(x-d)\\)\nPara hacer tangible la fórmula anterior, parametrizamos el polinomio directamente por sus raíces \\(c,d\\) y su coeficiente principal \\(a\\):\n\\[p(x) = a(x-c)(x-d) = a\\,x^2 \\underbrace{-\\,a(c+d)}_{B}\\,x + \\underbrace{a\\,c\\,d}_{C}\\]\nde modo que, en ausencia de redondeo, las raíces son exactamente \\(r_1=c\\) y \\(r_2=d\\) para cualquier \\(a\\ne 0\\). La simulación perturba solo el coeficiente \\(a\\to a(1+\\varepsilon)\\), mantiene \\(B,C\\) fijos (tal como en la derivación de \\(\\kappa_f(a)\\)), recalcula las raíces con la fórmula cuadrática, y compara:\n\nel error relativo predicho por la teoría: \\(\\kappa_f(a)\\cdot|\\varepsilon| = \\left|\\dfrac{r_1}{r_1-r_2}\\right|\\cdot|\\varepsilon|\\)\nel error relativo real, medido directamente sobre la raíz recalculada\n\nMueve los controles y observa qué pasa con \\(\\kappa_f\\) cuando \\(c\\) y \\(d\\) se acercan."
+  },
+  {
+    "objectID": "cursos/numerico/condicionamiento/index.html#tarea",
+    "href": "cursos/numerico/condicionamiento/index.html#tarea",
+    "title": "Condicionamiento",
+    "section": "7 Tarea",
+    "text": "7 Tarea\nResolver los siguientes ejercicios de la sección 1.2 (“Exercises”) de Fundamentals of Numerical Computation, disponibles en https://fncbook.com/julia/conditioning/#exercises:"
+  },
+  {
     "objectID": "cursos/odes/introduccion/index.html",
     "href": "cursos/odes/introduccion/index.html",
     "title": "Introducción",
@@ -172,7 +228,7 @@
     "href": "cursos/odes/index.html",
     "title": "Ecuaciones Diferenciales",
     "section": "",
-    "text": "Introducción\n\n\nApuntes de clase: breve historia de las ecuaciones diferenciales y ejercicios resueltos\n\n\nDe Zenón al caos: por qué nació el cálculo diferencial para describir el cambio, y ejercicios resueltos del Simmons sobre ecuaciones separables e implícitas.\n\n\n\n\n\n12 ago 2026\n\n\nArturo Sanjuán\n\n\n\n\n\n\n\n\n\n\n\n\nFamilias Ortogonales\n\n\nApuntes de clase: geometría de las ecuaciones diferenciales\n\n\nCómo una familia de curvas define su propia ecuación diferencial, y cómo esa ecuación revela la familia ortogonal: dos ejemplos resueltos con applets interactivos y código Maxima.\n\n\n\n\n\n12 ago 2026\n\n\nArturo Sanjuán\n\n\n\n\n\nNo hay resultados"
+    "text": "Introducción\n\n\nApuntes de clase: breve historia de las ecuaciones diferenciales y ejercicios resueltos\n\n\nDe Zenón al caos: por qué nació el cálculo diferencial para describir el cambio, y ejercicios resueltos del Simmons sobre ecuaciones separables e implícitas.\n\n\n\n\n\n13 ago 2026\n\n\nArturo Sanjuán\n\n\n\n\n\n\n\n\n\n\n\n\nFamilias Ortogonales\n\n\nApuntes de clase: geometría de las ecuaciones diferenciales\n\n\nCómo una familia de curvas define su propia ecuación diferencial, y cómo esa ecuación revela la familia ortogonal: dos ejemplos resueltos con applets interactivos y código Maxima.\n\n\n\n\n\n13 ago 2026\n\n\nArturo Sanjuán\n\n\n\n\n\nNo hay resultados"
   },
   {
     "objectID": "cursos/probabilidad/introduccion/index.html",
