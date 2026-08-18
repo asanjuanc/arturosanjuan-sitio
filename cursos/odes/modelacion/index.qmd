@@ -1,0 +1,401 @@
+---
+title: "Modelación con Ecuaciones Diferenciales"
+subtitle: "Apuntes de clase: interés compuesto, crecimiento exponencial, el modelo logístico, decaimiento radioactivo y mezclas"
+description: "De las cajitas de Nu al número e, del crecimiento bacteriano al absurdo de Malthus, y del modelo exponencial al logístico: ejercicios resueltos con Maxima y un simulador interactivo de curvas sigmoides."
+author: "Arturo Sanjuán"
+date: today
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 3
+---
+
+## Modelo — interés compuesto y el número $e$
+
+Las cajitas de Nu funcionan con interés compuesto **capitalizado diariamente**: el interés del día se calcula sobre el capital más el interés ya acumulado. Si la tasa efectiva anual es $i_{EA}$, la tasa diaria $i_d$ satisface
+
+$$(1+i_d)^{365} = 1+i_{EA}$$
+
+Con $i_{EA}=9.25\%$, despejando obtenemos $i_d\approx 0.02458\%$, y la tasa nominal anual asociada es
+
+$$r = 365\,i_d \approx 8.97\%$$
+
+Si $n$ es el número de días transcurridos y $A_0$ el capital inicial (sin nuevos aportes), el capital en el día $n$ es
+
+$$A(n) = A_0\left(1+\frac{r}{365}\right)^{n}$$
+
+::: {.callout-note title="¿Qué pasa si en vez de 365 capitalizamos $n$ veces, con $n\to\infty$?"}
+Esta es exactamente la pregunta que se hizo **Jacob Bernoulli** en 1683, estudiando el mismo problema de interés compuesto: ¿converge $\left(1+\dfrac{r}{n}\right)^n$ cuando $n\to\infty$? Bernoulli mostró que sí, y que para $r=1$ el límite está entre 2 y 3 — el primer encuentro documentado con lo que hoy llamamos $e$, sin nombre ni notación todavía.
+
+Fue **Euler**, en 1748 (*Introductio in analysin infinitorum*), quien le dio el nombre $e$, demostró que es irracional (vía fracciones continuas — la prueba rigurosa con la serie $\sum 1/k!$ es de **Fourier**, 1815), y notó la propiedad crucial: $(e^x)' = e^x$. Es decir, $e^{kt}$ satisface la ecuación diferencial $y'=ky$.
+:::
+
+**Comparación numérica.** Si depositamos \$100.000 en una cajita a $i_{EA}=9.25\%$ y lo dejamos un año:
+
+$$100{.}000\cdot(1+i_{EA}) = 100{.}000\cdot(1+9.25\%) = \$109{.}250$$
+
+Si en cambio capitalizáramos **continuamente** (el límite $n\to\infty$), usando $A(t)=A_0 e^{rt}$ con la tasa nominal $r\approx 8.97\%$:
+
+$$100{.}000\cdot e^{0.0897} \approx \$109{.}385$$
+
+La diferencia es de apenas \$135 sobre cien mil pesos en un año — el modelo continuo aproxima extraordinariamente bien al discreto, aun con solo 365 capitalizaciones.
+
+::: {.callout-note title="De dónde sale la EDO"}
+Si $A(t) = A_0 e^{kt}$, entonces $A'(t) = k A_0 e^{kt} = kA(t)$, es decir
+
+$$\frac{dA}{dt} = kA \qquad\Longleftrightarrow\qquad \frac{1}{A}\frac{dA}{dt} = k$$
+
+El cambio **fraccional** (el error relativo) de $A$ respecto al tiempo es constante, y esa constante es justamente la tasa de interés nominal $100k\,\%$.
+:::
+
+## Ejercicio — tiempo para duplicar un capital
+
+*(Simmons, ejercicio 2, p. 27)* Se invierte un capital $P$ a una tasa nominal anual $r$, con capitalización continua. ¿Cuánto tiempo debe pasar para duplicar el capital inicial?
+
+Partimos de $\dfrac{dA}{dt}=rA$, $A(0)=P$, cuya solución es $A(t)=Pe^{rt}$. Queremos $Pe^{rt}=2P$:
+
+$$e^{rt}=2 \quad\Longrightarrow\quad rt=\log 2 \quad\Longrightarrow\quad t=\frac{\log 2}{r}$$
+
+Para la tasa nominal de Nu ($r\approx 8.97\%$):
+
+$$t = \frac{\log 2}{0.0897}\approx 7.73 \text{ años}$$
+
+— poco más de 7 años y 8 meses.
+
+**Variante — ¿qué tasa se necesita para duplicar en exactamente 10 años?** Despejamos $r$ de $e^{10r}=2$:
+
+$$r = \frac{\log 2}{10} \approx 0.0693 = 6.93\%\ \text{(nominal anual)}$$
+
+lo que corresponde a una tasa diaria $i_d\approx 0.01894\%$ y una tasa efectiva anual $i_{EA}\approx 7.1\%$.
+
+::: {.callout-note title="Haciendo las cuentas con Maxima"}
+```maxima
+kill(all);
+
+/* tiempo para duplicar, dada la tasa nominal r */
+ode: 'diff(A,t) = r*A;
+sol: ode2(ode, A, t);
+sol: ic1(sol, t=0, A=P);
+/* sol: A = P*%e^(r*t) */
+
+/* despejar t tal que A = 2P */
+t_duplicar: solve(2*P = rhs(sol), t);
+ev(t_duplicar, r = 0.0897), numer;
+
+/* variante: despejar r para duplicar en 10 años */
+r_necesaria: solve(2*P = subst(t=10, rhs(sol)), r);
+ev(r_necesaria), numer;
+```
+:::
+
+## Modelo — crecimiento exponencial y el absurdo de Malthus
+
+Un cultivo de bacterias se reproduce por fisión celular: en cada ciclo cada bacteria se divide en dos. Si empezamos con $N_0$ bacterias sincronizadas, tras $n$ ciclos hay
+
+$$N(n) = 2^n N_0$$
+
+**Un ejemplo que se vuelve absurdo.** La *E. coli* se divide cada 20 minutos y vive (en cultivo) unos 10 días. Empezando con una sola bacteria, al cabo de 10 días habría aproximadamente $2^{720}\approx 2.9\times 10^{216}$ bacterias. Comparando volúmenes (universo observable $\approx 4\times 10^{80}\,\text{m}^3$, una *E. coli* $\approx 1.3\times 10^{-18}\,\text{m}^3$), esa cantidad de bacterias llenaría el equivalente a **$9.4\cdot 10^210$  universos observables**. Absurdo — y la conclusión pedagógica es clara: **los modelos puramente exponenciales solo son razonables en periodos cortos**, mientras los recursos disponibles no sean una restricción real.
+
+**Pasando al modelo continuo.** Si $h$ es la duración de un ciclo,
+
+$$N(t+h)-N(t) = \left(2^{(t+h)/h}-2^{t/h}\right)N_0 = 2^{t/h}\left(2^{h/h\cdot 1}-1\right)N_0$$
+
+Dividiendo por $h$ y tomando el límite $h\to 0$ (usando $\log 2$ como la tasa instantánea, que llamamos $k$), se llega a
+
+$$N'(t) = kN(t), \qquad N(0)=N_0 \qquad\Longrightarrow\qquad N(t) = N_0e^{kt}$$
+
+Si $k>0$ la población crece sin cota; si $k<0$ decrece hacia cero; si $k=0$ es constante.
+
+**Malthus (1798)** usó exactamente esta ecuación, $N'=kN$, para argumentar que el crecimiento poblacional (geométrico) superaría inevitablemente al crecimiento de la producción de alimentos (que él asumía lineal) — de ahí su predicción de crisis recurrentes por hambruna, guerra o enfermedad (ver la nota histórica más abajo sobre qué tan literal era esa predicción). En Colombia, la tasa de crecimiento poblacional actual es de aproximadamente $k\approx 0.0102$ (1.02% anual).
+
+::: {.callout-note title="Haciendo las cuentas con Maxima"}
+```maxima
+kill(all);
+
+/* fisión celular de E. coli: 10 días, ciclos de 20 min */
+ciclos: 10*24*60/20;   /* 720 ciclos */
+N_final: 2^ciclos;      /* ~2.9e216 */
+float(N_final);
+
+vol_universo: 4e80;      /* m^3 */
+vol_ecoli: 1.3e-18;      /* m^3 */
+universos_llenos: float(N_final*vol_ecoli/vol_universo);
+
+/* modelo continuo N' = kN */
+depends(N,t);
+ode: 'diff(N,t) = k*N;
+sol: ode2(ode, N, t);
+sol: ic1(sol, t=0, N=N0);
+/* sol: N = N0*%e^(k*t) */
+```
+:::
+
+## Modelo — crecimiento logístico (con capacidad de carga)
+
+*(Ejercicio 10)* El crecimiento exponencial ignora que los recursos son limitados. Si existe una **capacidad de carga** $K$ (el tamaño máximo que el entorno puede sostener), un modelo más realista es
+
+$$\frac{dN}{dt} = \alpha\, N(K-N), \qquad N(0)=N_0$$
+
+Cuando $N$ es pequeño comparado con $K$, el término $(K-N)\approx K$ y la ecuación se comporta casi como la exponencial pura; cuando $N$ se acerca a $K$, el crecimiento se frena y se detiene.
+
+**Resolviendo por variables separables.** Separando y usando fracciones parciales,
+
+$$\frac{dN}{N(K-N)} = \alpha\,dt \qquad\Longrightarrow\qquad \frac{1}{K}\log\left|\frac{N}{N-K}\right| = \alpha t + C$$
+
+Exponenciando y aplicando la condición inicial $N(0)=N_0$, se llega a la forma cerrada
+
+$$N(t) = \frac{K}{1+\left(\dfrac{K-N_0}{N_0}\right)e^{-K\alpha t}}$$
+
+— la clásica **curva sigmoide** (forma de S): arranca cerca de $N_0$, crece con concavidad hacia arriba, pasa por un punto de inflexión en $N=K/2$, y se aplana asintóticamente hacia $K$.
+
+
+::: {.callout-note title="Haciendo las cuentas con Maxima — versión completa, paso a paso"}
+```maxima
+kill(all);
+depends(N,t);
+diffeq: diff(N,t) = alpha*N*(K-N);
+diffeq;
+
+solucion: ode2(diffeq, N, t);
+solucion: (logcontract(solucion)*K*alpha);
+solucion: exp(lhs(solucion))=exp(rhs(solucion));
+solucion: ic1(solucion, t=0, N=N0);
+solucion: solve(solucion, N);
+/* solucion: [N=(K*N0*%e^(K*alpha*t))/(N0*%e^(K*alpha*t)-N0+K)] */
+
+/* IMPORTANTE: solve() siempre devuelve una LISTA, incluso con
+   una sola solución. Hay que indexar solucion[1] antes de pedir rhs(). */
+N_explicita: rhs(solucion[1]);
+
+/* Chequeo rápido: en t=0 debe dar N0 */
+ev(N_explicita, t=0);
+
+/* Graficar: si plot2d abre una ventana interactiva (gnuplot_pipes),
+   eso falla en un entorno sin pantalla (batch/consola) y plot2d
+   devuelve "false" sin dibujar nada. La solución es forzar la
+   salida a un archivo PNG en vez de una ventana: */
+load(draw);
+draw2d(
+    explicit(ev(N_explicita, K=1, alpha=2, N0=0.2), t, 0, 5),
+    xlabel = "t", ylabel = "N(t)",
+    proportional_axes = 'xy,
+    terminal = 'png,
+    file_name = "logistica"
+)$
+
+/* Alternativa con plot2d clásico, forzando el terminal PNG a mano: */
+plot2d(ev(N_explicita, K=1, alpha=2, N0=0.2), [t,0,5])$
+```
+:::
+
+::: {.callout-note title="Video explicativo"}
+```{=html}
+<div style="max-width:640px;margin:1em auto;">
+  <video controls style="width:100%;border-radius:8px;border:1px solid #ddd;">
+    <source src="https://www.dropbox.com/scl/fi/v5oesfarbtti1evrfjnrc/explicacion-maxima.mp4?rlkey=vt046u8zejwzeiqj1udbff34u&st=ejcsmmri&raw=1" type="video/mp4">
+    Tu navegador no soporta la reproducción de video en línea. Puedes descargarlo directamente
+    <a href="https://www.dropbox.com/scl/fi/v5oesfarbtti1evrfjnrc/explicacion-maxima.mp4?rlkey=vt046u8zejwzeiqj1udbff34u&st=ejcsmmri&dl=1">aquí</a>.
+  </video>
+</div>
+```
+:::
+
+::: {.callout-note title="Applet — la trampa de $\\ln(K-N)$ vs. $\\ln(N-K)$"}
+Al integrar $\dfrac{1}{K-N}$ hay dos antiderivadas igualmente válidas ($-\log(K-N)$ o $-\log(N-K)$, que difieren en una constante que la condición inicial absorbe), así que si tu cuenta a mano da un signo distinto al de Maxima, **ambas pueden ser correctas** — lo importante es que, tras aplicar la condición inicial, ambas dan exactamente la misma curva $N(t)$.
+:::
+
+::: {.callout-note title="Simulador — curva logística (sigmoide) para distintos $K$, $\\alpha$ y $N_0$"}
+```{=html}
+<div style="border:1px solid #ddd;border-radius:8px;padding:16px;max-width:640px;margin:1em auto;font-family:sans-serif;">
+  <canvas id="log-canvas" width="580" height="380" style="width:100%;height:auto;background:#fff;"></canvas>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;margin-top:10px;">
+    <label>Capacidad de carga $K$: <span id="log-K-val">10</span>
+      <input type="range" id="log-K" min="1" max="20" step="0.5" value="10" style="width:100%;">
+    </label>
+    <label>Tasa $\alpha$: <span id="log-alpha-val">0.05</span>
+      <input type="range" id="log-alpha" min="0.01" max="0.5" step="0.01" value="0.05" style="width:100%;">
+    </label>
+    <label>Población inicial $N_0$: <span id="log-N0-val">1</span>
+      <input type="range" id="log-N0" min="0.1" max="20" step="0.1" value="1" style="width:100%;">
+    </label>
+    <label>Ventana de tiempo $t_{max}$: <span id="log-T-val">40</span>
+      <input type="range" id="log-T" min="5" max="100" step="1" value="40" style="width:100%;">
+    </label>
+  </div>
+  <p style="font-size:0.9em;color:#555;margin-top:10px;">
+    La curva roja es $N(t)=\dfrac{K}{1+\left(\frac{K-N_0}{N_0}\right)e^{-K\alpha t}}$. La línea gris punteada marca la capacidad de carga $K$; el punto verde marca el punto de inflexión en $N=K/2$. Prueba mover $N_0$ por <em>encima</em> de $K$: la curva decrece hacia $K$ en vez de crecer — el modelo funciona igual en ambos casos.
+  </p>
+</div>
+<script>
+(function(){
+  const canvas = document.getElementById('log-canvas');
+  const ctx = canvas.getContext('2d');
+  const Ks = document.getElementById('log-K');
+  const As = document.getElementById('log-alpha');
+  const N0s = document.getElementById('log-N0');
+  const Ts = document.getElementById('log-T');
+  const KvalEl = document.getElementById('log-K-val');
+  const AvalEl = document.getElementById('log-alpha-val');
+  const N0valEl = document.getElementById('log-N0-val');
+  const TvalEl = document.getElementById('log-T-val');
+
+  const W = canvas.width, H = canvas.height;
+  const margin = {left: 55, right: 20, top: 20, bottom: 40};
+
+  function N(t, K, alpha, N0) {
+    const ratio = (K - N0) / N0;
+    return K / (1 + ratio * Math.exp(-K * alpha * t));
+  }
+
+  function draw(){
+    const K = parseFloat(Ks.value);
+    const alpha = parseFloat(As.value);
+    const N0 = parseFloat(N0s.value);
+    const Tmax = parseFloat(Ts.value);
+    KvalEl.textContent = K.toFixed(1);
+    AvalEl.textContent = alpha.toFixed(2);
+    N0valEl.textContent = N0.toFixed(1);
+    TvalEl.textContent = Tmax.toFixed(0);
+
+    ctx.clearRect(0,0,W,H);
+
+    // rango vertical: cubrir min(N0,0) .. max(K,N0) con margen
+    const plotW = W - margin.left - margin.right;
+    const plotH = H - margin.top - margin.bottom;
+    let yMax = Math.max(K, N0) * 1.15;
+    let yMin = 0;
+
+    function toPx(t, n){
+      const px = margin.left + (t / Tmax) * plotW;
+      const py = margin.top + plotH - ((n - yMin) / (yMax - yMin)) * plotH;
+      return [px, py];
+    }
+
+    // ejes
+    ctx.strokeStyle = '#333'; ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(margin.left, margin.top);
+    ctx.lineTo(margin.left, margin.top + plotH);
+    ctx.lineTo(margin.left + plotW, margin.top + plotH);
+    ctx.stroke();
+
+    // linea K (capacidad de carga)
+    ctx.strokeStyle = '#999'; ctx.setLineDash([5,4]); ctx.lineWidth = 1;
+    const [,pyK] = toPx(0, K);
+    ctx.beginPath(); ctx.moveTo(margin.left, pyK); ctx.lineTo(margin.left+plotW, pyK); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#777'; ctx.font = '12px sans-serif';
+    ctx.fillText('K = ' + K.toFixed(1), margin.left + plotW - 55, pyK - 6);
+
+    // curva logistica
+    ctx.strokeStyle = '#d62728'; ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    let first = true;
+    for (let t = 0; t <= Tmax; t += Tmax/300) {
+      const n = N(t, K, alpha, N0);
+      const [px, py] = toPx(t, n);
+      if (first) { ctx.moveTo(px,py); first = false; } else ctx.lineTo(px,py);
+    }
+    ctx.stroke();
+
+    // punto de inflexion en N = K/2, si esta dentro de la ventana visible
+    const ratio = (K - N0) / N0;
+    if (ratio > 0) {
+      const tInfl = Math.log(ratio) / (K * alpha);
+      if (tInfl >= 0 && tInfl <= Tmax) {
+        const [ix, iy] = toPx(tInfl, K/2);
+        ctx.fillStyle = '#2ca02c';
+        ctx.beginPath(); ctx.arc(ix, iy, 4.5, 0, 2*Math.PI); ctx.fill();
+        ctx.fillStyle = '#2ca02c'; ctx.font = '12px sans-serif';
+        ctx.fillText('inflexión', ix+8, iy-8);
+      }
+    }
+
+    // punto inicial N0
+    const [p0x, p0y] = toPx(0, N0);
+    ctx.fillStyle = '#1f77b4';
+    ctx.beginPath(); ctx.arc(p0x, p0y, 4, 0, 2*Math.PI); ctx.fill();
+
+    // etiquetas de ejes
+    ctx.fillStyle = '#333'; ctx.font = '12px sans-serif';
+    ctx.fillText('t', margin.left + plotW - 8, margin.top + plotH + 20);
+    ctx.save();
+    ctx.translate(14, margin.top + plotH/2);
+    ctx.rotate(-Math.PI/2);
+    ctx.fillText('N(t)', 0, 0);
+    ctx.restore();
+
+    // marcas numericas en eje y (0 y K)
+    ctx.fillText('0', margin.left - 18, margin.top + plotH + 4);
+  }
+
+  [Ks, As, N0s, Ts].forEach(el => el.addEventListener('input', draw));
+  draw();
+})();
+</script>
+```
+:::
+
+## Modelo — decaimiento radioactivo
+
+La descomposición radioactiva se rige por $\dfrac{dA}{dt}=-kA$ ($k>0$), donde $A$ mide la cantidad de sustancia. La solución es $A(t)=A_0e^{-kt}$, y la **vida media** $\tau$ (tiempo para que decaiga la mitad) satisface $\dfrac12=e^{-k\tau}$, de donde $k=\dfrac{\log 2}{\tau}$.
+
+::: {.callout-tip title="Ejercicio 13 — vida media de 20 días"}
+Si la vida media de una sustancia radioactiva es 20 días, ¿cuánto tardará en decaer el 99% de la sustancia?
+:::
+
+Con $\tau=20$: $k=\dfrac{\log 2}{20}\approx 0.03466$. Que decaiga el 99% significa que queda el 1%:
+
+$$0.01 = e^{-kt} \quad\Longrightarrow\quad t = \frac{\log(100)}{k} = \frac{20\log(100)}{\log 2} \approx 133 \text{ días}$$
+
+::: {.callout-note title="Haciendo las cuentas con Maxima"}
+```maxima
+kill(all);
+tau: 20;
+k: log(2)/tau;
+t99: log(100)/k;
+float(t99);   /* ~132.9 dias */
+```
+:::
+
+## Modelo — mezclas en un tanque
+
+Un tanque contiene 50 galones de salmuera con 75 libras de sal disueltas. Entra salmuera con 3 lb/gal a razón de 2 gal/min, y la mezcla (bien agitada) sale a la misma tasa de 2 gal/min. ¿Cuándo habrá 125 libras de sal en el tanque?
+
+Sea $x(t)$ la cantidad de sal (en libras) en el instante $t$. Como el volumen se mantiene constante en 50 galones, la concentración de salida es $x/50$ lb/gal:
+
+$$\frac{dx}{dt} = \underbrace{3\cdot 2}_{\text{entra}} - \underbrace{\frac{x}{50}\cdot 2}_{\text{sale}} = 6-\frac{x}{25}$$
+
+Separando variables:
+
+$$\frac{dx}{6-x/25} = dt \quad\Longrightarrow\quad -25\log(150-x) = t+C \quad\Longrightarrow\quad x(t) = 150-Ce^{-t/25}$$
+
+Con $x(0)=75$: $75=150-C \Rightarrow C=75$. Entonces
+
+$$x(t) = 75\left(2-e^{-t/25}\right)$$
+
+Buscamos $t$ tal que $x(t)=125$:
+
+$$125 = 75\left(2-e^{-t/25}\right) \quad\Longrightarrow\quad t \approx 27.46 \text{ min}$$
+
+::: {.callout-note title="Haciendo las cuentas con Maxima"}
+```maxima
+kill(all);
+depends(x,t);
+ode: 'diff(x,t) = 6 - x/25;
+sol: ode2(ode, x, t);
+sol: ic1(sol, t=0, x=75);
+sol_t: solve(subst(x=125, sol), t);
+float(rhs(sol_t[1]));   /* ~27.46 min */
+```
+:::
+
+::: {.callout-important title="Tarea"}
+Hacer todos los ejercicios de esa sección, usando máxima para comprobar los resultados y teniendo cuidado con las magnitudes físicas.
+:::

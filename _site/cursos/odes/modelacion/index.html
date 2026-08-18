@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Arturo Sanjuán">
+<meta name="description" content="De las cajitas de Nu al número e, del crecimiento bacteriano al absurdo de Malthus, y del modelo exponencial al logístico: ejercicios resueltos con Maxima y un simulador interactivo de curvas sigmoides.">
+
+<title>Modelación con Ecuaciones Diferenciales – Arturo Sanjuán</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-a627f686d9537b343e7f3fb245a59876.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Arturo Sanjuán</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../cursos/index.html"> 
+<span class="menu-text">Cursos</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#modelo-interés-compuesto-y-el-número-e" id="toc-modelo-interés-compuesto-y-el-número-e" class="nav-link active" data-scroll-target="#modelo-interés-compuesto-y-el-número-e"><span class="header-section-number">1</span> Modelo — interés compuesto y el número <span class="math inline">\(e\)</span></a></li>
+  <li><a href="#ejercicio-tiempo-para-duplicar-un-capital" id="toc-ejercicio-tiempo-para-duplicar-un-capital" class="nav-link" data-scroll-target="#ejercicio-tiempo-para-duplicar-un-capital"><span class="header-section-number">2</span> Ejercicio — tiempo para duplicar un capital</a></li>
+  <li><a href="#modelo-crecimiento-exponencial-y-el-absurdo-de-malthus" id="toc-modelo-crecimiento-exponencial-y-el-absurdo-de-malthus" class="nav-link" data-scroll-target="#modelo-crecimiento-exponencial-y-el-absurdo-de-malthus"><span class="header-section-number">3</span> Modelo — crecimiento exponencial y el absurdo de Malthus</a></li>
+  <li><a href="#modelo-crecimiento-logístico-con-capacidad-de-carga" id="toc-modelo-crecimiento-logístico-con-capacidad-de-carga" class="nav-link" data-scroll-target="#modelo-crecimiento-logístico-con-capacidad-de-carga"><span class="header-section-number">4</span> Modelo — crecimiento logístico (con capacidad de carga)</a></li>
+  <li><a href="#modelo-decaimiento-radioactivo" id="toc-modelo-decaimiento-radioactivo" class="nav-link" data-scroll-target="#modelo-decaimiento-radioactivo"><span class="header-section-number">5</span> Modelo — decaimiento radioactivo</a></li>
+  <li><a href="#modelo-mezclas-en-un-tanque" id="toc-modelo-mezclas-en-un-tanque" class="nav-link" data-scroll-target="#modelo-mezclas-en-un-tanque"><span class="header-section-number">6</span> Modelo — mezclas en un tanque</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Modelación con Ecuaciones Diferenciales</h1>
+<p class="subtitle lead">Apuntes de clase: interés compuesto, crecimiento exponencial, el modelo logístico, decaimiento radioactivo y mezclas</p>
+</div>
+
+<div>
+  <div class="description">
+    De las cajitas de Nu al número e, del crecimiento bacteriano al absurdo de Malthus, y del modelo exponencial al logístico: ejercicios resueltos con Maxima y un simulador interactivo de curvas sigmoides.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Arturo Sanjuán </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">18 de agosto de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="modelo-interés-compuesto-y-el-número-e" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="modelo-interés-compuesto-y-el-número-e"><span class="header-section-number">1</span> Modelo — interés compuesto y el número <span class="math inline">\(e\)</span></h2>
+<p>Las cajitas de Nu funcionan con interés compuesto <strong>capitalizado diariamente</strong>: el interés del día se calcula sobre el capital más el interés ya acumulado. Si la tasa efectiva anual es <span class="math inline">\(i_{EA}\)</span>, la tasa diaria <span class="math inline">\(i_d\)</span> satisface</p>
+<p><span class="math display">\[(1+i_d)^{365} = 1+i_{EA}\]</span></p>
+<p>Con <span class="math inline">\(i_{EA}=9.25\%\)</span>, despejando obtenemos <span class="math inline">\(i_d\approx 0.02458\%\)</span>, y la tasa nominal anual asociada es</p>
+<p><span class="math display">\[r = 365\,i_d \approx 8.97\%\]</span></p>
+<p>Si <span class="math inline">\(n\)</span> es el número de días transcurridos y <span class="math inline">\(A_0\)</span> el capital inicial (sin nuevos aportes), el capital en el día <span class="math inline">\(n\)</span> es</p>
+<p><span class="math display">\[A(n) = A_0\left(1+\frac{r}{365}\right)^{n}\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="¿Qué pasa si en vez de 365 capitalizamos $n$ veces, con $n\to\infty$?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>¿Qué pasa si en vez de 365 capitalizamos <span class="math inline">\(n\)</span> veces, con <span class="math inline">\(n\to\infty\)</span>?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Esta es exactamente la pregunta que se hizo <strong>Jacob Bernoulli</strong> en 1683, estudiando el mismo problema de interés compuesto: ¿converge <span class="math inline">\(\left(1+\dfrac{r}{n}\right)^n\)</span> cuando <span class="math inline">\(n\to\infty\)</span>? Bernoulli mostró que sí, y que para <span class="math inline">\(r=1\)</span> el límite está entre 2 y 3 — el primer encuentro documentado con lo que hoy llamamos <span class="math inline">\(e\)</span>, sin nombre ni notación todavía.</p>
+<p>Fue <strong>Euler</strong>, en 1748 (<em>Introductio in analysin infinitorum</em>), quien le dio el nombre <span class="math inline">\(e\)</span>, demostró que es irracional (vía fracciones continuas — la prueba rigurosa con la serie <span class="math inline">\(\sum 1/k!\)</span> es de <strong>Fourier</strong>, 1815), y notó la propiedad crucial: <span class="math inline">\((e^x)' = e^x\)</span>. Es decir, <span class="math inline">\(e^{kt}\)</span> satisface la ecuación diferencial <span class="math inline">\(y'=ky\)</span>.</p>
+</div>
+</div>
+<p><strong>Comparación numérica.</strong> Si depositamos $100.000 en una cajita a <span class="math inline">\(i_{EA}=9.25\%\)</span> y lo dejamos un año:</p>
+<p><span class="math display">\[100{.}000\cdot(1+i_{EA}) = 100{.}000\cdot(1+9.25\%) = \$109{.}250\]</span></p>
+<p>Si en cambio capitalizáramos <strong>continuamente</strong> (el límite <span class="math inline">\(n\to\infty\)</span>), usando <span class="math inline">\(A(t)=A_0 e^{rt}\)</span> con la tasa nominal <span class="math inline">\(r\approx 8.97\%\)</span>:</p>
+<p><span class="math display">\[100{.}000\cdot e^{0.0897} \approx \$109{.}385\]</span></p>
+<p>La diferencia es de apenas $135 sobre cien mil pesos en un año — el modelo continuo aproxima extraordinariamente bien al discreto, aun con solo 365 capitalizaciones.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="De dónde sale la EDO">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>De dónde sale la EDO
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si <span class="math inline">\(A(t) = A_0 e^{kt}\)</span>, entonces <span class="math inline">\(A'(t) = k A_0 e^{kt} = kA(t)\)</span>, es decir</p>
+<p><span class="math display">\[\frac{dA}{dt} = kA \qquad\Longleftrightarrow\qquad \frac{1}{A}\frac{dA}{dt} = k\]</span></p>
+<p>El cambio <strong>fraccional</strong> (el error relativo) de <span class="math inline">\(A\)</span> respecto al tiempo es constante, y esa constante es justamente la tasa de interés nominal <span class="math inline">\(100k\,\%\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="ejercicio-tiempo-para-duplicar-un-capital" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="ejercicio-tiempo-para-duplicar-un-capital"><span class="header-section-number">2</span> Ejercicio — tiempo para duplicar un capital</h2>
+<p><em>(Simmons, ejercicio 2, p.&nbsp;27)</em> Se invierte un capital <span class="math inline">\(P\)</span> a una tasa nominal anual <span class="math inline">\(r\)</span>, con capitalización continua. ¿Cuánto tiempo debe pasar para duplicar el capital inicial?</p>
+<p>Partimos de <span class="math inline">\(\dfrac{dA}{dt}=rA\)</span>, <span class="math inline">\(A(0)=P\)</span>, cuya solución es <span class="math inline">\(A(t)=Pe^{rt}\)</span>. Queremos <span class="math inline">\(Pe^{rt}=2P\)</span>:</p>
+<p><span class="math display">\[e^{rt}=2 \quad\Longrightarrow\quad rt=\log 2 \quad\Longrightarrow\quad t=\frac{\log 2}{r}\]</span></p>
+<p>Para la tasa nominal de Nu (<span class="math inline">\(r\approx 8.97\%\)</span>):</p>
+<p><span class="math display">\[t = \frac{\log 2}{0.0897}\approx 7.73 \text{ años}\]</span></p>
+<p>— poco más de 7 años y 8 meses.</p>
+<p><strong>Variante — ¿qué tasa se necesita para duplicar en exactamente 10 años?</strong> Despejamos <span class="math inline">\(r\)</span> de <span class="math inline">\(e^{10r}=2\)</span>:</p>
+<p><span class="math display">\[r = \frac{\log 2}{10} \approx 0.0693 = 6.93\%\ \text{(nominal anual)}\]</span></p>
+<p>lo que corresponde a una tasa diaria <span class="math inline">\(i_d\approx 0.01894\%\)</span> y una tasa efectiva anual <span class="math inline">\(i_{EA}\approx 7.1\%\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">/* tiempo para duplicar, dada la tasa nominal r */</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cn">ode</span>: <span class="do">'</span><span class="cn">diff</span>(<span class="cn">A</span>,<span class="cn">t</span>) = <span class="cn">r</span>*<span class="cn">A</span>;</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cn">sol</span>: <span class="fu">ode2</span>(<span class="cn">ode</span>, <span class="cn">A</span>, <span class="cn">t</span>);</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="cn">sol</span>: <span class="fu">ic1</span>(<span class="cn">sol</span>, <span class="cn">t</span>=<span class="dv">0</span>, <span class="cn">A</span>=<span class="cn">P</span>);</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">/* sol: A = P*%e^(r*t) */</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">/* despejar t tal que A = 2P */</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="cn">t_duplicar</span>: <span class="fu">solve</span>(<span class="dv">2</span>*<span class="cn">P</span> = <span class="fu">rhs</span>(<span class="cn">sol</span>), <span class="cn">t</span>);</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ev</span>(<span class="cn">t_duplicar</span>, <span class="cn">r</span> = <span class="fl">0.0897</span>), <span class="cn">numer</span>;</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">/* variante: despejar r para duplicar en 10 años */</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="cn">r_necesaria</span>: <span class="fu">solve</span>(<span class="dv">2</span>*<span class="cn">P</span> = <span class="fu">subst</span>(<span class="cn">t</span>=<span class="dv">10</span>, <span class="fu">rhs</span>(<span class="cn">sol</span>)), <span class="cn">r</span>);</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ev</span>(<span class="cn">r_necesaria</span>), <span class="cn">numer</span>;</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</section>
+<section id="modelo-crecimiento-exponencial-y-el-absurdo-de-malthus" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="modelo-crecimiento-exponencial-y-el-absurdo-de-malthus"><span class="header-section-number">3</span> Modelo — crecimiento exponencial y el absurdo de Malthus</h2>
+<p>Un cultivo de bacterias se reproduce por fisión celular: en cada ciclo cada bacteria se divide en dos. Si empezamos con <span class="math inline">\(N_0\)</span> bacterias sincronizadas, tras <span class="math inline">\(n\)</span> ciclos hay</p>
+<p><span class="math display">\[N(n) = 2^n N_0\]</span></p>
+<p><strong>Un ejemplo que se vuelve absurdo.</strong> La <em>E. coli</em> se divide cada 20 minutos y vive (en cultivo) unos 10 días. Empezando con una sola bacteria, al cabo de 10 días habría aproximadamente <span class="math inline">\(2^{720}\approx 2.9\times 10^{216}\)</span> bacterias. Comparando volúmenes (universo observable <span class="math inline">\(\approx 4\times 10^{80}\,\text{m}^3\)</span>, una <em>E. coli</em> <span class="math inline">\(\approx 1.3\times 10^{-18}\,\text{m}^3\)</span>), esa cantidad de bacterias llenaría el equivalente a <strong><span class="math inline">\(9.4\cdot 10^210\)</span> universos observables</strong>. Absurdo — y la conclusión pedagógica es clara: <strong>los modelos puramente exponenciales solo son razonables en periodos cortos</strong>, mientras los recursos disponibles no sean una restricción real.</p>
+<p><strong>Pasando al modelo continuo.</strong> Si <span class="math inline">\(h\)</span> es la duración de un ciclo,</p>
+<p><span class="math display">\[N(t+h)-N(t) = \left(2^{(t+h)/h}-2^{t/h}\right)N_0 = 2^{t/h}\left(2^{h/h\cdot 1}-1\right)N_0\]</span></p>
+<p>Dividiendo por <span class="math inline">\(h\)</span> y tomando el límite <span class="math inline">\(h\to 0\)</span> (usando <span class="math inline">\(\log 2\)</span> como la tasa instantánea, que llamamos <span class="math inline">\(k\)</span>), se llega a</p>
+<p><span class="math display">\[N'(t) = kN(t), \qquad N(0)=N_0 \qquad\Longrightarrow\qquad N(t) = N_0e^{kt}\]</span></p>
+<p>Si <span class="math inline">\(k&gt;0\)</span> la población crece sin cota; si <span class="math inline">\(k&lt;0\)</span> decrece hacia cero; si <span class="math inline">\(k=0\)</span> es constante.</p>
+<p><strong>Malthus (1798)</strong> usó exactamente esta ecuación, <span class="math inline">\(N'=kN\)</span>, para argumentar que el crecimiento poblacional (geométrico) superaría inevitablemente al crecimiento de la producción de alimentos (que él asumía lineal) — de ahí su predicción de crisis recurrentes por hambruna, guerra o enfermedad (ver la nota histórica más abajo sobre qué tan literal era esa predicción). En Colombia, la tasa de crecimiento poblacional actual es de aproximadamente <span class="math inline">\(k\approx 0.0102\)</span> (1.02% anual).</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">/* fisión celular de E. coli: 10 días, ciclos de 20 min */</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="cn">ciclos</span>: <span class="dv">10</span>*<span class="dv">24</span>*<span class="dv">60</span>/<span class="dv">20</span>;   <span class="co">/* 720 ciclos */</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cn">N_final</span>: <span class="dv">2</span>^<span class="cn">ciclos</span>;      <span class="co">/* ~2.9e216 */</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">float</span>(<span class="cn">N_final</span>);</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="cn">vol_universo</span>: <span class="fl">4e80</span>;      <span class="co">/* m^3 */</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="cn">vol_ecoli</span>: <span class="fl">1.3e-18</span>;      <span class="co">/* m^3 */</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="cn">universos_llenos</span>: <span class="fu">float</span>(<span class="cn">N_final</span>*<span class="cn">vol_ecoli</span>/<span class="cn">vol_universo</span>);</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">/* modelo continuo N' = kN */</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">depends</span>(<span class="cn">N</span>,<span class="cn">t</span>);</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="cn">ode</span>: <span class="do">'</span><span class="cn">diff</span>(<span class="cn">N</span>,<span class="cn">t</span>) = <span class="cn">k</span>*<span class="cn">N</span>;</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="cn">sol</span>: <span class="fu">ode2</span>(<span class="cn">ode</span>, <span class="cn">N</span>, <span class="cn">t</span>);</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="cn">sol</span>: <span class="fu">ic1</span>(<span class="cn">sol</span>, <span class="cn">t</span>=<span class="dv">0</span>, <span class="cn">N</span>=<span class="cn">N0</span>);</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">/* sol: N = N0*%e^(k*t) */</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</section>
+<section id="modelo-crecimiento-logístico-con-capacidad-de-carga" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="modelo-crecimiento-logístico-con-capacidad-de-carga"><span class="header-section-number">4</span> Modelo — crecimiento logístico (con capacidad de carga)</h2>
+<p><em>(Ejercicio 10)</em> El crecimiento exponencial ignora que los recursos son limitados. Si existe una <strong>capacidad de carga</strong> <span class="math inline">\(K\)</span> (el tamaño máximo que el entorno puede sostener), un modelo más realista es</p>
+<p><span class="math display">\[\frac{dN}{dt} = \alpha\, N(K-N), \qquad N(0)=N_0\]</span></p>
+<p>Cuando <span class="math inline">\(N\)</span> es pequeño comparado con <span class="math inline">\(K\)</span>, el término <span class="math inline">\((K-N)\approx K\)</span> y la ecuación se comporta casi como la exponencial pura; cuando <span class="math inline">\(N\)</span> se acerca a <span class="math inline">\(K\)</span>, el crecimiento se frena y se detiene.</p>
+<p><strong>Resolviendo por variables separables.</strong> Separando y usando fracciones parciales,</p>
+<p><span class="math display">\[\frac{dN}{N(K-N)} = \alpha\,dt \qquad\Longrightarrow\qquad \frac{1}{K}\log\left|\frac{N}{N-K}\right| = \alpha t + C\]</span></p>
+<p>Exponenciando y aplicando la condición inicial <span class="math inline">\(N(0)=N_0\)</span>, se llega a la forma cerrada</p>
+<p><span class="math display">\[N(t) = \frac{K}{1+\left(\dfrac{K-N_0}{N_0}\right)e^{-K\alpha t}}\]</span></p>
+<p>— la clásica <strong>curva sigmoide</strong> (forma de S): arranca cerca de <span class="math inline">\(N_0\)</span>, crece con concavidad hacia arriba, pasa por un punto de inflexión en <span class="math inline">\(N=K/2\)</span>, y se aplana asintóticamente hacia <span class="math inline">\(K\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima — versión completa, paso a paso">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima — versión completa, paso a paso
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">depends</span>(<span class="cn">N</span>,<span class="cn">t</span>);</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cn">diffeq</span>: <span class="fu">diff</span>(<span class="cn">N</span>,<span class="cn">t</span>) = <span class="cn">alpha</span>*<span class="cn">N</span>*(<span class="cn">K</span>-<span class="cn">N</span>);</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cn">diffeq</span>;</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="cn">solucion</span>: <span class="fu">ode2</span>(<span class="cn">diffeq</span>, <span class="cn">N</span>, <span class="cn">t</span>);</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="cn">solucion</span>: (<span class="fu">logcontract</span>(<span class="cn">solucion</span>)*<span class="cn">K</span>*<span class="cn">alpha</span>);</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="cn">solucion</span>: <span class="fu">exp</span>(<span class="fu">lhs</span>(<span class="cn">solucion</span>))=<span class="fu">exp</span>(<span class="fu">rhs</span>(<span class="cn">solucion</span>));</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="cn">solucion</span>: <span class="fu">ic1</span>(<span class="cn">solucion</span>, <span class="cn">t</span>=<span class="dv">0</span>, <span class="cn">N</span>=<span class="cn">N0</span>);</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="cn">solucion</span>: <span class="fu">solve</span>(<span class="cn">solucion</span>, <span class="cn">N</span>);</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">/* solucion: [N=(K*N0*%e^(K*alpha*t))/(N0*%e^(K*alpha*t)-N0+K)] */</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">/* IMPORTANTE: solve() siempre devuelve una LISTA, incluso con</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">   una sola solución. Hay que indexar solucion[1] antes de pedir rhs(). */</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="cn">N_explicita</span>: <span class="fu">rhs</span>(<span class="cn">solucion</span>[<span class="dv">1</span>]);</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">/* Chequeo rápido: en t=0 debe dar N0 */</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ev</span>(<span class="cn">N_explicita</span>, <span class="cn">t</span>=<span class="dv">0</span>);</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">/* Graficar: si plot2d abre una ventana interactiva (gnuplot_pipes),</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">   eso falla en un entorno sin pantalla (batch/consola) y plot2d</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">   devuelve "false" sin dibujar nada. La solución es forzar la</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">   salida a un archivo PNG en vez de una ventana: */</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">draw</span>);</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="fu">draw2d</span>(</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="cn">explicit</span>(<span class="fu">ev</span>(<span class="cn">N_explicita</span>, <span class="cn">K</span>=<span class="dv">1</span>, <span class="cn">alpha</span>=<span class="dv">2</span>, <span class="cn">N0</span>=<span class="fl">0.2</span>), <span class="cn">t</span>, <span class="dv">0</span>, <span class="dv">5</span>),</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="cn">xlabel</span> = <span class="st">"t"</span>, <span class="cn">ylabel</span> = <span class="st">"N(t)"</span>,</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    <span class="cn">proportional_axes</span> = <span class="do">'</span><span class="cn">xy</span>,</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    <span class="cn">terminal</span> = <span class="do">'</span><span class="cn">png</span>,</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="cn">file_name</span> = <span class="st">"logistica"</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>)$</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="co">/* Alternativa con plot2d clásico, forzando el terminal PNG a mano: */</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="fu">plot2d</span>(<span class="fu">ev</span>(<span class="cn">N_explicita</span>, <span class="cn">K</span>=<span class="dv">1</span>, <span class="cn">alpha</span>=<span class="dv">2</span>, <span class="cn">N0</span>=<span class="fl">0.2</span>), [<span class="cn">t</span>,<span class="dv">0</span>,<span class="dv">5</span>])$</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Video explicativo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Video explicativo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div style="max-width:640px;margin:1em auto;">
+  <video controls="" style="width:100%;border-radius:8px;border:1px solid #ddd;">
+    <source src="https://www.dropbox.com/scl/fi/v5oesfarbtti1evrfjnrc/explicacion-maxima.mp4?rlkey=vt046u8zejwzeiqj1udbff34u&amp;st=ejcsmmri&amp;raw=1" type="video/mp4">
+    Tu navegador no soporta la reproducción de video en línea. Puedes descargarlo directamente
+    <a href="https://www.dropbox.com/scl/fi/v5oesfarbtti1evrfjnrc/explicacion-maxima.mp4?rlkey=vt046u8zejwzeiqj1udbff34u&amp;st=ejcsmmri&amp;dl=1">aquí</a>.
+  </video>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Applet — la trampa de $\ln(K-N)$ vs. $\ln(N-K)$">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Applet — la trampa de <span class="math inline">\(\ln(K-N)\)</span> vs.&nbsp;<span class="math inline">\(\ln(N-K)\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Al integrar <span class="math inline">\(\dfrac{1}{K-N}\)</span> hay dos antiderivadas igualmente válidas (<span class="math inline">\(-\log(K-N)\)</span> o <span class="math inline">\(-\log(N-K)\)</span>, que difieren en una constante que la condición inicial absorbe), así que si tu cuenta a mano da un signo distinto al de Maxima, <strong>ambas pueden ser correctas</strong> — lo importante es que, tras aplicar la condición inicial, ambas dan exactamente la misma curva <span class="math inline">\(N(t)\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Simulador — curva logística (sigmoide) para distintos $K$, $\alpha$ y $N_0$">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Simulador — curva logística (sigmoide) para distintos <span class="math inline">\(K\)</span>, <span class="math inline">\(\alpha\)</span> y <span class="math inline">\(N_0\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div style="border:1px solid #ddd;border-radius:8px;padding:16px;max-width:640px;margin:1em auto;font-family:sans-serif;">
+  <canvas id="log-canvas" width="580" height="380" style="width:100%;height:auto;background:#fff;"></canvas>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;margin-top:10px;">
+    <label>Capacidad de carga $K$: <span id="log-K-val">10</span>
+      <input type="range" id="log-K" min="1" max="20" step="0.5" value="10" style="width:100%;">
+    </label>
+    <label>Tasa $\alpha$: <span id="log-alpha-val">0.05</span>
+      <input type="range" id="log-alpha" min="0.01" max="0.5" step="0.01" value="0.05" style="width:100%;">
+    </label>
+    <label>Población inicial $N_0$: <span id="log-N0-val">1</span>
+      <input type="range" id="log-N0" min="0.1" max="20" step="0.1" value="1" style="width:100%;">
+    </label>
+    <label>Ventana de tiempo $t_{max}$: <span id="log-T-val">40</span>
+      <input type="range" id="log-T" min="5" max="100" step="1" value="40" style="width:100%;">
+    </label>
+  </div>
+  <p style="font-size:0.9em;color:#555;margin-top:10px;">
+    La curva roja es $N(t)=\dfrac{K}{1+\left(\frac{K-N_0}{N_0}\right)e^{-K\alpha t}}$. La línea gris punteada marca la capacidad de carga $K$; el punto verde marca el punto de inflexión en $N=K/2$. Prueba mover $N_0$ por <em>encima</em> de $K$: la curva decrece hacia $K$ en vez de crecer — el modelo funciona igual en ambos casos.
+  </p>
+</div>
+<script>
+(function(){
+  const canvas = document.getElementById('log-canvas');
+  const ctx = canvas.getContext('2d');
+  const Ks = document.getElementById('log-K');
+  const As = document.getElementById('log-alpha');
+  const N0s = document.getElementById('log-N0');
+  const Ts = document.getElementById('log-T');
+  const KvalEl = document.getElementById('log-K-val');
+  const AvalEl = document.getElementById('log-alpha-val');
+  const N0valEl = document.getElementById('log-N0-val');
+  const TvalEl = document.getElementById('log-T-val');
+
+  const W = canvas.width, H = canvas.height;
+  const margin = {left: 55, right: 20, top: 20, bottom: 40};
+
+  function N(t, K, alpha, N0) {
+    const ratio = (K - N0) / N0;
+    return K / (1 + ratio * Math.exp(-K * alpha * t));
+  }
+
+  function draw(){
+    const K = parseFloat(Ks.value);
+    const alpha = parseFloat(As.value);
+    const N0 = parseFloat(N0s.value);
+    const Tmax = parseFloat(Ts.value);
+    KvalEl.textContent = K.toFixed(1);
+    AvalEl.textContent = alpha.toFixed(2);
+    N0valEl.textContent = N0.toFixed(1);
+    TvalEl.textContent = Tmax.toFixed(0);
+
+    ctx.clearRect(0,0,W,H);
+
+    // rango vertical: cubrir min(N0,0) .. max(K,N0) con margen
+    const plotW = W - margin.left - margin.right;
+    const plotH = H - margin.top - margin.bottom;
+    let yMax = Math.max(K, N0) * 1.15;
+    let yMin = 0;
+
+    function toPx(t, n){
+      const px = margin.left + (t / Tmax) * plotW;
+      const py = margin.top + plotH - ((n - yMin) / (yMax - yMin)) * plotH;
+      return [px, py];
+    }
+
+    // ejes
+    ctx.strokeStyle = '#333'; ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(margin.left, margin.top);
+    ctx.lineTo(margin.left, margin.top + plotH);
+    ctx.lineTo(margin.left + plotW, margin.top + plotH);
+    ctx.stroke();
+
+    // linea K (capacidad de carga)
+    ctx.strokeStyle = '#999'; ctx.setLineDash([5,4]); ctx.lineWidth = 1;
+    const [,pyK] = toPx(0, K);
+    ctx.beginPath(); ctx.moveTo(margin.left, pyK); ctx.lineTo(margin.left+plotW, pyK); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#777'; ctx.font = '12px sans-serif';
+    ctx.fillText('K = ' + K.toFixed(1), margin.left + plotW - 55, pyK - 6);
+
+    // curva logistica
+    ctx.strokeStyle = '#d62728'; ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    let first = true;
+    for (let t = 0; t <= Tmax; t += Tmax/300) {
+      const n = N(t, K, alpha, N0);
+      const [px, py] = toPx(t, n);
+      if (first) { ctx.moveTo(px,py); first = false; } else ctx.lineTo(px,py);
+    }
+    ctx.stroke();
+
+    // punto de inflexion en N = K/2, si esta dentro de la ventana visible
+    const ratio = (K - N0) / N0;
+    if (ratio > 0) {
+      const tInfl = Math.log(ratio) / (K * alpha);
+      if (tInfl >= 0 && tInfl <= Tmax) {
+        const [ix, iy] = toPx(tInfl, K/2);
+        ctx.fillStyle = '#2ca02c';
+        ctx.beginPath(); ctx.arc(ix, iy, 4.5, 0, 2*Math.PI); ctx.fill();
+        ctx.fillStyle = '#2ca02c'; ctx.font = '12px sans-serif';
+        ctx.fillText('inflexión', ix+8, iy-8);
+      }
+    }
+
+    // punto inicial N0
+    const [p0x, p0y] = toPx(0, N0);
+    ctx.fillStyle = '#1f77b4';
+    ctx.beginPath(); ctx.arc(p0x, p0y, 4, 0, 2*Math.PI); ctx.fill();
+
+    // etiquetas de ejes
+    ctx.fillStyle = '#333'; ctx.font = '12px sans-serif';
+    ctx.fillText('t', margin.left + plotW - 8, margin.top + plotH + 20);
+    ctx.save();
+    ctx.translate(14, margin.top + plotH/2);
+    ctx.rotate(-Math.PI/2);
+    ctx.fillText('N(t)', 0, 0);
+    ctx.restore();
+
+    // marcas numericas en eje y (0 y K)
+    ctx.fillText('0', margin.left - 18, margin.top + plotH + 4);
+  }
+
+  [Ks, As, N0s, Ts].forEach(el => el.addEventListener('input', draw));
+  draw();
+})();
+</script>
+</div>
+</div>
+</section>
+<section id="modelo-decaimiento-radioactivo" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="modelo-decaimiento-radioactivo"><span class="header-section-number">5</span> Modelo — decaimiento radioactivo</h2>
+<p>La descomposición radioactiva se rige por <span class="math inline">\(\dfrac{dA}{dt}=-kA\)</span> (<span class="math inline">\(k&gt;0\)</span>), donde <span class="math inline">\(A\)</span> mide la cantidad de sustancia. La solución es <span class="math inline">\(A(t)=A_0e^{-kt}\)</span>, y la <strong>vida media</strong> <span class="math inline">\(\tau\)</span> (tiempo para que decaiga la mitad) satisface <span class="math inline">\(\dfrac12=e^{-k\tau}\)</span>, de donde <span class="math inline">\(k=\dfrac{\log 2}{\tau}\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejercicio 13 — vida media de 20 días">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejercicio 13 — vida media de 20 días
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si la vida media de una sustancia radioactiva es 20 días, ¿cuánto tardará en decaer el 99% de la sustancia?</p>
+</div>
+</div>
+<p>Con <span class="math inline">\(\tau=20\)</span>: <span class="math inline">\(k=\dfrac{\log 2}{20}\approx 0.03466\)</span>. Que decaiga el 99% significa que queda el 1%:</p>
+<p><span class="math display">\[0.01 = e^{-kt} \quad\Longrightarrow\quad t = \frac{\log(100)}{k} = \frac{20\log(100)}{\log 2} \approx 133 \text{ días}\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cn">tau</span>: <span class="dv">20</span>;</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cn">k</span>: <span class="fu">log</span>(<span class="dv">2</span>)/<span class="cn">tau</span>;</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cn">t99</span>: <span class="fu">log</span>(<span class="dv">100</span>)/<span class="cn">k</span>;</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">float</span>(<span class="cn">t99</span>);   <span class="co">/* ~132.9 dias */</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</section>
+<section id="modelo-mezclas-en-un-tanque" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="modelo-mezclas-en-un-tanque"><span class="header-section-number">6</span> Modelo — mezclas en un tanque</h2>
+<p>Un tanque contiene 50 galones de salmuera con 75 libras de sal disueltas. Entra salmuera con 3 lb/gal a razón de 2 gal/min, y la mezcla (bien agitada) sale a la misma tasa de 2 gal/min. ¿Cuándo habrá 125 libras de sal en el tanque?</p>
+<p>Sea <span class="math inline">\(x(t)\)</span> la cantidad de sal (en libras) en el instante <span class="math inline">\(t\)</span>. Como el volumen se mantiene constante en 50 galones, la concentración de salida es <span class="math inline">\(x/50\)</span> lb/gal:</p>
+<p><span class="math display">\[\frac{dx}{dt} = \underbrace{3\cdot 2}_{\text{entra}} - \underbrace{\frac{x}{50}\cdot 2}_{\text{sale}} = 6-\frac{x}{25}\]</span></p>
+<p>Separando variables:</p>
+<p><span class="math display">\[\frac{dx}{6-x/25} = dt \quad\Longrightarrow\quad -25\log(150-x) = t+C \quad\Longrightarrow\quad x(t) = 150-Ce^{-t/25}\]</span></p>
+<p>Con <span class="math inline">\(x(0)=75\)</span>: <span class="math inline">\(75=150-C \Rightarrow C=75\)</span>. Entonces</p>
+<p><span class="math display">\[x(t) = 75\left(2-e^{-t/25}\right)\]</span></p>
+<p>Buscamos <span class="math inline">\(t\)</span> tal que <span class="math inline">\(x(t)=125\)</span>:</p>
+<p><span class="math display">\[125 = 75\left(2-e^{-t/25}\right) \quad\Longrightarrow\quad t \approx 27.46 \text{ min}\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">depends</span>(<span class="cn">x</span>,<span class="cn">t</span>);</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cn">ode</span>: <span class="do">'</span><span class="cn">diff</span>(<span class="cn">x</span>,<span class="cn">t</span>) = <span class="dv">6</span> - <span class="cn">x</span>/<span class="dv">25</span>;</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="cn">sol</span>: <span class="fu">ode2</span>(<span class="cn">ode</span>, <span class="cn">x</span>, <span class="cn">t</span>);</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="cn">sol</span>: <span class="fu">ic1</span>(<span class="cn">sol</span>, <span class="cn">t</span>=<span class="dv">0</span>, <span class="cn">x</span>=<span class="dv">75</span>);</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="cn">sol_t</span>: <span class="fu">solve</span>(<span class="fu">subst</span>(<span class="cn">x</span>=<span class="dv">125</span>, <span class="cn">sol</span>), <span class="cn">t</span>);</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">float</span>(<span class="fu">rhs</span>(<span class="cn">sol_t</span>[<span class="dv">1</span>]));   <span class="co">/* ~27.46 min */</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Hacer todos los ejercicios de esa sección, usando máxima para comprobar los resultados y teniendo cuidado con las magnitudes físicas.</p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

@@ -252,7 +252,7 @@ e: ratsimp(sqrt(1 - b2/a2));   /* -> 1/sqrt(2), no depende de k */
 :::
 
 ::: {.callout-tip title="Ejercicio"}
-"Demuestre" con GeoGebra que la respuesta es correcta.
+Verifique con GeoGebra que la respuesta es correcta.
 :::
 
 ## Ejemplo 2 — Una condición geométrica sobre la normal (Ejercicio 6-b)
@@ -370,10 +370,14 @@ ratsimp(rhs(xx) - x0);       /* debe dar exactamente 1 */
 ```
 :::
 
-::: {.callout-tip title="Ejercicio"}
-"Demuestre" en GeoGebra que esta es la respuesta correcta.
-:::
+::: {.callout-tip title="Explicación de cómo verificar en Geogebra"}
+<div style="max-width:720px;margin:1.5em auto;">
+  <video controls style="width:100%;border-radius:8px;">
+    <source src="https://www.dropbox.com/scl/fi/y76709lub6hnj358ctqt8/explicacion-geogebra.mp4?rlkey=5ikqqd192fjo41ooqj9vzs1q0&raw=1" type="video/mp4">
+    Tu navegador no soporta el elemento de video.
+  </video>
+</div>:::
 
 ::: {.callout-important title="Tarea"}
-Página 17–18: 1-a, 1-d, 2, 5, 6-a,d,e,f. 7, 8. Página 49–6. "Demuestre" sus respuestas en Geogebra.
+Página 17–18: 1-a, 1-d, 2, 5, 6-a,d,e,f. 7, 8. Página 49–6. Verifique sus respuestas en Geogebra.
 :::
