@@ -4,6 +4,7 @@ subtitle: "Apuntes de clase: geometría de las ecuaciones diferenciales"
 description: "Cómo una familia de curvas define su propia ecuación diferencial, y cómo esa ecuación revela la familia ortogonal: dos ejemplos resueltos con applets interactivos y código Maxima."
 author: "Arturo Sanjuán"
 date: today
+image: "circulos.png"
 format:
   html:
     toc: true
@@ -13,6 +14,7 @@ format:
     code-fold: false
     smooth-scroll: true
     highlight-style: github
+
 order: 2
 ---
 
@@ -173,7 +175,87 @@ e: ratsimp(sqrt(1 - b2/a2));   /* -> 1/sqrt(2), no depende de k */
   const ctx = canvas.getContext('2d');
   const Cs = document.getElementById('fo-ex1-C');
   const ks = document.getElementById('fo-ex1-k');
-  const W = canvas.width, H = canvas.height, scale = 35;
+  const W = canvas.width, H = canvas.height, s\!\(\*
+Graphics3DBox[
+{RGBColor[
+    0.9372549019607843, 0.596078431372549, 0.47843137254901963`], 
+    Opacity[0.8], 
+    GraphicsComplex3DBox[
+     NCache[{{0, 0, 
+        Rational[-1, 2] (
+          Rational[1, 2] (5 - 5^Rational[1, 2]))^Rational[1, 2]}, {0, 
+        0, Rational[
+         1, 2] (Rational[1, 2] (5 - 5^Rational[1, 2]))^Rational[
+          1, 2]}, {(
+         Rational[1, 8] + Rational[1, 8] 5^Rational[-1, 2])^Rational[
+         1, 2], (-1)/(1 + 5^Rational[1, 2]), 
+        Rational[-1, 2] (
+          Rational[1, 10] (5 - 5^Rational[1, 2]))^Rational[1, 2]}, {(
+         Rational[1, 8] + Rational[1, 8] 5^Rational[-1, 2])^Rational[
+         1, 2], (1 + 5^Rational[1, 2])^(-1), 
+        Rational[-1, 2] (
+          Rational[1, 10] (5 - 5^Rational[1, 2]))^Rational[1, 2]}, {-(
+          Rational[1, 8] + Rational[1, 8] 5^Rational[-1, 2])^Rational[
+          1, 2], (-1)/(1 + 5^Rational[1, 2]), 
+        Rational[
+         1, 2] (Rational[1, 10] (5 - 5^Rational[1, 2]))^Rational[
+          1, 2]}, {-(
+          Rational[1, 8] + Rational[1, 8] 5^Rational[-1, 2])^Rational[
+          1, 2], (1 + 5^Rational[1, 2])^(-1), 
+        Rational[
+         1, 2] (Rational[1, 10] (5 - 5^Rational[1, 2]))^Rational[
+          1, 2]}, {(Rational[1, 10] (5 - 5^Rational[1, 2]))^Rational[
+         1, 2], 0, 
+        Rational[
+         1, 2] (Rational[1, 10] (5 - 5^Rational[1, 2]))^Rational[
+          1, 2]}, {-(Rational[1, 10] (5 - 5^Rational[1, 2]))^Rational[
+          1, 2], 0, 
+        Rational[-1, 2] (
+          Rational[1, 10] (5 - 5^Rational[1, 2]))^Rational[
+          1, 2]}, {Rational[-1, 2] (1 - 2 5^Rational[-1, 2])^Rational[
+          1, 2], Rational[-1, 2], 
+        Rational[-1, 2] (
+          Rational[1, 10] (5 - 5^Rational[1, 2]))^Rational[
+          1, 2]}, {Rational[-1, 2] (1 - 2 5^Rational[-1, 2])^Rational[
+          1, 2], Rational[1, 2], 
+        Rational[-1, 2] (
+          Rational[1, 10] (5 - 5^Rational[1, 2]))^Rational[
+          1, 2]}, {Rational[
+         1, 2] (1 - 2 5^Rational[-1, 2])^Rational[1, 2], 
+        Rational[-1, 2], 
+        Rational[
+         1, 2] (Rational[1, 10] (5 - 5^Rational[1, 2]))^Rational[
+          1, 2]}, {Rational[
+         1, 2] (1 - 2 5^Rational[-1, 2])^Rational[1, 2], Rational[
+        1, 2], Rational[
+         1, 2] (Rational[1, 10] (5 - 5^Rational[1, 2]))^Rational[
+          1, 2]}}, {{0, 0, -0.5877852522924731}, {0, 0, 
+        0.5877852522924731}, {
+       0.42532540417601994`, -0.3090169943749474, \
+-0.2628655560595668}, {0.42532540417601994`, 
+       0.3090169943749474, -0.2628655560595668}, \
+{-0.42532540417601994`, -0.3090169943749474, 
+       0.2628655560595668}, {-0.42532540417601994`, 
+       0.3090169943749474, 
+       0.2628655560595668}, {0.5257311121191336, 0, 
+        0.2628655560595668}, {-0.5257311121191336, 
+        0, -0.2628655560595668}, {-0.16245984811645317`, -0.5, \
+-0.2628655560595668}, {-0.16245984811645317`, 
+       0.5, -0.2628655560595668}, {0.16245984811645317`, -0.5, 
+       0.2628655560595668}, {0.16245984811645317`, 0.5, 
+       0.2628655560595668}}], 
+     Polygon3DBox[{{1, 7, 5}, {6, 7, 1}, {1, 5, 12}, {11, 6, 1}, {12, 
+      11, 1}, {2, 8, 3}, {4, 8, 2}, {2, 3, 10}, {9, 4, 2}, {10, 9, 
+      2}, {12, 3, 8}, {8, 4, 11}, {8, 11, 12}, {10, 5, 7}, {7, 6, 
+      9}, {7, 9, 10}, {3, 5, 10}, {12, 5, 3}, {9, 6, 4}, {4, 6, 
+      11}}]]},
+Boxed->False,
+ImageSize->100,
+ImageSizeRaw->Automatic,
+ViewPoint->{-1.8529379144773177`, -2.298965737742867, \
+-1.6526879989208019`},
+ViewVertical->{-0.9826148910405178, -0.16058983618144432`, 
+    0.09316050891149363}]\)cale = 35;
   function toPx(x,y){ return [W/2 + x*scale, H/2 - y*scale]; }
 
   function drawParabola(C, color, lw){

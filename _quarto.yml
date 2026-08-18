@@ -5,6 +5,7 @@ lang: es
 
 website:
   title: "Arturo Sanjuán"
+  favicon: "favicon.png"
   navbar:
     left:
       - href: index.qmd
