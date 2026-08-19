@@ -1,8 +1,17 @@
 [
   {
-    "listing": "/cursos/probabilidad/index.html",
+    "listing": "/cursos/odes/index.html",
     "items": [
-      "/cursos/probabilidad/introduccion/index.html"
+      "/cursos/odes/introduccion/index.html",
+      "/cursos/odes/familiasortogonales/index.html",
+      "/cursos/odes/modelacion/index.html"
+    ]
+  },
+  {
+    "listing": "/cursos/numerico/index.html",
+    "items": [
+      "/cursos/numerico/introduccion/index.html",
+      "/cursos/numerico/condicionamiento/index.html"
     ]
   },
   {
@@ -14,18 +23,10 @@
     ]
   },
   {
-    "listing": "/cursos/numerico/index.html",
+    "listing": "/cursos/probabilidad/index.html",
     "items": [
-      "/cursos/numerico/introduccion/index.html",
-      "/cursos/numerico/condicionamiento/index.html"
-    ]
-  },
-  {
-    "listing": "/cursos/odes/index.html",
-    "items": [
-      "/cursos/odes/introduccion/index.html",
-      "/cursos/odes/familiasortogonales/index.html",
-      "/cursos/odes/modelacion/index.html"
+      "/cursos/probabilidad/introduccion/index.html",
+      "/cursos/probabilidad/calculoprobabilidades/index.html"
     ]
   }
 ]
