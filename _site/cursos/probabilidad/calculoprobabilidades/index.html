@@ -48,7 +48,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../site_libs/bootstrap/bootstrap-a627f686d9537b343e7f3fb245a59876.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-06ef128ffaab2aaffa18b1038abc86f3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -111,7 +111,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../../../styles.css">
 </head>
 
-<body class="floating nav-fixed quarto-light">
+<body class="nav-sidebar docked nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -142,11 +142,43 @@ window.Quarto = {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../cursos/probabilidad/calculoprobabilidades/index.html">Cálculo de probabilidades</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/probabilidad/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Probabilidad</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/probabilidad/introduccion/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/probabilidad/calculoprobabilidades/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Cálculo de probabilidades</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
     <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Contenido</h2>
    
@@ -198,7 +230,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">18 de agosto de 2026</p>
+      <p class="date">21 de agosto de 2026</p>
     </div>
   </div>
   
@@ -250,7 +282,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Ahora queremos la probabilidad de que la placa tenga la forma <code>XXX YYY</code> (las tres letras iguales entre sí, y los tres números iguales entre sí — no necesariamente <code>X=Y</code>).</p>
+<p>Ahora queremos la probabilidad de que la placa tenga la forma <code>XXX YYY</code> (las tres letras iguales entre sí, y los tres números iguales entre sí).</p>
 <p>Para las letras: la primera posición tiene 26 opciones, pero la segunda y la tercera ya no tienen ninguna opción libre (deben repetir la primera). Lo mismo para los números, con 10 opciones en la primera posición. Por la regla del producto:</p>
 <p><span class="math display">\[\#\{\text{casos favorables}\} = 26\times 10 = 260\]</span></p>
 <p><span class="math display">\[P(A) = \frac{26\times10}{26^3\times10^3} = \frac{260}{17.576.000} = \frac{1}{67.600} \approx 1{,}479\times10^{-5}\]</span></p>
@@ -555,7 +587,7 @@ P\Big(\bigcup_k A_k\Big) = \sum_n a_n\, P_n\Big(\bigcup_k A_k\Big) = \sum_n a_n 
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>¿Qué es mejor: apostar solo al directo, solo al combinado, o a los dos simultáneamente (con el mismo número, dividiendo el presupuesto entre ambas modalidades)? Justifique comparando valores esperados.</p>
+<p>¿Qué es mejor: apostar solo al directo, solo al combinado, o a los dos simultáneamente (con el mismo número, dividiendo el presupuesto entre ambas modalidades)?</p>
 </div>
 </div>
 </section>

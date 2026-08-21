@@ -12,6 +12,30 @@ website:
         text: Home
       - href: cursos/index.qmd
         text: Cursos
+  sidebar:
+    - id: odes
+      title: "Ecuaciones Diferenciales"
+      style: docked
+      contents:
+        - cursos/odes/index.qmd
+        - cursos/odes/introduccion/index.qmd
+        - cursos/odes/familiasortogonales/index.qmd
+        - cursos/odes/modelacion/index.qmd
+        - cursos/odes/polares/index.qmd
+    - id: numerico
+      title: "Análisis Numérico"
+      style: docked
+      contents:
+        - cursos/numerico/index.qmd
+        - cursos/numerico/introduccion/index.qmd
+        - cursos/numerico/condicionamiento/index.qmd
+    - id: probabilidad
+      title: "Probabilidad"
+      style: docked
+      contents:
+        - cursos/probabilidad/index.qmd
+        - cursos/probabilidad/introduccion/index.qmd
+        - cursos/probabilidad/calculoprobabilidades/index.qmd
 
 format:
   html:

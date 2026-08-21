@@ -31,7 +31,7 @@ $$P(\{\text{LIT 100}\}) = \frac{1}{26^3\cdot 10^3} = \frac{1}{17.576.000} \appro
 :::
 
 ::: {.callout-tip title="Probabilidad de tres letras iguales y tres números iguales"}
-Ahora queremos la probabilidad de que la placa tenga la forma `XXX YYY` (las tres letras iguales entre sí, y los tres números iguales entre sí — no necesariamente `X=Y`).
+Ahora queremos la probabilidad de que la placa tenga la forma `XXX YYY` (las tres letras iguales entre sí, y los tres números iguales entre sí).
 
 Para las letras: la primera posición tiene 26 opciones, pero la segunda y la tercera ya no tienen ninguna opción libre (deben repetir la primera). Lo mismo para los números, con 10 opciones en la primera posición. Por la regla del producto:
 
@@ -183,7 +183,7 @@ El operador paga un valor **fijo** por el combinado, sin importar si las cifras 
 :::
 
 ::: {.callout-note title="Ejercicio"}
-¿Qué es mejor: apostar solo al directo, solo al combinado, o a los dos simultáneamente (con el mismo número, dividiendo el presupuesto entre ambas modalidades)? Justifique comparando valores esperados.
+¿Qué es mejor: apostar solo al directo, solo al combinado, o a los dos simultáneamente (con el mismo número, dividiendo el presupuesto entre ambas modalidades)? 
 :::
 
 ## Ejercicio — comparando probabilidades raras

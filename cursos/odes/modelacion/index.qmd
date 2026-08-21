@@ -14,7 +14,7 @@ format:
     code-fold: false
     smooth-scroll: true
     highlight-style: github
-order: 3
+order: 4
 ---
 
 ## Modelo — interés compuesto y el número $e$

@@ -1,0 +1,481 @@
+---
+title: "Coordenadas Polares"
+subtitle: "Apuntes de clase: curvas, pendientes y áreas en coordenadas polares"
+description: "De la conversión básica a la lemniscata de Bernoulli, pasando por la deducción completa de las trayectorias ortogonales en polares (con dos enfoques distintos) y el cálculo de áreas por sectores."
+author: "Arturo Sanjuán"
+date: today
+image: "flor.png"
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 3
+---
+
+## Coordenadas polares
+
+Un punto en el plano se puede describir con la distancia $r$ al origen (el **polo**) y el ángulo $\theta$ respecto al eje $x$ (el **eje polar**). La relación con las coordenadas cartesianas es
+
+$$x = r\cos\theta \qquad y = r\sin\theta$$
+
+::: {.callout-note title="Applet — conversión entre coordenadas"}
+```{=html}
+<div style="border:1px solid #ddd;border-radius:8px;padding:16px;max-width:560px;margin:1em auto;font-family:sans-serif;">
+  <canvas id="pol-conv-canvas" width="480" height="420" style="width:100%;height:auto;background:#fff;"></canvas>
+  <div style="display:flex;gap:16px;margin-top:8px;flex-wrap:wrap;">
+    <label>r: <input type="range" id="pol-conv-r" min="0.5" max="4" step="0.05" value="2.5"></label>
+    <label>θ: <input type="range" id="pol-conv-theta" min="0" max="360" step="1" value="50"></label>
+  </div>
+  <p id="pol-conv-label" style="font-size:0.9em;color:#555;margin-top:8px;"></p>
+</div>
+<script>
+(function(){
+  const canvas=document.getElementById('pol-conv-canvas');
+  const ctx=canvas.getContext('2d');
+  const rs=document.getElementById('pol-conv-r'), ts=document.getElementById('pol-conv-theta');
+  const lbl=document.getElementById('pol-conv-label');
+  const W=canvas.width,H=canvas.height,scale=70;
+  function toPx(x,y){return [W/2+x*scale,H/2-y*scale];}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle='#ccc'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(0,H/2); ctx.lineTo(W,H/2); ctx.moveTo(W/2,0); ctx.lineTo(W/2,H); ctx.stroke();
+    const r=parseFloat(rs.value), theta=parseFloat(ts.value)*Math.PI/180;
+    const x=r*Math.cos(theta), y=r*Math.sin(theta);
+    const [Px,Py]=toPx(x,y);
+    const [Ox,Oy]=toPx(0,0);
+    const [Ax,Ay]=toPx(x,0);
+
+    // radio vector
+    ctx.strokeStyle='#1f77b4'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(Ox,Oy); ctx.lineTo(Px,Py); ctx.stroke();
+    // proyeccion x (y=0)
+    ctx.strokeStyle='#d62728'; ctx.setLineDash([4,3]);
+    ctx.beginPath(); ctx.moveTo(Px,Py); ctx.lineTo(Ax,Ay); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(Ox,Oy); ctx.lineTo(Ax,Ay); ctx.stroke();
+    ctx.setLineDash([]);
+    // arco de theta
+    ctx.strokeStyle='#2ca02c';
+    ctx.beginPath(); ctx.arc(Ox,Oy,25,-theta,0, theta>0); ctx.stroke();
+
+    ctx.fillStyle='#333';
+    [[Px,Py],[Ax,Ay],[Ox,Oy]].forEach(p=>{ctx.beginPath();ctx.arc(p[0],p[1],3.5,0,2*Math.PI);ctx.fill();});
+    ctx.font='13px sans-serif';
+    ctx.fillText('P (r,θ)', Px+6, Py-6);
+    ctx.fillText('(x,0)', Ax-10, Ay+16);
+    ctx.fillText('θ', Ox+30, Oy-8);
+
+    lbl.innerHTML = `r = ${r.toFixed(2)},  θ = ${(theta*180/Math.PI).toFixed(0)}°  →  x = r cos θ = ${x.toFixed(2)},  y = r sin θ = ${y.toFixed(2)}`;
+  }
+  rs.addEventListener('input',draw); ts.addEventListener('input',draw); draw();
+})();
+</script>
+```
+:::
+
+### Ejemplo — la familia $r=2a\cos\theta$
+
+Grafiquemos esta familia (¡la misma que ya trabajamos con la técnica de las trayectorias ortogonales!) para distintos rayos $\theta$, y construyamos la tabla de valores.
+
+::: {.callout-note title="Applet — r = 2a cos θ, con tabla de rayos"}
+```{=html}
+<div style="border:1px solid #ddd;border-radius:8px;padding:16px;max-width:640px;margin:1em auto;font-family:sans-serif;">
+  <canvas id="pol-2acos-canvas" width="480" height="420" style="width:100%;height:auto;background:#fff;"></canvas>
+  <label>a: <input type="range" id="pol-2acos-a" min="0.5" max="3" step="0.1" value="1.5" style="width:100%;"></label>
+  <table id="pol-2acos-table" style="width:100%;border-collapse:collapse;margin-top:10px;font-size:0.85em;text-align:center;">
+    <thead><tr><th style="border-bottom:1px solid #ccc;">θ</th></tr></thead>
+    <tbody></tbody>
+  </table>
+</div>
+<script>
+(function(){
+  const canvas=document.getElementById('pol-2acos-canvas');
+  const ctx=canvas.getContext('2d');
+  const as=document.getElementById('pol-2acos-a');
+  const table=document.getElementById('pol-2acos-table');
+  const W=canvas.width,H=canvas.height,scale=60;
+  function toPx(x,y){return [W/2+x*scale,H/2-y*scale];}
+  const rays_deg=[-60,-45,-30,0,30,45,60,90];
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle='#ccc'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(0,H/2); ctx.lineTo(W,H/2); ctx.moveTo(W/2,0); ctx.lineTo(W/2,H); ctx.stroke();
+    const a=parseFloat(as.value);
+
+    // curva
+    ctx.strokeStyle='#1f77b4'; ctx.lineWidth=2.5;
+    ctx.beginPath();
+    let first=true;
+    for(let t=-Math.PI/2;t<=Math.PI/2+0.01;t+=0.02){
+      const r=2*a*Math.cos(t);
+      const [px,py]=toPx(r*Math.cos(t), r*Math.sin(t));
+      if(first){ctx.moveTo(px,py);first=false;} else ctx.lineTo(px,py);
+    }
+    ctx.stroke();
+
+    // rayos y puntos
+    let rows='<tr><td>θ (grados)</td>' + rays_deg.map(d=>`<td>${d}°</td>`).join('') + '</tr>';
+    rows += '<tr><td>r = 2a cos θ</td>' + rays_deg.map(d=>{
+      const t=d*Math.PI/180, r=2*a*Math.cos(t);
+      return `<td>${r.toFixed(2)}</td>`;
+    }).join('') + '</tr>';
+    table.querySelector('tbody').innerHTML = rows;
+
+    ctx.strokeStyle='#f0c0c0';
+    rays_deg.forEach(d=>{
+      const t=d*Math.PI/180;
+      const [x1,y1]=toPx(6*Math.cos(t),6*Math.sin(t));
+      const [x2,y2]=toPx(0,0);
+      ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+      const r=2*a*Math.cos(t);
+      const [px,py]=toPx(r*Math.cos(t), r*Math.sin(t));
+      ctx.fillStyle='#d62728'; ctx.beginPath(); ctx.arc(px,py,3.5,0,2*Math.PI); ctx.fill();
+    });
+  }
+  as.addEventListener('input',draw); draw();
+})();
+</script>
+```
+:::
+
+### Ejemplo 3 (Apostol, Vol. 1, p. 136) — la lemniscata de Bernoulli
+
+Pasar a coordenadas polares la ecuación $(x^2+y^2)^2 = x^2-y^2$, con $y^2\leq x^2$.
+
+Con $x=r\cos\theta$, $y=r\sin\theta$, $x^2+y^2=r^2$, la ecuación se convierte en
+
+$$r^4 = r^2(\cos^2\theta-\sin^2\theta) = r^2\cos(2\theta)$$
+
+$$\Longrightarrow\quad r^2 = \cos(2\theta)$$
+
+que solo tiene sentido si $\cos(2\theta)\geq0$, es decir $2\theta\in\left[-\dfrac\pi2,\dfrac\pi2\right] \Rightarrow \theta\in\left[-\dfrac\pi4,\dfrac\pi4\right]$ (más su reflejo por $\pi$, para el segundo lóbulo). La figura que se genera se conoce como la **lemniscata de Bernoulli**, y se asocia al símbolo $\infty$.
+
+::: {.callout-note title="Applet — explorador de curvas polares clásicas"}
+```{=html}
+<div style="border:1px solid #ddd;border-radius:8px;padding:16px;max-width:560px;margin:1em auto;font-family:sans-serif;">
+  <canvas id="pol-explorer-canvas" width="480" height="480" style="width:100%;height:auto;background:#fff;"></canvas>
+  <div style="margin-top:8px;">
+    <select id="pol-explorer-type" style="width:100%;padding:4px;">
+      <option value="spiral">Espiral de Arquímedes: r = aθ</option>
+      <option value="rose">Rosa/trébol: r = a·cos(nθ)</option>
+      <option value="cardioid">Cardioide: r = a(1+cosθ)</option>
+      <option value="limacon">Caracol de Pascal: r = b + a·cosθ</option>
+    </select>
+  </div>
+  <div style="display:flex;gap:16px;margin-top:8px;flex-wrap:wrap;">
+    <label>a: <input type="range" id="pol-explorer-a" min="0.2" max="3" step="0.1" value="1.5"></label>
+    <label id="pol-explorer-n-label">n: <input type="range" id="pol-explorer-n" min="1" max="8" step="1" value="3"></label>
+    <label id="pol-explorer-b-label">b: <input type="range" id="pol-explorer-b" min="-2" max="2" step="0.1" value="1"></label>
+  </div>
+</div>
+<script>
+(function(){
+  const canvas=document.getElementById('pol-explorer-canvas');
+  const ctx=canvas.getContext('2d');
+  const typeSel=document.getElementById('pol-explorer-type');
+  const as=document.getElementById('pol-explorer-a'), ns=document.getElementById('pol-explorer-n'), bs=document.getElementById('pol-explorer-b');
+  const nLabel=document.getElementById('pol-explorer-n-label'), bLabel=document.getElementById('pol-explorer-b-label');
+  const W=canvas.width,H=canvas.height;
+  function draw(){
+    const type=typeSel.value;
+    nLabel.style.display = (type==='rose') ? 'inline' : 'none';
+    bLabel.style.display = (type==='limacon') ? 'inline' : 'none';
+    const a=parseFloat(as.value), n=parseInt(ns.value), b=parseFloat(bs.value);
+
+    let rmax = 6;
+    if(type==='spiral') rmax = a*4*Math.PI;
+    const scale = Math.min(W,H)/2/ (rmax*1.15);
+    function toPx(x,y){return [W/2+x*scale,H/2-y*scale];}
+
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle='#ccc'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(0,H/2); ctx.lineTo(W,H/2); ctx.moveTo(W/2,0); ctx.lineTo(W/2,H); ctx.stroke();
+
+    let tmax = 2*Math.PI;
+    if(type==='spiral') tmax = 4*Math.PI;
+
+    ctx.strokeStyle='#1f77b4'; ctx.lineWidth=2.2;
+    ctx.beginPath();
+    let first=true;
+    for(let t=0;t<=tmax+0.01;t+=0.01){
+      let r;
+      if(type==='spiral') r=a*t;
+      else if(type==='rose') r=a*Math.cos(n*t);
+      else if(type==='cardioid') r=a*(1+Math.cos(t));
+      else r=b+a*Math.cos(t);
+      const [px,py]=toPx(r*Math.cos(t), r*Math.sin(t));
+      if(first){ctx.moveTo(px,py);first=false;} else ctx.lineTo(px,py);
+    }
+    ctx.stroke();
+  }
+  [typeSel,as,ns,bs].forEach(el=>el.addEventListener('input',draw));
+  draw();
+})();
+</script>
+```
+:::
+
+## Pendientes en coordenadas polares
+
+Con $\varphi$ denotamos el ángulo de la pendiente de la recta tangente en el punto $(r,\theta)$; entonces $\tan\varphi = y'$. Denotamos $r'=dr/d\theta$. Ya dedujimos (viendo $x=r\cos\theta$, $y=r\sin\theta$ como una parametrización) que
+
+$$\tan\varphi = y' = \frac{r'\sin\theta + r\cos\theta}{r'\cos\theta - r\sin\theta}$$
+
+Si despejamos $r'$ de esta ecuación:
+
+$$r' = \frac{r(\cos\theta+\tan\varphi\sin\theta)}{\cos\theta\tan\varphi - \sin\theta} = F(r,\theta)$$
+
+Esta es la ecuación diferencial asociada a las pendientes de las rectas tangentes de la familia original. Para la familia **ortogonal**, reemplazamos $\tan\varphi$ por $-1/\tan\varphi$ (la pendiente perpendicular):
+
+$$r' = \frac{r(\sin\theta - \cos\theta\tan\varphi)}{\cos\theta+\sin\theta\tan\varphi} = G(r,\theta)$$
+
+Y si calculamos directamente $-r^2/F(r,\theta)$, coincide exactamente con $G(r,\theta)$. Por eso: **si la familia de rectas tangentes satisface $r'=F(r,\theta)$, la ecuación de las curvas ortogonales satisface $r'=-r^2/F(r,\theta)$** — queda demostrado.
+
+::: {.callout-note title="Hacer las cuentas — código Maxima"}
+```maxima
+kill(all);
+depends(y, x);
+
+/* pendiente cartesiana en terminos de r, theta, r'=dr/dtheta */
+tanphi: (rp*sin(theta)+r*cos(theta)) / (rp*cos(theta)-r*sin(theta));
+
+/* despejamos rp = F(r,theta) */
+F: rhs(solve(tanphi = tphi, rp)[1]);
+F: ratsimp(F);
+
+/* familia ortogonal: reemplazamos tphi por -1/tphi */
+G: ratsimp(subst(tphi = -1/tphi, F));
+
+/* chequeo: -r^2/F debe coincidir con G */
+ratsimp(-r^2/F - G);   /* debe dar 0 */
+```
+:::
+
+### Aplicando la técnica a $r=2a\cos\theta$
+
+$$\tan\varphi = \frac{r'\sin\theta+r\cos\theta}{r'\cos\theta-r\sin\theta} = -\cot(2\theta)$$
+
+(la última identidad se puede probar con algo de paciencia, sustituyendo $r=2a\cos\theta$, $r'=-2a\sin\theta$ y usando las identidades del ángulo doble). Y eliminando $a$ de $r'=-2a\sin\theta$ con $a=r/(2\cos\theta)$:
+
+$$F(r,\theta) = -r\tan\theta$$
+
+Entonces la ecuación a resolver para la familia ortogonal es
+
+$$r' = \frac{-r^2}{-r\tan\theta} = r\cot\theta \quad\Longrightarrow\quad \frac{dr}{r}=\cot\theta\,d\theta \quad\Longrightarrow\quad \ln r = \ln(\sin\theta)+C \quad\Longrightarrow\quad r = C\sin\theta$$
+
+::: {.callout-note title="Applet — simulación de la familia ortogonal, variando C"}
+```{=html}
+<div style="border:1px solid #ddd;border-radius:8px;padding:16px;max-width:560px;margin:1em auto;font-family:sans-serif;">
+  <canvas id="pol-orth-canvas" width="480" height="420" style="width:100%;height:auto;background:#fff;"></canvas>
+  <div style="display:flex;gap:16px;margin-top:8px;flex-wrap:wrap;">
+    <label>a (r=2a cos θ): <input type="range" id="pol-orth-a" min="0.3" max="2.5" step="0.1" value="1.2"></label>
+    <label>C (r=C sin θ): <input type="range" id="pol-orth-C" min="0.3" max="2.5" step="0.1" value="1.2"></label>
+  </div>
+</div>
+<script>
+(function(){
+  const canvas=document.getElementById('pol-orth-canvas');
+  const ctx=canvas.getContext('2d');
+  const as=document.getElementById('pol-orth-a'), cs=document.getElementById('pol-orth-C');
+  const W=canvas.width,H=canvas.height,scale=70;
+  function toPx(x,y){return [W/2+x*scale,H/2-y*scale];}
+  function drawCircleFamily(k, dir, color, lw){
+    // dir=1: r=2k cos(theta); dir=0: r=k sin(theta)
+    ctx.strokeStyle=color; ctx.lineWidth=lw;
+    ctx.beginPath();
+    let first=true;
+    for(let t=0;t<=2*Math.PI+0.01;t+=0.02){
+      const r = dir? 2*k*Math.cos(t) : k*Math.sin(t);
+      const [px,py]=toPx(r*Math.cos(t), r*Math.sin(t));
+      if(first){ctx.moveTo(px,py);first=false;} else ctx.lineTo(px,py);
+    }
+    ctx.stroke();
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle='#ccc'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(0,H/2); ctx.lineTo(W,H/2); ctx.moveTo(W/2,0); ctx.lineTo(W/2,H); ctx.stroke();
+
+    [0.4,0.8,1.6,2.2].forEach(k=>drawCircleFamily(k,1,'#ddd',1));
+    [0.4,0.8,1.6,2.2].forEach(k=>drawCircleFamily(k,0,'#f3c6c6',1));
+
+    const a=parseFloat(as.value), C=parseFloat(cs.value);
+    drawCircleFamily(a,1,'#1f77b4',2.5);
+    drawCircleFamily(C,0,'#d62728',2.5);
+
+    // interseccion (ambas circunferencias pasan por el origen; la otra interseccion:
+    // r=2a cos t = C sin t  -> tan t = 2a/C
+    const t = Math.atan2(2*a, C);
+    const r = C*Math.sin(t);
+    const [px,py]=toPx(r*Math.cos(t), r*Math.sin(t));
+    ctx.fillStyle='#333'; ctx.beginPath(); ctx.arc(px,py,4,0,2*Math.PI); ctx.fill();
+
+    ctx.fillStyle='#000'; ctx.font='13px sans-serif';
+    ctx.fillText('a = '+a.toFixed(2)+',  C = '+C.toFixed(2), 10, 18);
+  }
+  as.addEventListener('input',draw); cs.addEventListener('input',draw); draw();
+})();
+</script>
+```
+:::
+
+### Un enfoque más elegante: el ángulo $\psi$
+
+Este enfoque (con $\tan\varphi$) no es el más acertado necesariamente. En vez de $\varphi$ (ángulo de la tangente con el eje $x$), conviene trabajar con $\psi$, el ángulo **entre el radio vector y la recta tangente**.
+
+
+
+::: {.callout-note title="Applet — deducción de tan ψ con P, Q, N"}
+```{=html}
+<div style="border:1px solid #ddd;border-radius:8px;padding:16px;max-width:560px;margin:1em auto;font-family:sans-serif;">
+  <canvas id="pol-pqn-canvas" width="480" height="380" style="width:100%;height:auto;background:#fff;"></canvas>
+  <label>dθ (ilustrativo, no infinitesimal real): <input type="range" id="pol-pqn-dtheta" min="3" max="35" step="1" value="20" style="width:100%;"></label>
+  <p style="font-size:0.9em;color:#555;margin-top:8px;">
+    Al achicar dθ, el triángulo $OPQ$ se hace más y más parecido al triángulo rectángulo $PNQ$, con $PN\approx dr$ y $QN\approx r\,d\theta$ — de ahí $\tan\psi = r\,d\theta/dr$.
+  </p>
+</div>
+<script>
+(function(){
+  const canvas=document.getElementById('pol-pqn-canvas');
+  const ctx=canvas.getContext('2d');
+  const ds=document.getElementById('pol-pqn-dtheta');
+  const W=canvas.width,H=canvas.height,scale=150;
+  const Ox=60, Oy=H-40;
+  function toPx(x,y){return [Ox+x*scale,Oy-y*scale];}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const theta0=0.5, r0=1.3;
+    const dtheta=parseFloat(ds.value)*Math.PI/180;
+    const r1=r0+0.35; // r+dr fijo para que se vea bien
+    const theta1=theta0+dtheta;
+
+    const O=[0,0];
+    const P=[r0*Math.cos(theta0), r0*Math.sin(theta0)];
+    const Q=[r1*Math.cos(theta1), r1*Math.sin(theta1)];
+    // N: pie de perpendicular desde Q a la recta OP
+    const dirOP=[Math.cos(theta0), Math.sin(theta0)];
+    const ON = Q[0]*dirOP[0]+Q[1]*dirOP[1];
+    const N=[ON*dirOP[0], ON*dirOP[1]];
+
+    const [Opx,Opy]=toPx(...O);
+    const [Ppx,Ppy]=toPx(...P);
+    const [Qpx,Qpy]=toPx(...Q);
+    const [Npx,Npy]=toPx(...N);
+
+    ctx.strokeStyle='#1f77b4'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(Opx,Opy); ctx.lineTo(Npx,Npy); ctx.stroke(); // O-P-N misma recta
+    ctx.strokeStyle='#d62728'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(Opx,Opy); ctx.lineTo(Qpx,Qpy); ctx.stroke(); // O-Q
+    ctx.strokeStyle='#2ca02c'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(Ppx,Ppy); ctx.lineTo(Qpx,Qpy); ctx.stroke(); // P-Q (~tangente)
+    ctx.strokeStyle='#999'; ctx.setLineDash([3,3]);
+    ctx.beginPath(); ctx.moveTo(Qpx,Qpy); ctx.lineTo(Npx,Npy); ctx.stroke(); // Q-N (perpendicular)
+    ctx.setLineDash([]);
+
+    ctx.fillStyle='#333';
+    [[Opx,Opy],[Ppx,Ppy],[Qpx,Qpy],[Npx,Npy]].forEach(p=>{ctx.beginPath();ctx.arc(p[0],p[1],3.5,0,2*Math.PI);ctx.fill();});
+    ctx.font='13px sans-serif'; ctx.fillStyle='#000';
+    ctx.fillText('O', Opx-14, Opy+4);
+    ctx.fillText('P (r)', Ppx+6, Ppy-6);
+    ctx.fillText('Q (r+dr)', Qpx+6, Qpy-6);
+    ctx.fillText('N', Npx+6, Npy+14);
+    ctx.fillText('dθ', Opx+25, Opy-15);
+    ctx.fillText('tan ψ = QN/PN ≈ (r dθ)/dr', 10, 20);
+  }
+  ds.addEventListener('input',draw); draw();
+})();
+</script>
+```
+:::
+
+Analíticamente se comprueba con $\tan\psi=\tan(\varphi-\theta)=\dfrac{\tan\varphi-\tan\theta}{1+\tan\varphi\tan\theta}$, sustituyendo $\tan\varphi$ (la fórmula de arriba) y $\tan\theta=y/x$, y simplificando (queda, después de algo de álgebra, $\tan\psi = r/r'$, es decir $\tan\psi = r\,d\theta/dr$).
+
+Como $\psi+\pi/2$ es perpendicular a $\psi$ y $\tan(\psi+\pi/2)=-\cot\psi$, la ecuación de las familias ortogonales, en esta notación, es
+
+$$\left(r\frac{d\theta}{dr}\right)_{\text{ortogonal}} = -\frac{1}{r\,d\theta/dr}$$
+
+Si hacemos esto con $r=2a\cos\theta$: $r'=-2a\sin\theta$, y reemplazando $a$ obtenemos $r\,d\theta/dr = -\cot\theta$ — **esta** es la forma en la que **Simmons** presenta la ecuación a resolver (no es una ecuación distinta a la de arriba, es la misma, solo escrita "boca abajo").
+
+::: {.callout-tip title="Ejercicio"}
+Usa esta manera de pensar (con $\psi$) para resolver el problema 3 (el de $r=2c\sin\theta$, en Familias Ortogonales) de una forma más elegante. Con esto ya puedes hacer todos los ejercicios de la sección.
+:::
+
+## Bonus: cálculo de área en coordenadas polares
+
+Aproximamos el área bajo una curva $r=f(\theta)$ con sectores circulares delgados: el área de cada sector de ángulo $d\theta$ es $\tfrac12 r^2\,d\theta$, así que
+
+$$A = \frac12\int_\alpha^\beta r(\theta)^2\,d\theta$$
+
+::: {.callout-note title="Applet — aproximación por sectores"}
+```{=html}
+<div style="border:1px solid #ddd;border-radius:8px;padding:16px;max-width:520px;margin:1em auto;font-family:sans-serif;">
+  <canvas id="pol-area-canvas" width="440" height="440" style="width:100%;height:auto;background:#fff;"></canvas>
+  <label>Número de sectores n: <input type="range" id="pol-area-n" min="3" max="60" step="1" value="8" style="width:100%;"></label>
+  <p id="pol-area-label" style="font-size:0.9em;color:#555;margin-top:8px;"></p>
+</div>
+<script>
+(function(){
+  const canvas=document.getElementById('pol-area-canvas');
+  const ctx=canvas.getContext('2d');
+  const ns=document.getElementById('pol-area-n');
+  const lbl=document.getElementById('pol-area-label');
+  const W=canvas.width,H=canvas.height,scale=350;
+  const Ox=W/2, Oy=H*0.85;
+  function toPx(x,y){return [Ox+x*scale,Oy-y*scale];}
+  function r(t){return Math.sin(t);}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const n=parseInt(ns.value);
+    const dt=Math.PI/n;
+    let approxArea=0;
+    for(let i=0;i<n;i++){
+      const t0=i*dt, t1=(i+1)*dt, tm=(t0+t1)/2;
+      const rm=r(tm);
+      approxArea += 0.5*rm*rm*dt;
+      const [Opx,Opy]=toPx(0,0);
+      const [P1x,P1y]=toPx(rm*Math.cos(t0), rm*Math.sin(t0));
+      const [P2x,P2y]=toPx(rm*Math.cos(t1), rm*Math.sin(t1));
+      ctx.fillStyle='rgba(31,119,180,0.35)'; ctx.strokeStyle='#1f77b4'; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(Opx,Opy); ctx.lineTo(P1x,P1y); ctx.lineTo(P2x,P2y); ctx.closePath();
+      ctx.fill(); ctx.stroke();
+    }
+    // curva real
+    ctx.strokeStyle='#d62728'; ctx.lineWidth=2;
+    ctx.beginPath();
+    let first=true;
+    for(let t=0;t<=Math.PI;t+=0.01){
+      const rr=r(t);
+      const [px,py]=toPx(rr*Math.cos(t), rr*Math.sin(t));
+      if(first){ctx.moveTo(px,py);first=false;} else ctx.lineTo(px,py);
+    }
+    ctx.stroke();
+    lbl.innerHTML = `Área aproximada con ${n} sectores: ${approxArea.toFixed(5)}  (valor exacto: π/4 ≈ ${(Math.PI/4).toFixed(5)})`;
+  }
+  ns.addEventListener('input',draw); draw();
+})();
+</script>
+```
+:::
+
+### Ejemplo — área de un pétalo de $r=\sin\theta$
+
+Para $\theta\in[0,\pi]$:
+
+$$A = \frac12\int_0^\pi \sin^2\theta\,d\theta = \frac14\int_0^\pi(1-\cos2\theta)\,d\theta = \frac14\left[\theta-\frac12\sin2\theta\right]_0^\pi = \frac{\pi}{4}$$
+
+::: {.callout-note title="Hacer las cuentas — código Maxima"}
+```maxima
+kill(all);
+integrate(1/2*sin(theta)^2, theta, 0, %pi);
+```
+:::
+
+::: {.callout-important title="Tarea"}
+Dibujar a mano (y luego verificar en GeoGebra) y calcular el área del cardioide $r=a(1+\cos\theta)$ y del caracol $r=2+\cos\theta$, con $\theta\in[0,2\pi]$. Terminar *todos* los ejercicios de la sección de curvas ortogonales.
+:::
