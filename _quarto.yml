@@ -6,6 +6,7 @@ lang: es
 website:
   title: "Arturo Sanjuán"
   favicon: "favicon.png"
+  page-navigation: true
   navbar:
     left:
       - href: index.qmd
@@ -29,6 +30,7 @@ website:
         - cursos/numerico/index.qmd
         - cursos/numerico/introduccion/index.qmd
         - cursos/numerico/condicionamiento/index.qmd
+        - cursos/numerico/estabilidad/index.qmd
     - id: probabilidad
       title: "Probabilidad"
       style: docked

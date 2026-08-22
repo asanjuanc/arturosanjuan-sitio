@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Arturo Sanjuán">
-<meta name="description" content="De Zenón al caos: por qué nació el cálculo diferencial para describir el cambio, y ejercicios resueltos del Simmons sobre ecuaciones separables e implícitas.">
+<meta name="description" content="Problemas vs.&nbsp;algoritmos, el método de Horner, estabilidad, error hacia atrás, y el análisis completo del ejercicio 1.4.2 (condicionamiento vs.&nbsp;inestabilidad para f(x)=(e^x-1)/x).">
 
-<title>Introducción – Arturo Sanjuán</title>
+<title>Estabilidad – Arturo Sanjuán</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -73,8 +73,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
-<link href="../../../cursos/odes/familiasortogonales/index.html" rel="next">
-<link href="../../../cursos/odes/index.html" rel="prev">
+<link href="../../../cursos/numerico/condicionamiento/index.html" rel="prev">
 <link href="../../../favicon.png" rel="icon" type="image/png">
 <script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -184,7 +183,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../cursos/odes/introduccion/index.html">Introducción</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../cursos/numerico/estabilidad/index.html">Estabilidad</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -198,32 +197,26 @@ window.Quarto = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../cursos/odes/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Ecuaciones Diferenciales</span></a>
+  <a href="../../../cursos/numerico/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis Numérico</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../cursos/odes/introduccion/index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../../cursos/numerico/introduccion/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Introducción</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../cursos/odes/familiasortogonales/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Familias Ortogonales</span></a>
+  <a href="../../../cursos/numerico/condicionamiento/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Condicionamiento</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../cursos/odes/modelacion/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Modelación con Ecuaciones Diferenciales</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../cursos/odes/polares/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Coordenadas Polares</span></a>
+  <a href="../../../cursos/numerico/estabilidad/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Estabilidad</span></a>
   </div>
 </li>
     </ul>
@@ -232,8 +225,14 @@ window.Quarto = {
     <h2 id="toc-title">Contenido</h2>
    
   <ul>
-  <li><a href="#algo-de-historia" id="toc-algo-de-historia" class="nav-link active" data-scroll-target="#algo-de-historia"><span class="header-section-number">1</span> Algo de historia</a></li>
-  <li><a href="#ejercicios-resueltos-del-simmons" id="toc-ejercicios-resueltos-del-simmons" class="nav-link" data-scroll-target="#ejercicios-resueltos-del-simmons"><span class="header-section-number">2</span> Ejercicios resueltos del Simmons</a></li>
+  <li><a href="#problemas-vs.-algoritmos" id="toc-problemas-vs.-algoritmos" class="nav-link active" data-scroll-target="#problemas-vs.-algoritmos"><span class="header-section-number">1</span> Problemas vs.&nbsp;algoritmos</a></li>
+  <li><a href="#estudio-de-caso-evaluación-de-un-polinomio-el-método-de-horner" id="toc-estudio-de-caso-evaluación-de-un-polinomio-el-método-de-horner" class="nav-link" data-scroll-target="#estudio-de-caso-evaluación-de-un-polinomio-el-método-de-horner"><span class="header-section-number">2</span> Estudio de caso: evaluación de un polinomio — el método de Horner</a></li>
+  <li><a href="#ejercicio-1.4.2-fx-dfracex-1x" id="toc-ejercicio-1.4.2-fx-dfracex-1x" class="nav-link" data-scroll-target="#ejercicio-1.4.2-fx-dfracex-1x"><span class="header-section-number">3</span> Ejercicio 1.4.2 — <span class="math inline">\(f(x) = \dfrac{e^x-1}{x}\)</span></a>
+  <ul class="collapse">
+  <li><a href="#a-número-de-condición-y-su-máximomínimo-en--11" id="toc-a-número-de-condición-y-su-máximomínimo-en--11" class="nav-link" data-scroll-target="#a-número-de-condición-y-su-máximomínimo-en--11"><span class="header-section-number">3.1</span> (a) Número de condición y su máximo/mínimo en <span class="math inline">\([-1,1]\)</span></a></li>
+  <li><a href="#bd-dos-algoritmos-para-el-mismo-problema" id="toc-bd-dos-algoritmos-para-el-mismo-problema" class="nav-link" data-scroll-target="#bd-dos-algoritmos-para-el-mismo-problema"><span class="header-section-number">3.2</span> (b)–(d) Dos algoritmos para el mismo problema</a></li>
+  </ul></li>
+  <li><a href="#conexión-con-la-nota-de-condicionamiento" id="toc-conexión-con-la-nota-de-condicionamiento" class="nav-link" data-scroll-target="#conexión-con-la-nota-de-condicionamiento"><span class="header-section-number">4</span> Conexión con la nota de condicionamiento</a></li>
   </ul>
 </nav>
 </nav>
@@ -246,13 +245,13 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Introducción</h1>
-<p class="subtitle lead">Apuntes de clase: breve historia de las ecuaciones diferenciales y ejercicios resueltos</p>
+<h1 class="title">Estabilidad</h1>
+<p class="subtitle lead">Apuntes de clase: algoritmos, error hacia atrás, y el ejercicio 1.4.2</p>
 </div>
 
 <div>
   <div class="description">
-    De Zenón al caos: por qué nació el cálculo diferencial para describir el cambio, y ejercicios resueltos del Simmons sobre ecuaciones separables e implícitas.
+    Problemas vs.&nbsp;algoritmos, el método de Horner, estabilidad, error hacia atrás, y el análisis completo del ejercicio 1.4.2 (condicionamiento vs.&nbsp;inestabilidad para f(x)=(e^x-1)/x).
   </div>
 </div>
 
@@ -281,281 +280,198 @@ window.Quarto = {
 </header>
 
 
-<section id="algo-de-historia" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="algo-de-historia"><span class="header-section-number">1</span> Algo de historia</h2>
+<section id="problemas-vs.-algoritmos" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="problemas-vs.-algoritmos"><span class="header-section-number">1</span> Problemas vs.&nbsp;algoritmos</h2>
+<p>Un problema matemático idealizado se puede representar como una función <span class="math inline">\(a \mapsto f(a)\)</span>: a partir de un dato <span class="math inline">\(a\)</span>, se produce exactamente el resultado <span class="math inline">\(f(a)\)</span>. En la práctica, casi nunca podemos calcular <span class="math inline">\(f(a)\)</span> de manera exacta con un número finito de pasos aritméticos; en su lugar, construimos un <strong>algoritmo</strong>, otra función <span class="math inline">\(a \mapsto \tilde f(a)\)</span>, que aproxima a <span class="math inline">\(f\)</span> mediante una sucesión finita de operaciones elementales.</p>
+<p>Un mismo problema <span class="math inline">\(f\)</span> puede tener muchos algoritmos <span class="math inline">\(\tilde f\)</span> distintos que lo aproximan — y, como veremos, no todos son igual de buenos, incluso cuando matemáticamente (con aritmética exacta) producen el mismo resultado.</p>
+</section>
+<section id="estudio-de-caso-evaluación-de-un-polinomio-el-método-de-horner" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="estudio-de-caso-evaluación-de-un-polinomio-el-método-de-horner"><span class="header-section-number">2</span> Estudio de caso: evaluación de un polinomio — el método de Horner</h2>
+<p>Antes de hablar de estabilidad numérica, vale la pena ver un ejemplo de que “distintos algoritmos para el mismo problema” no es solo una cuestión de precisión: también puede ser una cuestión de <strong>eficiencia</strong>.</p>
+<p>Consideremos <span class="math display">\[p(x) = 5x^3 + 4x^2 + 3x + 2.\]</span></p>
+<p><strong>Evaluación directa.</strong> Calculamos <span class="math inline">\(x^2\)</span> (1 producto), luego <span class="math inline">\(x^3 = x^2\cdot x\)</span> (1 producto más), y finalmente los tres productos <span class="math inline">\(5x^3\)</span>, <span class="math inline">\(4x^2\)</span>, <span class="math inline">\(3x\)</span> (3 productos). En total: <strong>5 productos</strong> y <strong>3 sumas</strong> — 8 operaciones aritméticas.</p>
+<p><strong>Método de Horner.</strong> Reescribimos <span class="math inline">\(p\)</span> anidando la variable: <span class="math display">\[p(x) = ((5x+4)x+3)x+2.\]</span> Cada uno de los tres paréntesis cuesta exactamente 1 producto y 1 suma: <strong>3 productos</strong> y <strong>3 sumas</strong> — 6 operaciones en total.</p>
+<p><span class="math display">\[\frac{8-6}{8} = 0{,}25\]</span></p>
+<p>El método de Horner ahorra el <strong>25%</strong> del esfuerzo computacional respecto a la evaluación directa, y esta ventaja crece con el grado del polinomio: para grado <span class="math inline">\(n\)</span>, la evaluación directa requiere <span class="math inline">\(O(n^2)\)</span> productos (si no se reutiliza <span class="math inline">\(x^k\)</span>) o al menos <span class="math inline">\(2n-1\)</span> productos y <span class="math inline">\(n\)</span> sumas incluso reutilizando potencias, mientras que Horner siempre usa exactamente <span class="math inline">\(n\)</span> productos y <span class="math inline">\(n\)</span> sumas.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">    horner(coefs, x)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="st">Evalúa el polinomio con coeficientes `coefs = [a_n, a_{n-1}, ..., a_1, a_0]`</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">(de mayor a menor grado) en el punto `x`, usando el método de Horner.</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">horner</span>(coefs, x)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    resultado <span class="op">=</span> coefs[<span class="fl">1</span>]</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c <span class="kw">in</span> coefs[<span class="fl">2</span><span class="op">:</span><span class="kw">end</span>]</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        resultado <span class="op">=</span> resultado <span class="op">*</span> x <span class="op">+</span> c</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> resultado</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">horner</span>([<span class="fl">5</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">2</span>], <span class="fl">2.0</span>)   <span class="co"># p(2) = 5·8 + 4·4 + 3·2 + 2 = 64</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>horner([5, 4, 3, 2], 2.0) = 64.0</code></pre>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Estudiar el algoritmo de Horner en Julia (por ejemplo, comparándolo contra <code>Polynomials.jl</code> o contra la evaluación directa con <code>@time</code>/<code>@allocated</code> para verificar el ahorro) y resolver los ejercicios y estudiar la sección 1.3 (“Algorithms”) del FNC. Diga en sus palabras qué es condicionamiento, qué es estabilidad, cómo se relacionan. Ejemplifique. Diga en sus palabras qué entiende por hacia atrás y estabilidad. Ejemplifique.</p>
+</div>
+</div>
+</section>
+<section id="ejercicio-1.4.2-fx-dfracex-1x" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="ejercicio-1.4.2-fx-dfracex-1x"><span class="header-section-number">3</span> Ejercicio 1.4.2 — <span class="math inline">\(f(x) = \dfrac{e^x-1}{x}\)</span></h2>
+<section id="a-número-de-condición-y-su-máximomínimo-en--11" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="a-número-de-condición-y-su-máximomínimo-en--11"><span class="header-section-number">3.1</span> (a) Número de condición y su máximo/mínimo en <span class="math inline">\([-1,1]\)</span></h3>
+<p>Con <span class="math inline">\(f(x)=(e^x-1)/x\)</span> (extendida por continuidad, <span class="math inline">\(f(0)=1\)</span>): <span class="math display">\[f'(x) = \frac{xe^x - (e^x-1)}{x^2} = \frac{(x-1)e^x+1}{x^2}\]</span> <span class="math display">\[\kappa_f(x) = \left|x\cdot\frac{f'(x)}{f(x)}\right| = \left|\frac{(x-1)e^x+1}{e^x-1}\right|\]</span></p>
+<p>Derivando <span class="math inline">\(\kappa_f\)</span> (tratando el signo del numerador y denominador con cuidado, como en la nota de condicionamiento), se encuentra que el signo de <span class="math inline">\(\kappa_f'(x)\)</span> está gobernado por <span class="math inline">\(x(e^x-x-1)\)</span>, y como <span class="math inline">\(e^x-x-1\ge0\)</span> para todo <span class="math inline">\(x\)</span> real (con igualdad solo en <span class="math inline">\(x=0\)</span>), <span class="math inline">\(\kappa_f\)</span> es <strong>decreciente en <span class="math inline">\((-1,0)\)</span> y creciente en <span class="math inline">\((0,1)\)</span></strong>: tiene forma de “V”, con mínimo en <span class="math inline">\(x=0\)</span> y máximo en uno de los dos extremos del intervalo.</p>
+<p>Evaluando en los extremos: <span class="math display">\[\kappa_f(1) = \left|\frac{(1-1)e+1}{e-1}\right| = \frac{1}{e-1} \approx 0{,}5820, \qquad \kappa_f(-1) = \left|\frac{-2e^{-1}+1}{e^{-1}-1}\right| \approx 0{,}4180\]</span></p>
+<p><span class="math display">\[\boxed{\max_{[-1,1]}\kappa_f = \kappa_f(1) = \dfrac{1}{e-1}\approx 0{,}582, \qquad \min_{[-1,1]}\kappa_f = \kappa_f(0) = 0}\]</span></p>
+<p>Verificación en Julia (evaluando <span class="math inline">\(\kappa_f\)</span> numéricamente en una malla fina, sin depender de la simplificación simbólica — también se puede hacer con <code>Symbolics.jl</code> derivando <code>f</code> automáticamente):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ForwardDiff</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(x) <span class="op">=</span> x <span class="op">==</span> <span class="fl">0</span> ? <span class="fl">1.0</span> <span class="op">:</span> (<span class="fu">exp</span>(x) <span class="op">-</span> <span class="fl">1</span>)<span class="op">/</span>x</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">κ</span>(x) <span class="op">=</span> <span class="fu">abs</span>(x <span class="op">*</span> ForwardDiff.<span class="fu">derivative</span>(f, x) <span class="op">/</span> <span class="fu">f</span>(x))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>xs <span class="op">=</span> <span class="fu">range</span>(<span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span>, length<span class="op">=</span><span class="fl">20001</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>kmax, imax <span class="op">=</span> <span class="fu">findmax</span>(<span class="fu">κ</span>.(xs))</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>kmin, imin <span class="op">=</span> <span class="fu">findmin</span>(<span class="fu">κ</span>.(xs))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> xs[imax], kmax   <span class="co"># (1.0, 0.5819767068693265)</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> xs[imin], kmin   <span class="co"># (0.0, 0.0)</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fl">1</span><span class="op">/</span>(<span class="fu">exp</span>(<span class="fl">1</span>)<span class="op">-</span><span class="fl">1</span>)      <span class="co"># 0.5819767068693265  -- coincide exactamente</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>(xs[imax], kmax) = (1.0, 0.5819767068693265)
+(xs[imin], kmin) = (0.0, 0.0)
+1 / (exp(1) - 1) = 0.5819767068693265</code></pre>
+<p>Confirmado: <span class="math inline">\(\kappa_f(0)=0\)</span> (el problema está <strong>óptimamente condicionado</strong> cerca de cero) y <span class="math inline">\(\kappa_f\)</span> crece muy poco en <span class="math inline">\([-1,1]\)</span>, alcanzando apenas <span class="math inline">\(\approx0{,}58\)</span>. Este es exactamente el mismo problema bien condicionado que ya vimos en la nota de condicionamiento — aquí lo confirmamos cuantitativamente en todo el intervalo <span class="math inline">\([-1,1]\)</span>, no solo en el límite <span class="math inline">\(x\to0\)</span>.</p>
+</section>
+<section id="bd-dos-algoritmos-para-el-mismo-problema" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="bd-dos-algoritmos-para-el-mismo-problema"><span class="header-section-number">3.2</span> (b)–(d) Dos algoritmos para el mismo problema</h3>
+<p><strong>Algoritmo ingenuo:</strong> evaluar <span class="math inline">\(f(x)\)</span> tal cual, con la resta explícita.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">f_ingenuo</span>(x) <span class="op">=</span> (<span class="fu">exp</span>(x) <span class="op">-</span> <span class="fl">1</span>)<span class="op">/</span>x</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Algoritmo por serie de Maclaurin (8 términos):</strong> <span class="math display">\[f(x) \approx p(x) = 1 + \frac{x}{2!} + \frac{x^2}{3!} + \cdots + \frac{x^7}{8!}\]</span></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">p_maclaurin</span>(x)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> <span class="fl">0</span><span class="op">:</span><span class="fl">7</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        s <span class="op">+=</span> x<span class="op">^</span>k <span class="op">/</span> <span class="fu">factorial</span>(k<span class="op">+</span><span class="fl">1</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> s</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Evaluando ambos en <span class="math inline">\(x=10^{-2},10^{-3},\ldots,10^{-11}\)</span> y comparando contra un valor de referencia de alta precisión:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Época</th>
-<th>Autor(es)</th>
-<th>Aporte</th>
+<th><span class="math inline">\(x\)</span></th>
+<th>ingenuo</th>
+<th>Maclaurin (8 términos)</th>
+<th>error rel. ingenuo</th>
+<th>error rel. Maclaurin</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>~450 a.e.c.</td>
-<td>Zenón</td>
-<td>El movimiento es una ilusión</td>
+<td><span class="math inline">\(10^{-2}\)</span></td>
+<td><span class="math inline">\(1{,}005016708416795\)</span></td>
+<td><span class="math inline">\(1{,}005016708416806\)</span></td>
+<td><span class="math inline">\(1{,}08\times10^{-14}\)</span></td>
+<td><span class="math inline">\(1{,}8\times10^{-16}\)</span></td>
 </tr>
 <tr class="even">
-<td>~350 a.e.c.</td>
-<td>Aristóteles</td>
-<td>Teleología del movimiento: todo se mueve <em>por otro</em> — el primer motor inmóvil</td>
+<td><span class="math inline">\(10^{-3}\)</span></td>
+<td><span class="math inline">\(1{,}000500166708385\)</span></td>
+<td><span class="math inline">\(1{,}000500166708342\)</span></td>
+<td><span class="math inline">\(4{,}29\times10^{-14}\)</span></td>
+<td><span class="math inline">\(7{,}5\times10^{-17}\)</span></td>
 </tr>
 <tr class="odd">
-<td>S. XVII</td>
-<td>Newton (<em>Principia</em>, 1687)</td>
-<td>Quiere describir el movimiento, el cambio. Para eso inventa el cálculo y las ecuaciones diferenciales: <strong>cómo cambian las cosas</strong>, en lugar de dónde están o por qué cambian</td>
+<td><span class="math inline">\(10^{-4}\)</span></td>
+<td><span class="math inline">\(1{,}000050001667141\)</span></td>
+<td><span class="math inline">\(1{,}000050001666708\)</span></td>
+<td><span class="math inline">\(4{,}33\times10^{-13}\)</span></td>
+<td><span class="math inline">\(9{,}8\times10^{-17}\)</span></td>
 </tr>
 <tr class="even">
-<td>S. XVIII</td>
-<td>Bernoulli (Jacob, Johann, Daniel)</td>
-<td>La braquistócrona, la catenaria y la ecuación de onda</td>
+<td><span class="math inline">\(10^{-5}\)</span></td>
+<td><span class="math inline">\(1{,}000005000006965\)</span></td>
+<td><span class="math inline">\(1{,}000005000016667\)</span></td>
+<td><span class="math inline">\(9{,}70\times10^{-12}\)</span></td>
+<td><span class="math inline">\(7{,}5\times10^{-18}\)</span></td>
 </tr>
 <tr class="odd">
-<td>S. XVIII</td>
-<td>Euler y Lagrange</td>
-<td>Reformulan toda la mecánica</td>
+<td><span class="math inline">\(10^{-6}\)</span></td>
+<td><span class="math inline">\(1{,}000000499962184\)</span></td>
+<td><span class="math inline">\(1{,}000000500000167\)</span></td>
+<td><span class="math inline">\(3{,}80\times10^{-11}\)</span></td>
+<td><span class="math inline">\(1{,}6\times10^{-16}\)</span></td>
 </tr>
 <tr class="even">
-<td>S. XIX</td>
-<td>Laplace</td>
-<td>El determinismo</td>
+<td><span class="math inline">\(10^{-7}\)</span></td>
+<td><span class="math inline">\(1{,}000000049433680\)</span></td>
+<td><span class="math inline">\(1{,}000000050000002\)</span></td>
+<td><span class="math inline">\(5{,}66\times10^{-10}\)</span></td>
+<td><span class="math inline">\(2{,}8\times10^{-17}\)</span></td>
 </tr>
 <tr class="odd">
-<td>S. XIX</td>
-<td>Fourier</td>
-<td>La ecuación del calor (teoría de funciones)</td>
+<td><span class="math inline">\(10^{-8}\)</span></td>
+<td><span class="math inline">\(0{,}999999993922529\)</span></td>
+<td><span class="math inline">\(1{,}000000005000000\)</span></td>
+<td><span class="math inline">\(1{,}11\times10^{-8}\)</span></td>
+<td><span class="math inline">\(4{,}7\times10^{-17}\)</span></td>
 </tr>
 <tr class="even">
-<td>S. XIX</td>
-<td>Picard–Lindelöf</td>
-<td>La imposibilidad de encontrar, en general, una solución exacta</td>
+<td><span class="math inline">\(10^{-9}\)</span></td>
+<td><span class="math inline">\(1{,}000000082740371\)</span></td>
+<td><span class="math inline">\(1{,}000000000500000\)</span></td>
+<td><span class="math inline">\(8{,}22\times10^{-8}\)</span></td>
+<td><span class="math inline">\(4{,}1\times10^{-17}\)</span></td>
 </tr>
 <tr class="odd">
-<td>S. XIX</td>
-<td>Poincaré</td>
-<td>El estudio cualitativo de las ecuaciones</td>
+<td><span class="math inline">\(10^{-10}\)</span></td>
+<td><span class="math inline">\(1{,}000000082740371\)</span></td>
+<td><span class="math inline">\(1{,}000000000050000\)</span></td>
+<td><span class="math inline">\(8{,}27\times10^{-8}\)</span></td>
+<td><span class="math inline">\(4{,}1\times10^{-18}\)</span></td>
 </tr>
 <tr class="even">
-<td>S. XX</td>
-<td>Lorenz y Smale</td>
-<td>Aparecen los sistemas dinámicos y la teoría del caos</td>
-</tr>
-<tr class="odd">
-<td>S. XX</td>
-<td>—</td>
-<td>Aplicaciones a biología (poblaciones, crecimiento celular), economía, neurociencia (Hodgkin–Huxley–Nagumo), epidemiología (modelo SIR), química (quimiotaxis), física cuántica, formación de estrellas y agujeros negros</td>
+<td><span class="math inline">\(10^{-11}\)</span></td>
+<td><span class="math inline">\(1{,}000000082740371\)</span></td>
+<td><span class="math inline">\(1{,}000000000005000\)</span></td>
+<td><span class="math inline">\(8{,}27\times10^{-8}\)</span></td>
+<td><span class="math inline">\(4{,}1\times10^{-19}\)</span></td>
 </tr>
 </tbody>
 </table>
-<div class="callout callout-style-default callout-important callout-titled" title="La idea central">
+<div class="callout callout-style-default callout-important callout-titled" title="¿Cuál es más preciso, y por qué?">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>La idea central
+<span class="screen-reader-only">Importante</span>¿Cuál es más preciso, y por qué?
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>El giro de Newton es el que define el curso: en lugar de preguntar <strong>dónde</strong> está algo o <strong>por qué</strong> cambia, una ecuación diferencial pregunta <strong>cómo</strong> cambia — y de ahí se reconstruye todo lo demás.</p>
+<p>El algoritmo de Maclaurin es dramáticamente más preciso: mantiene error relativo cercano a <span class="math inline">\(\epsilon_{\text{mach}}\)</span> (<span class="math inline">\(\sim10^{-16}\)</span>–<span class="math inline">\(10^{-17}\)</span>) en <strong>todo</strong> el rango, mientras que el ingenuo se degrada progresivamente — de <span class="math inline">\(10^{-14}\)</span> en <span class="math inline">\(x=10^{-2}\)</span> a <span class="math inline">\(\sim10^{-8}\)</span> en <span class="math inline">\(x\le10^{-9}\)</span>, donde el error deja de crecer porque toca el límite de lo que la representación de <span class="math inline">\(x\)</span> misma permite distinguir.</p>
+<p>La razón es exactamente la del Ejemplo 1.4.1: el algoritmo ingenuo calcula <span class="math inline">\(e^x\)</span> (que para <span class="math inline">\(x\)</span> pequeño está muy cerca de <span class="math inline">\(1\)</span>) y luego <strong>resta <span class="math inline">\(1\)</span></strong>, cancelando los primeros dígitos compartidos y dejando expuesto el ruido de redondeo de <span class="math inline">\(e^x\)</span> como si fuera señal. El polinomio de Maclaurin, en cambio, <strong>nunca resta cantidades parecidas</strong>: todos sus términos <span class="math inline">\(x^k/(k{+}1)!\)</span> para <span class="math inline">\(x&gt;0\)</span> son positivos y decrecientes, así que solo hay sumas de cantidades del mismo signo — sin cancelación posible.</p>
+<p>Nótese que <span class="math inline">\(\kappa_f(x)\to0\)</span> cuando <span class="math inline">\(x\to0\)</span>: el <strong>problema</strong> se vuelve más fácil, no más difícil, cerca de cero. La degradación del algoritmo ingenuo no tiene nada que ver con el condicionamiento — es pura <strong>inestabilidad algorítmica</strong>, el mismo fenómeno ya documentado para <span class="math inline">\((e^x-1)/x\)</span> en la nota de condicionamiento, ahora cuantificado en todo el intervalo <span class="math inline">\([-1,1]\)</span> y comparado explícitamente contra una alternativa estable.</p>
 </div>
 </div>
 </section>
-<section id="ejercicios-resueltos-del-simmons" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="ejercicios-resueltos-del-simmons"><span class="header-section-number">2</span> Ejercicios resueltos del Simmons</h2>
-<div class="callout callout-style-default callout-tip callout-titled" title="Ejercicio 1-j — Verificar una solución implícita">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Ejercicio 1-j — Verificar una solución implícita
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Verificar que <span class="math inline">\(x^2 = 2y^2\log y\)</span> es solución de</p>
-<p><span class="math display">\[y' = \frac{xy}{x^2+y^2}\]</span></p>
-</div>
-</div>
-<p>Derivamos implícitamente, pensando a <span class="math inline">\(y\)</span> como función de <span class="math inline">\(x\)</span>:</p>
-<p><span class="math display">\[2x = 4y\,y'\log y + 2y^2\cdot\frac{y'}{y} = 4y\,y'\log y + 2y\,y' = 2y\,y'\big(2\log y + 1\big)\]</span></p>
-<p><span class="math display">\[\Rightarrow\quad x = y\,y'\big(2\log y + 1\big)\]</span></p>
-<p>De la ecuación original, <span class="math inline">\(\log y = \dfrac{x^2}{2y^2}\)</span>. Reemplazando:</p>
-<p><span class="math display">\[x = y\,y'\left(\frac{x^2}{y^2}+1\right) = y\,y'\cdot\frac{x^2+y^2}{y^2} \quad\Longrightarrow\quad xy = y'(x^2+y^2)\]</span></p>
-<p><span class="math display">\[\Longrightarrow\quad y' = \frac{xy}{x^2+y^2}\ \checkmark\]</span></p>
-<div class="callout callout-style-default callout-note callout-titled" title="Chequeo con Maxima">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Chequeo con Maxima
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">depends</span>(<span class="cn">y</span>, <span class="cn">x</span>);</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cn">eq</span>: <span class="cn">x</span>^<span class="dv">2</span> = <span class="dv">2</span>*<span class="cn">y</span>^<span class="dv">2</span>*<span class="fu">log</span>(<span class="cn">y</span>);</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cn">deq</span>: <span class="fu">diff</span>(<span class="cn">eq</span>, <span class="cn">x</span>);</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">solve</span>(<span class="cn">deq</span>, <span class="fu">diff</span>(<span class="cn">y</span>,<span class="cn">x</span>));</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Ejercicio 2-q — Solución general de una ecuación separable">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Ejercicio 2-q — Solución general de una ecuación separable
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Encuentre la solución general de</p>
-<p><span class="math display">\[(1+x^2)\,dy + (1+y^2)\,dx = 0\]</span></p>
-</div>
-</div>
-<p>Se puede escribir como <span class="math inline">\((1+x^2)y' + (1+y^2) = 0\)</span>, de donde</p>
-<p><span class="math display">\[y' = -\frac{1+y^2}{1+x^2} \quad\Longrightarrow\quad \frac{dy}{1+y^2} = -\frac{dx}{1+x^2}\]</span></p>
-<p>Integrando ambos lados:</p>
-<p><span class="math display">\[\arctan y = -\arctan x + C \quad\Longrightarrow\quad y = \tan\big(C - \arctan x\big)\]</span></p>
-<p>Usando la identidad <span class="math inline">\(\tan(A-B) = \dfrac{\tan A - \tan B}{1+\tan A\tan B}\)</span> con <span class="math inline">\(k=\tan C\)</span>:</p>
-<p><span class="math display">\[y = \frac{k - x}{1 + kx}\]</span></p>
-<div class="callout callout-style-default callout-note callout-titled" title="Chequeo con Maxima">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Chequeo con Maxima
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cn">ode</span>: <span class="do">'</span><span class="cn">diff</span>(<span class="cn">y</span>,<span class="cn">x</span>) = -(<span class="dv">1</span>+<span class="cn">y</span>^<span class="dv">2</span>)/(<span class="dv">1</span>+<span class="cn">x</span>^<span class="dv">2</span>);</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cn">sol</span>: <span class="fu">ode2</span>(<span class="cn">ode</span>, <span class="cn">y</span>, <span class="cn">x</span>);</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Ejercicio 3-f — Problema de valor inicial con fracciones parciales">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Ejercicio 3-f — Problema de valor inicial con fracciones parciales
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Encuentre la solución particular de</p>
-<p><span class="math display">\[(x+1)(x^2+1)\,y' = 2x^2+1, \qquad y(0)=1\]</span></p>
-</div>
-</div>
-<p><span class="math display">\[y' = \frac{2x^2+1}{(x+1)(x^2+1)}\]</span></p>
-<p>Hacemos fracciones parciales: <span class="math inline">\(\dfrac{2x^2+1}{(x+1)(x^2+1)} = \dfrac{A}{x+1} + \dfrac{Bx+C}{x^2+1}\)</span></p>
-<p><span class="math display">\[2x^2+1 = A(x^2+1) + (Bx+C)(x+1) = (A+B)x^2 + (B+C)x + (A+C)\]</span></p>
-<p>Igualando coeficientes:</p>
-<p><span class="math display">\[(1)\ A+B=2 \qquad (2)\ B+C=0 \qquad (3)\ A+C=1\]</span></p>
-<p>De (2), <span class="math inline">\(C=-B\)</span>. Sustituyendo en (3): <span class="math inline">\(A-B=1\)</span>. Sumando con (1): <span class="math inline">\(2A=3 \Rightarrow A=\tfrac32\)</span>, luego <span class="math inline">\(B=\tfrac12\)</span> y <span class="math inline">\(C=-\tfrac12\)</span>.</p>
-<p><span class="math display">\[y' = \frac{3/2}{x+1} + \frac{1}{2}\cdot\frac{x}{x^2+1} - \frac{1/2}{x^2+1}\]</span></p>
-<div class="callout callout-style-default callout-note callout-titled" title="Chequeo con Maxima">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Chequeo con Maxima
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cn">ode</span>: (<span class="cn">x</span><span class="dv">+1</span>)*(<span class="cn">x</span>^<span class="dv">2+1</span>)*<span class="do">'</span><span class="cn">diff</span>(<span class="cn">y</span>,<span class="cn">x</span>) = <span class="dv">2</span>*<span class="cn">x</span>^<span class="dv">2+1</span>;</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cn">sol</span>: <span class="fu">ode2</span>(<span class="cn">ode</span>, <span class="cn">y</span>, <span class="cn">x</span>);</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ic1</span>(<span class="cn">sol</span>, <span class="cn">x</span>=<span class="dv">0</span>, <span class="cn">y</span>=<span class="dv">1</span>);</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Como la ecuación es de <strong>primer orden</strong>, la condición inicial se fija con <code>ic1</code>, no con <code>ic2</code> (esa es para ecuaciones de segundo orden, que necesitan <span class="math inline">\(y\)</span> y <span class="math inline">\(y'\)</span> en el punto).</p>
-</div>
-</div>
-<p>Integrando:</p>
-<p><span class="math display">\[y = \frac32\log|x+1| + \frac14\log(x^2+1) - \frac12\arctan x + K\]</span></p>
-<p>Con la condición <span class="math inline">\(y(0)=1\)</span>: <span class="math inline">\(1 = 0+0-0+K \Rightarrow K=1\)</span>. Por tanto,</p>
-<p><span class="math display">\[y = \frac32\log(x+1) + \frac14\log(x^2+1) - \frac12\arctan x + 1\]</span></p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Ejercicio 4-b — Curva integral por un punto dado">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Ejercicio 4-b — Curva integral por un punto dado
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Encuentre la curva integral que pasa por el punto <span class="math inline">\((1,1)\)</span>, sabiendo que</p>
-<p><span class="math display">\[dy = \left(2x+\frac1x\right)dx\]</span></p>
-</div>
-</div>
-<p>Integrando directamente:</p>
-<p><span class="math display">\[y = x^2 + \log x + C\]</span></p>
-<p>Con la condición <span class="math inline">\(y(1)=1\)</span>: <span class="math inline">\(1 = 1^2+\log 1 + C \Rightarrow C=0\)</span>. La curva es</p>
-<p><span class="math display">\[y = x^2 + \log x\]</span></p>
-<div class="callout callout-style-default callout-note callout-titled" title="Chequeo con Maxima">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Chequeo con Maxima
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cn">ode</span>: <span class="do">'</span><span class="cn">diff</span>(<span class="cn">y</span>,<span class="cn">x</span>) = <span class="dv">2</span>*<span class="cn">x</span> + <span class="dv">1</span>/<span class="cn">x</span>;</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cn">sol</span>: <span class="fu">ode2</span>(<span class="cn">ode</span>, <span class="cn">y</span>, <span class="cn">x</span>);</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ic1</span>(<span class="cn">sol</span>, <span class="cn">x</span>=<span class="dv">1</span>, <span class="cn">y</span>=<span class="dv">1</span>);</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="Gráfica con Maxima">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Gráfica con Maxima
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cn">y</span>(<span class="cn">x</span>) := <span class="cn">x</span>^<span class="dv">2</span> + <span class="fu">log</span>(<span class="cn">x</span>);</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot2d</span>([<span class="cn">y</span>(<span class="cn">x</span>), [<span class="cn">discrete</span>, [[<span class="dv">1</span>,<span class="dv">1</span>]]]], [<span class="cn">x</span>, <span class="fl">0.05</span>, <span class="dv">3</span>],</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>       [<span class="cn">style</span>, [<span class="cn">lines</span>,<span class="dv">2</span>], [<span class="cn">points</span>,<span class="dv">3</span>,<span class="dv">7</span>]],</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>       [<span class="cn">legend</span>, <span class="st">"curva"</span>, <span class="st">"(1,1)"</span>],</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>       [<span class="cn">xlabel</span>, <span class="st">"x"</span>], [<span class="cn">ylabel</span>, <span class="st">"y"</span>]);</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="sol.png" class="img-fluid figure-img"></p>
-<figcaption>Solucion que pasa por (1,1)</figcaption>
-</figure>
-</div>
-<div class="callout callout-style-default callout-important callout-titled" title="Tarea">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Tarea
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Hacer los demás ejercicios de tarea, en especial el número 8.</p>
-</div>
-</div>
+</section>
+<section id="conexión-con-la-nota-de-condicionamiento" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="conexión-con-la-nota-de-condicionamiento"><span class="header-section-number">4</span> Conexión con la nota de condicionamiento</h2>
+<p>Este ejercicio es la contraparte natural de lo visto en la nota anterior: allí establecimos que <span class="math inline">\((e^x-1)/x\)</span> es un problema bien condicionado cerca de cero (<span class="math inline">\(\kappa_f(0)=0\)</span>); aquí confirmamos que esa buena condición se sostiene en todo <span class="math inline">\([-1,1]\)</span> (máximo <span class="math inline">\(\approx0{,}582\)</span>), y mostramos <strong>dos algoritmos concretos</strong> para el mismo problema — uno inestable (cancelación explícita) y uno estable (serie de Maclaurin, sin resta de cantidades parecidas) — cuantificando la brecha entre ellos. Es exactamente el mismo patrón del Ejemplo 1.4.1: problema bien condicionado, algoritmo mal elegido, error inexplicable por el condicionamiento — y una alternativa que lo resuelve sin cambiar el problema, solo la ruta de cálculo.</p>
 
 
 </section>
@@ -963,14 +879,11 @@ window.Quarto = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../../cursos/odes/index.html" class="pagination-link" aria-label="Ecuaciones Diferenciales">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Ecuaciones Diferenciales</span>
+      <a href="../../../cursos/numerico/condicionamiento/index.html" class="pagination-link" aria-label="Condicionamiento">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Condicionamiento</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../cursos/odes/familiasortogonales/index.html" class="pagination-link" aria-label="Familias Ortogonales">
-        <span class="nav-page-text">Familias Ortogonales</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

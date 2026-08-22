@@ -99,38 +99,37 @@ $$f(x)=\cos(x) \;\Longrightarrow\; \kappa_f(x)=|x\tan(x)|$$
 Puede ser grande si $x$ está cerca de un múltiplo impar de $\pi/2$ (ahí $f(x)\approx 0$) o si $|x|\gg 1$.
 
 ## Ejercicio 1.2.3 — $f(x)=\dfrac{e^x-1}{x}$
+### El límite en $x=0$ vía L'Hôpital
 
-Calculemos $\kappa_f(x)$ para $f(x)=\dfrac{e^x-1}{x}$ (extendida por continuidad a $f(0)=1$).
+$$\lim_{x\to 0}\frac{e^x-1}{x} \;=\; \frac{0}{0} \quad\text{(indeterminado)}$$
 
-$$f'(x)=\frac{xe^x-(e^x-1)}{x^2}=\frac{(x-1)e^x+1}{x^2}$$
+Aplicando L'Hôpital (derivando numerador y denominador por separado):
 
-$$\kappa_f(x)=\left|x\cdot\frac{f'(x)}{f(x)}\right| = \left|\frac{(x-1)e^x+1}{e^x-1}\right|$$
+$$\lim_{x\to 0}\frac{e^x-1}{x} = \lim_{x\to 0}\frac{\dfrac{d}{dx}(e^x-1)}{\dfrac{d}{dx}(x)} = \lim_{x\to 0}\frac{e^x}{1} = e^0 = 1$$
 
-Expandiendo en serie de Taylor alrededor de $x=0$:
+Esto confirma, sin usar series de Taylor, que $f(0)=1$ es la extensión continua correcta.
 
-$$(x-1)e^x+1 = \frac{x^2}{2}+\frac{x^3}{3}+\cdots \qquad e^x-1=x+\frac{x^2}{2}+\cdots$$
+### Comportamiento en $\pm\infty$
 
-$$\kappa_f(x) \approx \frac{x^2/2}{x} = \frac{|x|}{2} \;\xrightarrow[x\to 0]{}\; 0$$
+**Cuando $x\to+\infty$:** también es indeterminado ($\infty/\infty$), así que L'Hôpital vuelve a aplicar:
 
-Numéricamente: $\kappa_f(10^{-6})\approx 5\times10^{-7}$, $\kappa_f(1)\approx 0{,}58$, $\kappa_f(10)\approx 9$, $\kappa_f(20)\approx 19$ — crece linealmente solo para $x$ grande, nunca "explota". El **problema** $f(x)=(e^x-1)/x$ es entonces muy bien condicionado cerca de $x=0$: $\kappa_f(0)=0$.
+$$\lim_{x\to+\infty}\frac{e^x-1}{x} = \lim_{x\to+\infty}\frac{e^x}{1} = +\infty$$
 
-Y sin embargo, si evalúas $f$ en una máquina con esta fórmula tal cual —calcular $e^x$, restarle 1, dividir por $x$— para $x$ pequeño el resultado es basura. Esto no es una contradicción: es la distinción central del capítulo entre **condicionamiento del problema** y **estabilidad del algoritmo**.
+El numerador crece exponencialmente mientras el denominador crece linealmente, así que el cociente diverge.
 
-### Qué pasa exactamente en la resta $e^x-1$
+**Cuando $x\to-\infty$:** aquí **no** hay indeterminación, así que L'Hôpital no es necesario ni aplicable. Como $e^x\to 0$:
 
-Cuando $x$ es pequeño, $e^x$ está muy cerca de $1$ — por ejemplo $e^{10^{-8}} = 1{,}00000000999999994\ldots$ En doble precisión ($\approx16$ cifras significativas), ese número se guarda con toda su precisión disponible, pero al restarle $1$ ocurre exactamente la cancelación de la primera sección: los primeros 8 dígitos (el "$1{,}0000000$" que comparten $e^x$ y $1$) se cancelan exactamente, y lo único que sobrevive son los dígitos que ya estaban cerca del límite de precisión de la máquina. El resultado hereda el ruido de redondeo de $e^x$ como si fuera señal.
+$$\lim_{x\to-\infty}\frac{e^x-1}{x} = \frac{0-1}{-\infty} = \frac{-1}{-\infty} = 0$$
 
-Comparemos, para $x=10^{-8}$, la fórmula naíf y la función segura `expm1` (diseñada para evitar la resta):
+el numerador se acerca a la constante $-1$ mientras el denominador diverge, así que el cociente se anula directamente.
 
-| cantidad | valor calculado |
-|---|---|
-| $e^x$ (doble precisión) | $1{,}00000000999999994$ |
-| $e^x-1$ (naíf) | $9{,}99999993922529\times10^{-9}$ |
-| `expm1(x)` (seguro) | $1{,}00000000500000\times10^{-8}$ |
-| valor de referencia | $1{,}00000000500000\times10^{-8}$ |
+$$\boxed{\lim_{x\to-\infty} f(x) = 0, \qquad f(0)=1, \qquad \lim_{x\to+\infty} f(x) = +\infty}$$
 
-El resultado naíf tiene error relativo $\approx 1{,}1\times10^{-8}$ — apenas **8 dígitos correctos**, cuando la máquina en principio te puede dar 16. `expm1` da el valor exacto hasta el redondeo de máquina. Con $x=10^{-12}$ la cosa empeora: la fórmula naíf se queda con solo **4 dígitos correctos**, mientras `expm1` sigue exacta.
+El problema está bien condicionado para valores negativos. Para valores grandes el problema está mal condicionado.
 
+::: {.callout-note title="¿Cómo funciona `expm1`?"}
+`expm1(x)` calcula $e^x-1$ sin pasar por la resta explícita: para $x$ pequeño usa internamente una expansión en serie (o una tabla/aproximación racional de alta precisión) diseñada para que el resultado converja correctamente a $0$ cuando $x\to0$, sin cancelar dígitos. Para $x$ no pequeño, se reduce esencialmente al cálculo directo $e^x-1$, que ahí no tiene problema de cancelación. Es la misma idea que la serie de Maclaurin del ejercicio 1.4.2: evitar la resta de dos cantidades casi iguales.
+:::
 
 
 

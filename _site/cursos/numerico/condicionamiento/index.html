@@ -38,6 +38,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
+<link href="../../../cursos/numerico/estabilidad/index.html" rel="next">
+<link href="../../../cursos/numerico/introduccion/index.html" rel="prev">
 <link href="../../../favicon.png" rel="icon" type="image/png">
 <script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -177,6 +179,12 @@ window.Quarto = {
  <span class="menu-text">Condicionamiento</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/numerico/estabilidad/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estabilidad</span></a>
+  </div>
+</li>
     </ul>
     </div>
     <nav id="TOC" role="doc-toc" class="toc-active">
@@ -192,7 +200,8 @@ window.Quarto = {
   </ul></li>
   <li><a href="#ejercicio-1.2.3-fxdfracex-1x" id="toc-ejercicio-1.2.3-fxdfracex-1x" class="nav-link" data-scroll-target="#ejercicio-1.2.3-fxdfracex-1x"><span class="header-section-number">3</span> Ejercicio 1.2.3 — <span class="math inline">\(f(x)=\dfrac{e^x-1}{x}\)</span></a>
   <ul class="collapse">
-  <li><a href="#qué-pasa-exactamente-en-la-resta-ex-1" id="toc-qué-pasa-exactamente-en-la-resta-ex-1" class="nav-link" data-scroll-target="#qué-pasa-exactamente-en-la-resta-ex-1"><span class="header-section-number">3.1</span> Qué pasa exactamente en la resta <span class="math inline">\(e^x-1\)</span></a></li>
+  <li><a href="#el-límite-en-x0-vía-lhôpital" id="toc-el-límite-en-x0-vía-lhôpital" class="nav-link" data-scroll-target="#el-límite-en-x0-vía-lhôpital"><span class="header-section-number">3.1</span> El límite en <span class="math inline">\(x=0\)</span> vía L’Hôpital</a></li>
+  <li><a href="#comportamiento-en-pminfty" id="toc-comportamiento-en-pminfty" class="nav-link" data-scroll-target="#comportamiento-en-pminfty"><span class="header-section-number">3.2</span> Comportamiento en <span class="math inline">\(\pm\infty\)</span></a></li>
   </ul></li>
   <li><a href="#ejercicio-1.2.5-condición-del-inverso" id="toc-ejercicio-1.2.5-condición-del-inverso" class="nav-link" data-scroll-target="#ejercicio-1.2.5-condición-del-inverso"><span class="header-section-number">4</span> Ejercicio 1.2.5 — condición del inverso</a></li>
   <li><a href="#raíces-de-un-polinomio-cuadrático" id="toc-raíces-de-un-polinomio-cuadrático" class="nav-link" data-scroll-target="#raíces-de-un-polinomio-cuadrático"><span class="header-section-number">5</span> Raíces de un polinomio cuadrático</a></li>
@@ -233,7 +242,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">21 de agosto de 2026</p>
+      <p class="date">22 de agosto de 2026</p>
     </div>
   </div>
   
@@ -364,45 +373,36 @@ window.Quarto = {
 </section>
 <section id="ejercicio-1.2.3-fxdfracex-1x" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="ejercicio-1.2.3-fxdfracex-1x"><span class="header-section-number">3</span> Ejercicio 1.2.3 — <span class="math inline">\(f(x)=\dfrac{e^x-1}{x}\)</span></h2>
-<p>Calculemos <span class="math inline">\(\kappa_f(x)\)</span> para <span class="math inline">\(f(x)=\dfrac{e^x-1}{x}\)</span> (extendida por continuidad a <span class="math inline">\(f(0)=1\)</span>).</p>
-<p><span class="math display">\[f'(x)=\frac{xe^x-(e^x-1)}{x^2}=\frac{(x-1)e^x+1}{x^2}\]</span></p>
-<p><span class="math display">\[\kappa_f(x)=\left|x\cdot\frac{f'(x)}{f(x)}\right| = \left|\frac{(x-1)e^x+1}{e^x-1}\right|\]</span></p>
-<p>Expandiendo en serie de Taylor alrededor de <span class="math inline">\(x=0\)</span>:</p>
-<p><span class="math display">\[(x-1)e^x+1 = \frac{x^2}{2}+\frac{x^3}{3}+\cdots \qquad e^x-1=x+\frac{x^2}{2}+\cdots\]</span></p>
-<p><span class="math display">\[\kappa_f(x) \approx \frac{x^2/2}{x} = \frac{|x|}{2} \;\xrightarrow[x\to 0]{}\; 0\]</span></p>
-<p>Numéricamente: <span class="math inline">\(\kappa_f(10^{-6})\approx 5\times10^{-7}\)</span>, <span class="math inline">\(\kappa_f(1)\approx 0{,}58\)</span>, <span class="math inline">\(\kappa_f(10)\approx 9\)</span>, <span class="math inline">\(\kappa_f(20)\approx 19\)</span> — crece linealmente solo para <span class="math inline">\(x\)</span> grande, nunca “explota”. El <strong>problema</strong> <span class="math inline">\(f(x)=(e^x-1)/x\)</span> es entonces muy bien condicionado cerca de <span class="math inline">\(x=0\)</span>: <span class="math inline">\(\kappa_f(0)=0\)</span>.</p>
-<p>Y sin embargo, si evalúas <span class="math inline">\(f\)</span> en una máquina con esta fórmula tal cual —calcular <span class="math inline">\(e^x\)</span>, restarle 1, dividir por <span class="math inline">\(x\)</span>— para <span class="math inline">\(x\)</span> pequeño el resultado es basura. Esto no es una contradicción: es la distinción central del capítulo entre <strong>condicionamiento del problema</strong> y <strong>estabilidad del algoritmo</strong>.</p>
-<section id="qué-pasa-exactamente-en-la-resta-ex-1" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="qué-pasa-exactamente-en-la-resta-ex-1"><span class="header-section-number">3.1</span> Qué pasa exactamente en la resta <span class="math inline">\(e^x-1\)</span></h3>
-<p>Cuando <span class="math inline">\(x\)</span> es pequeño, <span class="math inline">\(e^x\)</span> está muy cerca de <span class="math inline">\(1\)</span> — por ejemplo <span class="math inline">\(e^{10^{-8}} = 1{,}00000000999999994\ldots\)</span> En doble precisión (<span class="math inline">\(\approx16\)</span> cifras significativas), ese número se guarda con toda su precisión disponible, pero al restarle <span class="math inline">\(1\)</span> ocurre exactamente la cancelación de la primera sección: los primeros 8 dígitos (el “<span class="math inline">\(1{,}0000000\)</span>” que comparten <span class="math inline">\(e^x\)</span> y <span class="math inline">\(1\)</span>) se cancelan exactamente, y lo único que sobrevive son los dígitos que ya estaban cerca del límite de precisión de la máquina. El resultado hereda el ruido de redondeo de <span class="math inline">\(e^x\)</span> como si fuera señal.</p>
-<p>Comparemos, para <span class="math inline">\(x=10^{-8}\)</span>, la fórmula naíf y la función segura <code>expm1</code> (diseñada para evitar la resta):</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>cantidad</th>
-<th>valor calculado</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(e^x\)</span> (doble precisión)</td>
-<td><span class="math inline">\(1{,}00000000999999994\)</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(e^x-1\)</span> (naíf)</td>
-<td><span class="math inline">\(9{,}99999993922529\times10^{-9}\)</span></td>
-</tr>
-<tr class="odd">
-<td><code>expm1(x)</code> (seguro)</td>
-<td><span class="math inline">\(1{,}00000000500000\times10^{-8}\)</span></td>
-</tr>
-<tr class="even">
-<td>valor de referencia</td>
-<td><span class="math inline">\(1{,}00000000500000\times10^{-8}\)</span></td>
-</tr>
-</tbody>
-</table>
-<p>El resultado naíf tiene error relativo <span class="math inline">\(\approx 1{,}1\times10^{-8}\)</span> — apenas <strong>8 dígitos correctos</strong>, cuando la máquina en principio te puede dar 16. <code>expm1</code> da el valor exacto hasta el redondeo de máquina. Con <span class="math inline">\(x=10^{-12}\)</span> la cosa empeora: la fórmula naíf se queda con solo <strong>4 dígitos correctos</strong>, mientras <code>expm1</code> sigue exacta.</p>
+<section id="el-límite-en-x0-vía-lhôpital" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="el-límite-en-x0-vía-lhôpital"><span class="header-section-number">3.1</span> El límite en <span class="math inline">\(x=0\)</span> vía L’Hôpital</h3>
+<p><span class="math display">\[\lim_{x\to 0}\frac{e^x-1}{x} \;=\; \frac{0}{0} \quad\text{(indeterminado)}\]</span></p>
+<p>Aplicando L’Hôpital (derivando numerador y denominador por separado):</p>
+<p><span class="math display">\[\lim_{x\to 0}\frac{e^x-1}{x} = \lim_{x\to 0}\frac{\dfrac{d}{dx}(e^x-1)}{\dfrac{d}{dx}(x)} = \lim_{x\to 0}\frac{e^x}{1} = e^0 = 1\]</span></p>
+<p>Esto confirma, sin usar series de Taylor, que <span class="math inline">\(f(0)=1\)</span> es la extensión continua correcta.</p>
+</section>
+<section id="comportamiento-en-pminfty" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="comportamiento-en-pminfty"><span class="header-section-number">3.2</span> Comportamiento en <span class="math inline">\(\pm\infty\)</span></h3>
+<p><strong>Cuando <span class="math inline">\(x\to+\infty\)</span>:</strong> también es indeterminado (<span class="math inline">\(\infty/\infty\)</span>), así que L’Hôpital vuelve a aplicar:</p>
+<p><span class="math display">\[\lim_{x\to+\infty}\frac{e^x-1}{x} = \lim_{x\to+\infty}\frac{e^x}{1} = +\infty\]</span></p>
+<p>El numerador crece exponencialmente mientras el denominador crece linealmente, así que el cociente diverge.</p>
+<p><strong>Cuando <span class="math inline">\(x\to-\infty\)</span>:</strong> aquí <strong>no</strong> hay indeterminación, así que L’Hôpital no es necesario ni aplicable. Como <span class="math inline">\(e^x\to 0\)</span>:</p>
+<p><span class="math display">\[\lim_{x\to-\infty}\frac{e^x-1}{x} = \frac{0-1}{-\infty} = \frac{-1}{-\infty} = 0\]</span></p>
+<p>el numerador se acerca a la constante <span class="math inline">\(-1\)</span> mientras el denominador diverge, así que el cociente se anula directamente.</p>
+<p><span class="math display">\[\boxed{\lim_{x\to-\infty} f(x) = 0, \qquad f(0)=1, \qquad \lim_{x\to+\infty} f(x) = +\infty}\]</span></p>
+<p>El problema está bien condicionado para valores negativos. Para valores grandes el problema está mal condicionado.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="¿Cómo funciona `expm1`?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>¿Cómo funciona <code>expm1</code>?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>expm1(x)</code> calcula <span class="math inline">\(e^x-1\)</span> sin pasar por la resta explícita: para <span class="math inline">\(x\)</span> pequeño usa internamente una expansión en serie (o una tabla/aproximación racional de alta precisión) diseñada para que el resultado converja correctamente a <span class="math inline">\(0\)</span> cuando <span class="math inline">\(x\to0\)</span>, sin cancelar dígitos. Para <span class="math inline">\(x\)</span> no pequeño, se reduce esencialmente al cálculo directo <span class="math inline">\(e^x-1\)</span>, que ahí no tiene problema de cancelación. Es la misma idea que la serie de Maclaurin del ejercicio 1.4.2: evitar la resta de dos cantidades casi iguales.</p>
+</div>
+</div>
 </section>
 </section>
 <section id="ejercicio-1.2.5-condición-del-inverso" class="level2" data-number="4">
@@ -848,6 +848,18 @@ window.Quarto = {
     }
   });
   </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../../cursos/numerico/introduccion/index.html" class="pagination-link" aria-label="Introducción">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Introducción</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../../cursos/numerico/estabilidad/index.html" class="pagination-link" aria-label="Estabilidad">
+        <span class="nav-page-text">Estabilidad</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 

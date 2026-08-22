@@ -1,0 +1,152 @@
+---
+title: "Estabilidad"
+subtitle: "Apuntes de clase: algoritmos, error hacia atrás, y el ejercicio 1.4.2"
+description: "Problemas vs. algoritmos, el método de Horner, estabilidad, error hacia atrás, y el análisis completo del ejercicio 1.4.2 (condicionamiento vs. inestabilidad para f(x)=(e^x-1)/x)."
+author: "Arturo Sanjuán"
+date: today
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 3
+---
+
+## Problemas vs. algoritmos
+
+Un problema matemático idealizado se puede representar como una función $a \mapsto f(a)$: a partir de un dato $a$, se produce exactamente el resultado $f(a)$. En la práctica, casi nunca podemos calcular $f(a)$ de manera exacta con un número finito de pasos aritméticos; en su lugar, construimos un **algoritmo**, otra función $a \mapsto \tilde f(a)$, que aproxima a $f$ mediante una sucesión finita de operaciones elementales.
+
+Un mismo problema $f$ puede tener muchos algoritmos $\tilde f$ distintos que lo aproximan — y, como veremos, no todos son igual de buenos, incluso cuando matemáticamente (con aritmética exacta) producen el mismo resultado.
+
+## Estudio de caso: evaluación de un polinomio — el método de Horner
+
+Antes de hablar de estabilidad numérica, vale la pena ver un ejemplo de que "distintos algoritmos para el mismo problema" no es solo una cuestión de precisión: también puede ser una cuestión de **eficiencia**.
+
+Consideremos
+$$p(x) = 5x^3 + 4x^2 + 3x + 2.$$
+
+**Evaluación directa.** Calculamos $x^2$ (1 producto), luego $x^3 = x^2\cdot x$ (1 producto más), y finalmente los tres productos $5x^3$, $4x^2$, $3x$ (3 productos). En total: **5 productos** y **3 sumas** — 8 operaciones aritméticas.
+
+**Método de Horner.** Reescribimos $p$ anidando la variable:
+$$p(x) = ((5x+4)x+3)x+2.$$
+Cada uno de los tres paréntesis cuesta exactamente 1 producto y 1 suma: **3 productos** y **3 sumas** — 6 operaciones en total.
+
+$$\frac{8-6}{8} = 0{,}25$$
+
+El método de Horner ahorra el **25%** del esfuerzo computacional respecto a la evaluación directa, y esta ventaja crece con el grado del polinomio: para grado $n$, la evaluación directa requiere $O(n^2)$ productos (si no se reutiliza $x^k$) o al menos $2n-1$ productos y $n$ sumas incluso reutilizando potencias, mientras que Horner siempre usa exactamente $n$ productos y $n$ sumas.
+
+```julia
+"""
+    horner(coefs, x)
+
+Evalúa el polinomio con coeficientes `coefs = [a_n, a_{n-1}, ..., a_1, a_0]`
+(de mayor a menor grado) en el punto `x`, usando el método de Horner.
+"""
+function horner(coefs, x)
+    resultado = coefs[1]
+    for c in coefs[2:end]
+        resultado = resultado * x + c
+    end
+    return resultado
+end
+
+@show horner([5, 4, 3, 2], 2.0)   # p(2) = 5·8 + 4·4 + 3·2 + 2 = 64
+```
+```
+horner([5, 4, 3, 2], 2.0) = 64.0
+```
+
+::: {.callout-note title="Tarea"}
+Estudiar el algoritmo de Horner en Julia (por ejemplo, comparándolo contra `Polynomials.jl` o contra la evaluación directa con `@time`/`@allocated` para verificar el ahorro) y resolver los ejercicios y estudiar la sección 1.3 ("Algorithms") del FNC. Diga en sus palabras qué es condicionamiento, qué es estabilidad, cómo se relacionan. Ejemplifique. Diga en sus palabras qué entiende por hacia atrás y estabilidad. Ejemplifique.
+:::
+
+## Ejercicio 1.4.2 — $f(x) = \dfrac{e^x-1}{x}$
+
+### (a) Número de condición y su máximo/mínimo en $[-1,1]$
+
+Con $f(x)=(e^x-1)/x$ (extendida por continuidad, $f(0)=1$):
+$$f'(x) = \frac{xe^x - (e^x-1)}{x^2} = \frac{(x-1)e^x+1}{x^2}$$
+$$\kappa_f(x) = \left|x\cdot\frac{f'(x)}{f(x)}\right| = \left|\frac{(x-1)e^x+1}{e^x-1}\right|$$
+
+Derivando $\kappa_f$ (tratando el signo del numerador y denominador con cuidado, como en la nota de condicionamiento), se encuentra que el signo de $\kappa_f'(x)$ está gobernado por $x(e^x-x-1)$, y como $e^x-x-1\ge0$ para todo $x$ real (con igualdad solo en $x=0$), $\kappa_f$ es **decreciente en $(-1,0)$ y creciente en $(0,1)$**: tiene forma de "V", con mínimo en $x=0$ y máximo en uno de los dos extremos del intervalo.
+
+Evaluando en los extremos:
+$$\kappa_f(1) = \left|\frac{(1-1)e+1}{e-1}\right| = \frac{1}{e-1} \approx 0{,}5820, \qquad \kappa_f(-1) = \left|\frac{-2e^{-1}+1}{e^{-1}-1}\right| \approx 0{,}4180$$
+
+$$\boxed{\max_{[-1,1]}\kappa_f = \kappa_f(1) = \dfrac{1}{e-1}\approx 0{,}582, \qquad \min_{[-1,1]}\kappa_f = \kappa_f(0) = 0}$$
+
+Verificación en Julia (evaluando $\kappa_f$ numéricamente en una malla fina, sin depender de la simplificación simbólica — también se puede hacer con `Symbolics.jl` derivando `f` automáticamente):
+
+```julia
+using ForwardDiff
+
+f(x) = x == 0 ? 1.0 : (exp(x) - 1)/x
+κ(x) = abs(x * ForwardDiff.derivative(f, x) / f(x))
+
+xs = range(-1, 1, length=20001)
+kmax, imax = findmax(κ.(xs))
+kmin, imin = findmin(κ.(xs))
+
+@show xs[imax], kmax   # (1.0, 0.5819767068693265)
+@show xs[imin], kmin   # (0.0, 0.0)
+@show 1/(exp(1)-1)      # 0.5819767068693265  -- coincide exactamente
+```
+```
+(xs[imax], kmax) = (1.0, 0.5819767068693265)
+(xs[imin], kmin) = (0.0, 0.0)
+1 / (exp(1) - 1) = 0.5819767068693265
+```
+
+Confirmado: $\kappa_f(0)=0$ (el problema está **óptimamente condicionado** cerca de cero) y $\kappa_f$ crece muy poco en $[-1,1]$, alcanzando apenas $\approx0{,}58$. Este es exactamente el mismo problema bien condicionado que ya vimos en la nota de condicionamiento — aquí lo confirmamos cuantitativamente en todo el intervalo $[-1,1]$, no solo en el límite $x\to0$.
+
+### (b)–(d) Dos algoritmos para el mismo problema
+
+**Algoritmo ingenuo:** evaluar $f(x)$ tal cual, con la resta explícita.
+
+```julia
+f_ingenuo(x) = (exp(x) - 1)/x
+```
+
+**Algoritmo por serie de Maclaurin (8 términos):**
+$$f(x) \approx p(x) = 1 + \frac{x}{2!} + \frac{x^2}{3!} + \cdots + \frac{x^7}{8!}$$
+
+```julia
+function p_maclaurin(x)
+    s = 0.0
+    for k in 0:7
+        s += x^k / factorial(k+1)
+    end
+    return s
+end
+```
+
+Evaluando ambos en $x=10^{-2},10^{-3},\ldots,10^{-11}$ y comparando contra un valor de referencia de alta precisión:
+
+| $x$ | ingenuo | Maclaurin (8 términos) | error rel. ingenuo | error rel. Maclaurin |
+|---|---|---|---|---|
+| $10^{-2}$ | $1{,}005016708416795$ | $1{,}005016708416806$ | $1{,}08\times10^{-14}$ | $1{,}8\times10^{-16}$ |
+| $10^{-3}$ | $1{,}000500166708385$ | $1{,}000500166708342$ | $4{,}29\times10^{-14}$ | $7{,}5\times10^{-17}$ |
+| $10^{-4}$ | $1{,}000050001667141$ | $1{,}000050001666708$ | $4{,}33\times10^{-13}$ | $9{,}8\times10^{-17}$ |
+| $10^{-5}$ | $1{,}000005000006965$ | $1{,}000005000016667$ | $9{,}70\times10^{-12}$ | $7{,}5\times10^{-18}$ |
+| $10^{-6}$ | $1{,}000000499962184$ | $1{,}000000500000167$ | $3{,}80\times10^{-11}$ | $1{,}6\times10^{-16}$ |
+| $10^{-7}$ | $1{,}000000049433680$ | $1{,}000000050000002$ | $5{,}66\times10^{-10}$ | $2{,}8\times10^{-17}$ |
+| $10^{-8}$ | $0{,}999999993922529$ | $1{,}000000005000000$ | $1{,}11\times10^{-8}$ | $4{,}7\times10^{-17}$ |
+| $10^{-9}$ | $1{,}000000082740371$ | $1{,}000000000500000$ | $8{,}22\times10^{-8}$ | $4{,}1\times10^{-17}$ |
+| $10^{-10}$ | $1{,}000000082740371$ | $1{,}000000000050000$ | $8{,}27\times10^{-8}$ | $4{,}1\times10^{-18}$ |
+| $10^{-11}$ | $1{,}000000082740371$ | $1{,}000000000005000$ | $8{,}27\times10^{-8}$ | $4{,}1\times10^{-19}$ |
+
+::: {.callout-important title="¿Cuál es más preciso, y por qué?"}
+El algoritmo de Maclaurin es dramáticamente más preciso: mantiene error relativo cercano a $\epsilon_{\text{mach}}$ ($\sim10^{-16}$–$10^{-17}$) en **todo** el rango, mientras que el ingenuo se degrada progresivamente — de $10^{-14}$ en $x=10^{-2}$ a $\sim10^{-8}$ en $x\le10^{-9}$, donde el error deja de crecer porque toca el límite de lo que la representación de $x$ misma permite distinguir.
+
+La razón es exactamente la del Ejemplo 1.4.1: el algoritmo ingenuo calcula $e^x$ (que para $x$ pequeño está muy cerca de $1$) y luego **resta $1$**, cancelando los primeros dígitos compartidos y dejando expuesto el ruido de redondeo de $e^x$ como si fuera señal. El polinomio de Maclaurin, en cambio, **nunca resta cantidades parecidas**: todos sus términos $x^k/(k{+}1)!$ para $x>0$ son positivos y decrecientes, así que solo hay sumas de cantidades del mismo signo — sin cancelación posible.
+
+Nótese que $\kappa_f(x)\to0$ cuando $x\to0$: el **problema** se vuelve más fácil, no más difícil, cerca de cero. La degradación del algoritmo ingenuo no tiene nada que ver con el condicionamiento — es pura **inestabilidad algorítmica**, el mismo fenómeno ya documentado para $(e^x-1)/x$ en la nota de condicionamiento, ahora cuantificado en todo el intervalo $[-1,1]$ y comparado explícitamente contra una alternativa estable.
+:::
+
+## Conexión con la nota de condicionamiento
+
+Este ejercicio es la contraparte natural de lo visto en la nota anterior: allí establecimos que $(e^x-1)/x$ es un problema bien condicionado cerca de cero ($\kappa_f(0)=0$); aquí confirmamos que esa buena condición se sostiene en todo $[-1,1]$ (máximo $\approx0{,}582$), y mostramos **dos algoritmos concretos** para el mismo problema — uno inestable (cancelación explícita) y uno estable (serie de Maclaurin, sin resta de cantidades parecidas) — cuantificando la brecha entre ellos. Es exactamente el mismo patrón del Ejemplo 1.4.1: problema bien condicionado, algoritmo mal elegido, error inexplicable por el condicionamiento — y una alternativa que lo resuelve sin cambiar el problema, solo la ruta de cálculo.
