@@ -2,6 +2,7 @@
 title: "Apuntes de clase"
 author: "Arturo Sanjuán"
 comments: false
+date: 2026-08-23
 listing:
   contents:
     - numerico/index.qmd

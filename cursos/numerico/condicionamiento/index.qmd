@@ -3,7 +3,7 @@ title: "Condicionamiento"
 subtitle: "Cancelación catastrófica, pérdida de significancia y número de condición"
 description: "Cancelación catastrófica, pérdida de significancia, y la definición formal del número de condición relativo de un problema."
 author: "Arturo Sanjuán"
-date: today
+date: 2026-08-14
 format:
   html:
     toc: true

@@ -17,623 +17,6 @@
 <generator>quarto-1.10.18</generator>
 <lastBuildDate>Sun, 23 Aug 2026 05:00:00 GMT</lastBuildDate>
 <item>
-  <title>Introducción</title>
-  <dc:creator>Arturo Sanjuán</dc:creator>
-  <link>https://arturosanjuan.xyz/cursos/numerico/introduccion/</link>
-  <description><![CDATA[ 
-
-
-
-
-<section id="breve-historia-de-los-sistemas-de-numeración" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="breve-historia-de-los-sistemas-de-numeración"><span class="header-section-number">1</span> Breve historia de los sistemas de numeración</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Época</th>
-<th>Sistema</th>
-<th>Características</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>~30 000 a.C.</td>
-<td>Sistemas de conteo primitivos (unarios)</td>
-<td>Hueso de Lebombo y hueso de Ishango — muescas talladas en hueso</td>
-</tr>
-<tr class="even">
-<td>~2500 a.C.</td>
-<td>Babilonios</td>
-<td>Base 60, <strong>posicional</strong> (avance decisivo)</td>
-</tr>
-<tr class="odd">
-<td>~500 a.C.</td>
-<td>Griegos</td>
-<td>Numeración con letras</td>
-</tr>
-<tr class="even">
-<td>500 a.C. – s. XIV</td>
-<td>Romanos</td>
-<td>Aditivo: <code>CXCIV = 194</code>, <code>XLVIII = 48</code></td>
-</tr>
-<tr class="odd">
-<td>~s. VIII</td>
-<td>Chinos</td>
-<td>Multiplicativo, basado en potencias de 10: 一 二 三 四 五 六 七 八 九 十</td>
-</tr>
-<tr class="even">
-<td>36 a.e.c. – ~350 a.e.c.</td>
-<td>Mayas</td>
-<td>Base 20, con un símbolo para el cero</td>
-</tr>
-<tr class="odd">
-<td>628 d.C. → ~800 → s. XIII</td>
-<td>Indo-arábigo</td>
-<td>India (Brahmagupta) → Arabia (Al-Juarismi / Al-Khwarizmi) → Europa (Fibonacci)</td>
-</tr>
-<tr class="even">
-<td>S. XVII</td>
-<td>Pascal</td>
-<td>Otras bases</td>
-</tr>
-<tr class="odd">
-<td>S. XVII</td>
-<td>Leibniz</td>
-<td>Base 2</td>
-</tr>
-<tr class="even">
-<td>S. XIX (finales)</td>
-<td>Peano y Dedekind</td>
-<td>Fundamentación formal</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Ejemplo unario:</strong> <code>II + III = IIIII</code></p>
-</section>
-<section id="el-sistema-posicional-decimal" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="el-sistema-posicional-decimal"><span class="header-section-number">2</span> El sistema posicional decimal</h2>
-<p><img src="https://latex.codecogs.com/png.latex?243%20=%202%5Ccdot100+4%5Ccdot10+3%20=%202%5Ccdot10%5E2+4%5Ccdot10%5E1+3%5Ccdot10%5E0"></p>
-<p>Fracciones simples:</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B3%7D%7B2%7D=%5Cfrac%7B6%7D%7B4%7D%20%5Cqquad%201%7B,%7D5%20=%201+%5Cfrac%7B5%7D%7B10%7D=1%5Cfrac%7B5%7D%7B10%7D=1%5Cfrac12"></p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B7%7D%7B6%7D=1%7B,%7D1%5Coverline%7B6%7D=1%5Ccdot10%5E0+1%5Ccdot10%5E%7B-1%7D+6%5Ccdot10%5E%7B-2%7D+%5Ccdots"></p>
-<p><strong>Forma general de un número posicional</strong>, con dígitos <img src="https://latex.codecogs.com/png.latex?a_i%20%5Cin%20%5C%7B0,1,%5Cldots,9%5C%7D">:</p>
-<p><img src="https://latex.codecogs.com/png.latex?a_n%20a_%7Bn-1%7D%5Ccdots%20a_0,%5C,%20a_%7B-1%7D%5C,%20a_%7B-2%7D%5C,%20a_%7B-3%7D%5Ccdots"></p>
-<p><img src="https://latex.codecogs.com/png.latex?=%20a_n%5Ccdot10%5En%20+%20a_%7Bn-1%7D%5Ccdot10%5E%7Bn-1%7D+%5Ccdots+a_0%5Ccdot10%5E0+a_%7B-1%7D%5Ccdot10%5E%7B-1%7D+a_%7B-2%7D%5Ccdot10%5E%7B-2%7D+%5Ccdots"></p>
-<p><img src="https://latex.codecogs.com/png.latex?=%5Cunderbrace%7B%5Csum_%7Bk=0%7D%5E%7Bn%7D%20a_k%5C,10%5Ek%7D_%7B%5Ctext%7Bparte%20entera%7D%7D%20+%20%5Cunderbrace%7B%5Csum_%7Bk=1%7D%5E%7B%5Cinfty%7D%20a_%7B-k%7D%5C,10%5E%7B-k%7D%7D_%7B%5Ctext%7Bparte%20decimal%20o%20mantisa%7D%7D"></p>
-</section>
-<section id="otras-bases" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="otras-bases"><span class="header-section-number">3</span> Otras bases</h2>
-<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Ejercicio
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Convertir <img src="https://latex.codecogs.com/png.latex?%5Cleft(%5Cdfrac13%5Cright)_%7B10%7D"> a base 3.</p>
-</div>
-</div>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cleft(%5Cfrac13%5Cright)_%7B(10)%7D%20=%20(0%7B,%7D1)_%7B(3)%7D"></p>
-<p>la expansión termina exactamente, porque <img src="https://latex.codecogs.com/png.latex?3%5E%7B-1%7D=1/3">.</p>
-<p>Para contraste, <img src="https://latex.codecogs.com/png.latex?(1/10)_%7B10%7D"> en base 3 <strong>no</strong> termina:</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cleft(%5Cfrac%7B1%7D%7B10%7D%5Cright)_%7B(10)%7D%20=%20(0%7B,%7D0%5Coverline%7B2%7D)_%7B(3)%7D"></p>
-<p><strong>Alfabetos según la base:</strong></p>
-<ul>
-<li>Binario: <img src="https://latex.codecogs.com/png.latex?%5C%7B0,1%5C%7D"> → un dígito es un <strong>bit</strong></li>
-<li>Octal: <img src="https://latex.codecogs.com/png.latex?%5C%7B0,1,%5Cldots,7%5C%7D"> → un dígito octal (byte) representa <strong>3 bits</strong></li>
-<li>Hexadecimal: <img src="https://latex.codecogs.com/png.latex?%5C%7B0,1,%5Cldots,9,A,B,C,D,E,F%5C%7D"> → un dígito hexadecimal (<strong>nibble</strong>) representa <strong>4 bits</strong></li>
-</ul>
-<p><strong>Correspondencia binario ↔︎ octal (3 bits):</strong></p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th style="text-align: center;">Binario</th>
-<th style="text-align: center;">Octal</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">000</td>
-<td style="text-align: center;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">001</td>
-<td style="text-align: center;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">010</td>
-<td style="text-align: center;">2</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">011</td>
-<td style="text-align: center;">3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">100</td>
-<td style="text-align: center;">4</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">101</td>
-<td style="text-align: center;">5</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">110</td>
-<td style="text-align: center;">6</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">111</td>
-<td style="text-align: center;">7</td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo — multiplicación en hexadecimal">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Ejemplo — multiplicación en hexadecimal
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><img src="https://latex.codecogs.com/png.latex?12_%7B16%7D%20%5Ctimes%20F_%7B16%7D%20=%2010E_%7B16%7D"></p>
-<p>Verificación pasando a decimal:</p>
-<p><img src="https://latex.codecogs.com/png.latex?12_%7B16%7D=1%5Ccdot16+2=18%20%5Cqquad%20F_%7B16%7D=15%20%5Cqquad%2018%5Ctimes15=270"></p>
-<p><img src="https://latex.codecogs.com/png.latex?270%20=%201%5Ccdot16%5E2+0%5Ccdot16+14%20%5C;%5CLongrightarrow%5C;%2010E_%7B16%7D%5C%20%5Ccheckmark"></p>
-</div>
-</div>
-</section>
-<section id="sec-def-F" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="sec-def-F"><span class="header-section-number">4</span> El conjunto 𝔽 de números de punto flotante</h2>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BF%7D%20=%20%5C%7B%5C,0,%5C%20%5Cpm(1+f)%5C,2%5E%7B%5C,n%7D%5C,%5C%7D"></p>
-<ul>
-<li><img src="https://latex.codecogs.com/png.latex?n%5Cto"> <strong>exponente</strong></li>
-<li><img src="https://latex.codecogs.com/png.latex?1+f%20%5Cto"> <strong>significando</strong> (mantisa)</li>
-<li><img src="https://latex.codecogs.com/png.latex?%5Cdisplaystyle%20f=%5Csum_%7Bi=1%7D%5E%7Bd%7D%20b_i%5C,2%5E%7B-i%7D,%20%5Cquad%20b_i%5Cin%5C%7B0,1%5C%7D"></li>
-<li><img src="https://latex.codecogs.com/png.latex?d"> se llama la <strong>precisión binaria</strong></li>
-</ul>
-<section id="ejemplos-de-normalización" class="level3" data-number="4.1">
-<h3 data-number="4.1" class="anchored" data-anchor-id="ejemplos-de-normalización"><span class="header-section-number">4.1</span> Ejemplos de normalización</h3>
-<p><img src="https://latex.codecogs.com/png.latex?4=(1+0)%5Ccdot2%5E2%20%5Cqquad%5Cqquad%204=(1+f)%5Ccdot2%5E1%20%5C;%5CRightarrow%5C;%201+f=2%20%5CRightarrow%20f=1%5C%20%5Ctext%7B%E2%9C%97%20(fuera%20de%20%7D%5B0,1))"></p>
-<p><img src="https://latex.codecogs.com/png.latex?5=(1+x)%5Ccdot2%5E1%20%5CRightarrow%201+x=%5Ctfrac52=2%7B,%7D5%20%5CRightarrow%20x=%5Ctfrac32%5C%20%5Ctext%7B%E2%9C%97%20(fuera%20de%20%7D%5B0,1))"></p>
-<p><img src="https://latex.codecogs.com/png.latex?5=(1+f)%5Ccdot2%5E2%20%5CRightarrow%201+f=%5Cfrac54%20%5CRightarrow%20f=%5Cfrac14=0%7B,%7D25=0%7B,%7D01_2%5C%20%5Ccheckmark"></p>
-<div class="callout callout-style-default callout-important callout-titled" title="Por qué falla el primer intento">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Por qué falla el primer intento
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>La normalización exige <img src="https://latex.codecogs.com/png.latex?1+f%5Cin%5B1,2)">; por eso el exponente correcto para 5 es <img src="https://latex.codecogs.com/png.latex?n=2">, no <img src="https://latex.codecogs.com/png.latex?n=1">.</p>
-</div>
-</div>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac13=(1+f)%5Ccdot2%5E%7B-1%7D%5CRightarrow%201+f=%5Cfrac23%5CRightarrow%20f=-%5Cfrac13%5C%20%5Ctext%7B%E2%9C%97%20(%7Df%3C0%5Ctext%7B)%7D"></p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac13=(1+f)%5Ccdot2%5E%7B-2%7D%5CRightarrow%201+f=%5Cfrac43%5CRightarrow%20f=%5Cfrac13%5C%20%5Ccheckmark"></p>
-<p>En decimal, <img src="https://latex.codecogs.com/png.latex?f=0%7B,%7D%5Coverline%7B3%7D=%5Cdfrac%7B3%7D%7B10%7D+%5Cdfrac%7B3%7D%7B10%5E2%7D+%5Ccdots">. <strong>En binario</strong>, usando la serie geométrica:</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac13=%5Cfrac%7B1/4%7D%7B1-1/4%7D=%5Cfrac14%5Csum_%7Bk=0%7D%5E%7B%5Cinfty%7D%5Cleft(%5Cfrac14%5Cright)%5Ek=%5Csum_%7Bk=1%7D%5E%7B%5Cinfty%7D%5Cfrac%7B1%7D%7B4%5E%7Bk%7D%7D=%5Csum_%7Bk=1%7D%5E%7B%5Cinfty%7D%5Cfrac%7B1%7D%7B2%5E%7B2k%7D%7D=0%7B,%7D010101%5Cldots_2"></p>
-<p>Por tanto se puede aproximar por un número de <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%20%7BF%7D"> pero <img src="https://latex.codecogs.com/png.latex?%5Ctfrac13%5Cnotin%20%5Cmathbb%7BF%7D"> para ningunos <img src="https://latex.codecogs.com/png.latex?d"> y <img src="https://latex.codecogs.com/png.latex?n">.</p>
-</section>
-</section>
-<section id="cuántos-elementos-de-𝔽-hay-por-binade" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="cuántos-elementos-de-𝔽-hay-por-binade"><span class="header-section-number">5</span> Cuántos elementos de 𝔽 hay por binade</h2>
-<p><img src="https://latex.codecogs.com/png.latex?f=%5Csum_%7Bi=1%7D%5E%7Bd%7Db_i%5C,2%5E%7B-i%7D=2%5E%7B-d%7D%5Csum_%7Bi=1%7D%5E%7Bd%7Db_i%5C,2%5E%7B%5C,d-i%7D=2%5E%7B-d%7Dz"></p>
-<p><img src="https://latex.codecogs.com/png.latex?1+f%5Cin%5B1,2)%5Cquad%5Ctext%7Bpara%20%7D%20z%5Cin%5C%7B0,1,2,%5Cldots,2%5Ed-1%5C%7D"></p>
-<div class="callout callout-style-default callout-important callout-titled" title="Resultado clave">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Resultado clave
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Entre <img src="https://latex.codecogs.com/png.latex?2%5En"> y <img src="https://latex.codecogs.com/png.latex?2%5E%7Bn+1%7D"> hay <img src="https://latex.codecogs.com/png.latex?2%5Ed"> números que pertenecen a <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BF%7D">.</p>
-</div>
-</div>
-<blockquote class="blockquote">
-<p>Referencia de las notas: <code>float32/float</code> → <img src="https://latex.codecogs.com/png.latex?d=23">; <code>float64/double</code> → <img src="https://latex.codecogs.com/png.latex?d=52"> (IEEE 754).</p>
-</blockquote>
-<section id="caso-d0" class="level3" data-number="5.1">
-<h3 data-number="5.1" class="anchored" data-anchor-id="caso-d0"><span class="header-section-number">5.1</span> Caso <img src="https://latex.codecogs.com/png.latex?d=0"></h3>
-<p>Solo hay un valor de <img src="https://latex.codecogs.com/png.latex?f"> (<img src="https://latex.codecogs.com/png.latex?f=0">), así que cada binade aporta un único punto:</p>
-<p><img src="https://latex.codecogs.com/png.latex?n=0:%5C%20%5Cpm(1+0)2%5E0=%5Cpm1%20%5Cqquad%20n=1:%5C%20%5Cpm2%20%5Cqquad%20n=2:%5C%20%5Cpm4%20%5Cqquad%20n=3:%5C%20%5Cpm8"></p>
-<p><strong>Con <img src="https://latex.codecogs.com/png.latex?d=0">, los únicos números posibles son <img src="https://latex.codecogs.com/png.latex?%5Cpm2%5En">.</strong></p>
-</section>
-<section id="caso-d1" class="level3" data-number="5.2">
-<h3 data-number="5.2" class="anchored" data-anchor-id="caso-d1"><span class="header-section-number">5.2</span> Caso <img src="https://latex.codecogs.com/png.latex?d=1"></h3>
-<p>Con <img src="https://latex.codecogs.com/png.latex?b_1%5Cin%5C%7B0,1%5C%7D">: <img src="https://latex.codecogs.com/png.latex?1+f%5Cin%5C%7B1,%5C%203/2%5C%7D">. Tomando el valor <img src="https://latex.codecogs.com/png.latex?3/2"> como ejemplo representativo en cada exponente:</p>
-<p><img src="https://latex.codecogs.com/png.latex?n=0:%5C%20%5Cpm%5Cleft(1+%5Ctfrac12%5Cright)2%5E0=%5Cpm%5Ctfrac32%20%5Cqquad%5Cqquad%20n=1:%5C%20%5Cpm%5Ctfrac32%5Ccdot2=%5Cpm3"></p>
-<p><img src="https://latex.codecogs.com/png.latex?n=-1:%5C%20%5Cpm%5Ctfrac32%5Ccdot%5Ctfrac12=%5Cpm%5Ctfrac34%20%5Cqquad%5Cqquad%20n=2:%5C%20%5Cpm%5Ctfrac32%5Ccdot4=%5Cpm6%20%5Cqquad%5Cqquad%20n=-2:%5C%20%5Cpm%5Ctfrac32%5Ccdot%5Ctfrac14=%5Cpm%5Ctfrac38"></p>
-</section>
-<section id="simulación-de-mathbbf-en-julia" class="level3" data-number="5.3">
-<h3 data-number="5.3" class="anchored" data-anchor-id="simulación-de-mathbbf-en-julia"><span class="header-section-number">5.3</span> Simulación de <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BF%7D"> en Julia</h3>
-<p><strong>Recta numérica</strong> (colores por exponente, simulación):</p>
-<iframe src="notebooks/flotantes.html" width="100%" height="650px" style="border:none;">
-</iframe>
-<p><a href="notebooks/flotantes-codigo.html">Ver código fuente de la simulación de <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BF%7D"></a></p>
-<p><a href="notebooks/flotantes_F.jl">Descargar el código fuente la simulación de <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BF%7D"></a></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://arturosanjuan.xyz/cursos/numerico/introduccion/floatingpointline.webp" class="img-fluid figure-img"></p>
-<figcaption>Representación de <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BF%7D"> de Moise rushanika</figcaption>
-</figure>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo motivador de lo que viene">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Ejemplo motivador de lo que viene
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><img src="https://latex.codecogs.com/png.latex?0%7B,%7D1+0%7B,%7D2%5Cneq0%7B,%7D3"></p>
-</div>
-</div>
-</section>
-</section>
-<section id="espaciado-dentro-de-un-binade" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="espaciado-dentro-de-un-binade"><span class="header-section-number">6</span> Espaciado dentro de un binade</h2>
-<p>Retomando <img src="https://latex.codecogs.com/png.latex?f=2%5E%7B-d%7Dz"> con <img src="https://latex.codecogs.com/png.latex?z%5Cin%5C%7B0,%5Cldots,2%5Ed-1%5C%7D">, si <img src="https://latex.codecogs.com/png.latex?x_k=(1+2%5E%7B-d%7Dk)%5C,2%5En">:</p>
-<p><img src="https://latex.codecogs.com/png.latex?x_%7Bk+1%7D-x_k=%5Cbig(1+2%5E%7B-d%7D(k+1)%5Cbig)2%5En-%5Cbig(1+2%5E%7B-d%7Dk%5Cbig)2%5En=2%5En%5C,2%5E%7B-d%7D=2%5E%7Bn-d%7D"></p>
-<p><strong>— el mismo espacio; hay <img src="https://latex.codecogs.com/png.latex?2%5Ed"> números.</strong></p>
-<p>El binade <strong>empieza</strong> en <img src="https://latex.codecogs.com/png.latex?f=0"> (es decir, en <img src="https://latex.codecogs.com/png.latex?2%5En">) y <strong>termina</strong> en <img src="https://latex.codecogs.com/png.latex?f_%7B%5Cmax%7D=%5Csum_%7Bi=1%7D%5E%7Bd%7D2%5E%7B-i%7D">:</p>
-<p><img src="https://latex.codecogs.com/png.latex?(1+f)2%5En=%5Cbig(1+(2%5Ed-1)2%5E%7B-d%7D%5Cbig)2%5En=%5Cbig(1+1-2%5E%7B-d%7D%5Cbig)2%5En=2%5E%7B%5C,n+1%7D-2%5E%7B%5C,n-d%7D"></p>
-</section>
-<section id="machine-epsilon" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="machine-epsilon"><span class="header-section-number">7</span> Machine epsilon</h2>
-<p>El número que le sigue a 1 es <img src="https://latex.codecogs.com/png.latex?1+2%5E%7B-d%7D">, entonces el <strong>épsilon de máquina</strong> es</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_%7B%5Ctext%7Bmach%7D%7D=2%5E%7B-d%7D"></p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Nota
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>En Julia, <code>eps()</code> para <code>Float64</code> da <img src="https://latex.codecogs.com/png.latex?2%5E%7B-52%7D">.</p>
-</div>
-</div>
-<p><strong>Definimos</strong> <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bfl%7D(x)=%5Coperatorname*%7Bargmin%7D_%7By%5Cin%5Cmathbb%7BF%7D%7D%7Cx-y%7C">.</p>
-<p>La distancia en cada binade <img src="https://latex.codecogs.com/png.latex?%5B2%5En,2%5E%7Bn+1%7D)"> es <img src="https://latex.codecogs.com/png.latex?2%5E%7Bn-d%7D=2%5En%5Cvarepsilon_%7B%5Ctext%7Bmach%7D%7D">.</p>
-<p>Cada número real <img src="https://latex.codecogs.com/png.latex?x"> está a una distancia a lo más</p>
-<p><img src="https://latex.codecogs.com/png.latex?2%5E%7B%5C,n-d-1%7D=%5Cfrac%7B2%5E%7Bn%7D%5Cvarepsilon_%7B%5Ctext%7Bmach%7D%7D%7D%7B2%7D%5Cqquad%5Ctext%7Bde%20%7D%5Cmathbb%7BF%7D,%20%5Cqquad%5Ctext%7Bes%20decir,%7D%5Cqquad%20%7C%5Ctext%7Bfl%7D(x)-x%7C%5Cle2%5E%7B%5C,n-d-1%7D"></p>
-</section>
-<section id="de-error-absoluto-a-error-relativo" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="de-error-absoluto-a-error-relativo"><span class="header-section-number">8</span> De error absoluto a error relativo</h2>
-<p>Al dividir por <img src="https://latex.codecogs.com/png.latex?%7Cx%7C%5Cge2%5En">:</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%7C%5Ctext%7Bfl%7D(x)-x%7C%7D%7B%7Cx%7C%7D%5Cle%5Cfrac12%5C,%5Cvarepsilon_%7B%5Ctext%7Bmach%7D%7D"></p>
-<p><img src="https://latex.codecogs.com/png.latex?%7C%5Ctext%7Bfl%7D(x)-x%7C%5Cle%5Cfrac12%5C,%5Cvarepsilon_%7B%5Ctext%7Bmach%7D%7D%5C,%7Cx%7C"></p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bfl%7D(x)=x+%5Cfrac12%5C,%5Cvarepsilon_%7B%5Ctext%7Bmach%7D%7D%5C,%7Cx%7C=x%5Cleft(1+%5Cfrac12%5C,%5Cvarepsilon_%7B%5Ctext%7Bmach%7D%7D%5C,%5Coperatorname%7Bsgn%7D(x)%5Cright)=x(1+%5Cepsilon)%5Cquad%5Ctext%7Bcon%20%7D%7C%5Cepsilon%7C%5Cle%5Ctfrac12%5Cvarepsilon_%7B%5Ctext%7Bmach%7D%7D"></p>
-<div class="callout callout-style-default callout-important callout-titled" title="Pregunta abierta de las notas">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Pregunta abierta de las notas
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>¿Qué quiere decir que el error absoluto puede ser grande y el relativo no?</p>
-</div>
-</div>
-</section>
-<section id="precisión-y-exactitud" class="level2" data-number="9">
-<h2 data-number="9" class="anchored" data-anchor-id="precisión-y-exactitud"><span class="header-section-number">9</span> Precisión y exactitud</h2>
-<p>Si expresamos</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cpm(1+f)%5C,2%5En%20=%20%5Cpm%5Cleft(1+%5Csum_%7Bi=1%7D%5E%7Bd%7D%20b_i%5C,2%5E%7B-i%7D%5Cright)2%5En"></p>
-<p>en base 10, se convierte en</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cpm(b_0+f_%7B10%7D)%5C,10%5En%20=%20%5Cpm%5Cleft(b_0+%5Csum_%7Bi=1%7D%5E%7Bd%7D%20b_i%5C,10%5E%7B-i%7D%5Cright)10%5En"></p>
-<p>donde cada <img src="https://latex.codecogs.com/png.latex?b_i%5Cin%5C%7B0,%5Cldots,9%5C%7D"> y <img src="https://latex.codecogs.com/png.latex?b_0%5Cneq0">. Esto no es otra cosa que la <strong>notación científica</strong>, con <img src="https://latex.codecogs.com/png.latex?d+1"> cifras significativas.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Ejemplo — constante de Planck">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Ejemplo — constante de Planck
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><img src="https://latex.codecogs.com/png.latex?h%20=%206.626068%5Ctimes10%5E%7B-34%7D%5C%20%5Cmathrm%7Bm%5E2%5C,kg/s%7D"></p>
-<p>Supongamos que ajustamos el último dígito de 8 a 9. Entonces el cambio relativo es</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%7C%5Ctext%7Bvalor%20inicial%7D-%5Ctext%7Bvalor%20final%7D%7C%7D%7B%7C%5Ctext%7Bvalor%20inicial%7D%7C%7D=%5Cfrac%7B0%7B,%7D000001%5Ctimes10%5E%7B-34%7D%7D%7B6%7B,%7D626068%5Ctimes10%5E%7B-34%7D%7D%5Capprox1%7B,%7D51%5Ctimes10%5E%7B-7%7D"></p>
-<p>Decimos entonces que la constante está dada con <strong>7 dígitos de precisión</strong>.</p>
-</div>
-</div>
-<p><strong>La precisión</strong> de un número flotante son los <img src="https://latex.codecogs.com/png.latex?d"> dígitos binarios. <strong>La exactitud</strong> es qué tan lejos está la aproximación del resultado.</p>
-<p>Si <img src="https://latex.codecogs.com/png.latex?%5Ctilde%7Bx%7D"> es la aproximación de <img src="https://latex.codecogs.com/png.latex?x">:</p>
-<ul>
-<li><strong>Exactitud absoluta:</strong> <img src="https://latex.codecogs.com/png.latex?%7C%5Ctilde%7Bx%7D-x%7C"> — mismas unidades que <img src="https://latex.codecogs.com/png.latex?x">.</li>
-<li><strong>Exactitud relativa:</strong> <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7B%7C%5Ctilde%7Bx%7D-x%7C%7D%7B%7Cx%7C%7D"> — adimensional.</li>
-</ul>
-<p>Por ejemplo, si la exactitud de la aproximación anterior es <img src="https://latex.codecogs.com/png.latex?1%7B,%7D51%5Ctimes10%5E%7B-7%7D=0%7B,%7D0000001%5Cunderbrace%7B51%7D_%7B%5Ctext%7B7%20cifras%20signif.%7D%7D">, el entero más cercano a</p>
-<p><img src="https://latex.codecogs.com/png.latex?-%5Clog_%7B10%7D%5Cleft%7C%5Cfrac%7B%5Ctilde%7Bx%7D-x%7D%7Bx%7D%5Cright%7C"></p>
-<p>da la <strong>“cantidad de dígitos de exactitud”</strong>, sin necesidad de aproximarlo al entero:</p>
-<p><img src="https://latex.codecogs.com/png.latex?-%5Clog_%7B10%7D(1%7B,%7D51%5Ctimes10%5E%7B-7%7D)%20=%20-%5Clog_%7B10%7D(1%7B,%7D51)+7%20%5Capprox%206%7B,%7D82"></p>
-<p><em>(el logaritmo cuenta esa cadena inicial de ceros).</em> Ejemplo clásico: <img src="https://latex.codecogs.com/png.latex?%5Crho=22/7"> frente a <img src="https://latex.codecogs.com/png.latex?%5Cpi">.</p>
-<section id="el-estándar-ieee-754" class="level3" data-number="9.1">
-<h3 data-number="9.1" class="anchored" data-anchor-id="el-estándar-ieee-754"><span class="header-section-number">9.1</span> El estándar IEEE 754</h3>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Tipo</th>
-<th><img src="https://latex.codecogs.com/png.latex?d"> (bits de significando)</th>
-<th><img src="https://latex.codecogs.com/png.latex?n"> (bits de exponente)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>Float32</code> (precisión sencilla)</td>
-<td>23</td>
-<td>8</td>
-</tr>
-<tr class="even">
-<td><code>Float64</code> (precisión doble)</td>
-<td>52</td>
-<td>11</td>
-</tr>
-</tbody>
-</table>
-<p>Con las funciones <code>sign</code>, <code>exponent</code> y <code>significand</code> podemos extraer las partes de un <img src="https://latex.codecogs.com/png.latex?x%5Cin%5Cmathbb%7BF%7D">.</p>
-</section>
-</section>
-<section id="aritmética-de-máquina" class="level2" data-number="10">
-<h2 data-number="10" class="anchored" data-anchor-id="aritmética-de-máquina"><span class="header-section-number">10</span> Aritmética de máquina</h2>
-<p>La aritmética se calcula de tal manera que si <img src="https://latex.codecogs.com/png.latex?x,y%5Cin%5Cmathbb%7BF%7D">, entonces <img src="https://latex.codecogs.com/png.latex?x%5Coplus%20y%5Cin%5Cmathbb%7BF%7D"> de tal manera que</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%7C(x%5Coplus%20y)-(x+y)%7C%7D%7B%7Cx+y%7C%7D%5Cle%5Cfrac12%5C,%5Cvarepsilon_%7B%5Ctext%7Bmach%7D%7D"></p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplos">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Ejemplos
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><img src="https://latex.codecogs.com/png.latex?(1%7B,%7D0+%5Ctexttt%7Beps()%7D/2)-1%20=%200"></p>
-<p><img src="https://latex.codecogs.com/png.latex?1%7B,%7D0+(%5Ctexttt%7Beps()%7D/2-1)%20%5Cneq%200"></p>
-<p><img src="https://latex.codecogs.com/png.latex?0%7B,%7D1+0%7B,%7D2%5Cneq0%7B,%7D3"></p>
-</div>
-</div>
-<p>Estos ejemplos muestran que la <strong>ley asociativa de la suma se rompe</strong> en aritmética de punto flotante: el orden en que se agrupan las operaciones puede cambiar el resultado.</p>
-</section>
-<section id="tarea" class="level2" data-number="11">
-<h2 data-number="11" class="anchored" data-anchor-id="tarea"><span class="header-section-number">11</span> Tarea</h2>
-<p>Resolver <strong>todos los ejercicios de la sección 1.1.4</strong> (“Exercises”) de <em>Fundamentals of Numerical Computation</em>, disponibles en <a href="https://fncbook.com/julia/floating-point/#exercises" class="uri">https://fncbook.com/julia/floating-point/#exercises</a>: los ejercicios 1.1.1 a 1.1.5, sobre el conjunto <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BF%7D">, la equivalencia de las cotas de error, aproximaciones racionales a <img src="https://latex.codecogs.com/png.latex?%5Cpi">, precisión sencilla IEEE 754, y <code>nextfloat</code>.</p>
-
-
-</section>
-
- ]]></description>
-  <guid>https://arturosanjuan.xyz/cursos/numerico/introduccion/</guid>
-  <pubDate>Sun, 23 Aug 2026 05:00:00 GMT</pubDate>
-</item>
-<item>
-  <title>Condicionamiento</title>
-  <dc:creator>Arturo Sanjuán</dc:creator>
-  <link>https://arturosanjuan.xyz/cursos/numerico/condicionamiento/</link>
-  <description><![CDATA[ 
-
-
-
-
-<section id="cancelación-catastrófica-o-pérdida-de-significancia" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="cancelación-catastrófica-o-pérdida-de-significancia"><span class="header-section-number">1</span> Cancelación catastrófica o pérdida de significancia</h2>
-<p>Consideremos la sucesión</p>
-<p><img src="https://latex.codecogs.com/png.latex?x_%7Bn+1%7D%20=%2010x_n%20-%209"></p>
-<p>Desde el punto de vista del análisis matemático puro, si <img src="https://latex.codecogs.com/png.latex?x_0=1"> entonces <img src="https://latex.codecogs.com/png.latex?x_n=1"> para todo <img src="https://latex.codecogs.com/png.latex?n">: es la sucesión constante, porque <img src="https://latex.codecogs.com/png.latex?x=1"> es el único punto fijo de <img src="https://latex.codecogs.com/png.latex?g(x)=10x-9">.</p>
-<p>Supongamos ahora que en punto flotante solo tenemos <img src="https://latex.codecogs.com/png.latex?d=2"> cifras significativas, y que el dato <img src="https://latex.codecogs.com/png.latex?x_0=1"> se representa como <img src="https://latex.codecogs.com/png.latex?%5Ctilde%20x_0=0%7B,%7D99"> — un error relativo de apenas el <img src="https://latex.codecogs.com/png.latex?1%5C%25">, del orden de cualquier redondeo típico. Aplicamos la recurrencia tal cual, redondeando a 2 cifras en cada paso:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?n"></th>
-<th style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Ctilde%20x_n"></th>
-<th style="text-align: center;">error absoluto <img src="https://latex.codecogs.com/png.latex?e_n=%5Ctilde%20x_n-1"></th>
-<th style="text-align: center;">error relativo</th>
-<th style="text-align: center;">dígitos perdidos</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0,99</td>
-<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?-0%7B,%7D01=-1%5Ctimes10%5E%7B-2%7D"></td>
-<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1%5C%25"></td>
-<td style="text-align: center;">0</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">0,90</td>
-<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?-0%7B,%7D10=-1%5Ctimes10%5E%7B-1%7D"></td>
-<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?10%5C%25"></td>
-<td style="text-align: center;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">0,00</td>
-<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?-1%7B,%7D00=-1%5Ctimes10%5E%7B0%7D"></td>
-<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?100%5C%25"></td>
-<td style="text-align: center;">2</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">3</td>
-<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?-9%7B,%7D00"></td>
-<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?-10%7B,%7D00=-1%5Ctimes10%5E%7B1%7D"></td>
-<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1000%5C%25"></td>
-<td style="text-align: center;">3</td>
-</tr>
-</tbody>
-</table>
-<p>En tres pasos el error relativo pasó de <img src="https://latex.codecogs.com/png.latex?1%5C%25"> a <img src="https://latex.codecogs.com/png.latex?1000%5C%25"> — la respuesta calculada (<img src="https://latex.codecogs.com/png.latex?-9">) no tiene <strong>ninguna</strong> relación con el valor verdadero (<img src="https://latex.codecogs.com/png.latex?1">).</p>
-<div class="callout callout-style-default callout-important callout-titled" title="Por qué ocurre esto">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Por qué ocurre esto
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Escribiendo <img src="https://latex.codecogs.com/png.latex?%5Ctilde%20x_n%20=%201+e_n"> y sustituyendo en la recurrencia:</p>
-<p><img src="https://latex.codecogs.com/png.latex?1+e_%7Bn+1%7D=10(1+e_n)-9=1+10e_n%20%5C;%5CLongrightarrow%5C;%20e_%7Bn+1%7D=10%5C,e_n%20%5C;%5CLongrightarrow%5C;%20e_n=10%5En%20e_0"></p>
-<p>El error se <strong>multiplica por 10 en cada paso</strong>, sin importar qué tan pequeño sea <img src="https://latex.codecogs.com/png.latex?e_0">. Tomar un dato más aproximado, como <img src="https://latex.codecogs.com/png.latex?x_0=0%7B,%7D99999">, <strong>no resuelve el problema, solo lo retrasa</strong>: el problema está mal condicionado. El algoritmo y el computador dan una respuesta, pero esa respuesta no está cerca de “la realidad”.</p>
-</div>
-</div>
-<p>Este es exactamente el mecanismo que hace <em>silenciosa</em> la pérdida de significancia: ninguna operación individual (multiplicar por 10, restar 9) tiene nada de alarmante — el resultado final simplemente deja de tener sentido, sin ningún símbolo de error que lo anuncie.</p>
-<p>El mismo fenómeno aparece cuando restamos dos números cercanos:</p>
-<p><img src="https://latex.codecogs.com/png.latex?2%7B,%7D1357%20-%202%7B,%7D1356%20=%200%7B,%7D0001%20=%201%5Ctimes10%5E%7B-4%7D"></p>
-<p>Cada operando tiene 5 cifras significativas, pero el resultado solo tiene 1 — <strong>perdimos 4 cifras significativas</strong> en una sola resta.</p>
-</section>
-<section id="el-número-de-condición-relativo" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="el-número-de-condición-relativo"><span class="header-section-number">2</span> El número de condición relativo</h2>
-<p>La pregunta natural es: <strong>¿qué tan sensible es un problema, independientemente del algoritmo o la máquina que se use para resolverlo?</strong></p>
-<section id="un-ejemplo-de-calentamiento" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="un-ejemplo-de-calentamiento"><span class="header-section-number">2.1</span> Un ejemplo de calentamiento</h3>
-<p>Sea <img src="https://latex.codecogs.com/png.latex?f(x)=x+1">. En la máquina, <img src="https://latex.codecogs.com/png.latex?x"> se representa como <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bfl%7D(x)=x(1+%5Cepsilon)"> con <img src="https://latex.codecogs.com/png.latex?%7C%5Cepsilon%7C%5Cle%20%5Cepsilon_%7B%5Ctext%7Bmach%7D%7D/2">. Si la suma se hace exacta:</p>
-<p><img src="https://latex.codecogs.com/png.latex?y%20=%20%5Ctext%7Bfl%7D(x)+1%20=%20x(1+%5Cepsilon)+1"></p>
-<p>El error relativo del resultado es</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%7Cy-f(x)%7C%7D%7B%7Cf(x)%7C%7D%20=%20%5Cfrac%7B%7Cx(1+%5Cepsilon)+1-(x+1)%7C%7D%7B%7Cx+1%7C%7D%20=%20%5Cfrac%7B%7C%5Cepsilon%20x%7C%7D%7B%7Cx+1%7C%7D"></p>
-<p>Este error puede ser arbitrariamente grande si <img src="https://latex.codecogs.com/png.latex?x%5Capprox%20-1"> — aunque <img src="https://latex.codecogs.com/png.latex?%5Cepsilon"> sea minúsculo. El problema “sumar 1” es benigno lejos de <img src="https://latex.codecogs.com/png.latex?x=-1">, mal condicionado cerca de ahí.</p>
-</section>
-<section id="definición-formal" class="level3" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="definición-formal"><span class="header-section-number">2.2</span> Definición formal</h3>
-<p>Queremos generalizar esta idea: dado un problema <img src="https://latex.codecogs.com/png.latex?f"> y un dato <img src="https://latex.codecogs.com/png.latex?a">, ¿cuánto se amplifica el error relativo de <img src="https://latex.codecogs.com/png.latex?a"> al pasar por <img src="https://latex.codecogs.com/png.latex?f">?</p>
-<div class="callout callout-style-default callout-important callout-titled" title="Definición — número de condición relativo">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Definición — número de condición relativo
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(a)%20=%20%5Clim_%7B%5Cepsilon%5Cto%200%7D%20%5Cfrac%7B%5Cleft%7Cf(a)-f(a(1+%5Cepsilon))%5Cright%7C/%7Cf(a)%7C%7D%7B%7C%5Cepsilon%7C%7D"></p>
-<p>Es la razón entre el cambio relativo en el resultado y el cambio relativo en el dato, en el límite de perturbaciones pequeñas. Si <img src="https://latex.codecogs.com/png.latex?f"> es diferenciable en <img src="https://latex.codecogs.com/png.latex?a">:</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(a)%20=%20%5Cleft%7C%5Cfrac%7Ba%5C,f'(a)%7D%7Bf(a)%7D%5Cright%7C"></p>
-</div>
-</div>
-<p>Si <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(a)"> es muy grande, el problema está <strong>mal condicionado</strong> en <img src="https://latex.codecogs.com/png.latex?a">: cualquier perturbación de los datos — así sea del tamaño de <img src="https://latex.codecogs.com/png.latex?%5Cepsilon_%7B%5Ctext%7Bmach%7D%7D"> — se amplifica hasta volver el resultado inútil. Esto <strong>no depende del algoritmo ni de la máquina</strong>: es una propiedad del problema mismo.</p>
-</section>
-<section id="ejemplos-elementales" class="level3" data-number="2.3">
-<h3 data-number="2.3" class="anchored" data-anchor-id="ejemplos-elementales"><span class="header-section-number">2.3</span> Ejemplos elementales</h3>
-<p><img src="https://latex.codecogs.com/png.latex?f(x)=x-c%20%5C;%5CLongrightarrow%5C;%20%5Ckappa_f(x)=%5Cleft%7C%5Cfrac%7Bx%7D%7Bx-c%7D%5Cright%7C"></p>
-<p>Puede ser muy grande si <img src="https://latex.codecogs.com/png.latex?%7Cx%7C%5Cgg%7Cx-c%7C">, por ejemplo si <img src="https://latex.codecogs.com/png.latex?x%5Capprox%20c"> — esta es exactamente la resta cancelante de la sección anterior.</p>
-<p><img src="https://latex.codecogs.com/png.latex?f(x)=cx%20%5C;%5CLongrightarrow%5C;%20%5Ckappa_f(x)=1"></p>
-<p>La multiplicación por una constante nunca amplifica el error relativo: siempre funciona bien.</p>
-<p><img src="https://latex.codecogs.com/png.latex?f(x)=x%5Ep%20%5C;%5CLongrightarrow%5C;%20%5Ckappa_f(x)=%7Cp%7C"></p>
-<p><img src="https://latex.codecogs.com/png.latex?f(x)=%5Ccos(x)%20%5C;%5CLongrightarrow%5C;%20%5Ckappa_f(x)=%7Cx%5Ctan(x)%7C"></p>
-<p>Puede ser grande si <img src="https://latex.codecogs.com/png.latex?x"> está cerca de un múltiplo impar de <img src="https://latex.codecogs.com/png.latex?%5Cpi/2"> (ahí <img src="https://latex.codecogs.com/png.latex?f(x)%5Capprox%200">) o si <img src="https://latex.codecogs.com/png.latex?%7Cx%7C%5Cgg%201">.</p>
-</section>
-</section>
-<section id="ejercicio-1.2.3-fxdfracex-1x" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="ejercicio-1.2.3-fxdfracex-1x"><span class="header-section-number">3</span> Ejercicio 1.2.3 — <img src="https://latex.codecogs.com/png.latex?f(x)=%5Cdfrac%7Be%5Ex-1%7D%7Bx%7D"></h2>
-<section id="el-límite-en-x0-vía-lhôpital" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="el-límite-en-x0-vía-lhôpital"><span class="header-section-number">3.1</span> El límite en <img src="https://latex.codecogs.com/png.latex?x=0"> vía L’Hôpital</h3>
-<p><img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bx%5Cto%200%7D%5Cfrac%7Be%5Ex-1%7D%7Bx%7D%20%5C;=%5C;%20%5Cfrac%7B0%7D%7B0%7D%20%5Cquad%5Ctext%7B(indeterminado)%7D"></p>
-<p>Aplicando L’Hôpital (derivando numerador y denominador por separado):</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bx%5Cto%200%7D%5Cfrac%7Be%5Ex-1%7D%7Bx%7D%20=%20%5Clim_%7Bx%5Cto%200%7D%5Cfrac%7B%5Cdfrac%7Bd%7D%7Bdx%7D(e%5Ex-1)%7D%7B%5Cdfrac%7Bd%7D%7Bdx%7D(x)%7D%20=%20%5Clim_%7Bx%5Cto%200%7D%5Cfrac%7Be%5Ex%7D%7B1%7D%20=%20e%5E0%20=%201"></p>
-<p>Esto confirma, sin usar series de Taylor, que <img src="https://latex.codecogs.com/png.latex?f(0)=1"> es la extensión continua correcta.</p>
-</section>
-<section id="comportamiento-en-pminfty" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="comportamiento-en-pminfty"><span class="header-section-number">3.2</span> Comportamiento en <img src="https://latex.codecogs.com/png.latex?%5Cpm%5Cinfty"></h3>
-<p><strong>Cuando <img src="https://latex.codecogs.com/png.latex?x%5Cto+%5Cinfty">:</strong> también es indeterminado (<img src="https://latex.codecogs.com/png.latex?%5Cinfty/%5Cinfty">), así que L’Hôpital vuelve a aplicar:</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bx%5Cto+%5Cinfty%7D%5Cfrac%7Be%5Ex-1%7D%7Bx%7D%20=%20%5Clim_%7Bx%5Cto+%5Cinfty%7D%5Cfrac%7Be%5Ex%7D%7B1%7D%20=%20+%5Cinfty"></p>
-<p>El numerador crece exponencialmente mientras el denominador crece linealmente, así que el cociente diverge.</p>
-<p><strong>Cuando <img src="https://latex.codecogs.com/png.latex?x%5Cto-%5Cinfty">:</strong> aquí <strong>no</strong> hay indeterminación, así que L’Hôpital no es necesario ni aplicable. Como <img src="https://latex.codecogs.com/png.latex?e%5Ex%5Cto%200">:</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bx%5Cto-%5Cinfty%7D%5Cfrac%7Be%5Ex-1%7D%7Bx%7D%20=%20%5Cfrac%7B0-1%7D%7B-%5Cinfty%7D%20=%20%5Cfrac%7B-1%7D%7B-%5Cinfty%7D%20=%200"></p>
-<p>el numerador se acerca a la constante <img src="https://latex.codecogs.com/png.latex?-1"> mientras el denominador diverge, así que el cociente se anula directamente.</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cboxed%7B%5Clim_%7Bx%5Cto-%5Cinfty%7D%20f(x)%20=%200,%20%5Cqquad%20f(0)=1,%20%5Cqquad%20%5Clim_%7Bx%5Cto+%5Cinfty%7D%20f(x)%20=%20+%5Cinfty%7D"></p>
-<p>El problema está bien condicionado para valores negativos. Para valores grandes el problema está mal condicionado.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="¿Cómo funciona `expm1`?">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>¿Cómo funciona <code>expm1</code>?
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><code>expm1(x)</code> calcula <img src="https://latex.codecogs.com/png.latex?e%5Ex-1"> sin pasar por la resta explícita: para <img src="https://latex.codecogs.com/png.latex?x"> pequeño usa internamente una expansión en serie (o una tabla/aproximación racional de alta precisión) diseñada para que el resultado converja correctamente a <img src="https://latex.codecogs.com/png.latex?0"> cuando <img src="https://latex.codecogs.com/png.latex?x%5Cto0">, sin cancelar dígitos. Para <img src="https://latex.codecogs.com/png.latex?x"> no pequeño, se reduce esencialmente al cálculo directo <img src="https://latex.codecogs.com/png.latex?e%5Ex-1">, que ahí no tiene problema de cancelación. Es la misma idea que la serie de Maclaurin del ejercicio 1.4.2: evitar la resta de dos cantidades casi iguales.</p>
-</div>
-</div>
-</section>
-</section>
-<section id="ejercicio-1.2.5-condición-del-inverso" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="ejercicio-1.2.5-condición-del-inverso"><span class="header-section-number">4</span> Ejercicio 1.2.5 — condición del inverso</h2>
-<p>Sea <img src="https://latex.codecogs.com/png.latex?f"> con número de condición <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f">, y <img src="https://latex.codecogs.com/png.latex?f%5E%7B-1%7D"> su inversa. Queremos mostrar</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Ckappa_%7Bf%5E%7B-1%7D%7D(x)%20=%20%5Cfrac%7B1%7D%7B%5Ckappa_f%5Cbig(f%5E%7B-1%7D(x)%5Cbig)%7D"></p>
-<p><strong>Demostración</strong>, sin invocar el teorema de la función inversa: sea <img src="https://latex.codecogs.com/png.latex?h%20=%20f%5Ccirc%20f%5E%7B-1%7D%20=%20%5Ctext%7Bid%7D">.</p>
-<p>Primero, <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%7B%5Ctext%7Bid%7D%7D(x)=1">: con <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bid%7D'(x)=1">, <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%7B%5Ctext%7Bid%7D%7D(x)=%7Cx%5Ccdot%201/x%7C=1">.</p>
-<p>Por la regla de la cadena para números de condición (ejercicio 1.2.4), aplicada a <img src="https://latex.codecogs.com/png.latex?h=f%5Ccirc%20f%5E%7B-1%7D">:</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Ckappa_h(x)%20=%20%5Ckappa_f%5Cbig(f%5E%7B-1%7D(x)%5Cbig)%5Ccdot%5Ckappa_%7Bf%5E%7B-1%7D%7D(x)"></p>
-<p>Como <img src="https://latex.codecogs.com/png.latex?h=%5Ctext%7Bid%7D">, <img src="https://latex.codecogs.com/png.latex?%5Ckappa_h(x)=%5Ckappa_%7B%5Ctext%7Bid%7D%7D(x)=1">. Despejando:</p>
-<p><img src="https://latex.codecogs.com/png.latex?1%20=%20%5Ckappa_f%5Cbig(f%5E%7B-1%7D(x)%5Cbig)%5Ccdot%5Ckappa_%7Bf%5E%7B-1%7D%7D(x)%20%5C;%5CLongrightarrow%5C;%20%5Ckappa_%7Bf%5E%7B-1%7D%7D(x)=%5Cfrac%7B1%7D%7B%5Ckappa_f%5Cbig(f%5E%7B-1%7D(x)%5Cbig)%7D%20%5Cqquad%20%5Cblacksquare"></p>
-<p>Esta ruta es más corta que aplicar el teorema de la función inversa directamente, y no exige demostrar por separado que <img src="https://latex.codecogs.com/png.latex?f%5E%7B-1%7D"> es derivable.</p>
-</section>
-<section id="raíces-de-un-polinomio-cuadrático" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="raíces-de-un-polinomio-cuadrático"><span class="header-section-number">5</span> Raíces de un polinomio cuadrático</h2>
-<p>Consideremos <img src="https://latex.codecogs.com/png.latex?ax%5E2+bx+c=0">. Los datos son los coeficientes <img src="https://latex.codecogs.com/png.latex?(a,b,c)">; el resultado son las raíces <img src="https://latex.codecogs.com/png.latex?r_1,r_2"> (posiblemente complejas). Formalmente, <img src="https://latex.codecogs.com/png.latex?f(a,b,c)=(r_1,r_2)">.</p>
-<p>Fijamos <img src="https://latex.codecogs.com/png.latex?b,c"> y perturbamos solo el coeficiente principal <img src="https://latex.codecogs.com/png.latex?a">, para ver cómo responde <img src="https://latex.codecogs.com/png.latex?r_1">: <img src="https://latex.codecogs.com/png.latex?f(a)=r_1">. Partiendo de la identidad <img src="https://latex.codecogs.com/png.latex?ar_1%5E2+br_1+c=0"> y derivando implícitamente respecto a <img src="https://latex.codecogs.com/png.latex?a"> (con <img src="https://latex.codecogs.com/png.latex?b,c"> fijos):</p>
-<p><img src="https://latex.codecogs.com/png.latex?r_1%5E2+2ar_1%5Cfrac%7Bdr_1%7D%7Bda%7D+b%5C,%5Cfrac%7Bdr_1%7D%7Bda%7D=0%20%5C;%5CLongrightarrow%5C;%20%5Cfrac%7Bdr_1%7D%7Bda%7D=%5Cfrac%7B-r_1%5E2%7D%7B2ar_1+b%7D"></p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(a)%20=%20%5Cleft%7C%5Cfrac%7Ba%7D%7Br_1%7D%5Ccdot%5Cfrac%7Bdr_1%7D%7Bda%7D%5Cright%7C%20=%20%5Cleft%7C%5Cfrac%7Ba%5C,r_1%7D%7B2ar_1+b%7D%5Cright%7C"></p>
-<p>Usando la fórmula cuadrática, <img src="https://latex.codecogs.com/png.latex?%7C2ar_1+b%7C=%5Cleft%7C%5Csqrt%7Bb%5E2-4ac%7D%5Cright%7C=%7Ca(r_1-r_2)%7C">:</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cboxed%7B%5Ckappa_f(a)%20=%20%5Cleft%7C%5Cfrac%7Br_1%7D%7Br_1-r_2%7D%5Cright%7C%7D"></p>
-<p>El problema está mal condicionado exactamente cuando <img src="https://latex.codecogs.com/png.latex?%7Cr_1%7C%5Cgg%7Cr_1-r_2%7C"> — es decir, cuando las raíces están mucho más cerca entre sí que del origen. En el caso extremo de una raíz doble (<img src="https://latex.codecogs.com/png.latex?r_1=r_2">), <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f%5Cto%5Cinfty">.</p>
-</section>
-<section id="simulación-sensibilidad-de-las-raíces-de-pxax-cx-d" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="simulación-sensibilidad-de-las-raíces-de-pxax-cx-d"><span class="header-section-number">6</span> Simulación — sensibilidad de las raíces de <img src="https://latex.codecogs.com/png.latex?p(x)=a(x-c)(x-d)"></h2>
-<p>Para hacer tangible la fórmula anterior, parametrizamos el polinomio directamente por sus raíces <img src="https://latex.codecogs.com/png.latex?c,d"> y su coeficiente principal <img src="https://latex.codecogs.com/png.latex?a">:</p>
-<p><img src="https://latex.codecogs.com/png.latex?p(x)%20=%20a(x-c)(x-d)%20=%20a%5C,x%5E2%20%5Cunderbrace%7B-%5C,a(c+d)%7D_%7BB%7D%5C,x%20+%20%5Cunderbrace%7Ba%5C,c%5C,d%7D_%7BC%7D"></p>
-<p>de modo que, en ausencia de redondeo, las raíces son exactamente <img src="https://latex.codecogs.com/png.latex?r_1=c"> y <img src="https://latex.codecogs.com/png.latex?r_2=d"> para cualquier <img src="https://latex.codecogs.com/png.latex?a%5Cne%200">. La simulación perturba <strong>solo</strong> el coeficiente <img src="https://latex.codecogs.com/png.latex?a%5Cto%20a(1+%5Cvarepsilon)">, mantiene <img src="https://latex.codecogs.com/png.latex?B,C"> fijos (tal como en la derivación de <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(a)">), recalcula las raíces con la fórmula cuadrática, y compara:</p>
-<ul>
-<li>el error relativo <strong>predicho</strong> por la teoría: <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(a)%5Ccdot%7C%5Cvarepsilon%7C%20=%20%5Cleft%7C%5Cdfrac%7Br_1%7D%7Br_1-r_2%7D%5Cright%7C%5Ccdot%7C%5Cvarepsilon%7C"></li>
-<li>el error relativo <strong>real</strong>, medido directamente sobre la raíz recalculada</li>
-</ul>
-<p>Mueve los controles y observa qué pasa con <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f"> cuando <img src="https://latex.codecogs.com/png.latex?c"> y <img src="https://latex.codecogs.com/png.latex?d"> se acercan.</p>
-<iframe src="notebooks/condicionamiento-simulacion.html" width="100%" height="1400px" style="border:none;">
-</iframe>
-</section>
-<section id="tarea" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="tarea"><span class="header-section-number">7</span> Tarea</h2>
-<p>Resolver los siguientes ejercicios de la sección 1.2 (“Exercises”) de <em>Fundamentals of Numerical Computation</em>, disponibles en <a href="https://fncbook.com/julia/conditioning/#exercises" class="uri">https://fncbook.com/julia/conditioning/#exercises</a>:</p>
-
-
-</section>
-
- ]]></description>
-  <guid>https://arturosanjuan.xyz/cursos/numerico/condicionamiento/</guid>
-  <pubDate>Sun, 23 Aug 2026 05:00:00 GMT</pubDate>
-</item>
-<item>
   <title>Estabilidad</title>
   <dc:creator>Arturo Sanjuán</dc:creator>
   <link>https://arturosanjuan.xyz/cursos/numerico/estabilidad/</link>
@@ -1046,6 +429,623 @@ font-style: inherit;">end</span></span></code></pre></div></div>
  ]]></description>
   <guid>https://arturosanjuan.xyz/cursos/numerico/estabilidad/</guid>
   <pubDate>Sun, 23 Aug 2026 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Condicionamiento</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/numerico/condicionamiento/</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="cancelación-catastrófica-o-pérdida-de-significancia" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="cancelación-catastrófica-o-pérdida-de-significancia"><span class="header-section-number">1</span> Cancelación catastrófica o pérdida de significancia</h2>
+<p>Consideremos la sucesión</p>
+<p><img src="https://latex.codecogs.com/png.latex?x_%7Bn+1%7D%20=%2010x_n%20-%209"></p>
+<p>Desde el punto de vista del análisis matemático puro, si <img src="https://latex.codecogs.com/png.latex?x_0=1"> entonces <img src="https://latex.codecogs.com/png.latex?x_n=1"> para todo <img src="https://latex.codecogs.com/png.latex?n">: es la sucesión constante, porque <img src="https://latex.codecogs.com/png.latex?x=1"> es el único punto fijo de <img src="https://latex.codecogs.com/png.latex?g(x)=10x-9">.</p>
+<p>Supongamos ahora que en punto flotante solo tenemos <img src="https://latex.codecogs.com/png.latex?d=2"> cifras significativas, y que el dato <img src="https://latex.codecogs.com/png.latex?x_0=1"> se representa como <img src="https://latex.codecogs.com/png.latex?%5Ctilde%20x_0=0%7B,%7D99"> — un error relativo de apenas el <img src="https://latex.codecogs.com/png.latex?1%5C%25">, del orden de cualquier redondeo típico. Aplicamos la recurrencia tal cual, redondeando a 2 cifras en cada paso:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?n"></th>
+<th style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Ctilde%20x_n"></th>
+<th style="text-align: center;">error absoluto <img src="https://latex.codecogs.com/png.latex?e_n=%5Ctilde%20x_n-1"></th>
+<th style="text-align: center;">error relativo</th>
+<th style="text-align: center;">dígitos perdidos</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0,99</td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?-0%7B,%7D01=-1%5Ctimes10%5E%7B-2%7D"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1%5C%25"></td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0,90</td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?-0%7B,%7D10=-1%5Ctimes10%5E%7B-1%7D"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?10%5C%25"></td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0,00</td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?-1%7B,%7D00=-1%5Ctimes10%5E%7B0%7D"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?100%5C%25"></td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?-9%7B,%7D00"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?-10%7B,%7D00=-1%5Ctimes10%5E%7B1%7D"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1000%5C%25"></td>
+<td style="text-align: center;">3</td>
+</tr>
+</tbody>
+</table>
+<p>En tres pasos el error relativo pasó de <img src="https://latex.codecogs.com/png.latex?1%5C%25"> a <img src="https://latex.codecogs.com/png.latex?1000%5C%25"> — la respuesta calculada (<img src="https://latex.codecogs.com/png.latex?-9">) no tiene <strong>ninguna</strong> relación con el valor verdadero (<img src="https://latex.codecogs.com/png.latex?1">).</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Por qué ocurre esto">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Por qué ocurre esto
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Escribiendo <img src="https://latex.codecogs.com/png.latex?%5Ctilde%20x_n%20=%201+e_n"> y sustituyendo en la recurrencia:</p>
+<p><img src="https://latex.codecogs.com/png.latex?1+e_%7Bn+1%7D=10(1+e_n)-9=1+10e_n%20%5C;%5CLongrightarrow%5C;%20e_%7Bn+1%7D=10%5C,e_n%20%5C;%5CLongrightarrow%5C;%20e_n=10%5En%20e_0"></p>
+<p>El error se <strong>multiplica por 10 en cada paso</strong>, sin importar qué tan pequeño sea <img src="https://latex.codecogs.com/png.latex?e_0">. Tomar un dato más aproximado, como <img src="https://latex.codecogs.com/png.latex?x_0=0%7B,%7D99999">, <strong>no resuelve el problema, solo lo retrasa</strong>: el problema está mal condicionado. El algoritmo y el computador dan una respuesta, pero esa respuesta no está cerca de “la realidad”.</p>
+</div>
+</div>
+<p>Este es exactamente el mecanismo que hace <em>silenciosa</em> la pérdida de significancia: ninguna operación individual (multiplicar por 10, restar 9) tiene nada de alarmante — el resultado final simplemente deja de tener sentido, sin ningún símbolo de error que lo anuncie.</p>
+<p>El mismo fenómeno aparece cuando restamos dos números cercanos:</p>
+<p><img src="https://latex.codecogs.com/png.latex?2%7B,%7D1357%20-%202%7B,%7D1356%20=%200%7B,%7D0001%20=%201%5Ctimes10%5E%7B-4%7D"></p>
+<p>Cada operando tiene 5 cifras significativas, pero el resultado solo tiene 1 — <strong>perdimos 4 cifras significativas</strong> en una sola resta.</p>
+</section>
+<section id="el-número-de-condición-relativo" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="el-número-de-condición-relativo"><span class="header-section-number">2</span> El número de condición relativo</h2>
+<p>La pregunta natural es: <strong>¿qué tan sensible es un problema, independientemente del algoritmo o la máquina que se use para resolverlo?</strong></p>
+<section id="un-ejemplo-de-calentamiento" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="un-ejemplo-de-calentamiento"><span class="header-section-number">2.1</span> Un ejemplo de calentamiento</h3>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?f(x)=x+1">. En la máquina, <img src="https://latex.codecogs.com/png.latex?x"> se representa como <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bfl%7D(x)=x(1+%5Cepsilon)"> con <img src="https://latex.codecogs.com/png.latex?%7C%5Cepsilon%7C%5Cle%20%5Cepsilon_%7B%5Ctext%7Bmach%7D%7D/2">. Si la suma se hace exacta:</p>
+<p><img src="https://latex.codecogs.com/png.latex?y%20=%20%5Ctext%7Bfl%7D(x)+1%20=%20x(1+%5Cepsilon)+1"></p>
+<p>El error relativo del resultado es</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%7Cy-f(x)%7C%7D%7B%7Cf(x)%7C%7D%20=%20%5Cfrac%7B%7Cx(1+%5Cepsilon)+1-(x+1)%7C%7D%7B%7Cx+1%7C%7D%20=%20%5Cfrac%7B%7C%5Cepsilon%20x%7C%7D%7B%7Cx+1%7C%7D"></p>
+<p>Este error puede ser arbitrariamente grande si <img src="https://latex.codecogs.com/png.latex?x%5Capprox%20-1"> — aunque <img src="https://latex.codecogs.com/png.latex?%5Cepsilon"> sea minúsculo. El problema “sumar 1” es benigno lejos de <img src="https://latex.codecogs.com/png.latex?x=-1">, mal condicionado cerca de ahí.</p>
+</section>
+<section id="definición-formal" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="definición-formal"><span class="header-section-number">2.2</span> Definición formal</h3>
+<p>Queremos generalizar esta idea: dado un problema <img src="https://latex.codecogs.com/png.latex?f"> y un dato <img src="https://latex.codecogs.com/png.latex?a">, ¿cuánto se amplifica el error relativo de <img src="https://latex.codecogs.com/png.latex?a"> al pasar por <img src="https://latex.codecogs.com/png.latex?f">?</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Definición — número de condición relativo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Definición — número de condición relativo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(a)%20=%20%5Clim_%7B%5Cepsilon%5Cto%200%7D%20%5Cfrac%7B%5Cleft%7Cf(a)-f(a(1+%5Cepsilon))%5Cright%7C/%7Cf(a)%7C%7D%7B%7C%5Cepsilon%7C%7D"></p>
+<p>Es la razón entre el cambio relativo en el resultado y el cambio relativo en el dato, en el límite de perturbaciones pequeñas. Si <img src="https://latex.codecogs.com/png.latex?f"> es diferenciable en <img src="https://latex.codecogs.com/png.latex?a">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(a)%20=%20%5Cleft%7C%5Cfrac%7Ba%5C,f'(a)%7D%7Bf(a)%7D%5Cright%7C"></p>
+</div>
+</div>
+<p>Si <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(a)"> es muy grande, el problema está <strong>mal condicionado</strong> en <img src="https://latex.codecogs.com/png.latex?a">: cualquier perturbación de los datos — así sea del tamaño de <img src="https://latex.codecogs.com/png.latex?%5Cepsilon_%7B%5Ctext%7Bmach%7D%7D"> — se amplifica hasta volver el resultado inútil. Esto <strong>no depende del algoritmo ni de la máquina</strong>: es una propiedad del problema mismo.</p>
+</section>
+<section id="ejemplos-elementales" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="ejemplos-elementales"><span class="header-section-number">2.3</span> Ejemplos elementales</h3>
+<p><img src="https://latex.codecogs.com/png.latex?f(x)=x-c%20%5C;%5CLongrightarrow%5C;%20%5Ckappa_f(x)=%5Cleft%7C%5Cfrac%7Bx%7D%7Bx-c%7D%5Cright%7C"></p>
+<p>Puede ser muy grande si <img src="https://latex.codecogs.com/png.latex?%7Cx%7C%5Cgg%7Cx-c%7C">, por ejemplo si <img src="https://latex.codecogs.com/png.latex?x%5Capprox%20c"> — esta es exactamente la resta cancelante de la sección anterior.</p>
+<p><img src="https://latex.codecogs.com/png.latex?f(x)=cx%20%5C;%5CLongrightarrow%5C;%20%5Ckappa_f(x)=1"></p>
+<p>La multiplicación por una constante nunca amplifica el error relativo: siempre funciona bien.</p>
+<p><img src="https://latex.codecogs.com/png.latex?f(x)=x%5Ep%20%5C;%5CLongrightarrow%5C;%20%5Ckappa_f(x)=%7Cp%7C"></p>
+<p><img src="https://latex.codecogs.com/png.latex?f(x)=%5Ccos(x)%20%5C;%5CLongrightarrow%5C;%20%5Ckappa_f(x)=%7Cx%5Ctan(x)%7C"></p>
+<p>Puede ser grande si <img src="https://latex.codecogs.com/png.latex?x"> está cerca de un múltiplo impar de <img src="https://latex.codecogs.com/png.latex?%5Cpi/2"> (ahí <img src="https://latex.codecogs.com/png.latex?f(x)%5Capprox%200">) o si <img src="https://latex.codecogs.com/png.latex?%7Cx%7C%5Cgg%201">.</p>
+</section>
+</section>
+<section id="ejercicio-1.2.3-fxdfracex-1x" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="ejercicio-1.2.3-fxdfracex-1x"><span class="header-section-number">3</span> Ejercicio 1.2.3 — <img src="https://latex.codecogs.com/png.latex?f(x)=%5Cdfrac%7Be%5Ex-1%7D%7Bx%7D"></h2>
+<section id="el-límite-en-x0-vía-lhôpital" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="el-límite-en-x0-vía-lhôpital"><span class="header-section-number">3.1</span> El límite en <img src="https://latex.codecogs.com/png.latex?x=0"> vía L’Hôpital</h3>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bx%5Cto%200%7D%5Cfrac%7Be%5Ex-1%7D%7Bx%7D%20%5C;=%5C;%20%5Cfrac%7B0%7D%7B0%7D%20%5Cquad%5Ctext%7B(indeterminado)%7D"></p>
+<p>Aplicando L’Hôpital (derivando numerador y denominador por separado):</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bx%5Cto%200%7D%5Cfrac%7Be%5Ex-1%7D%7Bx%7D%20=%20%5Clim_%7Bx%5Cto%200%7D%5Cfrac%7B%5Cdfrac%7Bd%7D%7Bdx%7D(e%5Ex-1)%7D%7B%5Cdfrac%7Bd%7D%7Bdx%7D(x)%7D%20=%20%5Clim_%7Bx%5Cto%200%7D%5Cfrac%7Be%5Ex%7D%7B1%7D%20=%20e%5E0%20=%201"></p>
+<p>Esto confirma, sin usar series de Taylor, que <img src="https://latex.codecogs.com/png.latex?f(0)=1"> es la extensión continua correcta.</p>
+</section>
+<section id="comportamiento-en-pminfty" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="comportamiento-en-pminfty"><span class="header-section-number">3.2</span> Comportamiento en <img src="https://latex.codecogs.com/png.latex?%5Cpm%5Cinfty"></h3>
+<p><strong>Cuando <img src="https://latex.codecogs.com/png.latex?x%5Cto+%5Cinfty">:</strong> también es indeterminado (<img src="https://latex.codecogs.com/png.latex?%5Cinfty/%5Cinfty">), así que L’Hôpital vuelve a aplicar:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bx%5Cto+%5Cinfty%7D%5Cfrac%7Be%5Ex-1%7D%7Bx%7D%20=%20%5Clim_%7Bx%5Cto+%5Cinfty%7D%5Cfrac%7Be%5Ex%7D%7B1%7D%20=%20+%5Cinfty"></p>
+<p>El numerador crece exponencialmente mientras el denominador crece linealmente, así que el cociente diverge.</p>
+<p><strong>Cuando <img src="https://latex.codecogs.com/png.latex?x%5Cto-%5Cinfty">:</strong> aquí <strong>no</strong> hay indeterminación, así que L’Hôpital no es necesario ni aplicable. Como <img src="https://latex.codecogs.com/png.latex?e%5Ex%5Cto%200">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bx%5Cto-%5Cinfty%7D%5Cfrac%7Be%5Ex-1%7D%7Bx%7D%20=%20%5Cfrac%7B0-1%7D%7B-%5Cinfty%7D%20=%20%5Cfrac%7B-1%7D%7B-%5Cinfty%7D%20=%200"></p>
+<p>el numerador se acerca a la constante <img src="https://latex.codecogs.com/png.latex?-1"> mientras el denominador diverge, así que el cociente se anula directamente.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cboxed%7B%5Clim_%7Bx%5Cto-%5Cinfty%7D%20f(x)%20=%200,%20%5Cqquad%20f(0)=1,%20%5Cqquad%20%5Clim_%7Bx%5Cto+%5Cinfty%7D%20f(x)%20=%20+%5Cinfty%7D"></p>
+<p>El problema está bien condicionado para valores negativos. Para valores grandes el problema está mal condicionado.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="¿Cómo funciona `expm1`?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>¿Cómo funciona <code>expm1</code>?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>expm1(x)</code> calcula <img src="https://latex.codecogs.com/png.latex?e%5Ex-1"> sin pasar por la resta explícita: para <img src="https://latex.codecogs.com/png.latex?x"> pequeño usa internamente una expansión en serie (o una tabla/aproximación racional de alta precisión) diseñada para que el resultado converja correctamente a <img src="https://latex.codecogs.com/png.latex?0"> cuando <img src="https://latex.codecogs.com/png.latex?x%5Cto0">, sin cancelar dígitos. Para <img src="https://latex.codecogs.com/png.latex?x"> no pequeño, se reduce esencialmente al cálculo directo <img src="https://latex.codecogs.com/png.latex?e%5Ex-1">, que ahí no tiene problema de cancelación. Es la misma idea que la serie de Maclaurin del ejercicio 1.4.2: evitar la resta de dos cantidades casi iguales.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="ejercicio-1.2.5-condición-del-inverso" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="ejercicio-1.2.5-condición-del-inverso"><span class="header-section-number">4</span> Ejercicio 1.2.5 — condición del inverso</h2>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?f"> con número de condición <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f">, y <img src="https://latex.codecogs.com/png.latex?f%5E%7B-1%7D"> su inversa. Queremos mostrar</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ckappa_%7Bf%5E%7B-1%7D%7D(x)%20=%20%5Cfrac%7B1%7D%7B%5Ckappa_f%5Cbig(f%5E%7B-1%7D(x)%5Cbig)%7D"></p>
+<p><strong>Demostración</strong>, sin invocar el teorema de la función inversa: sea <img src="https://latex.codecogs.com/png.latex?h%20=%20f%5Ccirc%20f%5E%7B-1%7D%20=%20%5Ctext%7Bid%7D">.</p>
+<p>Primero, <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%7B%5Ctext%7Bid%7D%7D(x)=1">: con <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bid%7D'(x)=1">, <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%7B%5Ctext%7Bid%7D%7D(x)=%7Cx%5Ccdot%201/x%7C=1">.</p>
+<p>Por la regla de la cadena para números de condición (ejercicio 1.2.4), aplicada a <img src="https://latex.codecogs.com/png.latex?h=f%5Ccirc%20f%5E%7B-1%7D">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ckappa_h(x)%20=%20%5Ckappa_f%5Cbig(f%5E%7B-1%7D(x)%5Cbig)%5Ccdot%5Ckappa_%7Bf%5E%7B-1%7D%7D(x)"></p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?h=%5Ctext%7Bid%7D">, <img src="https://latex.codecogs.com/png.latex?%5Ckappa_h(x)=%5Ckappa_%7B%5Ctext%7Bid%7D%7D(x)=1">. Despejando:</p>
+<p><img src="https://latex.codecogs.com/png.latex?1%20=%20%5Ckappa_f%5Cbig(f%5E%7B-1%7D(x)%5Cbig)%5Ccdot%5Ckappa_%7Bf%5E%7B-1%7D%7D(x)%20%5C;%5CLongrightarrow%5C;%20%5Ckappa_%7Bf%5E%7B-1%7D%7D(x)=%5Cfrac%7B1%7D%7B%5Ckappa_f%5Cbig(f%5E%7B-1%7D(x)%5Cbig)%7D%20%5Cqquad%20%5Cblacksquare"></p>
+<p>Esta ruta es más corta que aplicar el teorema de la función inversa directamente, y no exige demostrar por separado que <img src="https://latex.codecogs.com/png.latex?f%5E%7B-1%7D"> es derivable.</p>
+</section>
+<section id="raíces-de-un-polinomio-cuadrático" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="raíces-de-un-polinomio-cuadrático"><span class="header-section-number">5</span> Raíces de un polinomio cuadrático</h2>
+<p>Consideremos <img src="https://latex.codecogs.com/png.latex?ax%5E2+bx+c=0">. Los datos son los coeficientes <img src="https://latex.codecogs.com/png.latex?(a,b,c)">; el resultado son las raíces <img src="https://latex.codecogs.com/png.latex?r_1,r_2"> (posiblemente complejas). Formalmente, <img src="https://latex.codecogs.com/png.latex?f(a,b,c)=(r_1,r_2)">.</p>
+<p>Fijamos <img src="https://latex.codecogs.com/png.latex?b,c"> y perturbamos solo el coeficiente principal <img src="https://latex.codecogs.com/png.latex?a">, para ver cómo responde <img src="https://latex.codecogs.com/png.latex?r_1">: <img src="https://latex.codecogs.com/png.latex?f(a)=r_1">. Partiendo de la identidad <img src="https://latex.codecogs.com/png.latex?ar_1%5E2+br_1+c=0"> y derivando implícitamente respecto a <img src="https://latex.codecogs.com/png.latex?a"> (con <img src="https://latex.codecogs.com/png.latex?b,c"> fijos):</p>
+<p><img src="https://latex.codecogs.com/png.latex?r_1%5E2+2ar_1%5Cfrac%7Bdr_1%7D%7Bda%7D+b%5C,%5Cfrac%7Bdr_1%7D%7Bda%7D=0%20%5C;%5CLongrightarrow%5C;%20%5Cfrac%7Bdr_1%7D%7Bda%7D=%5Cfrac%7B-r_1%5E2%7D%7B2ar_1+b%7D"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(a)%20=%20%5Cleft%7C%5Cfrac%7Ba%7D%7Br_1%7D%5Ccdot%5Cfrac%7Bdr_1%7D%7Bda%7D%5Cright%7C%20=%20%5Cleft%7C%5Cfrac%7Ba%5C,r_1%7D%7B2ar_1+b%7D%5Cright%7C"></p>
+<p>Usando la fórmula cuadrática, <img src="https://latex.codecogs.com/png.latex?%7C2ar_1+b%7C=%5Cleft%7C%5Csqrt%7Bb%5E2-4ac%7D%5Cright%7C=%7Ca(r_1-r_2)%7C">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cboxed%7B%5Ckappa_f(a)%20=%20%5Cleft%7C%5Cfrac%7Br_1%7D%7Br_1-r_2%7D%5Cright%7C%7D"></p>
+<p>El problema está mal condicionado exactamente cuando <img src="https://latex.codecogs.com/png.latex?%7Cr_1%7C%5Cgg%7Cr_1-r_2%7C"> — es decir, cuando las raíces están mucho más cerca entre sí que del origen. En el caso extremo de una raíz doble (<img src="https://latex.codecogs.com/png.latex?r_1=r_2">), <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f%5Cto%5Cinfty">.</p>
+</section>
+<section id="simulación-sensibilidad-de-las-raíces-de-pxax-cx-d" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="simulación-sensibilidad-de-las-raíces-de-pxax-cx-d"><span class="header-section-number">6</span> Simulación — sensibilidad de las raíces de <img src="https://latex.codecogs.com/png.latex?p(x)=a(x-c)(x-d)"></h2>
+<p>Para hacer tangible la fórmula anterior, parametrizamos el polinomio directamente por sus raíces <img src="https://latex.codecogs.com/png.latex?c,d"> y su coeficiente principal <img src="https://latex.codecogs.com/png.latex?a">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?p(x)%20=%20a(x-c)(x-d)%20=%20a%5C,x%5E2%20%5Cunderbrace%7B-%5C,a(c+d)%7D_%7BB%7D%5C,x%20+%20%5Cunderbrace%7Ba%5C,c%5C,d%7D_%7BC%7D"></p>
+<p>de modo que, en ausencia de redondeo, las raíces son exactamente <img src="https://latex.codecogs.com/png.latex?r_1=c"> y <img src="https://latex.codecogs.com/png.latex?r_2=d"> para cualquier <img src="https://latex.codecogs.com/png.latex?a%5Cne%200">. La simulación perturba <strong>solo</strong> el coeficiente <img src="https://latex.codecogs.com/png.latex?a%5Cto%20a(1+%5Cvarepsilon)">, mantiene <img src="https://latex.codecogs.com/png.latex?B,C"> fijos (tal como en la derivación de <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(a)">), recalcula las raíces con la fórmula cuadrática, y compara:</p>
+<ul>
+<li>el error relativo <strong>predicho</strong> por la teoría: <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(a)%5Ccdot%7C%5Cvarepsilon%7C%20=%20%5Cleft%7C%5Cdfrac%7Br_1%7D%7Br_1-r_2%7D%5Cright%7C%5Ccdot%7C%5Cvarepsilon%7C"></li>
+<li>el error relativo <strong>real</strong>, medido directamente sobre la raíz recalculada</li>
+</ul>
+<p>Mueve los controles y observa qué pasa con <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f"> cuando <img src="https://latex.codecogs.com/png.latex?c"> y <img src="https://latex.codecogs.com/png.latex?d"> se acercan.</p>
+<iframe src="notebooks/condicionamiento-simulacion.html" width="100%" height="1400px" style="border:none;">
+</iframe>
+</section>
+<section id="tarea" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="tarea"><span class="header-section-number">7</span> Tarea</h2>
+<p>Resolver los siguientes ejercicios de la sección 1.2 (“Exercises”) de <em>Fundamentals of Numerical Computation</em>, disponibles en <a href="https://fncbook.com/julia/conditioning/#exercises" class="uri">https://fncbook.com/julia/conditioning/#exercises</a>:</p>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/numerico/condicionamiento/</guid>
+  <pubDate>Fri, 14 Aug 2026 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Introducción</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/numerico/introduccion/</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="breve-historia-de-los-sistemas-de-numeración" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="breve-historia-de-los-sistemas-de-numeración"><span class="header-section-number">1</span> Breve historia de los sistemas de numeración</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Época</th>
+<th>Sistema</th>
+<th>Características</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>~30 000 a.C.</td>
+<td>Sistemas de conteo primitivos (unarios)</td>
+<td>Hueso de Lebombo y hueso de Ishango — muescas talladas en hueso</td>
+</tr>
+<tr class="even">
+<td>~2500 a.C.</td>
+<td>Babilonios</td>
+<td>Base 60, <strong>posicional</strong> (avance decisivo)</td>
+</tr>
+<tr class="odd">
+<td>~500 a.C.</td>
+<td>Griegos</td>
+<td>Numeración con letras</td>
+</tr>
+<tr class="even">
+<td>500 a.C. – s. XIV</td>
+<td>Romanos</td>
+<td>Aditivo: <code>CXCIV = 194</code>, <code>XLVIII = 48</code></td>
+</tr>
+<tr class="odd">
+<td>~s. VIII</td>
+<td>Chinos</td>
+<td>Multiplicativo, basado en potencias de 10: 一 二 三 四 五 六 七 八 九 十</td>
+</tr>
+<tr class="even">
+<td>36 a.e.c. – ~350 a.e.c.</td>
+<td>Mayas</td>
+<td>Base 20, con un símbolo para el cero</td>
+</tr>
+<tr class="odd">
+<td>628 d.C. → ~800 → s. XIII</td>
+<td>Indo-arábigo</td>
+<td>India (Brahmagupta) → Arabia (Al-Juarismi / Al-Khwarizmi) → Europa (Fibonacci)</td>
+</tr>
+<tr class="even">
+<td>S. XVII</td>
+<td>Pascal</td>
+<td>Otras bases</td>
+</tr>
+<tr class="odd">
+<td>S. XVII</td>
+<td>Leibniz</td>
+<td>Base 2</td>
+</tr>
+<tr class="even">
+<td>S. XIX (finales)</td>
+<td>Peano y Dedekind</td>
+<td>Fundamentación formal</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Ejemplo unario:</strong> <code>II + III = IIIII</code></p>
+</section>
+<section id="el-sistema-posicional-decimal" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="el-sistema-posicional-decimal"><span class="header-section-number">2</span> El sistema posicional decimal</h2>
+<p><img src="https://latex.codecogs.com/png.latex?243%20=%202%5Ccdot100+4%5Ccdot10+3%20=%202%5Ccdot10%5E2+4%5Ccdot10%5E1+3%5Ccdot10%5E0"></p>
+<p>Fracciones simples:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B3%7D%7B2%7D=%5Cfrac%7B6%7D%7B4%7D%20%5Cqquad%201%7B,%7D5%20=%201+%5Cfrac%7B5%7D%7B10%7D=1%5Cfrac%7B5%7D%7B10%7D=1%5Cfrac12"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B7%7D%7B6%7D=1%7B,%7D1%5Coverline%7B6%7D=1%5Ccdot10%5E0+1%5Ccdot10%5E%7B-1%7D+6%5Ccdot10%5E%7B-2%7D+%5Ccdots"></p>
+<p><strong>Forma general de un número posicional</strong>, con dígitos <img src="https://latex.codecogs.com/png.latex?a_i%20%5Cin%20%5C%7B0,1,%5Cldots,9%5C%7D">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?a_n%20a_%7Bn-1%7D%5Ccdots%20a_0,%5C,%20a_%7B-1%7D%5C,%20a_%7B-2%7D%5C,%20a_%7B-3%7D%5Ccdots"></p>
+<p><img src="https://latex.codecogs.com/png.latex?=%20a_n%5Ccdot10%5En%20+%20a_%7Bn-1%7D%5Ccdot10%5E%7Bn-1%7D+%5Ccdots+a_0%5Ccdot10%5E0+a_%7B-1%7D%5Ccdot10%5E%7B-1%7D+a_%7B-2%7D%5Ccdot10%5E%7B-2%7D+%5Ccdots"></p>
+<p><img src="https://latex.codecogs.com/png.latex?=%5Cunderbrace%7B%5Csum_%7Bk=0%7D%5E%7Bn%7D%20a_k%5C,10%5Ek%7D_%7B%5Ctext%7Bparte%20entera%7D%7D%20+%20%5Cunderbrace%7B%5Csum_%7Bk=1%7D%5E%7B%5Cinfty%7D%20a_%7B-k%7D%5C,10%5E%7B-k%7D%7D_%7B%5Ctext%7Bparte%20decimal%20o%20mantisa%7D%7D"></p>
+</section>
+<section id="otras-bases" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="otras-bases"><span class="header-section-number">3</span> Otras bases</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Convertir <img src="https://latex.codecogs.com/png.latex?%5Cleft(%5Cdfrac13%5Cright)_%7B10%7D"> a base 3.</p>
+</div>
+</div>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cleft(%5Cfrac13%5Cright)_%7B(10)%7D%20=%20(0%7B,%7D1)_%7B(3)%7D"></p>
+<p>la expansión termina exactamente, porque <img src="https://latex.codecogs.com/png.latex?3%5E%7B-1%7D=1/3">.</p>
+<p>Para contraste, <img src="https://latex.codecogs.com/png.latex?(1/10)_%7B10%7D"> en base 3 <strong>no</strong> termina:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cleft(%5Cfrac%7B1%7D%7B10%7D%5Cright)_%7B(10)%7D%20=%20(0%7B,%7D0%5Coverline%7B2%7D)_%7B(3)%7D"></p>
+<p><strong>Alfabetos según la base:</strong></p>
+<ul>
+<li>Binario: <img src="https://latex.codecogs.com/png.latex?%5C%7B0,1%5C%7D"> → un dígito es un <strong>bit</strong></li>
+<li>Octal: <img src="https://latex.codecogs.com/png.latex?%5C%7B0,1,%5Cldots,7%5C%7D"> → un dígito octal (byte) representa <strong>3 bits</strong></li>
+<li>Hexadecimal: <img src="https://latex.codecogs.com/png.latex?%5C%7B0,1,%5Cldots,9,A,B,C,D,E,F%5C%7D"> → un dígito hexadecimal (<strong>nibble</strong>) representa <strong>4 bits</strong></li>
+</ul>
+<p><strong>Correspondencia binario ↔︎ octal (3 bits):</strong></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Binario</th>
+<th style="text-align: center;">Octal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">000</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">001</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">010</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">011</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">100</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">101</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">110</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">111</td>
+<td style="text-align: center;">7</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo — multiplicación en hexadecimal">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo — multiplicación en hexadecimal
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><img src="https://latex.codecogs.com/png.latex?12_%7B16%7D%20%5Ctimes%20F_%7B16%7D%20=%2010E_%7B16%7D"></p>
+<p>Verificación pasando a decimal:</p>
+<p><img src="https://latex.codecogs.com/png.latex?12_%7B16%7D=1%5Ccdot16+2=18%20%5Cqquad%20F_%7B16%7D=15%20%5Cqquad%2018%5Ctimes15=270"></p>
+<p><img src="https://latex.codecogs.com/png.latex?270%20=%201%5Ccdot16%5E2+0%5Ccdot16+14%20%5C;%5CLongrightarrow%5C;%2010E_%7B16%7D%5C%20%5Ccheckmark"></p>
+</div>
+</div>
+</section>
+<section id="sec-def-F" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="sec-def-F"><span class="header-section-number">4</span> El conjunto 𝔽 de números de punto flotante</h2>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BF%7D%20=%20%5C%7B%5C,0,%5C%20%5Cpm(1+f)%5C,2%5E%7B%5C,n%7D%5C,%5C%7D"></p>
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?n%5Cto"> <strong>exponente</strong></li>
+<li><img src="https://latex.codecogs.com/png.latex?1+f%20%5Cto"> <strong>significando</strong> (mantisa)</li>
+<li><img src="https://latex.codecogs.com/png.latex?%5Cdisplaystyle%20f=%5Csum_%7Bi=1%7D%5E%7Bd%7D%20b_i%5C,2%5E%7B-i%7D,%20%5Cquad%20b_i%5Cin%5C%7B0,1%5C%7D"></li>
+<li><img src="https://latex.codecogs.com/png.latex?d"> se llama la <strong>precisión binaria</strong></li>
+</ul>
+<section id="ejemplos-de-normalización" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="ejemplos-de-normalización"><span class="header-section-number">4.1</span> Ejemplos de normalización</h3>
+<p><img src="https://latex.codecogs.com/png.latex?4=(1+0)%5Ccdot2%5E2%20%5Cqquad%5Cqquad%204=(1+f)%5Ccdot2%5E1%20%5C;%5CRightarrow%5C;%201+f=2%20%5CRightarrow%20f=1%5C%20%5Ctext%7B%E2%9C%97%20(fuera%20de%20%7D%5B0,1))"></p>
+<p><img src="https://latex.codecogs.com/png.latex?5=(1+x)%5Ccdot2%5E1%20%5CRightarrow%201+x=%5Ctfrac52=2%7B,%7D5%20%5CRightarrow%20x=%5Ctfrac32%5C%20%5Ctext%7B%E2%9C%97%20(fuera%20de%20%7D%5B0,1))"></p>
+<p><img src="https://latex.codecogs.com/png.latex?5=(1+f)%5Ccdot2%5E2%20%5CRightarrow%201+f=%5Cfrac54%20%5CRightarrow%20f=%5Cfrac14=0%7B,%7D25=0%7B,%7D01_2%5C%20%5Ccheckmark"></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Por qué falla el primer intento">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Por qué falla el primer intento
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La normalización exige <img src="https://latex.codecogs.com/png.latex?1+f%5Cin%5B1,2)">; por eso el exponente correcto para 5 es <img src="https://latex.codecogs.com/png.latex?n=2">, no <img src="https://latex.codecogs.com/png.latex?n=1">.</p>
+</div>
+</div>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac13=(1+f)%5Ccdot2%5E%7B-1%7D%5CRightarrow%201+f=%5Cfrac23%5CRightarrow%20f=-%5Cfrac13%5C%20%5Ctext%7B%E2%9C%97%20(%7Df%3C0%5Ctext%7B)%7D"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac13=(1+f)%5Ccdot2%5E%7B-2%7D%5CRightarrow%201+f=%5Cfrac43%5CRightarrow%20f=%5Cfrac13%5C%20%5Ccheckmark"></p>
+<p>En decimal, <img src="https://latex.codecogs.com/png.latex?f=0%7B,%7D%5Coverline%7B3%7D=%5Cdfrac%7B3%7D%7B10%7D+%5Cdfrac%7B3%7D%7B10%5E2%7D+%5Ccdots">. <strong>En binario</strong>, usando la serie geométrica:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac13=%5Cfrac%7B1/4%7D%7B1-1/4%7D=%5Cfrac14%5Csum_%7Bk=0%7D%5E%7B%5Cinfty%7D%5Cleft(%5Cfrac14%5Cright)%5Ek=%5Csum_%7Bk=1%7D%5E%7B%5Cinfty%7D%5Cfrac%7B1%7D%7B4%5E%7Bk%7D%7D=%5Csum_%7Bk=1%7D%5E%7B%5Cinfty%7D%5Cfrac%7B1%7D%7B2%5E%7B2k%7D%7D=0%7B,%7D010101%5Cldots_2"></p>
+<p>Por tanto se puede aproximar por un número de <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%20%7BF%7D"> pero <img src="https://latex.codecogs.com/png.latex?%5Ctfrac13%5Cnotin%20%5Cmathbb%7BF%7D"> para ningunos <img src="https://latex.codecogs.com/png.latex?d"> y <img src="https://latex.codecogs.com/png.latex?n">.</p>
+</section>
+</section>
+<section id="cuántos-elementos-de-𝔽-hay-por-binade" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="cuántos-elementos-de-𝔽-hay-por-binade"><span class="header-section-number">5</span> Cuántos elementos de 𝔽 hay por binade</h2>
+<p><img src="https://latex.codecogs.com/png.latex?f=%5Csum_%7Bi=1%7D%5E%7Bd%7Db_i%5C,2%5E%7B-i%7D=2%5E%7B-d%7D%5Csum_%7Bi=1%7D%5E%7Bd%7Db_i%5C,2%5E%7B%5C,d-i%7D=2%5E%7B-d%7Dz"></p>
+<p><img src="https://latex.codecogs.com/png.latex?1+f%5Cin%5B1,2)%5Cquad%5Ctext%7Bpara%20%7D%20z%5Cin%5C%7B0,1,2,%5Cldots,2%5Ed-1%5C%7D"></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Resultado clave">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Resultado clave
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Entre <img src="https://latex.codecogs.com/png.latex?2%5En"> y <img src="https://latex.codecogs.com/png.latex?2%5E%7Bn+1%7D"> hay <img src="https://latex.codecogs.com/png.latex?2%5Ed"> números que pertenecen a <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BF%7D">.</p>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>Referencia de las notas: <code>float32/float</code> → <img src="https://latex.codecogs.com/png.latex?d=23">; <code>float64/double</code> → <img src="https://latex.codecogs.com/png.latex?d=52"> (IEEE 754).</p>
+</blockquote>
+<section id="caso-d0" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="caso-d0"><span class="header-section-number">5.1</span> Caso <img src="https://latex.codecogs.com/png.latex?d=0"></h3>
+<p>Solo hay un valor de <img src="https://latex.codecogs.com/png.latex?f"> (<img src="https://latex.codecogs.com/png.latex?f=0">), así que cada binade aporta un único punto:</p>
+<p><img src="https://latex.codecogs.com/png.latex?n=0:%5C%20%5Cpm(1+0)2%5E0=%5Cpm1%20%5Cqquad%20n=1:%5C%20%5Cpm2%20%5Cqquad%20n=2:%5C%20%5Cpm4%20%5Cqquad%20n=3:%5C%20%5Cpm8"></p>
+<p><strong>Con <img src="https://latex.codecogs.com/png.latex?d=0">, los únicos números posibles son <img src="https://latex.codecogs.com/png.latex?%5Cpm2%5En">.</strong></p>
+</section>
+<section id="caso-d1" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="caso-d1"><span class="header-section-number">5.2</span> Caso <img src="https://latex.codecogs.com/png.latex?d=1"></h3>
+<p>Con <img src="https://latex.codecogs.com/png.latex?b_1%5Cin%5C%7B0,1%5C%7D">: <img src="https://latex.codecogs.com/png.latex?1+f%5Cin%5C%7B1,%5C%203/2%5C%7D">. Tomando el valor <img src="https://latex.codecogs.com/png.latex?3/2"> como ejemplo representativo en cada exponente:</p>
+<p><img src="https://latex.codecogs.com/png.latex?n=0:%5C%20%5Cpm%5Cleft(1+%5Ctfrac12%5Cright)2%5E0=%5Cpm%5Ctfrac32%20%5Cqquad%5Cqquad%20n=1:%5C%20%5Cpm%5Ctfrac32%5Ccdot2=%5Cpm3"></p>
+<p><img src="https://latex.codecogs.com/png.latex?n=-1:%5C%20%5Cpm%5Ctfrac32%5Ccdot%5Ctfrac12=%5Cpm%5Ctfrac34%20%5Cqquad%5Cqquad%20n=2:%5C%20%5Cpm%5Ctfrac32%5Ccdot4=%5Cpm6%20%5Cqquad%5Cqquad%20n=-2:%5C%20%5Cpm%5Ctfrac32%5Ccdot%5Ctfrac14=%5Cpm%5Ctfrac38"></p>
+</section>
+<section id="simulación-de-mathbbf-en-julia" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="simulación-de-mathbbf-en-julia"><span class="header-section-number">5.3</span> Simulación de <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BF%7D"> en Julia</h3>
+<p><strong>Recta numérica</strong> (colores por exponente, simulación):</p>
+<iframe src="notebooks/flotantes.html" width="100%" height="650px" style="border:none;">
+</iframe>
+<p><a href="notebooks/flotantes-codigo.html">Ver código fuente de la simulación de <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BF%7D"></a></p>
+<p><a href="notebooks/flotantes_F.jl">Descargar el código fuente la simulación de <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BF%7D"></a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://arturosanjuan.xyz/cursos/numerico/introduccion/floatingpointline.webp" class="img-fluid figure-img"></p>
+<figcaption>Representación de <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BF%7D"> de Moise rushanika</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo motivador de lo que viene">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo motivador de lo que viene
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><img src="https://latex.codecogs.com/png.latex?0%7B,%7D1+0%7B,%7D2%5Cneq0%7B,%7D3"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="espaciado-dentro-de-un-binade" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="espaciado-dentro-de-un-binade"><span class="header-section-number">6</span> Espaciado dentro de un binade</h2>
+<p>Retomando <img src="https://latex.codecogs.com/png.latex?f=2%5E%7B-d%7Dz"> con <img src="https://latex.codecogs.com/png.latex?z%5Cin%5C%7B0,%5Cldots,2%5Ed-1%5C%7D">, si <img src="https://latex.codecogs.com/png.latex?x_k=(1+2%5E%7B-d%7Dk)%5C,2%5En">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?x_%7Bk+1%7D-x_k=%5Cbig(1+2%5E%7B-d%7D(k+1)%5Cbig)2%5En-%5Cbig(1+2%5E%7B-d%7Dk%5Cbig)2%5En=2%5En%5C,2%5E%7B-d%7D=2%5E%7Bn-d%7D"></p>
+<p><strong>— el mismo espacio; hay <img src="https://latex.codecogs.com/png.latex?2%5Ed"> números.</strong></p>
+<p>El binade <strong>empieza</strong> en <img src="https://latex.codecogs.com/png.latex?f=0"> (es decir, en <img src="https://latex.codecogs.com/png.latex?2%5En">) y <strong>termina</strong> en <img src="https://latex.codecogs.com/png.latex?f_%7B%5Cmax%7D=%5Csum_%7Bi=1%7D%5E%7Bd%7D2%5E%7B-i%7D">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?(1+f)2%5En=%5Cbig(1+(2%5Ed-1)2%5E%7B-d%7D%5Cbig)2%5En=%5Cbig(1+1-2%5E%7B-d%7D%5Cbig)2%5En=2%5E%7B%5C,n+1%7D-2%5E%7B%5C,n-d%7D"></p>
+</section>
+<section id="machine-epsilon" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="machine-epsilon"><span class="header-section-number">7</span> Machine epsilon</h2>
+<p>El número que le sigue a 1 es <img src="https://latex.codecogs.com/png.latex?1+2%5E%7B-d%7D">, entonces el <strong>épsilon de máquina</strong> es</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_%7B%5Ctext%7Bmach%7D%7D=2%5E%7B-d%7D"></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En Julia, <code>eps()</code> para <code>Float64</code> da <img src="https://latex.codecogs.com/png.latex?2%5E%7B-52%7D">.</p>
+</div>
+</div>
+<p><strong>Definimos</strong> <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bfl%7D(x)=%5Coperatorname*%7Bargmin%7D_%7By%5Cin%5Cmathbb%7BF%7D%7D%7Cx-y%7C">.</p>
+<p>La distancia en cada binade <img src="https://latex.codecogs.com/png.latex?%5B2%5En,2%5E%7Bn+1%7D)"> es <img src="https://latex.codecogs.com/png.latex?2%5E%7Bn-d%7D=2%5En%5Cvarepsilon_%7B%5Ctext%7Bmach%7D%7D">.</p>
+<p>Cada número real <img src="https://latex.codecogs.com/png.latex?x"> está a una distancia a lo más</p>
+<p><img src="https://latex.codecogs.com/png.latex?2%5E%7B%5C,n-d-1%7D=%5Cfrac%7B2%5E%7Bn%7D%5Cvarepsilon_%7B%5Ctext%7Bmach%7D%7D%7D%7B2%7D%5Cqquad%5Ctext%7Bde%20%7D%5Cmathbb%7BF%7D,%20%5Cqquad%5Ctext%7Bes%20decir,%7D%5Cqquad%20%7C%5Ctext%7Bfl%7D(x)-x%7C%5Cle2%5E%7B%5C,n-d-1%7D"></p>
+</section>
+<section id="de-error-absoluto-a-error-relativo" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="de-error-absoluto-a-error-relativo"><span class="header-section-number">8</span> De error absoluto a error relativo</h2>
+<p>Al dividir por <img src="https://latex.codecogs.com/png.latex?%7Cx%7C%5Cge2%5En">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%7C%5Ctext%7Bfl%7D(x)-x%7C%7D%7B%7Cx%7C%7D%5Cle%5Cfrac12%5C,%5Cvarepsilon_%7B%5Ctext%7Bmach%7D%7D"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%7C%5Ctext%7Bfl%7D(x)-x%7C%5Cle%5Cfrac12%5C,%5Cvarepsilon_%7B%5Ctext%7Bmach%7D%7D%5C,%7Cx%7C"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bfl%7D(x)=x+%5Cfrac12%5C,%5Cvarepsilon_%7B%5Ctext%7Bmach%7D%7D%5C,%7Cx%7C=x%5Cleft(1+%5Cfrac12%5C,%5Cvarepsilon_%7B%5Ctext%7Bmach%7D%7D%5C,%5Coperatorname%7Bsgn%7D(x)%5Cright)=x(1+%5Cepsilon)%5Cquad%5Ctext%7Bcon%20%7D%7C%5Cepsilon%7C%5Cle%5Ctfrac12%5Cvarepsilon_%7B%5Ctext%7Bmach%7D%7D"></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Pregunta abierta de las notas">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Pregunta abierta de las notas
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Qué quiere decir que el error absoluto puede ser grande y el relativo no?</p>
+</div>
+</div>
+</section>
+<section id="precisión-y-exactitud" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="precisión-y-exactitud"><span class="header-section-number">9</span> Precisión y exactitud</h2>
+<p>Si expresamos</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cpm(1+f)%5C,2%5En%20=%20%5Cpm%5Cleft(1+%5Csum_%7Bi=1%7D%5E%7Bd%7D%20b_i%5C,2%5E%7B-i%7D%5Cright)2%5En"></p>
+<p>en base 10, se convierte en</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cpm(b_0+f_%7B10%7D)%5C,10%5En%20=%20%5Cpm%5Cleft(b_0+%5Csum_%7Bi=1%7D%5E%7Bd%7D%20b_i%5C,10%5E%7B-i%7D%5Cright)10%5En"></p>
+<p>donde cada <img src="https://latex.codecogs.com/png.latex?b_i%5Cin%5C%7B0,%5Cldots,9%5C%7D"> y <img src="https://latex.codecogs.com/png.latex?b_0%5Cneq0">. Esto no es otra cosa que la <strong>notación científica</strong>, con <img src="https://latex.codecogs.com/png.latex?d+1"> cifras significativas.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejemplo — constante de Planck">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejemplo — constante de Planck
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><img src="https://latex.codecogs.com/png.latex?h%20=%206.626068%5Ctimes10%5E%7B-34%7D%5C%20%5Cmathrm%7Bm%5E2%5C,kg/s%7D"></p>
+<p>Supongamos que ajustamos el último dígito de 8 a 9. Entonces el cambio relativo es</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%7C%5Ctext%7Bvalor%20inicial%7D-%5Ctext%7Bvalor%20final%7D%7C%7D%7B%7C%5Ctext%7Bvalor%20inicial%7D%7C%7D=%5Cfrac%7B0%7B,%7D000001%5Ctimes10%5E%7B-34%7D%7D%7B6%7B,%7D626068%5Ctimes10%5E%7B-34%7D%7D%5Capprox1%7B,%7D51%5Ctimes10%5E%7B-7%7D"></p>
+<p>Decimos entonces que la constante está dada con <strong>7 dígitos de precisión</strong>.</p>
+</div>
+</div>
+<p><strong>La precisión</strong> de un número flotante son los <img src="https://latex.codecogs.com/png.latex?d"> dígitos binarios. <strong>La exactitud</strong> es qué tan lejos está la aproximación del resultado.</p>
+<p>Si <img src="https://latex.codecogs.com/png.latex?%5Ctilde%7Bx%7D"> es la aproximación de <img src="https://latex.codecogs.com/png.latex?x">:</p>
+<ul>
+<li><strong>Exactitud absoluta:</strong> <img src="https://latex.codecogs.com/png.latex?%7C%5Ctilde%7Bx%7D-x%7C"> — mismas unidades que <img src="https://latex.codecogs.com/png.latex?x">.</li>
+<li><strong>Exactitud relativa:</strong> <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7B%7C%5Ctilde%7Bx%7D-x%7C%7D%7B%7Cx%7C%7D"> — adimensional.</li>
+</ul>
+<p>Por ejemplo, si la exactitud de la aproximación anterior es <img src="https://latex.codecogs.com/png.latex?1%7B,%7D51%5Ctimes10%5E%7B-7%7D=0%7B,%7D0000001%5Cunderbrace%7B51%7D_%7B%5Ctext%7B7%20cifras%20signif.%7D%7D">, el entero más cercano a</p>
+<p><img src="https://latex.codecogs.com/png.latex?-%5Clog_%7B10%7D%5Cleft%7C%5Cfrac%7B%5Ctilde%7Bx%7D-x%7D%7Bx%7D%5Cright%7C"></p>
+<p>da la <strong>“cantidad de dígitos de exactitud”</strong>, sin necesidad de aproximarlo al entero:</p>
+<p><img src="https://latex.codecogs.com/png.latex?-%5Clog_%7B10%7D(1%7B,%7D51%5Ctimes10%5E%7B-7%7D)%20=%20-%5Clog_%7B10%7D(1%7B,%7D51)+7%20%5Capprox%206%7B,%7D82"></p>
+<p><em>(el logaritmo cuenta esa cadena inicial de ceros).</em> Ejemplo clásico: <img src="https://latex.codecogs.com/png.latex?%5Crho=22/7"> frente a <img src="https://latex.codecogs.com/png.latex?%5Cpi">.</p>
+<section id="el-estándar-ieee-754" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="el-estándar-ieee-754"><span class="header-section-number">9.1</span> El estándar IEEE 754</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tipo</th>
+<th><img src="https://latex.codecogs.com/png.latex?d"> (bits de significando)</th>
+<th><img src="https://latex.codecogs.com/png.latex?n"> (bits de exponente)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Float32</code> (precisión sencilla)</td>
+<td>23</td>
+<td>8</td>
+</tr>
+<tr class="even">
+<td><code>Float64</code> (precisión doble)</td>
+<td>52</td>
+<td>11</td>
+</tr>
+</tbody>
+</table>
+<p>Con las funciones <code>sign</code>, <code>exponent</code> y <code>significand</code> podemos extraer las partes de un <img src="https://latex.codecogs.com/png.latex?x%5Cin%5Cmathbb%7BF%7D">.</p>
+</section>
+</section>
+<section id="aritmética-de-máquina" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="aritmética-de-máquina"><span class="header-section-number">10</span> Aritmética de máquina</h2>
+<p>La aritmética se calcula de tal manera que si <img src="https://latex.codecogs.com/png.latex?x,y%5Cin%5Cmathbb%7BF%7D">, entonces <img src="https://latex.codecogs.com/png.latex?x%5Coplus%20y%5Cin%5Cmathbb%7BF%7D"> de tal manera que</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%7C(x%5Coplus%20y)-(x+y)%7C%7D%7B%7Cx+y%7C%7D%5Cle%5Cfrac12%5C,%5Cvarepsilon_%7B%5Ctext%7Bmach%7D%7D"></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplos">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><img src="https://latex.codecogs.com/png.latex?(1%7B,%7D0+%5Ctexttt%7Beps()%7D/2)-1%20=%200"></p>
+<p><img src="https://latex.codecogs.com/png.latex?1%7B,%7D0+(%5Ctexttt%7Beps()%7D/2-1)%20%5Cneq%200"></p>
+<p><img src="https://latex.codecogs.com/png.latex?0%7B,%7D1+0%7B,%7D2%5Cneq0%7B,%7D3"></p>
+</div>
+</div>
+<p>Estos ejemplos muestran que la <strong>ley asociativa de la suma se rompe</strong> en aritmética de punto flotante: el orden en que se agrupan las operaciones puede cambiar el resultado.</p>
+</section>
+<section id="tarea" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="tarea"><span class="header-section-number">11</span> Tarea</h2>
+<p>Resolver <strong>todos los ejercicios de la sección 1.1.4</strong> (“Exercises”) de <em>Fundamentals of Numerical Computation</em>, disponibles en <a href="https://fncbook.com/julia/floating-point/#exercises" class="uri">https://fncbook.com/julia/floating-point/#exercises</a>: los ejercicios 1.1.1 a 1.1.5, sobre el conjunto <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BF%7D">, la equivalencia de las cotas de error, aproximaciones racionales a <img src="https://latex.codecogs.com/png.latex?%5Cpi">, precisión sencilla IEEE 754, y <code>nextfloat</code>.</p>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/numerico/introduccion/</guid>
+  <pubDate>Fri, 07 Aug 2026 05:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

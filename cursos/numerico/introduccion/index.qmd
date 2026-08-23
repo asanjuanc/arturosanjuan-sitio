@@ -3,7 +3,7 @@ title: "Introducción"
 subtitle: "Sistemas de numeración y punto flotante"
 description: "Sistemas de numeración, bases, y la construcción del conjunto de números de punto flotante 𝔽."
 author: "Arturo Sanjuán"
-date: today
+date: 2026-08-07
 format:
   html:
     toc: true

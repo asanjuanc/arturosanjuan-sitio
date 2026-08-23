@@ -3,7 +3,7 @@ title: "Problemas de Movimiento"
 subtitle: "Caída libre, resistencia del aire y la altura máxima de un lanzamiento vertical"
 description: "De los planos inclinados de Galileo a F=mg, y de ahí a un lanzamiento vertical con resistencia proporcional a la velocidad: la ecuación diferencial que gobierna ascenso y caída a la vez, y el cálculo exacto de la altura máxima."
 author: "Arturo Sanjuán"
-date: today
+date: 2026-08-23
 image: "trayectoria.png"
 format:
   html:

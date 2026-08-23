@@ -6,6 +6,7 @@ description: .
 author: "Arturo Sanjuán"
 image: "vector.png"
 comments: false
+date: 2026-08-23
 listing:
   contents: .
   feed: true

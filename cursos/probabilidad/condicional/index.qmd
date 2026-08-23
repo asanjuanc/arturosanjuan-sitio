@@ -3,7 +3,7 @@ title: "Probabilidad condicional"
 subtitle: "Independencia, probabilidad total y teorema de Bayes"
 description: "Definición de probabilidad condicional, independencia de eventos, teorema de la probabilidad total y teorema de Bayes, con aplicaciones a la baraja y a pruebas diagnósticas."
 author: "Arturo Sanjuán"
-date: today
+date: 2026-08-23
 format:
   html:
     toc: true

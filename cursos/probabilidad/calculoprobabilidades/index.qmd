@@ -3,7 +3,7 @@ title: "Cálculo de probabilidades"
 subtitle: "Técnicas de conteo y el modelo de Laplace"
 description: "Permutaciones, combinaciones y coeficientes multinomiales, con aplicaciones a placas vehiculares, el chance, el Baloto y la baraja."
 author: "Arturo Sanjuán"
-date: today
+date: 2026-08-16
 format:
   html:
     toc: true

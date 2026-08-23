@@ -1,6 +1,7 @@
 ---
 title: "Home"
 comments: false
+date: 2026-08-23
 ---
 
 ![Laguna Negra Mongua, Boyacá Colombia](laguna.jpeg)
