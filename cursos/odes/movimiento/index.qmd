@@ -1,0 +1,269 @@
+---
+title: "Problemas de Movimiento"
+subtitle: "Caída libre, resistencia del aire y la altura máxima de un lanzamiento vertical"
+description: "De los planos inclinados de Galileo a F=mg, y de ahí a un lanzamiento vertical con resistencia proporcional a la velocidad: la ecuación diferencial que gobierna ascenso y caída a la vez, y el cálculo exacto de la altura máxima."
+author: "Arturo Sanjuán"
+date: today
+image: "trayectoria.png"
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 5
+---
+
+## De Galileo a Newton: la ecuación del movimiento
+
+La segunda ley de Newton, en su versión abreviada, dice que la fuerza aplicada sobre un objeto es proporcional a la aceleración que produce, y la constante de proporcionalidad es la masa:
+
+$$F = ma$$
+
+Esto es más profundo de lo que parece: si conocemos la fuerza, y la aceleración es una derivada (de hecho, la *segunda* derivada de la posición respecto al tiempo — ver la introducción del curso), entonces $F=ma$ **es** una ecuación diferencial. Conocer la fuerza es conocer el movimiento.
+
+Galileo demostró experimentalmente, usando planos inclinados, que la aceleración de un cuerpo que cae es constante e independiente de su masa: $g\approx 9.8\ \text{m/s}^2$. Newton, con su ley de gravitación universal, explicó *por qué*: cerca de la superficie terrestre, la fuerza gravitacional sobre un objeto de masa $m$ es
+
+$$F = mg$$
+
+y como $F=m\ddot x$ también, la masa se cancela y queda $\ddot x = g$ para *cualquier* objeto — el resultado empírico de Galileo, ahora derivado de una ley más profunda.
+
+## Caída libre sin resistencia
+
+Partiendo de $\ddot x = g$ e integrando dos veces:
+
+$$\dot x(t) = gt + v_0, \qquad x(t) = x_0 + v_0t + \frac{1}{2}gt^2$$
+
+Si el cuerpo cae desde el reposo ($v_0=0$) y tomamos el origen en el punto de partida ($x_0=0$), con $x$ midiendo la distancia recorrida hacia abajo:
+
+$$x(t) = \frac{1}{2}gt^2, \qquad v(t) = gt$$
+
+Eliminando $t$ entre las dos ecuaciones ($t=v/g$) se obtiene una relación directa entre velocidad y distancia recorrida, sin pasar por el tiempo:
+
+$$v = \sqrt{2gx}$$
+
+::: {.callout-note title="La misma relación, vista como conservación de energía"}
+Si en vez de cinemática pura usamos energía, con el origen de energía potencial en $x=0$:
+
+$$\frac{1}{2}mv^2 - mgx = 0 \quad\Longrightarrow\quad v = \sqrt{2gx}$$
+
+Es el mismo resultado por un camino distinto — un buen ejemplo de cómo la mecánica newtoniana y la conservación de energía son dos caras de la misma moneda para este tipo de problemas.
+:::
+
+## Caída libre con resistencia del aire
+
+Experimentalmente, cuando hay resistencia del aire, la razón de cambio de la velocidad ya no es constante: decrece a medida que la velocidad aumenta. El modelo más simple (y sorprendentemente bueno) es que la fuerza de resistencia es **proporcional a la velocidad**, $F_{\text{res}} = -cv$, lo que da
+
+$$\dot v = g - cv$$
+
+Esta es una EDO lineal de primer orden; su solución (con $v(0)=0$) es
+
+$$v(t) = \frac{g}{c}\left(1-e^{-ct}\right)$$
+
+Cuando $t\to\infty$, $v\to g/c$ — la **velocidad terminal**: a partir de cierto punto el cuerpo cae prácticamente a velocidad constante, porque la resistencia iguala al peso. Nota que si $c=0$ (sin resistencia) este fenómeno desaparece por completo y la velocidad crece sin cota, como en la sección anterior.
+
+## Ejercicio (Simmons) — lanzamiento vertical con resistencia proporcional a la velocidad
+
+Una masa $m$ se lanza **hacia arriba** desde la superficie de la tierra con velocidad inicial $v_0$. La resistencia del aire es proporcional a la velocidad, con constante $k$. ¿Cuál es la altura máxima que alcanza?
+
+**Planteamiento.** Tomamos el eje $x$ positivo hacia arriba, con $x(0)=0$. La resistencia del aire siempre se opone al movimiento — así que su signo depende de si el cuerpo sube o baja. Pero si escribimos la fuerza de resistencia como $-kv$ (con $v$ la velocidad *con signo*, positiva hacia arriba), el signo se ajusta automáticamente: cuando $v>0$ (subiendo) la resistencia es negativa, hacia abajo; cuando $v<0$ (bajando) la resistencia es positiva, hacia arriba. **Una sola ecuación describe todo el vuelo**, sin necesidad de separar casos:
+
+$$m\dot v = -mg - kv \qquad\Longrightarrow\qquad \dot v + \frac{k}{m}v = -g$$
+
+**Resolviendo.** Es lineal de primer orden. Con la condición inicial $v(0)=v_0$:
+
+$$v(t) = \left(v_0+\frac{mg}{k}\right)e^{-\frac{k}{m}t} - \frac{mg}{k}$$
+
+Integrando de nuevo, con $x(0)=0$:
+
+$$x(t) = \frac{m}{k}\left(v_0+\frac{mg}{k}\right)\left(1-e^{-\frac{k}{m}t}\right) - \frac{mg}{k}\,t$$
+
+**Altura máxima.** Ocurre cuando $v(t^*)=0$ (el instante en que el cuerpo deja de subir):
+
+$$t^* = \frac{m}{k}\log\left(1+\frac{kv_0}{mg}\right)$$
+
+Sustituyendo $t^*$ en $x(t)$ y simplificando (los términos se cancelan de forma más limpia de lo que uno esperaría):
+
+$$\boxed{x_{\max} = \frac{mv_0}{k} - \frac{m^2g}{k^2}\log\left(1+\frac{kv_0}{mg}\right)}$$
+
+::: {.callout-tip title="Un detalle conceptual: solo importa la razón k/m"}
+Si defines $\gamma = k/m$ (la resistencia *por unidad de masa*), las fórmulas de arriba se reescriben enteramente en términos de $\gamma$:
+
+$$t^* = \frac{1}{\gamma}\log\left(1+\frac{\gamma v_0}{g}\right), \qquad x_{\max} = \frac{v_0}{\gamma} - \frac{g}{\gamma^2}\log\left(1+\frac{\gamma v_0}{g}\right)$$
+
+Es decir: la masa **no** afecta la trayectoria por sí sola, solo a través de $\gamma=k/m$. Dos objetos con la misma $k/m$ (mismo "arrastre por kilo") suben exactamente igual de alto, sin importar cuánto pesen por separado — el mismo tipo de cancelación que ya vimos con $F=mg$ en la caída libre.
+:::
+
+**¿Y el tiempo de caída hasta el suelo?** Buscar $t_{\text{suelo}}>t^*$ tal que $x(t_{\text{suelo}})=0$ lleva a una ecuación **trascendente** (mezcla un término lineal en $t$ con uno exponencial): no tiene solución en forma cerrada, y hay que resolverla numéricamente.
+
+::: {.callout-note title="Haciendo las cuentas con Maxima"}
+```maxima
+kill(all);
+
+/* Ecuación de movimiento: -mg - kv, válida en ascenso y descenso */
+eq: 'diff(v(t),t) = -g - (k/m)*v(t);
+gensol: ode2(eq, v(t), t);
+
+/* imponer v(0) = vi despejando la constante de integración */
+c_val: solve(subst(t=0, rhs(gensol)) = vi, %c)[1];
+sol_v: radcan(subst(c_val, gensol));
+vt_expr: rhs(sol_v);
+
+/* posición, con x(0) = 0 */
+xt_expr: radcan(integrate(vt_expr, t) - subst(t=0, integrate(vt_expr, t)));
+
+/* tiempo de altura máxima y altura máxima */
+tstar_expr: radcan(rhs(solve(vt_expr = 0, t)[1]));
+hmax_expr: radcan(logcontract(subst(t=tstar_expr, xt_expr)));
+
+/* ejemplo numérico: m=2 kg, k=0.5, g=9.8, v0=15 m/s */
+vals: [m=2, k=0.5, g=9.8, vi=15];
+vt(t) := ''(subst(vals, vt_expr));
+xt(t) := ''(subst(vals, xt_expr));
+
+tstar: find_root(vt(t), t, 0, 20);
+tsuelo: find_root(xt(t), t, tstar, 20);   /* t_suelo: numérico, ecuación trascendente */
+print("t* = ", tstar, "  x_max = ", float(xt(tstar)), "  t_suelo = ", tsuelo);
+
+/* gráfica de la trayectoria hasta que toca el suelo */
+load(draw);
+draw2d(
+  terminal = png, file_name = "trayectoria",
+  xlabel = "t (s)", ylabel = "x (m)",
+  explicit(xt(t), t, 0, tsuelo)
+);
+```
+:::
+
+::: {.callout-note title="Simulador — trayectoria vertical con resistencia lineal"}
+```{=html}
+<div style="border:1px solid #ddd;border-radius:8px;padding:16px;max-width:640px;margin:1em auto;font-family:sans-serif;">
+  <canvas id="mov-canvas" width="580" height="380" style="width:100%;height:auto;background:#fff;"></canvas>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;margin-top:10px;">
+    <label>Velocidad inicial $v_0$ (m/s): <span id="mov-v0-val">15</span>
+      <input type="range" id="mov-v0" min="1" max="40" step="0.5" value="15" style="width:100%;">
+    </label>
+    <label>Resistencia por unidad de masa $\gamma=k/m$ (1/s): <span id="mov-gamma-val">0.25</span>
+      <input type="range" id="mov-gamma" min="0.02" max="1.5" step="0.01" value="0.25" style="width:100%;">
+    </label>
+  </div>
+  <p style="font-size:0.9em;color:#555;margin-top:10px;">
+    Curva azul: $x(t)$ desde el lanzamiento hasta que toca el suelo. El punto verde marca la altura máxima
+    ($t^*=$ <span id="mov-tstar">-</span> s, $x_{max}=$ <span id="mov-hmax">-</span> m); el punto rojo marca
+    la llegada al suelo ($t_{suelo}=$ <span id="mov-tsuelo">-</span> s, obtenido numéricamente — la ecuación
+    es trascendente). Con $\gamma\to 0$ recuperas la parábola simétrica de la caída libre sin resistencia.
+  </p>
+</div>
+<script>
+(function(){
+  const canvas = document.getElementById('mov-canvas');
+  const ctx = canvas.getContext('2d');
+  const v0s = document.getElementById('mov-v0');
+  const gs = document.getElementById('mov-gamma');
+  const v0valEl = document.getElementById('mov-v0-val');
+  const gvalEl = document.getElementById('mov-gamma-val');
+  const tstarEl = document.getElementById('mov-tstar');
+  const hmaxEl = document.getElementById('mov-hmax');
+  const tsueloEl = document.getElementById('mov-tsuelo');
+
+  const g = 9.8;
+  const W = canvas.width, H = canvas.height;
+  const margin = {left: 55, right: 20, top: 20, bottom: 40};
+
+  function xOf(t, v0, gamma){
+    return (1/gamma)*(v0 + g/gamma)*(1 - Math.exp(-gamma*t)) - (g/gamma)*t;
+  }
+
+  function landingTime(v0, gamma, tstar){
+    let lo = tstar, hi = tstar + 0.5;
+    let tries = 0;
+    while (xOf(hi, v0, gamma) > 0 && tries < 60) { hi *= 1.4; tries++; }
+    for (let i = 0; i < 60; i++) {
+      const mid = (lo + hi) / 2;
+      if (xOf(mid, v0, gamma) > 0) lo = mid; else hi = mid;
+    }
+    return (lo + hi) / 2;
+  }
+
+  function draw(){
+    const v0 = parseFloat(v0s.value);
+    const gamma = parseFloat(gs.value);
+    v0valEl.textContent = v0.toFixed(1);
+    gvalEl.textContent = gamma.toFixed(2);
+
+    const tstar = (1/gamma) * Math.log(1 + gamma*v0/g);
+    const hmax = v0/gamma - (g/(gamma*gamma)) * Math.log(1 + gamma*v0/g);
+    const tsuelo = landingTime(v0, gamma, tstar);
+
+    tstarEl.textContent = tstar.toFixed(2);
+    hmaxEl.textContent = hmax.toFixed(2);
+    tsueloEl.textContent = tsuelo.toFixed(2);
+
+    ctx.clearRect(0,0,W,H);
+
+    const plotW = W - margin.left - margin.right;
+    const plotH = H - margin.top - margin.bottom;
+    const Tmax = tsuelo;
+    const yMax = hmax * 1.15;
+
+    function toPx(t, x){
+      const px = margin.left + (t/Tmax) * plotW;
+      const py = margin.top + plotH - (x/yMax) * plotH;
+      return [px, py];
+    }
+
+    // ejes
+    ctx.strokeStyle = '#333'; ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(margin.left, margin.top);
+    ctx.lineTo(margin.left, margin.top + plotH);
+    ctx.lineTo(margin.left + plotW, margin.top + plotH);
+    ctx.stroke();
+
+    // curva x(t)
+    ctx.strokeStyle = '#1f77b4'; ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    let first = true;
+    for (let t = 0; t <= Tmax; t += Tmax/300) {
+      const x = Math.max(xOf(t, v0, gamma), 0);
+      const [px, py] = toPx(t, x);
+      if (first) { ctx.moveTo(px,py); first = false; } else ctx.lineTo(px,py);
+    }
+    ctx.stroke();
+
+    // punto de altura maxima
+    const [ax, ay] = toPx(tstar, hmax);
+    ctx.fillStyle = '#2ca02c';
+    ctx.beginPath(); ctx.arc(ax, ay, 4.5, 0, 2*Math.PI); ctx.fill();
+    ctx.fillStyle = '#2ca02c'; ctx.font = '12px sans-serif';
+    ctx.fillText('máximo', ax+8, ay-8);
+
+    // punto de aterrizaje
+    const [lx, ly] = toPx(tsuelo, 0);
+    ctx.fillStyle = '#d62728';
+    ctx.beginPath(); ctx.arc(lx, ly, 4.5, 0, 2*Math.PI); ctx.fill();
+
+    // etiquetas de ejes
+    ctx.fillStyle = '#333'; ctx.font = '12px sans-serif';
+    ctx.fillText('t (s)', margin.left + plotW - 30, margin.top + plotH + 20);
+    ctx.save();
+    ctx.translate(14, margin.top + plotH/2);
+    ctx.rotate(-Math.PI/2);
+    ctx.fillText('x(t) (m)', 0, 0);
+    ctx.restore();
+    ctx.fillText('0', margin.left - 12, margin.top + plotH + 4);
+  }
+
+  [v0s, gs].forEach(el => el.addEventListener('input', draw));
+  draw();
+})();
+</script>
+```
+:::
+
+## Tarea
+
+Hacer los ejercicios 1 al 8 de la sección correspondiente del Simmons.
