@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Arturo Sanjuán">
-<meta name="description" content="Permutaciones, combinaciones y coeficientes multinomiales, con aplicaciones a placas vehiculares, el chance, el Baloto y la baraja.">
+<meta name="description" content="Definición de probabilidad condicional, independencia de eventos, teorema de la probabilidad total y teorema de Bayes, con aplicaciones a la baraja y a pruebas diagnósticas.">
 
-<title>Cálculo de probabilidades – Arturo Sanjuán</title>
+<title>Probabilidad condicional – Arturo Sanjuán</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -38,7 +38,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
-<link href="../../../cursos/probabilidad/introduccion/index.html" rel="prev">
 <link href="../../../favicon.png" rel="icon" type="image/png">
 <script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -112,7 +111,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../../../styles.css">
 </head>
 
-<body class="nav-sidebar docked nav-fixed quarto-light">
+<body class="docked nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -143,62 +142,22 @@ window.Quarto = {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../cursos/probabilidad/calculoprobabilidades/index.html">Cálculo de probabilidades</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-    </div>
-  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-        <div class="sidebar-tools-main">
-    <a href="../../../cursos/probabilidad/index.xml" title="RSS — Probabilidad" class="quarto-navigation-tool px-1" aria-label="RSS — Probabilidad"><i class="bi bi-rss"></i></a>
-</div>
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../cursos/probabilidad/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Probabilidad</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../cursos/probabilidad/introduccion/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introducción</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../cursos/probabilidad/calculoprobabilidades/index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Cálculo de probabilidades</span></a>
-  </div>
-</li>
-    </ul>
-    </div>
     <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Contenido</h2>
    
   <ul>
-  <li><a href="#repaso-de-técnicas-de-conteo" id="toc-repaso-de-técnicas-de-conteo" class="nav-link active" data-scroll-target="#repaso-de-técnicas-de-conteo"><span class="header-section-number">1</span> Repaso de técnicas de conteo</a>
-  <ul class="collapse">
-  <li><a href="#regla-del-producto" id="toc-regla-del-producto" class="nav-link" data-scroll-target="#regla-del-producto"><span class="header-section-number">1.1</span> Regla del producto</a></li>
-  <li><a href="#permutaciones" id="toc-permutaciones" class="nav-link" data-scroll-target="#permutaciones"><span class="header-section-number">1.2</span> Permutaciones</a></li>
-  <li><a href="#combinaciones" id="toc-combinaciones" class="nav-link" data-scroll-target="#combinaciones"><span class="header-section-number">1.3</span> Combinaciones</a></li>
-  <li><a href="#coeficientes-multinomiales" id="toc-coeficientes-multinomiales" class="nav-link" data-scroll-target="#coeficientes-multinomiales"><span class="header-section-number">1.4</span> Coeficientes multinomiales</a></li>
-  </ul></li>
-  <li><a href="#ejemplo-placas-de-carros-en-colombia" id="toc-ejemplo-placas-de-carros-en-colombia" class="nav-link" data-scroll-target="#ejemplo-placas-de-carros-en-colombia"><span class="header-section-number">2</span> Ejemplo — placas de carros en Colombia</a></li>
-  <li><a href="#una-medida-de-probabilidad-construida-como-mezcla" id="toc-una-medida-de-probabilidad-construida-como-mezcla" class="nav-link" data-scroll-target="#una-medida-de-probabilidad-construida-como-mezcla"><span class="header-section-number">3</span> Una medida de probabilidad construida como mezcla</a></li>
-  <li><a href="#ejercicio-partición-de-un-grupo-en-subgrupos-iguales" id="toc-ejercicio-partición-de-un-grupo-en-subgrupos-iguales" class="nav-link" data-scroll-target="#ejercicio-partición-de-un-grupo-en-subgrupos-iguales"><span class="header-section-number">4</span> Ejercicio — partición de un grupo en subgrupos iguales</a></li>
-  <li><a href="#ejemplo-el-chance-directo-y-combinado" id="toc-ejemplo-el-chance-directo-y-combinado" class="nav-link" data-scroll-target="#ejemplo-el-chance-directo-y-combinado"><span class="header-section-number">5</span> Ejemplo — el chance: directo y combinado</a></li>
-  <li><a href="#ejercicio-comparando-probabilidades-raras" id="toc-ejercicio-comparando-probabilidades-raras" class="nav-link" data-scroll-target="#ejercicio-comparando-probabilidades-raras"><span class="header-section-number">6</span> Ejercicio — comparando probabilidades raras</a></li>
+  <li><a href="#definición" id="toc-definición" class="nav-link active" data-scroll-target="#definición"><span class="header-section-number">1</span> Definición</a></li>
+  <li><a href="#ejercicio-1.27-reyes-y-ases-en-una-mano-de-13-cartas" id="toc-ejercicio-1.27-reyes-y-ases-en-una-mano-de-13-cartas" class="nav-link" data-scroll-target="#ejercicio-1.27-reyes-y-ases-en-una-mano-de-13-cartas"><span class="header-section-number">2</span> Ejercicio 1.27 — reyes y ases en una mano de 13 cartas</a></li>
+  <li><a href="#teorema-de-la-probabilidad-total" id="toc-teorema-de-la-probabilidad-total" class="nav-link" data-scroll-target="#teorema-de-la-probabilidad-total"><span class="header-section-number">3</span> Teorema de la probabilidad total</a></li>
+  <li><a href="#corolario-teorema-de-bayes" id="toc-corolario-teorema-de-bayes" class="nav-link" data-scroll-target="#corolario-teorema-de-bayes"><span class="header-section-number">4</span> Corolario — teorema de Bayes</a></li>
+  <li><a href="#ejemplo-prueba-diagnóstica" id="toc-ejemplo-prueba-diagnóstica" class="nav-link" data-scroll-target="#ejemplo-prueba-diagnóstica"><span class="header-section-number">5</span> Ejemplo — prueba diagnóstica</a></li>
+  <li><a href="#independencia" id="toc-independencia" class="nav-link" data-scroll-target="#independencia"><span class="header-section-number">6</span> Independencia</a></li>
+  <li><a href="#teorema-independencia-se-hereda-a-los-complementos" id="toc-teorema-independencia-se-hereda-a-los-complementos" class="nav-link" data-scroll-target="#teorema-independencia-se-hereda-a-los-complementos"><span class="header-section-number">7</span> Teorema — independencia se hereda a los complementos</a></li>
   </ul>
 </nav>
 </nav>
@@ -211,13 +170,13 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Cálculo de probabilidades</h1>
-<p class="subtitle lead">Técnicas de conteo y el modelo de Laplace</p>
+<h1 class="title">Probabilidad condicional</h1>
+<p class="subtitle lead">Independencia, probabilidad total y teorema de Bayes</p>
 </div>
 
 <div>
   <div class="description">
-    Permutaciones, combinaciones y coeficientes multinomiales, con aplicaciones a placas vehiculares, el chance, el Baloto y la baraja.
+    Definición de probabilidad condicional, independencia de eventos, teorema de la probabilidad total y teorema de Bayes, con aplicaciones a la baraja y a pruebas diagnósticas.
   </div>
 </div>
 
@@ -246,214 +205,126 @@ window.Quarto = {
 </header>
 
 
-<section id="repaso-de-técnicas-de-conteo" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="repaso-de-técnicas-de-conteo"><span class="header-section-number">1</span> Repaso de técnicas de conteo</h2>
-<section id="regla-del-producto" class="level3" data-number="1.1">
-<h3 data-number="1.1" class="anchored" data-anchor-id="regla-del-producto"><span class="header-section-number">1.1</span> Regla del producto</h3>
-<p>Si un proceso consiste en dos elecciones sucesivas (o en paralelo), y la primera tiene <span class="math inline">\(m\)</span> opciones y la segunda <span class="math inline">\(n\)</span> opciones, el número de resultados posibles del proceso combinado es <span class="math inline">\(m\times n\)</span>.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo — dado y moneda">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Ejemplo — dado y moneda
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Se lanza un dado y una moneda. El espacio muestral tiene</p>
-<p><span class="math display">\[|\Omega| = 6\times 2 = 12\]</span></p>
-<p>resultados: <span class="math inline">\((1,c),(1,s),(2,c),(2,s),\ldots,(6,c),(6,s)\)</span>.</p>
-</div>
-</div>
-</section>
-<section id="permutaciones" class="level3" data-number="1.2">
-<h3 data-number="1.2" class="anchored" data-anchor-id="permutaciones"><span class="header-section-number">1.2</span> Permutaciones</h3>
-<p>Si necesitamos ordenar <span class="math inline">\(r\)</span> objetos elegidos de un conjunto de <span class="math inline">\(n\)</span> elementos, para la primera posición hay <span class="math inline">\(n\)</span> opciones, para la segunda <span class="math inline">\(n-1\)</span>, …, para la <span class="math inline">\(r\)</span>-ésima quedan <span class="math inline">\(n-(r-1)\)</span>. En total:</p>
-<p><span class="math display">\[n(n-1)\cdots(n-r+1) = \frac{n!}{(n-r)!}\]</span></p>
-<p>(Note que <span class="math inline">\(n!\)</span> es el caso particular <span class="math inline">\(r=n\)</span>.)</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo — ganchos y pantalones">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Ejemplo — ganchos y pantalones
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Tengo 3 ganchos y 5 pantalones, y quiero colgar 3 de los 5 pantalones (uno por gancho). Para el primer gancho hay 5 opciones, para el segundo 4, para el tercero 3:</p>
-<p><span class="math display">\[5\times4\times3 = \frac{5!}{2!} = 60 \text{ formas distintas}\]</span></p>
-<p>Si en cambio tuviera 5 pantalones para 5 ganchos, serían <span class="math inline">\(5!=120\)</span> formas.</p>
-</div>
-</div>
-</section>
-<section id="combinaciones" class="level3" data-number="1.3">
-<h3 data-number="1.3" class="anchored" data-anchor-id="combinaciones"><span class="header-section-number">1.3</span> Combinaciones</h3>
-<p>Si el orden <strong>no importa</strong>, cada subconjunto de tamaño <span class="math inline">\(r\)</span> fue contado <span class="math inline">\(r!\)</span> veces en el conteo anterior (una vez por cada reordenación posible de sus elementos).</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Ejemplo
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Con <span class="math inline">\(n=4\)</span> elementos <span class="math inline">\(\{a,b,c,d\}\)</span> y <span class="math inline">\(r=3\)</span>: las tuplas ordenadas <span class="math inline">\((a,b,c)\)</span>, <span class="math inline">\((a,c,b)\)</span>, <span class="math inline">\((b,a,c)\)</span>, <span class="math inline">\((b,c,a)\)</span>, <span class="math inline">\((c,a,b)\)</span>, <span class="math inline">\((c,b,a)\)</span> son todas <em>distintas</em> como tuplas, pero corresponden al mismo subconjunto <span class="math inline">\(\{a,b,c\}\)</span>. Son <span class="math inline">\(3!=6\)</span> tuplas por cada subconjunto.</p>
-</div>
-</div>
-<p>Como cada subconjunto se contó <span class="math inline">\(r!\)</span> veces, dividimos:</p>
-<p><span class="math display">\[\binom{n}{r} = \frac{1}{r!}\cdot\frac{n!}{(n-r)!} = \frac{n!}{r!\,(n-r)!}\]</span></p>
-<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Ejercicio
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Verifique con el ejemplo anterior (<span class="math inline">\(n=4\)</span>, <span class="math inline">\(r=3\)</span>) que <span class="math inline">\(\binom{4}{3}=4\)</span>, listando explícitamente los 4 subconjuntos.</p>
-</div>
-</div>
-</section>
-<section id="coeficientes-multinomiales" class="level3" data-number="1.4">
-<h3 data-number="1.4" class="anchored" data-anchor-id="coeficientes-multinomiales"><span class="header-section-number">1.4</span> Coeficientes multinomiales</h3>
-<p>Supongamos que tenemos <span class="math inline">\(n\)</span> objetos y <span class="math inline">\(m\)</span> categorías (etiquetas, colores), y queremos partirlos ordenadamente en subgrupos de tamaños <span class="math inline">\(k_1,k_2,\ldots,k_m\)</span> con <span class="math inline">\(k_1+\cdots+k_m=n\)</span>. Elegimos el primer grupo (<span class="math inline">\(\binom{n}{k_1}\)</span> formas), luego el segundo de lo que queda (<span class="math inline">\(\binom{n-k_1}{k_2}\)</span> formas), y así sucesivamente. El producto telescopa:</p>
+<section id="definición" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="definición"><span class="header-section-number">1</span> Definición</h2>
+<p>Sea <span class="math inline">\((\Omega,\mathfrak F, P)\)</span> un espacio de probabilidad, y sean <span class="math inline">\(A,B\in\mathfrak F\)</span> con <span class="math inline">\(P(A)&gt;0\)</span>. La probabilidad del evento <span class="math inline">\(B\)</span> <strong>bajo la condición</strong> <span class="math inline">\(A\)</span> se define como</p>
 <p><span class="math display">\[
-\binom{n}{k_1}\binom{n-k_1}{k_2}\cdots\binom{n-k_1-\cdots-k_{m-1}}{k_m} = \frac{n!}{k_1!\,k_2!\,\cdots\,k_m!} =: \binom{n}{k_1,k_2,\ldots,k_m}
+P(B\mid A) = \frac{P(A\cap B)}{P(A)}
 \]</span></p>
-<p>Note que si <span class="math inline">\(m=2\)</span>, <span class="math inline">\(\binom{n}{k_1,k_2}=\binom{n}{k_1,n-k_1}=\binom{n}{k_1}\)</span>: el binomial es el caso particular de dos categorías.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo — bolas de colores">
+<div class="callout callout-style-default callout-important callout-titled" title="Qué mide esto">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Ejemplo — bolas de colores
+<span class="screen-reader-only">Importante</span>Qué mide esto
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Una urna tiene 4 bolas rojas, 3 azules y 2 verdes (9 en total). Al sacarlas todas y ponerlas en fila, el número de arreglos distintos es</p>
-<p><span class="math display">\[\binom{9}{4,3,2} = \frac{9!}{4!\,3!\,2!} = 1.260\]</span></p>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo — extracción parcial sin importar el orden">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Ejemplo — extracción parcial sin importar el orden
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>De la misma urna, se sacan 5 bolas (sin reemplazo) y queremos que sean 2 rojas, 2 azules y 1 verde, sin importar el orden de extracción. Aquí <strong>no</strong> es un multinomial (no se reparten todas las bolas): es un producto de combinaciones, eligiendo independientemente dentro de cada color:</p>
-<p><span class="math display">\[\binom{4}{2}\binom{3}{2}\binom{2}{1} = 6\cdot3\cdot2 = 36\]</span></p>
-</div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled" title="Diferencia clave">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Diferencia clave
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>El coeficiente multinomial reparte <strong>todos</strong> los <span class="math inline">\(n\)</span> objetos entre las categorías (es un arreglo completo). El producto de binomiales cuenta <strong>selecciones parciales</strong> de cada categoría, cuando no se usan todos los objetos disponibles.</p>
+<p><span class="math inline">\(P(B\mid A)\)</span> no es una probabilidad distinta en abstracto: es la probabilidad de <span class="math inline">\(B\)</span> recalculada dentro del nuevo espacio muestral <span class="math inline">\(A\)</span> (renormalizando para que <span class="math inline">\(P(A\mid A)=1\)</span>).</p>
 </div>
 </div>
 </section>
-</section>
-<section id="ejemplo-placas-de-carros-en-colombia" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="ejemplo-placas-de-carros-en-colombia"><span class="header-section-number">2</span> Ejemplo — placas de carros en Colombia</h2>
-<p>Las placas de los vehículos particulares en Colombia tienen el formato <code>ABC 123</code>: tres letras seguidas de tres números. Usamos el alfabeto de 26 letras (sin contar la Ñ). Suponga que las placas se generan de forma aleatoria y uniforme sobre todas las combinaciones posibles.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Espacio muestral">
+<section id="ejercicio-1.27-reyes-y-ases-en-una-mano-de-13-cartas" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="ejercicio-1.27-reyes-y-ases-en-una-mano-de-13-cartas"><span class="header-section-number">2</span> Ejercicio 1.27 — reyes y ases en una mano de 13 cartas</h2>
+<p>Considere una mano de 13 cartas repartidas de una baraja de 52. Sean</p>
+<p><span class="math display">\[A: \text{la mano tiene exactamente un as} \]</span> <span class="math display">\[ B: \text{la mano tiene exactamente dos reyes}\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Probabilidad de A">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Espacio muestral
+<span class="screen-reader-only">Tip</span>Probabilidad de A
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><span class="math display">\[|\Omega| = 26^3 \times 10^3 = 17.576.000\]</span></p>
+<p><span class="math display">\[P(A) = \frac{\binom{4}{1}\binom{48}{12}}{\binom{52}{13}} \approx 0{,}4388\]</span></p>
 </div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Probabilidad de una placa específica">
+<div class="callout callout-style-default callout-tip callout-titled" title="Probabilidad de B">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Probabilidad de una placa específica
+<span class="screen-reader-only">Tip</span>Probabilidad de B
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>La probabilidad de que salga una placa particular, como <code>LIT 100</code>, es</p>
-<p><span class="math display">\[P(\{\text{LIT 100}\}) = \frac{1}{26^3\cdot 10^3} = \frac{1}{17.576.000} \approx 5{,}6896\times10^{-8}\]</span></p>
+<p><span class="math display">\[P(B) = \frac{\binom{4}{2}\binom{48}{11}}{\binom{52}{13}} \approx 0{,}2135\]</span></p>
 </div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Probabilidad de tres letras iguales y tres números iguales">
+<div class="callout callout-style-default callout-tip callout-titled" title="Probabilidad de A∩B">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Probabilidad de tres letras iguales y tres números iguales
+<span class="screen-reader-only">Tip</span>Probabilidad de A∩B
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Ahora queremos la probabilidad de que la placa tenga la forma <code>XXX YYY</code> (las tres letras iguales entre sí, y los tres números iguales entre sí).</p>
-<p>Para las letras: la primera posición tiene 26 opciones, pero la segunda y la tercera ya no tienen ninguna opción libre (deben repetir la primera). Lo mismo para los números, con 10 opciones en la primera posición. Por la regla del producto:</p>
-<p><span class="math display">\[\#\{\text{casos favorables}\} = 26\times 10 = 260\]</span></p>
-<p><span class="math display">\[P(A) = \frac{26\times10}{26^3\times10^3} = \frac{260}{17.576.000} = \frac{1}{67.600} \approx 1{,}479\times10^{-5}\]</span></p>
+<p>Las 44 cartas restantes (ni reyes ni ases) reparten las 10 posiciones libres:</p>
+<p><span class="math display">\[P(A\cap B) = \frac{\binom{4}{2}\binom{4}{1}\binom{44}{10}}{\binom{52}{13}} \approx 0{,}0938\]</span></p>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Ejercicio
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>¿Cuántas placas hay con <strong>exactamente dos</strong> letras iguales (y la tercera distinta)? ¿Y con exactamente dos números iguales? Use esto para encontrar la probabilidad de que una placa tenga <em>alguna</em> repetición, ya sea en las letras o en los números.</p>
-</div>
-</div>
-</section>
-<section id="una-medida-de-probabilidad-construida-como-mezcla" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="una-medida-de-probabilidad-construida-como-mezcla"><span class="header-section-number">3</span> Una medida de probabilidad construida como mezcla</h2>
-<div class="callout callout-style-default callout-tip callout-titled" title="Proposición (cf. Blanco Castañeda)">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Proposición (cf.&nbsp;Blanco Castañeda)
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Sea <span class="math inline">\((P_n)_{n\in\mathbb N}\)</span> una sucesión de medidas de probabilidad sobre un espacio medible <span class="math inline">\((\Omega,\mathfrak F)\)</span>, y sea <span class="math inline">\((a_n)_{n\in\mathbb N}\)</span> una sucesión de reales no negativos con <span class="math inline">\(\sum_n a_n = 1\)</span>. Entonces</p>
-<p><span class="math display">\[P:\mathfrak F\to\mathbb R, \qquad P(A) = \sum_n a_n\, P_n(A)\]</span></p>
-<p>es una medida de probabilidad sobre <span class="math inline">\((\Omega,\mathfrak F)\)</span>.</p>
-</div>
-</div>
-<p><strong>Demostración.</strong> La no negatividad de <span class="math inline">\(P\)</span> y <span class="math inline">\(P(\Omega)=\sum_n a_n P_n(\Omega) = \sum_n a_n \cdot 1 = 1\)</span> son inmediatas. Para la σ-aditividad, sea <span class="math inline">\((A_k)_k\)</span> una familia disyunta dos a dos de elementos de <span class="math inline">\(\mathfrak F\)</span>. Entonces</p>
+<p>Con esto, la probabilidad condicional pedida es directa:</p>
 <p><span class="math display">\[
-P\Big(\bigcup_k A_k\Big) = \sum_n a_n\, P_n\Big(\bigcup_k A_k\Big) = \sum_n a_n \sum_k P_n(A_k) = \sum_n\sum_k a_n P_n(A_k)
+P(A\mid B) = \frac{P(A\cap B)}{P(B)} = \frac{0{,}0938}{0{,}2135} \approx 0{,}4393
 \]</span></p>
-<p>Como los términos son no negativos, la serie doble converge absolutamente y podemos intercambiar el orden de las sumas:</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Un cuidado con el cálculo de A|B">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Un cuidado con el cálculo de A|B
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(P(A\mid B)\)</span> también puede calcularse <em>directamente</em>, sin pasar por <span class="math inline">\(P(A\cap B)\)</span>: condicionar en “dos reyes” dados deja un mazo efectivo de <span class="math inline">\(52-4=48\)</span> cartas para las 11 posiciones restantes, de las cuales 4 son ases. Entonces</p>
+<p><span class="math display">\[P(A\mid B) = \frac{\binom{4}{1}\binom{44}{10}}{\binom{48}{11}}\]</span></p>
+<p>Verifique que esta expresión es <em>algebraicamente idéntica</em> a <span class="math inline">\(P(A\cap B)/P(B)\)</span> (simplifique los factoriales). Es el mismo número por dos caminos: uno pasa por el espacio muestral original de 52 cartas, el otro construye directamente el espacio muestral condicionado de 48.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio — ¿independencia?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio — ¿independencia?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Compare <span class="math inline">\(P(A)\approx 0{,}4388\)</span> con <span class="math inline">\(P(A\mid B)\approx 0{,}4393\)</span>. Son <em>casi</em> iguales pero no exactamente. ¿<span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> son independientes? Explique, en términos de cartas, por qué tener dos reyes casi no altera la probabilidad de tener un as (y por qué “casi” no es “exactamente”).</p>
+</div>
+</div>
+</section>
+<section id="teorema-de-la-probabilidad-total" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="teorema-de-la-probabilidad-total"><span class="header-section-number">3</span> Teorema de la probabilidad total</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Teorema
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sea <span class="math inline">\((A_n)_{n}\)</span> una partición a lo más contable de <span class="math inline">\(\Omega\)</span>, con cada <span class="math inline">\(A_n\in\mathfrak F\)</span>, <span class="math inline">\(P(A_n)&gt;0\)</span>. Si <span class="math inline">\(B\in\mathfrak F\)</span>, entonces</p>
+<p><span class="math display">\[P(B) = \sum_n P(B\mid A_n)\,P(A_n)\]</span></p>
+</div>
+</div>
+<p><strong>Demostración.</strong> Como <span class="math inline">\((A_n)_n\)</span> es una partición, <span class="math inline">\(\Omega=\bigcup_n A_n\)</span> y por lo tanto</p>
 <p><span class="math display">\[
-= \sum_k\sum_n a_n P_n(A_k) = \sum_k P(A_k) \qquad\blacksquare
+B = B\cap\Omega = B\cap\Big(\bigcup_n A_n\Big) = \bigcup_n (B\cap A_n)
+\]</span></p>
+<p>Los conjuntos <span class="math inline">\(B\cap A_n\)</span> son disyuntos dos a dos (porque los <span class="math inline">\(A_n\)</span> lo son), así que por σ-aditividad</p>
+<p><span class="math display">\[
+P(B) = P\Big(\bigcup_n (B\cap A_n)\Big) = \sum_n P(B\cap A_n) = \sum_n P(B\mid A_n)\,P(A_n) \qquad\blacksquare
 \]</span></p>
 <div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
 <div class="callout-header d-flex align-content-center">
@@ -465,107 +336,56 @@ P\Big(\bigcup_k A_k\Big) = \sum_n a_n\, P_n\Big(\bigcup_k A_k\Big) = \sum_n a_n 
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>¿En qué paso de la demostración se usó específicamente que <span class="math inline">\((A_k)_k\)</span> es disyunta? ¿Qué falla si los <span class="math inline">\(A_k\)</span> se traslapan?</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio — ¿P(A)=P(B)=p implica P(A∩B)=p²?">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Ejercicio — ¿P(A)=P(B)=p implica P(A∩B)=p²?
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Encuentre un contraejemplo. (Piense en qué pasa si <span class="math inline">\(A=B\)</span>.)</p>
+<p>¿En qué paso se usó que los <span class="math inline">\(A_n\)</span> son disyuntos dos a dos? ¿Qué falla en la demostración si solo pedimos <span class="math inline">\(\bigcup_n A_n=\Omega\)</span> sin disyunción?</p>
 </div>
 </div>
 </section>
-<section id="ejercicio-partición-de-un-grupo-en-subgrupos-iguales" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="ejercicio-partición-de-un-grupo-en-subgrupos-iguales"><span class="header-section-number">4</span> Ejercicio — partición de un grupo en subgrupos iguales</h2>
-<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio 1.7">
+<section id="corolario-teorema-de-bayes" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="corolario-teorema-de-bayes"><span class="header-section-number">4</span> Corolario — teorema de Bayes</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Corolario">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Ejercicio 1.7
+<span class="screen-reader-only">Tip</span>Corolario
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Un grupo de 40 estudiantes tiene 20 hombres y 20 mujeres. ¿Cuál es la probabilidad de que, al dividirlo en dos partes iguales (de 20 cada una), queden con la misma cantidad de hombres que de mujeres en cada parte?</p>
-<p><em>Ayuda:</em> <span class="math inline">\(\binom{40}{20}\)</span> mide cuántos grupos posibles de 20 personas se pueden armar; <span class="math inline">\(\binom{20}{10}\)</span> mide, de los 20 hombres, cuántos subgrupos de 10 hombres hay; análogamente para las mujeres.</p>
+<p>Con las mismas hipótesis, si además <span class="math inline">\(P(B)&gt;0\)</span>:</p>
+<p><span class="math display">\[
+P(A_j\mid B) = \frac{P(A_j)\,P(B\mid A_j)}{\displaystyle\sum_n P(B\mid A_n)\,P(A_n)}
+\]</span></p>
 </div>
 </div>
+<p><strong>Demostración.</strong> Por definición de probabilidad condicional y la regla del producto,</p>
+<p><span class="math display">\[
+P(A_j\mid B) = \frac{P(A_j\cap B)}{P(B)} = \frac{P(A_j)\,P(B\mid A_j)}{P(B)}
+\]</span></p>
+<p>y el denominador se reescribe con el teorema de la probabilidad total. <span class="math inline">\(\blacksquare\)</span></p>
 </section>
-<section id="ejemplo-el-chance-directo-y-combinado" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="ejemplo-el-chance-directo-y-combinado"><span class="header-section-number">5</span> Ejemplo — el chance: directo y combinado</h2>
-<p>Recuerde que el chance consiste en acertar las últimas <span class="math inline">\(k\)</span> cifras del número ganador de una lotería o sorteo autorizado. Para <span class="math inline">\(k=3\)</span> cifras, el sorteo saca una de <span class="math inline">\(10^3=1.000\)</span> secuencias posibles, todas igualmente probables.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Directo">
+<section id="ejemplo-prueba-diagnóstica" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="ejemplo-prueba-diagnóstica"><span class="header-section-number">5</span> Ejemplo — prueba diagnóstica</h2>
+<p>Una prueba de tamizaje para una enfermedad tiene sensibilidad <span class="math inline">\(P(+\mid E)=0{,}867\)</span> y especificidad <span class="math inline">\(P(-\mid E^c)=0{,}94\)</span>. La prevalencia es <span class="math inline">\(P(E)=0{,}005\)</span>. Un paciente da positivo. ¿<span class="math inline">\(P(E\mid +)\)</span>?</p>
+<p>Partición <span class="math inline">\(\{E,E^c\}\)</span>, teorema de la probabilidad total:</p>
+<p><span class="math display">\[
+P(+) = P(+\mid E)P(E) + P(+\mid E^c)P(E^c) = (0{,}867)(0{,}005) + (0{,}06)(0{,}995) = 0{,}0640
+\]</span></p>
+<p>Bayes:</p>
+<p><span class="math display">\[
+P(E\mid +) = \frac{(0{,}867)(0{,}005)}{0{,}0640} \approx 0{,}068
+\]</span></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Lectura del resultado">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Directo
+<span class="screen-reader-only">Importante</span>Lectura del resultado
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Ganar el directo requiere acertar el orden exacto:</p>
-<p><span class="math display">\[P(\text{directo}) = \frac{1}{10^3} = 0{,}001\]</span></p>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Combinado">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Combinado
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Ganar el combinado requiere que las cifras salgan en <strong>cualquier</strong> orden. El número de secuencias favorables depende de cuántas de las tres cifras elegidas se repiten:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Cifras elegidas</th>
-<th>Permutaciones distintas</th>
-<th>Probabilidad</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Las tres distintas (ej. <span class="math inline">\(abc\)</span>)</td>
-<td><span class="math inline">\(3!=6\)</span></td>
-<td><span class="math inline">\(6/1.000=0{,}006\)</span></td>
-</tr>
-<tr class="even">
-<td>Dos iguales (ej. <span class="math inline">\(aab\)</span>)</td>
-<td><span class="math inline">\(3!/2!=3\)</span></td>
-<td><span class="math inline">\(3/1.000=0{,}003\)</span></td>
-</tr>
-<tr class="odd">
-<td>Las tres iguales (ej. <span class="math inline">\(aaa\)</span>)</td>
-<td><span class="math inline">\(3!/3!=1\)</span></td>
-<td><span class="math inline">\(1/1.000=0{,}001\)</span></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled" title="Consecuencia">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Consecuencia
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>El operador paga un valor <strong>fijo</strong> por el combinado, sin importar si las cifras elegidas se repiten o no. Como la probabilidad real de ganar sí cambia según el patrón de repetición, elegir cifras con repeticiones es una decisión estrictamente peor (misma paga, menor probabilidad) que elegir tres cifras distintas.</p>
+<p>Sensibilidad alta no implica valor predictivo positivo alto. Aquí lo que domina es la prevalencia: con <span class="math inline">\(P(E)\)</span> pequeño, los falsos positivos entre los sanos (que son la inmensa mayoría) superan en número absoluto a los verdaderos positivos entre los enfermos, aunque la especificidad sea buena.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
@@ -578,25 +398,30 @@ P\Big(\bigcup_k A_k\Big) = \sum_n a_n\, P_n\Big(\bigcup_k A_k\Big) = \sum_n a_n 
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>¿En qué casos la modalidad <strong>pata</strong> (2 cifras) es mutuamente excluyente con la <strong>uña</strong> (1 cifra)? ¿Y cuándo, en cambio, una está <em>contenida</em> en la otra?</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Ejercicio
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>¿Qué es mejor: apostar solo al directo, solo al combinado, o a los dos simultáneamente (con el mismo número, dividiendo el presupuesto entre ambas modalidades)?</p>
+<p>Recalcule <span class="math inline">\(P(E\mid+)\)</span> si la prueba se aplica solo a pacientes con síntomas compatibles, donde la prevalencia sube a <span class="math inline">\(P(E)=0{,}3\)</span>. ¿Qué le dice esto sobre por qué el mismo test se usa distinto en tamizaje poblacional que en confirmación diagnóstica?</p>
 </div>
 </div>
 </section>
-<section id="ejercicio-comparando-probabilidades-raras" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="ejercicio-comparando-probabilidades-raras"><span class="header-section-number">6</span> Ejercicio — comparando probabilidades raras</h2>
+<section id="independencia" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="independencia"><span class="header-section-number">6</span> Independencia</h2>
+<p>Dos eventos <span class="math inline">\(A,B\)</span> se dicen <strong>independientes</strong> si</p>
+<p><span class="math display">\[P(A\cap B) = P(A)\,P(B)\]</span></p>
+<p>En caso contrario, son <strong>dependientes</strong>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo — dos lanzamientos de un dado">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo — dos lanzamientos de un dado
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(A\)</span>: la suma de los dos lanzamientos es par. <span class="math inline">\(B\)</span>: el segundo lanzamiento es par.</p>
+<p><span class="math display">\[P(A) = \frac{18}{36}=\frac12 \qquad P(B) = \frac{18}{36}=\frac12 \qquad P(A\cap B) = \frac{9}{36}=\frac14\]</span></p>
+<p>Como <span class="math inline">\(P(A)P(B)=1/4=P(A\cap B)\)</span>, <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> son independientes.</p>
+</div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -607,20 +432,67 @@ P\Big(\bigcup_k A_k\Big) = \sum_n a_n\, P_n\Big(\bigcup_k A_k\Big) = \sum_n a_n 
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Estudie el esquema actual de sorteo del Baloto (números elegidos, tamaño del espacio muestral) y calcule la probabilidad de ganar el premio mayor con un solo tiquete. Compare esa probabilidad con la de que un jugador reciba las 13 cartas de un mismo palo (por ejemplo, todas las picas) al repartir una baraja de 52 cartas entre 4 jugadores. ¿Cuál es más improbable, y por qué factor?</p>
+<p>Si se carga el dado de forma que <span class="math inline">\(P(\text{par})=3/4\)</span> en cada lanzamiento (en vez de <span class="math inline">\(1/2\)</span>), ¿siguen siendo independientes <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span>? Recalcule <span class="math inline">\(P(A)\)</span>, <span class="math inline">\(P(B)\)</span> y <span class="math inline">\(P(A\cap B)\)</span>.</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Ejercicios del libro">
+<div class="callout callout-style-default callout-important callout-titled" title="Independiente ≠ mutuamente excluyente">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Ejercicios del libro
+<span class="screen-reader-only">Importante</span>Independiente ≠ mutuamente excluyente
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Haga los ejercicios 1.1–1.26 (Blanco Castañeda, <em>Probabilidad</em>).</p>
+<p>Son conceptos distintos y en general no relacionados:</p>
+<ul>
+<li>El ejemplo anterior da eventos independientes que <strong>no</strong> son mutuamente excluyentes (<span class="math inline">\(P(A\cap B)=1/4\ne 0\)</span>).</li>
+<li>Si <span class="math inline">\(A\)</span>: sale cara, <span class="math inline">\(B\)</span>: sale sello (un solo lanzamiento), entonces <span class="math inline">\(A\cap B=\varnothing\)</span>, así que <span class="math inline">\(P(A\cap B)=0\)</span>, pero <span class="math inline">\(P(A)P(B)=1/4\ne 0\)</span>. Son mutuamente excluyentes pero <strong>no</strong> independientes.</li>
+</ul>
+<p>La única forma de que <span class="math inline">\(A,B\)</span> mutuamente excluyentes sean también independientes es que <span class="math inline">\(P(A)=0\)</span> o <span class="math inline">\(P(B)=0\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="teorema-independencia-se-hereda-a-los-complementos" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="teorema-independencia-se-hereda-a-los-complementos"><span class="header-section-number">7</span> Teorema — independencia se hereda a los complementos</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Teorema
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> son independientes, también lo son <span class="math inline">\(A\)</span> y <span class="math inline">\(B^c\)</span>.</p>
+</div>
+</div>
+<p><strong>Demostración.</strong> Escribimos <span class="math inline">\(A\)</span> como unión disyunta:</p>
+<p><span class="math display">\[
+A = A\cap\Omega = A\cap(B\cup B^c) = (A\cap B)\cup(A\cap B^c)
+\]</span></p>
+<p>Como la unión es disyunta,</p>
+<p><span class="math display">\[
+P(A) = P(A\cap B) + P(A\cap B^c)
+\]</span></p>
+<p>Usando independencia de <span class="math inline">\(A,B\)</span> en el primer término y despejando:</p>
+<p><span class="math display">\[
+P(A\cap B^c) = P(A) - P(A)P(B) = P(A)\big(1-P(B)\big) = P(A)\,P(B^c) \qquad\blacksquare
+\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre, con el mismo argumento, que <span class="math inline">\(A^c\)</span> y <span class="math inline">\(B\)</span> también son independientes. (Y por transitividad de este resultado, también lo son <span class="math inline">\(A^c\)</span> y <span class="math inline">\(B^c\)</span>.)</p>
+<p>Haga además todos los ejercicios del capítulo (Blanco Castañeda, <em>Probabilidad</em>).</p>
 </div>
 </div>
 
@@ -1028,15 +900,6 @@ P\Big(\bigcup_k A_k\Big) = \sum_n a_n\, P_n\Big(\bigcup_k A_k\Big) = \sum_n a_n 
     }
   });
   </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-      <a href="../../../cursos/probabilidad/introduccion/index.html" class="pagination-link" aria-label="Introducción">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Introducción</span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-  </div>
-</nav>
 </div> <!-- /content -->
 
 

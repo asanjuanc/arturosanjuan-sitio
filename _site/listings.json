@@ -1,20 +1,10 @@
 [
   {
-    "listing": "/cursos/odes/index.html",
+    "listing": "/cursos/probabilidad/index.html",
     "items": [
-      "/cursos/odes/introduccion/index.html",
-      "/cursos/odes/familiasortogonales/index.html",
-      "/cursos/odes/polares/index.html",
-      "/cursos/odes/modelacion/index.html",
-      "/cursos/odes/movimiento/index.html"
-    ]
-  },
-  {
-    "listing": "/cursos/numerico/index.html",
-    "items": [
-      "/cursos/numerico/introduccion/index.html",
-      "/cursos/numerico/condicionamiento/index.html",
-      "/cursos/numerico/estabilidad/index.html"
+      "/cursos/probabilidad/introduccion/index.html",
+      "/cursos/probabilidad/calculoprobabilidades/index.html",
+      "/cursos/probabilidad/condicional/index.html"
     ]
   },
   {
@@ -26,10 +16,21 @@
     ]
   },
   {
-    "listing": "/cursos/probabilidad/index.html",
+    "listing": "/cursos/numerico/index.html",
     "items": [
-      "/cursos/probabilidad/introduccion/index.html",
-      "/cursos/probabilidad/calculoprobabilidades/index.html"
+      "/cursos/numerico/introduccion/index.html",
+      "/cursos/numerico/condicionamiento/index.html",
+      "/cursos/numerico/estabilidad/index.html"
+    ]
+  },
+  {
+    "listing": "/cursos/odes/index.html",
+    "items": [
+      "/cursos/odes/introduccion/index.html",
+      "/cursos/odes/familiasortogonales/index.html",
+      "/cursos/odes/polares/index.html",
+      "/cursos/odes/modelacion/index.html",
+      "/cursos/odes/movimiento/index.html"
     ]
   }
 ]

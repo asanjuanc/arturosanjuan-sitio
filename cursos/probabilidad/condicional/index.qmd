@@ -1,0 +1,193 @@
+---
+title: "Probabilidad condicional"
+subtitle: "Independencia, probabilidad total y teorema de Bayes"
+description: "Definición de probabilidad condicional, independencia de eventos, teorema de la probabilidad total y teorema de Bayes, con aplicaciones a la baraja y a pruebas diagnósticas."
+author: "Arturo Sanjuán"
+date: today
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 3
+---
+
+## Definición
+
+Sea $(\Omega,\mathfrak F, P)$ un espacio de probabilidad, y sean $A,B\in\mathfrak F$ con $P(A)>0$. La probabilidad del evento $B$ **bajo la condición** $A$ se define como
+
+$$
+P(B\mid A) = \frac{P(A\cap B)}{P(A)}
+$$
+
+::: {.callout-important title="Qué mide esto"}
+$P(B\mid A)$ no es una probabilidad distinta en abstracto: es la probabilidad de $B$ recalculada dentro del nuevo espacio muestral $A$ (renormalizando para que $P(A\mid A)=1$).
+:::
+
+## Ejercicio 1.27 — reyes y ases en una mano de 13 cartas
+
+Considere una mano de 13 cartas repartidas de una baraja de 52. Sean
+
+$$A: \text{la mano tiene exactamente un as} $$
+$$ B: \text{la mano tiene exactamente dos reyes}$$
+
+::: {.callout-tip title="Probabilidad de A"}
+$$P(A) = \frac{\binom{4}{1}\binom{48}{12}}{\binom{52}{13}} \approx 0{,}4388$$
+:::
+
+::: {.callout-tip title="Probabilidad de B"}
+$$P(B) = \frac{\binom{4}{2}\binom{48}{11}}{\binom{52}{13}} \approx 0{,}2135$$
+:::
+
+::: {.callout-tip title="Probabilidad de A∩B"}
+Las 44 cartas restantes (ni reyes ni ases) reparten las 10 posiciones libres:
+
+$$P(A\cap B) = \frac{\binom{4}{2}\binom{4}{1}\binom{44}{10}}{\binom{52}{13}} \approx 0{,}0938$$
+:::
+
+Con esto, la probabilidad condicional pedida es directa:
+
+$$
+P(A\mid B) = \frac{P(A\cap B)}{P(B)} = \frac{0{,}0938}{0{,}2135} \approx 0{,}4393
+$$
+
+::: {.callout-important title="Un cuidado con el cálculo de A|B"}
+$P(A\mid B)$ también puede calcularse *directamente*, sin pasar por $P(A\cap B)$: condicionar en "dos reyes" dados deja un mazo efectivo de $52-4=48$ cartas para las 11 posiciones restantes, de las cuales 4 son ases. Entonces
+
+$$P(A\mid B) = \frac{\binom{4}{1}\binom{44}{10}}{\binom{48}{11}}$$
+
+Verifique que esta expresión es *algebraicamente idéntica* a $P(A\cap B)/P(B)$ (simplifique los factoriales). Es el mismo número por dos caminos: uno pasa por el espacio muestral original de 52 cartas, el otro construye directamente el espacio muestral condicionado de 48.
+:::
+
+::: {.callout-note title="Ejercicio — ¿independencia?"}
+Compare $P(A)\approx 0{,}4388$ con $P(A\mid B)\approx 0{,}4393$. Son *casi* iguales pero no exactamente. ¿$A$ y $B$ son independientes? Explique, en términos de cartas, por qué tener dos reyes casi no altera la probabilidad de tener un as (y por qué "casi" no es "exactamente").
+:::
+
+## Teorema de la probabilidad total
+
+::: {.callout-tip title="Teorema"}
+Sea $(A_n)_{n}$ una partición a lo más contable de $\Omega$, con cada $A_n\in\mathfrak F$, $P(A_n)>0$. Si $B\in\mathfrak F$, entonces
+
+$$P(B) = \sum_n P(B\mid A_n)\,P(A_n)$$
+:::
+
+**Demostración.** Como $(A_n)_n$ es una partición, $\Omega=\bigcup_n A_n$ y por lo tanto
+
+$$
+B = B\cap\Omega = B\cap\Big(\bigcup_n A_n\Big) = \bigcup_n (B\cap A_n)
+$$
+
+Los conjuntos $B\cap A_n$ son disyuntos dos a dos (porque los $A_n$ lo son), así que por σ-aditividad
+
+$$
+P(B) = P\Big(\bigcup_n (B\cap A_n)\Big) = \sum_n P(B\cap A_n) = \sum_n P(B\mid A_n)\,P(A_n) \qquad\blacksquare
+$$
+
+::: {.callout-note title="Ejercicio"}
+¿En qué paso se usó que los $A_n$ son disyuntos dos a dos? ¿Qué falla en la demostración si solo pedimos $\bigcup_n A_n=\Omega$ sin disyunción?
+:::
+
+## Corolario — teorema de Bayes
+
+::: {.callout-tip title="Corolario"}
+Con las mismas hipótesis, si además $P(B)>0$:
+
+$$
+P(A_j\mid B) = \frac{P(A_j)\,P(B\mid A_j)}{\displaystyle\sum_n P(B\mid A_n)\,P(A_n)}
+$$
+:::
+
+**Demostración.** Por definición de probabilidad condicional y la regla del producto,
+
+$$
+P(A_j\mid B) = \frac{P(A_j\cap B)}{P(B)} = \frac{P(A_j)\,P(B\mid A_j)}{P(B)}
+$$
+
+y el denominador se reescribe con el teorema de la probabilidad total. $\blacksquare$
+
+## Ejemplo — prueba diagnóstica
+
+Una prueba de tamizaje para una enfermedad tiene sensibilidad $P(+\mid E)=0{,}867$ y especificidad $P(-\mid E^c)=0{,}94$. La prevalencia es $P(E)=0{,}005$. Un paciente da positivo. ¿$P(E\mid +)$?
+
+Partición $\{E,E^c\}$, teorema de la probabilidad total:
+
+$$
+P(+) = P(+\mid E)P(E) + P(+\mid E^c)P(E^c) = (0{,}867)(0{,}005) + (0{,}06)(0{,}995) = 0{,}0640
+$$
+
+Bayes:
+
+$$
+P(E\mid +) = \frac{(0{,}867)(0{,}005)}{0{,}0640} \approx 0{,}068
+$$
+
+::: {.callout-important title="Lectura del resultado"}
+Sensibilidad alta no implica valor predictivo positivo alto. Aquí lo que domina es la prevalencia: con $P(E)$ pequeño, los falsos positivos entre los sanos (que son la inmensa mayoría) superan en número absoluto a los verdaderos positivos entre los enfermos, aunque la especificidad sea buena.
+:::
+
+::: {.callout-note title="Ejercicio"}
+Recalcule $P(E\mid+)$ si la prueba se aplica solo a pacientes con síntomas compatibles, donde la prevalencia sube a $P(E)=0{,}3$. ¿Qué le dice esto sobre por qué el mismo test se usa distinto en tamizaje poblacional que en confirmación diagnóstica?
+:::
+
+## Independencia
+
+Dos eventos $A,B$ se dicen **independientes** si
+
+$$P(A\cap B) = P(A)\,P(B)$$
+
+En caso contrario, son **dependientes**.
+
+::: {.callout-tip title="Ejemplo — dos lanzamientos de un dado"}
+$A$: la suma de los dos lanzamientos es par. $B$: el segundo lanzamiento es par.
+
+$$P(A) = \frac{18}{36}=\frac12 \qquad P(B) = \frac{18}{36}=\frac12 \qquad P(A\cap B) = \frac{9}{36}=\frac14$$
+
+Como $P(A)P(B)=1/4=P(A\cap B)$, $A$ y $B$ son independientes.
+:::
+
+::: {.callout-note title="Ejercicio"}
+Si se carga el dado de forma que $P(\text{par})=3/4$ en cada lanzamiento (en vez de $1/2$), ¿siguen siendo independientes $A$ y $B$? Recalcule $P(A)$, $P(B)$ y $P(A\cap B)$.
+:::
+
+::: {.callout-important title="Independiente ≠ mutuamente excluyente"}
+Son conceptos distintos y en general no relacionados:
+
+- El ejemplo anterior da eventos independientes que **no** son mutuamente excluyentes ($P(A\cap B)=1/4\ne 0$).
+- Si $A$: sale cara, $B$: sale sello (un solo lanzamiento), entonces $A\cap B=\varnothing$, así que $P(A\cap B)=0$, pero $P(A)P(B)=1/4\ne 0$. Son mutuamente excluyentes pero **no** independientes.
+
+La única forma de que $A,B$ mutuamente excluyentes sean también independientes es que $P(A)=0$ o $P(B)=0$.
+:::
+
+## Teorema — independencia se hereda a los complementos
+
+::: {.callout-tip title="Teorema"}
+Si $A$ y $B$ son independientes, también lo son $A$ y $B^c$.
+:::
+
+**Demostración.** Escribimos $A$ como unión disyunta:
+
+$$
+A = A\cap\Omega = A\cap(B\cup B^c) = (A\cap B)\cup(A\cap B^c)
+$$
+
+Como la unión es disyunta,
+
+$$
+P(A) = P(A\cap B) + P(A\cap B^c)
+$$
+
+Usando independencia de $A,B$ en el primer término y despejando:
+
+$$
+P(A\cap B^c) = P(A) - P(A)P(B) = P(A)\big(1-P(B)\big) = P(A)\,P(B^c) \qquad\blacksquare
+$$
+
+::: {.callout-note title="Tarea"}
+Demuestre, con el mismo argumento, que $A^c$ y $B$ también son independientes. (Y por transitividad de este resultado, también lo son $A^c$ y $B^c$.)
+
+Haga además todos los ejercicios del capítulo (Blanco Castañeda, *Probabilidad*).
+:::

@@ -15,7 +15,7 @@
 <link>https://arturosanjuan.xyz/cursos/probabilidad/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Sat, 22 Aug 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 23 Aug 2026 05:00:00 GMT</lastBuildDate>
 <item>
   <title>Introducción</title>
   <dc:creator>Arturo Sanjuán</dc:creator>
@@ -398,7 +398,7 @@ Figura&nbsp;1: Convergencia de la frecuencia relativa de caras a p = 1/2
 
  ]]></description>
   <guid>https://arturosanjuan.xyz/cursos/probabilidad/introduccion/</guid>
-  <pubDate>Sat, 22 Aug 2026 05:00:00 GMT</pubDate>
+  <pubDate>Sun, 23 Aug 2026 05:00:00 GMT</pubDate>
 </item>
 <item>
   <title>Cálculo de probabilidades</title>
@@ -786,7 +786,292 @@ Figura&nbsp;1: Convergencia de la frecuencia relativa de caras a p = 1/2
 
  ]]></description>
   <guid>https://arturosanjuan.xyz/cursos/probabilidad/calculoprobabilidades/</guid>
-  <pubDate>Sat, 22 Aug 2026 05:00:00 GMT</pubDate>
+  <pubDate>Sun, 23 Aug 2026 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Probabilidad condicional</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/probabilidad/condicional/</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="definición" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="definición"><span class="header-section-number">1</span> Definición</h2>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?(%5COmega,%5Cmathfrak%20F,%20P)"> un espacio de probabilidad, y sean <img src="https://latex.codecogs.com/png.latex?A,B%5Cin%5Cmathfrak%20F"> con <img src="https://latex.codecogs.com/png.latex?P(A)%3E0">. La probabilidad del evento <img src="https://latex.codecogs.com/png.latex?B"> <strong>bajo la condición</strong> <img src="https://latex.codecogs.com/png.latex?A"> se define como</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AP(B%5Cmid%20A)%20=%20%5Cfrac%7BP(A%5Ccap%20B)%7D%7BP(A)%7D%0A"></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Qué mide esto">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Qué mide esto
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><img src="https://latex.codecogs.com/png.latex?P(B%5Cmid%20A)"> no es una probabilidad distinta en abstracto: es la probabilidad de <img src="https://latex.codecogs.com/png.latex?B"> recalculada dentro del nuevo espacio muestral <img src="https://latex.codecogs.com/png.latex?A"> (renormalizando para que <img src="https://latex.codecogs.com/png.latex?P(A%5Cmid%20A)=1">).</p>
+</div>
+</div>
+</section>
+<section id="ejercicio-1.27-reyes-y-ases-en-una-mano-de-13-cartas" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="ejercicio-1.27-reyes-y-ases-en-una-mano-de-13-cartas"><span class="header-section-number">2</span> Ejercicio 1.27 — reyes y ases en una mano de 13 cartas</h2>
+<p>Considere una mano de 13 cartas repartidas de una baraja de 52. Sean</p>
+<p><img src="https://latex.codecogs.com/png.latex?A:%20%5Ctext%7Bla%20mano%20tiene%20exactamente%20un%20as%7D%20"> <img src="https://latex.codecogs.com/png.latex?%20B:%20%5Ctext%7Bla%20mano%20tiene%20exactamente%20dos%20reyes%7D"></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Probabilidad de A">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Probabilidad de A
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><img src="https://latex.codecogs.com/png.latex?P(A)%20=%20%5Cfrac%7B%5Cbinom%7B4%7D%7B1%7D%5Cbinom%7B48%7D%7B12%7D%7D%7B%5Cbinom%7B52%7D%7B13%7D%7D%20%5Capprox%200%7B,%7D4388"></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Probabilidad de B">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Probabilidad de B
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><img src="https://latex.codecogs.com/png.latex?P(B)%20=%20%5Cfrac%7B%5Cbinom%7B4%7D%7B2%7D%5Cbinom%7B48%7D%7B11%7D%7D%7B%5Cbinom%7B52%7D%7B13%7D%7D%20%5Capprox%200%7B,%7D2135"></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Probabilidad de A∩B">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Probabilidad de A∩B
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Las 44 cartas restantes (ni reyes ni ases) reparten las 10 posiciones libres:</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(A%5Ccap%20B)%20=%20%5Cfrac%7B%5Cbinom%7B4%7D%7B2%7D%5Cbinom%7B4%7D%7B1%7D%5Cbinom%7B44%7D%7B10%7D%7D%7B%5Cbinom%7B52%7D%7B13%7D%7D%20%5Capprox%200%7B,%7D0938"></p>
+</div>
+</div>
+<p>Con esto, la probabilidad condicional pedida es directa:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AP(A%5Cmid%20B)%20=%20%5Cfrac%7BP(A%5Ccap%20B)%7D%7BP(B)%7D%20=%20%5Cfrac%7B0%7B,%7D0938%7D%7B0%7B,%7D2135%7D%20%5Capprox%200%7B,%7D4393%0A"></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Un cuidado con el cálculo de A|B">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Un cuidado con el cálculo de A|B
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><img src="https://latex.codecogs.com/png.latex?P(A%5Cmid%20B)"> también puede calcularse <em>directamente</em>, sin pasar por <img src="https://latex.codecogs.com/png.latex?P(A%5Ccap%20B)">: condicionar en “dos reyes” dados deja un mazo efectivo de <img src="https://latex.codecogs.com/png.latex?52-4=48"> cartas para las 11 posiciones restantes, de las cuales 4 son ases. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(A%5Cmid%20B)%20=%20%5Cfrac%7B%5Cbinom%7B4%7D%7B1%7D%5Cbinom%7B44%7D%7B10%7D%7D%7B%5Cbinom%7B48%7D%7B11%7D%7D"></p>
+<p>Verifique que esta expresión es <em>algebraicamente idéntica</em> a <img src="https://latex.codecogs.com/png.latex?P(A%5Ccap%20B)/P(B)"> (simplifique los factoriales). Es el mismo número por dos caminos: uno pasa por el espacio muestral original de 52 cartas, el otro construye directamente el espacio muestral condicionado de 48.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio — ¿independencia?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio — ¿independencia?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Compare <img src="https://latex.codecogs.com/png.latex?P(A)%5Capprox%200%7B,%7D4388"> con <img src="https://latex.codecogs.com/png.latex?P(A%5Cmid%20B)%5Capprox%200%7B,%7D4393">. Son <em>casi</em> iguales pero no exactamente. ¿<img src="https://latex.codecogs.com/png.latex?A"> y <img src="https://latex.codecogs.com/png.latex?B"> son independientes? Explique, en términos de cartas, por qué tener dos reyes casi no altera la probabilidad de tener un as (y por qué “casi” no es “exactamente”).</p>
+</div>
+</div>
+</section>
+<section id="teorema-de-la-probabilidad-total" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="teorema-de-la-probabilidad-total"><span class="header-section-number">3</span> Teorema de la probabilidad total</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Teorema
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sea <img src="https://latex.codecogs.com/png.latex?(A_n)_%7Bn%7D"> una partición a lo más contable de <img src="https://latex.codecogs.com/png.latex?%5COmega">, con cada <img src="https://latex.codecogs.com/png.latex?A_n%5Cin%5Cmathfrak%20F">, <img src="https://latex.codecogs.com/png.latex?P(A_n)%3E0">. Si <img src="https://latex.codecogs.com/png.latex?B%5Cin%5Cmathfrak%20F">, entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(B)%20=%20%5Csum_n%20P(B%5Cmid%20A_n)%5C,P(A_n)"></p>
+</div>
+</div>
+<p><strong>Demostración.</strong> Como <img src="https://latex.codecogs.com/png.latex?(A_n)_n"> es una partición, <img src="https://latex.codecogs.com/png.latex?%5COmega=%5Cbigcup_n%20A_n"> y por lo tanto</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AB%20=%20B%5Ccap%5COmega%20=%20B%5Ccap%5CBig(%5Cbigcup_n%20A_n%5CBig)%20=%20%5Cbigcup_n%20(B%5Ccap%20A_n)%0A"></p>
+<p>Los conjuntos <img src="https://latex.codecogs.com/png.latex?B%5Ccap%20A_n"> son disyuntos dos a dos (porque los <img src="https://latex.codecogs.com/png.latex?A_n"> lo son), así que por σ-aditividad</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AP(B)%20=%20P%5CBig(%5Cbigcup_n%20(B%5Ccap%20A_n)%5CBig)%20=%20%5Csum_n%20P(B%5Ccap%20A_n)%20=%20%5Csum_n%20P(B%5Cmid%20A_n)%5C,P(A_n)%20%5Cqquad%5Cblacksquare%0A"></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿En qué paso se usó que los <img src="https://latex.codecogs.com/png.latex?A_n"> son disyuntos dos a dos? ¿Qué falla en la demostración si solo pedimos <img src="https://latex.codecogs.com/png.latex?%5Cbigcup_n%20A_n=%5COmega"> sin disyunción?</p>
+</div>
+</div>
+</section>
+<section id="corolario-teorema-de-bayes" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="corolario-teorema-de-bayes"><span class="header-section-number">4</span> Corolario — teorema de Bayes</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Corolario">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Corolario
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con las mismas hipótesis, si además <img src="https://latex.codecogs.com/png.latex?P(B)%3E0">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AP(A_j%5Cmid%20B)%20=%20%5Cfrac%7BP(A_j)%5C,P(B%5Cmid%20A_j)%7D%7B%5Cdisplaystyle%5Csum_n%20P(B%5Cmid%20A_n)%5C,P(A_n)%7D%0A"></p>
+</div>
+</div>
+<p><strong>Demostración.</strong> Por definición de probabilidad condicional y la regla del producto,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AP(A_j%5Cmid%20B)%20=%20%5Cfrac%7BP(A_j%5Ccap%20B)%7D%7BP(B)%7D%20=%20%5Cfrac%7BP(A_j)%5C,P(B%5Cmid%20A_j)%7D%7BP(B)%7D%0A"></p>
+<p>y el denominador se reescribe con el teorema de la probabilidad total. <img src="https://latex.codecogs.com/png.latex?%5Cblacksquare"></p>
+</section>
+<section id="ejemplo-prueba-diagnóstica" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="ejemplo-prueba-diagnóstica"><span class="header-section-number">5</span> Ejemplo — prueba diagnóstica</h2>
+<p>Una prueba de tamizaje para una enfermedad tiene sensibilidad <img src="https://latex.codecogs.com/png.latex?P(+%5Cmid%20E)=0%7B,%7D867"> y especificidad <img src="https://latex.codecogs.com/png.latex?P(-%5Cmid%20E%5Ec)=0%7B,%7D94">. La prevalencia es <img src="https://latex.codecogs.com/png.latex?P(E)=0%7B,%7D005">. Un paciente da positivo. ¿<img src="https://latex.codecogs.com/png.latex?P(E%5Cmid%20+)">?</p>
+<p>Partición <img src="https://latex.codecogs.com/png.latex?%5C%7BE,E%5Ec%5C%7D">, teorema de la probabilidad total:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AP(+)%20=%20P(+%5Cmid%20E)P(E)%20+%20P(+%5Cmid%20E%5Ec)P(E%5Ec)%20=%20(0%7B,%7D867)(0%7B,%7D005)%20+%20(0%7B,%7D06)(0%7B,%7D995)%20=%200%7B,%7D0640%0A"></p>
+<p>Bayes:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AP(E%5Cmid%20+)%20=%20%5Cfrac%7B(0%7B,%7D867)(0%7B,%7D005)%7D%7B0%7B,%7D0640%7D%20%5Capprox%200%7B,%7D068%0A"></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Lectura del resultado">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Lectura del resultado
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sensibilidad alta no implica valor predictivo positivo alto. Aquí lo que domina es la prevalencia: con <img src="https://latex.codecogs.com/png.latex?P(E)"> pequeño, los falsos positivos entre los sanos (que son la inmensa mayoría) superan en número absoluto a los verdaderos positivos entre los enfermos, aunque la especificidad sea buena.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Recalcule <img src="https://latex.codecogs.com/png.latex?P(E%5Cmid+)"> si la prueba se aplica solo a pacientes con síntomas compatibles, donde la prevalencia sube a <img src="https://latex.codecogs.com/png.latex?P(E)=0%7B,%7D3">. ¿Qué le dice esto sobre por qué el mismo test se usa distinto en tamizaje poblacional que en confirmación diagnóstica?</p>
+</div>
+</div>
+</section>
+<section id="independencia" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="independencia"><span class="header-section-number">6</span> Independencia</h2>
+<p>Dos eventos <img src="https://latex.codecogs.com/png.latex?A,B"> se dicen <strong>independientes</strong> si</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(A%5Ccap%20B)%20=%20P(A)%5C,P(B)"></p>
+<p>En caso contrario, son <strong>dependientes</strong>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo — dos lanzamientos de un dado">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo — dos lanzamientos de un dado
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><img src="https://latex.codecogs.com/png.latex?A">: la suma de los dos lanzamientos es par. <img src="https://latex.codecogs.com/png.latex?B">: el segundo lanzamiento es par.</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(A)%20=%20%5Cfrac%7B18%7D%7B36%7D=%5Cfrac12%20%5Cqquad%20P(B)%20=%20%5Cfrac%7B18%7D%7B36%7D=%5Cfrac12%20%5Cqquad%20P(A%5Ccap%20B)%20=%20%5Cfrac%7B9%7D%7B36%7D=%5Cfrac14"></p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?P(A)P(B)=1/4=P(A%5Ccap%20B)">, <img src="https://latex.codecogs.com/png.latex?A"> y <img src="https://latex.codecogs.com/png.latex?B"> son independientes.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si se carga el dado de forma que <img src="https://latex.codecogs.com/png.latex?P(%5Ctext%7Bpar%7D)=3/4"> en cada lanzamiento (en vez de <img src="https://latex.codecogs.com/png.latex?1/2">), ¿siguen siendo independientes <img src="https://latex.codecogs.com/png.latex?A"> y <img src="https://latex.codecogs.com/png.latex?B">? Recalcule <img src="https://latex.codecogs.com/png.latex?P(A)">, <img src="https://latex.codecogs.com/png.latex?P(B)"> y <img src="https://latex.codecogs.com/png.latex?P(A%5Ccap%20B)">.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Independiente ≠ mutuamente excluyente">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Independiente ≠ mutuamente excluyente
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Son conceptos distintos y en general no relacionados:</p>
+<ul>
+<li>El ejemplo anterior da eventos independientes que <strong>no</strong> son mutuamente excluyentes (<img src="https://latex.codecogs.com/png.latex?P(A%5Ccap%20B)=1/4%5Cne%200">).</li>
+<li>Si <img src="https://latex.codecogs.com/png.latex?A">: sale cara, <img src="https://latex.codecogs.com/png.latex?B">: sale sello (un solo lanzamiento), entonces <img src="https://latex.codecogs.com/png.latex?A%5Ccap%20B=%5Cvarnothing">, así que <img src="https://latex.codecogs.com/png.latex?P(A%5Ccap%20B)=0">, pero <img src="https://latex.codecogs.com/png.latex?P(A)P(B)=1/4%5Cne%200">. Son mutuamente excluyentes pero <strong>no</strong> independientes.</li>
+</ul>
+<p>La única forma de que <img src="https://latex.codecogs.com/png.latex?A,B"> mutuamente excluyentes sean también independientes es que <img src="https://latex.codecogs.com/png.latex?P(A)=0"> o <img src="https://latex.codecogs.com/png.latex?P(B)=0">.</p>
+</div>
+</div>
+</section>
+<section id="teorema-independencia-se-hereda-a-los-complementos" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="teorema-independencia-se-hereda-a-los-complementos"><span class="header-section-number">7</span> Teorema — independencia se hereda a los complementos</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Teorema
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si <img src="https://latex.codecogs.com/png.latex?A"> y <img src="https://latex.codecogs.com/png.latex?B"> son independientes, también lo son <img src="https://latex.codecogs.com/png.latex?A"> y <img src="https://latex.codecogs.com/png.latex?B%5Ec">.</p>
+</div>
+</div>
+<p><strong>Demostración.</strong> Escribimos <img src="https://latex.codecogs.com/png.latex?A"> como unión disyunta:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AA%20=%20A%5Ccap%5COmega%20=%20A%5Ccap(B%5Ccup%20B%5Ec)%20=%20(A%5Ccap%20B)%5Ccup(A%5Ccap%20B%5Ec)%0A"></p>
+<p>Como la unión es disyunta,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AP(A)%20=%20P(A%5Ccap%20B)%20+%20P(A%5Ccap%20B%5Ec)%0A"></p>
+<p>Usando independencia de <img src="https://latex.codecogs.com/png.latex?A,B"> en el primer término y despejando:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AP(A%5Ccap%20B%5Ec)%20=%20P(A)%20-%20P(A)P(B)%20=%20P(A)%5Cbig(1-P(B)%5Cbig)%20=%20P(A)%5C,P(B%5Ec)%20%5Cqquad%5Cblacksquare%0A"></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre, con el mismo argumento, que <img src="https://latex.codecogs.com/png.latex?A%5Ec"> y <img src="https://latex.codecogs.com/png.latex?B"> también son independientes. (Y por transitividad de este resultado, también lo son <img src="https://latex.codecogs.com/png.latex?A%5Ec"> y <img src="https://latex.codecogs.com/png.latex?B%5Ec">.)</p>
+<p>Haga además todos los ejercicios del capítulo (Blanco Castañeda, <em>Probabilidad</em>).</p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/probabilidad/condicional/</guid>
+  <pubDate>Sun, 23 Aug 2026 05:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
