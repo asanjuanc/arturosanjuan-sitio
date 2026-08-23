@@ -26,8 +26,6 @@ website:
       language: "es"
   navbar:
     left:
-      - href: index.qmd
-        text: Home
       - href: cursos/index.qmd
         text: Cursos
   sidebar:
