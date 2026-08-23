@@ -151,7 +151,8 @@ draw2d(
     </label>
   </div>
   <p style="font-size:0.9em;color:#555;margin-top:10px;">
-    Curva azul: $x(t)$ desde el lanzamiento hasta que toca el suelo. El punto verde marca la altura máxima
+    Curva azul: $x(t)$ desde el lanzamiento hasta que toca el suelo, con <strong>escala vertical fija</strong>
+    (0–90 m) para poder comparar de un ajuste a otro. El punto verde marca la altura máxima
     ($t^*=$ <span id="mov-tstar">-</span> s, $x_{max}=$ <span id="mov-hmax">-</span> m); el punto rojo marca
     la llegada al suelo ($t_{suelo}=$ <span id="mov-tsuelo">-</span> s, obtenido numéricamente — la ecuación
     es trascendente). Con $\gamma\to 0$ recuperas la parábola simétrica de la caída libre sin resistencia.
@@ -170,6 +171,7 @@ draw2d(
   const tsueloEl = document.getElementById('mov-tsuelo');
 
   const g = 9.8;
+  const YMAX_FIJO = 90; // techo fijo del eje vertical (m) — cubre v0 hasta 40 y gamma desde 0.02
   const W = canvas.width, H = canvas.height;
   const margin = {left: 55, right: 20, top: 20, bottom: 40};
 
@@ -207,7 +209,7 @@ draw2d(
     const plotW = W - margin.left - margin.right;
     const plotH = H - margin.top - margin.bottom;
     const Tmax = tsuelo;
-    const yMax = hmax * 1.15;
+    const yMax = YMAX_FIJO; // <-- fijo, ya no depende de hmax
 
     function toPx(t, x){
       const px = margin.left + (t/Tmax) * plotW;
