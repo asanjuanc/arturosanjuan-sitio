@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Arturo Sanjuán">
+<meta name="description" content=".">
 
 <title>Análisis Numérico – Arturo Sanjuán</title>
 <style>
@@ -88,9 +89,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-subtitle','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-title','listing-subtitle',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description"],
+      searchColumns: ["listing-date","listing-title","listing-author"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -139,7 +140,7 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="../../styles.css">
-</head>
+<link rel="alternate" type="application/rss+xml" title="Arturo Sanjuán" href="index.xml" data-external="1"></head>
 
 <body class="nav-sidebar docked nav-fixed quarto-light">
 
@@ -187,6 +188,9 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="sidebar-tools-main">
+    <a href="../../cursos/numerico/index.xml" title="RSS — Análisis Numérico" class="quarto-navigation-tool px-1" aria-label="RSS — Análisis Numérico"><i class="bi bi-rss"></i></a>
+</div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -227,14 +231,20 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Análisis Numérico</h1>
+<p class="subtitle lead">Notas de clase del curso de computación y métodos numéricos siguiendo el libro de <a href="https://fncbook.com/julia/">Driscoll y Braun, versión Julia</a></p>
 </div>
 
+<div>
+  <div class="description">
+    .
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
 
     <div>
-    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-heading">Autor</div>
     <div class="quarto-title-meta-contents">
              <p>Arturo Sanjuán </p>
           </div>
@@ -253,93 +263,71 @@ window.Quarto = {
 
 
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-listing-date-sort="1787374800000" data-listing-file-modified-sort="1786584214162" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="962">
-<div class="thumbnail"><a href="../../cursos/numerico/introduccion/index.html" class="no-external">
+<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
+<div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+    <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+    <select id="listing-listing-sort" class="form-select" aria-label="Ordenar por" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+      <option value="" disabled="" selected="" hidden="">Ordenar por</option>
+      <option value="index" data-direction="asc">Por defecto</option>
+      <option value="listing-title-sort" data-direction="asc">
+        Título
+      </option>
+    </select>
+  </div>
+    <div class="input-group input-group-sm quarto-listing-filter">
+      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <input type="text" class="search form-control" placeholder="Filtro">
+    </div>
+</div>
+<table class="quarto-listing-table table">
+<thead>
+<tr>
 
-<p class="card-img-top"><img loading='lazy' src="introduccion/floatingpointline.webp"  class="thumbnail-image card-img"/></p>
+<th>
+<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Título</a>
+</th>
 
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../../cursos/numerico/introduccion/index.html" class="no-external">Introducción</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../../cursos/numerico/introduccion/index.html" class="no-external">Apuntes de clase: sistemas de numeración y punto flotante</a>
-</div>
-<div class="delink listing-description"><a href="../../cursos/numerico/introduccion/index.html" class="no-external">
-<p>Sistemas de numeración, bases, y la construcción del conjunto de números de punto flotante 𝔽.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../../cursos/numerico/introduccion/index.html" class="no-external">
-<div class="listing-date">
-22 ago 2026
-</div>
-<div class="listing-author">
-Arturo Sanjuán
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-listing-date-sort="1787374800000" data-listing-file-modified-sort="1787436479819" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1103">
-<div class="thumbnail"><a href="../../cursos/numerico/condicionamiento/index.html" class="no-external">
+<th>
+Subtítulo
+</th>
 
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</tr>
+</thead>
+<tbody class="list">
 
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../../cursos/numerico/condicionamiento/index.html" class="no-external">Condicionamiento</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../../cursos/numerico/condicionamiento/index.html" class="no-external">Apuntes de clase: cancelación catastrófica, pérdida de significancia y número de condición</a>
-</div>
-<div class="delink listing-description"><a href="../../cursos/numerico/condicionamiento/index.html" class="no-external">
-<p>Cancelación catastrófica, pérdida de significancia, y la definición formal del número de condición relativo de un problema.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../../cursos/numerico/condicionamiento/index.html" class="no-external">
-<div class="listing-date">
-22 ago 2026
-</div>
-<div class="listing-author">
-Arturo Sanjuán
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-listing-date-sort="1787374800000" data-listing-file-modified-sort="1787435763260" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1209">
-<div class="thumbnail"><a href="../../cursos/numerico/estabilidad/index.html" class="no-external">
+<tr data-index="0" data-listing-date-sort="1787374800000" data-listing-file-modified-sort="1787438271284" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="962" data-listing-title-sort="Introducción" data-listing-filename-sort="index.qmd">
+<td>
+<a href="../../cursos/numerico/introduccion/index.html" class="title listing-title">Introducción</a>
+</td>
+<td>
+<span class="listing-subtitle">Sistemas de numeración y punto flotante</span>
+</td>
 
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</tr>
 
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../../cursos/numerico/estabilidad/index.html" class="no-external">Estabilidad</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../../cursos/numerico/estabilidad/index.html" class="no-external">Apuntes de clase: algoritmos, error hacia atrás, y el ejercicio 1.4.2</a>
-</div>
-<div class="delink listing-description"><a href="../../cursos/numerico/estabilidad/index.html" class="no-external">
-<p>Problemas vs.&nbsp;algoritmos, el método de Horner, estabilidad, error hacia atrás, y el análisis completo del ejercicio 1.4.2 (condicionamiento vs.&nbsp;inestabilidad para f(x)=(e^x-1)/x).</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../../cursos/numerico/estabilidad/index.html" class="no-external">
-<div class="listing-date">
-22 ago 2026
-</div>
-<div class="listing-author">
-Arturo Sanjuán
-</div>
-</a>
-</div>
-</div>
-</div>
+<tr data-index="1" data-listing-date-sort="1787374800000" data-listing-file-modified-sort="1787438501462" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1103" data-listing-title-sort="Condicionamiento" data-listing-filename-sort="index.qmd">
+<td>
+<a href="../../cursos/numerico/condicionamiento/index.html" class="title listing-title">Condicionamiento</a>
+</td>
+<td>
+<span class="listing-subtitle">Cancelación catastrófica, pérdida de significancia y número de condición</span>
+</td>
+
+</tr>
+
+<tr data-index="2" data-listing-date-sort="1787374800000" data-listing-file-modified-sort="1787438577733" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1209" data-listing-title-sort="Estabilidad" data-listing-filename-sort="index.qmd">
+<td>
+<a href="../../cursos/numerico/estabilidad/index.html" class="title listing-title">Estabilidad</a>
+</td>
+<td>
+<span class="listing-subtitle">Algoritmos y estabilidad ejemplo con f(x)=(e^x-1)/x).</span>
+</td>
+
+</tr>
+
+</tbody>
+</table>
 <div class="listing-no-matching d-none">No hay resultados</div>
 </div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -415,7 +403,7 @@ Arturo Sanjuán
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/arturosanjuan\.xyz");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

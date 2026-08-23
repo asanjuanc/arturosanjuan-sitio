@@ -1,9 +1,15 @@
 ---
 title: "Ecuaciones Diferenciales"
+
+subtitle: "Notas de clase del curso de ecuaciones diferenciales siguiendo el libro de [Simmons](https://books.google.com.co/books/about/Differential_Equations_with_Applications.html?id=hNi_DQAAQBAJ&redir_esc=y)"
+description: .
 author: "Arturo Sanjuán"
 image: "vector.png"
 listing:
   contents: .
+  feed: true
   sort: "order"
   categories: false
+  type: table
+  fields: [title, subtitle]
 ---

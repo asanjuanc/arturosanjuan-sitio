@@ -3,8 +3,13 @@ project:
 
 lang: es 
 
+language:
+  title-block-author-single: "Autor"
+  title-block-author-plural: "Autores"
+
 website:
   title: "Arturo Sanjuán"
+  site-url: "https://arturosanjuan.xyz"
   favicon: "favicon.png"
   page-navigation: true
   navbar:
@@ -17,6 +22,10 @@ website:
     - id: odes
       title: "Ecuaciones Diferenciales"
       style: docked
+      tools:
+        - icon: rss
+          href: cursos/odes/index.xml
+          text: "RSS — Ecuaciones Diferenciales"
       contents:
         - cursos/odes/index.qmd
         - cursos/odes/introduccion/index.qmd
@@ -26,6 +35,10 @@ website:
     - id: numerico
       title: "Análisis Numérico"
       style: docked
+      tools:
+        - icon: rss
+          href: cursos/numerico/index.xml
+          text: "RSS — Análisis Numérico"
       contents:
         - cursos/numerico/index.qmd
         - cursos/numerico/introduccion/index.qmd
@@ -34,6 +47,10 @@ website:
     - id: probabilidad
       title: "Probabilidad"
       style: docked
+      tools:
+        - icon: rss
+          href: cursos/probabilidad/index.xml
+          text: "RSS — Probabilidad"
       contents:
         - cursos/probabilidad/index.qmd
         - cursos/probabilidad/introduccion/index.qmd
@@ -46,7 +63,3 @@ format:
       - brand
     css: styles.css
     toc: true
-
-
-
-

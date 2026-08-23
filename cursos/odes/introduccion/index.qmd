@@ -1,6 +1,6 @@
 ---
 title: "Introducción"
-subtitle: "Apuntes de clase: breve historia de las ecuaciones diferenciales y ejercicios resueltos"
+subtitle: "Breve historia de las ecuaciones diferenciales y ejercicios resueltos"
 description: "De Zenón al caos: por qué nació el cálculo diferencial para describir el cambio, y ejercicios resueltos del Simmons sobre ecuaciones separables e implícitas."
 author: "Arturo Sanjuán"
 date: today

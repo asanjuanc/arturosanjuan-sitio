@@ -1,6 +1,6 @@
 ---
 title: "Condicionamiento"
-subtitle: "Apuntes de clase: cancelación catastrófica, pérdida de significancia y número de condición"
+subtitle: "Cancelación catastrófica, pérdida de significancia y número de condición"
 description: "Cancelación catastrófica, pérdida de significancia, y la definición formal del número de condición relativo de un problema."
 author: "Arturo Sanjuán"
 date: today

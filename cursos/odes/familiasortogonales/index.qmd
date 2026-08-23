@@ -1,6 +1,6 @@
 ---
 title: "Familias Ortogonales"
-subtitle: "Apuntes de clase: geometría de las ecuaciones diferenciales"
+subtitle: "Geometría de las ecuaciones diferenciales"
 description: "Cómo una familia de curvas define su propia ecuación diferencial, y cómo esa ecuación revela la familia ortogonal: dos ejemplos resueltos con applets interactivos y código Maxima."
 author: "Arturo Sanjuán"
 date: today

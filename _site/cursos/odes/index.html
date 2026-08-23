@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Arturo Sanjuán">
+<meta name="description" content=".">
 
 <title>Ecuaciones Diferenciales – Arturo Sanjuán</title>
 <style>
@@ -88,9 +89,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-subtitle','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-title','listing-subtitle',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description"],
+      searchColumns: ["listing-date","listing-title","listing-author"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -139,7 +140,7 @@ window.Quarto = {
 </script>
 
 <link rel="stylesheet" href="../../styles.css">
-</head>
+<link rel="alternate" type="application/rss+xml" title="Arturo Sanjuán" href="index.xml" data-external="1"></head>
 
 <body class="nav-sidebar docked nav-fixed quarto-light">
 
@@ -187,6 +188,9 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="sidebar-tools-main">
+    <a href="../../cursos/odes/index.xml" title="RSS — Ecuaciones Diferenciales" class="quarto-navigation-tool px-1" aria-label="RSS — Ecuaciones Diferenciales"><i class="bi bi-rss"></i></a>
+</div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -233,14 +237,20 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Ecuaciones Diferenciales</h1>
+<p class="subtitle lead">Notas de clase del curso de ecuaciones diferenciales siguiendo el libro de <a href="https://books.google.com.co/books/about/Differential_Equations_with_Applications.html?id=hNi_DQAAQBAJ&amp;redir_esc=y">Simmons</a></p>
 </div>
 
+<div>
+  <div class="description">
+    .
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
 
     <div>
-    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-heading">Autor</div>
     <div class="quarto-title-meta-contents">
              <p>Arturo Sanjuán </p>
           </div>
@@ -259,121 +269,81 @@ window.Quarto = {
 
 
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-listing-date-sort="1787374800000" data-listing-file-modified-sort="1786420729347" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="656">
-<div class="thumbnail"><a href="../../cursos/odes/introduccion/index.html" class="no-external">
+<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
+<div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+    <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+    <select id="listing-listing-sort" class="form-select" aria-label="Ordenar por" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+      <option value="" disabled="" selected="" hidden="">Ordenar por</option>
+      <option value="index" data-direction="asc">Por defecto</option>
+      <option value="listing-title-sort" data-direction="asc">
+        Título
+      </option>
+    </select>
+  </div>
+    <div class="input-group input-group-sm quarto-listing-filter">
+      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <input type="text" class="search form-control" placeholder="Filtro">
+    </div>
+</div>
+<table class="quarto-listing-table table">
+<thead>
+<tr>
 
-<p class="card-img-top"><img loading='lazy' src="introduccion/sol.png"  class="thumbnail-image card-img"/></p>
+<th>
+<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Título</a>
+</th>
 
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../../cursos/odes/introduccion/index.html" class="no-external">Introducción</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../../cursos/odes/introduccion/index.html" class="no-external">Apuntes de clase: breve historia de las ecuaciones diferenciales y ejercicios resueltos</a>
-</div>
-<div class="delink listing-description"><a href="../../cursos/odes/introduccion/index.html" class="no-external">
-<p>De Zenón al caos: por qué nació el cálculo diferencial para describir el cambio, y ejercicios resueltos del Simmons sobre ecuaciones separables e implícitas.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../../cursos/odes/introduccion/index.html" class="no-external">
-<div class="listing-date">
-22 ago 2026
-</div>
-<div class="listing-author">
-Arturo Sanjuán
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-listing-date-sort="1787374800000" data-listing-file-modified-sort="1787032207990" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3153">
-<div class="thumbnail"><a href="../../cursos/odes/familiasortogonales/index.html" class="no-external">
+<th>
+Subtítulo
+</th>
 
-<img loading="lazy" src="../../cursos/odes/familiasortogonales/circulos.png" class="thumbnail-image">
+</tr>
+</thead>
+<tbody class="list">
 
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../../cursos/odes/familiasortogonales/index.html" class="no-external">Familias Ortogonales</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../../cursos/odes/familiasortogonales/index.html" class="no-external">Apuntes de clase: geometría de las ecuaciones diferenciales</a>
-</div>
-<div class="delink listing-description"><a href="../../cursos/odes/familiasortogonales/index.html" class="no-external">
-<p>Cómo una familia de curvas define su propia ecuación diferencial, y cómo esa ecuación revela la familia ortogonal: dos ejemplos resueltos con applets interactivos y código Maxima.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../../cursos/odes/familiasortogonales/index.html" class="no-external">
-<div class="listing-date">
-22 ago 2026
-</div>
-<div class="listing-author">
-Arturo Sanjuán
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-listing-date-sort="1787374800000" data-listing-file-modified-sort="1787290503983" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2319">
-<div class="thumbnail"><a href="../../cursos/odes/polares/index.html" class="no-external">
+<tr data-index="0" data-listing-date-sort="1787374800000" data-listing-file-modified-sort="1787440865260" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="656" data-listing-title-sort="Introducción" data-listing-filename-sort="index.qmd">
+<td>
+<a href="../../cursos/odes/introduccion/index.html" class="title listing-title">Introducción</a>
+</td>
+<td>
+<span class="listing-subtitle">Breve historia de las ecuaciones diferenciales y ejercicios resueltos</span>
+</td>
 
-<img loading="lazy" src="../../cursos/odes/polares/flor.png" class="thumbnail-image">
+</tr>
 
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../../cursos/odes/polares/index.html" class="no-external">Coordenadas Polares</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../../cursos/odes/polares/index.html" class="no-external">Apuntes de clase: curvas, pendientes y áreas en coordenadas polares</a>
-</div>
-<div class="delink listing-description"><a href="../../cursos/odes/polares/index.html" class="no-external">
-<p>De la conversión básica a la lemniscata de Bernoulli, pasando por la deducción completa de las trayectorias ortogonales en polares (con dos enfoques distintos) y el cálculo de áreas por sectores.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../../cursos/odes/polares/index.html" class="no-external">
-<div class="listing-date">
-22 ago 2026
-</div>
-<div class="listing-author">
-Arturo Sanjuán
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-listing-date-sort="1787374800000" data-listing-file-modified-sort="1787289845301" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2383">
-<div class="thumbnail"><a href="../../cursos/odes/modelacion/index.html" class="no-external">
+<tr data-index="1" data-listing-date-sort="1787374800000" data-listing-file-modified-sort="1787440853112" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3153" data-listing-title-sort="Familias Ortogonales" data-listing-filename-sort="index.qmd">
+<td>
+<a href="../../cursos/odes/familiasortogonales/index.html" class="title listing-title">Familias Ortogonales</a>
+</td>
+<td>
+<span class="listing-subtitle">Geometría de las ecuaciones diferenciales</span>
+</td>
 
-<img loading="lazy" src="../../cursos/odes/modelacion/sigmoides.png" class="thumbnail-image">
+</tr>
 
-</a></div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="../../cursos/odes/modelacion/index.html" class="no-external">Modelación con Ecuaciones Diferenciales</a>
-</h3>
-<div class="listing-subtitle">
-<a href="../../cursos/odes/modelacion/index.html" class="no-external">Apuntes de clase: interés compuesto, crecimiento exponencial, el modelo logístico, decaimiento radioactivo y mezclas</a>
-</div>
-<div class="delink listing-description"><a href="../../cursos/odes/modelacion/index.html" class="no-external">
-<p>De las cajitas de Nu al número e, del crecimiento bacteriano al absurdo de Malthus, y del modelo exponencial al logístico: ejercicios resueltos con Maxima y un simulador interactivo de curvas sigmoides.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="../../cursos/odes/modelacion/index.html" class="no-external">
-<div class="listing-date">
-22 ago 2026
-</div>
-<div class="listing-author">
-Arturo Sanjuán
-</div>
-</a>
-</div>
-</div>
-</div>
+<tr data-index="2" data-listing-date-sort="1787374800000" data-listing-file-modified-sort="1787440884614" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2319" data-listing-title-sort="Coordenadas Polares" data-listing-filename-sort="index.qmd">
+<td>
+<a href="../../cursos/odes/polares/index.html" class="title listing-title">Coordenadas Polares</a>
+</td>
+<td>
+<span class="listing-subtitle">Curvas, pendientes y áreas en coordenadas polares</span>
+</td>
+
+</tr>
+
+<tr data-index="3" data-listing-date-sort="1787374800000" data-listing-file-modified-sort="1787440873194" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2383" data-listing-title-sort="Modelación con Ecuaciones Diferenciales" data-listing-filename-sort="index.qmd">
+<td>
+<a href="../../cursos/odes/modelacion/index.html" class="title listing-title">Modelación con Ecuaciones Diferenciales</a>
+</td>
+<td>
+<span class="listing-subtitle">Interés compuesto, crecimiento exponencial, el modelo logístico, decaimiento radioactivo y mezclas</span>
+</td>
+
+</tr>
+
+</tbody>
+</table>
 <div class="listing-no-matching d-none">No hay resultados</div>
 </div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -449,7 +419,7 @@ Arturo Sanjuán
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/arturosanjuan\.xyz");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

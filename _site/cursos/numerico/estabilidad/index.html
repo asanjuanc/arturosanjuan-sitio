@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Arturo Sanjuán">
-<meta name="description" content="Problemas vs.&nbsp;algoritmos, el método de Horner, estabilidad, error hacia atrás, y el análisis completo del ejercicio 1.4.2 (condicionamiento vs.&nbsp;inestabilidad para f(x)=(e^x-1)/x).">
+<meta name="description" content="Problemas vs.&nbsp;algoritmos, el método de Horner, estabilidad, error hacia atrás, y el análisis completo del ejercicio 1.4.2 (condicionamiento vs.&nbsp;inestabilidad para f(x)=(e^x-1)/x.">
 
 <title>Estabilidad – Arturo Sanjuán</title>
 <style>
@@ -193,6 +193,9 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="sidebar-tools-main">
+    <a href="../../../cursos/numerico/index.xml" title="RSS — Análisis Numérico" class="quarto-navigation-tool px-1" aria-label="RSS — Análisis Numérico"><i class="bi bi-rss"></i></a>
+</div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
@@ -246,12 +249,12 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Estabilidad</h1>
-<p class="subtitle lead">Apuntes de clase: algoritmos, error hacia atrás, y el ejercicio 1.4.2</p>
+<p class="subtitle lead">Algoritmos y estabilidad ejemplo con f(x)=(e^x-1)/x).</p>
 </div>
 
 <div>
   <div class="description">
-    Problemas vs.&nbsp;algoritmos, el método de Horner, estabilidad, error hacia atrás, y el análisis completo del ejercicio 1.4.2 (condicionamiento vs.&nbsp;inestabilidad para f(x)=(e^x-1)/x).
+    Problemas vs.&nbsp;algoritmos, el método de Horner, estabilidad, error hacia atrás, y el análisis completo del ejercicio 1.4.2 (condicionamiento vs.&nbsp;inestabilidad para f(x)=(e^x-1)/x.
   </div>
 </div>
 
@@ -259,7 +262,7 @@ window.Quarto = {
 <div class="quarto-title-meta">
 
     <div>
-    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-heading">Autor</div>
     <div class="quarto-title-meta-contents">
              <p>Arturo Sanjuán </p>
           </div>
@@ -550,7 +553,7 @@ window.Quarto = {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/arturosanjuan\.xyz");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

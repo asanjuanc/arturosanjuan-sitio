@@ -1,0 +1,792 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Arturo Sanjuán</title>
+<link>https://arturosanjuan.xyz/cursos/probabilidad/</link>
+<atom:link href="https://arturosanjuan.xyz/cursos/probabilidad/index.xml" rel="self" type="application/rss+xml"/>
+<description></description>
+<image>
+<url>https://arturosanjuan.xyz/normal.png</url>
+<title>Arturo Sanjuán</title>
+<link>https://arturosanjuan.xyz/cursos/probabilidad/</link>
+</image>
+<generator>quarto-1.10.18</generator>
+<lastBuildDate>Sat, 22 Aug 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Introducción</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/probabilidad/introduccion/</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="experimentos-aleatorios-y-espacios-muestrales" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="experimentos-aleatorios-y-espacios-muestrales"><span class="header-section-number">1</span> Experimentos aleatorios y espacios muestrales</h2>
+<p>En el texto de Liliana Blanco se define <strong>experimento aleatorio</strong> como un experimento en el que no podemos determinar su resultado de antemano, y <strong>espacio muestral</strong> <img src="https://latex.codecogs.com/png.latex?%5COmega"> como el conjunto de todos los resultados posibles de un experimento aleatorio.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio 1">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Discuta esta definición desde lo que se entiende por <em>definir</em> en matemáticas.</p>
+</div>
+</div>
+<section id="ejemplo-1-lanzar-una-moneda" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="ejemplo-1-lanzar-una-moneda"><span class="header-section-number">1.1</span> Ejemplo 1 — Lanzar una moneda</h3>
+<p><img src="https://latex.codecogs.com/png.latex?%5COmega%20=%20%5C%7Bc,%20s%5C%7D%20%5Cqquad%20c:%20%5Ctext%7Bcara%7D,%20%5Cquad%20s:%20%5Ctext%7Bsello%7D"></p>
+</section>
+<section id="ejemplo-2-tiempo-de-espera-hasta-la-primera-cara" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="ejemplo-2-tiempo-de-espera-hasta-la-primera-cara"><span class="header-section-number">1.2</span> Ejemplo 2 — Tiempo de espera hasta la primera cara</h3>
+<p>El experimento aleatorio es: <em>el número de veces que es necesario lanzar una moneda hasta obtener por primera vez cara</em>. El espacio muestral natural es</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5COmega%20=%20%5Cmathbb%7BN%7D%20=%20%5C%7B1,%202,%203,%20%5Cldots%5C%7D"></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Por qué <img src="https://latex.codecogs.com/png.latex?%5COmega=%5Cmathbb%20N"> es un espacio muestral adecuado para este experimento? ¿Cómo se interpreta cada elemento <img src="https://latex.codecogs.com/png.latex?n%5Cin%5COmega">?</p>
+</div>
+</div>
+<p>Note que un mismo experimento puede tener distintos espacios muestrales. Por ejemplo,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5COmega'%20=%20%5C%7B0,1%5C%7D%5E%7B%5Cmathbb%7BN%7D%7D%20=%20%5C%7B(a_1,a_2,%5Cldots)%20:%20a_i%20%5Cin%20%5C%7B0,1%5C%7D%5C%7D"></p>
+<p>también funciona (registrando la sucesión <em>completa</em> de lanzamientos, con <img src="https://latex.codecogs.com/png.latex?1="> cara y <img src="https://latex.codecogs.com/png.latex?0="> sello, en lugar de solo el tiempo de espera).</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Por qué <img src="https://latex.codecogs.com/png.latex?%5COmega'"> también sirve como espacio muestral de este experimento? ¿Cómo se interpreta cada elemento de <img src="https://latex.codecogs.com/png.latex?%5COmega'">? ¿Qué relación hay entre <img src="https://latex.codecogs.com/png.latex?%5COmega"> y <img src="https://latex.codecogs.com/png.latex?%5COmega'">?</p>
+</div>
+</div>
+</section>
+<section id="ejemplo-3-lanzar-dos-dados" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="ejemplo-3-lanzar-dos-dados"><span class="header-section-number">1.3</span> Ejemplo 3 — Lanzar dos dados</h3>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5COmega%20=%20%5Cbig%5C%7B(i,j)%20:%20i,j%20%5Cin%20%5C%7B1,%5Cldots,6%5C%7D%5Cbig%5C%7D%20=%0A%5Cbegin%7Baligned%7D%0A&amp;%5C%7B(1,1),(1,2),(1,3),(1,4),(1,5),(1,6),%5C%5C%0A&amp;%5C%20(2,1),(2,2),(2,3),(2,4),(2,5),(2,6),%5C%5C%0A&amp;%5C%20(3,1),(3,2),(3,3),(3,4),(3,5),(3,6),%5C%5C%0A&amp;%5C%20(4,1),(4,2),(4,3),(4,4),(4,5),(4,6),%5C%5C%0A&amp;%5C%20(5,1),(5,2),(5,3),(5,4),(5,5),(5,6),%5C%5C%0A&amp;%5C%20(6,1),(6,2),(6,3),(6,4),(6,5),(6,6)%5C%7D%0A%5Cend%7Baligned%7D%0A"></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si lo que nos interesa es la <strong>suma</strong> de los dados, ¿cómo podemos simplificar el espacio muestral? Determine por extensión, en el espacio muestral inicial <img src="https://latex.codecogs.com/png.latex?%5COmega">, el evento “la suma da 6”:</p>
+<p><img src="https://latex.codecogs.com/png.latex?A%20=%20%5C%7B(a,b)%20%5Cin%20%5C%7B1,%5Cldots,6%5C%7D%5E2%20:%20a+b%20=%206%5C%7D"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="σ-álgebras" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="σ-álgebras"><span class="header-section-number">2</span> σ-álgebras</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio 4.1 — La traza de una σ-álgebra">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio 4.1 — La traza de una σ-álgebra
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si <img src="https://latex.codecogs.com/png.latex?%5Cmathfrak%7BB%7D"> es una σ-álgebra sobre <img src="https://latex.codecogs.com/png.latex?%5COmega"> y <img src="https://latex.codecogs.com/png.latex?%5CLambda%20%5Csubset%20%5COmega">, demuestre que la <strong>huella</strong> (o traza) de <img src="https://latex.codecogs.com/png.latex?%5Cmathfrak%7BB%7D"> sobre <img src="https://latex.codecogs.com/png.latex?%5CLambda">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cmathfrak%7BB%7D%5Cbig%7C_%5CLambda%20=%20%5C%7BA%20%5Ccap%20%5CLambda%20:%20A%20%5Cin%20%5Cmathfrak%7BB%7D%5C%7D,"></p>
+<p>es también una σ-álgebra, pero sobre <img src="https://latex.codecogs.com/png.latex?%5CLambda">.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio 4.2 — Preimagen de una σ-álgebra">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio 4.2 — Preimagen de una σ-álgebra
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si <img src="https://latex.codecogs.com/png.latex?f:%5COmega%20%5Cto%20%5COmega'"> y <img src="https://latex.codecogs.com/png.latex?%5Cmathfrak%7BB%7D'"> es una σ-álgebra sobre <img src="https://latex.codecogs.com/png.latex?%5COmega'">, demuestre que</p>
+<p><img src="https://latex.codecogs.com/png.latex?f%5E%7B-1%7D(%5Cmathfrak%7BB%7D')%20=%20%5C%7Bf%5E%7B-1%7D(A)%20:%20A%20%5Cin%20%5Cmathfrak%7BB%7D'%5C%7D"></p>
+<p>es una σ-álgebra sobre <img src="https://latex.codecogs.com/png.latex?%5COmega">.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio 4.3 — Intersección de σ-álgebras">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio 4.3 — Intersección de σ-álgebras
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre que la intersección de dos σ-álgebras sobre <img src="https://latex.codecogs.com/png.latex?%5COmega"> es una σ-álgebra sobre <img src="https://latex.codecogs.com/png.latex?%5COmega">.</p>
+<p>¿Qué pasa con la intersección <strong>arbitraria</strong> de σ-álgebras? ¿Y con la <strong>unión</strong>?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio 4.4 — Generadores de la σ-álgebra de Borel">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio 4.4 — Generadores de la σ-álgebra de Borel
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre rigurosamente que en <img src="https://latex.codecogs.com/png.latex?(%5Cmathbb%7BR%7D,%20%5Cmathfrak%7BB%7D(%5Cmathbb%7BR%7D))"> (la σ-álgebra de Borel), los conjuntos de la forma <img src="https://latex.codecogs.com/png.latex?(a,b%5D"> pertenecen a <img src="https://latex.codecogs.com/png.latex?%5Cmathfrak%7BB%7D(%5Cmathbb%7BR%7D)">, y que de hecho generan la misma σ-álgebra que los intervalos abiertos.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Recordatorio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Recordatorio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Aprenda de memoria todas las definiciones: sepa <strong>negarlas</strong>, sepa <strong>ejemplificarlas</strong> y sepa <strong>ejemplificar la negación</strong>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio — frecuencia vs. probabilidad">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio — frecuencia vs.&nbsp;probabilidad
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Lance una moneda 20 veces y calcule la frecuencia relativa de caras. ¿Qué relación tiene esto con la definición formal de probabilidad?</p>
+<p>¿Qué debería pasar con la espera de un seis al lanzar repetidamente un dado? ¿Cómo se puede simular esto en R?</p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">set.seed</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb1-2">n_max <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2000</span></span>
+<span id="cb1-3">lanzamientos <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sample</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>), n_max, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">replace =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 1 = cara</span></span>
+<span id="cb1-4">frecuencia_acumulada <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cumsum</span>(lanzamientos) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">seq_len</span>(n_max)</span>
+<span id="cb1-5"></span>
+<span id="cb1-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot</span>(frecuencia_acumulada, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"l"</span>,</span>
+<span id="cb1-7">     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xlab =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"número de lanzamientos"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ylab =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"frecuencia relativa de caras"</span>,</span>
+<span id="cb1-8">     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">main =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Convergencia de la frecuencia a p = 1/2"</span>)</span>
+<span id="cb1-9"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">abline</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">h =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"red"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lty =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span></code></pre></div></div>
+<div class="cell-output-display">
+<div id="fig-lgn-moneda" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lgn-moneda-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/probabilidad/introduccion/index_files/figure-html/fig-lgn-moneda-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lgn-moneda-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Convergencia de la frecuencia relativa de caras a p = 1/2
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>La curva oscila y se va estabilizando alrededor de <img src="https://latex.codecogs.com/png.latex?p=1/2">: el fenómeno empírico que la Ley de los Grandes Números justifica formalmente. La simulación <strong>exhibe</strong> la convergencia; no la <strong>explica</strong> — eso lo hace el teorema.</p>
+<iframe src="notebooks/moneda.html" width="100%" height="640" style="border:1px solid #dfe3e2; border-radius:6px;" title="Simulación de lanzamientos de moneda"></iframe>
+</section>
+<section id="continuidad-de-la-probabilidad" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="continuidad-de-la-probabilidad"><span class="header-section-number">3</span> Continuidad de la probabilidad</h2>
+<p>A continuación vamos a explicar cómo se demuestra que si <img src="https://latex.codecogs.com/png.latex?(A_n)_%7Bn%5Cin%5Cmathbb%20N%7D"> es una sucesión <strong>creciente</strong> de elementos de <img src="https://latex.codecogs.com/png.latex?%5Cmathfrak%7BF%7D">, con <img src="https://latex.codecogs.com/png.latex?(%5COmega,%5Cmathfrak%7BF%7D,P)"> un espacio de probabilidad, entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?P%5CBig(%5Clim_n%20A_n%5CBig)%20=%20%5Clim_n%20P(A_n)"></p>
+<p>Cuando tenemos una sucesión creciente de conjuntos, escribimos <img src="https://latex.codecogs.com/png.latex?%5Clim_n%20A_n%20=%20%5Cbigcup_n%20A_n">.</p>
+<p>La estrategia consiste en escribir <img src="https://latex.codecogs.com/png.latex?%5Cbigcup_n%20A_n"> como la unión de una familia <strong>disyunta</strong>:</p>
+<p><img src="https://latex.codecogs.com/png.latex?B_1%20=%20A_1,%20%5Cqquad%20B_n%20=%20A_n%20%5Csetminus%20A_%7Bn-1%7D%20%5C%20%5C%20(n%5Cge%202)"></p>
+<p>de modo que <img src="https://latex.codecogs.com/png.latex?%5Cbigcup_n%20B_n%20=%20%5Cbigcup_n%20A_n">, y los <img src="https://latex.codecogs.com/png.latex?B_n"> son disyuntos dos a dos (usamos que si <img src="https://latex.codecogs.com/png.latex?A%5Csubset%20B"> entonces <img src="https://latex.codecogs.com/png.latex?P(B%5Csetminus%20A)=P(B)-P(A)">).</p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?A_n%20%5Csubset%20A_%7Bn+1%7D">, entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(A_%7Bn+1%7D%5Csetminus%20A_n)%20=%20P(A_%7Bn+1%7D)%20-%20P(A_n)"></p>
+<p>Resumiendo:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AP(A)%20=%20P%5CBig(%5Cbigcup_i%20A_i%5CBig)%20=%20P%5CBig(%5Cbigcup_i%20B_i%5CBig)%20=%20%5Csum_i%20P(B_i)%20=%20P(A_1)%20+%20%5Csum_%7Bn%5Cge%201%7D%5Cbig(P(A_%7Bn+1%7D)-P(A_n)%5Cbig)%20=%20%5Clim_n%20P(A_n)%0A"></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Por qué los <img src="https://latex.codecogs.com/png.latex?B_n"> son disyuntos dos a dos? ¿Por qué la suma anterior es una <strong>serie telescópica</strong>?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="La paradoja de Méré">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>La paradoja de Méré
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Diseñe un experimento aleatorio que le permita resolver la paradoja de Méré: él creía que era igualmente probable obtener un seis en cuatro lanzamientos de un dado que obtener un doble seis en veinticuatro lanzamientos de dos dados. Revise en internet en qué estaba pensando (y en qué se equivocaba). Él creyó esto hasta que empezó a perder dinero.</p>
+<p>Recoja los datos de una simulación y compare con la solución formal (calculando las probabilidades exactas de cada evento).</p>
+</div>
+</div>
+</section>
+<section id="por-qué-la-probabilidad-puntual-falla-en-espacios-no-numerables" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="por-qué-la-probabilidad-puntual-falla-en-espacios-no-numerables"><span class="header-section-number">4</span> ¿Por qué la probabilidad puntual falla en espacios no numerables?</h2>
+<p>En un espacio de probabilidad <strong>discreto</strong> podemos determinar la probabilidad sumando masas puntuales:</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(A)%20=%20%5Csum_%7B%5Comega%20%5Cin%20A%7D%20P(%5C%7B%5Comega%5C%7D)"></p>
+<p>Pero veamos que <strong>no</strong> podemos definir la probabilidad así si el conjunto no es numerable (por ejemplo, <img src="https://latex.codecogs.com/png.latex?%5B0,1%5D"> o <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D">).</p>
+<p>Supongamos que sí se pudiera. Sea</p>
+<p><img src="https://latex.codecogs.com/png.latex?T_n%20=%20%5CBig%5C%7B%5Comega%20%5Cin%20%5COmega%20:%20P(%5C%7B%5Comega%5C%7D)%20%3E%20%5Ctfrac%7B1%7D%7Bn%7D%5CBig%5C%7D"></p>
+<p>Es claro que <img src="https://latex.codecogs.com/png.latex?T%20=%20%5Cbigcup_n%20T_n%20=%20%5C%7B%5Comega%20%5Cin%20%5COmega%20:%20P(%5C%7B%5Comega%5C%7D)%3E0%5C%7D">.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Es claro por qué <img src="https://latex.codecogs.com/png.latex?T=%5Cbigcup_n%20T_n">? Ahora, cada <img src="https://latex.codecogs.com/png.latex?T_n"> contiene a lo sumo <img src="https://latex.codecogs.com/png.latex?n"> puntos — ¿por qué? ¿Qué implica esto sobre <img src="https://latex.codecogs.com/png.latex?T">? ¿Cómo se interpreta el resultado?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Consecuencia">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Consecuencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Como cada <img src="https://latex.codecogs.com/png.latex?T_n"> es finito (<img src="https://latex.codecogs.com/png.latex?%7CT_n%7C%5Cle%20n">), <img src="https://latex.codecogs.com/png.latex?T"> es una unión numerable de conjuntos finitos, y por lo tanto <strong>numerable</strong>. Esto significa que a lo sumo una cantidad numerable de puntos de <img src="https://latex.codecogs.com/png.latex?%5COmega"> pueden tener masa puntual positiva — en un espacio no numerable como <img src="https://latex.codecogs.com/png.latex?%5B0,1%5D">, “sumar masas” no puede reproducir, por ejemplo, la probabilidad uniforme.</p>
+</div>
+</div>
+</section>
+<section id="probabilidad-de-laplace" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="probabilidad-de-laplace"><span class="header-section-number">5</span> Probabilidad de Laplace</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En un curso con 17 niñas y 15 niños (32 estudiantes en total), se seleccionan al azar 5 estudiantes para representar al curso. Explique por qué la probabilidad de que las 5 seleccionadas sean <strong>todas niñas</strong> es</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(A)%20=%20%5Cfrac%7B%5Cbinom%7B17%7D%7B5%7D%7D%7B%5Cbinom%7B32%7D%7B5%7D%7D%20%5Capprox%203.07%5Ctimes10%5E%7B-2%7D"></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Cuál sería la probabilidad de que <strong>al menos una niña</strong> sea seleccionada?</p>
+<p>¿Cuál es la probabilidad de ganarse el Baloto? ¿el chance? ¿la lotería?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicios del libro">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicios del libro
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Haga los ejercicios 1.1–1.26 (Blanco Castañeda, <em>Probabilidad</em>).</p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/probabilidad/introduccion/</guid>
+  <pubDate>Sat, 22 Aug 2026 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Cálculo de probabilidades</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/probabilidad/calculoprobabilidades/</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="repaso-de-técnicas-de-conteo" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="repaso-de-técnicas-de-conteo"><span class="header-section-number">1</span> Repaso de técnicas de conteo</h2>
+<section id="regla-del-producto" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="regla-del-producto"><span class="header-section-number">1.1</span> Regla del producto</h3>
+<p>Si un proceso consiste en dos elecciones sucesivas (o en paralelo), y la primera tiene <img src="https://latex.codecogs.com/png.latex?m"> opciones y la segunda <img src="https://latex.codecogs.com/png.latex?n"> opciones, el número de resultados posibles del proceso combinado es <img src="https://latex.codecogs.com/png.latex?m%5Ctimes%20n">.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo — dado y moneda">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo — dado y moneda
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Se lanza un dado y una moneda. El espacio muestral tiene</p>
+<p><img src="https://latex.codecogs.com/png.latex?%7C%5COmega%7C%20=%206%5Ctimes%202%20=%2012"></p>
+<p>resultados: <img src="https://latex.codecogs.com/png.latex?(1,c),(1,s),(2,c),(2,s),%5Cldots,(6,c),(6,s)">.</p>
+</div>
+</div>
+</section>
+<section id="permutaciones" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="permutaciones"><span class="header-section-number">1.2</span> Permutaciones</h3>
+<p>Si necesitamos ordenar <img src="https://latex.codecogs.com/png.latex?r"> objetos elegidos de un conjunto de <img src="https://latex.codecogs.com/png.latex?n"> elementos, para la primera posición hay <img src="https://latex.codecogs.com/png.latex?n"> opciones, para la segunda <img src="https://latex.codecogs.com/png.latex?n-1">, …, para la <img src="https://latex.codecogs.com/png.latex?r">-ésima quedan <img src="https://latex.codecogs.com/png.latex?n-(r-1)">. En total:</p>
+<p><img src="https://latex.codecogs.com/png.latex?n(n-1)%5Ccdots(n-r+1)%20=%20%5Cfrac%7Bn!%7D%7B(n-r)!%7D"></p>
+<p>(Note que <img src="https://latex.codecogs.com/png.latex?n!"> es el caso particular <img src="https://latex.codecogs.com/png.latex?r=n">.)</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo — ganchos y pantalones">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo — ganchos y pantalones
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Tengo 3 ganchos y 5 pantalones, y quiero colgar 3 de los 5 pantalones (uno por gancho). Para el primer gancho hay 5 opciones, para el segundo 4, para el tercero 3:</p>
+<p><img src="https://latex.codecogs.com/png.latex?5%5Ctimes4%5Ctimes3%20=%20%5Cfrac%7B5!%7D%7B2!%7D%20=%2060%20%5Ctext%7B%20formas%20distintas%7D"></p>
+<p>Si en cambio tuviera 5 pantalones para 5 ganchos, serían <img src="https://latex.codecogs.com/png.latex?5!=120"> formas.</p>
+</div>
+</div>
+</section>
+<section id="combinaciones" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="combinaciones"><span class="header-section-number">1.3</span> Combinaciones</h3>
+<p>Si el orden <strong>no importa</strong>, cada subconjunto de tamaño <img src="https://latex.codecogs.com/png.latex?r"> fue contado <img src="https://latex.codecogs.com/png.latex?r!"> veces en el conteo anterior (una vez por cada reordenación posible de sus elementos).</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con <img src="https://latex.codecogs.com/png.latex?n=4"> elementos <img src="https://latex.codecogs.com/png.latex?%5C%7Ba,b,c,d%5C%7D"> y <img src="https://latex.codecogs.com/png.latex?r=3">: las tuplas ordenadas <img src="https://latex.codecogs.com/png.latex?(a,b,c)">, <img src="https://latex.codecogs.com/png.latex?(a,c,b)">, <img src="https://latex.codecogs.com/png.latex?(b,a,c)">, <img src="https://latex.codecogs.com/png.latex?(b,c,a)">, <img src="https://latex.codecogs.com/png.latex?(c,a,b)">, <img src="https://latex.codecogs.com/png.latex?(c,b,a)"> son todas <em>distintas</em> como tuplas, pero corresponden al mismo subconjunto <img src="https://latex.codecogs.com/png.latex?%5C%7Ba,b,c%5C%7D">. Son <img src="https://latex.codecogs.com/png.latex?3!=6"> tuplas por cada subconjunto.</p>
+</div>
+</div>
+<p>Como cada subconjunto se contó <img src="https://latex.codecogs.com/png.latex?r!"> veces, dividimos:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbinom%7Bn%7D%7Br%7D%20=%20%5Cfrac%7B1%7D%7Br!%7D%5Ccdot%5Cfrac%7Bn!%7D%7B(n-r)!%7D%20=%20%5Cfrac%7Bn!%7D%7Br!%5C,(n-r)!%7D"></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Verifique con el ejemplo anterior (<img src="https://latex.codecogs.com/png.latex?n=4">, <img src="https://latex.codecogs.com/png.latex?r=3">) que <img src="https://latex.codecogs.com/png.latex?%5Cbinom%7B4%7D%7B3%7D=4">, listando explícitamente los 4 subconjuntos.</p>
+</div>
+</div>
+</section>
+<section id="coeficientes-multinomiales" class="level3" data-number="1.4">
+<h3 data-number="1.4" class="anchored" data-anchor-id="coeficientes-multinomiales"><span class="header-section-number">1.4</span> Coeficientes multinomiales</h3>
+<p>Supongamos que tenemos <img src="https://latex.codecogs.com/png.latex?n"> objetos y <img src="https://latex.codecogs.com/png.latex?m"> categorías (etiquetas, colores), y queremos partirlos ordenadamente en subgrupos de tamaños <img src="https://latex.codecogs.com/png.latex?k_1,k_2,%5Cldots,k_m"> con <img src="https://latex.codecogs.com/png.latex?k_1+%5Ccdots+k_m=n">. Elegimos el primer grupo (<img src="https://latex.codecogs.com/png.latex?%5Cbinom%7Bn%7D%7Bk_1%7D"> formas), luego el segundo de lo que queda (<img src="https://latex.codecogs.com/png.latex?%5Cbinom%7Bn-k_1%7D%7Bk_2%7D"> formas), y así sucesivamente. El producto telescopa:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbinom%7Bn%7D%7Bk_1%7D%5Cbinom%7Bn-k_1%7D%7Bk_2%7D%5Ccdots%5Cbinom%7Bn-k_1-%5Ccdots-k_%7Bm-1%7D%7D%7Bk_m%7D%20=%20%5Cfrac%7Bn!%7D%7Bk_1!%5C,k_2!%5C,%5Ccdots%5C,k_m!%7D%20=:%20%5Cbinom%7Bn%7D%7Bk_1,k_2,%5Cldots,k_m%7D%0A"></p>
+<p>Note que si <img src="https://latex.codecogs.com/png.latex?m=2">, <img src="https://latex.codecogs.com/png.latex?%5Cbinom%7Bn%7D%7Bk_1,k_2%7D=%5Cbinom%7Bn%7D%7Bk_1,n-k_1%7D=%5Cbinom%7Bn%7D%7Bk_1%7D">: el binomial es el caso particular de dos categorías.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo — bolas de colores">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo — bolas de colores
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Una urna tiene 4 bolas rojas, 3 azules y 2 verdes (9 en total). Al sacarlas todas y ponerlas en fila, el número de arreglos distintos es</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbinom%7B9%7D%7B4,3,2%7D%20=%20%5Cfrac%7B9!%7D%7B4!%5C,3!%5C,2!%7D%20=%201.260"></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo — extracción parcial sin importar el orden">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo — extracción parcial sin importar el orden
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>De la misma urna, se sacan 5 bolas (sin reemplazo) y queremos que sean 2 rojas, 2 azules y 1 verde, sin importar el orden de extracción. Aquí <strong>no</strong> es un multinomial (no se reparten todas las bolas): es un producto de combinaciones, eligiendo independientemente dentro de cada color:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbinom%7B4%7D%7B2%7D%5Cbinom%7B3%7D%7B2%7D%5Cbinom%7B2%7D%7B1%7D%20=%206%5Ccdot3%5Ccdot2%20=%2036"></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Diferencia clave">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Diferencia clave
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El coeficiente multinomial reparte <strong>todos</strong> los <img src="https://latex.codecogs.com/png.latex?n"> objetos entre las categorías (es un arreglo completo). El producto de binomiales cuenta <strong>selecciones parciales</strong> de cada categoría, cuando no se usan todos los objetos disponibles.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="ejemplo-placas-de-carros-en-colombia" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="ejemplo-placas-de-carros-en-colombia"><span class="header-section-number">2</span> Ejemplo — placas de carros en Colombia</h2>
+<p>Las placas de los vehículos particulares en Colombia tienen el formato <code>ABC 123</code>: tres letras seguidas de tres números. Usamos el alfabeto de 26 letras (sin contar la Ñ). Suponga que las placas se generan de forma aleatoria y uniforme sobre todas las combinaciones posibles.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Espacio muestral">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Espacio muestral
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><img src="https://latex.codecogs.com/png.latex?%7C%5COmega%7C%20=%2026%5E3%20%5Ctimes%2010%5E3%20=%2017.576.000"></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Probabilidad de una placa específica">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Probabilidad de una placa específica
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La probabilidad de que salga una placa particular, como <code>LIT 100</code>, es</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(%5C%7B%5Ctext%7BLIT%20100%7D%5C%7D)%20=%20%5Cfrac%7B1%7D%7B26%5E3%5Ccdot%2010%5E3%7D%20=%20%5Cfrac%7B1%7D%7B17.576.000%7D%20%5Capprox%205%7B,%7D6896%5Ctimes10%5E%7B-8%7D"></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Probabilidad de tres letras iguales y tres números iguales">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Probabilidad de tres letras iguales y tres números iguales
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ahora queremos la probabilidad de que la placa tenga la forma <code>XXX YYY</code> (las tres letras iguales entre sí, y los tres números iguales entre sí).</p>
+<p>Para las letras: la primera posición tiene 26 opciones, pero la segunda y la tercera ya no tienen ninguna opción libre (deben repetir la primera). Lo mismo para los números, con 10 opciones en la primera posición. Por la regla del producto:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5C#%5C%7B%5Ctext%7Bcasos%20favorables%7D%5C%7D%20=%2026%5Ctimes%2010%20=%20260"></p>
+<p><img src="https://latex.codecogs.com/png.latex?P(A)%20=%20%5Cfrac%7B26%5Ctimes10%7D%7B26%5E3%5Ctimes10%5E3%7D%20=%20%5Cfrac%7B260%7D%7B17.576.000%7D%20=%20%5Cfrac%7B1%7D%7B67.600%7D%20%5Capprox%201%7B,%7D479%5Ctimes10%5E%7B-5%7D"></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Cuántas placas hay con <strong>exactamente dos</strong> letras iguales (y la tercera distinta)? ¿Y con exactamente dos números iguales? Use esto para encontrar la probabilidad de que una placa tenga <em>alguna</em> repetición, ya sea en las letras o en los números.</p>
+</div>
+</div>
+</section>
+<section id="una-medida-de-probabilidad-construida-como-mezcla" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="una-medida-de-probabilidad-construida-como-mezcla"><span class="header-section-number">3</span> Una medida de probabilidad construida como mezcla</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Proposición (cf. Blanco Castañeda)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Proposición (cf.&nbsp;Blanco Castañeda)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sea <img src="https://latex.codecogs.com/png.latex?(P_n)_%7Bn%5Cin%5Cmathbb%20N%7D"> una sucesión de medidas de probabilidad sobre un espacio medible <img src="https://latex.codecogs.com/png.latex?(%5COmega,%5Cmathfrak%20F)">, y sea <img src="https://latex.codecogs.com/png.latex?(a_n)_%7Bn%5Cin%5Cmathbb%20N%7D"> una sucesión de reales no negativos con <img src="https://latex.codecogs.com/png.latex?%5Csum_n%20a_n%20=%201">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?P:%5Cmathfrak%20F%5Cto%5Cmathbb%20R,%20%5Cqquad%20P(A)%20=%20%5Csum_n%20a_n%5C,%20P_n(A)"></p>
+<p>es una medida de probabilidad sobre <img src="https://latex.codecogs.com/png.latex?(%5COmega,%5Cmathfrak%20F)">.</p>
+</div>
+</div>
+<p><strong>Demostración.</strong> La no negatividad de <img src="https://latex.codecogs.com/png.latex?P"> y <img src="https://latex.codecogs.com/png.latex?P(%5COmega)=%5Csum_n%20a_n%20P_n(%5COmega)%20=%20%5Csum_n%20a_n%20%5Ccdot%201%20=%201"> son inmediatas. Para la σ-aditividad, sea <img src="https://latex.codecogs.com/png.latex?(A_k)_k"> una familia disyunta dos a dos de elementos de <img src="https://latex.codecogs.com/png.latex?%5Cmathfrak%20F">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AP%5CBig(%5Cbigcup_k%20A_k%5CBig)%20=%20%5Csum_n%20a_n%5C,%20P_n%5CBig(%5Cbigcup_k%20A_k%5CBig)%20=%20%5Csum_n%20a_n%20%5Csum_k%20P_n(A_k)%20=%20%5Csum_n%5Csum_k%20a_n%20P_n(A_k)%0A"></p>
+<p>Como los términos son no negativos, la serie doble converge absolutamente y podemos intercambiar el orden de las sumas:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A=%20%5Csum_k%5Csum_n%20a_n%20P_n(A_k)%20=%20%5Csum_k%20P(A_k)%20%5Cqquad%5Cblacksquare%0A"></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿En qué paso de la demostración se usó específicamente que <img src="https://latex.codecogs.com/png.latex?(A_k)_k"> es disyunta? ¿Qué falla si los <img src="https://latex.codecogs.com/png.latex?A_k"> se traslapan?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio — ¿P(A)=P(B)=p implica P(A∩B)=p²?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio — ¿P(A)=P(B)=p implica P(A∩B)=p²?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Encuentre un contraejemplo. (Piense en qué pasa si <img src="https://latex.codecogs.com/png.latex?A=B">.)</p>
+</div>
+</div>
+</section>
+<section id="ejercicio-partición-de-un-grupo-en-subgrupos-iguales" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="ejercicio-partición-de-un-grupo-en-subgrupos-iguales"><span class="header-section-number">4</span> Ejercicio — partición de un grupo en subgrupos iguales</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio 1.7">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio 1.7
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un grupo de 40 estudiantes tiene 20 hombres y 20 mujeres. ¿Cuál es la probabilidad de que, al dividirlo en dos partes iguales (de 20 cada una), queden con la misma cantidad de hombres que de mujeres en cada parte?</p>
+<p><em>Ayuda:</em> <img src="https://latex.codecogs.com/png.latex?%5Cbinom%7B40%7D%7B20%7D"> mide cuántos grupos posibles de 20 personas se pueden armar; <img src="https://latex.codecogs.com/png.latex?%5Cbinom%7B20%7D%7B10%7D"> mide, de los 20 hombres, cuántos subgrupos de 10 hombres hay; análogamente para las mujeres.</p>
+</div>
+</div>
+</section>
+<section id="ejemplo-el-chance-directo-y-combinado" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="ejemplo-el-chance-directo-y-combinado"><span class="header-section-number">5</span> Ejemplo — el chance: directo y combinado</h2>
+<p>Recuerde que el chance consiste en acertar las últimas <img src="https://latex.codecogs.com/png.latex?k"> cifras del número ganador de una lotería o sorteo autorizado. Para <img src="https://latex.codecogs.com/png.latex?k=3"> cifras, el sorteo saca una de <img src="https://latex.codecogs.com/png.latex?10%5E3=1.000"> secuencias posibles, todas igualmente probables.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Directo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Directo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ganar el directo requiere acertar el orden exacto:</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(%5Ctext%7Bdirecto%7D)%20=%20%5Cfrac%7B1%7D%7B10%5E3%7D%20=%200%7B,%7D001"></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Combinado">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Combinado
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ganar el combinado requiere que las cifras salgan en <strong>cualquier</strong> orden. El número de secuencias favorables depende de cuántas de las tres cifras elegidas se repiten:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Cifras elegidas</th>
+<th>Permutaciones distintas</th>
+<th>Probabilidad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Las tres distintas (ej. <img src="https://latex.codecogs.com/png.latex?abc">)</td>
+<td><img src="https://latex.codecogs.com/png.latex?3!=6"></td>
+<td><img src="https://latex.codecogs.com/png.latex?6/1.000=0%7B,%7D006"></td>
+</tr>
+<tr class="even">
+<td>Dos iguales (ej. <img src="https://latex.codecogs.com/png.latex?aab">)</td>
+<td><img src="https://latex.codecogs.com/png.latex?3!/2!=3"></td>
+<td><img src="https://latex.codecogs.com/png.latex?3/1.000=0%7B,%7D003"></td>
+</tr>
+<tr class="odd">
+<td>Las tres iguales (ej. <img src="https://latex.codecogs.com/png.latex?aaa">)</td>
+<td><img src="https://latex.codecogs.com/png.latex?3!/3!=1"></td>
+<td><img src="https://latex.codecogs.com/png.latex?1/1.000=0%7B,%7D001"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Consecuencia">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Consecuencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El operador paga un valor <strong>fijo</strong> por el combinado, sin importar si las cifras elegidas se repiten o no. Como la probabilidad real de ganar sí cambia según el patrón de repetición, elegir cifras con repeticiones es una decisión estrictamente peor (misma paga, menor probabilidad) que elegir tres cifras distintas.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿En qué casos la modalidad <strong>pata</strong> (2 cifras) es mutuamente excluyente con la <strong>uña</strong> (1 cifra)? ¿Y cuándo, en cambio, una está <em>contenida</em> en la otra?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Qué es mejor: apostar solo al directo, solo al combinado, o a los dos simultáneamente (con el mismo número, dividiendo el presupuesto entre ambas modalidades)?</p>
+</div>
+</div>
+</section>
+<section id="ejercicio-comparando-probabilidades-raras" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="ejercicio-comparando-probabilidades-raras"><span class="header-section-number">6</span> Ejercicio — comparando probabilidades raras</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Estudie el esquema actual de sorteo del Baloto (números elegidos, tamaño del espacio muestral) y calcule la probabilidad de ganar el premio mayor con un solo tiquete. Compare esa probabilidad con la de que un jugador reciba las 13 cartas de un mismo palo (por ejemplo, todas las picas) al repartir una baraja de 52 cartas entre 4 jugadores. ¿Cuál es más improbable, y por qué factor?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicios del libro">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicios del libro
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Haga los ejercicios 1.1–1.26 (Blanco Castañeda, <em>Probabilidad</em>).</p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/probabilidad/calculoprobabilidades/</guid>
+  <pubDate>Sat, 22 Aug 2026 05:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>

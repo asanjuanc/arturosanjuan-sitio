@@ -1,6 +1,6 @@
 ---
 title: "Modelación con Ecuaciones Diferenciales"
-subtitle: "Apuntes de clase: interés compuesto, crecimiento exponencial, el modelo logístico, decaimiento radioactivo y mezclas"
+subtitle: "Interés compuesto, crecimiento exponencial, el modelo logístico, decaimiento radioactivo y mezclas"
 description: "De las cajitas de Nu al número e, del crecimiento bacteriano al absurdo de Malthus, y del modelo exponencial al logístico: ejercicios resueltos con Maxima y un simulador interactivo de curvas sigmoides."
 author: "Arturo Sanjuán"
 date: today

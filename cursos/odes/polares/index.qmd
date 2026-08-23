@@ -1,6 +1,6 @@
 ---
 title: "Coordenadas Polares"
-subtitle: "Apuntes de clase: curvas, pendientes y áreas en coordenadas polares"
+subtitle: "Curvas, pendientes y áreas en coordenadas polares"
 description: "De la conversión básica a la lemniscata de Bernoulli, pasando por la deducción completa de las trayectorias ortogonales en polares (con dos enfoques distintos) y el cálculo de áreas por sectores."
 author: "Arturo Sanjuán"
 date: today

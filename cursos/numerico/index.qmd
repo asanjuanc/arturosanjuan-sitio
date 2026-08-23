@@ -1,9 +1,14 @@
 ---
 title: "Análisis Numérico"
+subtitle: "Notas de clase del curso de computación y métodos numéricos siguiendo el libro de [Driscoll y Braun, versión Julia](https://fncbook.com/julia/)"
+description: .
 author: "Arturo Sanjuán"
 image: "lorenz.png"
 listing:
   contents: .
+  feed: true
   sort: "order"
   categories: false
+  type: table
+  fields: [title, subtitle]
 ---

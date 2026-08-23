@@ -7,4 +7,5 @@ listing:
     - probabilidad/index.qmd
     - odes/index.qmd
   type: grid
+  fields: [title, image, subtitle]
 ---

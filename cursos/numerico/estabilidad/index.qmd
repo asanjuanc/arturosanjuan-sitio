@@ -1,7 +1,7 @@
 ---
 title: "Estabilidad"
-subtitle: "Apuntes de clase: algoritmos, error hacia atrás, y el ejercicio 1.4.2"
-description: "Problemas vs. algoritmos, el método de Horner, estabilidad, error hacia atrás, y el análisis completo del ejercicio 1.4.2 (condicionamiento vs. inestabilidad para f(x)=(e^x-1)/x)."
+subtitle: "Algoritmos y estabilidad ejemplo con f(x)=(e^x-1)/x)."
+description: "Problemas vs. algoritmos, el método de Horner, estabilidad, error hacia atrás, y el análisis completo del ejercicio 1.4.2 (condicionamiento vs. inestabilidad para f(x)=(e^x-1)/x."
 author: "Arturo Sanjuán"
 date: today
 format:

@@ -1,9 +1,16 @@
 ---
 title: "Probabilidad"
+
+subtitle: "Notas de clase del curso de probabilidad siguiendo el libro de [Blanco](https://repositorio.unal.edu.co/items/132312a1-0f81-425e-a34f-e5ae9c51aa19)"
 author: "Arturo Sanjuán"
 image: "normal.png"
+
+
 listing:
+  feed: true
   contents: .
   sort: "order"
   categories: false
+  type: table
+  fields: [title, subtitle]
 ---

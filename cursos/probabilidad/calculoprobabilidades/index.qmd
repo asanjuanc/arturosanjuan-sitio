@@ -1,6 +1,6 @@
 ---
 title: "Cálculo de probabilidades"
-subtitle: "Apuntes de clase: técnicas de conteo y el modelo de Laplace"
+subtitle: "Técnicas de conteo y el modelo de Laplace"
 description: "Permutaciones, combinaciones y coeficientes multinomiales, con aplicaciones a placas vehiculares, el chance, el Baloto y la baraja."
 author: "Arturo Sanjuán"
 date: today
@@ -16,63 +16,7 @@ format:
 order: 2
 ---
 
-## Ejemplo — placas de carros en Colombia
 
-Las placas de los vehículos particulares en Colombia tienen el formato `ABC 123`: tres letras seguidas de tres números. Usamos el alfabeto de 26 letras (sin contar la Ñ). Suponga que las placas se generan de forma aleatoria y uniforme sobre todas las combinaciones posibles.
-
-::: {.callout-tip title="Espacio muestral"}
-$$|\Omega| = 26^3 \times 10^3 = 17.576.000$$
-:::
-
-::: {.callout-tip title="Probabilidad de una placa específica"}
-La probabilidad de que salga una placa particular, como `LIT 100`, es
-
-$$P(\{\text{LIT 100}\}) = \frac{1}{26^3\cdot 10^3} = \frac{1}{17.576.000} \approx 5{,}6896\times10^{-8}$$
-:::
-
-::: {.callout-tip title="Probabilidad de tres letras iguales y tres números iguales"}
-Ahora queremos la probabilidad de que la placa tenga la forma `XXX YYY` (las tres letras iguales entre sí, y los tres números iguales entre sí).
-
-Para las letras: la primera posición tiene 26 opciones, pero la segunda y la tercera ya no tienen ninguna opción libre (deben repetir la primera). Lo mismo para los números, con 10 opciones en la primera posición. Por la regla del producto:
-
-$$\#\{\text{casos favorables}\} = 26\times 10 = 260$$
-
-$$P(A) = \frac{26\times10}{26^3\times10^3} = \frac{260}{17.576.000} = \frac{1}{67.600} \approx 1{,}479\times10^{-5}$$
-:::
-
-::: {.callout-note title="Ejercicio"}
-¿Cuántas placas hay con **exactamente dos** letras iguales (y la tercera distinta)? ¿Y con exactamente dos números iguales? Use esto para encontrar la probabilidad de que una placa tenga *alguna* repetición, ya sea en las letras o en los números.
-:::
-
-## Una medida de probabilidad construida como mezcla
-
-::: {.callout-tip title="Proposición (cf. Blanco Castañeda)"}
-Sea $(P_n)_{n\in\mathbb N}$ una sucesión de medidas de probabilidad sobre un espacio medible $(\Omega,\mathfrak F)$, y sea $(a_n)_{n\in\mathbb N}$ una sucesión de reales no negativos con $\sum_n a_n = 1$. Entonces
-
-$$P:\mathfrak F\to\mathbb R, \qquad P(A) = \sum_n a_n\, P_n(A)$$
-
-es una medida de probabilidad sobre $(\Omega,\mathfrak F)$.
-:::
-
-**Demostración.** La no negatividad de $P$ y $P(\Omega)=\sum_n a_n P_n(\Omega) = \sum_n a_n \cdot 1 = 1$ son inmediatas. Para la σ-aditividad, sea $(A_k)_k$ una familia disyunta dos a dos de elementos de $\mathfrak F$. Entonces
-
-$$
-P\Big(\bigcup_k A_k\Big) = \sum_n a_n\, P_n\Big(\bigcup_k A_k\Big) = \sum_n a_n \sum_k P_n(A_k) = \sum_n\sum_k a_n P_n(A_k)
-$$
-
-Como los términos son no negativos, la serie doble converge absolutamente y podemos intercambiar el orden de las sumas:
-
-$$
-= \sum_k\sum_n a_n P_n(A_k) = \sum_k P(A_k) \qquad\blacksquare
-$$
-
-::: {.callout-note title="Ejercicio"}
-¿En qué paso de la demostración se usó específicamente que $(A_k)_k$ es disyunta? ¿Qué falla si los $A_k$ se traslapan?
-:::
-
-::: {.callout-note title="Ejercicio — ¿P(A)=P(B)=p implica P(A∩B)=p²?"}
-Encuentre un contraejemplo. (Piense en qué pasa si $A=B$.)
-:::
 
 ## Repaso de técnicas de conteo
 
@@ -145,6 +89,65 @@ $$\binom{4}{2}\binom{3}{2}\binom{2}{1} = 6\cdot3\cdot2 = 36$$
 ::: {.callout-important title="Diferencia clave"}
 El coeficiente multinomial reparte **todos** los $n$ objetos entre las categorías (es un arreglo completo). El producto de binomiales cuenta **selecciones parciales** de cada categoría, cuando no se usan todos los objetos disponibles.
 :::
+
+## Ejemplo — placas de carros en Colombia
+
+Las placas de los vehículos particulares en Colombia tienen el formato `ABC 123`: tres letras seguidas de tres números. Usamos el alfabeto de 26 letras (sin contar la Ñ). Suponga que las placas se generan de forma aleatoria y uniforme sobre todas las combinaciones posibles.
+
+::: {.callout-tip title="Espacio muestral"}
+$$|\Omega| = 26^3 \times 10^3 = 17.576.000$$
+:::
+
+::: {.callout-tip title="Probabilidad de una placa específica"}
+La probabilidad de que salga una placa particular, como `LIT 100`, es
+
+$$P(\{\text{LIT 100}\}) = \frac{1}{26^3\cdot 10^3} = \frac{1}{17.576.000} \approx 5{,}6896\times10^{-8}$$
+:::
+
+::: {.callout-tip title="Probabilidad de tres letras iguales y tres números iguales"}
+Ahora queremos la probabilidad de que la placa tenga la forma `XXX YYY` (las tres letras iguales entre sí, y los tres números iguales entre sí).
+
+Para las letras: la primera posición tiene 26 opciones, pero la segunda y la tercera ya no tienen ninguna opción libre (deben repetir la primera). Lo mismo para los números, con 10 opciones en la primera posición. Por la regla del producto:
+
+$$\#\{\text{casos favorables}\} = 26\times 10 = 260$$
+
+$$P(A) = \frac{26\times10}{26^3\times10^3} = \frac{260}{17.576.000} = \frac{1}{67.600} \approx 1{,}479\times10^{-5}$$
+:::
+
+::: {.callout-note title="Ejercicio"}
+¿Cuántas placas hay con **exactamente dos** letras iguales (y la tercera distinta)? ¿Y con exactamente dos números iguales? Use esto para encontrar la probabilidad de que una placa tenga *alguna* repetición, ya sea en las letras o en los números.
+:::
+
+## Una medida de probabilidad construida como mezcla
+
+::: {.callout-tip title="Proposición (cf. Blanco Castañeda)"}
+Sea $(P_n)_{n\in\mathbb N}$ una sucesión de medidas de probabilidad sobre un espacio medible $(\Omega,\mathfrak F)$, y sea $(a_n)_{n\in\mathbb N}$ una sucesión de reales no negativos con $\sum_n a_n = 1$. Entonces
+
+$$P:\mathfrak F\to\mathbb R, \qquad P(A) = \sum_n a_n\, P_n(A)$$
+
+es una medida de probabilidad sobre $(\Omega,\mathfrak F)$.
+:::
+
+**Demostración.** La no negatividad de $P$ y $P(\Omega)=\sum_n a_n P_n(\Omega) = \sum_n a_n \cdot 1 = 1$ son inmediatas. Para la σ-aditividad, sea $(A_k)_k$ una familia disyunta dos a dos de elementos de $\mathfrak F$. Entonces
+
+$$
+P\Big(\bigcup_k A_k\Big) = \sum_n a_n\, P_n\Big(\bigcup_k A_k\Big) = \sum_n a_n \sum_k P_n(A_k) = \sum_n\sum_k a_n P_n(A_k)
+$$
+
+Como los términos son no negativos, la serie doble converge absolutamente y podemos intercambiar el orden de las sumas:
+
+$$
+= \sum_k\sum_n a_n P_n(A_k) = \sum_k P(A_k) \qquad\blacksquare
+$$
+
+::: {.callout-note title="Ejercicio"}
+¿En qué paso de la demostración se usó específicamente que $(A_k)_k$ es disyunta? ¿Qué falla si los $A_k$ se traslapan?
+:::
+
+::: {.callout-note title="Ejercicio — ¿P(A)=P(B)=p implica P(A∩B)=p²?"}
+Encuentre un contraejemplo. (Piense en qué pasa si $A=B$.)
+:::
+
 
 ## Ejercicio — partición de un grupo en subgrupos iguales
 
