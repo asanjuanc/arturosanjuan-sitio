@@ -4,6 +4,7 @@ subtitle: "Notas de clase del curso de computación y métodos numéricos siguie
 description: .
 author: "Arturo Sanjuán"
 image: "lorenz.png"
+comments: false
 listing:
   contents: .
   feed: true

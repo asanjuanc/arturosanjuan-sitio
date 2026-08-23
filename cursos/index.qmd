@@ -1,6 +1,7 @@
 ---
 title: "Apuntes de clase"
 author: "Arturo Sanjuán"
+comments: false
 listing:
   contents:
     - numerico/index.qmd

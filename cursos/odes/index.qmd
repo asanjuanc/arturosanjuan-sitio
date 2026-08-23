@@ -5,6 +5,7 @@ subtitle: "Notas de clase del curso de ecuaciones diferenciales siguiendo el lib
 description: .
 author: "Arturo Sanjuán"
 image: "vector.png"
+comments: false
 listing:
   contents: .
   feed: true

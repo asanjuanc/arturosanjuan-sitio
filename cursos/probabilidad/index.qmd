@@ -5,6 +5,7 @@ subtitle: "Notas de clase del curso de probabilidad siguiendo el libro de [Blanc
 author: "Arturo Sanjuán"
 image: "normal.png"
 
+comments: false
 
 listing:
   feed: true

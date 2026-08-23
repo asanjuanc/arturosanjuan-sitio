@@ -12,6 +12,18 @@ website:
   site-url: "https://arturosanjuan.xyz"
   favicon: "favicon.png"
   page-navigation: true
+  comments:
+    giscus:
+      repo: "asanjuanc/arturosanjuan-sitio"
+      repo-id: "R_kgDOTzuHrw"
+      category: "Comentarios"
+      category-id: "DIC_kwDOTzuHr84DD_eD"
+      mapping: pathname
+      reactions-enabled: true
+      loading: lazy
+      input-position: "top"
+      theme: preferred_color_scheme
+      language: "es"
   navbar:
     left:
       - href: index.qmd
@@ -63,3 +75,4 @@ format:
       - brand
     css: styles.css
     toc: true
+
