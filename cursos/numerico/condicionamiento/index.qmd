@@ -109,28 +109,31 @@ $$\lim_{x\to 0}\frac{e^x-1}{x} = \lim_{x\to 0}\frac{\dfrac{d}{dx}(e^x-1)}{\dfrac
 
 Esto confirma, sin usar series de Taylor, que $f(0)=1$ es la extensión continua correcta.
 
-### Comportamiento en $\pm\infty$
+## Comportamiento de $\kappa_f$ en $\pm\infty$
 
-**Cuando $x\to+\infty$:** también es indeterminado ($\infty/\infty$), así que L'Hôpital vuelve a aplicar:
+Ya sabemos que $\kappa_f(0)=0$. Para completar el panorama, veamos qué le pasa a $\kappa_f(x)=\left|\dfrac{N(x)}{D(x)}\right|$, con $N(x)=(x-1)e^x+1$ y $D(x)=e^x-1$, en los dos extremos.
 
-$$\lim_{x\to+\infty}\frac{e^x-1}{x} = \lim_{x\to+\infty}\frac{e^x}{1} = +\infty$$
+Cuando $x\to+\infty$: tanto $N(x)$ como $D(x)$ divergen ($e^x$ domina en ambos), así que es indeterminado $\infty/\infty$ y L'Hôpital aplica:
 
-El numerador crece exponencialmente mientras el denominador crece linealmente, así que el cociente diverge.
+$$\lim_{x\to+\infty}\frac{N(x)}{D(x)} = \lim_{x\to+\infty}\frac{N'(x)}{D'(x)} = \lim_{x\to+\infty}\frac{xe^x}{e^x} = \lim_{x\to+\infty} x = +\infty$$
 
-**Cuando $x\to-\infty$:** aquí **no** hay indeterminación, así que L'Hôpital no es necesario ni aplicable. Como $e^x\to 0$:
+(se usó $N'(x)=e^x+(x-1)e^x=xe^x$ y $D'(x)=e^x$; tras una sola aplicación de L'Hôpital el cociente ya se simplifica sin quedar indeterminado). Entonces $\displaystyle\lim_{x\to+\infty}\kappa_f(x)=+\infty$: el problema se vuelve arbitrariamente mal condicionado para $x$ grande — aunque de forma "mansa", porque $\kappa_f(x)\approx x$ crece solo linealmente (no exponencialmente).
 
-$$\lim_{x\to-\infty}\frac{e^x-1}{x} = \frac{0-1}{-\infty} = \frac{-1}{-\infty} = 0$$
+Cuando $x\to-\infty$: aquí no hay indeterminación, porque $e^x\to0$ y ambos, numerador y denominador, convergen a valores finitos directamente:
 
-el numerador se acerca a la constante $-1$ mientras el denominador diverge, así que el cociente se anula directamente.
+$$N(x)=(x-1)e^x+1 \;\longrightarrow\; 0+1=1$$
 
-$$\boxed{\lim_{x\to-\infty} f(x) = 0, \qquad f(0)=1, \qquad \lim_{x\to+\infty} f(x) = +\infty}$$
+($(x-1)e^x\to0$ porque la exponencial decae más rápido de lo que cualquier polinomio crece)
 
-El problema está bien condicionado para valores negativos. Para valores grandes el problema está mal condicionado.
+$$D(x)=e^x-1 \;\longrightarrow\; 0-1=-1$$
 
-::: {.callout-note title="¿Cómo funciona `expm1`?"}
-`expm1(x)` calcula $e^x-1$ sin pasar por la resta explícita: para $x$ pequeño usa internamente una expansión en serie (o una tabla/aproximación racional de alta precisión) diseñada para que el resultado converja correctamente a $0$ cuando $x\to0$, sin cancelar dígitos. Para $x$ no pequeño, se reduce esencialmente al cálculo directo $e^x-1$, que ahí no tiene problema de cancelación. Es la misma idea que la serie de Maclaurin del ejercicio 1.4.2: evitar la resta de dos cantidades casi iguales.
-:::
+$$\lim_{x\to-\infty}\kappa_f(x) = \left|\frac{1}{-1}\right| = 1$$
 
+En resumen
+
+$$\lim_{x\to-\infty}\kappa_f(x)=1 \qquad \kappa_f(0)=0 \qquad \lim_{x\to+\infty}\kappa_f(x)=+\infty$$
+
+Para $x\le0$, $\kappa_f$ queda **acotado entre 0 y 1**: el problema está uniformemente bien condicionado en todo el semieje negativo. Para $x$ positivo y grande, el problema se vuelve mal condicionado, pero solo linealmente (consistente con los valores numéricos: $\kappa_f(10^{-6})\approx5\times10^{-7}$, $\kappa_f(1)\approx0{,}58$, $\kappa_f(10)\approx9$, $\kappa_f(20)\approx19$).
 
 
 ## Ejercicio 1.2.5 — condición del inverso

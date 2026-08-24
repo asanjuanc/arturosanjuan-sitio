@@ -200,12 +200,12 @@ window.Quarto = {
   <li><a href="#ejercicio-1.2.3-fxdfracex-1x" id="toc-ejercicio-1.2.3-fxdfracex-1x" class="nav-link" data-scroll-target="#ejercicio-1.2.3-fxdfracex-1x"><span class="header-section-number">3</span> Ejercicio 1.2.3 — <span class="math inline">\(f(x)=\dfrac{e^x-1}{x}\)</span></a>
   <ul class="collapse">
   <li><a href="#el-límite-en-x0-vía-lhôpital" id="toc-el-límite-en-x0-vía-lhôpital" class="nav-link" data-scroll-target="#el-límite-en-x0-vía-lhôpital"><span class="header-section-number">3.1</span> El límite en <span class="math inline">\(x=0\)</span> vía L’Hôpital</a></li>
-  <li><a href="#comportamiento-en-pminfty" id="toc-comportamiento-en-pminfty" class="nav-link" data-scroll-target="#comportamiento-en-pminfty"><span class="header-section-number">3.2</span> Comportamiento en <span class="math inline">\(\pm\infty\)</span></a></li>
   </ul></li>
-  <li><a href="#ejercicio-1.2.5-condición-del-inverso" id="toc-ejercicio-1.2.5-condición-del-inverso" class="nav-link" data-scroll-target="#ejercicio-1.2.5-condición-del-inverso"><span class="header-section-number">4</span> Ejercicio 1.2.5 — condición del inverso</a></li>
-  <li><a href="#raíces-de-un-polinomio-cuadrático" id="toc-raíces-de-un-polinomio-cuadrático" class="nav-link" data-scroll-target="#raíces-de-un-polinomio-cuadrático"><span class="header-section-number">5</span> Raíces de un polinomio cuadrático</a></li>
-  <li><a href="#simulación-sensibilidad-de-las-raíces-de-pxax-cx-d" id="toc-simulación-sensibilidad-de-las-raíces-de-pxax-cx-d" class="nav-link" data-scroll-target="#simulación-sensibilidad-de-las-raíces-de-pxax-cx-d"><span class="header-section-number">6</span> Simulación — sensibilidad de las raíces de <span class="math inline">\(p(x)=a(x-c)(x-d)\)</span></a></li>
-  <li><a href="#tarea" id="toc-tarea" class="nav-link" data-scroll-target="#tarea"><span class="header-section-number">7</span> Tarea</a></li>
+  <li><a href="#comportamiento-de-kappa_f-en-pminfty" id="toc-comportamiento-de-kappa_f-en-pminfty" class="nav-link" data-scroll-target="#comportamiento-de-kappa_f-en-pminfty"><span class="header-section-number">4</span> Comportamiento de <span class="math inline">\(\kappa_f\)</span> en <span class="math inline">\(\pm\infty\)</span></a></li>
+  <li><a href="#ejercicio-1.2.5-condición-del-inverso" id="toc-ejercicio-1.2.5-condición-del-inverso" class="nav-link" data-scroll-target="#ejercicio-1.2.5-condición-del-inverso"><span class="header-section-number">5</span> Ejercicio 1.2.5 — condición del inverso</a></li>
+  <li><a href="#raíces-de-un-polinomio-cuadrático" id="toc-raíces-de-un-polinomio-cuadrático" class="nav-link" data-scroll-target="#raíces-de-un-polinomio-cuadrático"><span class="header-section-number">6</span> Raíces de un polinomio cuadrático</a></li>
+  <li><a href="#simulación-sensibilidad-de-las-raíces-de-pxax-cx-d" id="toc-simulación-sensibilidad-de-las-raíces-de-pxax-cx-d" class="nav-link" data-scroll-target="#simulación-sensibilidad-de-las-raíces-de-pxax-cx-d"><span class="header-section-number">7</span> Simulación — sensibilidad de las raíces de <span class="math inline">\(p(x)=a(x-c)(x-d)\)</span></a></li>
+  <li><a href="#tarea" id="toc-tarea" class="nav-link" data-scroll-target="#tarea"><span class="header-section-number">8</span> Tarea</a></li>
   </ul>
 </nav>
 </nav>
@@ -379,33 +379,24 @@ window.Quarto = {
 <p><span class="math display">\[\lim_{x\to 0}\frac{e^x-1}{x} = \lim_{x\to 0}\frac{\dfrac{d}{dx}(e^x-1)}{\dfrac{d}{dx}(x)} = \lim_{x\to 0}\frac{e^x}{1} = e^0 = 1\]</span></p>
 <p>Esto confirma, sin usar series de Taylor, que <span class="math inline">\(f(0)=1\)</span> es la extensión continua correcta.</p>
 </section>
-<section id="comportamiento-en-pminfty" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="comportamiento-en-pminfty"><span class="header-section-number">3.2</span> Comportamiento en <span class="math inline">\(\pm\infty\)</span></h3>
-<p><strong>Cuando <span class="math inline">\(x\to+\infty\)</span>:</strong> también es indeterminado (<span class="math inline">\(\infty/\infty\)</span>), así que L’Hôpital vuelve a aplicar:</p>
-<p><span class="math display">\[\lim_{x\to+\infty}\frac{e^x-1}{x} = \lim_{x\to+\infty}\frac{e^x}{1} = +\infty\]</span></p>
-<p>El numerador crece exponencialmente mientras el denominador crece linealmente, así que el cociente diverge.</p>
-<p><strong>Cuando <span class="math inline">\(x\to-\infty\)</span>:</strong> aquí <strong>no</strong> hay indeterminación, así que L’Hôpital no es necesario ni aplicable. Como <span class="math inline">\(e^x\to 0\)</span>:</p>
-<p><span class="math display">\[\lim_{x\to-\infty}\frac{e^x-1}{x} = \frac{0-1}{-\infty} = \frac{-1}{-\infty} = 0\]</span></p>
-<p>el numerador se acerca a la constante <span class="math inline">\(-1\)</span> mientras el denominador diverge, así que el cociente se anula directamente.</p>
-<p><span class="math display">\[\boxed{\lim_{x\to-\infty} f(x) = 0, \qquad f(0)=1, \qquad \lim_{x\to+\infty} f(x) = +\infty}\]</span></p>
-<p>El problema está bien condicionado para valores negativos. Para valores grandes el problema está mal condicionado.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="¿Cómo funciona `expm1`?">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>¿Cómo funciona <code>expm1</code>?
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><code>expm1(x)</code> calcula <span class="math inline">\(e^x-1\)</span> sin pasar por la resta explícita: para <span class="math inline">\(x\)</span> pequeño usa internamente una expansión en serie (o una tabla/aproximación racional de alta precisión) diseñada para que el resultado converja correctamente a <span class="math inline">\(0\)</span> cuando <span class="math inline">\(x\to0\)</span>, sin cancelar dígitos. Para <span class="math inline">\(x\)</span> no pequeño, se reduce esencialmente al cálculo directo <span class="math inline">\(e^x-1\)</span>, que ahí no tiene problema de cancelación. Es la misma idea que la serie de Maclaurin del ejercicio 1.4.2: evitar la resta de dos cantidades casi iguales.</p>
-</div>
-</div>
 </section>
+<section id="comportamiento-de-kappa_f-en-pminfty" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="comportamiento-de-kappa_f-en-pminfty"><span class="header-section-number">4</span> Comportamiento de <span class="math inline">\(\kappa_f\)</span> en <span class="math inline">\(\pm\infty\)</span></h2>
+<p>Ya sabemos que <span class="math inline">\(\kappa_f(0)=0\)</span>. Para completar el panorama, veamos qué le pasa a <span class="math inline">\(\kappa_f(x)=\left|\dfrac{N(x)}{D(x)}\right|\)</span>, con <span class="math inline">\(N(x)=(x-1)e^x+1\)</span> y <span class="math inline">\(D(x)=e^x-1\)</span>, en los dos extremos.</p>
+<p>Cuando <span class="math inline">\(x\to+\infty\)</span>: tanto <span class="math inline">\(N(x)\)</span> como <span class="math inline">\(D(x)\)</span> divergen (<span class="math inline">\(e^x\)</span> domina en ambos), así que es indeterminado <span class="math inline">\(\infty/\infty\)</span> y L’Hôpital aplica:</p>
+<p><span class="math display">\[\lim_{x\to+\infty}\frac{N(x)}{D(x)} = \lim_{x\to+\infty}\frac{N'(x)}{D'(x)} = \lim_{x\to+\infty}\frac{xe^x}{e^x} = \lim_{x\to+\infty} x = +\infty\]</span></p>
+<p>(se usó <span class="math inline">\(N'(x)=e^x+(x-1)e^x=xe^x\)</span> y <span class="math inline">\(D'(x)=e^x\)</span>; tras una sola aplicación de L’Hôpital el cociente ya se simplifica sin quedar indeterminado). Entonces <span class="math inline">\(\displaystyle\lim_{x\to+\infty}\kappa_f(x)=+\infty\)</span>: el problema se vuelve arbitrariamente mal condicionado para <span class="math inline">\(x\)</span> grande — aunque de forma “mansa”, porque <span class="math inline">\(\kappa_f(x)\approx x\)</span> crece solo linealmente (no exponencialmente).</p>
+<p>Cuando <span class="math inline">\(x\to-\infty\)</span>: aquí no hay indeterminación, porque <span class="math inline">\(e^x\to0\)</span> y ambos, numerador y denominador, convergen a valores finitos directamente:</p>
+<p><span class="math display">\[N(x)=(x-1)e^x+1 \;\longrightarrow\; 0+1=1\]</span></p>
+<p>(<span class="math inline">\((x-1)e^x\to0\)</span> porque la exponencial decae más rápido de lo que cualquier polinomio crece)</p>
+<p><span class="math display">\[D(x)=e^x-1 \;\longrightarrow\; 0-1=-1\]</span></p>
+<p><span class="math display">\[\lim_{x\to-\infty}\kappa_f(x) = \left|\frac{1}{-1}\right| = 1\]</span></p>
+<p>En resumen</p>
+<p><span class="math display">\[\lim_{x\to-\infty}\kappa_f(x)=1 \qquad \kappa_f(0)=0 \qquad \lim_{x\to+\infty}\kappa_f(x)=+\infty\]</span></p>
+<p>Para <span class="math inline">\(x\le0\)</span>, <span class="math inline">\(\kappa_f\)</span> queda <strong>acotado entre 0 y 1</strong>: el problema está uniformemente bien condicionado en todo el semieje negativo. Para <span class="math inline">\(x\)</span> positivo y grande, el problema se vuelve mal condicionado, pero solo linealmente (consistente con los valores numéricos: <span class="math inline">\(\kappa_f(10^{-6})\approx5\times10^{-7}\)</span>, <span class="math inline">\(\kappa_f(1)\approx0{,}58\)</span>, <span class="math inline">\(\kappa_f(10)\approx9\)</span>, <span class="math inline">\(\kappa_f(20)\approx19\)</span>).</p>
 </section>
-<section id="ejercicio-1.2.5-condición-del-inverso" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="ejercicio-1.2.5-condición-del-inverso"><span class="header-section-number">4</span> Ejercicio 1.2.5 — condición del inverso</h2>
+<section id="ejercicio-1.2.5-condición-del-inverso" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="ejercicio-1.2.5-condición-del-inverso"><span class="header-section-number">5</span> Ejercicio 1.2.5 — condición del inverso</h2>
 <p>Sea <span class="math inline">\(f\)</span> con número de condición <span class="math inline">\(\kappa_f\)</span>, y <span class="math inline">\(f^{-1}\)</span> su inversa. Queremos mostrar</p>
 <p><span class="math display">\[\kappa_{f^{-1}}(x) = \frac{1}{\kappa_f\big(f^{-1}(x)\big)}\]</span></p>
 <p><strong>Demostración</strong>, sin invocar el teorema de la función inversa: sea <span class="math inline">\(h = f\circ f^{-1} = \text{id}\)</span>.</p>
@@ -416,8 +407,8 @@ window.Quarto = {
 <p><span class="math display">\[1 = \kappa_f\big(f^{-1}(x)\big)\cdot\kappa_{f^{-1}}(x) \;\Longrightarrow\; \kappa_{f^{-1}}(x)=\frac{1}{\kappa_f\big(f^{-1}(x)\big)} \qquad \blacksquare\]</span></p>
 <p>Esta ruta es más corta que aplicar el teorema de la función inversa directamente, y no exige demostrar por separado que <span class="math inline">\(f^{-1}\)</span> es derivable.</p>
 </section>
-<section id="raíces-de-un-polinomio-cuadrático" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="raíces-de-un-polinomio-cuadrático"><span class="header-section-number">5</span> Raíces de un polinomio cuadrático</h2>
+<section id="raíces-de-un-polinomio-cuadrático" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="raíces-de-un-polinomio-cuadrático"><span class="header-section-number">6</span> Raíces de un polinomio cuadrático</h2>
 <p>Consideremos <span class="math inline">\(ax^2+bx+c=0\)</span>. Los datos son los coeficientes <span class="math inline">\((a,b,c)\)</span>; el resultado son las raíces <span class="math inline">\(r_1,r_2\)</span> (posiblemente complejas). Formalmente, <span class="math inline">\(f(a,b,c)=(r_1,r_2)\)</span>.</p>
 <p>Fijamos <span class="math inline">\(b,c\)</span> y perturbamos solo el coeficiente principal <span class="math inline">\(a\)</span>, para ver cómo responde <span class="math inline">\(r_1\)</span>: <span class="math inline">\(f(a)=r_1\)</span>. Partiendo de la identidad <span class="math inline">\(ar_1^2+br_1+c=0\)</span> y derivando implícitamente respecto a <span class="math inline">\(a\)</span> (con <span class="math inline">\(b,c\)</span> fijos):</p>
 <p><span class="math display">\[r_1^2+2ar_1\frac{dr_1}{da}+b\,\frac{dr_1}{da}=0 \;\Longrightarrow\; \frac{dr_1}{da}=\frac{-r_1^2}{2ar_1+b}\]</span></p>
@@ -426,8 +417,8 @@ window.Quarto = {
 <p><span class="math display">\[\boxed{\kappa_f(a) = \left|\frac{r_1}{r_1-r_2}\right|}\]</span></p>
 <p>El problema está mal condicionado exactamente cuando <span class="math inline">\(|r_1|\gg|r_1-r_2|\)</span> — es decir, cuando las raíces están mucho más cerca entre sí que del origen. En el caso extremo de una raíz doble (<span class="math inline">\(r_1=r_2\)</span>), <span class="math inline">\(\kappa_f\to\infty\)</span>.</p>
 </section>
-<section id="simulación-sensibilidad-de-las-raíces-de-pxax-cx-d" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="simulación-sensibilidad-de-las-raíces-de-pxax-cx-d"><span class="header-section-number">6</span> Simulación — sensibilidad de las raíces de <span class="math inline">\(p(x)=a(x-c)(x-d)\)</span></h2>
+<section id="simulación-sensibilidad-de-las-raíces-de-pxax-cx-d" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="simulación-sensibilidad-de-las-raíces-de-pxax-cx-d"><span class="header-section-number">7</span> Simulación — sensibilidad de las raíces de <span class="math inline">\(p(x)=a(x-c)(x-d)\)</span></h2>
 <p>Para hacer tangible la fórmula anterior, parametrizamos el polinomio directamente por sus raíces <span class="math inline">\(c,d\)</span> y su coeficiente principal <span class="math inline">\(a\)</span>:</p>
 <p><span class="math display">\[p(x) = a(x-c)(x-d) = a\,x^2 \underbrace{-\,a(c+d)}_{B}\,x + \underbrace{a\,c\,d}_{C}\]</span></p>
 <p>de modo que, en ausencia de redondeo, las raíces son exactamente <span class="math inline">\(r_1=c\)</span> y <span class="math inline">\(r_2=d\)</span> para cualquier <span class="math inline">\(a\ne 0\)</span>. La simulación perturba <strong>solo</strong> el coeficiente <span class="math inline">\(a\to a(1+\varepsilon)\)</span>, mantiene <span class="math inline">\(B,C\)</span> fijos (tal como en la derivación de <span class="math inline">\(\kappa_f(a)\)</span>), recalcula las raíces con la fórmula cuadrática, y compara:</p>
@@ -439,8 +430,8 @@ window.Quarto = {
 <iframe src="notebooks/condicionamiento-simulacion.html" width="100%" height="1400px" style="border:none;">
 </iframe>
 </section>
-<section id="tarea" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="tarea"><span class="header-section-number">7</span> Tarea</h2>
+<section id="tarea" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="tarea"><span class="header-section-number">8</span> Tarea</h2>
 <p>Resolver los siguientes ejercicios de la sección 1.2 (“Exercises”) de <em>Fundamentals of Numerical Computation</em>, disponibles en <a href="https://fncbook.com/julia/conditioning/#exercises" class="uri">https://fncbook.com/julia/conditioning/#exercises</a>:</p>
 
 

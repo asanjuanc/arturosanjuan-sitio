@@ -565,33 +565,24 @@ font-style: inherit;">end</span></span></code></pre></div></div>
 <p><img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bx%5Cto%200%7D%5Cfrac%7Be%5Ex-1%7D%7Bx%7D%20=%20%5Clim_%7Bx%5Cto%200%7D%5Cfrac%7B%5Cdfrac%7Bd%7D%7Bdx%7D(e%5Ex-1)%7D%7B%5Cdfrac%7Bd%7D%7Bdx%7D(x)%7D%20=%20%5Clim_%7Bx%5Cto%200%7D%5Cfrac%7Be%5Ex%7D%7B1%7D%20=%20e%5E0%20=%201"></p>
 <p>Esto confirma, sin usar series de Taylor, que <img src="https://latex.codecogs.com/png.latex?f(0)=1"> es la extensión continua correcta.</p>
 </section>
-<section id="comportamiento-en-pminfty" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="comportamiento-en-pminfty"><span class="header-section-number">3.2</span> Comportamiento en <img src="https://latex.codecogs.com/png.latex?%5Cpm%5Cinfty"></h3>
-<p><strong>Cuando <img src="https://latex.codecogs.com/png.latex?x%5Cto+%5Cinfty">:</strong> también es indeterminado (<img src="https://latex.codecogs.com/png.latex?%5Cinfty/%5Cinfty">), así que L’Hôpital vuelve a aplicar:</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bx%5Cto+%5Cinfty%7D%5Cfrac%7Be%5Ex-1%7D%7Bx%7D%20=%20%5Clim_%7Bx%5Cto+%5Cinfty%7D%5Cfrac%7Be%5Ex%7D%7B1%7D%20=%20+%5Cinfty"></p>
-<p>El numerador crece exponencialmente mientras el denominador crece linealmente, así que el cociente diverge.</p>
-<p><strong>Cuando <img src="https://latex.codecogs.com/png.latex?x%5Cto-%5Cinfty">:</strong> aquí <strong>no</strong> hay indeterminación, así que L’Hôpital no es necesario ni aplicable. Como <img src="https://latex.codecogs.com/png.latex?e%5Ex%5Cto%200">:</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bx%5Cto-%5Cinfty%7D%5Cfrac%7Be%5Ex-1%7D%7Bx%7D%20=%20%5Cfrac%7B0-1%7D%7B-%5Cinfty%7D%20=%20%5Cfrac%7B-1%7D%7B-%5Cinfty%7D%20=%200"></p>
-<p>el numerador se acerca a la constante <img src="https://latex.codecogs.com/png.latex?-1"> mientras el denominador diverge, así que el cociente se anula directamente.</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cboxed%7B%5Clim_%7Bx%5Cto-%5Cinfty%7D%20f(x)%20=%200,%20%5Cqquad%20f(0)=1,%20%5Cqquad%20%5Clim_%7Bx%5Cto+%5Cinfty%7D%20f(x)%20=%20+%5Cinfty%7D"></p>
-<p>El problema está bien condicionado para valores negativos. Para valores grandes el problema está mal condicionado.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="¿Cómo funciona `expm1`?">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>¿Cómo funciona <code>expm1</code>?
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><code>expm1(x)</code> calcula <img src="https://latex.codecogs.com/png.latex?e%5Ex-1"> sin pasar por la resta explícita: para <img src="https://latex.codecogs.com/png.latex?x"> pequeño usa internamente una expansión en serie (o una tabla/aproximación racional de alta precisión) diseñada para que el resultado converja correctamente a <img src="https://latex.codecogs.com/png.latex?0"> cuando <img src="https://latex.codecogs.com/png.latex?x%5Cto0">, sin cancelar dígitos. Para <img src="https://latex.codecogs.com/png.latex?x"> no pequeño, se reduce esencialmente al cálculo directo <img src="https://latex.codecogs.com/png.latex?e%5Ex-1">, que ahí no tiene problema de cancelación. Es la misma idea que la serie de Maclaurin del ejercicio 1.4.2: evitar la resta de dos cantidades casi iguales.</p>
-</div>
-</div>
 </section>
+<section id="comportamiento-de-kappa_f-en-pminfty" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="comportamiento-de-kappa_f-en-pminfty"><span class="header-section-number">4</span> Comportamiento de <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f"> en <img src="https://latex.codecogs.com/png.latex?%5Cpm%5Cinfty"></h2>
+<p>Ya sabemos que <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(0)=0">. Para completar el panorama, veamos qué le pasa a <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(x)=%5Cleft%7C%5Cdfrac%7BN(x)%7D%7BD(x)%7D%5Cright%7C">, con <img src="https://latex.codecogs.com/png.latex?N(x)=(x-1)e%5Ex+1"> y <img src="https://latex.codecogs.com/png.latex?D(x)=e%5Ex-1">, en los dos extremos.</p>
+<p>Cuando <img src="https://latex.codecogs.com/png.latex?x%5Cto+%5Cinfty">: tanto <img src="https://latex.codecogs.com/png.latex?N(x)"> como <img src="https://latex.codecogs.com/png.latex?D(x)"> divergen (<img src="https://latex.codecogs.com/png.latex?e%5Ex"> domina en ambos), así que es indeterminado <img src="https://latex.codecogs.com/png.latex?%5Cinfty/%5Cinfty"> y L’Hôpital aplica:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bx%5Cto+%5Cinfty%7D%5Cfrac%7BN(x)%7D%7BD(x)%7D%20=%20%5Clim_%7Bx%5Cto+%5Cinfty%7D%5Cfrac%7BN'(x)%7D%7BD'(x)%7D%20=%20%5Clim_%7Bx%5Cto+%5Cinfty%7D%5Cfrac%7Bxe%5Ex%7D%7Be%5Ex%7D%20=%20%5Clim_%7Bx%5Cto+%5Cinfty%7D%20x%20=%20+%5Cinfty"></p>
+<p>(se usó <img src="https://latex.codecogs.com/png.latex?N'(x)=e%5Ex+(x-1)e%5Ex=xe%5Ex"> y <img src="https://latex.codecogs.com/png.latex?D'(x)=e%5Ex">; tras una sola aplicación de L’Hôpital el cociente ya se simplifica sin quedar indeterminado). Entonces <img src="https://latex.codecogs.com/png.latex?%5Cdisplaystyle%5Clim_%7Bx%5Cto+%5Cinfty%7D%5Ckappa_f(x)=+%5Cinfty">: el problema se vuelve arbitrariamente mal condicionado para <img src="https://latex.codecogs.com/png.latex?x"> grande — aunque de forma “mansa”, porque <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(x)%5Capprox%20x"> crece solo linealmente (no exponencialmente).</p>
+<p>Cuando <img src="https://latex.codecogs.com/png.latex?x%5Cto-%5Cinfty">: aquí no hay indeterminación, porque <img src="https://latex.codecogs.com/png.latex?e%5Ex%5Cto0"> y ambos, numerador y denominador, convergen a valores finitos directamente:</p>
+<p><img src="https://latex.codecogs.com/png.latex?N(x)=(x-1)e%5Ex+1%20%5C;%5Clongrightarrow%5C;%200+1=1"></p>
+<p>(<img src="https://latex.codecogs.com/png.latex?(x-1)e%5Ex%5Cto0"> porque la exponencial decae más rápido de lo que cualquier polinomio crece)</p>
+<p><img src="https://latex.codecogs.com/png.latex?D(x)=e%5Ex-1%20%5C;%5Clongrightarrow%5C;%200-1=-1"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bx%5Cto-%5Cinfty%7D%5Ckappa_f(x)%20=%20%5Cleft%7C%5Cfrac%7B1%7D%7B-1%7D%5Cright%7C%20=%201"></p>
+<p>En resumen</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bx%5Cto-%5Cinfty%7D%5Ckappa_f(x)=1%20%5Cqquad%20%5Ckappa_f(0)=0%20%5Cqquad%20%5Clim_%7Bx%5Cto+%5Cinfty%7D%5Ckappa_f(x)=+%5Cinfty"></p>
+<p>Para <img src="https://latex.codecogs.com/png.latex?x%5Cle0">, <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f"> queda <strong>acotado entre 0 y 1</strong>: el problema está uniformemente bien condicionado en todo el semieje negativo. Para <img src="https://latex.codecogs.com/png.latex?x"> positivo y grande, el problema se vuelve mal condicionado, pero solo linealmente (consistente con los valores numéricos: <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(10%5E%7B-6%7D)%5Capprox5%5Ctimes10%5E%7B-7%7D">, <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(1)%5Capprox0%7B,%7D58">, <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(10)%5Capprox9">, <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(20)%5Capprox19">).</p>
 </section>
-<section id="ejercicio-1.2.5-condición-del-inverso" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="ejercicio-1.2.5-condición-del-inverso"><span class="header-section-number">4</span> Ejercicio 1.2.5 — condición del inverso</h2>
+<section id="ejercicio-1.2.5-condición-del-inverso" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="ejercicio-1.2.5-condición-del-inverso"><span class="header-section-number">5</span> Ejercicio 1.2.5 — condición del inverso</h2>
 <p>Sea <img src="https://latex.codecogs.com/png.latex?f"> con número de condición <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f">, y <img src="https://latex.codecogs.com/png.latex?f%5E%7B-1%7D"> su inversa. Queremos mostrar</p>
 <p><img src="https://latex.codecogs.com/png.latex?%5Ckappa_%7Bf%5E%7B-1%7D%7D(x)%20=%20%5Cfrac%7B1%7D%7B%5Ckappa_f%5Cbig(f%5E%7B-1%7D(x)%5Cbig)%7D"></p>
 <p><strong>Demostración</strong>, sin invocar el teorema de la función inversa: sea <img src="https://latex.codecogs.com/png.latex?h%20=%20f%5Ccirc%20f%5E%7B-1%7D%20=%20%5Ctext%7Bid%7D">.</p>
@@ -602,8 +593,8 @@ font-style: inherit;">end</span></span></code></pre></div></div>
 <p><img src="https://latex.codecogs.com/png.latex?1%20=%20%5Ckappa_f%5Cbig(f%5E%7B-1%7D(x)%5Cbig)%5Ccdot%5Ckappa_%7Bf%5E%7B-1%7D%7D(x)%20%5C;%5CLongrightarrow%5C;%20%5Ckappa_%7Bf%5E%7B-1%7D%7D(x)=%5Cfrac%7B1%7D%7B%5Ckappa_f%5Cbig(f%5E%7B-1%7D(x)%5Cbig)%7D%20%5Cqquad%20%5Cblacksquare"></p>
 <p>Esta ruta es más corta que aplicar el teorema de la función inversa directamente, y no exige demostrar por separado que <img src="https://latex.codecogs.com/png.latex?f%5E%7B-1%7D"> es derivable.</p>
 </section>
-<section id="raíces-de-un-polinomio-cuadrático" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="raíces-de-un-polinomio-cuadrático"><span class="header-section-number">5</span> Raíces de un polinomio cuadrático</h2>
+<section id="raíces-de-un-polinomio-cuadrático" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="raíces-de-un-polinomio-cuadrático"><span class="header-section-number">6</span> Raíces de un polinomio cuadrático</h2>
 <p>Consideremos <img src="https://latex.codecogs.com/png.latex?ax%5E2+bx+c=0">. Los datos son los coeficientes <img src="https://latex.codecogs.com/png.latex?(a,b,c)">; el resultado son las raíces <img src="https://latex.codecogs.com/png.latex?r_1,r_2"> (posiblemente complejas). Formalmente, <img src="https://latex.codecogs.com/png.latex?f(a,b,c)=(r_1,r_2)">.</p>
 <p>Fijamos <img src="https://latex.codecogs.com/png.latex?b,c"> y perturbamos solo el coeficiente principal <img src="https://latex.codecogs.com/png.latex?a">, para ver cómo responde <img src="https://latex.codecogs.com/png.latex?r_1">: <img src="https://latex.codecogs.com/png.latex?f(a)=r_1">. Partiendo de la identidad <img src="https://latex.codecogs.com/png.latex?ar_1%5E2+br_1+c=0"> y derivando implícitamente respecto a <img src="https://latex.codecogs.com/png.latex?a"> (con <img src="https://latex.codecogs.com/png.latex?b,c"> fijos):</p>
 <p><img src="https://latex.codecogs.com/png.latex?r_1%5E2+2ar_1%5Cfrac%7Bdr_1%7D%7Bda%7D+b%5C,%5Cfrac%7Bdr_1%7D%7Bda%7D=0%20%5C;%5CLongrightarrow%5C;%20%5Cfrac%7Bdr_1%7D%7Bda%7D=%5Cfrac%7B-r_1%5E2%7D%7B2ar_1+b%7D"></p>
@@ -612,8 +603,8 @@ font-style: inherit;">end</span></span></code></pre></div></div>
 <p><img src="https://latex.codecogs.com/png.latex?%5Cboxed%7B%5Ckappa_f(a)%20=%20%5Cleft%7C%5Cfrac%7Br_1%7D%7Br_1-r_2%7D%5Cright%7C%7D"></p>
 <p>El problema está mal condicionado exactamente cuando <img src="https://latex.codecogs.com/png.latex?%7Cr_1%7C%5Cgg%7Cr_1-r_2%7C"> — es decir, cuando las raíces están mucho más cerca entre sí que del origen. En el caso extremo de una raíz doble (<img src="https://latex.codecogs.com/png.latex?r_1=r_2">), <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f%5Cto%5Cinfty">.</p>
 </section>
-<section id="simulación-sensibilidad-de-las-raíces-de-pxax-cx-d" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="simulación-sensibilidad-de-las-raíces-de-pxax-cx-d"><span class="header-section-number">6</span> Simulación — sensibilidad de las raíces de <img src="https://latex.codecogs.com/png.latex?p(x)=a(x-c)(x-d)"></h2>
+<section id="simulación-sensibilidad-de-las-raíces-de-pxax-cx-d" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="simulación-sensibilidad-de-las-raíces-de-pxax-cx-d"><span class="header-section-number">7</span> Simulación — sensibilidad de las raíces de <img src="https://latex.codecogs.com/png.latex?p(x)=a(x-c)(x-d)"></h2>
 <p>Para hacer tangible la fórmula anterior, parametrizamos el polinomio directamente por sus raíces <img src="https://latex.codecogs.com/png.latex?c,d"> y su coeficiente principal <img src="https://latex.codecogs.com/png.latex?a">:</p>
 <p><img src="https://latex.codecogs.com/png.latex?p(x)%20=%20a(x-c)(x-d)%20=%20a%5C,x%5E2%20%5Cunderbrace%7B-%5C,a(c+d)%7D_%7BB%7D%5C,x%20+%20%5Cunderbrace%7Ba%5C,c%5C,d%7D_%7BC%7D"></p>
 <p>de modo que, en ausencia de redondeo, las raíces son exactamente <img src="https://latex.codecogs.com/png.latex?r_1=c"> y <img src="https://latex.codecogs.com/png.latex?r_2=d"> para cualquier <img src="https://latex.codecogs.com/png.latex?a%5Cne%200">. La simulación perturba <strong>solo</strong> el coeficiente <img src="https://latex.codecogs.com/png.latex?a%5Cto%20a(1+%5Cvarepsilon)">, mantiene <img src="https://latex.codecogs.com/png.latex?B,C"> fijos (tal como en la derivación de <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(a)">), recalcula las raíces con la fórmula cuadrática, y compara:</p>
@@ -625,8 +616,8 @@ font-style: inherit;">end</span></span></code></pre></div></div>
 <iframe src="notebooks/condicionamiento-simulacion.html" width="100%" height="1400px" style="border:none;">
 </iframe>
 </section>
-<section id="tarea" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="tarea"><span class="header-section-number">7</span> Tarea</h2>
+<section id="tarea" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="tarea"><span class="header-section-number">8</span> Tarea</h2>
 <p>Resolver los siguientes ejercicios de la sección 1.2 (“Exercises”) de <em>Fundamentals of Numerical Computation</em>, disponibles en <a href="https://fncbook.com/julia/conditioning/#exercises" class="uri">https://fncbook.com/julia/conditioning/#exercises</a>:</p>
 
 
