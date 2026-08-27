@@ -15,7 +15,172 @@
 <link>https://arturosanjuan.xyz/cursos/probabilidad/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Sun, 23 Aug 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 26 Aug 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Taller 1</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/probabilidad/taller-1/</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="callout callout-style-default callout-important callout-titled" title="Instrucciones">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Instrucciones
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Trabajen en equipos de máximo tres personas. Toda afirmación debe venir acompañada de su justificación.</p>
+</div>
+</div>
+<p>Una fábrica de bombillos produce en dos líneas distintas, con tasas de falla distintas. En este taller van a recorrer el mismo objeto (un bombillo defectuoso o no) bajo tres modelos probabilísticos diferentes: un espacio muestral discreto con su σ-álgebra, un lote ya fabricado y fijo (Laplace clásico), y un proceso de fabricación en dos etapas (probabilidad total, Bayes e independencia). El hilo que conecta los tres es la pregunta: ¿qué estructura matemática le corresponde a cada situación aleatoria, y por qué no es la misma en los tres casos?</p>
+<section id="espacio-muestral-y-una-σ-álgebra-más-pequeña" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="espacio-muestral-y-una-σ-álgebra-más-pequeña"><span class="header-section-number">1</span> Espacio muestral y una σ-álgebra más pequeña</h2>
+<p>Se extraen 3 bombillos de la producción (ya mezclada) y se clasifica cada uno como defectuoso “D” o no defectuoso “N”. Sea <img src="https://latex.codecogs.com/png.latex?%5COmega%20=%20%5C%7BD,N%5C%7D%5E3"> y, para <img src="https://latex.codecogs.com/png.latex?i=1,2,3">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?A_i%20:=%20%5Ctext%7Bel%20%7D%20i%5Ctext%7B-%C3%A9simo%20bombillo%20extra%C3%ADdo%20es%20defectuoso%7D"></p>
+<ol type="1">
+<li>Describan por extensión los eventos <img src="https://latex.codecogs.com/png.latex?A_1">, <img src="https://latex.codecogs.com/png.latex?A_1%5Ccup%20A_3"> y <img src="https://latex.codecogs.com/png.latex?A_1%5Ccap%20A_2%5Ec%5Ccap%20A_3">.</li>
+<li>Sea <img src="https://latex.codecogs.com/png.latex?T:%5COmega%5Cto%5C%7B0,1,2,3%5C%7D"> la función que cuenta el número total de bombillos defectuosos entre los tres extraídos. Usando el resultado ya demostrado en clase sobre la preimagen de una σ-álgebra (si <img src="https://latex.codecogs.com/png.latex?%5Cmathfrak%20F'"> es una σ-álgebra sobre <img src="https://latex.codecogs.com/png.latex?%5COmega'"> y <img src="https://latex.codecogs.com/png.latex?f:%5COmega%5Cto%5COmega'">, entonces <img src="https://latex.codecogs.com/png.latex?f%5E%7B-1%7D(%5Cmathfrak%20F')"> es una σ-álgebra sobre <img src="https://latex.codecogs.com/png.latex?%5COmega">), identifiquen explícitamente <img src="https://latex.codecogs.com/png.latex?%5Cmathfrak%20T%20:=%20T%5E%7B-1%7D%5Cbig(%5Cmathcal%20P(%5C%7B0,1,2,3%5C%7D)%5Cbig)%20%5Csubset%20%5Cmathcal%20P(%5COmega)"> Listen los átomos de <img src="https://latex.codecogs.com/png.latex?%5Cmathfrak%20T"> (los subconjuntos no vacíos más pequeños de <img src="https://latex.codecogs.com/png.latex?%5COmega"> que pertenecen a <img src="https://latex.codecogs.com/png.latex?%5Cmathfrak%20T">).</li>
+<li>Muestren que <img src="https://latex.codecogs.com/png.latex?%5Cmathfrak%20T"> es estrictamente más pequeña que <img src="https://latex.codecogs.com/png.latex?%5Cmathcal%20P(%5COmega)">: exhiban un evento de <img src="https://latex.codecogs.com/png.latex?%5Cmathcal%20P(%5COmega)"> que no pertenezca a <img src="https://latex.codecogs.com/png.latex?%5Cmathfrak%20T">, y expliquen en una frase por qué la información de <img src="https://latex.codecogs.com/png.latex?T"> (cuántos, no cuáles) no alcanza para reconstruirlo.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><img src="https://latex.codecogs.com/png.latex?%5COmega%20=%20%5C%7BDDD,%20DDN,%20DND,%20DNN,%20NDD,%20NDN,%20NND,%20NNN%5C%7D"></p>
+<p><strong>1.</strong> <img src="https://latex.codecogs.com/png.latex?A_1%20=%20%5C%7BDDD,%20DDN,%20DND,%20DNN%5C%7D"> <img src="https://latex.codecogs.com/png.latex?A_1%5Ccup%20A_3%20=%20%5C%7BDDD,%20DDN,%20DND,%20DNN,%20NDD,%20NND%5C%7D"></p>
+<p>Para <img src="https://latex.codecogs.com/png.latex?A_1%5Ccap%20A_2%5Ec%5Ccap%20A_3"> se exige posición 1 = D, posición 2 = N y posición 3 = D simultáneamente, lo que fija el resultado por completo:</p>
+<p><img src="https://latex.codecogs.com/png.latex?A_1%5Ccap%20A_2%5Ec%5Ccap%20A_3%20=%20%5C%7BDND%5C%7D"></p>
+<p><strong>2.</strong> Sea <img src="https://latex.codecogs.com/png.latex?T(%5Comega)"> el número de defectuosos. Sus niveles particionan <img src="https://latex.codecogs.com/png.latex?%5COmega">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?L_0=%5C%7BNNN%5C%7D,%20%5Cquad%20L_1=%5C%7BDNN,NDN,NND%5C%7D,%20%5Cquad%20L_2=%5C%7BDDN,DND,NDD%5C%7D,%20%5Cquad%20L_3=%5C%7BDDD%5C%7D"></p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?T%5E%7B-1%7D(%5C%7Bk%5C%7D)=L_k"> y todo subconjunto de <img src="https://latex.codecogs.com/png.latex?%5C%7B0,1,2,3%5C%7D"> es unión de singletons, <img src="https://latex.codecogs.com/png.latex?%5Cmathfrak%20T"> es exactamente el conjunto de todas las uniones de <img src="https://latex.codecogs.com/png.latex?L_0,L_1,L_2,L_3">: <img src="https://latex.codecogs.com/png.latex?%7C%5Cmathfrak%20T%7C=2%5E4=16">. Los átomos de <img src="https://latex.codecogs.com/png.latex?%5Cmathfrak%20T"> son <img src="https://latex.codecogs.com/png.latex?L_0,%20L_1,%20L_2,%20L_3">.</p>
+<p><strong>3.</strong> Tomemos <img src="https://latex.codecogs.com/png.latex?A_1=%5C%7BDDD,DDN,DND,DNN%5C%7D">. Nótese que <img src="https://latex.codecogs.com/png.latex?A_1%5Ccap%20L_2=%5C%7BDDN,DND%5C%7D"> es un subconjunto propio y no vacío de <img src="https://latex.codecogs.com/png.latex?L_2=%5C%7BDDN,DND,NDD%5C%7D">. Como todo elemento de <img src="https://latex.codecogs.com/png.latex?%5Cmathfrak%20T"> es unión completa de átomos, ningún elemento de <img src="https://latex.codecogs.com/png.latex?%5Cmathfrak%20T"> puede cortar a la mitad un átomo, así que <img src="https://latex.codecogs.com/png.latex?A_1%5Cnotin%5Cmathfrak%20T">. Interpretación: <img src="https://latex.codecogs.com/png.latex?T"> solo informa cuántos defectuosos hubo, no cuáles posiciones, por eso no puede reconstruir un evento que depende de la posición específica.</p>
+</div>
+</div>
+</section>
+<section id="un-lote-ya-fabricado-modelo-de-laplace" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="un-lote-ya-fabricado-modelo-de-laplace"><span class="header-section-number">2</span> Un lote ya fabricado (modelo de Laplace)</h2>
+<p>Ahora cambien de modelo: un lote ya fabricado y en bodega tiene <img src="https://latex.codecogs.com/png.latex?N=60"> bombillos, de los cuales <img src="https://latex.codecogs.com/png.latex?D=9"> son defectuosos. Esta vez el defecto ya está fijo en cada bombillo del lote; no hay ningún mecanismo aleatorio en curso, solo incertidumbre sobre cuáles bombillos tocan en la muestra. Un inspector extrae, sin reemplazo, una muestra de <img src="https://latex.codecogs.com/png.latex?n=6"> bombillos.</p>
+<ol type="1">
+<li>Calculen la probabilidad de que la muestra contenga exactamente 2 defectuosos.</li>
+<li>Calculen la probabilidad de que la muestra no contenga ningún defectuoso, y usen esto para obtener la probabilidad de que contenga al menos uno.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> <img src="https://latex.codecogs.com/png.latex?P(%5Ctext%7Bexactamente%202%7D)%20=%20%5Cfrac%7B%5Cbinom%7B9%7D%7B2%7D%5Cbinom%7B51%7D%7B4%7D%7D%7B%5Cbinom%7B60%7D%7B6%7D%7D%20=%20%5Cfrac%7B36%5Ctimes%20249%7B.%7D900%7D%7B50%7B.%7D063%7B.%7D860%7D%20%5Capprox%200%7B,%7D1797"></p>
+<p><strong>2.</strong> <img src="https://latex.codecogs.com/png.latex?P(%5Ctext%7Bninguno%20defectuoso%7D)%20=%20%5Cfrac%7B%5Cbinom%7B51%7D%7B6%7D%7D%7B%5Cbinom%7B60%7D%7B6%7D%7D%20=%20%5Cfrac%7B18%7B.%7D009%7B.%7D460%7D%7B50%7B.%7D063%7B.%7D860%7D%20%5Capprox%200%7B,%7D3597"> <img src="https://latex.codecogs.com/png.latex?P(%5Ctext%7Bal%20menos%20uno%7D)%20=%201-0%7B,%7D3597%20=%200%7B,%7D6403"></p>
+</div>
+</div>
+</section>
+<section id="el-proceso-de-fabricación-probabilidad-total-y-bayes" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="el-proceso-de-fabricación-probabilidad-total-y-bayes"><span class="header-section-number">3</span> El proceso de fabricación (probabilidad total y Bayes)</h2>
+<p>Modelen ahora el proceso mismo de fabricación, bombillo por bombillo: cada bombillo se produce en la línea 1 con probabilidad <img src="https://latex.codecogs.com/png.latex?%5Calpha=0%7B,%7D7"> o en la línea 2 con probabilidad <img src="https://latex.codecogs.com/png.latex?1-%5Calpha=0%7B,%7D3">. Dado que se produjo en la línea 1, la probabilidad de que sea defectuoso es <img src="https://latex.codecogs.com/png.latex?p_1=0%7B,%7D02">; dado que se produjo en la línea 2, es <img src="https://latex.codecogs.com/png.latex?p_2=0%7B,%7D09">. Sea <img src="https://latex.codecogs.com/png.latex?D"> el evento “el bombillo es defectuoso” y <img src="https://latex.codecogs.com/png.latex?M_1">, <img src="https://latex.codecogs.com/png.latex?M_2"> los eventos “se produjo en la línea 1 (2)”.</p>
+<ol type="1">
+<li>Calculen <img src="https://latex.codecogs.com/png.latex?P(D)"> usando el teorema de la probabilidad total.</li>
+<li>Un bombillo elegido al azar de la producción resulta defectuoso. Calculen <img src="https://latex.codecogs.com/png.latex?P(M_2%5Cmid%20D)"> usando el teorema de Bayes.</li>
+<li>Calculen <img src="https://latex.codecogs.com/png.latex?P(M_1%5Cmid%20D%5Ec)"> (dado que el bombillo no es defectuoso, la probabilidad de que venga de la línea 1). Comparen este número con <img src="https://latex.codecogs.com/png.latex?P(M_1)=0%7B,%7D7"> y comenten, en una frase, qué les dice la diferencia.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> <img src="https://latex.codecogs.com/png.latex?P(D)%20=%20P(D%5Cmid%20M_1)P(M_1)+P(D%5Cmid%20M_2)P(M_2)%20=%20(0%7B,%7D02)(0%7B,%7D7)+(0%7B,%7D09)(0%7B,%7D3)%20=%200%7B,%7D014+0%7B,%7D027%20=%200%7B,%7D041"></p>
+<p><strong>2.</strong> <img src="https://latex.codecogs.com/png.latex?P(M_2%5Cmid%20D)%20=%20%5Cfrac%7BP(D%5Cmid%20M_2)P(M_2)%7D%7BP(D)%7D%20=%20%5Cfrac%7B0%7B,%7D027%7D%7B0%7B,%7D041%7D%20=%20%5Cfrac%7B27%7D%7B41%7D%20%5Capprox%200%7B,%7D6585"></p>
+<p><strong>3.</strong> Con <img src="https://latex.codecogs.com/png.latex?P(D%5Ec)=0%7B,%7D959"> y <img src="https://latex.codecogs.com/png.latex?P(D%5Ec%5Cmid%20M_1)=1-p_1=0%7B,%7D98">: <img src="https://latex.codecogs.com/png.latex?P(M_1%5Cmid%20D%5Ec)%20=%20%5Cfrac%7BP(D%5Ec%5Cmid%20M_1)P(M_1)%7D%7BP(D%5Ec)%7D%20=%20%5Cfrac%7B(0%7B,%7D98)(0%7B,%7D7)%7D%7B0%7B,%7D959%7D%20=%20%5Cfrac%7B0%7B,%7D686%7D%7B0%7B,%7D959%7D%20%5Capprox%200%7B,%7D7153"></p>
+<p>Comparado con <img src="https://latex.codecogs.com/png.latex?P(M_1)=0%7B,%7D7">, sube levemente a <img src="https://latex.codecogs.com/png.latex?0%7B,%7D7153">: como la línea 1 falla menos, que un bombillo no sea defectuoso es evidencia débil a favor de que venga de la línea más confiable.</p>
+</div>
+</div>
+</section>
+<section id="cuándo-son-independientes" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="cuándo-son-independientes"><span class="header-section-number">4</span> ¿Cuándo son independientes?</h2>
+<ol type="1">
+<li>Verifiquen, con los datos de la sección anterior, si <img src="https://latex.codecogs.com/png.latex?D"> y <img src="https://latex.codecogs.com/png.latex?M_1"> son eventos independientes.</li>
+<li>Ahora generalicen. Con <img src="https://latex.codecogs.com/png.latex?%5Calpha"> fijo, <img src="https://latex.codecogs.com/png.latex?0%3C%5Calpha%3C1">, y tasas de falla <img src="https://latex.codecogs.com/png.latex?p_1,p_2"> arbitrarias (no necesariamente <img src="https://latex.codecogs.com/png.latex?0%7B,%7D02"> y <img src="https://latex.codecogs.com/png.latex?0%7B,%7D09">), determinen para qué relación entre <img src="https://latex.codecogs.com/png.latex?p_1"> y <img src="https://latex.codecogs.com/png.latex?p_2"> los eventos <img src="https://latex.codecogs.com/png.latex?D"> y <img src="https://latex.codecogs.com/png.latex?M_1"> resultan independientes. Demuestren su respuesta algebraicamente a partir de la definición de independencia (no verifiquen un caso: derive la condición general).</li>
+<li>En una frase: ¿por qué el resultado del numeral anterior no depende de <img src="https://latex.codecogs.com/png.latex?%5Calpha">? ¿Qué les dice esto sobre qué es lo que realmente vuelve informativo saber de qué línea vino un bombillo?</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> <img src="https://latex.codecogs.com/png.latex?P(D%5Ccap%20M_1)%20=%20P(D%5Cmid%20M_1)P(M_1)%20=%20(0%7B,%7D02)(0%7B,%7D7)%20=%200%7B,%7D014">, mientras que <img src="https://latex.codecogs.com/png.latex?P(D)P(M_1)%20=%20(0%7B,%7D041)(0%7B,%7D7)%20=%200%7B,%7D0287">. Como <img src="https://latex.codecogs.com/png.latex?0%7B,%7D014%5Cne%200%7B,%7D0287">, <img src="https://latex.codecogs.com/png.latex?D"> y <img src="https://latex.codecogs.com/png.latex?M_1"> no son independientes; la desigualdad va en el sentido esperado, saber que un bombillo viene de la línea 1 baja su probabilidad de falla por debajo del promedio.</p>
+<p><strong>2.</strong> Con <img src="https://latex.codecogs.com/png.latex?%5Calpha"> fijo, <img src="https://latex.codecogs.com/png.latex?0%3C%5Calpha%3C1">, y <img src="https://latex.codecogs.com/png.latex?p_1,p_2"> arbitrarias:</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(D%5Ccap%20M_1)=%5Calpha%20p_1,%20%5Cqquad%20P(D)=%5Calpha%20p_1+(1-%5Calpha)p_2,%20%5Cqquad%20P(M_1)=%5Calpha"></p>
+<p>La independencia exige <img src="https://latex.codecogs.com/png.latex?P(D%5Ccap%20M_1)=P(D)P(M_1)">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Calpha%20p_1%20=%20%5Calpha%5Cbig%5B%5Calpha%20p_1+(1-%5Calpha)p_2%5Cbig%5D"></p>
+<p>Dividiendo por <img src="https://latex.codecogs.com/png.latex?%5Calpha%5Cne%200">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?p_1%20=%20%5Calpha%20p_1+(1-%5Calpha)p_2%20%5Cimplies%20p_1(1-%5Calpha)%20=%20(1-%5Calpha)p_2"></p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?%5Calpha%3C1">, dividimos por <img src="https://latex.codecogs.com/png.latex?(1-%5Calpha)%5Cne%200">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?p_1=p_2"></p>
+<p><strong>3.</strong> El resultado no depende de <img src="https://latex.codecogs.com/png.latex?%5Calpha"> porque <img src="https://latex.codecogs.com/png.latex?%5Calpha"> solo controla cuántos bombillos vienen de cada línea, no qué tan distinto falla cada línea. La independencia pregunta si el origen aporta información sobre la falla, y esa información solo existe si <img src="https://latex.codecogs.com/png.latex?p_1%5Cne%20p_2">. La proporción de producción de cada línea es irrelevante para esa pregunta: lo único que delata el origen es la diferencia entre las tasas de falla.</p>
+</div>
+</div>
+</section>
+<section id="verdadero-o-falso-justificando" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="verdadero-o-falso-justificando"><span class="header-section-number">5</span> Verdadero o falso, justificando</h2>
+<p>Para cada afirmación, indiquen si es verdadera o falsa y justifiquen. No se aceptan respuestas sin justificación.</p>
+<ol type="1">
+<li>Si <img src="https://latex.codecogs.com/png.latex?A"> y <img src="https://latex.codecogs.com/png.latex?B"> son eventos mutuamente excluyentes y ambos tienen probabilidad positiva, entonces <img src="https://latex.codecogs.com/png.latex?A"> y <img src="https://latex.codecogs.com/png.latex?B"> son independientes.</li>
+<li>Si <img src="https://latex.codecogs.com/png.latex?A"> y <img src="https://latex.codecogs.com/png.latex?B"> son eventos independientes, entonces <img src="https://latex.codecogs.com/png.latex?A%5Ec"> y <img src="https://latex.codecogs.com/png.latex?B"> también lo son.</li>
+<li>Si <img src="https://latex.codecogs.com/png.latex?%5COmega"> es finito y <img src="https://latex.codecogs.com/png.latex?T:%5COmega%5Cto%5COmega'"> no es inyectiva, entonces <img src="https://latex.codecogs.com/png.latex?T%5E%7B-1%7D(%5Cmathcal%20P(%5COmega'))"> es igual a <img src="https://latex.codecogs.com/png.latex?%5Cmathcal%20P(%5COmega)">.</li>
+<li>Si <img src="https://latex.codecogs.com/png.latex?(A_n)_%7Bn%5Cin%5Cmathbb%20N%7D"> es una sucesión decreciente de eventos con <img src="https://latex.codecogs.com/png.latex?A_n%5Cdownarrow%5Cvarnothing"> (es decir, <img src="https://latex.codecogs.com/png.latex?%5Cbigcap_n%20A_n=%5Cvarnothing">), entonces <img src="https://latex.codecogs.com/png.latex?P(A_n)%5Cto%200">.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1. Falso.</strong> Si <img src="https://latex.codecogs.com/png.latex?A%5Ccap%20B=%5Cvarnothing">, entonces <img src="https://latex.codecogs.com/png.latex?P(A%5Ccap%20B)=0">. Si además fueran independientes, <img src="https://latex.codecogs.com/png.latex?P(A)P(B)=0">, forzando <img src="https://latex.codecogs.com/png.latex?P(A)=0"> o <img src="https://latex.codecogs.com/png.latex?P(B)=0">, lo que contradice que ambas sean positivas. Mutuamente excluyentes con probabilidad positiva implica necesariamente dependientes.</p>
+<p><strong>2. Verdadero.</strong> Escribiendo <img src="https://latex.codecogs.com/png.latex?B"> como unión disyunta: <img src="https://latex.codecogs.com/png.latex?B%20=%20(A%5Ccap%20B)%5Ccup(A%5Ec%5Ccap%20B)%20%5Cimplies%20P(B)=P(A%5Ccap%20B)+P(A%5Ec%5Ccap%20B)"> <img src="https://latex.codecogs.com/png.latex?P(A%5Ec%5Ccap%20B)%20=%20P(B)-P(A%5Ccap%20B)%20=%20P(B)-P(A)P(B)%20=%20P(B)%5Cbig(1-P(A)%5Cbig)%20=%20P(A%5Ec)P(B)"></p>
+<p><strong>3. Falso.</strong> El ejercicio de la primera sección es el contraejemplo: <img src="https://latex.codecogs.com/png.latex?T"> no es inyectiva (<img src="https://latex.codecogs.com/png.latex?T(DDN)=T(DND)=T(NDD)=2">) y sin embargo <img src="https://latex.codecogs.com/png.latex?%7C%5Cmathfrak%20T%7C=16%20%5Cne%20256=%7C%5Cmathcal%20P(%5COmega)%7C">.</p>
+<p><strong>4. Verdadero.</strong> Sea <img src="https://latex.codecogs.com/png.latex?B_n:=A_n%5Ec">. Como <img src="https://latex.codecogs.com/png.latex?A_n"> es decreciente, <img src="https://latex.codecogs.com/png.latex?B_n"> es creciente. Por De Morgan, <img src="https://latex.codecogs.com/png.latex?%5Cbigcup_n%20B_n%20=%20%5CBig(%5Cbigcap_n%20A_n%5CBig)%5Ec%20=%20%5Cvarnothing%5Ec%20=%20%5COmega"></p>
+<p>Por el teorema de continuidad para sucesiones crecientes: <img src="https://latex.codecogs.com/png.latex?P(%5COmega)%20=%20P%5CBig(%5Clim_n%20B_n%5CBig)%20=%20%5Clim_n%20P(B_n)%20%5Cimplies%20%5Clim_n%20P(B_n)=1"></p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?P(B_n)=1-P(A_n)">, se sigue <img src="https://latex.codecogs.com/png.latex?%5Clim_n%5Cbig(1-P(A_n)%5Cbig)=1">, es decir <img src="https://latex.codecogs.com/png.latex?%5Clim_n%20P(A_n)=0">.</p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/probabilidad/taller-1/</guid>
+  <pubDate>Wed, 26 Aug 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Probabilidad condicional</title>
   <dc:creator>Arturo Sanjuán</dc:creator>

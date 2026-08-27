@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Arturo Sanjuán">
+<meta name="description" content="Taller en equipos de hasta tres personas, con solución, sobre espacios muestrales, σ-álgebras, probabilidad de Laplace, teorema de la probabilidad total, teorema de Bayes e independencia de eventos.">
+
+<title>Taller 1 – Arturo Sanjuán</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-06ef128ffaab2aaffa18b1038abc86f3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Arturo Sanjuán</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../cursos/index.html"> 
+<span class="menu-text">Cursos</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#espacio-muestral-y-una-σ-álgebra-más-pequeña" id="toc-espacio-muestral-y-una-σ-álgebra-más-pequeña" class="nav-link active" data-scroll-target="#espacio-muestral-y-una-σ-álgebra-más-pequeña"><span class="header-section-number">1</span> Espacio muestral y una σ-álgebra más pequeña</a></li>
+  <li><a href="#un-lote-ya-fabricado-modelo-de-laplace" id="toc-un-lote-ya-fabricado-modelo-de-laplace" class="nav-link" data-scroll-target="#un-lote-ya-fabricado-modelo-de-laplace"><span class="header-section-number">2</span> Un lote ya fabricado (modelo de Laplace)</a></li>
+  <li><a href="#el-proceso-de-fabricación-probabilidad-total-y-bayes" id="toc-el-proceso-de-fabricación-probabilidad-total-y-bayes" class="nav-link" data-scroll-target="#el-proceso-de-fabricación-probabilidad-total-y-bayes"><span class="header-section-number">3</span> El proceso de fabricación (probabilidad total y Bayes)</a></li>
+  <li><a href="#cuándo-son-independientes" id="toc-cuándo-son-independientes" class="nav-link" data-scroll-target="#cuándo-son-independientes"><span class="header-section-number">4</span> ¿Cuándo son independientes?</a></li>
+  <li><a href="#verdadero-o-falso-justificando" id="toc-verdadero-o-falso-justificando" class="nav-link" data-scroll-target="#verdadero-o-falso-justificando"><span class="header-section-number">5</span> Verdadero o falso, justificando</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Taller 1</h1>
+<p class="subtitle lead">Control de calidad: σ-álgebras, probabilidad de Laplace, teorema de Bayes e independencia</p>
+</div>
+
+<div>
+  <div class="description">
+    Taller en equipos de hasta tres personas, con solución, sobre espacios muestrales, σ-álgebras, probabilidad de Laplace, teorema de la probabilidad total, teorema de Bayes e independencia de eventos.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor</div>
+    <div class="quarto-title-meta-contents">
+             <p>Arturo Sanjuán </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">26 de agosto de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-important callout-titled" title="Instrucciones">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Instrucciones
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Trabajen en equipos de máximo tres personas. Toda afirmación debe venir acompañada de su justificación.</p>
+</div>
+</div>
+<p>Una fábrica de bombillos produce en dos líneas distintas, con tasas de falla distintas. En este taller van a recorrer el mismo objeto (un bombillo defectuoso o no) bajo tres modelos probabilísticos diferentes: un espacio muestral discreto con su σ-álgebra, un lote ya fabricado y fijo (Laplace clásico), y un proceso de fabricación en dos etapas (probabilidad total, Bayes e independencia). El hilo que conecta los tres es la pregunta: ¿qué estructura matemática le corresponde a cada situación aleatoria, y por qué no es la misma en los tres casos?</p>
+<section id="espacio-muestral-y-una-σ-álgebra-más-pequeña" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="espacio-muestral-y-una-σ-álgebra-más-pequeña"><span class="header-section-number">1</span> Espacio muestral y una σ-álgebra más pequeña</h2>
+<p>Se extraen 3 bombillos de la producción (ya mezclada) y se clasifica cada uno como defectuoso “D” o no defectuoso “N”. Sea <span class="math inline">\(\Omega = \{D,N\}^3\)</span> y, para <span class="math inline">\(i=1,2,3\)</span>,</p>
+<p><span class="math display">\[A_i := \text{el } i\text{-ésimo bombillo extraído es defectuoso}\]</span></p>
+<ol type="1">
+<li>Describan por extensión los eventos <span class="math inline">\(A_1\)</span>, <span class="math inline">\(A_1\cup A_3\)</span> y <span class="math inline">\(A_1\cap A_2^c\cap A_3\)</span>.</li>
+<li>Sea <span class="math inline">\(T:\Omega\to\{0,1,2,3\}\)</span> la función que cuenta el número total de bombillos defectuosos entre los tres extraídos. Usando el resultado ya demostrado en clase sobre la preimagen de una σ-álgebra (si <span class="math inline">\(\mathfrak F'\)</span> es una σ-álgebra sobre <span class="math inline">\(\Omega'\)</span> y <span class="math inline">\(f:\Omega\to\Omega'\)</span>, entonces <span class="math inline">\(f^{-1}(\mathfrak F')\)</span> es una σ-álgebra sobre <span class="math inline">\(\Omega\)</span>), identifiquen explícitamente <span class="math display">\[\mathfrak T := T^{-1}\big(\mathcal P(\{0,1,2,3\})\big) \subset \mathcal P(\Omega)\]</span> Listen los átomos de <span class="math inline">\(\mathfrak T\)</span> (los subconjuntos no vacíos más pequeños de <span class="math inline">\(\Omega\)</span> que pertenecen a <span class="math inline">\(\mathfrak T\)</span>).</li>
+<li>Muestren que <span class="math inline">\(\mathfrak T\)</span> es estrictamente más pequeña que <span class="math inline">\(\mathcal P(\Omega)\)</span>: exhiban un evento de <span class="math inline">\(\mathcal P(\Omega)\)</span> que no pertenezca a <span class="math inline">\(\mathfrak T\)</span>, y expliquen en una frase por qué la información de <span class="math inline">\(T\)</span> (cuántos, no cuáles) no alcanza para reconstruirlo.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[\Omega = \{DDD, DDN, DND, DNN, NDD, NDN, NND, NNN\}\]</span></p>
+<p><strong>1.</strong> <span class="math display">\[A_1 = \{DDD, DDN, DND, DNN\}\]</span> <span class="math display">\[A_1\cup A_3 = \{DDD, DDN, DND, DNN, NDD, NND\}\]</span></p>
+<p>Para <span class="math inline">\(A_1\cap A_2^c\cap A_3\)</span> se exige posición 1 = D, posición 2 = N y posición 3 = D simultáneamente, lo que fija el resultado por completo:</p>
+<p><span class="math display">\[A_1\cap A_2^c\cap A_3 = \{DND\}\]</span></p>
+<p><strong>2.</strong> Sea <span class="math inline">\(T(\omega)\)</span> el número de defectuosos. Sus niveles particionan <span class="math inline">\(\Omega\)</span>:</p>
+<p><span class="math display">\[L_0=\{NNN\}, \quad L_1=\{DNN,NDN,NND\}, \quad L_2=\{DDN,DND,NDD\}, \quad L_3=\{DDD\}\]</span></p>
+<p>Como <span class="math inline">\(T^{-1}(\{k\})=L_k\)</span> y todo subconjunto de <span class="math inline">\(\{0,1,2,3\}\)</span> es unión de singletons, <span class="math inline">\(\mathfrak T\)</span> es exactamente el conjunto de todas las uniones de <span class="math inline">\(L_0,L_1,L_2,L_3\)</span>: <span class="math inline">\(|\mathfrak T|=2^4=16\)</span>. Los átomos de <span class="math inline">\(\mathfrak T\)</span> son <span class="math inline">\(L_0, L_1, L_2, L_3\)</span>.</p>
+<p><strong>3.</strong> Tomemos <span class="math inline">\(A_1=\{DDD,DDN,DND,DNN\}\)</span>. Nótese que <span class="math inline">\(A_1\cap L_2=\{DDN,DND\}\)</span> es un subconjunto propio y no vacío de <span class="math inline">\(L_2=\{DDN,DND,NDD\}\)</span>. Como todo elemento de <span class="math inline">\(\mathfrak T\)</span> es unión completa de átomos, ningún elemento de <span class="math inline">\(\mathfrak T\)</span> puede cortar a la mitad un átomo, así que <span class="math inline">\(A_1\notin\mathfrak T\)</span>. Interpretación: <span class="math inline">\(T\)</span> solo informa cuántos defectuosos hubo, no cuáles posiciones, por eso no puede reconstruir un evento que depende de la posición específica.</p>
+</div>
+</div>
+</section>
+<section id="un-lote-ya-fabricado-modelo-de-laplace" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="un-lote-ya-fabricado-modelo-de-laplace"><span class="header-section-number">2</span> Un lote ya fabricado (modelo de Laplace)</h2>
+<p>Ahora cambien de modelo: un lote ya fabricado y en bodega tiene <span class="math inline">\(N=60\)</span> bombillos, de los cuales <span class="math inline">\(D=9\)</span> son defectuosos. Esta vez el defecto ya está fijo en cada bombillo del lote; no hay ningún mecanismo aleatorio en curso, solo incertidumbre sobre cuáles bombillos tocan en la muestra. Un inspector extrae, sin reemplazo, una muestra de <span class="math inline">\(n=6\)</span> bombillos.</p>
+<ol type="1">
+<li>Calculen la probabilidad de que la muestra contenga exactamente 2 defectuosos.</li>
+<li>Calculen la probabilidad de que la muestra no contenga ningún defectuoso, y usen esto para obtener la probabilidad de que contenga al menos uno.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> <span class="math display">\[P(\text{exactamente 2}) = \frac{\binom{9}{2}\binom{51}{4}}{\binom{60}{6}} = \frac{36\times 249{.}900}{50{.}063{.}860} \approx 0{,}1797\]</span></p>
+<p><strong>2.</strong> <span class="math display">\[P(\text{ninguno defectuoso}) = \frac{\binom{51}{6}}{\binom{60}{6}} = \frac{18{.}009{.}460}{50{.}063{.}860} \approx 0{,}3597\]</span> <span class="math display">\[P(\text{al menos uno}) = 1-0{,}3597 = 0{,}6403\]</span></p>
+</div>
+</div>
+</section>
+<section id="el-proceso-de-fabricación-probabilidad-total-y-bayes" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="el-proceso-de-fabricación-probabilidad-total-y-bayes"><span class="header-section-number">3</span> El proceso de fabricación (probabilidad total y Bayes)</h2>
+<p>Modelen ahora el proceso mismo de fabricación, bombillo por bombillo: cada bombillo se produce en la línea 1 con probabilidad <span class="math inline">\(\alpha=0{,}7\)</span> o en la línea 2 con probabilidad <span class="math inline">\(1-\alpha=0{,}3\)</span>. Dado que se produjo en la línea 1, la probabilidad de que sea defectuoso es <span class="math inline">\(p_1=0{,}02\)</span>; dado que se produjo en la línea 2, es <span class="math inline">\(p_2=0{,}09\)</span>. Sea <span class="math inline">\(D\)</span> el evento “el bombillo es defectuoso” y <span class="math inline">\(M_1\)</span>, <span class="math inline">\(M_2\)</span> los eventos “se produjo en la línea 1 (2)”.</p>
+<ol type="1">
+<li>Calculen <span class="math inline">\(P(D)\)</span> usando el teorema de la probabilidad total.</li>
+<li>Un bombillo elegido al azar de la producción resulta defectuoso. Calculen <span class="math inline">\(P(M_2\mid D)\)</span> usando el teorema de Bayes.</li>
+<li>Calculen <span class="math inline">\(P(M_1\mid D^c)\)</span> (dado que el bombillo no es defectuoso, la probabilidad de que venga de la línea 1). Comparen este número con <span class="math inline">\(P(M_1)=0{,}7\)</span> y comenten, en una frase, qué les dice la diferencia.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> <span class="math display">\[P(D) = P(D\mid M_1)P(M_1)+P(D\mid M_2)P(M_2) = (0{,}02)(0{,}7)+(0{,}09)(0{,}3) = 0{,}014+0{,}027 = 0{,}041\]</span></p>
+<p><strong>2.</strong> <span class="math display">\[P(M_2\mid D) = \frac{P(D\mid M_2)P(M_2)}{P(D)} = \frac{0{,}027}{0{,}041} = \frac{27}{41} \approx 0{,}6585\]</span></p>
+<p><strong>3.</strong> Con <span class="math inline">\(P(D^c)=0{,}959\)</span> y <span class="math inline">\(P(D^c\mid M_1)=1-p_1=0{,}98\)</span>: <span class="math display">\[P(M_1\mid D^c) = \frac{P(D^c\mid M_1)P(M_1)}{P(D^c)} = \frac{(0{,}98)(0{,}7)}{0{,}959} = \frac{0{,}686}{0{,}959} \approx 0{,}7153\]</span></p>
+<p>Comparado con <span class="math inline">\(P(M_1)=0{,}7\)</span>, sube levemente a <span class="math inline">\(0{,}7153\)</span>: como la línea 1 falla menos, que un bombillo no sea defectuoso es evidencia débil a favor de que venga de la línea más confiable.</p>
+</div>
+</div>
+</section>
+<section id="cuándo-son-independientes" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="cuándo-son-independientes"><span class="header-section-number">4</span> ¿Cuándo son independientes?</h2>
+<ol type="1">
+<li>Verifiquen, con los datos de la sección anterior, si <span class="math inline">\(D\)</span> y <span class="math inline">\(M_1\)</span> son eventos independientes.</li>
+<li>Ahora generalicen. Con <span class="math inline">\(\alpha\)</span> fijo, <span class="math inline">\(0&lt;\alpha&lt;1\)</span>, y tasas de falla <span class="math inline">\(p_1,p_2\)</span> arbitrarias (no necesariamente <span class="math inline">\(0{,}02\)</span> y <span class="math inline">\(0{,}09\)</span>), determinen para qué relación entre <span class="math inline">\(p_1\)</span> y <span class="math inline">\(p_2\)</span> los eventos <span class="math inline">\(D\)</span> y <span class="math inline">\(M_1\)</span> resultan independientes. Demuestren su respuesta algebraicamente a partir de la definición de independencia (no verifiquen un caso: derive la condición general).</li>
+<li>En una frase: ¿por qué el resultado del numeral anterior no depende de <span class="math inline">\(\alpha\)</span>? ¿Qué les dice esto sobre qué es lo que realmente vuelve informativo saber de qué línea vino un bombillo?</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> <span class="math inline">\(P(D\cap M_1) = P(D\mid M_1)P(M_1) = (0{,}02)(0{,}7) = 0{,}014\)</span>, mientras que <span class="math inline">\(P(D)P(M_1) = (0{,}041)(0{,}7) = 0{,}0287\)</span>. Como <span class="math inline">\(0{,}014\ne 0{,}0287\)</span>, <span class="math inline">\(D\)</span> y <span class="math inline">\(M_1\)</span> no son independientes; la desigualdad va en el sentido esperado, saber que un bombillo viene de la línea 1 baja su probabilidad de falla por debajo del promedio.</p>
+<p><strong>2.</strong> Con <span class="math inline">\(\alpha\)</span> fijo, <span class="math inline">\(0&lt;\alpha&lt;1\)</span>, y <span class="math inline">\(p_1,p_2\)</span> arbitrarias:</p>
+<p><span class="math display">\[P(D\cap M_1)=\alpha p_1, \qquad P(D)=\alpha p_1+(1-\alpha)p_2, \qquad P(M_1)=\alpha\]</span></p>
+<p>La independencia exige <span class="math inline">\(P(D\cap M_1)=P(D)P(M_1)\)</span>:</p>
+<p><span class="math display">\[\alpha p_1 = \alpha\big[\alpha p_1+(1-\alpha)p_2\big]\]</span></p>
+<p>Dividiendo por <span class="math inline">\(\alpha\ne 0\)</span>:</p>
+<p><span class="math display">\[p_1 = \alpha p_1+(1-\alpha)p_2 \implies p_1(1-\alpha) = (1-\alpha)p_2\]</span></p>
+<p>Como <span class="math inline">\(\alpha&lt;1\)</span>, dividimos por <span class="math inline">\((1-\alpha)\ne 0\)</span>:</p>
+<p><span class="math display">\[p_1=p_2\]</span></p>
+<p><strong>3.</strong> El resultado no depende de <span class="math inline">\(\alpha\)</span> porque <span class="math inline">\(\alpha\)</span> solo controla cuántos bombillos vienen de cada línea, no qué tan distinto falla cada línea. La independencia pregunta si el origen aporta información sobre la falla, y esa información solo existe si <span class="math inline">\(p_1\ne p_2\)</span>. La proporción de producción de cada línea es irrelevante para esa pregunta: lo único que delata el origen es la diferencia entre las tasas de falla.</p>
+</div>
+</div>
+</section>
+<section id="verdadero-o-falso-justificando" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="verdadero-o-falso-justificando"><span class="header-section-number">5</span> Verdadero o falso, justificando</h2>
+<p>Para cada afirmación, indiquen si es verdadera o falsa y justifiquen. No se aceptan respuestas sin justificación.</p>
+<ol type="1">
+<li>Si <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> son eventos mutuamente excluyentes y ambos tienen probabilidad positiva, entonces <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> son independientes.</li>
+<li>Si <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> son eventos independientes, entonces <span class="math inline">\(A^c\)</span> y <span class="math inline">\(B\)</span> también lo son.</li>
+<li>Si <span class="math inline">\(\Omega\)</span> es finito y <span class="math inline">\(T:\Omega\to\Omega'\)</span> no es inyectiva, entonces <span class="math inline">\(T^{-1}(\mathcal P(\Omega'))\)</span> es igual a <span class="math inline">\(\mathcal P(\Omega)\)</span>.</li>
+<li>Si <span class="math inline">\((A_n)_{n\in\mathbb N}\)</span> es una sucesión decreciente de eventos con <span class="math inline">\(A_n\downarrow\varnothing\)</span> (es decir, <span class="math inline">\(\bigcap_n A_n=\varnothing\)</span>), entonces <span class="math inline">\(P(A_n)\to 0\)</span>.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1. Falso.</strong> Si <span class="math inline">\(A\cap B=\varnothing\)</span>, entonces <span class="math inline">\(P(A\cap B)=0\)</span>. Si además fueran independientes, <span class="math inline">\(P(A)P(B)=0\)</span>, forzando <span class="math inline">\(P(A)=0\)</span> o <span class="math inline">\(P(B)=0\)</span>, lo que contradice que ambas sean positivas. Mutuamente excluyentes con probabilidad positiva implica necesariamente dependientes.</p>
+<p><strong>2. Verdadero.</strong> Escribiendo <span class="math inline">\(B\)</span> como unión disyunta: <span class="math display">\[B = (A\cap B)\cup(A^c\cap B) \implies P(B)=P(A\cap B)+P(A^c\cap B)\]</span> <span class="math display">\[P(A^c\cap B) = P(B)-P(A\cap B) = P(B)-P(A)P(B) = P(B)\big(1-P(A)\big) = P(A^c)P(B)\]</span></p>
+<p><strong>3. Falso.</strong> El ejercicio de la primera sección es el contraejemplo: <span class="math inline">\(T\)</span> no es inyectiva (<span class="math inline">\(T(DDN)=T(DND)=T(NDD)=2\)</span>) y sin embargo <span class="math inline">\(|\mathfrak T|=16 \ne 256=|\mathcal P(\Omega)|\)</span>.</p>
+<p><strong>4. Verdadero.</strong> Sea <span class="math inline">\(B_n:=A_n^c\)</span>. Como <span class="math inline">\(A_n\)</span> es decreciente, <span class="math inline">\(B_n\)</span> es creciente. Por De Morgan, <span class="math display">\[\bigcup_n B_n = \Big(\bigcap_n A_n\Big)^c = \varnothing^c = \Omega\]</span></p>
+<p>Por el teorema de continuidad para sucesiones crecientes: <span class="math display">\[P(\Omega) = P\Big(\lim_n B_n\Big) = \lim_n P(B_n) \implies \lim_n P(B_n)=1\]</span></p>
+<p>Como <span class="math inline">\(P(B_n)=1-P(A_n)\)</span>, se sigue <span class="math inline">\(\lim_n\big(1-P(A_n)\big)=1\)</span>, es decir <span class="math inline">\(\lim_n P(A_n)=0\)</span>.</p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/arturosanjuan\.xyz");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="preferred_color_scheme">
+<input type="hidden" id="giscus-alt-theme" value="preferred_color_scheme">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "asanjuanc/arturosanjuan-sitio";
+    script.dataset.repoId = "R_kgDOTzuHrw";
+    script.dataset.category = "Comentarios";
+    script.dataset.categoryId = "DIC_kwDOTzuHr84DD_eD";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "es";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

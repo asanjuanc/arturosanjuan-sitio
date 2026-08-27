@@ -1,0 +1,147 @@
+---
+title: "Taller 1"
+subtitle: "Control de calidad: σ-álgebras, probabilidad de Laplace, teorema de Bayes e independencia"
+description: "Taller en equipos de hasta tres personas, con solución, sobre espacios muestrales, σ-álgebras, probabilidad de Laplace, teorema de la probabilidad total, teorema de Bayes e independencia de eventos."
+author: "Arturo Sanjuán"
+date: 2026-08-26
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 4
+---
+
+::: {.callout-important title="Instrucciones"}
+Trabajen en equipos de máximo tres personas. Toda afirmación debe venir acompañada de su justificación.
+:::
+
+Una fábrica de bombillos produce en dos líneas distintas, con tasas de falla distintas. En este taller van a recorrer el mismo objeto (un bombillo defectuoso o no) bajo tres modelos probabilísticos diferentes: un espacio muestral discreto con su σ-álgebra, un lote ya fabricado y fijo (Laplace clásico), y un proceso de fabricación en dos etapas (probabilidad total, Bayes e independencia). El hilo que conecta los tres es la pregunta: ¿qué estructura matemática le corresponde a cada situación aleatoria, y por qué no es la misma en los tres casos?
+
+## Espacio muestral y una σ-álgebra más pequeña
+
+Se extraen 3 bombillos de la producción (ya mezclada) y se clasifica cada uno como defectuoso "D" o no defectuoso "N". Sea $\Omega = \{D,N\}^3$ y, para $i=1,2,3$,
+
+$$A_i := \text{el } i\text{-ésimo bombillo extraído es defectuoso}$$
+
+1. Describan por extensión los eventos $A_1$, $A_1\cup A_3$ y $A_1\cap A_2^c\cap A_3$.
+2. Sea $T:\Omega\to\{0,1,2,3\}$ la función que cuenta el número total de bombillos defectuosos entre los tres extraídos. Usando el resultado ya demostrado en clase sobre la preimagen de una σ-álgebra (si $\mathfrak F'$ es una σ-álgebra sobre $\Omega'$ y $f:\Omega\to\Omega'$, entonces $f^{-1}(\mathfrak F')$ es una σ-álgebra sobre $\Omega$), identifiquen explícitamente
+$$\mathfrak T := T^{-1}\big(\mathcal P(\{0,1,2,3\})\big) \subset \mathcal P(\Omega)$$
+Listen los átomos de $\mathfrak T$ (los subconjuntos no vacíos más pequeños de $\Omega$ que pertenecen a $\mathfrak T$).
+3. Muestren que $\mathfrak T$ es estrictamente más pequeña que $\mathcal P(\Omega)$: exhiban un evento de $\mathcal P(\Omega)$ que no pertenezca a $\mathfrak T$, y expliquen en una frase por qué la información de $T$ (cuántos, no cuáles) no alcanza para reconstruirlo.
+
+::: {.callout-tip title="Solución"}
+$$\Omega = \{DDD, DDN, DND, DNN, NDD, NDN, NND, NNN\}$$
+
+**1.**
+$$A_1 = \{DDD, DDN, DND, DNN\}$$
+$$A_1\cup A_3 = \{DDD, DDN, DND, DNN, NDD, NND\}$$
+
+Para $A_1\cap A_2^c\cap A_3$ se exige posición 1 = D, posición 2 = N y posición 3 = D simultáneamente, lo que fija el resultado por completo:
+
+$$A_1\cap A_2^c\cap A_3 = \{DND\}$$
+
+**2.** Sea $T(\omega)$ el número de defectuosos. Sus niveles particionan $\Omega$:
+
+$$L_0=\{NNN\}, \quad L_1=\{DNN,NDN,NND\}, \quad L_2=\{DDN,DND,NDD\}, \quad L_3=\{DDD\}$$
+
+Como $T^{-1}(\{k\})=L_k$ y todo subconjunto de $\{0,1,2,3\}$ es unión de singletons, $\mathfrak T$ es exactamente el conjunto de todas las uniones de $L_0,L_1,L_2,L_3$: $|\mathfrak T|=2^4=16$. Los átomos de $\mathfrak T$ son $L_0, L_1, L_2, L_3$.
+
+**3.** Tomemos $A_1=\{DDD,DDN,DND,DNN\}$. Nótese que $A_1\cap L_2=\{DDN,DND\}$ es un subconjunto propio y no vacío de $L_2=\{DDN,DND,NDD\}$. Como todo elemento de $\mathfrak T$ es unión completa de átomos, ningún elemento de $\mathfrak T$ puede cortar a la mitad un átomo, así que $A_1\notin\mathfrak T$. Interpretación: $T$ solo informa cuántos defectuosos hubo, no cuáles posiciones, por eso no puede reconstruir un evento que depende de la posición específica.
+:::
+
+## Un lote ya fabricado (modelo de Laplace)
+
+Ahora cambien de modelo: un lote ya fabricado y en bodega tiene $N=60$ bombillos, de los cuales $D=9$ son defectuosos. Esta vez el defecto ya está fijo en cada bombillo del lote; no hay ningún mecanismo aleatorio en curso, solo incertidumbre sobre cuáles bombillos tocan en la muestra. Un inspector extrae, sin reemplazo, una muestra de $n=6$ bombillos.
+
+1. Calculen la probabilidad de que la muestra contenga exactamente 2 defectuosos.
+2. Calculen la probabilidad de que la muestra no contenga ningún defectuoso, y usen esto para obtener la probabilidad de que contenga al menos uno.
+
+::: {.callout-tip title="Solución"}
+**1.**
+$$P(\text{exactamente 2}) = \frac{\binom{9}{2}\binom{51}{4}}{\binom{60}{6}} = \frac{36\times 249{.}900}{50{.}063{.}860} \approx 0{,}1797$$
+
+**2.**
+$$P(\text{ninguno defectuoso}) = \frac{\binom{51}{6}}{\binom{60}{6}} = \frac{18{.}009{.}460}{50{.}063{.}860} \approx 0{,}3597$$
+$$P(\text{al menos uno}) = 1-0{,}3597 = 0{,}6403$$
+:::
+
+## El proceso de fabricación (probabilidad total y Bayes)
+
+Modelen ahora el proceso mismo de fabricación, bombillo por bombillo: cada bombillo se produce en la línea 1 con probabilidad $\alpha=0{,}7$ o en la línea 2 con probabilidad $1-\alpha=0{,}3$. Dado que se produjo en la línea 1, la probabilidad de que sea defectuoso es $p_1=0{,}02$; dado que se produjo en la línea 2, es $p_2=0{,}09$. Sea $D$ el evento "el bombillo es defectuoso" y $M_1$, $M_2$ los eventos "se produjo en la línea 1 (2)".
+
+1. Calculen $P(D)$ usando el teorema de la probabilidad total.
+2. Un bombillo elegido al azar de la producción resulta defectuoso. Calculen $P(M_2\mid D)$ usando el teorema de Bayes.
+3. Calculen $P(M_1\mid D^c)$ (dado que el bombillo no es defectuoso, la probabilidad de que venga de la línea 1). Comparen este número con $P(M_1)=0{,}7$ y comenten, en una frase, qué les dice la diferencia.
+
+::: {.callout-tip title="Solución"}
+**1.**
+$$P(D) = P(D\mid M_1)P(M_1)+P(D\mid M_2)P(M_2) = (0{,}02)(0{,}7)+(0{,}09)(0{,}3) = 0{,}014+0{,}027 = 0{,}041$$
+
+**2.**
+$$P(M_2\mid D) = \frac{P(D\mid M_2)P(M_2)}{P(D)} = \frac{0{,}027}{0{,}041} = \frac{27}{41} \approx 0{,}6585$$
+
+**3.** Con $P(D^c)=0{,}959$ y $P(D^c\mid M_1)=1-p_1=0{,}98$:
+$$P(M_1\mid D^c) = \frac{P(D^c\mid M_1)P(M_1)}{P(D^c)} = \frac{(0{,}98)(0{,}7)}{0{,}959} = \frac{0{,}686}{0{,}959} \approx 0{,}7153$$
+
+Comparado con $P(M_1)=0{,}7$, sube levemente a $0{,}7153$: como la línea 1 falla menos, que un bombillo no sea defectuoso es evidencia débil a favor de que venga de la línea más confiable.
+:::
+
+## ¿Cuándo son independientes?
+
+1. Verifiquen, con los datos de la sección anterior, si $D$ y $M_1$ son eventos independientes.
+2. Ahora generalicen. Con $\alpha$ fijo, $0<\alpha<1$, y tasas de falla $p_1,p_2$ arbitrarias (no necesariamente $0{,}02$ y $0{,}09$), determinen para qué relación entre $p_1$ y $p_2$ los eventos $D$ y $M_1$ resultan independientes. Demuestren su respuesta algebraicamente a partir de la definición de independencia (no verifiquen un caso: derive la condición general).
+3. En una frase: ¿por qué el resultado del numeral anterior no depende de $\alpha$? ¿Qué les dice esto sobre qué es lo que realmente vuelve informativo saber de qué línea vino un bombillo?
+
+::: {.callout-tip title="Solución"}
+**1.** $P(D\cap M_1) = P(D\mid M_1)P(M_1) = (0{,}02)(0{,}7) = 0{,}014$, mientras que $P(D)P(M_1) = (0{,}041)(0{,}7) = 0{,}0287$. Como $0{,}014\ne 0{,}0287$, $D$ y $M_1$ no son independientes; la desigualdad va en el sentido esperado, saber que un bombillo viene de la línea 1 baja su probabilidad de falla por debajo del promedio.
+
+**2.** Con $\alpha$ fijo, $0<\alpha<1$, y $p_1,p_2$ arbitrarias:
+
+$$P(D\cap M_1)=\alpha p_1, \qquad P(D)=\alpha p_1+(1-\alpha)p_2, \qquad P(M_1)=\alpha$$
+
+La independencia exige $P(D\cap M_1)=P(D)P(M_1)$:
+
+$$\alpha p_1 = \alpha\big[\alpha p_1+(1-\alpha)p_2\big]$$
+
+Dividiendo por $\alpha\ne 0$:
+
+$$p_1 = \alpha p_1+(1-\alpha)p_2 \implies p_1(1-\alpha) = (1-\alpha)p_2$$
+
+Como $\alpha<1$, dividimos por $(1-\alpha)\ne 0$:
+
+$$p_1=p_2$$
+
+**3.** El resultado no depende de $\alpha$ porque $\alpha$ solo controla cuántos bombillos vienen de cada línea, no qué tan distinto falla cada línea. La independencia pregunta si el origen aporta información sobre la falla, y esa información solo existe si $p_1\ne p_2$. La proporción de producción de cada línea es irrelevante para esa pregunta: lo único que delata el origen es la diferencia entre las tasas de falla.
+:::
+
+## Verdadero o falso, justificando
+
+Para cada afirmación, indiquen si es verdadera o falsa y justifiquen. No se aceptan respuestas sin justificación.
+
+1. Si $A$ y $B$ son eventos mutuamente excluyentes y ambos tienen probabilidad positiva, entonces $A$ y $B$ son independientes.
+2. Si $A$ y $B$ son eventos independientes, entonces $A^c$ y $B$ también lo son.
+3. Si $\Omega$ es finito y $T:\Omega\to\Omega'$ no es inyectiva, entonces $T^{-1}(\mathcal P(\Omega'))$ es igual a $\mathcal P(\Omega)$.
+4. Si $(A_n)_{n\in\mathbb N}$ es una sucesión decreciente de eventos con $A_n\downarrow\varnothing$ (es decir, $\bigcap_n A_n=\varnothing$), entonces $P(A_n)\to 0$.
+
+::: {.callout-tip title="Solución"}
+**1. Falso.** Si $A\cap B=\varnothing$, entonces $P(A\cap B)=0$. Si además fueran independientes, $P(A)P(B)=0$, forzando $P(A)=0$ o $P(B)=0$, lo que contradice que ambas sean positivas. Mutuamente excluyentes con probabilidad positiva implica necesariamente dependientes.
+
+**2. Verdadero.** Escribiendo $B$ como unión disyunta:
+$$B = (A\cap B)\cup(A^c\cap B) \implies P(B)=P(A\cap B)+P(A^c\cap B)$$
+$$P(A^c\cap B) = P(B)-P(A\cap B) = P(B)-P(A)P(B) = P(B)\big(1-P(A)\big) = P(A^c)P(B)$$
+
+**3. Falso.** El ejercicio de la primera sección es el contraejemplo: $T$ no es inyectiva ($T(DDN)=T(DND)=T(NDD)=2$) y sin embargo $|\mathfrak T|=16 \ne 256=|\mathcal P(\Omega)|$.
+
+**4. Verdadero.** Sea $B_n:=A_n^c$. Como $A_n$ es decreciente, $B_n$ es creciente. Por De Morgan,
+$$\bigcup_n B_n = \Big(\bigcap_n A_n\Big)^c = \varnothing^c = \Omega$$
+
+Por el teorema de continuidad para sucesiones crecientes:
+$$P(\Omega) = P\Big(\lim_n B_n\Big) = \lim_n P(B_n) \implies \lim_n P(B_n)=1$$
+
+Como $P(B_n)=1-P(A_n)$, se sigue $\lim_n\big(1-P(A_n)\big)=1$, es decir $\lim_n P(A_n)=0$.
+:::
