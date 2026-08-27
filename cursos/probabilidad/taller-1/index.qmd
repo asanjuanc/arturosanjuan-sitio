@@ -16,10 +16,6 @@ format:
 order: 4
 ---
 
-::: {.callout-important title="Instrucciones"}
-Trabajen en equipos de máximo tres personas. Toda afirmación debe venir acompañada de su justificación.
-:::
-
 Una fábrica de bombillos produce en dos líneas distintas, con tasas de falla distintas. En este taller van a recorrer el mismo objeto (un bombillo defectuoso o no) bajo tres modelos probabilísticos diferentes: un espacio muestral discreto con su σ-álgebra, un lote ya fabricado y fijo (Laplace clásico), y un proceso de fabricación en dos etapas (probabilidad total, Bayes e independencia). El hilo que conecta los tres es la pregunta: ¿qué estructura matemática le corresponde a cada situación aleatoria, y por qué no es la misma en los tres casos?
 
 ## Espacio muestral y una σ-álgebra más pequeña
