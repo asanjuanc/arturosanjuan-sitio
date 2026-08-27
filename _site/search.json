@@ -280,118 +280,94 @@
     ]
   },
   {
-    "objectID": "cursos/numerico/index.html",
-    "href": "cursos/numerico/index.html",
-    "title": "Análisis Numérico",
+    "objectID": "cursos/numerico/taller-1/index.html",
+    "href": "cursos/numerico/taller-1/index.html",
+    "title": "Taller 1",
     "section": "",
-    "text": "Ordenar por\n      Por defecto\n      \n        Título\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTítulo\n\n\n\nSubtítulo\n\n\n\n\n\n\n\n\nIntroducción\n\n\nSistemas de numeración y punto flotante\n\n\n\n\n\n\nCondicionamiento\n\n\nCancelación catastrófica, pérdida de significancia y número de condición\n\n\n\n\n\n\nEstabilidad\n\n\nAlgoritmos y estabilidad ejemplo con f(x)=(e^x-1)/x).\n\n\n\n\n\n\nNo hay resultados",
+    "text": "Un sistema de navegación reporta que, después de mucho tiempo de vuelo, su corrección de rumbo se “congela” en cero. La corrección se calcula con la función \\(f(x)=\\sqrt{x+1}-\\sqrt{x}\\), donde \\(x\\) es el tiempo transcurrido de misión. El equipo de ingeniería sospecha del modelo matemático; en este taller ustedes actúan como peritos numéricos y deben determinar si la culpa es del problema o del algoritmo usado para calcularlo. Cada equipo recibió un valor \\(x_0\\) distinto entre \\(10^2\\) y \\(10^6\\); la solución de esta hoja cubre esos valores.",
     "crumbs": [
-      "Análisis Numérico"
+      "Taller 1"
     ]
   },
   {
-    "objectID": "cursos/numerico/condicionamiento/index.html",
-    "href": "cursos/numerico/condicionamiento/index.html",
-    "title": "Condicionamiento",
+    "objectID": "cursos/numerico/taller-1/index.html#la-rejilla-de-la-máquina",
+    "href": "cursos/numerico/taller-1/index.html#la-rejilla-de-la-máquina",
+    "title": "Taller 1",
+    "section": "1 La rejilla de la máquina",
+    "text": "1 La rejilla de la máquina\nTrabajando en precisión doble de IEEE 754 (52 bits de mantisa), la distancia entre dos números de punto flotante consecutivos cerca de un valor \\(x\\) (la unidad en el último lugar, o ULP) es aproximadamente\n\\[\\text{ULP}(x) \\approx 2^{\\lfloor \\log_2 x \\rfloor - 52}\\]\nCon su \\(x_0\\) asignado, calculen \\(\\text{ULP}(x_0)\\), determinen si \\(x_0\\) y \\(x_0+1\\) se almacenan como el mismo número de punto flotante o son distinguibles, y si son distinguibles calculen cuántos números representables existen estrictamente entre \\(x_0\\) y \\(x_0+1\\). Antes de tocar Julia, con base en esto, predigan si esperan que el algoritmo ingenuo para \\(f(x_0)\\) sea preciso o falle catastróficamente, y por qué.\n\n\n\n\n\n\nTipSolución\n\n\n\nSi \\(h=\\text{ULP}(x_0)\\) es el espaciado entre flotantes consecutivos, un intervalo de longitud 1 contiene \\(1/h\\) huecos iguales entre marcas; por conteo de postes de cerca, eso deja \\(1/h-1\\) representables estrictamente adentro (sin contar los dos extremos):\n\\[\\#\\{\\text{representables en }(x_0,x_0+1)\\} = 2^{52-\\lfloor\\log_2 x_0\\rfloor}-1\\]\nsiempre un entero exacto, porque \\(2^{52-e}\\) es potencia de 2.\n\n\n\n\n\n\n\n\n\n\n\\(x_0\\)\n\\(\\lfloor\\log_2 x_0\\rfloor\\)\n\\(\\text{ULP}(x_0)\\)\n\\(x_0+1=x_0\\)?\n# representables entre \\(x_0\\) y \\(x_0+1\\)\n\n\n\n\n\\(10^2\\)\n6\n\\(1{,}42\\times10^{-14}\\)\nNo\n\\(\\approx 7{,}0\\times10^{13}\\)\n\n\n\\(10^3\\)\n9\n\\(1{,}14\\times10^{-13}\\)\nNo\n\\(\\approx 8{,}8\\times10^{12}\\)\n\n\n\\(10^4\\)\n13\n\\(1{,}82\\times10^{-12}\\)\nNo\n\\(\\approx 5{,}5\\times10^{11}\\)\n\n\n\\(10^5\\)\n16\n\\(1{,}46\\times10^{-11}\\)\nNo\n\\(\\approx 6{,}9\\times10^{10}\\)\n\n\n\\(10^6\\)\n19\n\\(1{,}16\\times10^{-10}\\)\nNo\n\\(\\approx 8{,}6\\times10^{9}\\)\n\n\n\nEn ninguno de estos valores \\(x_0\\) y \\(x_0+1\\) colapsan al mismo flotante (eso solo ocurre desde \\(x_0=2^{53}\\approx9{,}007\\times10^{15}\\)), así que en este rango se predice degradación progresiva del algoritmo ingenuo, pero no un colapso total.",
+    "crumbs": [
+      "Taller 1"
+    ]
+  },
+  {
+    "objectID": "cursos/numerico/taller-1/index.html#el-expediente-del-condicionamiento",
+    "href": "cursos/numerico/taller-1/index.html#el-expediente-del-condicionamiento",
+    "title": "Taller 1",
+    "section": "2 El expediente del condicionamiento",
+    "text": "2 El expediente del condicionamiento\nDeriven el número de condición relativo \\(\\kappa_f(x)\\) de \\(f(x)=\\sqrt{x+1}-\\sqrt x\\), calculen \\(\\displaystyle\\lim_{x\\to\\infty}\\kappa_f(x)\\), y evalúen \\(\\kappa_f(x_0)\\) para su valor asignado. Con esta evidencia sola, sin haber corrido nada todavía, ¿el problema \\(f\\) es responsable de un eventual fallo? Justifiquen.\n\n\n\n\n\n\nTipSolución\n\n\n\nCon \\(f'(x)=\\dfrac{1}{2\\sqrt{x+1}}-\\dfrac1{2\\sqrt x}\\), factorizando por diferencia de raíces se obtiene \\(f'(x)=-\\dfrac{f(x)}{2\\sqrt x\\sqrt{x+1}}\\), así que\n\\[\\kappa_f(x)=\\left|\\frac{xf'(x)}{f(x)}\\right| = \\frac{x}{2\\sqrt x\\sqrt{x+1}} = \\frac12\\sqrt{\\frac{x}{x+1}}\\]\nComo \\(x/(x+1)\\to 1\\), \\[\\lim_{x\\to\\infty}\\kappa_f(x)=\\frac12\\]\ny como \\(x/(x+1)&lt;1\\) para todo \\(x&gt;0\\), de hecho \\(\\kappa_f(x)&lt;1/2\\) siempre: el problema nunca amplifica el error relativo de entrada más de la mitad, en ningún punto de su dominio.\n\n\n\n\\(x_0\\)\n\\(\\kappa_f(x_0)\\)\n\n\n\n\n\\(10^2\\)\n\\(0{,}4975186\\)\n\n\n\\(10^3\\)\n\\(0{,}4997502\\)\n\n\n\\(10^4\\)\n\\(0{,}4999750\\)\n\n\n\\(10^5\\)\n\\(0{,}4999975\\)\n\n\n\\(10^6\\)\n\\(0{,}49999975\\)\n\n\n\nEl problema está óptimamente condicionado en todo el rango asignado (\\(\\kappa_f&lt;1/2\\) siempre): si el algoritmo ingenuo falla, la responsabilidad es exclusivamente del algoritmo, no de \\(f\\).",
+    "crumbs": [
+      "Taller 1"
+    ]
+  },
+  {
+    "objectID": "cursos/numerico/taller-1/index.html#el-interrogatorio-en-julia",
+    "href": "cursos/numerico/taller-1/index.html#el-interrogatorio-en-julia",
+    "title": "Taller 1",
+    "section": "3 El interrogatorio en Julia",
+    "text": "3 El interrogatorio en Julia\nImplementen el algoritmo ingenuo sqrt(x+1) - sqrt(x) y evalúenlo en \\(x_0\\). Encuentren, mediante racionalización, una forma equivalente de \\(f\\) que evite restar cantidades casi iguales, e impleméntenla. Usando BigFloat como referencia de alta precisión, construyan una tabla comparando ambos algoritmos en un barrido que incluya su \\(x_0\\). Escriban su veredicto forense en 4 o 5 líneas: si el problema está bien o mal condicionado, en qué paso exacto entra la inestabilidad, y cuál algoritmo recomiendan.\n\n\n\n\n\n\nTipSolución\n\n\n\nLa racionalización multiplica y divide por el conjugado:\n\\[f(x)=\\sqrt{x+1}-\\sqrt x = \\frac{(\\sqrt{x+1}-\\sqrt x)(\\sqrt{x+1}+\\sqrt x)}{\\sqrt{x+1}+\\sqrt x} = \\frac{1}{\\sqrt{x+1}+\\sqrt x}\\]\nf_ingenuo(x)    = sqrt(x + 1) - sqrt(x)\nf_estable(x)    = 1 / (sqrt(x + 1) + sqrt(x))\nf_referencia(x) = Float64(sqrt(BigFloat(x) + 1) - sqrt(BigFloat(x)))\nf_estable solo suma cantidades positivas, así que no hay cancelación posible en ningún paso.\n\n\n\n\n\n\n\n\n\n\n\\(x_0\\)\ningenuo\nestable\nerror rel. ingenuo\nerror rel. estable\n\n\n\n\n\\(10^2\\)\n\\(4{,}987562112089\\times10^{-2}\\)\nigual\n\\(6{,}5\\times10^{-15}\\)\n\\(0\\)\n\n\n\\(10^3\\)\n\\(1{,}580743742896\\times10^{-2}\\)\nigual\n\\(1{,}1\\times10^{-13}\\)\n\\(0\\)\n\n\n\\(10^4\\)\n\\(4{,}999875006249\\times10^{-3}\\)\nigual\n\\(2{,}1\\times10^{-13}\\)\n\\(0\\)\n\n\n\\(10^5\\)\n\\(1{,}581134877256\\times10^{-3}\\)\nigual\n\\(6{,}4\\times10^{-13}\\)\n\\(1{,}4\\times10^{-16}\\)\n\n\n\\(10^6\\)\n\\(4{,}999998750463\\times10^{-4}\\)\n\\(4{,}999998750001\\times10^{-4}\\)\n\\(9{,}3\\times10^{-11}\\)\n\\(0\\)\n\n\n\nEn este rango el error del algoritmo ingenuo nunca supera \\(\\sim10^{-10}\\): todavía está lejos del colapso, pero ya muestra degradación consistente y medible frente al estable, que se mantiene en \\(0\\) o en el orden de \\(\\epsilon_{\\text{mach}}\\) en todos los casos.\nVeredicto modelo: “El problema en \\(x_0\\) tiene \\(\\kappa_f(x_0)\\approx 0{,}5\\): bien condicionado, y de hecho \\(\\kappa_f(x)&lt;1/2\\) para todo \\(x\\). El algoritmo ingenuo pierde precisión progresivamente porque en el paso \\(\\sqrt{x+1}-\\sqrt{x}\\) se restan dos cantidades cada vez más parecidas a medida que \\(x_0\\) crece; aunque en este rango no llega a colapsar del todo, la tendencia ya es clara y se vuelve catastrófica para \\(x_0\\) mucho mayores (a partir de \\(x_0=2^{53}\\), donde \\(x_0\\) y \\(x_0+1\\) dejan de ser distinguibles). La causa es inestabilidad algorítmica, no mal condicionamiento. La forma racionalizada, al no restar cantidades parecidas, mantiene precisión de máquina en todo el rango probado.”",
+    "crumbs": [
+      "Taller 1"
+    ]
+  },
+  {
+    "objectID": "cursos/numerico/estabilidad/index.html",
+    "href": "cursos/numerico/estabilidad/index.html",
+    "title": "Estabilidad",
     "section": "",
-    "text": "Consideremos la sucesión\n\\[x_{n+1} = 10x_n - 9\\]\nDesde el punto de vista del análisis matemático puro, si \\(x_0=1\\) entonces \\(x_n=1\\) para todo \\(n\\): es la sucesión constante, porque \\(x=1\\) es el único punto fijo de \\(g(x)=10x-9\\).\nSupongamos ahora que en punto flotante solo tenemos \\(d=2\\) cifras significativas, y que el dato \\(x_0=1\\) se representa como \\(\\tilde x_0=0{,}99\\) — un error relativo de apenas el \\(1\\%\\), del orden de cualquier redondeo típico. Aplicamos la recurrencia tal cual, redondeando a 2 cifras en cada paso:\n\n\n\n\n\n\n\n\n\n\n\\(n\\)\n\\(\\tilde x_n\\)\nerror absoluto \\(e_n=\\tilde x_n-1\\)\nerror relativo\ndígitos perdidos\n\n\n\n\n0\n0,99\n\\(-0{,}01=-1\\times10^{-2}\\)\n\\(1\\%\\)\n0\n\n\n1\n0,90\n\\(-0{,}10=-1\\times10^{-1}\\)\n\\(10\\%\\)\n1\n\n\n2\n0,00\n\\(-1{,}00=-1\\times10^{0}\\)\n\\(100\\%\\)\n2\n\n\n3\n\\(-9{,}00\\)\n\\(-10{,}00=-1\\times10^{1}\\)\n\\(1000\\%\\)\n3\n\n\n\nEn tres pasos el error relativo pasó de \\(1\\%\\) a \\(1000\\%\\) — la respuesta calculada (\\(-9\\)) no tiene ninguna relación con el valor verdadero (\\(1\\)).\n\n\n\n\n\n\nImportantePor qué ocurre esto\n\n\n\nEscribiendo \\(\\tilde x_n = 1+e_n\\) y sustituyendo en la recurrencia:\n\\[1+e_{n+1}=10(1+e_n)-9=1+10e_n \\;\\Longrightarrow\\; e_{n+1}=10\\,e_n \\;\\Longrightarrow\\; e_n=10^n e_0\\]\nEl error se multiplica por 10 en cada paso, sin importar qué tan pequeño sea \\(e_0\\). Tomar un dato más aproximado, como \\(x_0=0{,}99999\\), no resuelve el problema, solo lo retrasa: el problema está mal condicionado. El algoritmo y el computador dan una respuesta, pero esa respuesta no está cerca de “la realidad”.\n\n\nEste es exactamente el mecanismo que hace silenciosa la pérdida de significancia: ninguna operación individual (multiplicar por 10, restar 9) tiene nada de alarmante — el resultado final simplemente deja de tener sentido, sin ningún símbolo de error que lo anuncie.\nEl mismo fenómeno aparece cuando restamos dos números cercanos:\n\\[2{,}1357 - 2{,}1356 = 0{,}0001 = 1\\times10^{-4}\\]\nCada operando tiene 5 cifras significativas, pero el resultado solo tiene 1 — perdimos 4 cifras significativas en una sola resta.",
+    "text": "Un problema matemático idealizado se puede representar como una función \\(a \\mapsto f(a)\\): a partir de un dato \\(a\\), se produce exactamente el resultado \\(f(a)\\). En la práctica, casi nunca podemos calcular \\(f(a)\\) de manera exacta con un número finito de pasos aritméticos; en su lugar, construimos un algoritmo, otra función \\(a \\mapsto \\tilde f(a)\\), que aproxima a \\(f\\) mediante una sucesión finita de operaciones elementales.\nUn mismo problema \\(f\\) puede tener muchos algoritmos \\(\\tilde f\\) distintos que lo aproximan — y, como veremos, no todos son igual de buenos, incluso cuando matemáticamente (con aritmética exacta) producen el mismo resultado.",
     "crumbs": [
-      "Condicionamiento"
+      "Estabilidad"
     ]
   },
   {
-    "objectID": "cursos/numerico/condicionamiento/index.html#cancelación-catastrófica-o-pérdida-de-significancia",
-    "href": "cursos/numerico/condicionamiento/index.html#cancelación-catastrófica-o-pérdida-de-significancia",
-    "title": "Condicionamiento",
+    "objectID": "cursos/numerico/estabilidad/index.html#problemas-vs.-algoritmos",
+    "href": "cursos/numerico/estabilidad/index.html#problemas-vs.-algoritmos",
+    "title": "Estabilidad",
     "section": "",
-    "text": "Consideremos la sucesión\n\\[x_{n+1} = 10x_n - 9\\]\nDesde el punto de vista del análisis matemático puro, si \\(x_0=1\\) entonces \\(x_n=1\\) para todo \\(n\\): es la sucesión constante, porque \\(x=1\\) es el único punto fijo de \\(g(x)=10x-9\\).\nSupongamos ahora que en punto flotante solo tenemos \\(d=2\\) cifras significativas, y que el dato \\(x_0=1\\) se representa como \\(\\tilde x_0=0{,}99\\) — un error relativo de apenas el \\(1\\%\\), del orden de cualquier redondeo típico. Aplicamos la recurrencia tal cual, redondeando a 2 cifras en cada paso:\n\n\n\n\n\n\n\n\n\n\n\\(n\\)\n\\(\\tilde x_n\\)\nerror absoluto \\(e_n=\\tilde x_n-1\\)\nerror relativo\ndígitos perdidos\n\n\n\n\n0\n0,99\n\\(-0{,}01=-1\\times10^{-2}\\)\n\\(1\\%\\)\n0\n\n\n1\n0,90\n\\(-0{,}10=-1\\times10^{-1}\\)\n\\(10\\%\\)\n1\n\n\n2\n0,00\n\\(-1{,}00=-1\\times10^{0}\\)\n\\(100\\%\\)\n2\n\n\n3\n\\(-9{,}00\\)\n\\(-10{,}00=-1\\times10^{1}\\)\n\\(1000\\%\\)\n3\n\n\n\nEn tres pasos el error relativo pasó de \\(1\\%\\) a \\(1000\\%\\) — la respuesta calculada (\\(-9\\)) no tiene ninguna relación con el valor verdadero (\\(1\\)).\n\n\n\n\n\n\nImportantePor qué ocurre esto\n\n\n\nEscribiendo \\(\\tilde x_n = 1+e_n\\) y sustituyendo en la recurrencia:\n\\[1+e_{n+1}=10(1+e_n)-9=1+10e_n \\;\\Longrightarrow\\; e_{n+1}=10\\,e_n \\;\\Longrightarrow\\; e_n=10^n e_0\\]\nEl error se multiplica por 10 en cada paso, sin importar qué tan pequeño sea \\(e_0\\). Tomar un dato más aproximado, como \\(x_0=0{,}99999\\), no resuelve el problema, solo lo retrasa: el problema está mal condicionado. El algoritmo y el computador dan una respuesta, pero esa respuesta no está cerca de “la realidad”.\n\n\nEste es exactamente el mecanismo que hace silenciosa la pérdida de significancia: ninguna operación individual (multiplicar por 10, restar 9) tiene nada de alarmante — el resultado final simplemente deja de tener sentido, sin ningún símbolo de error que lo anuncie.\nEl mismo fenómeno aparece cuando restamos dos números cercanos:\n\\[2{,}1357 - 2{,}1356 = 0{,}0001 = 1\\times10^{-4}\\]\nCada operando tiene 5 cifras significativas, pero el resultado solo tiene 1 — perdimos 4 cifras significativas en una sola resta.",
+    "text": "Un problema matemático idealizado se puede representar como una función \\(a \\mapsto f(a)\\): a partir de un dato \\(a\\), se produce exactamente el resultado \\(f(a)\\). En la práctica, casi nunca podemos calcular \\(f(a)\\) de manera exacta con un número finito de pasos aritméticos; en su lugar, construimos un algoritmo, otra función \\(a \\mapsto \\tilde f(a)\\), que aproxima a \\(f\\) mediante una sucesión finita de operaciones elementales.\nUn mismo problema \\(f\\) puede tener muchos algoritmos \\(\\tilde f\\) distintos que lo aproximan — y, como veremos, no todos son igual de buenos, incluso cuando matemáticamente (con aritmética exacta) producen el mismo resultado.",
     "crumbs": [
-      "Condicionamiento"
+      "Estabilidad"
     ]
   },
   {
-    "objectID": "cursos/numerico/condicionamiento/index.html#el-número-de-condición-relativo",
-    "href": "cursos/numerico/condicionamiento/index.html#el-número-de-condición-relativo",
-    "title": "Condicionamiento",
-    "section": "2 El número de condición relativo",
-    "text": "2 El número de condición relativo\nLa pregunta natural es: ¿qué tan sensible es un problema, independientemente del algoritmo o la máquina que se use para resolverlo?\n\n2.1 Un ejemplo de calentamiento\nSea \\(f(x)=x+1\\). En la máquina, \\(x\\) se representa como \\(\\text{fl}(x)=x(1+\\epsilon)\\) con \\(|\\epsilon|\\le \\epsilon_{\\text{mach}}/2\\). Si la suma se hace exacta:\n\\[y = \\text{fl}(x)+1 = x(1+\\epsilon)+1\\]\nEl error relativo del resultado es\n\\[\\frac{|y-f(x)|}{|f(x)|} = \\frac{|x(1+\\epsilon)+1-(x+1)|}{|x+1|} = \\frac{|\\epsilon x|}{|x+1|}\\]\nEste error puede ser arbitrariamente grande si \\(x\\approx -1\\) — aunque \\(\\epsilon\\) sea minúsculo. El problema “sumar 1” es benigno lejos de \\(x=-1\\), mal condicionado cerca de ahí.\n\n\n2.2 Definición formal\nQueremos generalizar esta idea: dado un problema \\(f\\) y un dato \\(a\\), ¿cuánto se amplifica el error relativo de \\(a\\) al pasar por \\(f\\)?\n\n\n\n\n\n\nImportanteDefinición — número de condición relativo\n\n\n\n\\[\\kappa_f(a) = \\lim_{\\epsilon\\to 0} \\frac{\\left|f(a)-f(a(1+\\epsilon))\\right|/|f(a)|}{|\\epsilon|}\\]\nEs la razón entre el cambio relativo en el resultado y el cambio relativo en el dato, en el límite de perturbaciones pequeñas. Si \\(f\\) es diferenciable en \\(a\\):\n\\[\\kappa_f(a) = \\left|\\frac{a\\,f'(a)}{f(a)}\\right|\\]\n\n\nSi \\(\\kappa_f(a)\\) es muy grande, el problema está mal condicionado en \\(a\\): cualquier perturbación de los datos — así sea del tamaño de \\(\\epsilon_{\\text{mach}}\\) — se amplifica hasta volver el resultado inútil. Esto no depende del algoritmo ni de la máquina: es una propiedad del problema mismo.\n\n\n2.3 Ejemplos elementales\n\\[f(x)=x-c \\;\\Longrightarrow\\; \\kappa_f(x)=\\left|\\frac{x}{x-c}\\right|\\]\nPuede ser muy grande si \\(|x|\\gg|x-c|\\), por ejemplo si \\(x\\approx c\\) — esta es exactamente la resta cancelante de la sección anterior.\n\\[f(x)=cx \\;\\Longrightarrow\\; \\kappa_f(x)=1\\]\nLa multiplicación por una constante nunca amplifica el error relativo: siempre funciona bien.\n\\[f(x)=x^p \\;\\Longrightarrow\\; \\kappa_f(x)=|p|\\]\n\\[f(x)=\\cos(x) \\;\\Longrightarrow\\; \\kappa_f(x)=|x\\tan(x)|\\]\nPuede ser grande si \\(x\\) está cerca de un múltiplo impar de \\(\\pi/2\\) (ahí \\(f(x)\\approx 0\\)) o si \\(|x|\\gg 1\\).",
+    "objectID": "cursos/numerico/estabilidad/index.html#estudio-de-caso-evaluación-de-un-polinomio-el-método-de-horner",
+    "href": "cursos/numerico/estabilidad/index.html#estudio-de-caso-evaluación-de-un-polinomio-el-método-de-horner",
+    "title": "Estabilidad",
+    "section": "2 Estudio de caso: evaluación de un polinomio — el método de Horner",
+    "text": "2 Estudio de caso: evaluación de un polinomio — el método de Horner\nAntes de hablar de estabilidad numérica, vale la pena ver un ejemplo de que “distintos algoritmos para el mismo problema” no es solo una cuestión de precisión: también puede ser una cuestión de eficiencia.\nConsideremos \\[p(x) = 5x^3 + 4x^2 + 3x + 2.\\]\nEvaluación directa. Calculamos \\(x^2\\) (1 producto), luego \\(x^3 = x^2\\cdot x\\) (1 producto más), y finalmente los tres productos \\(5x^3\\), \\(4x^2\\), \\(3x\\) (3 productos). En total: 5 productos y 3 sumas — 8 operaciones aritméticas.\nMétodo de Horner. Reescribimos \\(p\\) anidando la variable: \\[p(x) = ((5x+4)x+3)x+2.\\] Cada uno de los tres paréntesis cuesta exactamente 1 producto y 1 suma: 3 productos y 3 sumas — 6 operaciones en total.\n\\[\\frac{8-6}{8} = 0{,}25\\]\nEl método de Horner ahorra el 25% del esfuerzo computacional respecto a la evaluación directa, y esta ventaja crece con el grado del polinomio: para grado \\(n\\), la evaluación directa requiere \\(O(n^2)\\) productos (si no se reutiliza \\(x^k\\)) o al menos \\(2n-1\\) productos y \\(n\\) sumas incluso reutilizando potencias, mientras que Horner siempre usa exactamente \\(n\\) productos y \\(n\\) sumas.\n\"\"\"\n    horner(coefs, x)\n\nEvalúa el polinomio con coeficientes `coefs = [a_n, a_{n-1}, ..., a_1, a_0]`\n(de mayor a menor grado) en el punto `x`, usando el método de Horner.\n\"\"\"\nfunction horner(coefs, x)\n    resultado = coefs[1]\n    for c in coefs[2:end]\n        resultado = resultado * x + c\n    end\n    return resultado\nend\n\n@show horner([5, 4, 3, 2], 2.0)   # p(2) = 5·8 + 4·4 + 3·2 + 2 = 64\nhorner([5, 4, 3, 2], 2.0) = 64.0\n\n\n\n\n\n\nNotaTarea\n\n\n\nEstudiar el algoritmo de Horner en Julia (por ejemplo, comparándolo contra Polynomials.jl o contra la evaluación directa con @time/@allocated para verificar el ahorro) y resolver los ejercicios y estudiar la sección 1.3 (“Algorithms”) del FNC. Diga en sus palabras qué es condicionamiento, qué es estabilidad, cómo se relacionan. Ejemplifique. Diga en sus palabras qué entiende por hacia atrás y estabilidad. Ejemplifique.",
     "crumbs": [
-      "Condicionamiento"
+      "Estabilidad"
     ]
   },
   {
-    "objectID": "cursos/numerico/condicionamiento/index.html#ejercicio-1.2.3-fxdfracex-1x",
-    "href": "cursos/numerico/condicionamiento/index.html#ejercicio-1.2.3-fxdfracex-1x",
-    "title": "Condicionamiento",
-    "section": "3 Ejercicio 1.2.3 — \\(f(x)=\\dfrac{e^x-1}{x}\\)",
-    "text": "3 Ejercicio 1.2.3 — \\(f(x)=\\dfrac{e^x-1}{x}\\)\n\n3.1 El límite en \\(x=0\\) vía L’Hôpital\n\\[\\lim_{x\\to 0}\\frac{e^x-1}{x} \\;=\\; \\frac{0}{0} \\quad\\text{(indeterminado)}\\]\nAplicando L’Hôpital (derivando numerador y denominador por separado):\n\\[\\lim_{x\\to 0}\\frac{e^x-1}{x} = \\lim_{x\\to 0}\\frac{\\dfrac{d}{dx}(e^x-1)}{\\dfrac{d}{dx}(x)} = \\lim_{x\\to 0}\\frac{e^x}{1} = e^0 = 1\\]\nEsto confirma, sin usar series de Taylor, que \\(f(0)=1\\) es la extensión continua correcta.",
+    "objectID": "cursos/numerico/estabilidad/index.html#ejercicio-1.4.2-fx-dfracex-1x",
+    "href": "cursos/numerico/estabilidad/index.html#ejercicio-1.4.2-fx-dfracex-1x",
+    "title": "Estabilidad",
+    "section": "3 Ejercicio 1.4.2 — \\(f(x) = \\dfrac{e^x-1}{x}\\)",
+    "text": "3 Ejercicio 1.4.2 — \\(f(x) = \\dfrac{e^x-1}{x}\\)\n\n3.1 (a) Número de condición y su máximo/mínimo en \\([-1,1]\\)\nCon \\(f(x)=(e^x-1)/x\\) (extendida por continuidad, \\(f(0)=1\\)): \\[f'(x) = \\frac{xe^x - (e^x-1)}{x^2} = \\frac{(x-1)e^x+1}{x^2}\\] \\[\\kappa_f(x) = \\left|x\\cdot\\frac{f'(x)}{f(x)}\\right| = \\left|\\frac{(x-1)e^x+1}{e^x-1}\\right|\\]\nDerivando \\(\\kappa_f\\) (tratando el signo del numerador y denominador con cuidado, como en la nota de condicionamiento), se encuentra que el signo de \\(\\kappa_f'(x)\\) está gobernado por \\(x(e^x-x-1)\\), y como \\(e^x-x-1\\ge0\\) para todo \\(x\\) real (con igualdad solo en \\(x=0\\)), \\(\\kappa_f\\) es decreciente en \\((-1,0)\\) y creciente en \\((0,1)\\): tiene forma de “V”, con mínimo en \\(x=0\\) y máximo en uno de los dos extremos del intervalo.\nEvaluando en los extremos: \\[\\kappa_f(1) = \\left|\\frac{(1-1)e+1}{e-1}\\right| = \\frac{1}{e-1} \\approx 0{,}5820, \\qquad \\kappa_f(-1) = \\left|\\frac{-2e^{-1}+1}{e^{-1}-1}\\right| \\approx 0{,}4180\\]\n\\[\\boxed{\\max_{[-1,1]}\\kappa_f = \\kappa_f(1) = \\dfrac{1}{e-1}\\approx 0{,}582, \\qquad \\min_{[-1,1]}\\kappa_f = \\kappa_f(0) = 0}\\]\nVerificación en Julia (evaluando \\(\\kappa_f\\) numéricamente en una malla fina, sin depender de la simplificación simbólica — también se puede hacer con Symbolics.jl derivando f automáticamente):\nusing ForwardDiff\n\nf(x) = x == 0 ? 1.0 : (exp(x) - 1)/x\nκ(x) = abs(x * ForwardDiff.derivative(f, x) / f(x))\n\nxs = range(-1, 1, length=20001)\nkmax, imax = findmax(κ.(xs))\nkmin, imin = findmin(κ.(xs))\n\n@show xs[imax], kmax   # (1.0, 0.5819767068693265)\n@show xs[imin], kmin   # (0.0, 0.0)\n@show 1/(exp(1)-1)      # 0.5819767068693265  -- coincide exactamente\n(xs[imax], kmax) = (1.0, 0.5819767068693265)\n(xs[imin], kmin) = (0.0, 0.0)\n1 / (exp(1) - 1) = 0.5819767068693265\nConfirmado: \\(\\kappa_f(0)=0\\) (el problema está óptimamente condicionado cerca de cero) y \\(\\kappa_f\\) crece muy poco en \\([-1,1]\\), alcanzando apenas \\(\\approx0{,}58\\). Este es exactamente el mismo problema bien condicionado que ya vimos en la nota de condicionamiento — aquí lo confirmamos cuantitativamente en todo el intervalo \\([-1,1]\\), no solo en el límite \\(x\\to0\\).\n\n\n3.2 (b)–(d) Dos algoritmos para el mismo problema\nAlgoritmo ingenuo: evaluar \\(f(x)\\) tal cual, con la resta explícita.\nf_ingenuo(x) = (exp(x) - 1)/x\nAlgoritmo por serie de Maclaurin (8 términos): \\[f(x) \\approx p(x) = 1 + \\frac{x}{2!} + \\frac{x^2}{3!} + \\cdots + \\frac{x^7}{8!}\\]\nfunction p_maclaurin(x)\n    s = 0.0\n    for k in 0:7\n        s += x^k / factorial(k+1)\n    end\n    return s\nend\nEvaluando ambos en \\(x=10^{-2},10^{-3},\\ldots,10^{-11}\\) y comparando contra un valor de referencia de alta precisión:\n\n\n\n\n\n\n\n\n\n\n\\(x\\)\ningenuo\nMaclaurin (8 términos)\nerror rel. ingenuo\nerror rel. Maclaurin\n\n\n\n\n\\(10^{-2}\\)\n\\(1{,}005016708416795\\)\n\\(1{,}005016708416806\\)\n\\(1{,}08\\times10^{-14}\\)\n\\(1{,}8\\times10^{-16}\\)\n\n\n\\(10^{-3}\\)\n\\(1{,}000500166708385\\)\n\\(1{,}000500166708342\\)\n\\(4{,}29\\times10^{-14}\\)\n\\(7{,}5\\times10^{-17}\\)\n\n\n\\(10^{-4}\\)\n\\(1{,}000050001667141\\)\n\\(1{,}000050001666708\\)\n\\(4{,}33\\times10^{-13}\\)\n\\(9{,}8\\times10^{-17}\\)\n\n\n\\(10^{-5}\\)\n\\(1{,}000005000006965\\)\n\\(1{,}000005000016667\\)\n\\(9{,}70\\times10^{-12}\\)\n\\(7{,}5\\times10^{-18}\\)\n\n\n\\(10^{-6}\\)\n\\(1{,}000000499962184\\)\n\\(1{,}000000500000167\\)\n\\(3{,}80\\times10^{-11}\\)\n\\(1{,}6\\times10^{-16}\\)\n\n\n\\(10^{-7}\\)\n\\(1{,}000000049433680\\)\n\\(1{,}000000050000002\\)\n\\(5{,}66\\times10^{-10}\\)\n\\(2{,}8\\times10^{-17}\\)\n\n\n\\(10^{-8}\\)\n\\(0{,}999999993922529\\)\n\\(1{,}000000005000000\\)\n\\(1{,}11\\times10^{-8}\\)\n\\(4{,}7\\times10^{-17}\\)\n\n\n\\(10^{-9}\\)\n\\(1{,}000000082740371\\)\n\\(1{,}000000000500000\\)\n\\(8{,}22\\times10^{-8}\\)\n\\(4{,}1\\times10^{-17}\\)\n\n\n\\(10^{-10}\\)\n\\(1{,}000000082740371\\)\n\\(1{,}000000000050000\\)\n\\(8{,}27\\times10^{-8}\\)\n\\(4{,}1\\times10^{-18}\\)\n\n\n\\(10^{-11}\\)\n\\(1{,}000000082740371\\)\n\\(1{,}000000000005000\\)\n\\(8{,}27\\times10^{-8}\\)\n\\(4{,}1\\times10^{-19}\\)\n\n\n\n\n\n\n\n\n\nImportante¿Cuál es más preciso, y por qué?\n\n\n\nEl algoritmo de Maclaurin es dramáticamente más preciso: mantiene error relativo cercano a \\(\\epsilon_{\\text{mach}}\\) (\\(\\sim10^{-16}\\)–\\(10^{-17}\\)) en todo el rango, mientras que el ingenuo se degrada progresivamente — de \\(10^{-14}\\) en \\(x=10^{-2}\\) a \\(\\sim10^{-8}\\) en \\(x\\le10^{-9}\\), donde el error deja de crecer porque toca el límite de lo que la representación de \\(x\\) misma permite distinguir.\nLa razón es exactamente la del Ejemplo 1.4.1: el algoritmo ingenuo calcula \\(e^x\\) (que para \\(x\\) pequeño está muy cerca de \\(1\\)) y luego resta \\(1\\), cancelando los primeros dígitos compartidos y dejando expuesto el ruido de redondeo de \\(e^x\\) como si fuera señal. El polinomio de Maclaurin, en cambio, nunca resta cantidades parecidas: todos sus términos \\(x^k/(k{+}1)!\\) para \\(x&gt;0\\) son positivos y decrecientes, así que solo hay sumas de cantidades del mismo signo — sin cancelación posible.\nNótese que \\(\\kappa_f(x)\\to0\\) cuando \\(x\\to0\\): el problema se vuelve más fácil, no más difícil, cerca de cero. La degradación del algoritmo ingenuo no tiene nada que ver con el condicionamiento — es pura inestabilidad algorítmica, el mismo fenómeno ya documentado para \\((e^x-1)/x\\) en la nota de condicionamiento, ahora cuantificado en todo el intervalo \\([-1,1]\\) y comparado explícitamente contra una alternativa estable.",
     "crumbs": [
-      "Condicionamiento"
+      "Estabilidad"
     ]
   },
   {
-    "objectID": "cursos/numerico/condicionamiento/index.html#comportamiento-de-kappa_f-en-pminfty",
-    "href": "cursos/numerico/condicionamiento/index.html#comportamiento-de-kappa_f-en-pminfty",
-    "title": "Condicionamiento",
-    "section": "4 Comportamiento de \\(\\kappa_f\\) en \\(\\pm\\infty\\)",
-    "text": "4 Comportamiento de \\(\\kappa_f\\) en \\(\\pm\\infty\\)\nYa sabemos que \\(\\kappa_f(0)=0\\). Para completar el panorama, veamos qué le pasa a \\(\\kappa_f(x)=\\left|\\dfrac{N(x)}{D(x)}\\right|\\), con \\(N(x)=(x-1)e^x+1\\) y \\(D(x)=e^x-1\\), en los dos extremos.\nCuando \\(x\\to+\\infty\\): tanto \\(N(x)\\) como \\(D(x)\\) divergen (\\(e^x\\) domina en ambos), así que es indeterminado \\(\\infty/\\infty\\) y L’Hôpital aplica:\n\\[\\lim_{x\\to+\\infty}\\frac{N(x)}{D(x)} = \\lim_{x\\to+\\infty}\\frac{N'(x)}{D'(x)} = \\lim_{x\\to+\\infty}\\frac{xe^x}{e^x} = \\lim_{x\\to+\\infty} x = +\\infty\\]\n(se usó \\(N'(x)=e^x+(x-1)e^x=xe^x\\) y \\(D'(x)=e^x\\); tras una sola aplicación de L’Hôpital el cociente ya se simplifica sin quedar indeterminado). Entonces \\(\\displaystyle\\lim_{x\\to+\\infty}\\kappa_f(x)=+\\infty\\): el problema se vuelve arbitrariamente mal condicionado para \\(x\\) grande — aunque de forma “mansa”, porque \\(\\kappa_f(x)\\approx x\\) crece solo linealmente (no exponencialmente).\nCuando \\(x\\to-\\infty\\): aquí no hay indeterminación, porque \\(e^x\\to0\\) y ambos, numerador y denominador, convergen a valores finitos directamente:\n\\[N(x)=(x-1)e^x+1 \\;\\longrightarrow\\; 0+1=1\\]\n(\\((x-1)e^x\\to0\\) porque la exponencial decae más rápido de lo que cualquier polinomio crece)\n\\[D(x)=e^x-1 \\;\\longrightarrow\\; 0-1=-1\\]\n\\[\\lim_{x\\to-\\infty}\\kappa_f(x) = \\left|\\frac{1}{-1}\\right| = 1\\]\nEn resumen\n\\[\\lim_{x\\to-\\infty}\\kappa_f(x)=1 \\qquad \\kappa_f(0)=0 \\qquad \\lim_{x\\to+\\infty}\\kappa_f(x)=+\\infty\\]\nPara \\(x\\le0\\), \\(\\kappa_f\\) queda acotado entre 0 y 1: el problema está uniformemente bien condicionado en todo el semieje negativo. Para \\(x\\) positivo y grande, el problema se vuelve mal condicionado, pero solo linealmente (consistente con los valores numéricos: \\(\\kappa_f(10^{-6})\\approx5\\times10^{-7}\\), \\(\\kappa_f(1)\\approx0{,}58\\), \\(\\kappa_f(10)\\approx9\\), \\(\\kappa_f(20)\\approx19\\)).",
+    "objectID": "cursos/numerico/estabilidad/index.html#conexión-con-la-nota-de-condicionamiento",
+    "href": "cursos/numerico/estabilidad/index.html#conexión-con-la-nota-de-condicionamiento",
+    "title": "Estabilidad",
+    "section": "4 Conexión con la nota de condicionamiento",
+    "text": "4 Conexión con la nota de condicionamiento\nEste ejercicio es la contraparte natural de lo visto en la nota anterior: allí establecimos que \\((e^x-1)/x\\) es un problema bien condicionado cerca de cero (\\(\\kappa_f(0)=0\\)); aquí confirmamos que esa buena condición se sostiene en todo \\([-1,1]\\) (máximo \\(\\approx0{,}582\\)), y mostramos dos algoritmos concretos para el mismo problema — uno inestable (cancelación explícita) y uno estable (serie de Maclaurin, sin resta de cantidades parecidas) — cuantificando la brecha entre ellos. Es exactamente el mismo patrón del Ejemplo 1.4.1: problema bien condicionado, algoritmo mal elegido, error inexplicable por el condicionamiento — y una alternativa que lo resuelve sin cambiar el problema, solo la ruta de cálculo.",
     "crumbs": [
-      "Condicionamiento"
+      "Estabilidad"
     ]
-  },
-  {
-    "objectID": "cursos/numerico/condicionamiento/index.html#ejercicio-1.2.5-condición-del-inverso",
-    "href": "cursos/numerico/condicionamiento/index.html#ejercicio-1.2.5-condición-del-inverso",
-    "title": "Condicionamiento",
-    "section": "5 Ejercicio 1.2.5 — condición del inverso",
-    "text": "5 Ejercicio 1.2.5 — condición del inverso\nSea \\(f\\) con número de condición \\(\\kappa_f\\), y \\(f^{-1}\\) su inversa. Queremos mostrar\n\\[\\kappa_{f^{-1}}(x) = \\frac{1}{\\kappa_f\\big(f^{-1}(x)\\big)}\\]\nDemostración, sin invocar el teorema de la función inversa: sea \\(h = f\\circ f^{-1} = \\text{id}\\).\nPrimero, \\(\\kappa_{\\text{id}}(x)=1\\): con \\(\\text{id}'(x)=1\\), \\(\\kappa_{\\text{id}}(x)=|x\\cdot 1/x|=1\\).\nPor la regla de la cadena para números de condición (ejercicio 1.2.4), aplicada a \\(h=f\\circ f^{-1}\\):\n\\[\\kappa_h(x) = \\kappa_f\\big(f^{-1}(x)\\big)\\cdot\\kappa_{f^{-1}}(x)\\]\nComo \\(h=\\text{id}\\), \\(\\kappa_h(x)=\\kappa_{\\text{id}}(x)=1\\). Despejando:\n\\[1 = \\kappa_f\\big(f^{-1}(x)\\big)\\cdot\\kappa_{f^{-1}}(x) \\;\\Longrightarrow\\; \\kappa_{f^{-1}}(x)=\\frac{1}{\\kappa_f\\big(f^{-1}(x)\\big)} \\qquad \\blacksquare\\]\nEsta ruta es más corta que aplicar el teorema de la función inversa directamente, y no exige demostrar por separado que \\(f^{-1}\\) es derivable.",
-    "crumbs": [
-      "Condicionamiento"
-    ]
-  },
-  {
-    "objectID": "cursos/numerico/condicionamiento/index.html#raíces-de-un-polinomio-cuadrático",
-    "href": "cursos/numerico/condicionamiento/index.html#raíces-de-un-polinomio-cuadrático",
-    "title": "Condicionamiento",
-    "section": "6 Raíces de un polinomio cuadrático",
-    "text": "6 Raíces de un polinomio cuadrático\nConsideremos \\(ax^2+bx+c=0\\). Los datos son los coeficientes \\((a,b,c)\\); el resultado son las raíces \\(r_1,r_2\\) (posiblemente complejas). Formalmente, \\(f(a,b,c)=(r_1,r_2)\\).\nFijamos \\(b,c\\) y perturbamos solo el coeficiente principal \\(a\\), para ver cómo responde \\(r_1\\): \\(f(a)=r_1\\). Partiendo de la identidad \\(ar_1^2+br_1+c=0\\) y derivando implícitamente respecto a \\(a\\) (con \\(b,c\\) fijos):\n\\[r_1^2+2ar_1\\frac{dr_1}{da}+b\\,\\frac{dr_1}{da}=0 \\;\\Longrightarrow\\; \\frac{dr_1}{da}=\\frac{-r_1^2}{2ar_1+b}\\]\n\\[\\kappa_f(a) = \\left|\\frac{a}{r_1}\\cdot\\frac{dr_1}{da}\\right| = \\left|\\frac{a\\,r_1}{2ar_1+b}\\right|\\]\nUsando la fórmula cuadrática, \\(|2ar_1+b|=\\left|\\sqrt{b^2-4ac}\\right|=|a(r_1-r_2)|\\):\n\\[\\boxed{\\kappa_f(a) = \\left|\\frac{r_1}{r_1-r_2}\\right|}\\]\nEl problema está mal condicionado exactamente cuando \\(|r_1|\\gg|r_1-r_2|\\) — es decir, cuando las raíces están mucho más cerca entre sí que del origen. En el caso extremo de una raíz doble (\\(r_1=r_2\\)), \\(\\kappa_f\\to\\infty\\).",
-    "crumbs": [
-      "Condicionamiento"
-    ]
-  },
-  {
-    "objectID": "cursos/numerico/condicionamiento/index.html#simulación-sensibilidad-de-las-raíces-de-pxax-cx-d",
-    "href": "cursos/numerico/condicionamiento/index.html#simulación-sensibilidad-de-las-raíces-de-pxax-cx-d",
-    "title": "Condicionamiento",
-    "section": "7 Simulación — sensibilidad de las raíces de \\(p(x)=a(x-c)(x-d)\\)",
-    "text": "7 Simulación — sensibilidad de las raíces de \\(p(x)=a(x-c)(x-d)\\)\nPara hacer tangible la fórmula anterior, parametrizamos el polinomio directamente por sus raíces \\(c,d\\) y su coeficiente principal \\(a\\):\n\\[p(x) = a(x-c)(x-d) = a\\,x^2 \\underbrace{-\\,a(c+d)}_{B}\\,x + \\underbrace{a\\,c\\,d}_{C}\\]\nde modo que, en ausencia de redondeo, las raíces son exactamente \\(r_1=c\\) y \\(r_2=d\\) para cualquier \\(a\\ne 0\\). La simulación perturba solo el coeficiente \\(a\\to a(1+\\varepsilon)\\), mantiene \\(B,C\\) fijos (tal como en la derivación de \\(\\kappa_f(a)\\)), recalcula las raíces con la fórmula cuadrática, y compara:\n\nel error relativo predicho por la teoría: \\(\\kappa_f(a)\\cdot|\\varepsilon| = \\left|\\dfrac{r_1}{r_1-r_2}\\right|\\cdot|\\varepsilon|\\)\nel error relativo real, medido directamente sobre la raíz recalculada\n\nMueve los controles y observa qué pasa con \\(\\kappa_f\\) cuando \\(c\\) y \\(d\\) se acercan.",
-    "crumbs": [
-      "Condicionamiento"
-    ]
-  },
-  {
-    "objectID": "cursos/numerico/condicionamiento/index.html#tarea",
-    "href": "cursos/numerico/condicionamiento/index.html#tarea",
-    "title": "Condicionamiento",
-    "section": "8 Tarea",
-    "text": "8 Tarea\nResolver los siguientes ejercicios de la sección 1.2 (“Exercises”) de Fundamentals of Numerical Computation, disponibles en https://fncbook.com/julia/conditioning/#exercises:",
-    "crumbs": [
-      "Condicionamiento"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Home",
-    "section": "",
-    "text": "Laguna Negra Mongua, Boyacá Colombia\n\n\nSoy profesor titular en la Universidad Distrital Francisco José de Caldas y hago parte de los grupos de investigación MESCUD y CMyT. Realicé mis estudios de pregrado, maestría y doctorado en Matemáticas en la Universidad Nacional de Colombia, bajo la dirección de los profesores Alfonso Castro (Harvey Mudd College) y Francisco Caicedo (Universidad Nacional de Colombia). Anteriormente, fui docente de planta en la Universidad de los Andes en Bogotá.\nMi investigación se centra en ecuaciones diferenciales parciales y funcional-diferenciales mediante métodos topológicos, con especial énfasis en la ecuación de onda semilineal con condiciones Dirichlet-periódicas.\nCorreo: aasanjuanc@udistrital.edu.co"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site"
   },
   {
     "objectID": "cursos/numerico/introduccion/index.html",
@@ -514,53 +490,117 @@
     ]
   },
   {
-    "objectID": "cursos/numerico/estabilidad/index.html",
-    "href": "cursos/numerico/estabilidad/index.html",
-    "title": "Estabilidad",
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
     "section": "",
-    "text": "Un problema matemático idealizado se puede representar como una función \\(a \\mapsto f(a)\\): a partir de un dato \\(a\\), se produce exactamente el resultado \\(f(a)\\). En la práctica, casi nunca podemos calcular \\(f(a)\\) de manera exacta con un número finito de pasos aritméticos; en su lugar, construimos un algoritmo, otra función \\(a \\mapsto \\tilde f(a)\\), que aproxima a \\(f\\) mediante una sucesión finita de operaciones elementales.\nUn mismo problema \\(f\\) puede tener muchos algoritmos \\(\\tilde f\\) distintos que lo aproximan — y, como veremos, no todos son igual de buenos, incluso cuando matemáticamente (con aritmética exacta) producen el mismo resultado.",
-    "crumbs": [
-      "Estabilidad"
-    ]
+    "text": "About this site"
   },
   {
-    "objectID": "cursos/numerico/estabilidad/index.html#problemas-vs.-algoritmos",
-    "href": "cursos/numerico/estabilidad/index.html#problemas-vs.-algoritmos",
-    "title": "Estabilidad",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Home",
     "section": "",
-    "text": "Un problema matemático idealizado se puede representar como una función \\(a \\mapsto f(a)\\): a partir de un dato \\(a\\), se produce exactamente el resultado \\(f(a)\\). En la práctica, casi nunca podemos calcular \\(f(a)\\) de manera exacta con un número finito de pasos aritméticos; en su lugar, construimos un algoritmo, otra función \\(a \\mapsto \\tilde f(a)\\), que aproxima a \\(f\\) mediante una sucesión finita de operaciones elementales.\nUn mismo problema \\(f\\) puede tener muchos algoritmos \\(\\tilde f\\) distintos que lo aproximan — y, como veremos, no todos son igual de buenos, incluso cuando matemáticamente (con aritmética exacta) producen el mismo resultado.",
+    "text": "Laguna Negra Mongua, Boyacá Colombia\n\n\nSoy profesor titular en la Universidad Distrital Francisco José de Caldas y hago parte de los grupos de investigación MESCUD y CMyT. Realicé mis estudios de pregrado, maestría y doctorado en Matemáticas en la Universidad Nacional de Colombia, bajo la dirección de los profesores Alfonso Castro (Harvey Mudd College) y Francisco Caicedo (Universidad Nacional de Colombia). Anteriormente, fui docente de planta en la Universidad de los Andes en Bogotá.\nMi investigación se centra en ecuaciones diferenciales parciales y funcional-diferenciales mediante métodos topológicos, con especial énfasis en la ecuación de onda semilineal con condiciones Dirichlet-periódicas.\nCorreo: aasanjuanc@udistrital.edu.co"
+  },
+  {
+    "objectID": "cursos/numerico/condicionamiento/index.html",
+    "href": "cursos/numerico/condicionamiento/index.html",
+    "title": "Condicionamiento",
+    "section": "",
+    "text": "Consideremos la sucesión\n\\[x_{n+1} = 10x_n - 9\\]\nDesde el punto de vista del análisis matemático puro, si \\(x_0=1\\) entonces \\(x_n=1\\) para todo \\(n\\): es la sucesión constante, porque \\(x=1\\) es el único punto fijo de \\(g(x)=10x-9\\).\nSupongamos ahora que en punto flotante solo tenemos \\(d=2\\) cifras significativas, y que el dato \\(x_0=1\\) se representa como \\(\\tilde x_0=0{,}99\\) — un error relativo de apenas el \\(1\\%\\), del orden de cualquier redondeo típico. Aplicamos la recurrencia tal cual, redondeando a 2 cifras en cada paso:\n\n\n\n\n\n\n\n\n\n\n\\(n\\)\n\\(\\tilde x_n\\)\nerror absoluto \\(e_n=\\tilde x_n-1\\)\nerror relativo\ndígitos perdidos\n\n\n\n\n0\n0,99\n\\(-0{,}01=-1\\times10^{-2}\\)\n\\(1\\%\\)\n0\n\n\n1\n0,90\n\\(-0{,}10=-1\\times10^{-1}\\)\n\\(10\\%\\)\n1\n\n\n2\n0,00\n\\(-1{,}00=-1\\times10^{0}\\)\n\\(100\\%\\)\n2\n\n\n3\n\\(-9{,}00\\)\n\\(-10{,}00=-1\\times10^{1}\\)\n\\(1000\\%\\)\n3\n\n\n\nEn tres pasos el error relativo pasó de \\(1\\%\\) a \\(1000\\%\\) — la respuesta calculada (\\(-9\\)) no tiene ninguna relación con el valor verdadero (\\(1\\)).\n\n\n\n\n\n\nImportantePor qué ocurre esto\n\n\n\nEscribiendo \\(\\tilde x_n = 1+e_n\\) y sustituyendo en la recurrencia:\n\\[1+e_{n+1}=10(1+e_n)-9=1+10e_n \\;\\Longrightarrow\\; e_{n+1}=10\\,e_n \\;\\Longrightarrow\\; e_n=10^n e_0\\]\nEl error se multiplica por 10 en cada paso, sin importar qué tan pequeño sea \\(e_0\\). Tomar un dato más aproximado, como \\(x_0=0{,}99999\\), no resuelve el problema, solo lo retrasa: el problema está mal condicionado. El algoritmo y el computador dan una respuesta, pero esa respuesta no está cerca de “la realidad”.\n\n\nEste es exactamente el mecanismo que hace silenciosa la pérdida de significancia: ninguna operación individual (multiplicar por 10, restar 9) tiene nada de alarmante — el resultado final simplemente deja de tener sentido, sin ningún símbolo de error que lo anuncie.\nEl mismo fenómeno aparece cuando restamos dos números cercanos:\n\\[2{,}1357 - 2{,}1356 = 0{,}0001 = 1\\times10^{-4}\\]\nCada operando tiene 5 cifras significativas, pero el resultado solo tiene 1 — perdimos 4 cifras significativas en una sola resta.",
     "crumbs": [
-      "Estabilidad"
+      "Condicionamiento"
     ]
   },
   {
-    "objectID": "cursos/numerico/estabilidad/index.html#estudio-de-caso-evaluación-de-un-polinomio-el-método-de-horner",
-    "href": "cursos/numerico/estabilidad/index.html#estudio-de-caso-evaluación-de-un-polinomio-el-método-de-horner",
-    "title": "Estabilidad",
-    "section": "2 Estudio de caso: evaluación de un polinomio — el método de Horner",
-    "text": "2 Estudio de caso: evaluación de un polinomio — el método de Horner\nAntes de hablar de estabilidad numérica, vale la pena ver un ejemplo de que “distintos algoritmos para el mismo problema” no es solo una cuestión de precisión: también puede ser una cuestión de eficiencia.\nConsideremos \\[p(x) = 5x^3 + 4x^2 + 3x + 2.\\]\nEvaluación directa. Calculamos \\(x^2\\) (1 producto), luego \\(x^3 = x^2\\cdot x\\) (1 producto más), y finalmente los tres productos \\(5x^3\\), \\(4x^2\\), \\(3x\\) (3 productos). En total: 5 productos y 3 sumas — 8 operaciones aritméticas.\nMétodo de Horner. Reescribimos \\(p\\) anidando la variable: \\[p(x) = ((5x+4)x+3)x+2.\\] Cada uno de los tres paréntesis cuesta exactamente 1 producto y 1 suma: 3 productos y 3 sumas — 6 operaciones en total.\n\\[\\frac{8-6}{8} = 0{,}25\\]\nEl método de Horner ahorra el 25% del esfuerzo computacional respecto a la evaluación directa, y esta ventaja crece con el grado del polinomio: para grado \\(n\\), la evaluación directa requiere \\(O(n^2)\\) productos (si no se reutiliza \\(x^k\\)) o al menos \\(2n-1\\) productos y \\(n\\) sumas incluso reutilizando potencias, mientras que Horner siempre usa exactamente \\(n\\) productos y \\(n\\) sumas.\n\"\"\"\n    horner(coefs, x)\n\nEvalúa el polinomio con coeficientes `coefs = [a_n, a_{n-1}, ..., a_1, a_0]`\n(de mayor a menor grado) en el punto `x`, usando el método de Horner.\n\"\"\"\nfunction horner(coefs, x)\n    resultado = coefs[1]\n    for c in coefs[2:end]\n        resultado = resultado * x + c\n    end\n    return resultado\nend\n\n@show horner([5, 4, 3, 2], 2.0)   # p(2) = 5·8 + 4·4 + 3·2 + 2 = 64\nhorner([5, 4, 3, 2], 2.0) = 64.0\n\n\n\n\n\n\nNotaTarea\n\n\n\nEstudiar el algoritmo de Horner en Julia (por ejemplo, comparándolo contra Polynomials.jl o contra la evaluación directa con @time/@allocated para verificar el ahorro) y resolver los ejercicios y estudiar la sección 1.3 (“Algorithms”) del FNC. Diga en sus palabras qué es condicionamiento, qué es estabilidad, cómo se relacionan. Ejemplifique. Diga en sus palabras qué entiende por hacia atrás y estabilidad. Ejemplifique.",
+    "objectID": "cursos/numerico/condicionamiento/index.html#cancelación-catastrófica-o-pérdida-de-significancia",
+    "href": "cursos/numerico/condicionamiento/index.html#cancelación-catastrófica-o-pérdida-de-significancia",
+    "title": "Condicionamiento",
+    "section": "",
+    "text": "Consideremos la sucesión\n\\[x_{n+1} = 10x_n - 9\\]\nDesde el punto de vista del análisis matemático puro, si \\(x_0=1\\) entonces \\(x_n=1\\) para todo \\(n\\): es la sucesión constante, porque \\(x=1\\) es el único punto fijo de \\(g(x)=10x-9\\).\nSupongamos ahora que en punto flotante solo tenemos \\(d=2\\) cifras significativas, y que el dato \\(x_0=1\\) se representa como \\(\\tilde x_0=0{,}99\\) — un error relativo de apenas el \\(1\\%\\), del orden de cualquier redondeo típico. Aplicamos la recurrencia tal cual, redondeando a 2 cifras en cada paso:\n\n\n\n\n\n\n\n\n\n\n\\(n\\)\n\\(\\tilde x_n\\)\nerror absoluto \\(e_n=\\tilde x_n-1\\)\nerror relativo\ndígitos perdidos\n\n\n\n\n0\n0,99\n\\(-0{,}01=-1\\times10^{-2}\\)\n\\(1\\%\\)\n0\n\n\n1\n0,90\n\\(-0{,}10=-1\\times10^{-1}\\)\n\\(10\\%\\)\n1\n\n\n2\n0,00\n\\(-1{,}00=-1\\times10^{0}\\)\n\\(100\\%\\)\n2\n\n\n3\n\\(-9{,}00\\)\n\\(-10{,}00=-1\\times10^{1}\\)\n\\(1000\\%\\)\n3\n\n\n\nEn tres pasos el error relativo pasó de \\(1\\%\\) a \\(1000\\%\\) — la respuesta calculada (\\(-9\\)) no tiene ninguna relación con el valor verdadero (\\(1\\)).\n\n\n\n\n\n\nImportantePor qué ocurre esto\n\n\n\nEscribiendo \\(\\tilde x_n = 1+e_n\\) y sustituyendo en la recurrencia:\n\\[1+e_{n+1}=10(1+e_n)-9=1+10e_n \\;\\Longrightarrow\\; e_{n+1}=10\\,e_n \\;\\Longrightarrow\\; e_n=10^n e_0\\]\nEl error se multiplica por 10 en cada paso, sin importar qué tan pequeño sea \\(e_0\\). Tomar un dato más aproximado, como \\(x_0=0{,}99999\\), no resuelve el problema, solo lo retrasa: el problema está mal condicionado. El algoritmo y el computador dan una respuesta, pero esa respuesta no está cerca de “la realidad”.\n\n\nEste es exactamente el mecanismo que hace silenciosa la pérdida de significancia: ninguna operación individual (multiplicar por 10, restar 9) tiene nada de alarmante — el resultado final simplemente deja de tener sentido, sin ningún símbolo de error que lo anuncie.\nEl mismo fenómeno aparece cuando restamos dos números cercanos:\n\\[2{,}1357 - 2{,}1356 = 0{,}0001 = 1\\times10^{-4}\\]\nCada operando tiene 5 cifras significativas, pero el resultado solo tiene 1 — perdimos 4 cifras significativas en una sola resta.",
     "crumbs": [
-      "Estabilidad"
+      "Condicionamiento"
     ]
   },
   {
-    "objectID": "cursos/numerico/estabilidad/index.html#ejercicio-1.4.2-fx-dfracex-1x",
-    "href": "cursos/numerico/estabilidad/index.html#ejercicio-1.4.2-fx-dfracex-1x",
-    "title": "Estabilidad",
-    "section": "3 Ejercicio 1.4.2 — \\(f(x) = \\dfrac{e^x-1}{x}\\)",
-    "text": "3 Ejercicio 1.4.2 — \\(f(x) = \\dfrac{e^x-1}{x}\\)\n\n3.1 (a) Número de condición y su máximo/mínimo en \\([-1,1]\\)\nCon \\(f(x)=(e^x-1)/x\\) (extendida por continuidad, \\(f(0)=1\\)): \\[f'(x) = \\frac{xe^x - (e^x-1)}{x^2} = \\frac{(x-1)e^x+1}{x^2}\\] \\[\\kappa_f(x) = \\left|x\\cdot\\frac{f'(x)}{f(x)}\\right| = \\left|\\frac{(x-1)e^x+1}{e^x-1}\\right|\\]\nDerivando \\(\\kappa_f\\) (tratando el signo del numerador y denominador con cuidado, como en la nota de condicionamiento), se encuentra que el signo de \\(\\kappa_f'(x)\\) está gobernado por \\(x(e^x-x-1)\\), y como \\(e^x-x-1\\ge0\\) para todo \\(x\\) real (con igualdad solo en \\(x=0\\)), \\(\\kappa_f\\) es decreciente en \\((-1,0)\\) y creciente en \\((0,1)\\): tiene forma de “V”, con mínimo en \\(x=0\\) y máximo en uno de los dos extremos del intervalo.\nEvaluando en los extremos: \\[\\kappa_f(1) = \\left|\\frac{(1-1)e+1}{e-1}\\right| = \\frac{1}{e-1} \\approx 0{,}5820, \\qquad \\kappa_f(-1) = \\left|\\frac{-2e^{-1}+1}{e^{-1}-1}\\right| \\approx 0{,}4180\\]\n\\[\\boxed{\\max_{[-1,1]}\\kappa_f = \\kappa_f(1) = \\dfrac{1}{e-1}\\approx 0{,}582, \\qquad \\min_{[-1,1]}\\kappa_f = \\kappa_f(0) = 0}\\]\nVerificación en Julia (evaluando \\(\\kappa_f\\) numéricamente en una malla fina, sin depender de la simplificación simbólica — también se puede hacer con Symbolics.jl derivando f automáticamente):\nusing ForwardDiff\n\nf(x) = x == 0 ? 1.0 : (exp(x) - 1)/x\nκ(x) = abs(x * ForwardDiff.derivative(f, x) / f(x))\n\nxs = range(-1, 1, length=20001)\nkmax, imax = findmax(κ.(xs))\nkmin, imin = findmin(κ.(xs))\n\n@show xs[imax], kmax   # (1.0, 0.5819767068693265)\n@show xs[imin], kmin   # (0.0, 0.0)\n@show 1/(exp(1)-1)      # 0.5819767068693265  -- coincide exactamente\n(xs[imax], kmax) = (1.0, 0.5819767068693265)\n(xs[imin], kmin) = (0.0, 0.0)\n1 / (exp(1) - 1) = 0.5819767068693265\nConfirmado: \\(\\kappa_f(0)=0\\) (el problema está óptimamente condicionado cerca de cero) y \\(\\kappa_f\\) crece muy poco en \\([-1,1]\\), alcanzando apenas \\(\\approx0{,}58\\). Este es exactamente el mismo problema bien condicionado que ya vimos en la nota de condicionamiento — aquí lo confirmamos cuantitativamente en todo el intervalo \\([-1,1]\\), no solo en el límite \\(x\\to0\\).\n\n\n3.2 (b)–(d) Dos algoritmos para el mismo problema\nAlgoritmo ingenuo: evaluar \\(f(x)\\) tal cual, con la resta explícita.\nf_ingenuo(x) = (exp(x) - 1)/x\nAlgoritmo por serie de Maclaurin (8 términos): \\[f(x) \\approx p(x) = 1 + \\frac{x}{2!} + \\frac{x^2}{3!} + \\cdots + \\frac{x^7}{8!}\\]\nfunction p_maclaurin(x)\n    s = 0.0\n    for k in 0:7\n        s += x^k / factorial(k+1)\n    end\n    return s\nend\nEvaluando ambos en \\(x=10^{-2},10^{-3},\\ldots,10^{-11}\\) y comparando contra un valor de referencia de alta precisión:\n\n\n\n\n\n\n\n\n\n\n\\(x\\)\ningenuo\nMaclaurin (8 términos)\nerror rel. ingenuo\nerror rel. Maclaurin\n\n\n\n\n\\(10^{-2}\\)\n\\(1{,}005016708416795\\)\n\\(1{,}005016708416806\\)\n\\(1{,}08\\times10^{-14}\\)\n\\(1{,}8\\times10^{-16}\\)\n\n\n\\(10^{-3}\\)\n\\(1{,}000500166708385\\)\n\\(1{,}000500166708342\\)\n\\(4{,}29\\times10^{-14}\\)\n\\(7{,}5\\times10^{-17}\\)\n\n\n\\(10^{-4}\\)\n\\(1{,}000050001667141\\)\n\\(1{,}000050001666708\\)\n\\(4{,}33\\times10^{-13}\\)\n\\(9{,}8\\times10^{-17}\\)\n\n\n\\(10^{-5}\\)\n\\(1{,}000005000006965\\)\n\\(1{,}000005000016667\\)\n\\(9{,}70\\times10^{-12}\\)\n\\(7{,}5\\times10^{-18}\\)\n\n\n\\(10^{-6}\\)\n\\(1{,}000000499962184\\)\n\\(1{,}000000500000167\\)\n\\(3{,}80\\times10^{-11}\\)\n\\(1{,}6\\times10^{-16}\\)\n\n\n\\(10^{-7}\\)\n\\(1{,}000000049433680\\)\n\\(1{,}000000050000002\\)\n\\(5{,}66\\times10^{-10}\\)\n\\(2{,}8\\times10^{-17}\\)\n\n\n\\(10^{-8}\\)\n\\(0{,}999999993922529\\)\n\\(1{,}000000005000000\\)\n\\(1{,}11\\times10^{-8}\\)\n\\(4{,}7\\times10^{-17}\\)\n\n\n\\(10^{-9}\\)\n\\(1{,}000000082740371\\)\n\\(1{,}000000000500000\\)\n\\(8{,}22\\times10^{-8}\\)\n\\(4{,}1\\times10^{-17}\\)\n\n\n\\(10^{-10}\\)\n\\(1{,}000000082740371\\)\n\\(1{,}000000000050000\\)\n\\(8{,}27\\times10^{-8}\\)\n\\(4{,}1\\times10^{-18}\\)\n\n\n\\(10^{-11}\\)\n\\(1{,}000000082740371\\)\n\\(1{,}000000000005000\\)\n\\(8{,}27\\times10^{-8}\\)\n\\(4{,}1\\times10^{-19}\\)\n\n\n\n\n\n\n\n\n\nImportante¿Cuál es más preciso, y por qué?\n\n\n\nEl algoritmo de Maclaurin es dramáticamente más preciso: mantiene error relativo cercano a \\(\\epsilon_{\\text{mach}}\\) (\\(\\sim10^{-16}\\)–\\(10^{-17}\\)) en todo el rango, mientras que el ingenuo se degrada progresivamente — de \\(10^{-14}\\) en \\(x=10^{-2}\\) a \\(\\sim10^{-8}\\) en \\(x\\le10^{-9}\\), donde el error deja de crecer porque toca el límite de lo que la representación de \\(x\\) misma permite distinguir.\nLa razón es exactamente la del Ejemplo 1.4.1: el algoritmo ingenuo calcula \\(e^x\\) (que para \\(x\\) pequeño está muy cerca de \\(1\\)) y luego resta \\(1\\), cancelando los primeros dígitos compartidos y dejando expuesto el ruido de redondeo de \\(e^x\\) como si fuera señal. El polinomio de Maclaurin, en cambio, nunca resta cantidades parecidas: todos sus términos \\(x^k/(k{+}1)!\\) para \\(x&gt;0\\) son positivos y decrecientes, así que solo hay sumas de cantidades del mismo signo — sin cancelación posible.\nNótese que \\(\\kappa_f(x)\\to0\\) cuando \\(x\\to0\\): el problema se vuelve más fácil, no más difícil, cerca de cero. La degradación del algoritmo ingenuo no tiene nada que ver con el condicionamiento — es pura inestabilidad algorítmica, el mismo fenómeno ya documentado para \\((e^x-1)/x\\) en la nota de condicionamiento, ahora cuantificado en todo el intervalo \\([-1,1]\\) y comparado explícitamente contra una alternativa estable.",
+    "objectID": "cursos/numerico/condicionamiento/index.html#el-número-de-condición-relativo",
+    "href": "cursos/numerico/condicionamiento/index.html#el-número-de-condición-relativo",
+    "title": "Condicionamiento",
+    "section": "2 El número de condición relativo",
+    "text": "2 El número de condición relativo\nLa pregunta natural es: ¿qué tan sensible es un problema, independientemente del algoritmo o la máquina que se use para resolverlo?\n\n2.1 Un ejemplo de calentamiento\nSea \\(f(x)=x+1\\). En la máquina, \\(x\\) se representa como \\(\\text{fl}(x)=x(1+\\epsilon)\\) con \\(|\\epsilon|\\le \\epsilon_{\\text{mach}}/2\\). Si la suma se hace exacta:\n\\[y = \\text{fl}(x)+1 = x(1+\\epsilon)+1\\]\nEl error relativo del resultado es\n\\[\\frac{|y-f(x)|}{|f(x)|} = \\frac{|x(1+\\epsilon)+1-(x+1)|}{|x+1|} = \\frac{|\\epsilon x|}{|x+1|}\\]\nEste error puede ser arbitrariamente grande si \\(x\\approx -1\\) — aunque \\(\\epsilon\\) sea minúsculo. El problema “sumar 1” es benigno lejos de \\(x=-1\\), mal condicionado cerca de ahí.\n\n\n2.2 Definición formal\nQueremos generalizar esta idea: dado un problema \\(f\\) y un dato \\(a\\), ¿cuánto se amplifica el error relativo de \\(a\\) al pasar por \\(f\\)?\n\n\n\n\n\n\nImportanteDefinición — número de condición relativo\n\n\n\n\\[\\kappa_f(a) = \\lim_{\\epsilon\\to 0} \\frac{\\left|f(a)-f(a(1+\\epsilon))\\right|/|f(a)|}{|\\epsilon|}\\]\nEs la razón entre el cambio relativo en el resultado y el cambio relativo en el dato, en el límite de perturbaciones pequeñas. Si \\(f\\) es diferenciable en \\(a\\):\n\\[\\kappa_f(a) = \\left|\\frac{a\\,f'(a)}{f(a)}\\right|\\]\n\n\nSi \\(\\kappa_f(a)\\) es muy grande, el problema está mal condicionado en \\(a\\): cualquier perturbación de los datos — así sea del tamaño de \\(\\epsilon_{\\text{mach}}\\) — se amplifica hasta volver el resultado inútil. Esto no depende del algoritmo ni de la máquina: es una propiedad del problema mismo.\n\n\n2.3 Ejemplos elementales\n\\[f(x)=x-c \\;\\Longrightarrow\\; \\kappa_f(x)=\\left|\\frac{x}{x-c}\\right|\\]\nPuede ser muy grande si \\(|x|\\gg|x-c|\\), por ejemplo si \\(x\\approx c\\) — esta es exactamente la resta cancelante de la sección anterior.\n\\[f(x)=cx \\;\\Longrightarrow\\; \\kappa_f(x)=1\\]\nLa multiplicación por una constante nunca amplifica el error relativo: siempre funciona bien.\n\\[f(x)=x^p \\;\\Longrightarrow\\; \\kappa_f(x)=|p|\\]\n\\[f(x)=\\cos(x) \\;\\Longrightarrow\\; \\kappa_f(x)=|x\\tan(x)|\\]\nPuede ser grande si \\(x\\) está cerca de un múltiplo impar de \\(\\pi/2\\) (ahí \\(f(x)\\approx 0\\)) o si \\(|x|\\gg 1\\).",
     "crumbs": [
-      "Estabilidad"
+      "Condicionamiento"
     ]
   },
   {
-    "objectID": "cursos/numerico/estabilidad/index.html#conexión-con-la-nota-de-condicionamiento",
-    "href": "cursos/numerico/estabilidad/index.html#conexión-con-la-nota-de-condicionamiento",
-    "title": "Estabilidad",
-    "section": "4 Conexión con la nota de condicionamiento",
-    "text": "4 Conexión con la nota de condicionamiento\nEste ejercicio es la contraparte natural de lo visto en la nota anterior: allí establecimos que \\((e^x-1)/x\\) es un problema bien condicionado cerca de cero (\\(\\kappa_f(0)=0\\)); aquí confirmamos que esa buena condición se sostiene en todo \\([-1,1]\\) (máximo \\(\\approx0{,}582\\)), y mostramos dos algoritmos concretos para el mismo problema — uno inestable (cancelación explícita) y uno estable (serie de Maclaurin, sin resta de cantidades parecidas) — cuantificando la brecha entre ellos. Es exactamente el mismo patrón del Ejemplo 1.4.1: problema bien condicionado, algoritmo mal elegido, error inexplicable por el condicionamiento — y una alternativa que lo resuelve sin cambiar el problema, solo la ruta de cálculo.",
+    "objectID": "cursos/numerico/condicionamiento/index.html#ejercicio-1.2.3-fxdfracex-1x",
+    "href": "cursos/numerico/condicionamiento/index.html#ejercicio-1.2.3-fxdfracex-1x",
+    "title": "Condicionamiento",
+    "section": "3 Ejercicio 1.2.3 — \\(f(x)=\\dfrac{e^x-1}{x}\\)",
+    "text": "3 Ejercicio 1.2.3 — \\(f(x)=\\dfrac{e^x-1}{x}\\)\n\n3.1 El límite en \\(x=0\\) vía L’Hôpital\n\\[\\lim_{x\\to 0}\\frac{e^x-1}{x} \\;=\\; \\frac{0}{0} \\quad\\text{(indeterminado)}\\]\nAplicando L’Hôpital (derivando numerador y denominador por separado):\n\\[\\lim_{x\\to 0}\\frac{e^x-1}{x} = \\lim_{x\\to 0}\\frac{\\dfrac{d}{dx}(e^x-1)}{\\dfrac{d}{dx}(x)} = \\lim_{x\\to 0}\\frac{e^x}{1} = e^0 = 1\\]\nEsto confirma, sin usar series de Taylor, que \\(f(0)=1\\) es la extensión continua correcta.",
     "crumbs": [
-      "Estabilidad"
+      "Condicionamiento"
+    ]
+  },
+  {
+    "objectID": "cursos/numerico/condicionamiento/index.html#comportamiento-de-kappa_f-en-pminfty",
+    "href": "cursos/numerico/condicionamiento/index.html#comportamiento-de-kappa_f-en-pminfty",
+    "title": "Condicionamiento",
+    "section": "4 Comportamiento de \\(\\kappa_f\\) en \\(\\pm\\infty\\)",
+    "text": "4 Comportamiento de \\(\\kappa_f\\) en \\(\\pm\\infty\\)\nYa sabemos que \\(\\kappa_f(0)=0\\). Para completar el panorama, veamos qué le pasa a \\(\\kappa_f(x)=\\left|\\dfrac{N(x)}{D(x)}\\right|\\), con \\(N(x)=(x-1)e^x+1\\) y \\(D(x)=e^x-1\\), en los dos extremos.\nCuando \\(x\\to+\\infty\\): tanto \\(N(x)\\) como \\(D(x)\\) divergen (\\(e^x\\) domina en ambos), así que es indeterminado \\(\\infty/\\infty\\) y L’Hôpital aplica:\n\\[\\lim_{x\\to+\\infty}\\frac{N(x)}{D(x)} = \\lim_{x\\to+\\infty}\\frac{N'(x)}{D'(x)} = \\lim_{x\\to+\\infty}\\frac{xe^x}{e^x} = \\lim_{x\\to+\\infty} x = +\\infty\\]\n(se usó \\(N'(x)=e^x+(x-1)e^x=xe^x\\) y \\(D'(x)=e^x\\); tras una sola aplicación de L’Hôpital el cociente ya se simplifica sin quedar indeterminado). Entonces \\(\\displaystyle\\lim_{x\\to+\\infty}\\kappa_f(x)=+\\infty\\): el problema se vuelve arbitrariamente mal condicionado para \\(x\\) grande — aunque de forma “mansa”, porque \\(\\kappa_f(x)\\approx x\\) crece solo linealmente (no exponencialmente).\nCuando \\(x\\to-\\infty\\): aquí no hay indeterminación, porque \\(e^x\\to0\\) y ambos, numerador y denominador, convergen a valores finitos directamente:\n\\[N(x)=(x-1)e^x+1 \\;\\longrightarrow\\; 0+1=1\\]\n(\\((x-1)e^x\\to0\\) porque la exponencial decae más rápido de lo que cualquier polinomio crece)\n\\[D(x)=e^x-1 \\;\\longrightarrow\\; 0-1=-1\\]\n\\[\\lim_{x\\to-\\infty}\\kappa_f(x) = \\left|\\frac{1}{-1}\\right| = 1\\]\nEn resumen\n\\[\\lim_{x\\to-\\infty}\\kappa_f(x)=1 \\qquad \\kappa_f(0)=0 \\qquad \\lim_{x\\to+\\infty}\\kappa_f(x)=+\\infty\\]\nPara \\(x\\le0\\), \\(\\kappa_f\\) queda acotado entre 0 y 1: el problema está uniformemente bien condicionado en todo el semieje negativo. Para \\(x\\) positivo y grande, el problema se vuelve mal condicionado, pero solo linealmente (consistente con los valores numéricos: \\(\\kappa_f(10^{-6})\\approx5\\times10^{-7}\\), \\(\\kappa_f(1)\\approx0{,}58\\), \\(\\kappa_f(10)\\approx9\\), \\(\\kappa_f(20)\\approx19\\)).",
+    "crumbs": [
+      "Condicionamiento"
+    ]
+  },
+  {
+    "objectID": "cursos/numerico/condicionamiento/index.html#ejercicio-1.2.5-condición-del-inverso",
+    "href": "cursos/numerico/condicionamiento/index.html#ejercicio-1.2.5-condición-del-inverso",
+    "title": "Condicionamiento",
+    "section": "5 Ejercicio 1.2.5 — condición del inverso",
+    "text": "5 Ejercicio 1.2.5 — condición del inverso\nSea \\(f\\) con número de condición \\(\\kappa_f\\), y \\(f^{-1}\\) su inversa. Queremos mostrar\n\\[\\kappa_{f^{-1}}(x) = \\frac{1}{\\kappa_f\\big(f^{-1}(x)\\big)}\\]\nDemostración, sin invocar el teorema de la función inversa: sea \\(h = f\\circ f^{-1} = \\text{id}\\).\nPrimero, \\(\\kappa_{\\text{id}}(x)=1\\): con \\(\\text{id}'(x)=1\\), \\(\\kappa_{\\text{id}}(x)=|x\\cdot 1/x|=1\\).\nPor la regla de la cadena para números de condición (ejercicio 1.2.4), aplicada a \\(h=f\\circ f^{-1}\\):\n\\[\\kappa_h(x) = \\kappa_f\\big(f^{-1}(x)\\big)\\cdot\\kappa_{f^{-1}}(x)\\]\nComo \\(h=\\text{id}\\), \\(\\kappa_h(x)=\\kappa_{\\text{id}}(x)=1\\). Despejando:\n\\[1 = \\kappa_f\\big(f^{-1}(x)\\big)\\cdot\\kappa_{f^{-1}}(x) \\;\\Longrightarrow\\; \\kappa_{f^{-1}}(x)=\\frac{1}{\\kappa_f\\big(f^{-1}(x)\\big)} \\qquad \\blacksquare\\]\nEsta ruta es más corta que aplicar el teorema de la función inversa directamente, y no exige demostrar por separado que \\(f^{-1}\\) es derivable.",
+    "crumbs": [
+      "Condicionamiento"
+    ]
+  },
+  {
+    "objectID": "cursos/numerico/condicionamiento/index.html#raíces-de-un-polinomio-cuadrático",
+    "href": "cursos/numerico/condicionamiento/index.html#raíces-de-un-polinomio-cuadrático",
+    "title": "Condicionamiento",
+    "section": "6 Raíces de un polinomio cuadrático",
+    "text": "6 Raíces de un polinomio cuadrático\nConsideremos \\(ax^2+bx+c=0\\). Los datos son los coeficientes \\((a,b,c)\\); el resultado son las raíces \\(r_1,r_2\\) (posiblemente complejas). Formalmente, \\(f(a,b,c)=(r_1,r_2)\\).\nFijamos \\(b,c\\) y perturbamos solo el coeficiente principal \\(a\\), para ver cómo responde \\(r_1\\): \\(f(a)=r_1\\). Partiendo de la identidad \\(ar_1^2+br_1+c=0\\) y derivando implícitamente respecto a \\(a\\) (con \\(b,c\\) fijos):\n\\[r_1^2+2ar_1\\frac{dr_1}{da}+b\\,\\frac{dr_1}{da}=0 \\;\\Longrightarrow\\; \\frac{dr_1}{da}=\\frac{-r_1^2}{2ar_1+b}\\]\n\\[\\kappa_f(a) = \\left|\\frac{a}{r_1}\\cdot\\frac{dr_1}{da}\\right| = \\left|\\frac{a\\,r_1}{2ar_1+b}\\right|\\]\nUsando la fórmula cuadrática, \\(|2ar_1+b|=\\left|\\sqrt{b^2-4ac}\\right|=|a(r_1-r_2)|\\):\n\\[\\boxed{\\kappa_f(a) = \\left|\\frac{r_1}{r_1-r_2}\\right|}\\]\nEl problema está mal condicionado exactamente cuando \\(|r_1|\\gg|r_1-r_2|\\) — es decir, cuando las raíces están mucho más cerca entre sí que del origen. En el caso extremo de una raíz doble (\\(r_1=r_2\\)), \\(\\kappa_f\\to\\infty\\).",
+    "crumbs": [
+      "Condicionamiento"
+    ]
+  },
+  {
+    "objectID": "cursos/numerico/condicionamiento/index.html#simulación-sensibilidad-de-las-raíces-de-pxax-cx-d",
+    "href": "cursos/numerico/condicionamiento/index.html#simulación-sensibilidad-de-las-raíces-de-pxax-cx-d",
+    "title": "Condicionamiento",
+    "section": "7 Simulación — sensibilidad de las raíces de \\(p(x)=a(x-c)(x-d)\\)",
+    "text": "7 Simulación — sensibilidad de las raíces de \\(p(x)=a(x-c)(x-d)\\)\nPara hacer tangible la fórmula anterior, parametrizamos el polinomio directamente por sus raíces \\(c,d\\) y su coeficiente principal \\(a\\):\n\\[p(x) = a(x-c)(x-d) = a\\,x^2 \\underbrace{-\\,a(c+d)}_{B}\\,x + \\underbrace{a\\,c\\,d}_{C}\\]\nde modo que, en ausencia de redondeo, las raíces son exactamente \\(r_1=c\\) y \\(r_2=d\\) para cualquier \\(a\\ne 0\\). La simulación perturba solo el coeficiente \\(a\\to a(1+\\varepsilon)\\), mantiene \\(B,C\\) fijos (tal como en la derivación de \\(\\kappa_f(a)\\)), recalcula las raíces con la fórmula cuadrática, y compara:\n\nel error relativo predicho por la teoría: \\(\\kappa_f(a)\\cdot|\\varepsilon| = \\left|\\dfrac{r_1}{r_1-r_2}\\right|\\cdot|\\varepsilon|\\)\nel error relativo real, medido directamente sobre la raíz recalculada\n\nMueve los controles y observa qué pasa con \\(\\kappa_f\\) cuando \\(c\\) y \\(d\\) se acercan.",
+    "crumbs": [
+      "Condicionamiento"
+    ]
+  },
+  {
+    "objectID": "cursos/numerico/condicionamiento/index.html#tarea",
+    "href": "cursos/numerico/condicionamiento/index.html#tarea",
+    "title": "Condicionamiento",
+    "section": "8 Tarea",
+    "text": "8 Tarea\nResolver los siguientes ejercicios de la sección 1.2 (“Exercises”) de Fundamentals of Numerical Computation, disponibles en https://fncbook.com/julia/conditioning/#exercises:",
+    "crumbs": [
+      "Condicionamiento"
+    ]
+  },
+  {
+    "objectID": "cursos/numerico/index.html",
+    "href": "cursos/numerico/index.html",
+    "title": "Análisis Numérico",
+    "section": "",
+    "text": "Ordenar por\n      Por defecto\n      \n        Título\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTítulo\n\n\n\nSubtítulo\n\n\n\n\n\n\n\n\nIntroducción\n\n\nSistemas de numeración y punto flotante\n\n\n\n\n\n\nCondicionamiento\n\n\nCancelación catastrófica, pérdida de significancia y número de condición\n\n\n\n\n\n\nEstabilidad\n\n\nAlgoritmos y estabilidad ejemplo con f(x)=(e^x-1)/x).\n\n\n\n\n\n\nTaller 1\n\n\nAutopsia numérica: máquina de punto flotante, condicionamiento y estabilidad\n\n\n\n\n\n\nNo hay resultados",
+    "crumbs": [
+      "Análisis Numérico"
     ]
   },
   {

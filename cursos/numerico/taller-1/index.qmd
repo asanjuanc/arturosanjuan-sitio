@@ -1,0 +1,100 @@
+---
+title: "Taller 1"
+subtitle: "Autopsia numérica: máquina de punto flotante, condicionamiento y estabilidad"
+description: "Taller en equipos de hasta tres personas, con solución, sobre representación de punto flotante en precisión doble, número de condición relativo, y diagnóstico de estabilidad algorítmica, con el caso f(x)=sqrt(x+1)-sqrt(x)."
+author: "Arturo Sanjuán"
+date: 2026-09-04
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 4
+---
+
+Un sistema de navegación reporta que, después de mucho tiempo de vuelo, su corrección de rumbo se "congela" en cero. La corrección se calcula con la función $f(x)=\sqrt{x+1}-\sqrt{x}$, donde $x$ es el tiempo transcurrido de misión. El equipo de ingeniería sospecha del modelo matemático; en este taller ustedes actúan como peritos numéricos y deben determinar si la culpa es del problema o del algoritmo usado para calcularlo. Cada equipo recibió un valor $x_0$ distinto entre $10^2$ y $10^6$; la solución de esta hoja cubre esos valores.
+
+## La rejilla de la máquina
+
+Trabajando en precisión doble de IEEE 754 (52 bits de mantisa), la distancia entre dos números de punto flotante consecutivos cerca de un valor $x$ (la unidad en el último lugar, o ULP) es aproximadamente
+
+$$\text{ULP}(x) \approx 2^{\lfloor \log_2 x \rfloor - 52}$$
+
+Con su $x_0$ asignado, calculen $\text{ULP}(x_0)$, determinen si $x_0$ y $x_0+1$ se almacenan como el mismo número de punto flotante o son distinguibles, y si son distinguibles calculen cuántos números representables existen estrictamente entre $x_0$ y $x_0+1$. Antes de tocar Julia, con base en esto, predigan si esperan que el algoritmo ingenuo para $f(x_0)$ sea preciso o falle catastróficamente, y por qué.
+
+::: {.callout-tip title="Solución"}
+Si $h=\text{ULP}(x_0)$ es el espaciado entre flotantes consecutivos, un intervalo de longitud 1 contiene $1/h$ huecos iguales entre marcas; por conteo de postes de cerca, eso deja $1/h-1$ representables estrictamente adentro (sin contar los dos extremos):
+
+$$\#\{\text{representables en }(x_0,x_0+1)\} = 2^{52-\lfloor\log_2 x_0\rfloor}-1$$
+
+siempre un entero exacto, porque $2^{52-e}$ es potencia de 2.
+
+| $x_0$ | $\lfloor\log_2 x_0\rfloor$ | $\text{ULP}(x_0)$ | $x_0+1=x_0$? | # representables entre $x_0$ y $x_0+1$ |
+|---|---|---|---|---|
+| $10^2$ | 6 | $1{,}42\times10^{-14}$ | No | $\approx 7{,}0\times10^{13}$ |
+| $10^3$ | 9 | $1{,}14\times10^{-13}$ | No | $\approx 8{,}8\times10^{12}$ |
+| $10^4$ | 13 | $1{,}82\times10^{-12}$ | No | $\approx 5{,}5\times10^{11}$ |
+| $10^5$ | 16 | $1{,}46\times10^{-11}$ | No | $\approx 6{,}9\times10^{10}$ |
+| $10^6$ | 19 | $1{,}16\times10^{-10}$ | No | $\approx 8{,}6\times10^{9}$ |
+
+En ninguno de estos valores $x_0$ y $x_0+1$ colapsan al mismo flotante (eso solo ocurre desde $x_0=2^{53}\approx9{,}007\times10^{15}$), así que en este rango se predice degradación progresiva del algoritmo ingenuo, pero no un colapso total.
+:::
+
+## El expediente del condicionamiento
+
+Deriven el número de condición relativo $\kappa_f(x)$ de $f(x)=\sqrt{x+1}-\sqrt x$, calculen $\displaystyle\lim_{x\to\infty}\kappa_f(x)$, y evalúen $\kappa_f(x_0)$ para su valor asignado. Con esta evidencia sola, sin haber corrido nada todavía, ¿el problema $f$ es responsable de un eventual fallo? Justifiquen.
+
+::: {.callout-tip title="Solución"}
+Con $f'(x)=\dfrac{1}{2\sqrt{x+1}}-\dfrac1{2\sqrt x}$, factorizando por diferencia de raíces se obtiene $f'(x)=-\dfrac{f(x)}{2\sqrt x\sqrt{x+1}}$, así que
+
+$$\kappa_f(x)=\left|\frac{xf'(x)}{f(x)}\right| = \frac{x}{2\sqrt x\sqrt{x+1}} = \frac12\sqrt{\frac{x}{x+1}}$$
+
+Como $x/(x+1)\to 1$,
+$$\lim_{x\to\infty}\kappa_f(x)=\frac12$$
+
+y como $x/(x+1)<1$ para todo $x>0$, de hecho $\kappa_f(x)<1/2$ siempre: el problema nunca amplifica el error relativo de entrada más de la mitad, en ningún punto de su dominio.
+
+| $x_0$ | $\kappa_f(x_0)$ |
+|---|---|
+| $10^2$ | $0{,}4975186$ |
+| $10^3$ | $0{,}4997502$ |
+| $10^4$ | $0{,}4999750$ |
+| $10^5$ | $0{,}4999975$ |
+| $10^6$ | $0{,}49999975$ |
+
+El problema está óptimamente condicionado en todo el rango asignado ($\kappa_f<1/2$ siempre): si el algoritmo ingenuo falla, la responsabilidad es exclusivamente del algoritmo, no de $f$.
+:::
+
+## El interrogatorio en Julia
+
+Implementen el algoritmo ingenuo `sqrt(x+1) - sqrt(x)` y evalúenlo en $x_0$. Encuentren, mediante racionalización, una forma equivalente de $f$ que evite restar cantidades casi iguales, e impleméntenla. Usando `BigFloat` como referencia de alta precisión, construyan una tabla comparando ambos algoritmos en un barrido que incluya su $x_0$. Escriban su veredicto forense en 4 o 5 líneas: si el problema está bien o mal condicionado, en qué paso exacto entra la inestabilidad, y cuál algoritmo recomiendan.
+
+::: {.callout-tip title="Solución"}
+La racionalización multiplica y divide por el conjugado:
+
+$$f(x)=\sqrt{x+1}-\sqrt x = \frac{(\sqrt{x+1}-\sqrt x)(\sqrt{x+1}+\sqrt x)}{\sqrt{x+1}+\sqrt x} = \frac{1}{\sqrt{x+1}+\sqrt x}$$
+
+```julia
+f_ingenuo(x)    = sqrt(x + 1) - sqrt(x)
+f_estable(x)    = 1 / (sqrt(x + 1) + sqrt(x))
+f_referencia(x) = Float64(sqrt(BigFloat(x) + 1) - sqrt(BigFloat(x)))
+```
+
+`f_estable` solo suma cantidades positivas, así que no hay cancelación posible en ningún paso.
+
+| $x_0$ | ingenuo | estable | error rel. ingenuo | error rel. estable |
+|---|---|---|---|---|
+| $10^2$ | $4{,}987562112089\times10^{-2}$ | igual | $6{,}5\times10^{-15}$ | $0$ |
+| $10^3$ | $1{,}580743742896\times10^{-2}$ | igual | $1{,}1\times10^{-13}$ | $0$ |
+| $10^4$ | $4{,}999875006249\times10^{-3}$ | igual | $2{,}1\times10^{-13}$ | $0$ |
+| $10^5$ | $1{,}581134877256\times10^{-3}$ | igual | $6{,}4\times10^{-13}$ | $1{,}4\times10^{-16}$ |
+| $10^6$ | $4{,}999998750463\times10^{-4}$ | $4{,}999998750001\times10^{-4}$ | $9{,}3\times10^{-11}$ | $0$ |
+
+En este rango el error del algoritmo ingenuo nunca supera $\sim10^{-10}$: todavía está lejos del colapso, pero ya muestra degradación consistente y medible frente al estable, que se mantiene en $0$ o en el orden de $\epsilon_{\text{mach}}$ en todos los casos.
+
+Veredicto modelo: *"El problema en $x_0$ tiene $\kappa_f(x_0)\approx 0{,}5$: bien condicionado, y de hecho $\kappa_f(x)<1/2$ para todo $x$. El algoritmo ingenuo pierde precisión progresivamente porque en el paso $\sqrt{x+1}-\sqrt{x}$ se restan dos cantidades cada vez más parecidas a medida que $x_0$ crece; aunque en este rango no llega a colapsar del todo, la tendencia ya es clara y se vuelve catastrófica para $x_0$ mucho mayores (a partir de $x_0=2^{53}$, donde $x_0$ y $x_0+1$ dejan de ser distinguibles). La causa es inestabilidad algorítmica, no mal condicionamiento. La forma racionalizada, al no restar cantidades parecidas, mantiene precisión de máquina en todo el rango probado."*
+:::

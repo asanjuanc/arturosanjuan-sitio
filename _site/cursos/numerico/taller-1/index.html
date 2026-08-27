@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Arturo Sanjuán">
-<meta name="description" content="Problemas vs.&nbsp;algoritmos, el método de Horner, estabilidad, error hacia atrás, y el análisis completo del ejercicio 1.4.2 (condicionamiento vs.&nbsp;inestabilidad para f(x)=(e^x-1)/x.">
+<meta name="description" content="Taller en equipos de hasta tres personas, con solución, sobre representación de punto flotante en precisión doble, número de condición relativo, y diagnóstico de estabilidad algorítmica, con el caso f(x)=sqrt(x+1)-sqrt(x).">
 
-<title>Estabilidad – Arturo Sanjuán</title>
+<title>Taller 1 – Arturo Sanjuán</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -73,8 +73,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
-<link href="../../../cursos/numerico/taller-1/index.html" rel="next">
-<link href="../../../cursos/numerico/condicionamiento/index.html" rel="prev">
+<link href="../../../cursos/numerico/estabilidad/index.html" rel="prev">
 <link href="../../../favicon.png" rel="icon" type="image/png">
 <script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -180,7 +179,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../cursos/numerico/estabilidad/index.html">Estabilidad</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../cursos/numerico/taller-1/index.html">Taller 1</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -215,13 +214,13 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../cursos/numerico/estabilidad/index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../../cursos/numerico/estabilidad/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Estabilidad</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../cursos/numerico/taller-1/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../cursos/numerico/taller-1/index.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Taller 1</span></a>
   </div>
 </li>
@@ -231,14 +230,9 @@ window.Quarto = {
     <h2 id="toc-title">Contenido</h2>
    
   <ul>
-  <li><a href="#problemas-vs.-algoritmos" id="toc-problemas-vs.-algoritmos" class="nav-link active" data-scroll-target="#problemas-vs.-algoritmos"><span class="header-section-number">1</span> Problemas vs.&nbsp;algoritmos</a></li>
-  <li><a href="#estudio-de-caso-evaluación-de-un-polinomio-el-método-de-horner" id="toc-estudio-de-caso-evaluación-de-un-polinomio-el-método-de-horner" class="nav-link" data-scroll-target="#estudio-de-caso-evaluación-de-un-polinomio-el-método-de-horner"><span class="header-section-number">2</span> Estudio de caso: evaluación de un polinomio — el método de Horner</a></li>
-  <li><a href="#ejercicio-1.4.2-fx-dfracex-1x" id="toc-ejercicio-1.4.2-fx-dfracex-1x" class="nav-link" data-scroll-target="#ejercicio-1.4.2-fx-dfracex-1x"><span class="header-section-number">3</span> Ejercicio 1.4.2 — <span class="math inline">\(f(x) = \dfrac{e^x-1}{x}\)</span></a>
-  <ul class="collapse">
-  <li><a href="#a-número-de-condición-y-su-máximomínimo-en--11" id="toc-a-número-de-condición-y-su-máximomínimo-en--11" class="nav-link" data-scroll-target="#a-número-de-condición-y-su-máximomínimo-en--11"><span class="header-section-number">3.1</span> (a) Número de condición y su máximo/mínimo en <span class="math inline">\([-1,1]\)</span></a></li>
-  <li><a href="#bd-dos-algoritmos-para-el-mismo-problema" id="toc-bd-dos-algoritmos-para-el-mismo-problema" class="nav-link" data-scroll-target="#bd-dos-algoritmos-para-el-mismo-problema"><span class="header-section-number">3.2</span> (b)–(d) Dos algoritmos para el mismo problema</a></li>
-  </ul></li>
-  <li><a href="#conexión-con-la-nota-de-condicionamiento" id="toc-conexión-con-la-nota-de-condicionamiento" class="nav-link" data-scroll-target="#conexión-con-la-nota-de-condicionamiento"><span class="header-section-number">4</span> Conexión con la nota de condicionamiento</a></li>
+  <li><a href="#la-rejilla-de-la-máquina" id="toc-la-rejilla-de-la-máquina" class="nav-link active" data-scroll-target="#la-rejilla-de-la-máquina"><span class="header-section-number">1</span> La rejilla de la máquina</a></li>
+  <li><a href="#el-expediente-del-condicionamiento" id="toc-el-expediente-del-condicionamiento" class="nav-link" data-scroll-target="#el-expediente-del-condicionamiento"><span class="header-section-number">2</span> El expediente del condicionamiento</a></li>
+  <li><a href="#el-interrogatorio-en-julia" id="toc-el-interrogatorio-en-julia" class="nav-link" data-scroll-target="#el-interrogatorio-en-julia"><span class="header-section-number">3</span> El interrogatorio en Julia</a></li>
   </ul>
 </nav>
 </nav>
@@ -251,13 +245,13 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Estabilidad</h1>
-<p class="subtitle lead">Algoritmos y estabilidad ejemplo con f(x)=(e^x-1)/x).</p>
+<h1 class="title">Taller 1</h1>
+<p class="subtitle lead">Autopsia numérica: máquina de punto flotante, condicionamiento y estabilidad</p>
 </div>
 
 <div>
   <div class="description">
-    Problemas vs.&nbsp;algoritmos, el método de Horner, estabilidad, error hacia atrás, y el análisis completo del ejercicio 1.4.2 (condicionamiento vs.&nbsp;inestabilidad para f(x)=(e^x-1)/x.
+    Taller en equipos de hasta tres personas, con solución, sobre representación de punto flotante en precisión doble, número de condición relativo, y diagnóstico de estabilidad algorítmica, con el caso f(x)=sqrt(x+1)-sqrt(x).
   </div>
 </div>
 
@@ -274,7 +268,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">23 de agosto de 2026</p>
+      <p class="date">4 de septiembre de 2026</p>
     </div>
   </div>
   
@@ -286,88 +280,25 @@ window.Quarto = {
 </header>
 
 
-<section id="problemas-vs.-algoritmos" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="problemas-vs.-algoritmos"><span class="header-section-number">1</span> Problemas vs.&nbsp;algoritmos</h2>
-<p>Un problema matemático idealizado se puede representar como una función <span class="math inline">\(a \mapsto f(a)\)</span>: a partir de un dato <span class="math inline">\(a\)</span>, se produce exactamente el resultado <span class="math inline">\(f(a)\)</span>. En la práctica, casi nunca podemos calcular <span class="math inline">\(f(a)\)</span> de manera exacta con un número finito de pasos aritméticos; en su lugar, construimos un <strong>algoritmo</strong>, otra función <span class="math inline">\(a \mapsto \tilde f(a)\)</span>, que aproxima a <span class="math inline">\(f\)</span> mediante una sucesión finita de operaciones elementales.</p>
-<p>Un mismo problema <span class="math inline">\(f\)</span> puede tener muchos algoritmos <span class="math inline">\(\tilde f\)</span> distintos que lo aproximan — y, como veremos, no todos son igual de buenos, incluso cuando matemáticamente (con aritmética exacta) producen el mismo resultado.</p>
-</section>
-<section id="estudio-de-caso-evaluación-de-un-polinomio-el-método-de-horner" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="estudio-de-caso-evaluación-de-un-polinomio-el-método-de-horner"><span class="header-section-number">2</span> Estudio de caso: evaluación de un polinomio — el método de Horner</h2>
-<p>Antes de hablar de estabilidad numérica, vale la pena ver un ejemplo de que “distintos algoritmos para el mismo problema” no es solo una cuestión de precisión: también puede ser una cuestión de <strong>eficiencia</strong>.</p>
-<p>Consideremos <span class="math display">\[p(x) = 5x^3 + 4x^2 + 3x + 2.\]</span></p>
-<p><strong>Evaluación directa.</strong> Calculamos <span class="math inline">\(x^2\)</span> (1 producto), luego <span class="math inline">\(x^3 = x^2\cdot x\)</span> (1 producto más), y finalmente los tres productos <span class="math inline">\(5x^3\)</span>, <span class="math inline">\(4x^2\)</span>, <span class="math inline">\(3x\)</span> (3 productos). En total: <strong>5 productos</strong> y <strong>3 sumas</strong> — 8 operaciones aritméticas.</p>
-<p><strong>Método de Horner.</strong> Reescribimos <span class="math inline">\(p\)</span> anidando la variable: <span class="math display">\[p(x) = ((5x+4)x+3)x+2.\]</span> Cada uno de los tres paréntesis cuesta exactamente 1 producto y 1 suma: <strong>3 productos</strong> y <strong>3 sumas</strong> — 6 operaciones en total.</p>
-<p><span class="math display">\[\frac{8-6}{8} = 0{,}25\]</span></p>
-<p>El método de Horner ahorra el <strong>25%</strong> del esfuerzo computacional respecto a la evaluación directa, y esta ventaja crece con el grado del polinomio: para grado <span class="math inline">\(n\)</span>, la evaluación directa requiere <span class="math inline">\(O(n^2)\)</span> productos (si no se reutiliza <span class="math inline">\(x^k\)</span>) o al menos <span class="math inline">\(2n-1\)</span> productos y <span class="math inline">\(n\)</span> sumas incluso reutilizando potencias, mientras que Horner siempre usa exactamente <span class="math inline">\(n\)</span> productos y <span class="math inline">\(n\)</span> sumas.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">    horner(coefs, x)</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="st">Evalúa el polinomio con coeficientes `coefs = [a_n, a_{n-1}, ..., a_1, a_0]`</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">(de mayor a menor grado) en el punto `x`, usando el método de Horner.</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">horner</span>(coefs, x)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    resultado <span class="op">=</span> coefs[<span class="fl">1</span>]</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c <span class="kw">in</span> coefs[<span class="fl">2</span><span class="op">:</span><span class="kw">end</span>]</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        resultado <span class="op">=</span> resultado <span class="op">*</span> x <span class="op">+</span> c</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> resultado</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">horner</span>([<span class="fl">5</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">2</span>], <span class="fl">2.0</span>)   <span class="co"># p(2) = 5·8 + 4·4 + 3·2 + 2 = 64</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<pre><code>horner([5, 4, 3, 2], 2.0) = 64.0</code></pre>
-<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<p>Un sistema de navegación reporta que, después de mucho tiempo de vuelo, su corrección de rumbo se “congela” en cero. La corrección se calcula con la función <span class="math inline">\(f(x)=\sqrt{x+1}-\sqrt{x}\)</span>, donde <span class="math inline">\(x\)</span> es el tiempo transcurrido de misión. El equipo de ingeniería sospecha del modelo matemático; en este taller ustedes actúan como peritos numéricos y deben determinar si la culpa es del problema o del algoritmo usado para calcularlo. Cada equipo recibió un valor <span class="math inline">\(x_0\)</span> distinto entre <span class="math inline">\(10^2\)</span> y <span class="math inline">\(10^6\)</span>; la solución de esta hoja cubre esos valores.</p>
+<section id="la-rejilla-de-la-máquina" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="la-rejilla-de-la-máquina"><span class="header-section-number">1</span> La rejilla de la máquina</h2>
+<p>Trabajando en precisión doble de IEEE 754 (52 bits de mantisa), la distancia entre dos números de punto flotante consecutivos cerca de un valor <span class="math inline">\(x\)</span> (la unidad en el último lugar, o ULP) es aproximadamente</p>
+<p><span class="math display">\[\text{ULP}(x) \approx 2^{\lfloor \log_2 x \rfloor - 52}\]</span></p>
+<p>Con su <span class="math inline">\(x_0\)</span> asignado, calculen <span class="math inline">\(\text{ULP}(x_0)\)</span>, determinen si <span class="math inline">\(x_0\)</span> y <span class="math inline">\(x_0+1\)</span> se almacenan como el mismo número de punto flotante o son distinguibles, y si son distinguibles calculen cuántos números representables existen estrictamente entre <span class="math inline">\(x_0\)</span> y <span class="math inline">\(x_0+1\)</span>. Antes de tocar Julia, con base en esto, predigan si esperan que el algoritmo ingenuo para <span class="math inline">\(f(x_0)\)</span> sea preciso o falle catastróficamente, y por qué.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Tarea
+<span class="screen-reader-only">Tip</span>Solución
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Estudiar el algoritmo de Horner en Julia (por ejemplo, comparándolo contra <code>Polynomials.jl</code> o contra la evaluación directa con <code>@time</code>/<code>@allocated</code> para verificar el ahorro) y resolver los ejercicios y estudiar la sección 1.3 (“Algorithms”) del FNC. Diga en sus palabras qué es condicionamiento, qué es estabilidad, cómo se relacionan. Ejemplifique. Diga en sus palabras qué entiende por hacia atrás y estabilidad. Ejemplifique.</p>
-</div>
-</div>
-</section>
-<section id="ejercicio-1.4.2-fx-dfracex-1x" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="ejercicio-1.4.2-fx-dfracex-1x"><span class="header-section-number">3</span> Ejercicio 1.4.2 — <span class="math inline">\(f(x) = \dfrac{e^x-1}{x}\)</span></h2>
-<section id="a-número-de-condición-y-su-máximomínimo-en--11" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="a-número-de-condición-y-su-máximomínimo-en--11"><span class="header-section-number">3.1</span> (a) Número de condición y su máximo/mínimo en <span class="math inline">\([-1,1]\)</span></h3>
-<p>Con <span class="math inline">\(f(x)=(e^x-1)/x\)</span> (extendida por continuidad, <span class="math inline">\(f(0)=1\)</span>): <span class="math display">\[f'(x) = \frac{xe^x - (e^x-1)}{x^2} = \frac{(x-1)e^x+1}{x^2}\]</span> <span class="math display">\[\kappa_f(x) = \left|x\cdot\frac{f'(x)}{f(x)}\right| = \left|\frac{(x-1)e^x+1}{e^x-1}\right|\]</span></p>
-<p>Derivando <span class="math inline">\(\kappa_f\)</span> (tratando el signo del numerador y denominador con cuidado, como en la nota de condicionamiento), se encuentra que el signo de <span class="math inline">\(\kappa_f'(x)\)</span> está gobernado por <span class="math inline">\(x(e^x-x-1)\)</span>, y como <span class="math inline">\(e^x-x-1\ge0\)</span> para todo <span class="math inline">\(x\)</span> real (con igualdad solo en <span class="math inline">\(x=0\)</span>), <span class="math inline">\(\kappa_f\)</span> es <strong>decreciente en <span class="math inline">\((-1,0)\)</span> y creciente en <span class="math inline">\((0,1)\)</span></strong>: tiene forma de “V”, con mínimo en <span class="math inline">\(x=0\)</span> y máximo en uno de los dos extremos del intervalo.</p>
-<p>Evaluando en los extremos: <span class="math display">\[\kappa_f(1) = \left|\frac{(1-1)e+1}{e-1}\right| = \frac{1}{e-1} \approx 0{,}5820, \qquad \kappa_f(-1) = \left|\frac{-2e^{-1}+1}{e^{-1}-1}\right| \approx 0{,}4180\]</span></p>
-<p><span class="math display">\[\boxed{\max_{[-1,1]}\kappa_f = \kappa_f(1) = \dfrac{1}{e-1}\approx 0{,}582, \qquad \min_{[-1,1]}\kappa_f = \kappa_f(0) = 0}\]</span></p>
-<p>Verificación en Julia (evaluando <span class="math inline">\(\kappa_f\)</span> numéricamente en una malla fina, sin depender de la simplificación simbólica — también se puede hacer con <code>Symbolics.jl</code> derivando <code>f</code> automáticamente):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ForwardDiff</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(x) <span class="op">=</span> x <span class="op">==</span> <span class="fl">0</span> ? <span class="fl">1.0</span> <span class="op">:</span> (<span class="fu">exp</span>(x) <span class="op">-</span> <span class="fl">1</span>)<span class="op">/</span>x</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">κ</span>(x) <span class="op">=</span> <span class="fu">abs</span>(x <span class="op">*</span> ForwardDiff.<span class="fu">derivative</span>(f, x) <span class="op">/</span> <span class="fu">f</span>(x))</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>xs <span class="op">=</span> <span class="fu">range</span>(<span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span>, length<span class="op">=</span><span class="fl">20001</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>kmax, imax <span class="op">=</span> <span class="fu">findmax</span>(<span class="fu">κ</span>.(xs))</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>kmin, imin <span class="op">=</span> <span class="fu">findmin</span>(<span class="fu">κ</span>.(xs))</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> xs[imax], kmax   <span class="co"># (1.0, 0.5819767068693265)</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> xs[imin], kmin   <span class="co"># (0.0, 0.0)</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fl">1</span><span class="op">/</span>(<span class="fu">exp</span>(<span class="fl">1</span>)<span class="op">-</span><span class="fl">1</span>)      <span class="co"># 0.5819767068693265  -- coincide exactamente</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<pre><code>(xs[imax], kmax) = (1.0, 0.5819767068693265)
-(xs[imin], kmin) = (0.0, 0.0)
-1 / (exp(1) - 1) = 0.5819767068693265</code></pre>
-<p>Confirmado: <span class="math inline">\(\kappa_f(0)=0\)</span> (el problema está <strong>óptimamente condicionado</strong> cerca de cero) y <span class="math inline">\(\kappa_f\)</span> crece muy poco en <span class="math inline">\([-1,1]\)</span>, alcanzando apenas <span class="math inline">\(\approx0{,}58\)</span>. Este es exactamente el mismo problema bien condicionado que ya vimos en la nota de condicionamiento — aquí lo confirmamos cuantitativamente en todo el intervalo <span class="math inline">\([-1,1]\)</span>, no solo en el límite <span class="math inline">\(x\to0\)</span>.</p>
-</section>
-<section id="bd-dos-algoritmos-para-el-mismo-problema" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="bd-dos-algoritmos-para-el-mismo-problema"><span class="header-section-number">3.2</span> (b)–(d) Dos algoritmos para el mismo problema</h3>
-<p><strong>Algoritmo ingenuo:</strong> evaluar <span class="math inline">\(f(x)\)</span> tal cual, con la resta explícita.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">f_ingenuo</span>(x) <span class="op">=</span> (<span class="fu">exp</span>(x) <span class="op">-</span> <span class="fl">1</span>)<span class="op">/</span>x</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Algoritmo por serie de Maclaurin (8 términos):</strong> <span class="math display">\[f(x) \approx p(x) = 1 + \frac{x}{2!} + \frac{x^2}{3!} + \cdots + \frac{x^7}{8!}\]</span></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">p_maclaurin</span>(x)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> <span class="fl">0.0</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> <span class="fl">0</span><span class="op">:</span><span class="fl">7</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        s <span class="op">+=</span> x<span class="op">^</span>k <span class="op">/</span> <span class="fu">factorial</span>(k<span class="op">+</span><span class="fl">1</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> s</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Evaluando ambos en <span class="math inline">\(x=10^{-2},10^{-3},\ldots,10^{-11}\)</span> y comparando contra un valor de referencia de alta precisión:</p>
+<p>Si <span class="math inline">\(h=\text{ULP}(x_0)\)</span> es el espaciado entre flotantes consecutivos, un intervalo de longitud 1 contiene <span class="math inline">\(1/h\)</span> huecos iguales entre marcas; por conteo de postes de cerca, eso deja <span class="math inline">\(1/h-1\)</span> representables estrictamente adentro (sin contar los dos extremos):</p>
+<p><span class="math display">\[\#\{\text{representables en }(x_0,x_0+1)\} = 2^{52-\lfloor\log_2 x_0\rfloor}-1\]</span></p>
+<p>siempre un entero exacto, porque <span class="math inline">\(2^{52-e}\)</span> es potencia de 2.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 20%">
@@ -378,106 +309,184 @@ window.Quarto = {
 </colgroup>
 <thead>
 <tr class="header">
-<th><span class="math inline">\(x\)</span></th>
-<th>ingenuo</th>
-<th>Maclaurin (8 términos)</th>
-<th>error rel. ingenuo</th>
-<th>error rel. Maclaurin</th>
+<th><span class="math inline">\(x_0\)</span></th>
+<th><span class="math inline">\(\lfloor\log_2 x_0\rfloor\)</span></th>
+<th><span class="math inline">\(\text{ULP}(x_0)\)</span></th>
+<th><span class="math inline">\(x_0+1=x_0\)</span>?</th>
+<th># representables entre <span class="math inline">\(x_0\)</span> y <span class="math inline">\(x_0+1\)</span></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><span class="math inline">\(10^{-2}\)</span></td>
-<td><span class="math inline">\(1{,}005016708416795\)</span></td>
-<td><span class="math inline">\(1{,}005016708416806\)</span></td>
-<td><span class="math inline">\(1{,}08\times10^{-14}\)</span></td>
-<td><span class="math inline">\(1{,}8\times10^{-16}\)</span></td>
+<td><span class="math inline">\(10^2\)</span></td>
+<td>6</td>
+<td><span class="math inline">\(1{,}42\times10^{-14}\)</span></td>
+<td>No</td>
+<td><span class="math inline">\(\approx 7{,}0\times10^{13}\)</span></td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(10^{-3}\)</span></td>
-<td><span class="math inline">\(1{,}000500166708385\)</span></td>
-<td><span class="math inline">\(1{,}000500166708342\)</span></td>
-<td><span class="math inline">\(4{,}29\times10^{-14}\)</span></td>
-<td><span class="math inline">\(7{,}5\times10^{-17}\)</span></td>
+<td><span class="math inline">\(10^3\)</span></td>
+<td>9</td>
+<td><span class="math inline">\(1{,}14\times10^{-13}\)</span></td>
+<td>No</td>
+<td><span class="math inline">\(\approx 8{,}8\times10^{12}\)</span></td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(10^{-4}\)</span></td>
-<td><span class="math inline">\(1{,}000050001667141\)</span></td>
-<td><span class="math inline">\(1{,}000050001666708\)</span></td>
-<td><span class="math inline">\(4{,}33\times10^{-13}\)</span></td>
-<td><span class="math inline">\(9{,}8\times10^{-17}\)</span></td>
+<td><span class="math inline">\(10^4\)</span></td>
+<td>13</td>
+<td><span class="math inline">\(1{,}82\times10^{-12}\)</span></td>
+<td>No</td>
+<td><span class="math inline">\(\approx 5{,}5\times10^{11}\)</span></td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(10^{-5}\)</span></td>
-<td><span class="math inline">\(1{,}000005000006965\)</span></td>
-<td><span class="math inline">\(1{,}000005000016667\)</span></td>
-<td><span class="math inline">\(9{,}70\times10^{-12}\)</span></td>
-<td><span class="math inline">\(7{,}5\times10^{-18}\)</span></td>
+<td><span class="math inline">\(10^5\)</span></td>
+<td>16</td>
+<td><span class="math inline">\(1{,}46\times10^{-11}\)</span></td>
+<td>No</td>
+<td><span class="math inline">\(\approx 6{,}9\times10^{10}\)</span></td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(10^{-6}\)</span></td>
-<td><span class="math inline">\(1{,}000000499962184\)</span></td>
-<td><span class="math inline">\(1{,}000000500000167\)</span></td>
-<td><span class="math inline">\(3{,}80\times10^{-11}\)</span></td>
-<td><span class="math inline">\(1{,}6\times10^{-16}\)</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(10^{-7}\)</span></td>
-<td><span class="math inline">\(1{,}000000049433680\)</span></td>
-<td><span class="math inline">\(1{,}000000050000002\)</span></td>
-<td><span class="math inline">\(5{,}66\times10^{-10}\)</span></td>
-<td><span class="math inline">\(2{,}8\times10^{-17}\)</span></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(10^{-8}\)</span></td>
-<td><span class="math inline">\(0{,}999999993922529\)</span></td>
-<td><span class="math inline">\(1{,}000000005000000\)</span></td>
-<td><span class="math inline">\(1{,}11\times10^{-8}\)</span></td>
-<td><span class="math inline">\(4{,}7\times10^{-17}\)</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(10^{-9}\)</span></td>
-<td><span class="math inline">\(1{,}000000082740371\)</span></td>
-<td><span class="math inline">\(1{,}000000000500000\)</span></td>
-<td><span class="math inline">\(8{,}22\times10^{-8}\)</span></td>
-<td><span class="math inline">\(4{,}1\times10^{-17}\)</span></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(10^{-10}\)</span></td>
-<td><span class="math inline">\(1{,}000000082740371\)</span></td>
-<td><span class="math inline">\(1{,}000000000050000\)</span></td>
-<td><span class="math inline">\(8{,}27\times10^{-8}\)</span></td>
-<td><span class="math inline">\(4{,}1\times10^{-18}\)</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(10^{-11}\)</span></td>
-<td><span class="math inline">\(1{,}000000082740371\)</span></td>
-<td><span class="math inline">\(1{,}000000000005000\)</span></td>
-<td><span class="math inline">\(8{,}27\times10^{-8}\)</span></td>
-<td><span class="math inline">\(4{,}1\times10^{-19}\)</span></td>
+<td><span class="math inline">\(10^6\)</span></td>
+<td>19</td>
+<td><span class="math inline">\(1{,}16\times10^{-10}\)</span></td>
+<td>No</td>
+<td><span class="math inline">\(\approx 8{,}6\times10^{9}\)</span></td>
 </tr>
 </tbody>
 </table>
-<div class="callout callout-style-default callout-important callout-titled" title="¿Cuál es más preciso, y por qué?">
+<p>En ninguno de estos valores <span class="math inline">\(x_0\)</span> y <span class="math inline">\(x_0+1\)</span> colapsan al mismo flotante (eso solo ocurre desde <span class="math inline">\(x_0=2^{53}\approx9{,}007\times10^{15}\)</span>), así que en este rango se predice degradación progresiva del algoritmo ingenuo, pero no un colapso total.</p>
+</div>
+</div>
+</section>
+<section id="el-expediente-del-condicionamiento" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="el-expediente-del-condicionamiento"><span class="header-section-number">2</span> El expediente del condicionamiento</h2>
+<p>Deriven el número de condición relativo <span class="math inline">\(\kappa_f(x)\)</span> de <span class="math inline">\(f(x)=\sqrt{x+1}-\sqrt x\)</span>, calculen <span class="math inline">\(\displaystyle\lim_{x\to\infty}\kappa_f(x)\)</span>, y evalúen <span class="math inline">\(\kappa_f(x_0)\)</span> para su valor asignado. Con esta evidencia sola, sin haber corrido nada todavía, ¿el problema <span class="math inline">\(f\)</span> es responsable de un eventual fallo? Justifiquen.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>¿Cuál es más preciso, y por qué?
+<span class="screen-reader-only">Tip</span>Solución
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>El algoritmo de Maclaurin es dramáticamente más preciso: mantiene error relativo cercano a <span class="math inline">\(\epsilon_{\text{mach}}\)</span> (<span class="math inline">\(\sim10^{-16}\)</span>–<span class="math inline">\(10^{-17}\)</span>) en <strong>todo</strong> el rango, mientras que el ingenuo se degrada progresivamente — de <span class="math inline">\(10^{-14}\)</span> en <span class="math inline">\(x=10^{-2}\)</span> a <span class="math inline">\(\sim10^{-8}\)</span> en <span class="math inline">\(x\le10^{-9}\)</span>, donde el error deja de crecer porque toca el límite de lo que la representación de <span class="math inline">\(x\)</span> misma permite distinguir.</p>
-<p>La razón es exactamente la del Ejemplo 1.4.1: el algoritmo ingenuo calcula <span class="math inline">\(e^x\)</span> (que para <span class="math inline">\(x\)</span> pequeño está muy cerca de <span class="math inline">\(1\)</span>) y luego <strong>resta <span class="math inline">\(1\)</span></strong>, cancelando los primeros dígitos compartidos y dejando expuesto el ruido de redondeo de <span class="math inline">\(e^x\)</span> como si fuera señal. El polinomio de Maclaurin, en cambio, <strong>nunca resta cantidades parecidas</strong>: todos sus términos <span class="math inline">\(x^k/(k{+}1)!\)</span> para <span class="math inline">\(x&gt;0\)</span> son positivos y decrecientes, así que solo hay sumas de cantidades del mismo signo — sin cancelación posible.</p>
-<p>Nótese que <span class="math inline">\(\kappa_f(x)\to0\)</span> cuando <span class="math inline">\(x\to0\)</span>: el <strong>problema</strong> se vuelve más fácil, no más difícil, cerca de cero. La degradación del algoritmo ingenuo no tiene nada que ver con el condicionamiento — es pura <strong>inestabilidad algorítmica</strong>, el mismo fenómeno ya documentado para <span class="math inline">\((e^x-1)/x\)</span> en la nota de condicionamiento, ahora cuantificado en todo el intervalo <span class="math inline">\([-1,1]\)</span> y comparado explícitamente contra una alternativa estable.</p>
+<p>Con <span class="math inline">\(f'(x)=\dfrac{1}{2\sqrt{x+1}}-\dfrac1{2\sqrt x}\)</span>, factorizando por diferencia de raíces se obtiene <span class="math inline">\(f'(x)=-\dfrac{f(x)}{2\sqrt x\sqrt{x+1}}\)</span>, así que</p>
+<p><span class="math display">\[\kappa_f(x)=\left|\frac{xf'(x)}{f(x)}\right| = \frac{x}{2\sqrt x\sqrt{x+1}} = \frac12\sqrt{\frac{x}{x+1}}\]</span></p>
+<p>Como <span class="math inline">\(x/(x+1)\to 1\)</span>, <span class="math display">\[\lim_{x\to\infty}\kappa_f(x)=\frac12\]</span></p>
+<p>y como <span class="math inline">\(x/(x+1)&lt;1\)</span> para todo <span class="math inline">\(x&gt;0\)</span>, de hecho <span class="math inline">\(\kappa_f(x)&lt;1/2\)</span> siempre: el problema nunca amplifica el error relativo de entrada más de la mitad, en ningún punto de su dominio.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><span class="math inline">\(x_0\)</span></th>
+<th><span class="math inline">\(\kappa_f(x_0)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(10^2\)</span></td>
+<td><span class="math inline">\(0{,}4975186\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(10^3\)</span></td>
+<td><span class="math inline">\(0{,}4997502\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(10^4\)</span></td>
+<td><span class="math inline">\(0{,}4999750\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(10^5\)</span></td>
+<td><span class="math inline">\(0{,}4999975\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(10^6\)</span></td>
+<td><span class="math inline">\(0{,}49999975\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>El problema está óptimamente condicionado en todo el rango asignado (<span class="math inline">\(\kappa_f&lt;1/2\)</span> siempre): si el algoritmo ingenuo falla, la responsabilidad es exclusivamente del algoritmo, no de <span class="math inline">\(f\)</span>.</p>
 </div>
 </div>
 </section>
-</section>
-<section id="conexión-con-la-nota-de-condicionamiento" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="conexión-con-la-nota-de-condicionamiento"><span class="header-section-number">4</span> Conexión con la nota de condicionamiento</h2>
-<p>Este ejercicio es la contraparte natural de lo visto en la nota anterior: allí establecimos que <span class="math inline">\((e^x-1)/x\)</span> es un problema bien condicionado cerca de cero (<span class="math inline">\(\kappa_f(0)=0\)</span>); aquí confirmamos que esa buena condición se sostiene en todo <span class="math inline">\([-1,1]\)</span> (máximo <span class="math inline">\(\approx0{,}582\)</span>), y mostramos <strong>dos algoritmos concretos</strong> para el mismo problema — uno inestable (cancelación explícita) y uno estable (serie de Maclaurin, sin resta de cantidades parecidas) — cuantificando la brecha entre ellos. Es exactamente el mismo patrón del Ejemplo 1.4.1: problema bien condicionado, algoritmo mal elegido, error inexplicable por el condicionamiento — y una alternativa que lo resuelve sin cambiar el problema, solo la ruta de cálculo.</p>
+<section id="el-interrogatorio-en-julia" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="el-interrogatorio-en-julia"><span class="header-section-number">3</span> El interrogatorio en Julia</h2>
+<p>Implementen el algoritmo ingenuo <code>sqrt(x+1) - sqrt(x)</code> y evalúenlo en <span class="math inline">\(x_0\)</span>. Encuentren, mediante racionalización, una forma equivalente de <span class="math inline">\(f\)</span> que evite restar cantidades casi iguales, e impleméntenla. Usando <code>BigFloat</code> como referencia de alta precisión, construyan una tabla comparando ambos algoritmos en un barrido que incluya su <span class="math inline">\(x_0\)</span>. Escriban su veredicto forense en 4 o 5 líneas: si el problema está bien o mal condicionado, en qué paso exacto entra la inestabilidad, y cuál algoritmo recomiendan.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La racionalización multiplica y divide por el conjugado:</p>
+<p><span class="math display">\[f(x)=\sqrt{x+1}-\sqrt x = \frac{(\sqrt{x+1}-\sqrt x)(\sqrt{x+1}+\sqrt x)}{\sqrt{x+1}+\sqrt x} = \frac{1}{\sqrt{x+1}+\sqrt x}\]</span></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">f_ingenuo</span>(x)    <span class="op">=</span> <span class="fu">sqrt</span>(x <span class="op">+</span> <span class="fl">1</span>) <span class="op">-</span> <span class="fu">sqrt</span>(x)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">f_estable</span>(x)    <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> (<span class="fu">sqrt</span>(x <span class="op">+</span> <span class="fl">1</span>) <span class="op">+</span> <span class="fu">sqrt</span>(x))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">f_referencia</span>(x) <span class="op">=</span> <span class="fu">Float64</span>(<span class="fu">sqrt</span>(<span class="fu">BigFloat</span>(x) <span class="op">+</span> <span class="fl">1</span>) <span class="op">-</span> <span class="fu">sqrt</span>(<span class="fu">BigFloat</span>(x)))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>f_estable</code> solo suma cantidades positivas, así que no hay cancelación posible en ningún paso.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(x_0\)</span></th>
+<th>ingenuo</th>
+<th>estable</th>
+<th>error rel. ingenuo</th>
+<th>error rel. estable</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(10^2\)</span></td>
+<td><span class="math inline">\(4{,}987562112089\times10^{-2}\)</span></td>
+<td>igual</td>
+<td><span class="math inline">\(6{,}5\times10^{-15}\)</span></td>
+<td><span class="math inline">\(0\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(10^3\)</span></td>
+<td><span class="math inline">\(1{,}580743742896\times10^{-2}\)</span></td>
+<td>igual</td>
+<td><span class="math inline">\(1{,}1\times10^{-13}\)</span></td>
+<td><span class="math inline">\(0\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(10^4\)</span></td>
+<td><span class="math inline">\(4{,}999875006249\times10^{-3}\)</span></td>
+<td>igual</td>
+<td><span class="math inline">\(2{,}1\times10^{-13}\)</span></td>
+<td><span class="math inline">\(0\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(10^5\)</span></td>
+<td><span class="math inline">\(1{,}581134877256\times10^{-3}\)</span></td>
+<td>igual</td>
+<td><span class="math inline">\(6{,}4\times10^{-13}\)</span></td>
+<td><span class="math inline">\(1{,}4\times10^{-16}\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(10^6\)</span></td>
+<td><span class="math inline">\(4{,}999998750463\times10^{-4}\)</span></td>
+<td><span class="math inline">\(4{,}999998750001\times10^{-4}\)</span></td>
+<td><span class="math inline">\(9{,}3\times10^{-11}\)</span></td>
+<td><span class="math inline">\(0\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>En este rango el error del algoritmo ingenuo nunca supera <span class="math inline">\(\sim10^{-10}\)</span>: todavía está lejos del colapso, pero ya muestra degradación consistente y medible frente al estable, que se mantiene en <span class="math inline">\(0\)</span> o en el orden de <span class="math inline">\(\epsilon_{\text{mach}}\)</span> en todos los casos.</p>
+<p>Veredicto modelo: <em>“El problema en <span class="math inline">\(x_0\)</span> tiene <span class="math inline">\(\kappa_f(x_0)\approx 0{,}5\)</span>: bien condicionado, y de hecho <span class="math inline">\(\kappa_f(x)&lt;1/2\)</span> para todo <span class="math inline">\(x\)</span>. El algoritmo ingenuo pierde precisión progresivamente porque en el paso <span class="math inline">\(\sqrt{x+1}-\sqrt{x}\)</span> se restan dos cantidades cada vez más parecidas a medida que <span class="math inline">\(x_0\)</span> crece; aunque en este rango no llega a colapsar del todo, la tendencia ya es clara y se vuelve catastrófica para <span class="math inline">\(x_0\)</span> mucho mayores (a partir de <span class="math inline">\(x_0=2^{53}\)</span>, donde <span class="math inline">\(x_0\)</span> y <span class="math inline">\(x_0+1\)</span> dejan de ser distinguibles). La causa es inestabilidad algorítmica, no mal condicionamiento. La forma racionalizada, al no restar cantidades parecidas, mantiene precisión de máquina en todo el rango probado.”</em></p>
+</div>
+</div>
 
 
 </section>
@@ -914,14 +923,11 @@ window.Quarto = {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../../cursos/numerico/condicionamiento/index.html" class="pagination-link" aria-label="Condicionamiento">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Condicionamiento</span>
+      <a href="../../../cursos/numerico/estabilidad/index.html" class="pagination-link" aria-label="Estabilidad">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Estabilidad</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../cursos/numerico/taller-1/index.html" class="pagination-link" aria-label="Taller 1">
-        <span class="nav-page-text">Taller 1</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

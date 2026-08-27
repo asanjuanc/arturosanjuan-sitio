@@ -54,6 +54,7 @@ website:
         - cursos/numerico/introduccion/index.qmd
         - cursos/numerico/condicionamiento/index.qmd
         - cursos/numerico/estabilidad/index.qmd
+        - cursos/numerico/taller-1/index.qmd
     - id: probabilidad
       title: "Probabilidad"
       style: docked

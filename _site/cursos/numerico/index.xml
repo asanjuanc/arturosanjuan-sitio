@@ -15,7 +15,283 @@
 <link>https://arturosanjuan.xyz/cursos/numerico/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Sun, 23 Aug 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 04 Sep 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Taller 1</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/numerico/taller-1/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>Un sistema de navegación reporta que, después de mucho tiempo de vuelo, su corrección de rumbo se “congela” en cero. La corrección se calcula con la función <img src="https://latex.codecogs.com/png.latex?f(x)=%5Csqrt%7Bx+1%7D-%5Csqrt%7Bx%7D">, donde <img src="https://latex.codecogs.com/png.latex?x"> es el tiempo transcurrido de misión. El equipo de ingeniería sospecha del modelo matemático; en este taller ustedes actúan como peritos numéricos y deben determinar si la culpa es del problema o del algoritmo usado para calcularlo. Cada equipo recibió un valor <img src="https://latex.codecogs.com/png.latex?x_0"> distinto entre <img src="https://latex.codecogs.com/png.latex?10%5E2"> y <img src="https://latex.codecogs.com/png.latex?10%5E6">; la solución de esta hoja cubre esos valores.</p>
+<section id="la-rejilla-de-la-máquina" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="la-rejilla-de-la-máquina"><span class="header-section-number">1</span> La rejilla de la máquina</h2>
+<p>Trabajando en precisión doble de IEEE 754 (52 bits de mantisa), la distancia entre dos números de punto flotante consecutivos cerca de un valor <img src="https://latex.codecogs.com/png.latex?x"> (la unidad en el último lugar, o ULP) es aproximadamente</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ctext%7BULP%7D(x)%20%5Capprox%202%5E%7B%5Clfloor%20%5Clog_2%20x%20%5Crfloor%20-%2052%7D"></p>
+<p>Con su <img src="https://latex.codecogs.com/png.latex?x_0"> asignado, calculen <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BULP%7D(x_0)">, determinen si <img src="https://latex.codecogs.com/png.latex?x_0"> y <img src="https://latex.codecogs.com/png.latex?x_0+1"> se almacenan como el mismo número de punto flotante o son distinguibles, y si son distinguibles calculen cuántos números representables existen estrictamente entre <img src="https://latex.codecogs.com/png.latex?x_0"> y <img src="https://latex.codecogs.com/png.latex?x_0+1">. Antes de tocar Julia, con base en esto, predigan si esperan que el algoritmo ingenuo para <img src="https://latex.codecogs.com/png.latex?f(x_0)"> sea preciso o falle catastróficamente, y por qué.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si <img src="https://latex.codecogs.com/png.latex?h=%5Ctext%7BULP%7D(x_0)"> es el espaciado entre flotantes consecutivos, un intervalo de longitud 1 contiene <img src="https://latex.codecogs.com/png.latex?1/h"> huecos iguales entre marcas; por conteo de postes de cerca, eso deja <img src="https://latex.codecogs.com/png.latex?1/h-1"> representables estrictamente adentro (sin contar los dos extremos):</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5C#%5C%7B%5Ctext%7Brepresentables%20en%20%7D(x_0,x_0+1)%5C%7D%20=%202%5E%7B52-%5Clfloor%5Clog_2%20x_0%5Crfloor%7D-1"></p>
+<p>siempre un entero exacto, porque <img src="https://latex.codecogs.com/png.latex?2%5E%7B52-e%7D"> es potencia de 2.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><img src="https://latex.codecogs.com/png.latex?x_0"></th>
+<th><img src="https://latex.codecogs.com/png.latex?%5Clfloor%5Clog_2%20x_0%5Crfloor"></th>
+<th><img src="https://latex.codecogs.com/png.latex?%5Ctext%7BULP%7D(x_0)"></th>
+<th><img src="https://latex.codecogs.com/png.latex?x_0+1=x_0">?</th>
+<th># representables entre <img src="https://latex.codecogs.com/png.latex?x_0"> y <img src="https://latex.codecogs.com/png.latex?x_0+1"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E2"></td>
+<td>6</td>
+<td><img src="https://latex.codecogs.com/png.latex?1%7B,%7D42%5Ctimes10%5E%7B-14%7D"></td>
+<td>No</td>
+<td><img src="https://latex.codecogs.com/png.latex?%5Capprox%207%7B,%7D0%5Ctimes10%5E%7B13%7D"></td>
+</tr>
+<tr class="even">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E3"></td>
+<td>9</td>
+<td><img src="https://latex.codecogs.com/png.latex?1%7B,%7D14%5Ctimes10%5E%7B-13%7D"></td>
+<td>No</td>
+<td><img src="https://latex.codecogs.com/png.latex?%5Capprox%208%7B,%7D8%5Ctimes10%5E%7B12%7D"></td>
+</tr>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E4"></td>
+<td>13</td>
+<td><img src="https://latex.codecogs.com/png.latex?1%7B,%7D82%5Ctimes10%5E%7B-12%7D"></td>
+<td>No</td>
+<td><img src="https://latex.codecogs.com/png.latex?%5Capprox%205%7B,%7D5%5Ctimes10%5E%7B11%7D"></td>
+</tr>
+<tr class="even">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E5"></td>
+<td>16</td>
+<td><img src="https://latex.codecogs.com/png.latex?1%7B,%7D46%5Ctimes10%5E%7B-11%7D"></td>
+<td>No</td>
+<td><img src="https://latex.codecogs.com/png.latex?%5Capprox%206%7B,%7D9%5Ctimes10%5E%7B10%7D"></td>
+</tr>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E6"></td>
+<td>19</td>
+<td><img src="https://latex.codecogs.com/png.latex?1%7B,%7D16%5Ctimes10%5E%7B-10%7D"></td>
+<td>No</td>
+<td><img src="https://latex.codecogs.com/png.latex?%5Capprox%208%7B,%7D6%5Ctimes10%5E%7B9%7D"></td>
+</tr>
+</tbody>
+</table>
+<p>En ninguno de estos valores <img src="https://latex.codecogs.com/png.latex?x_0"> y <img src="https://latex.codecogs.com/png.latex?x_0+1"> colapsan al mismo flotante (eso solo ocurre desde <img src="https://latex.codecogs.com/png.latex?x_0=2%5E%7B53%7D%5Capprox9%7B,%7D007%5Ctimes10%5E%7B15%7D">), así que en este rango se predice degradación progresiva del algoritmo ingenuo, pero no un colapso total.</p>
+</div>
+</div>
+</section>
+<section id="el-expediente-del-condicionamiento" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="el-expediente-del-condicionamiento"><span class="header-section-number">2</span> El expediente del condicionamiento</h2>
+<p>Deriven el número de condición relativo <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(x)"> de <img src="https://latex.codecogs.com/png.latex?f(x)=%5Csqrt%7Bx+1%7D-%5Csqrt%20x">, calculen <img src="https://latex.codecogs.com/png.latex?%5Cdisplaystyle%5Clim_%7Bx%5Cto%5Cinfty%7D%5Ckappa_f(x)">, y evalúen <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(x_0)"> para su valor asignado. Con esta evidencia sola, sin haber corrido nada todavía, ¿el problema <img src="https://latex.codecogs.com/png.latex?f"> es responsable de un eventual fallo? Justifiquen.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con <img src="https://latex.codecogs.com/png.latex?f'(x)=%5Cdfrac%7B1%7D%7B2%5Csqrt%7Bx+1%7D%7D-%5Cdfrac1%7B2%5Csqrt%20x%7D">, factorizando por diferencia de raíces se obtiene <img src="https://latex.codecogs.com/png.latex?f'(x)=-%5Cdfrac%7Bf(x)%7D%7B2%5Csqrt%20x%5Csqrt%7Bx+1%7D%7D">, así que</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(x)=%5Cleft%7C%5Cfrac%7Bxf'(x)%7D%7Bf(x)%7D%5Cright%7C%20=%20%5Cfrac%7Bx%7D%7B2%5Csqrt%20x%5Csqrt%7Bx+1%7D%7D%20=%20%5Cfrac12%5Csqrt%7B%5Cfrac%7Bx%7D%7Bx+1%7D%7D"></p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?x/(x+1)%5Cto%201">, <img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bx%5Cto%5Cinfty%7D%5Ckappa_f(x)=%5Cfrac12"></p>
+<p>y como <img src="https://latex.codecogs.com/png.latex?x/(x+1)%3C1"> para todo <img src="https://latex.codecogs.com/png.latex?x%3E0">, de hecho <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(x)%3C1/2"> siempre: el problema nunca amplifica el error relativo de entrada más de la mitad, en ningún punto de su dominio.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><img src="https://latex.codecogs.com/png.latex?x_0"></th>
+<th><img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(x_0)"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E2"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D4975186"></td>
+</tr>
+<tr class="even">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E3"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D4997502"></td>
+</tr>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E4"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D4999750"></td>
+</tr>
+<tr class="even">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E5"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D4999975"></td>
+</tr>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E6"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D49999975"></td>
+</tr>
+</tbody>
+</table>
+<p>El problema está óptimamente condicionado en todo el rango asignado (<img src="https://latex.codecogs.com/png.latex?%5Ckappa_f%3C1/2"> siempre): si el algoritmo ingenuo falla, la responsabilidad es exclusivamente del algoritmo, no de <img src="https://latex.codecogs.com/png.latex?f">.</p>
+</div>
+</div>
+</section>
+<section id="el-interrogatorio-en-julia" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="el-interrogatorio-en-julia"><span class="header-section-number">3</span> El interrogatorio en Julia</h2>
+<p>Implementen el algoritmo ingenuo <code>sqrt(x+1) - sqrt(x)</code> y evalúenlo en <img src="https://latex.codecogs.com/png.latex?x_0">. Encuentren, mediante racionalización, una forma equivalente de <img src="https://latex.codecogs.com/png.latex?f"> que evite restar cantidades casi iguales, e impleméntenla. Usando <code>BigFloat</code> como referencia de alta precisión, construyan una tabla comparando ambos algoritmos en un barrido que incluya su <img src="https://latex.codecogs.com/png.latex?x_0">. Escriban su veredicto forense en 4 o 5 líneas: si el problema está bien o mal condicionado, en qué paso exacto entra la inestabilidad, y cuál algoritmo recomiendan.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La racionalización multiplica y divide por el conjugado:</p>
+<p><img src="https://latex.codecogs.com/png.latex?f(x)=%5Csqrt%7Bx+1%7D-%5Csqrt%20x%20=%20%5Cfrac%7B(%5Csqrt%7Bx+1%7D-%5Csqrt%20x)(%5Csqrt%7Bx+1%7D+%5Csqrt%20x)%7D%7B%5Csqrt%7Bx+1%7D+%5Csqrt%20x%7D%20=%20%5Cfrac%7B1%7D%7B%5Csqrt%7Bx+1%7D+%5Csqrt%20x%7D"></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">f_ingenuo</span>(x)    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(x)</span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">f_estable</span>(x)    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> (<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(x))</span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">f_referencia</span>(x) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">Float64</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">BigFloat</span>(x) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">BigFloat</span>(x)))</span></code></pre></div></div>
+<p><code>f_estable</code> solo suma cantidades positivas, así que no hay cancelación posible en ningún paso.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><img src="https://latex.codecogs.com/png.latex?x_0"></th>
+<th>ingenuo</th>
+<th>estable</th>
+<th>error rel. ingenuo</th>
+<th>error rel. estable</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E2"></td>
+<td><img src="https://latex.codecogs.com/png.latex?4%7B,%7D987562112089%5Ctimes10%5E%7B-2%7D"></td>
+<td>igual</td>
+<td><img src="https://latex.codecogs.com/png.latex?6%7B,%7D5%5Ctimes10%5E%7B-15%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0"></td>
+</tr>
+<tr class="even">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E3"></td>
+<td><img src="https://latex.codecogs.com/png.latex?1%7B,%7D580743742896%5Ctimes10%5E%7B-2%7D"></td>
+<td>igual</td>
+<td><img src="https://latex.codecogs.com/png.latex?1%7B,%7D1%5Ctimes10%5E%7B-13%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0"></td>
+</tr>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E4"></td>
+<td><img src="https://latex.codecogs.com/png.latex?4%7B,%7D999875006249%5Ctimes10%5E%7B-3%7D"></td>
+<td>igual</td>
+<td><img src="https://latex.codecogs.com/png.latex?2%7B,%7D1%5Ctimes10%5E%7B-13%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0"></td>
+</tr>
+<tr class="even">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E5"></td>
+<td><img src="https://latex.codecogs.com/png.latex?1%7B,%7D581134877256%5Ctimes10%5E%7B-3%7D"></td>
+<td>igual</td>
+<td><img src="https://latex.codecogs.com/png.latex?6%7B,%7D4%5Ctimes10%5E%7B-13%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?1%7B,%7D4%5Ctimes10%5E%7B-16%7D"></td>
+</tr>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E6"></td>
+<td><img src="https://latex.codecogs.com/png.latex?4%7B,%7D999998750463%5Ctimes10%5E%7B-4%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?4%7B,%7D999998750001%5Ctimes10%5E%7B-4%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?9%7B,%7D3%5Ctimes10%5E%7B-11%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0"></td>
+</tr>
+</tbody>
+</table>
+<p>En este rango el error del algoritmo ingenuo nunca supera <img src="https://latex.codecogs.com/png.latex?%5Csim10%5E%7B-10%7D">: todavía está lejos del colapso, pero ya muestra degradación consistente y medible frente al estable, que se mantiene en <img src="https://latex.codecogs.com/png.latex?0"> o en el orden de <img src="https://latex.codecogs.com/png.latex?%5Cepsilon_%7B%5Ctext%7Bmach%7D%7D"> en todos los casos.</p>
+<p>Veredicto modelo: <em>“El problema en <img src="https://latex.codecogs.com/png.latex?x_0"> tiene <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(x_0)%5Capprox%200%7B,%7D5">: bien condicionado, y de hecho <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(x)%3C1/2"> para todo <img src="https://latex.codecogs.com/png.latex?x">. El algoritmo ingenuo pierde precisión progresivamente porque en el paso <img src="https://latex.codecogs.com/png.latex?%5Csqrt%7Bx+1%7D-%5Csqrt%7Bx%7D"> se restan dos cantidades cada vez más parecidas a medida que <img src="https://latex.codecogs.com/png.latex?x_0"> crece; aunque en este rango no llega a colapsar del todo, la tendencia ya es clara y se vuelve catastrófica para <img src="https://latex.codecogs.com/png.latex?x_0"> mucho mayores (a partir de <img src="https://latex.codecogs.com/png.latex?x_0=2%5E%7B53%7D">, donde <img src="https://latex.codecogs.com/png.latex?x_0"> y <img src="https://latex.codecogs.com/png.latex?x_0+1"> dejan de ser distinguibles). La causa es inestabilidad algorítmica, no mal condicionamiento. La forma racionalizada, al no restar cantidades parecidas, mantiene precisión de máquina en todo el rango probado.”</em></p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/numerico/taller-1/</guid>
+  <pubDate>Fri, 04 Sep 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Estabilidad</title>
   <dc:creator>Arturo Sanjuán</dc:creator>
