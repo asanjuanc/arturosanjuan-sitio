@@ -15,7 +15,120 @@
 <link>https://arturosanjuan.xyz/cursos/odes/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Sun, 23 Aug 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 04 Sep 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Taller 1</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/odes/taller-1/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>Una ecuación diferencial no siempre nace de la misma manera. En este taller van a recorrer tres orígenes distintos de una EDO: una condición geométrica local, una ley física de proporcionalidad, y un principio mecánico que reduce una ecuación de segundo orden a una de primer orden.</p>
+<section id="familias-de-curvas-ortogonales" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="familias-de-curvas-ortogonales"><span class="header-section-number">1</span> Familias de curvas ortogonales</h2>
+<p>Encuentren la curva tal que <em>la parte de la recta tangente cortada por los ejes queda bisecada por el punto de tangencia</em>.</p>
+<ol type="1">
+<li>Traduzcan la condición geométrica a una ecuación diferencial.</li>
+<li>Resuelvan la ecuación y muestren que la familia de curvas es <img src="https://latex.codecogs.com/png.latex?xy=c">.</li>
+<li>Encuentren la ecuación diferencial de la familia de curvas <em>ortogonales</em> a la familia hallada en el punto anterior, resuélvanla, y muestren que esta segunda familia es <img src="https://latex.codecogs.com/png.latex?y%5E2-x%5E2=k">.</li>
+<li>Grafiquen ambas familias sobre los mismos ejes.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La recta tangente en <img src="https://latex.codecogs.com/png.latex?(x,y)"> es <img src="https://latex.codecogs.com/png.latex?Y-y=y'(X-x)">. Corta al eje <img src="https://latex.codecogs.com/png.latex?X"> en <img src="https://latex.codecogs.com/png.latex?%5Cleft(x-%5Cdfrac%7By%7D%7By'%7D,0%5Cright)"> y al eje <img src="https://latex.codecogs.com/png.latex?Y"> en <img src="https://latex.codecogs.com/png.latex?(0,%5C,y-xy')">. Que <img src="https://latex.codecogs.com/png.latex?(x,y)"> biseque ese segmento significa que <img src="https://latex.codecogs.com/png.latex?x"> es el promedio de las dos abscisas de los cortes:</p>
+<p><img src="https://latex.codecogs.com/png.latex?x%20=%20%5Cfrac%7B%5Cleft(x-%5Cdfrac%7By%7D%7By'%7D%5Cright)+0%7D%7B2%7D%20%5C;%5CLongrightarrow%5C;%20x-%5Cfrac%7By%7D%7By'%7D=2x%20%5C;%5CLongrightarrow%5C;%20y'=-%5Cfrac%7By%7D%7Bx%7D"></p>
+<p>Separando variables:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bdy%7D%7By%7D=-%5Cfrac%7Bdx%7D%7Bx%7D%20%5C;%5CLongrightarrow%5C;%20%5Cln%7Cy%7C=-%5Cln%7Cx%7C+C%20%5C;%5CLongrightarrow%5C;%20xy=c"></p>
+<p>La pendiente ortogonal es <img src="https://latex.codecogs.com/png.latex?-1/y'%20=%20x/y">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bdy%7D%7Bdx%7D=%5Cfrac%7Bx%7D%7By%7D%20%5C;%5CLongrightarrow%5C;%20y%5C,dy=x%5C,dx%20%5C;%5CLongrightarrow%5C;%20%5Cfrac%7By%5E2%7D%7B2%7D=%5Cfrac%7Bx%5E2%7D%7B2%7D+C'%20%5C;%5CLongrightarrow%5C;%20y%5E2-x%5E2=k"></p>
+<p>Ambas familias son hipérbolas: <img src="https://latex.codecogs.com/png.latex?xy=c"> tiene por asíntotas los ejes coordenados, y <img src="https://latex.codecogs.com/png.latex?y%5E2-x%5E2=k"> tiene por asíntotas <img src="https://latex.codecogs.com/png.latex?y=%5Cpm%20x"> — la segunda familia es, geométricamente, la primera rotada 45°.</p>
+</div>
+</div>
+</section>
+<section id="la-ley-de-enfriamiento-de-newton" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="la-ley-de-enfriamiento-de-newton"><span class="header-section-number">2</span> La ley de enfriamiento de Newton</h2>
+<p>La ley de enfriamiento de Newton establece que la tasa de cambio de la temperatura <img src="https://latex.codecogs.com/png.latex?T"> de un cuerpo es proporcional a la diferencia entre su temperatura y la del medio que lo rodea, <img src="https://latex.codecogs.com/png.latex?T_a">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7BdT%7D%7Bdt%7D=-k(T-T_a),%20%5Cquad%20k%3E0"></p>
+<p><strong>El caso:</strong> un forense muere durante una autopsia en un cuarto que se mantiene a 5°C constantes. Su cuerpo es encontrado a las 10 a.m. a 23°C, y a las 12 p.m. a 18.5°C. Su temperatura normal en vida era 37°C.</p>
+<ol type="1">
+<li>Resuelvan la ecuación diferencial de forma general (en términos de <img src="https://latex.codecogs.com/png.latex?T_a">, <img src="https://latex.codecogs.com/png.latex?k">, y una constante de integración).</li>
+<li>Usen los dos datos de temperatura (10 a.m. y 12 p.m.) para hallar <img src="https://latex.codecogs.com/png.latex?k"> y la constante de integración.</li>
+<li>Determinen a qué hora ocurrió la muerte.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con <img src="https://latex.codecogs.com/png.latex?t=0"> a las 10 a.m., <img src="https://latex.codecogs.com/png.latex?T(0)=23"> y <img src="https://latex.codecogs.com/png.latex?T_a=5">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?T(t)%20=%205+18e%5E%7B-kt%7D"></p>
+<p>Con el dato de las 12 p.m. (<img src="https://latex.codecogs.com/png.latex?t=2">, <img src="https://latex.codecogs.com/png.latex?T=18.5">):</p>
+<p><img src="https://latex.codecogs.com/png.latex?18.5%20=%205+18e%5E%7B-2k%7D%20%5C;%5CLongrightarrow%5C;%20e%5E%7B-2k%7D=%5Cfrac34%20%5C;%5CLongrightarrow%5C;%20k=%5Cfrac12%5Cln%5Cfrac43"></p>
+<p>Para la hora de muerte (<img src="https://latex.codecogs.com/png.latex?T=37">):</p>
+<p><img src="https://latex.codecogs.com/png.latex?37=5+18e%5E%7B-kt_d%7D%20%5C;%5CLongrightarrow%5C;%20e%5E%7B-kt_d%7D=%5Cfrac%7B16%7D%7B9%7D=%5Cleft(%5Cfrac43%5Cright)%5E2%20%5C;%5CLongrightarrow%5C;%20-kt_d=2%5Cln%5Cfrac43"></p>
+<p><img src="https://latex.codecogs.com/png.latex?t_d%20=%20%5Cfrac%7B-2%5Cln(4/3)%7D%7B%5Cfrac12%5Cln(4/3)%7D%20=%20-4"></p>
+<p>Los logaritmos se cancelan exactamente: la muerte ocurrió 4 horas antes de las 10 a.m., <strong>a las 6:00 a.m.</strong></p>
+</div>
+</div>
+</section>
+<section id="la-velocidad-de-escape" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="la-velocidad-de-escape"><span class="header-section-number">3</span> La velocidad de escape</h2>
+<p>En el espacio, la ley de gravitación de Newton establece que la fuerza que la Tierra ejerce sobre un cuerpo varía inversamente al cuadrado de la distancia a su centro. Esto plantea una pregunta con consecuencias muy concretas: ¿qué tan rápido hay que lanzar un proyectil hacia arriba para que <em>nunca</em> regrese, escapando para siempre de la atracción terrestre? La respuesta la <em>velocidad de escape</em> es la razón por la que los cohetes necesitan alcanzar una velocidad mínima muy específica para salir de la órbita terrestre.</p>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?x"> la distancia del proyectil al centro de la Tierra, <img src="https://latex.codecogs.com/png.latex?R"> el radio terrestre, y <img src="https://latex.codecogs.com/png.latex?v=dx/dt"> su velocidad. Si se desprecia la resistencia del aire, la segunda ley de Newton da</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bd%5E2x%7D%7Bdt%5E2%7D%20=%20-%5Cfrac%7BgR%5E2%7D%7Bx%5E2%7D"></p>
+<ol type="1">
+<li><strong>Reducción de orden.</strong> Usen la regla de la cadena, <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7Bd%5E2x%7D%7Bdt%5E2%7D=v%5Cdfrac%7Bdv%7D%7Bdx%7D">, para reescribir la ecuación anterior como una ecuación de primer orden y separable en <img src="https://latex.codecogs.com/png.latex?v"> y <img src="https://latex.codecogs.com/png.latex?x">.</li>
+<li><strong>Integren</strong>, usando la condición inicial <img src="https://latex.codecogs.com/png.latex?v=v_0"> cuando <img src="https://latex.codecogs.com/png.latex?x=R">, para mostrar que <img src="https://latex.codecogs.com/png.latex?v%5E2%20=%20v_0%5E2-2gR%5Cleft(1-%5Cdfrac%7BR%7D%7Bx%7D%5Cright)">.</li>
+<li><strong>Velocidad de escape.</strong> El proyectil escapa (nunca regresa) si <img src="https://latex.codecogs.com/png.latex?v%5E2%5Cge0"> se mantiene incluso cuando <img src="https://latex.codecogs.com/png.latex?x%5Cto%5Cinfty">. Usen esta condición para mostrar que la velocidad inicial mínima requerida es <img src="https://latex.codecogs.com/png.latex?v_e=%5Csqrt%7B2gR%7D">.</li>
+<li><strong>Si no escapa.</strong> Supongan ahora que <img src="https://latex.codecogs.com/png.latex?v_0%3Cv_e">, de modo que el proyectil sube pero eventualmente regresa. Encuentren la altura máxima <img src="https://latex.codecogs.com/png.latex?h"> que alcanza sobre la superficie (el valor de <img src="https://latex.codecogs.com/png.latex?x-R"> cuando <img src="https://latex.codecogs.com/png.latex?v=0">).</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7Bd%5E2x%7D%7Bdt%5E2%7D=v%5Cdfrac%7Bdv%7D%7Bdx%7D">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?v%5Cfrac%7Bdv%7D%7Bdx%7D%20=%20-%5Cfrac%7BgR%5E2%7D%7Bx%5E2%7D"></p>
+<p>Separando e integrando:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bv%5E2%7D%7B2%7D%20=%20%5Cfrac%7BgR%5E2%7D%7Bx%7D+C"></p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?v=v_0"> en <img src="https://latex.codecogs.com/png.latex?x=R">: <img src="https://latex.codecogs.com/png.latex?C=%5Cdfrac%7Bv_0%5E2%7D%7B2%7D-gR">, así que</p>
+<p><img src="https://latex.codecogs.com/png.latex?v%5E2%20=%20v_0%5E2-2gR%5Cleft(1-%5Cfrac%7BR%7D%7Bx%7D%5Cright)"></p>
+<p>Cuando <img src="https://latex.codecogs.com/png.latex?x%5Cto%5Cinfty">, <img src="https://latex.codecogs.com/png.latex?v%5E2%5Cto%20v_0%5E2-2gR">. Para que nunca sea negativo se necesita <img src="https://latex.codecogs.com/png.latex?v_0%5E2%5Cge%202gR">, es decir</p>
+<p><img src="https://latex.codecogs.com/png.latex?v_e%20=%20%5Csqrt%7B2gR%7D%20%5Capprox%2011.2%5Ctext%7B%20km/s%7D"></p>
+<p>(con <img src="https://latex.codecogs.com/png.latex?g%5Capprox9.8%5Ctext%7B%20m/s%7D%5E2"> y <img src="https://latex.codecogs.com/png.latex?R%5Capprox6371%5Ctext%7B%20km%7D">).</p>
+<p>Si <img src="https://latex.codecogs.com/png.latex?v_0%3Cv_e">, la altura máxima es donde <img src="https://latex.codecogs.com/png.latex?v=0">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?0%20=%20v_0%5E2-2gR%5Cleft(1-%5Cfrac%7BR%7D%7Bx%7D%5Cright)%20%5C;%5CLongrightarrow%5C;%20x=%5Cfrac%7B2gR%5E2%7D%7B2gR-v_0%5E2%7D%20%5C;%5CLongrightarrow%5C;%20h=x-R=%5Cfrac%7BRv_0%5E2%7D%7B2gR-v_0%5E2%7D"></p>
+<p>Equivalente, en términos de <img src="https://latex.codecogs.com/png.latex?v_e">: <img src="https://latex.codecogs.com/png.latex?h=%5Cdfrac%7BRv_0%5E2%7D%7Bv_e%5E2-v_0%5E2%7D">, crece sin límite a medida que <img src="https://latex.codecogs.com/png.latex?v_0%5Cto%20v_e">.</p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/odes/taller-1/</guid>
+  <pubDate>Fri, 04 Sep 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Coordenadas Polares</title>
   <dc:creator>Arturo Sanjuán</dc:creator>

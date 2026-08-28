@@ -1,0 +1,113 @@
+---
+title: "Taller 1"
+subtitle: "Tres caminos hacia una ecuación diferencial: geometría, ley de enfriamiento y velocidad de escape"
+description: "Taller en equipos de hasta tres personas, con solución, sobre tres orígenes distintos de una ecuación diferencial: una condición geométrica local, una ley física de proporcionalidad, y la reducción de una ecuación de segundo orden mediante v dv/dx."
+author: "Arturo Sanjuán"
+date: 2026-09-04
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 6
+---
+
+Una ecuación diferencial no siempre nace de la misma manera. En este taller van a recorrer tres orígenes distintos de una EDO: una condición geométrica local, una ley física de proporcionalidad, y un principio mecánico que reduce una ecuación de segundo orden a una de primer orden.
+
+## Familias de curvas ortogonales
+
+Encuentren la curva tal que *la parte de la recta tangente cortada por los ejes queda bisecada por el punto de tangencia*.
+
+1. Traduzcan la condición geométrica a una ecuación diferencial.
+2. Resuelvan la ecuación y muestren que la familia de curvas es $xy=c$.
+3. Encuentren la ecuación diferencial de la familia de curvas *ortogonales* a la familia hallada en el punto anterior, resuélvanla, y muestren que esta segunda familia es $y^2-x^2=k$.
+4. Grafiquen ambas familias sobre los mismos ejes.
+
+::: {.callout-tip title="Solución"}
+La recta tangente en $(x,y)$ es $Y-y=y'(X-x)$. Corta al eje $X$ en $\left(x-\dfrac{y}{y'},0\right)$ y al eje $Y$ en $(0,\,y-xy')$. Que $(x,y)$ biseque ese segmento significa que $x$ es el promedio de las dos abscisas de los cortes:
+
+$$x = \frac{\left(x-\dfrac{y}{y'}\right)+0}{2} \;\Longrightarrow\; x-\frac{y}{y'}=2x \;\Longrightarrow\; y'=-\frac{y}{x}$$
+
+Separando variables:
+
+$$\frac{dy}{y}=-\frac{dx}{x} \;\Longrightarrow\; \ln|y|=-\ln|x|+C \;\Longrightarrow\; xy=c$$
+
+La pendiente ortogonal es $-1/y' = x/y$:
+
+$$\frac{dy}{dx}=\frac{x}{y} \;\Longrightarrow\; y\,dy=x\,dx \;\Longrightarrow\; \frac{y^2}{2}=\frac{x^2}{2}+C' \;\Longrightarrow\; y^2-x^2=k$$
+
+Ambas familias son hipérbolas: $xy=c$ tiene por asíntotas los ejes coordenados, y $y^2-x^2=k$ tiene por asíntotas $y=\pm x$ — la segunda familia es, geométricamente, la primera rotada 45°.
+:::
+
+## La ley de enfriamiento de Newton
+
+La ley de enfriamiento de Newton establece que la tasa de cambio de la temperatura $T$ de un cuerpo es proporcional a la diferencia entre su temperatura y la del medio que lo rodea, $T_a$:
+
+$$\frac{dT}{dt}=-k(T-T_a), \quad k>0$$
+
+**El caso:** un forense muere durante una autopsia en un cuarto que se mantiene a 5°C constantes. Su cuerpo es encontrado a las 10 a.m. a 23°C, y a las 12 p.m. a 18.5°C. Su temperatura normal en vida era 37°C.
+
+1. Resuelvan la ecuación diferencial de forma general (en términos de $T_a$, $k$, y una constante de integración).
+2. Usen los dos datos de temperatura (10 a.m. y 12 p.m.) para hallar $k$ y la constante de integración.
+3. Determinen a qué hora ocurrió la muerte.
+
+::: {.callout-tip title="Solución"}
+Con $t=0$ a las 10 a.m., $T(0)=23$ y $T_a=5$:
+
+$$T(t) = 5+18e^{-kt}$$
+
+Con el dato de las 12 p.m. ($t=2$, $T=18.5$):
+
+$$18.5 = 5+18e^{-2k} \;\Longrightarrow\; e^{-2k}=\frac34 \;\Longrightarrow\; k=\frac12\ln\frac43$$
+
+Para la hora de muerte ($T=37$):
+
+$$37=5+18e^{-kt_d} \;\Longrightarrow\; e^{-kt_d}=\frac{16}{9}=\left(\frac43\right)^2 \;\Longrightarrow\; -kt_d=2\ln\frac43$$
+
+$$t_d = \frac{-2\ln(4/3)}{\frac12\ln(4/3)} = -4$$
+
+Los logaritmos se cancelan exactamente: la muerte ocurrió 4 horas antes de las 10 a.m., **a las 6:00 a.m.**
+:::
+
+## La velocidad de escape
+
+En el espacio, la ley de gravitación de Newton establece que la fuerza que la Tierra ejerce sobre un cuerpo varía inversamente al cuadrado de la distancia a su centro. Esto plantea una pregunta con consecuencias muy concretas: ¿qué tan rápido hay que lanzar un proyectil hacia arriba para que *nunca* regrese, escapando para siempre de la atracción terrestre? La respuesta la *velocidad de escape* es la razón por la que los cohetes necesitan alcanzar una velocidad mínima muy específica para salir de la órbita terrestre.
+
+Sea $x$ la distancia del proyectil al centro de la Tierra, $R$ el radio terrestre, y $v=dx/dt$ su velocidad. Si se desprecia la resistencia del aire, la segunda ley de Newton da
+
+$$\frac{d^2x}{dt^2} = -\frac{gR^2}{x^2}$$
+
+1. **Reducción de orden.** Usen la regla de la cadena, $\dfrac{d^2x}{dt^2}=v\dfrac{dv}{dx}$, para reescribir la ecuación anterior como una ecuación de primer orden y separable en $v$ y $x$.
+2. **Integren**, usando la condición inicial $v=v_0$ cuando $x=R$, para mostrar que $v^2 = v_0^2-2gR\left(1-\dfrac{R}{x}\right)$.
+3. **Velocidad de escape.** El proyectil escapa (nunca regresa) si $v^2\ge0$ se mantiene incluso cuando $x\to\infty$. Usen esta condición para mostrar que la velocidad inicial mínima requerida es $v_e=\sqrt{2gR}$.
+4. **Si no escapa.** Supongan ahora que $v_0<v_e$, de modo que el proyectil sube pero eventualmente regresa. Encuentren la altura máxima $h$ que alcanza sobre la superficie (el valor de $x-R$ cuando $v=0$).
+
+::: {.callout-tip title="Solución"}
+Con $\dfrac{d^2x}{dt^2}=v\dfrac{dv}{dx}$:
+
+$$v\frac{dv}{dx} = -\frac{gR^2}{x^2}$$
+
+Separando e integrando:
+
+$$\frac{v^2}{2} = \frac{gR^2}{x}+C$$
+
+Con $v=v_0$ en $x=R$: $C=\dfrac{v_0^2}{2}-gR$, así que
+
+$$v^2 = v_0^2-2gR\left(1-\frac{R}{x}\right)$$
+
+Cuando $x\to\infty$, $v^2\to v_0^2-2gR$. Para que nunca sea negativo se necesita $v_0^2\ge 2gR$, es decir
+
+$$v_e = \sqrt{2gR} \approx 11.2\text{ km/s}$$
+
+(con $g\approx9.8\text{ m/s}^2$ y $R\approx6371\text{ km}$).
+
+Si $v_0<v_e$, la altura máxima es donde $v=0$:
+
+$$0 = v_0^2-2gR\left(1-\frac{R}{x}\right) \;\Longrightarrow\; x=\frac{2gR^2}{2gR-v_0^2} \;\Longrightarrow\; h=x-R=\frac{Rv_0^2}{2gR-v_0^2}$$
+
+Equivalente, en términos de $v_e$: $h=\dfrac{Rv_0^2}{v_e^2-v_0^2}$, crece sin límite a medida que $v_0\to v_e$.
+:::
