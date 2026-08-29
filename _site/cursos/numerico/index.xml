@@ -15,7 +15,606 @@
 <link>https://arturosanjuan.xyz/cursos/numerico/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Fri, 04 Sep 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 11 Sep 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Sistemas lineales e interpolación</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/numerico/matrices/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>Antes de hacer los ejercicios de las secciones 2.1–2.3 familiarícese con la manipulación matricial y los comandos básicos de Polynomials y Plots en Julia.</p>
+<section id="problema-de-demografía-ejercicio-2.1.3" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="problema-de-demografía-ejercicio-2.1.3"><span class="header-section-number">1</span> Problema de demografía (ejercicio 2.1.3)</h2>
+<p>Los datos son poblaciones (en millones) de tres países en cuatro censos:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>1990</th>
+<th>2000</th>
+<th>2010</th>
+<th>2020</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Estados Unidos</td>
+<td>252,120</td>
+<td>281,711</td>
+<td>309,011</td>
+<td>331,003</td>
+</tr>
+<tr class="even">
+<td>India</td>
+<td>873,278</td>
+<td>1.056,576</td>
+<td>1.234,281</td>
+<td>1.380,004</td>
+</tr>
+<tr class="odd">
+<td>Polonia</td>
+<td>37,960</td>
+<td>38,557</td>
+<td>38,330</td>
+<td>37,847</td>
+</tr>
+</tbody>
+</table>
+<p>Con cuatro puntos por país buscamos, en cada caso, el único polinomio cúbico que pasa por ellos. Como ya vimos con los datos de población de China en la sección 2.1, conviene no trabajar directamente con los años (1990, 2000, …) como variable independiente, porque las potencias de números tan grandes producen una matriz de Vandermonde con columnas de magnitudes muy dispares y mal condicionada. En su lugar usamos</p>
+<p><img src="https://latex.codecogs.com/png.latex?t%20=%20%5Cfrac%7B%5Ctext%7Ba%C3%B1o%7D-1990%7D%7B10%7D,%20%5Cqquad%20t=0,1,2,3"></p>
+<p>con lo que la matriz de Vandermonde queda con entradas entre <img src="https://latex.codecogs.com/png.latex?0"> y <img src="https://latex.codecogs.com/png.latex?27">, mucho más manejable.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1">year <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1990</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2000</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2010</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2020</span>]</span>
+<span id="cb1-2">t <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (year <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1990</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">./</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span></span>
+<span id="cb1-3">V <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [ t[i]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">^</span>j for i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, j <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span> ]</span></code></pre></div></div>
+<p><strong>(a) Estados Unidos en 2005.</strong> Resolviendo <img src="https://latex.codecogs.com/png.latex?Vc%20=%20y"> con los datos de Estados Unidos se obtiene el polinomio, en la variable <img src="https://latex.codecogs.com/png.latex?t">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?p(t)%20=%20252%7B,%7D120%20+%2029%7B,%7D730833%5C,t%20+%200%7B,%7D363%5C,t%5E2%20-%200%7B,%7D502833%5C,t%5E3"></p>
+<p>El año 2005 corresponde a <img src="https://latex.codecogs.com/png.latex?t=1%7B,%7D5">. Evaluando,</p>
+<p><img src="https://latex.codecogs.com/png.latex?p(1%7B,%7D5)%20%5Capprox%20295%7B,%7D836%20%5Ctext%7B%20millones%7D"></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1">c <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> V <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span> usa</span>
+<span id="cb2-2">p <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">Polynomial</span>(c)</span>
+<span id="cb2-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">p</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>)   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 295.83593750000006</span></span></code></pre></div></div>
+<p><strong>(b) El pico de Polonia.</strong> Con los mismos nodos y los datos de Polonia se obtiene</p>
+<p><img src="https://latex.codecogs.com/png.latex?q(t)%20=%2037%7B,%7D960%20+%201%7B,%7D198333%5C,t%20-%200%7B,%7D696%5C,t%5E2%20+%200%7B,%7D094667%5C,t%5E3"></p>
+<p>Un máximo de <img src="https://latex.codecogs.com/png.latex?q"> en el intervalo cumple <img src="https://latex.codecogs.com/png.latex?q'(t)=0">. Derivando,</p>
+<p><img src="https://latex.codecogs.com/png.latex?q'(t)%20=%201%7B,%7D198333%20-%201%7B,%7D392%5C,t%20+%200%7B,%7D284%5C,t%5E2"></p>
+<p>y resolviendo la cuadrática salen dos raíces, <img src="https://latex.codecogs.com/png.latex?t%5Capprox1%7B,%7D114"> y <img src="https://latex.codecogs.com/png.latex?t%5Capprox3%7B,%7D787">. Solo la primera cae dentro de la ventana de datos (<img src="https://latex.codecogs.com/png.latex?0%5Cle%20t%5Cle3">, entre 1990 y 2020); la segunda corresponde a un año fuera de esa ventana (2028) y es un artefacto de extrapolar el comportamiento algebraico del polinomio más allá de donde hay datos, no algo en lo que debamos confiar (el mismo tipo de advertencia que discutimos sobre no usar un interpolante para predecir fuera del rango observado).</p>
+<p>Revisando el signo de <img src="https://latex.codecogs.com/png.latex?q''"> en cada raíz se confirma que <img src="https://latex.codecogs.com/png.latex?t%5Capprox1%7B,%7D114"> es efectivamente un máximo y la otra raíz es un mínimo. Entonces el pico ocurre en</p>
+<p><img src="https://latex.codecogs.com/png.latex?t%5Capprox1%7B,%7D114%20%5C;%5CLongrightarrow%5C;%20%5Ctext%7Ba%C3%B1o%7D%5Capprox2001,%20%5Cqquad%20q(1%7B,%7D114)%5Capprox38%7B,%7D562%5Ctext%7B%20millones%7D"></p>
+<p>Es decir, según esta interpolación la población de Polonia alcanzó su máximo alrededor del año 2001, con algo más de 38,5 millones de habitantes, y descendió de forma sostenida en la década siguiente.</p>
+<p><strong>(c) La curva de India.</strong> El mismo procedimiento con los datos de India da un polinomio cúbico que, graficado junto con los cuatro puntos originales, se ve así:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://arturosanjuan.xyz/cursos/numerico/matrices/india.png" class="img-fluid figure-img"></p>
+<figcaption>Interpolación cúbica de la población de India</figcaption>
+</figure>
+</div>
+<p>La curva es suave y estrictamente creciente en todo el intervalo, sin ningún vaivén: con solo cuatro puntos y un cúbico no hay espacio para que aparezcan las oscilaciones que sí se ven con interpolantes de grado mucho más alto (el fenómeno de Runge, que se estudia más adelante en el capítulo 9). Aquí el interpolante se comporta como uno esperaría de una curva real de crecimiento poblacional.</p>
+</section>
+<section id="sistemas-con-matrices-triangulares-inferiores-algoritmo-2.3.1-forwardsub" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="sistemas-con-matrices-triangulares-inferiores-algoritmo-2.3.1-forwardsub"><span class="header-section-number">2</span> Sistemas con matrices triangulares inferiores (algoritmo 2.3.1 (forwardsub))</h2>
+<p>El problema que resuelve este algoritmo es un sistema <img src="https://latex.codecogs.com/png.latex?L%5Cmathbf%7Bx%7D=%5Cmathbf%7Bb%7D"> donde <img src="https://latex.codecogs.com/png.latex?L"> es triangular inferior, es decir, todas las entradas por encima de la diagonal son cero. La idea es que la primera ecuación del sistema involucra solamente a <img src="https://latex.codecogs.com/png.latex?x_1">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?L_%7B11%7Dx_1%20=%20b_1%20%5C;%5CLongrightarrow%5C;%20x_1%20=%20%5Cfrac%7Bb_1%7D%7BL_%7B11%7D%7D"></p>
+<p>La segunda ecuación involucra a <img src="https://latex.codecogs.com/png.latex?x_1"> y <img src="https://latex.codecogs.com/png.latex?x_2">, pero <img src="https://latex.codecogs.com/png.latex?x_1"> ya lo conocemos del paso anterior, así que despejamos <img src="https://latex.codecogs.com/png.latex?x_2">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?L_%7B21%7Dx_1%20+%20L_%7B22%7Dx_2%20=%20b_2%20%5C;%5CLongrightarrow%5C;%20x_2%20=%20%5Cfrac%7Bb_2%20-%20L_%7B21%7Dx_1%7D%7BL_%7B22%7D%7D"></p>
+<p>y así sucesivamente: la ecuación <img src="https://latex.codecogs.com/png.latex?i"> involucra a <img src="https://latex.codecogs.com/png.latex?x_1,%5Cldots,x_i">, pero los primeros <img src="https://latex.codecogs.com/png.latex?i-1"> ya se calcularon en pasos anteriores, de modo que solo queda una incógnita por despejar. En general,</p>
+<p><img src="https://latex.codecogs.com/png.latex?x_i%20=%20%5Cfrac%7Bb_i%20-%20%5Csum_%7Bj=1%7D%5E%7Bi-1%7D%20L_%7Bij%7Dx_j%7D%7BL_%7Bii%7D%7D"></p>
+<p>Este proceso, de avanzar calculando un componente a la vez, es lo que le da el nombre de sustitución hacia adelante. Su implementación en Julia sigue la fórmula al pie de la letra:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">forwardsub</span>(L, b)</span>
+<span id="cb3-2">    n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">size</span>(L, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb3-3">    x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">zeros</span>(n)</span>
+<span id="cb3-4">    x[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> b[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> L[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb3-5">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span>n</span>
+<span id="cb3-6">        s <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sum</span>(L[i, j] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x[j] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> j <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span>i<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb3-7">        x[i] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (b[i] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> s) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> L[i, i]</span>
+<span id="cb3-8">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span>
+<span id="cb3-9">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> x</span>
+<span id="cb3-10"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span></code></pre></div></div>
+<p>El primer componente se calcula aparte porque la suma vacía (de <img src="https://latex.codecogs.com/png.latex?j=1"> a <img src="https://latex.codecogs.com/png.latex?0">) le daría problemas al <code>sum</code> de Julia. Dentro del ciclo, <code>s</code> acumula exactamente la parte ya conocida de la ecuación <img src="https://latex.codecogs.com/png.latex?i">, y la línea siguiente despeja <img src="https://latex.codecogs.com/png.latex?x_i">.</p>
+<p>Vale la pena notar el costo: cada paso <img src="https://latex.codecogs.com/png.latex?i"> hace <img src="https://latex.codecogs.com/png.latex?i-1"> multiplicaciones para formar la suma, así que el total en todo el algoritmo es del orden de <img src="https://latex.codecogs.com/png.latex?n%5E2/2"> operaciones, muy por debajo de las <img src="https://latex.codecogs.com/png.latex?O(n%5E3)"> que cuesta resolver un sistema arbitrario por eliminación gaussiana completa. Esta es la razón por la que triangularizar un sistema primero (mediante la factorización LU de la siguiente sección) resulta tan valioso: una vez triangular, resolverlo es barato.</p>
+<p>El algoritmo solo falla si algún <img src="https://latex.codecogs.com/png.latex?L_%7Bii%7D"> es cero, porque ahí aparecería una división por cero; y por el Teorema 2.3.1 del libro, eso ocurre exactamente cuando <img src="https://latex.codecogs.com/png.latex?L"> es singular.</p>
+<section id="caso-particular-ejercicio-2.3.3" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="caso-particular-ejercicio-2.3.3"><span class="header-section-number">2.1</span> Caso particular (ejercicio 2.3.3)</h3>
+<p>El sistema (a) del ejercicio 2.3.2 es</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0A-2x_1%20&amp;=%20-4%20%5C%5C%0Ax_1%20-%20x_2%20&amp;=%202%20%5C%5C%0A3x_1%20+%202x_2%20+%20x_3%20&amp;=%201%0A%5Cend%7Baligned%7D%0A"></p>
+<p>que en forma matricial es <img src="https://latex.codecogs.com/png.latex?L%5Cmathbf%7Bx%7D=%5Cmathbf%7Bb%7D"> con</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AL%20=%20%5Cbegin%7Bbmatrix%7D%20-2%20&amp;%200%20&amp;%200%20%5C%5C%201%20&amp;%20-1%20&amp;%200%20%5C%5C%203%20&amp;%202%20&amp;%201%20%5Cend%7Bbmatrix%7D,%20%5Cqquad%0A%5Cmathbf%7Bb%7D%20=%20%5Cbegin%7Bbmatrix%7D%20-4%20%5C%5C%202%20%5C%5C%201%20%5Cend%7Bbmatrix%7D%0A"></p>
+<p><img src="https://latex.codecogs.com/png.latex?L"> es triangular inferior, así que aplica directamente la sustitución hacia adelante de la sección anterior.</p>
+<p><img src="https://latex.codecogs.com/png.latex?x_1%20=%20%5Cfrac%7B-4%7D%7B-2%7D%20=%202"></p>
+<p><img src="https://latex.codecogs.com/png.latex?x_2%20=%20%5Cfrac%7B2%20-%201%5Ccdot2%7D%7B-1%7D%20=%20%5Cfrac%7B0%7D%7B-1%7D%20=%200"></p>
+<p><img src="https://latex.codecogs.com/png.latex?x_3%20=%20%5Cfrac%7B1%20-%203%5Ccdot2%20-%202%5Ccdot0%7D%7B1%7D%20=%20%5Cfrac%7B1-6-0%7D%7B1%7D%20=%20-5"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bx%7D%20=%20%5Cbegin%7Bbmatrix%7D%202%20%5C%5C%200%20%5C%5C%20-5%20%5Cend%7Bbmatrix%7D"></p>
+<p>El ejercicio 2.3.3 pide además verificar la solución calculando el residuo <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bb%7D-L%5Cmathbf%7Bx%7D">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cmathbf%7Bb%7D%20-%20L%5Cmathbf%7Bx%7D%20=%0A%5Cbegin%7Bbmatrix%7D%20-4%20%5C%5C%202%20%5C%5C%201%20%5Cend%7Bbmatrix%7D%20-%0A%5Cbegin%7Bbmatrix%7D%20-2%5Ccdot2%20%5C%5C%201%5Ccdot2-1%5Ccdot0%20%5C%5C%203%5Ccdot2+2%5Ccdot0+1%5Ccdot(-5)%20%5Cend%7Bbmatrix%7D%20=%0A%5Cbegin%7Bbmatrix%7D%20-4-(-4)%20%5C%5C%202-2%20%5C%5C%201-1%20%5Cend%7Bbmatrix%7D%20=%0A%5Cbegin%7Bbmatrix%7D%200%5C%5C0%5C%5C0%20%5Cend%7Bbmatrix%7D%0A"></p>
+<p>El residuo es cero: como todas las entradas son enteras y las operaciones son exactas (nunca aparece una división que no dé un resultado exacto), no hay ningún error de redondeo que reportar aquí.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1">L <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>; <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>; <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb4-2">b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb4-3">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">forwardsub</span>(L, b)   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># [2.0, 0.0, -5.0]</span></span>
+<span id="cb4-4">b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> L<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>x                 <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># [0.0, 0.0, 0.0]</span></span></code></pre></div></div>
+</section>
+</section>
+<section id="mal-condicionamiento-o-inestabilidad-ejercicio-2.3.7" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="mal-condicionamiento-o-inestabilidad-ejercicio-2.3.7"><span class="header-section-number">3</span> ¿Mal condicionamiento o inestabilidad? (ejercicio 2.3.7)</h2>
+<p>El sistema es <img src="https://latex.codecogs.com/png.latex?A%5Cmathbf%7Bx%7D=%5Cmathbf%7Bb%7D"> con</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AA%20=%20%5Cbegin%7Bbmatrix%7D%0A1%20&amp;%20-1%20&amp;%200%20&amp;%20%5Calpha-%5Cbeta%20&amp;%20%5Cbeta%20%5C%5C%0A0%20&amp;%201%20&amp;%20-1%20&amp;%200%20&amp;%200%20%5C%5C%0A0%20&amp;%200%20&amp;%201%20&amp;%20-1%20&amp;%200%20%5C%5C%0A0%20&amp;%200%20&amp;%200%20&amp;%201%20&amp;%20-1%20%5C%5C%0A0%20&amp;%200%20&amp;%200%20&amp;%200%20&amp;%201%0A%5Cend%7Bbmatrix%7D,%20%5Cqquad%0A%5Cmathbf%7Bb%7D%20=%20%5Cbegin%7Bbmatrix%7D%20%5Calpha%20%5C%5C%200%20%5C%5C%200%20%5C%5C%200%20%5C%5C%201%20%5Cend%7Bbmatrix%7D%0A"></p>
+<p><img src="https://latex.codecogs.com/png.latex?A"> es triangular superior, así que se resuelve con sustitución hacia atrás (el análogo de forwardsub, pero empezando por <img src="https://latex.codecogs.com/png.latex?x_5">). Aplicando la fórmula fila por fila:</p>
+<p><img src="https://latex.codecogs.com/png.latex?x_5%20=%201,%20%5Cquad%20x_4%20=%201,%20%5Cquad%20x_3%20=%201,%20%5Cquad%20x_2%20=%201"></p>
+<p>y en la primera fila,</p>
+<p><img src="https://latex.codecogs.com/png.latex?x_1%20=%20%5Calpha%20-%20(-1)%5Ccdot1%20-%200%5Ccdot1%20-%20(%5Calpha-%5Cbeta)%5Ccdot1%20-%20%5Cbeta%5Ccdot1%20=%20%5Calpha%20+%201%20-%20(%5Calpha-%5Cbeta)%20-%20%5Cbeta%20=%201"></p>
+<p>Con aritmética exacta, entonces, <img src="https://latex.codecogs.com/png.latex?x_1=1"> sin importar los valores de <img src="https://latex.codecogs.com/png.latex?%5Calpha"> y <img src="https://latex.codecogs.com/png.latex?%5Cbeta">: los términos <img src="https://latex.codecogs.com/png.latex?-%5Cbeta"> y <img src="https://latex.codecogs.com/png.latex?+%5Cbeta"> se cancelan algebraicamente y desaparecen del resultado. El problema, visto así, es completamente inofensivo.</p>
+<p>Pero eso es cierto solo en el papel. El algoritmo de sustitución hacia atrás no ve esa cancelación de antemano: primero calcula y guarda el número <img src="https://latex.codecogs.com/png.latex?U_%7B14%7D=%5Calpha-%5Cbeta"> como una entrada de la matriz, y cuando <img src="https://latex.codecogs.com/png.latex?%5Cbeta"> es mucho más grande que <img src="https://latex.codecogs.com/png.latex?%5Calpha">, esa resta ya pierde casi todas las cifras significativas de <img src="https://latex.codecogs.com/png.latex?%5Calpha"> antes de que el cálculo de <img src="https://latex.codecogs.com/png.latex?x_1"> siquiera empiece. Es la misma cancelación catastrófica de la nota de condicionamiento, aquí escondida dentro de una sola entrada de la matriz en vez de en la ecuación final.</p>
+<p>Resolviendo con <img src="https://latex.codecogs.com/png.latex?%5Calpha=0%7B,%7D1"> y <img src="https://latex.codecogs.com/png.latex?%5Cbeta=10,100,10%5E3,%5Cldots,10%5E%7B12%7D"> en aritmética de doble precisión:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><img src="https://latex.codecogs.com/png.latex?%5Cbeta"></th>
+<th><img src="https://latex.codecogs.com/png.latex?x_1"> calculado</th>
+<th><img src="https://latex.codecogs.com/png.latex?%7Cx_1-1%7C"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E%7B1%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?1%7B,%7D000000000000000"></td>
+<td><img src="https://latex.codecogs.com/png.latex?4%7B,%7D44%5Ctimes10%5E%7B-16%7D"></td>
+</tr>
+<tr class="even">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E%7B2%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?1%7B,%7D000000000000006"></td>
+<td><img src="https://latex.codecogs.com/png.latex?5%7B,%7D77%5Ctimes10%5E%7B-15%7D"></td>
+</tr>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E%7B3%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D999999999999977"></td>
+<td><img src="https://latex.codecogs.com/png.latex?2%7B,%7D28%5Ctimes10%5E%7B-14%7D"></td>
+</tr>
+<tr class="even">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E%7B4%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D999999999999636"></td>
+<td><img src="https://latex.codecogs.com/png.latex?3%7B,%7D64%5Ctimes10%5E%7B-13%7D"></td>
+</tr>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E%7B5%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D999999999994179"></td>
+<td><img src="https://latex.codecogs.com/png.latex?5%7B,%7D82%5Ctimes10%5E%7B-12%7D"></td>
+</tr>
+<tr class="even">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E%7B6%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?1%7B,%7D000000000023283"></td>
+<td><img src="https://latex.codecogs.com/png.latex?2%7B,%7D33%5Ctimes10%5E%7B-11%7D"></td>
+</tr>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E%7B7%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?1%7B,%7D000000000372529"></td>
+<td><img src="https://latex.codecogs.com/png.latex?3%7B,%7D73%5Ctimes10%5E%7B-10%7D"></td>
+</tr>
+<tr class="even">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E%7B8%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?1%7B,%7D000000005960465"></td>
+<td><img src="https://latex.codecogs.com/png.latex?5%7B,%7D96%5Ctimes10%5E%7B-9%7D"></td>
+</tr>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E%7B9%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D999999976158142"></td>
+<td><img src="https://latex.codecogs.com/png.latex?2%7B,%7D38%5Ctimes10%5E%7B-8%7D"></td>
+</tr>
+<tr class="even">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E%7B10%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D999999618530273"></td>
+<td><img src="https://latex.codecogs.com/png.latex?3%7B,%7D82%5Ctimes10%5E%7B-7%7D"></td>
+</tr>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E%7B11%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D999993896484375"></td>
+<td><img src="https://latex.codecogs.com/png.latex?6%7B,%7D10%5Ctimes10%5E%7B-6%7D"></td>
+</tr>
+<tr class="even">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E%7B12%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?1%7B,%7D000024414062500"></td>
+<td><img src="https://latex.codecogs.com/png.latex?2%7B,%7D44%5Ctimes10%5E%7B-5%7D"></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled" title="Qué muestra esta tabla">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Qué muestra esta tabla
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El error crece de forma prácticamente proporcional a <img src="https://latex.codecogs.com/png.latex?%5Cbeta">: cada vez que <img src="https://latex.codecogs.com/png.latex?%5Cbeta"> se multiplica por <img src="https://latex.codecogs.com/png.latex?10">, el error también se multiplica aproximadamente por <img src="https://latex.codecogs.com/png.latex?10">. Esto es justo lo que se espera cuando la cancelación ocurre entre <img src="https://latex.codecogs.com/png.latex?%5Calpha-%5Cbeta"> y <img src="https://latex.codecogs.com/png.latex?%5Cbeta">: el error absoluto que introduce el redondeo al formar <img src="https://latex.codecogs.com/png.latex?%5Calpha-%5Cbeta"> es del orden de <img src="https://latex.codecogs.com/png.latex?%5Cbeta%5Ccdot%5Cepsilon_%7B%5Ctext%7Bmach%7D%7D">, y ese error queda atrapado en <img src="https://latex.codecogs.com/png.latex?x_1"> sin que ninguna operación posterior lo corrija.</p>
+<p>Es el mismo mensaje de siempre. El problema (calcular <img src="https://latex.codecogs.com/png.latex?x_1"> a partir de <img src="https://latex.codecogs.com/png.latex?A"> y <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bb%7D">) tiene una respuesta exacta, <img src="https://latex.codecogs.com/png.latex?x_1=1">, que no depende de <img src="https://latex.codecogs.com/png.latex?%5Cbeta"> en absoluto. Lo que falla es el orden en el que el algoritmo hace las operaciones: construir primero <img src="https://latex.codecogs.com/png.latex?%5Calpha-%5Cbeta"> como un número aparte es una elección de implementación, no una necesidad matemática, y es esa elección la que expone el cálculo a la cancelación.</p>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">backsub</span>(U, b)</span>
+<span id="cb5-2">    n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">size</span>(U, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb5-3">    x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">zeros</span>(n)</span>
+<span id="cb5-4">    x[n] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> b[n] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> U[n, n]</span>
+<span id="cb5-5">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> n<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb5-6">        s <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sum</span>(U[i, j] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x[j] <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> j <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> i<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span>n)</span>
+<span id="cb5-7">        x[i] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (b[i] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> s) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> U[i, i]</span>
+<span id="cb5-8">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span>
+<span id="cb5-9">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> x</span>
+<span id="cb5-10"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span>
+<span id="cb5-11"></span>
+<span id="cb5-12">α <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span></span>
+<span id="cb5-13"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> k <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span></span>
+<span id="cb5-14">    β <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10.0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">^</span>k</span>
+<span id="cb5-15">    U <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> (α<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>β) β; <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>; <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>; <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>; <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb5-16">    b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [α, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]</span>
+<span id="cb5-17">    x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">backsub</span>(U, b)</span>
+<span id="cb5-18">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">println</span>(β, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"  "</span>, x[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"  "</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">abs</span>(x[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb5-19"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span></code></pre></div></div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/numerico/matrices/</guid>
+  <pubDate>Fri, 11 Sep 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Taller 1</title>
   <dc:creator>Arturo Sanjuán</dc:creator>

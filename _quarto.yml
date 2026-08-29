@@ -37,11 +37,12 @@ website:
           href: cursos/odes/index.xml
           text: "RSS — Ecuaciones Diferenciales"
       contents:
-        - cursos/odes/index.qmd
+        -- cursos/odes/index.qmd
         - cursos/odes/introduccion/index.qmd
         - cursos/odes/familiasortogonales/index.qmd
         - cursos/odes/modelacion/index.qmd
         - cursos/odes/polares/index.qmd
+        - cursos/odes/taller-1/index.qmd
     - id: numerico
       title: "Análisis Numérico"
       style: docked
@@ -55,6 +56,7 @@ website:
         - cursos/numerico/condicionamiento/index.qmd
         - cursos/numerico/estabilidad/index.qmd
         - cursos/numerico/taller-1/index.qmd
+        - cursos/numerico/matrices/index.qmd
     - id: probabilidad
       title: "Probabilidad"
       style: docked
@@ -66,6 +68,8 @@ website:
         - cursos/probabilidad/index.qmd
         - cursos/probabilidad/introduccion/index.qmd
         - cursos/probabilidad/calculoprobabilidades/index.qmd
+        - cursos/probabilidad/condicional/index.qmd
+        - cursos/probabilidad/taller-1/index.qmd
 
 format:
   html:
