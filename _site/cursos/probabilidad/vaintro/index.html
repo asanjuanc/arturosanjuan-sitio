@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Arturo Sanjuán">
+<meta name="description" content="Definición de variable aleatoria real como función medible respecto a Borel, σ-álgebra generada por una variable aleatoria, la distribución inducida por una variable aleatoria y propiedades de la función de distribución, con ejemplos sobre un espacio de cuatro puntos y el conteo de caras en cuatro lanzamientos de una moneda.">
+
+<title>Variables aleatorias – Arturo Sanjuán</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-06ef128ffaab2aaffa18b1038abc86f3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Arturo Sanjuán</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../cursos/index.html"> 
+<span class="menu-text">Cursos</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#definición" id="toc-definición" class="nav-link active" data-scroll-target="#definición"><span class="header-section-number">1</span> Definición</a></li>
+  <li><a href="#una-σ-álgebra-generada-por-una-variable-aleatoria-ejercicio-2.2" id="toc-una-σ-álgebra-generada-por-una-variable-aleatoria-ejercicio-2.2" class="nav-link" data-scroll-target="#una-σ-álgebra-generada-por-una-variable-aleatoria-ejercicio-2.2"><span class="header-section-number">2</span> Una σ-álgebra generada por una variable aleatoria (ejercicio 2.2)</a></li>
+  <li><a href="#la-distribución-de-una-variable-aleatoria" id="toc-la-distribución-de-una-variable-aleatoria" class="nav-link" data-scroll-target="#la-distribución-de-una-variable-aleatoria"><span class="header-section-number">3</span> La distribución de una variable aleatoria</a></li>
+  <li><a href="#probabilidades-en-un-espacio-laplaciano-ejercicio-2.4" id="toc-probabilidades-en-un-espacio-laplaciano-ejercicio-2.4" class="nav-link" data-scroll-target="#probabilidades-en-un-espacio-laplaciano-ejercicio-2.4"><span class="header-section-number">4</span> Probabilidades en un espacio Laplaciano (ejercicio 2.4)</a></li>
+  <li><a href="#función-de-distribución-propiedades" id="toc-función-de-distribución-propiedades" class="nav-link" data-scroll-target="#función-de-distribución-propiedades"><span class="header-section-number">5</span> Función de distribución: propiedades</a></li>
+  <li><a href="#una-función-de-distribución-para-un-lanzamiento-de-monedas-ejercicio-2.6" id="toc-una-función-de-distribución-para-un-lanzamiento-de-monedas-ejercicio-2.6" class="nav-link" data-scroll-target="#una-función-de-distribución-para-un-lanzamiento-de-monedas-ejercicio-2.6"><span class="header-section-number">6</span> Una función de distribución para un lanzamiento de monedas (ejercicio 2.6)</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Variables aleatorias</h1>
+<p class="subtitle lead">σ-álgebra generada, distribución y función de distribución</p>
+</div>
+
+<div>
+  <div class="description">
+    Definición de variable aleatoria real como función medible respecto a Borel, σ-álgebra generada por una variable aleatoria, la distribución inducida por una variable aleatoria y propiedades de la función de distribución, con ejemplos sobre un espacio de cuatro puntos y el conteo de caras en cuatro lanzamientos de una moneda.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor</div>
+    <div class="quarto-title-meta-contents">
+             <p>Arturo Sanjuán </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">29 de agosto de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="definición" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="definición"><span class="header-section-number">1</span> Definición</h2>
+<p>Sea <span class="math inline">\((\Omega,\mathfrak F, P)\)</span> un espacio de probabilidad. Una <strong>variable aleatoria real</strong> es una función</p>
+<p><span class="math display">\[X:(\Omega,\mathfrak F)\to(\mathbb R,\mathfrak B(\mathbb R))\]</span></p>
+<p>que es <span class="math inline">\(\mathfrak F/\mathfrak B(\mathbb R)\)</span>-medible, es decir, <span class="math inline">\(X^{-1}(B)\in\mathfrak F\)</span> para todo <span class="math inline">\(B\in\mathfrak B(\mathbb R)\)</span>, donde <span class="math inline">\(\mathfrak B(\mathbb R)\)</span> es la σ-álgebra de Borel (la generada por los abiertos de <span class="math inline">\(\mathbb R\)</span>).</p>
+<div class="callout callout-style-default callout-important callout-titled" title="¿Por qué basta revisar los conjuntos $(-\infty,a]$?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>¿Por qué basta revisar los conjuntos <span class="math inline">\((-\infty,a]\)</span>?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(\mathfrak B(\mathbb R)\)</span> está generada por la familia <span class="math inline">\(\{(-\infty,a] : a\in\mathbb R\}\)</span>. Como la imagen inversa se comporta bien con complementos y uniones,</p>
+<p><span class="math display">\[X^{-1}(A^c) = \big(X^{-1}(A)\big)^c \qquad X^{-1}\Big(\bigcup_n A_n\Big) = \bigcup_n X^{-1}(A_n)\]</span></p>
+<p>basta verificar <span class="math inline">\(X^{-1}((-\infty,a])\in\mathfrak F\)</span> para todo <span class="math inline">\(a\in\mathbb R\)</span>: todos los demás borelianos (intervalos abiertos, semiabiertos, uniones numerables de estos) se obtienen de los <span class="math inline">\((-\infty,a]\)</span> por complementos e intersecciones/uniones numerables. Por ejemplo:</p>
+<p><span class="math display">\[(a,b) = \Big(\bigcup_{n} (-\infty, b-\tfrac1n]\Big) \cap (-\infty,a]^c\]</span></p>
+<p>Esto simplifica muchísimo la verificación de que una función dada es una variable aleatoria: no hay que revisar <em>todo</em> <span class="math inline">\(\mathfrak B(\mathbb R)\)</span>, solo la familia generadora.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Aprenda de memoria las definiciones de función medible, variable aleatoria, σ-álgebra generada por una función y función de distribución. Sepa negarlas, ejemplificarlas y ejemplificar la negación.</p>
+</div>
+</div>
+</section>
+<section id="una-σ-álgebra-generada-por-una-variable-aleatoria-ejercicio-2.2" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="una-σ-álgebra-generada-por-una-variable-aleatoria-ejercicio-2.2"><span class="header-section-number">2</span> Una σ-álgebra generada por una variable aleatoria (ejercicio 2.2)</h2>
+<p>Sea <span class="math inline">\(\Omega=\{1,2,3,4\}\)</span>. Determinar la menor σ-álgebra sobre <span class="math inline">\(\Omega\)</span> con respecto a la cual <span class="math inline">\(X(\omega):=\omega+1\)</span> es una variable aleatoria real.</p>
+<p>En otras palabras, queremos <span class="math inline">\(\sigma(X)\)</span>, la σ-álgebra generada sobre <span class="math inline">\(\Omega\)</span> por <span class="math inline">\(X:\Omega\to(\mathbb R,\mathfrak B(\mathbb R))\)</span>. Por la observación anterior, basta con enviar hacia atrás los conjuntos <span class="math inline">\((-\infty,a]\)</span>, <span class="math inline">\(a\in\mathbb R\)</span>:</p>
+<p><span class="math display">\[X^{-1}\big((-\infty,a]\big) = \{\omega\in\Omega : \omega+1\le a\} = \{\omega\in\Omega : \omega\le a-1\}\]</span></p>
+<p>Como <span class="math inline">\(\Omega=\{1,2,3,4\}\)</span>, basta distinguir en qué intervalo cae <span class="math inline">\(a-1\)</span>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Rango de <span class="math inline">\(a\)</span></th>
+<th><span class="math inline">\(\{\omega\le a-1\}\)</span></th>
+<th>Preimagen</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(a&lt;2\)</span></td>
+<td>ningún <span class="math inline">\(\omega\in\Omega\)</span></td>
+<td><span class="math inline">\(\varnothing\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(2\le a&lt;3\)</span></td>
+<td><span class="math inline">\(\omega=1\)</span></td>
+<td><span class="math inline">\(\{1\}\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(3\le a&lt;4\)</span></td>
+<td><span class="math inline">\(\omega\in\{1,2\}\)</span></td>
+<td><span class="math inline">\(\{1,2\}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(4\le a&lt;5\)</span></td>
+<td><span class="math inline">\(\omega\in\{1,2,3\}\)</span></td>
+<td><span class="math inline">\(\{1,2,3\}\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(a\ge5\)</span></td>
+<td><span class="math inline">\(\omega\in\{1,2,3,4\}\)</span></td>
+<td><span class="math inline">\(\Omega\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Así que la familia generadora directa es <span class="math inline">\(\mathcal F_0=\{\varnothing,\{1\},\{1,2\},\{1,2,3\},\Omega\}\)</span>. Ahora cerramos bajo las operaciones de σ-álgebra:</p>
+<p><strong>Complementos:</strong> <span class="math inline">\(\{1\}^c=\{2,3,4\}\)</span>, <span class="math inline">\(\{1,2\}^c=\{3,4\}\)</span>, <span class="math inline">\(\{1,2,3\}^c=\{4\}\)</span>.</p>
+<p><strong>Uniones (para aislar los singletons restantes):</strong> <span class="math display">\[\{1\}\cup\{3,4\}=\{1,3,4\} \quad\Rightarrow\quad \{1,3,4\}^c=\{2\}\]</span> <span class="math display">\[\{1,2\}\cup\{4\}=\{1,2,4\} \quad\Rightarrow\quad \{1,2,4\}^c=\{3\}\]</span></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Conclusión">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Conclusión
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ya tenemos los cuatro singletons <span class="math inline">\(\{1\},\{2\},\{3\},\{4\}\)</span> dentro de la σ-álgebra. Como toda σ-álgebra es cerrada bajo uniones (finitas, en este caso, porque <span class="math inline">\(\Omega\)</span> es finito), <strong>cualquier</strong> subconjunto de <span class="math inline">\(\Omega\)</span> se escribe como unión de singletons. Por lo tanto</p>
+<p><span class="math display">\[\sigma(X) = \mathcal P(\Omega)\]</span></p>
+<p>el conjunto de partes completo — y esto pasa <strong>sin importar</strong> qué medida de probabilidad <span class="math inline">\(P\)</span> se defina sobre <span class="math inline">\(\Omega\)</span>; es una propiedad puramente de <span class="math inline">\(X\)</span> y de <span class="math inline">\(\Omega\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="la-distribución-de-una-variable-aleatoria" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="la-distribución-de-una-variable-aleatoria"><span class="header-section-number">3</span> La distribución de una variable aleatoria</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Estudie del libro la demostración del siguiente teorema</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema 2.18">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Teorema 2.18
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sea <span class="math inline">\(X\)</span> una variable aleatoria real definida sobre <span class="math inline">\((\Omega,\mathfrak F,P)\)</span>. La función <span class="math inline">\(P_X\)</span> definida sobre <span class="math inline">\(\mathfrak B(\mathbb R)\)</span> por</p>
+<p><span class="math display">\[P_X(B) := P\big(X^{-1}(B)\big) = P(X\in B), \qquad B\in\mathfrak B(\mathbb R)\]</span></p>
+<p>es una medida de probabilidad sobre <span class="math inline">\((\mathbb R,\mathfrak B(\mathbb R))\)</span>, llamada <strong>distribución</strong> (o <strong>ley</strong>) de <span class="math inline">\(X\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Por qué importa">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Por qué importa
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Este teorema es lo que permite <strong>olvidarse de <span class="math inline">\(\Omega\)</span></strong>: una vez que conocemos <span class="math inline">\(P_X\)</span>, toda pregunta probabilística sobre <span class="math inline">\(X\)</span> (¿<span class="math inline">\(P(X\in B)\)</span>?) se responde dentro de <span class="math inline">\((\mathbb R,\mathfrak B(\mathbb R))\)</span>, sin necesidad de volver al espacio muestral original. Es la razón por la que, en la práctica, casi nunca se especifica <span class="math inline">\(\Omega\)</span> explícitamente al trabajar con variables aleatorias.</p>
+</div>
+</div>
+</section>
+<section id="probabilidades-en-un-espacio-laplaciano-ejercicio-2.4" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="probabilidades-en-un-espacio-laplaciano-ejercicio-2.4"><span class="header-section-number">4</span> Probabilidades en un espacio Laplaciano (ejercicio 2.4)</h2>
+<p>Sea <span class="math inline">\(\Omega=\{a,b,c,d,e,f\}\)</span> un espacio Laplaciano (cada resultado con probabilidad <span class="math inline">\(1/6\)</span>) y <span class="math inline">\(X\)</span> la variable aleatoria dada por la tabla de valores <span class="math inline">\(X(a),\ldots,X(f)\)</span> del enunciado (Blanco Castañeda, ejercicio 2.4).</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tabla pendiente de transcribir">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tabla pendiente de transcribir
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La tabla de valores <span class="math inline">\(X(\omega)\)</span> no se pudo recuperar de forma confiable ni del escaneo del libro ni de las notas manuscritas — en ambos casos la extracción de texto rompe la tabla. En vez de inventar los valores, queda pendiente completarla aquí con la tabla real del libro antes de publicar esta sección.</p>
+</div>
+</div>
+<p>Con la tabla completa, se pide calcular:</p>
+<ol type="a">
+<li><span class="math inline">\(P(X=1{,}5)\)</span></li>
+<li><span class="math inline">\(P(|X-1|\le 1{,}5)\)</span></li>
+<li><span class="math inline">\(P(X\ge 0 \lor X&lt;2)\)</span></li>
+</ol>
+<div class="callout callout-style-default callout-important callout-titled" title="Método (independiente de la tabla)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Método (independiente de la tabla)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En un espacio Laplaciano, <span class="math inline">\(P_X(\{x_0\}) = P(X^{-1}(\{x_0\}))\)</span> se calcula contando cuántos <span class="math inline">\(\omega\in\Omega\)</span> satisfacen <span class="math inline">\(X(\omega)=x_0\)</span>, y dividiendo por <span class="math inline">\(|\Omega|=6\)</span>. Para un evento como <span class="math inline">\(\{|X-1|\le 1{,}5\}\)</span>, primero se reescribe como <span class="math inline">\(\{-0{,}5\le X\le 2{,}5\}\)</span>, se identifica <span class="math inline">\(X^{-1}([-0{,}5,\,2{,}5])\subset\Omega\)</span>, y se cuenta.</p>
+</div>
+</div>
+</section>
+<section id="función-de-distribución-propiedades" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="función-de-distribución-propiedades"><span class="header-section-number">5</span> Función de distribución: propiedades</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema 2.24">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Teorema 2.24
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sea <span class="math inline">\(X\)</span> una variable aleatoria real definida sobre <span class="math inline">\((\Omega,\mathfrak F,P)\)</span> y <span class="math inline">\(F_X(x):=P(X\le x)\)</span> su función de distribución. Entonces:</p>
+<ol type="1">
+<li><span class="math inline">\(F_X\)</span> es <strong>creciente</strong>: si <span class="math inline">\(x\le y\)</span>, <span class="math inline">\(F_X(x)\le F_X(y)\)</span>.</li>
+<li><span class="math inline">\(F_X\)</span> es <strong>continua a derecha</strong>: <span class="math inline">\(F_X(x^+):=\lim_{h\to0^+}F_X(x+h)=F_X(x)\)</span> para todo <span class="math inline">\(x\in\mathbb R\)</span>.</li>
+<li><span class="math inline">\(\lim_{x\to\infty}F_X(x)=1\)</span>.</li>
+<li><span class="math inline">\(\lim_{x\to-\infty}F_X(x)=0\)</span>.</li>
+</ol>
+</div>
+</div>
+<p><strong>Demostración de la continuidad a derecha.</strong> <span class="math inline">\(F_X\)</span> es continua a derecha en <span class="math inline">\(a\)</span> si para toda sucesión <span class="math inline">\((a_n)_n\)</span> que decrece a <span class="math inline">\(a\)</span>, <span class="math inline">\(F_X(a_n)\to F_X(a)\)</span>.</p>
+<p>Sea <span class="math inline">\((a_n)_n\)</span> decreciente con <span class="math inline">\(a_n\downarrow a\)</span>. Definamos <span class="math inline">\(A_n:=(-\infty,a_n]\)</span>. Como <span class="math inline">\((a_n)_n\)</span> es decreciente, <span class="math inline">\((A_n)_n\)</span> es una sucesión decreciente de conjuntos: <span class="math inline">\(A_{n+1}\subset A_n\)</span>. Afirmamos que (verifique)</p>
+<p><span class="math display">\[\bigcap_n A_n = (-\infty,a]\]</span></p>
+<p>Con esto,</p>
+<p><span class="math display">\[
+\lim_n F_X(a_n) = \lim_n P(X\le a_n) = \lim_n P(X\in A_n) = P\Big(X^{-1}\Big(\bigcap_n A_n\Big)\Big) = P(X\le a) = F_X(a)
+\]</span></p>
+<p>donde la penúltima igualdad usa la continuidad de <span class="math inline">\(P\)</span> respecto a sucesiones decrecientes de conjuntos (vista en la sección de <a href="../../../cursos/probabilidad/introduccion/index.html">introducción</a>). <span class="math inline">\(\blacksquare\)</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre las otras tres propiedades del teorema (monotonía, límite en <span class="math inline">\(+\infty\)</span> y límite en <span class="math inline">\(-\infty\)</span>), usando el mismo tipo de argumento: escriba el evento límite como <span class="math inline">\(\bigcup_n\)</span> o <span class="math inline">\(\bigcap_n\)</span> de eventos <span class="math inline">\(\{X\le x_n\}\)</span> y use la continuidad de <span class="math inline">\(P\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Corolario 2.25">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Corolario 2.25
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sean <span class="math inline">\(X\)</span> una variable aleatoria real, <span class="math inline">\(F_X\)</span> su función de distribución y <span class="math inline">\(a,b\in\mathbb R\)</span> con <span class="math inline">\(a&lt;b\)</span>. Entonces:</p>
+<ol type="1">
+<li><span class="math inline">\(F_X(a^-):=\displaystyle\lim_{h\to0^+}F_X(a-h) = P(X&lt;a)\)</span></li>
+<li><span class="math inline">\(P(a\le X\le b) = F_X(b)-F_X(a^-)\)</span></li>
+<li><span class="math inline">\(P(a&lt; X\le b) = F_X(b)-F_X(a)\)</span></li>
+<li><span class="math inline">\(P(a\le X&lt; b) = F_X(b^-)-F_X(a^-)\)</span></li>
+<li><span class="math inline">\(P(a&lt; X&lt; b) = F_X(b^-)-F_X(a)\)</span></li>
+<li><span class="math inline">\(P(X=a) = F_X(a)-F_X(a^-)\)</span></li>
+<li>Si <span class="math inline">\(P(a&lt;X&lt;b)=0\)</span>, entonces <span class="math inline">\(F_X\)</span> es constante en <span class="math inline">\((a,b)\)</span>.</li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre todos los puntos de este corolario.</p>
+</div>
+</div>
+</section>
+<section id="una-función-de-distribución-para-un-lanzamiento-de-monedas-ejercicio-2.6" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="una-función-de-distribución-para-un-lanzamiento-de-monedas-ejercicio-2.6"><span class="header-section-number">6</span> Una función de distribución para un lanzamiento de monedas (ejercicio 2.6)</h2>
+<p>Se lanza una moneda corriente cuatro veces consecutivas. Sea <span class="math inline">\(X\)</span> el número de caras obtenidas. Hallar y graficar la función de distribución de <span class="math inline">\(Y:=X-2\)</span>.</p>
+<p><span class="math inline">\(X\)</span> toma valores en <span class="math inline">\(\{0,1,2,3,4\}.\)</span> Entonces</p>
+<p><span class="math display">\[P(X=k) = \binom{4}{k}\Big(\frac12\Big)^4 = \frac{\binom4k}{16}, \qquad k=0,1,2,3,4\]</span></p>
+<p>es decir <span class="math inline">\(P(X=0)=P(X=4)=\tfrac1{16}\)</span>, <span class="math inline">\(P(X=1)=P(X=3)=\tfrac4{16}\)</span>, <span class="math inline">\(P(X=2)=\tfrac6{16}\)</span>.</p>
+<p>Como <span class="math inline">\(Y=X-2\)</span>, <span class="math inline">\(Y\)</span> toma valores en <span class="math inline">\(\{-2,-1,0,1,2\}\)</span> con las mismas probabilidades (solo se recorre el índice). Sumando acumulativamente:</p>
+<p><span class="math display">\[
+F_Y(y) =
+\begin{cases}
+0 &amp; y&lt;-2 \\
+1/16 &amp; -2\le y&lt;-1 \\
+5/16 &amp; -1\le y&lt;0 \\
+11/16 &amp; 0\le y&lt;1 \\
+15/16 &amp; 1\le y&lt;2 \\
+1 &amp; y\ge2
+\end{cases}
+\]</span></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>y_vals <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">4</span>, <span class="dv">1</span>) <span class="sc">/</span> <span class="dv">16</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Fy <span class="ot">&lt;-</span> <span class="fu">stepfun</span>(y_vals, <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">cumsum</span>(p)))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Fy, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"y"</span>, <span class="at">ylab =</span> <span class="fu">expression</span>(F[Y](y)),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">""</span>, <span class="at">do.points =</span> <span class="cn">TRUE</span>, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"steelblue"</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">verticals =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"gray60"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-Fy-x-menos-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-Fy-x-menos-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-Fy-x-menos-2-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-Fy-x-menos-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Función de distribución de Y = X - 2
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Aplicación del corolario 2.25">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Aplicación del corolario 2.25
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La parte 6 del corolario (<span class="math inline">\(P(X=a)=F_X(a)-F_X(a^-)\)</span>) aplicada a <span class="math inline">\(F_Y\)</span> recupera exactamente los saltos de la gráfica. Por ejemplo, en <span class="math inline">\(y=-1\)</span> (que corresponde a <span class="math inline">\(X=1\)</span>):</p>
+<p><span class="math display">\[P(Y=-1) = F_Y(-1)-F_Y(-1^-) = \frac{5}{16}-\frac1{16} = \frac{4}{16} = \frac14\]</span></p>
+<p>y en <span class="math inline">\(y=1\)</span> (que corresponde a <span class="math inline">\(X=3\)</span>):</p>
+<p><span class="math display">\[P(Y=1) = F_Y(1)-F_Y(1^-) = \frac{15}{16}-\frac{11}{16} = \frac{4}{16} = \frac14\]</span></p>
+<p>Los dos saltos son idénticos: <span class="math inline">\(P(X=1)=P(X=3)=1/4\)</span>, reflejando la simetría de la binomial <span class="math inline">\((4,1/2)\)</span> alrededor de <span class="math inline">\(k=2\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Por qué la función de distribución de <span class="math inline">\(Y\)</span> tiene <em>la misma forma</em> (los mismos saltos) que la de <span class="math inline">\(X\)</span>, solo desplazada 2 unidades hacia la izquierda? Enuncie y demuestre, en general, la relación entre <span class="math inline">\(F_X\)</span> y <span class="math inline">\(F_{X+c}\)</span> para una constante <span class="math inline">\(c\in\mathbb R\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicios del libro">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicios del libro
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Haga los ejercicios 1–50 de la sección 2.5 (Blanco, <em>Probabilidad</em>).</p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/arturosanjuan\.xyz");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="preferred_color_scheme">
+<input type="hidden" id="giscus-alt-theme" value="preferred_color_scheme">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "asanjuanc/arturosanjuan-sitio";
+    script.dataset.repoId = "R_kgDOTzuHrw";
+    script.dataset.category = "Comentarios";
+    script.dataset.categoryId = "DIC_kwDOTzuHr84DD_eD";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "es";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

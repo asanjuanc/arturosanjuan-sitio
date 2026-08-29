@@ -15,7 +15,463 @@
 <link>https://arturosanjuan.xyz/cursos/probabilidad/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Wed, 26 Aug 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 29 Aug 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Variables aleatorias</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/probabilidad/vaintro/</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="definición" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="definición"><span class="header-section-number">1</span> Definición</h2>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?(%5COmega,%5Cmathfrak%20F,%20P)"> un espacio de probabilidad. Una <strong>variable aleatoria real</strong> es una función</p>
+<p><img src="https://latex.codecogs.com/png.latex?X:(%5COmega,%5Cmathfrak%20F)%5Cto(%5Cmathbb%20R,%5Cmathfrak%20B(%5Cmathbb%20R))"></p>
+<p>que es <img src="https://latex.codecogs.com/png.latex?%5Cmathfrak%20F/%5Cmathfrak%20B(%5Cmathbb%20R)">-medible, es decir, <img src="https://latex.codecogs.com/png.latex?X%5E%7B-1%7D(B)%5Cin%5Cmathfrak%20F"> para todo <img src="https://latex.codecogs.com/png.latex?B%5Cin%5Cmathfrak%20B(%5Cmathbb%20R)">, donde <img src="https://latex.codecogs.com/png.latex?%5Cmathfrak%20B(%5Cmathbb%20R)"> es la σ-álgebra de Borel (la generada por los abiertos de <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%20R">).</p>
+<div class="callout callout-style-default callout-important callout-titled" title="¿Por qué basta revisar los conjuntos $(-\infty,a]$?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>¿Por qué basta revisar los conjuntos <img src="https://latex.codecogs.com/png.latex?(-%5Cinfty,a%5D">?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><img src="https://latex.codecogs.com/png.latex?%5Cmathfrak%20B(%5Cmathbb%20R)"> está generada por la familia <img src="https://latex.codecogs.com/png.latex?%5C%7B(-%5Cinfty,a%5D%20:%20a%5Cin%5Cmathbb%20R%5C%7D">. Como la imagen inversa se comporta bien con complementos y uniones,</p>
+<p><img src="https://latex.codecogs.com/png.latex?X%5E%7B-1%7D(A%5Ec)%20=%20%5Cbig(X%5E%7B-1%7D(A)%5Cbig)%5Ec%20%5Cqquad%20X%5E%7B-1%7D%5CBig(%5Cbigcup_n%20A_n%5CBig)%20=%20%5Cbigcup_n%20X%5E%7B-1%7D(A_n)"></p>
+<p>basta verificar <img src="https://latex.codecogs.com/png.latex?X%5E%7B-1%7D((-%5Cinfty,a%5D)%5Cin%5Cmathfrak%20F"> para todo <img src="https://latex.codecogs.com/png.latex?a%5Cin%5Cmathbb%20R">: todos los demás borelianos (intervalos abiertos, semiabiertos, uniones numerables de estos) se obtienen de los <img src="https://latex.codecogs.com/png.latex?(-%5Cinfty,a%5D"> por complementos e intersecciones/uniones numerables. Por ejemplo:</p>
+<p><img src="https://latex.codecogs.com/png.latex?(a,b)%20=%20%5CBig(%5Cbigcup_%7Bn%7D%20(-%5Cinfty,%20b-%5Ctfrac1n%5D%5CBig)%20%5Ccap%20(-%5Cinfty,a%5D%5Ec"></p>
+<p>Esto simplifica muchísimo la verificación de que una función dada es una variable aleatoria: no hay que revisar <em>todo</em> <img src="https://latex.codecogs.com/png.latex?%5Cmathfrak%20B(%5Cmathbb%20R)">, solo la familia generadora.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Aprenda de memoria las definiciones de función medible, variable aleatoria, σ-álgebra generada por una función y función de distribución. Sepa negarlas, ejemplificarlas y ejemplificar la negación.</p>
+</div>
+</div>
+</section>
+<section id="una-σ-álgebra-generada-por-una-variable-aleatoria-ejercicio-2.2" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="una-σ-álgebra-generada-por-una-variable-aleatoria-ejercicio-2.2"><span class="header-section-number">2</span> Una σ-álgebra generada por una variable aleatoria (ejercicio 2.2)</h2>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?%5COmega=%5C%7B1,2,3,4%5C%7D">. Determinar la menor σ-álgebra sobre <img src="https://latex.codecogs.com/png.latex?%5COmega"> con respecto a la cual <img src="https://latex.codecogs.com/png.latex?X(%5Comega):=%5Comega+1"> es una variable aleatoria real.</p>
+<p>En otras palabras, queremos <img src="https://latex.codecogs.com/png.latex?%5Csigma(X)">, la σ-álgebra generada sobre <img src="https://latex.codecogs.com/png.latex?%5COmega"> por <img src="https://latex.codecogs.com/png.latex?X:%5COmega%5Cto(%5Cmathbb%20R,%5Cmathfrak%20B(%5Cmathbb%20R))">. Por la observación anterior, basta con enviar hacia atrás los conjuntos <img src="https://latex.codecogs.com/png.latex?(-%5Cinfty,a%5D">, <img src="https://latex.codecogs.com/png.latex?a%5Cin%5Cmathbb%20R">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?X%5E%7B-1%7D%5Cbig((-%5Cinfty,a%5D%5Cbig)%20=%20%5C%7B%5Comega%5Cin%5COmega%20:%20%5Comega+1%5Cle%20a%5C%7D%20=%20%5C%7B%5Comega%5Cin%5COmega%20:%20%5Comega%5Cle%20a-1%5C%7D"></p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?%5COmega=%5C%7B1,2,3,4%5C%7D">, basta distinguir en qué intervalo cae <img src="https://latex.codecogs.com/png.latex?a-1">:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Rango de <img src="https://latex.codecogs.com/png.latex?a"></th>
+<th><img src="https://latex.codecogs.com/png.latex?%5C%7B%5Comega%5Cle%20a-1%5C%7D"></th>
+<th>Preimagen</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?a%3C2"></td>
+<td>ningún <img src="https://latex.codecogs.com/png.latex?%5Comega%5Cin%5COmega"></td>
+<td><img src="https://latex.codecogs.com/png.latex?%5Cvarnothing"></td>
+</tr>
+<tr class="even">
+<td><img src="https://latex.codecogs.com/png.latex?2%5Cle%20a%3C3"></td>
+<td><img src="https://latex.codecogs.com/png.latex?%5Comega=1"></td>
+<td><img src="https://latex.codecogs.com/png.latex?%5C%7B1%5C%7D"></td>
+</tr>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?3%5Cle%20a%3C4"></td>
+<td><img src="https://latex.codecogs.com/png.latex?%5Comega%5Cin%5C%7B1,2%5C%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?%5C%7B1,2%5C%7D"></td>
+</tr>
+<tr class="even">
+<td><img src="https://latex.codecogs.com/png.latex?4%5Cle%20a%3C5"></td>
+<td><img src="https://latex.codecogs.com/png.latex?%5Comega%5Cin%5C%7B1,2,3%5C%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?%5C%7B1,2,3%5C%7D"></td>
+</tr>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?a%5Cge5"></td>
+<td><img src="https://latex.codecogs.com/png.latex?%5Comega%5Cin%5C%7B1,2,3,4%5C%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?%5COmega"></td>
+</tr>
+</tbody>
+</table>
+<p>Así que la familia generadora directa es <img src="https://latex.codecogs.com/png.latex?%5Cmathcal%20F_0=%5C%7B%5Cvarnothing,%5C%7B1%5C%7D,%5C%7B1,2%5C%7D,%5C%7B1,2,3%5C%7D,%5COmega%5C%7D">. Ahora cerramos bajo las operaciones de σ-álgebra:</p>
+<p><strong>Complementos:</strong> <img src="https://latex.codecogs.com/png.latex?%5C%7B1%5C%7D%5Ec=%5C%7B2,3,4%5C%7D">, <img src="https://latex.codecogs.com/png.latex?%5C%7B1,2%5C%7D%5Ec=%5C%7B3,4%5C%7D">, <img src="https://latex.codecogs.com/png.latex?%5C%7B1,2,3%5C%7D%5Ec=%5C%7B4%5C%7D">.</p>
+<p><strong>Uniones (para aislar los singletons restantes):</strong> <img src="https://latex.codecogs.com/png.latex?%5C%7B1%5C%7D%5Ccup%5C%7B3,4%5C%7D=%5C%7B1,3,4%5C%7D%20%5Cquad%5CRightarrow%5Cquad%20%5C%7B1,3,4%5C%7D%5Ec=%5C%7B2%5C%7D"> <img src="https://latex.codecogs.com/png.latex?%5C%7B1,2%5C%7D%5Ccup%5C%7B4%5C%7D=%5C%7B1,2,4%5C%7D%20%5Cquad%5CRightarrow%5Cquad%20%5C%7B1,2,4%5C%7D%5Ec=%5C%7B3%5C%7D"></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Conclusión">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Conclusión
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ya tenemos los cuatro singletons <img src="https://latex.codecogs.com/png.latex?%5C%7B1%5C%7D,%5C%7B2%5C%7D,%5C%7B3%5C%7D,%5C%7B4%5C%7D"> dentro de la σ-álgebra. Como toda σ-álgebra es cerrada bajo uniones (finitas, en este caso, porque <img src="https://latex.codecogs.com/png.latex?%5COmega"> es finito), <strong>cualquier</strong> subconjunto de <img src="https://latex.codecogs.com/png.latex?%5COmega"> se escribe como unión de singletons. Por lo tanto</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Csigma(X)%20=%20%5Cmathcal%20P(%5COmega)"></p>
+<p>el conjunto de partes completo — y esto pasa <strong>sin importar</strong> qué medida de probabilidad <img src="https://latex.codecogs.com/png.latex?P"> se defina sobre <img src="https://latex.codecogs.com/png.latex?%5COmega">; es una propiedad puramente de <img src="https://latex.codecogs.com/png.latex?X"> y de <img src="https://latex.codecogs.com/png.latex?%5COmega">.</p>
+</div>
+</div>
+</section>
+<section id="la-distribución-de-una-variable-aleatoria" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="la-distribución-de-una-variable-aleatoria"><span class="header-section-number">3</span> La distribución de una variable aleatoria</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Estudie del libro la demostración del siguiente teorema</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema 2.18">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Teorema 2.18
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sea <img src="https://latex.codecogs.com/png.latex?X"> una variable aleatoria real definida sobre <img src="https://latex.codecogs.com/png.latex?(%5COmega,%5Cmathfrak%20F,P)">. La función <img src="https://latex.codecogs.com/png.latex?P_X"> definida sobre <img src="https://latex.codecogs.com/png.latex?%5Cmathfrak%20B(%5Cmathbb%20R)"> por</p>
+<p><img src="https://latex.codecogs.com/png.latex?P_X(B)%20:=%20P%5Cbig(X%5E%7B-1%7D(B)%5Cbig)%20=%20P(X%5Cin%20B),%20%5Cqquad%20B%5Cin%5Cmathfrak%20B(%5Cmathbb%20R)"></p>
+<p>es una medida de probabilidad sobre <img src="https://latex.codecogs.com/png.latex?(%5Cmathbb%20R,%5Cmathfrak%20B(%5Cmathbb%20R))">, llamada <strong>distribución</strong> (o <strong>ley</strong>) de <img src="https://latex.codecogs.com/png.latex?X">.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Por qué importa">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Por qué importa
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Este teorema es lo que permite <strong>olvidarse de <img src="https://latex.codecogs.com/png.latex?%5COmega"></strong>: una vez que conocemos <img src="https://latex.codecogs.com/png.latex?P_X">, toda pregunta probabilística sobre <img src="https://latex.codecogs.com/png.latex?X"> (¿<img src="https://latex.codecogs.com/png.latex?P(X%5Cin%20B)">?) se responde dentro de <img src="https://latex.codecogs.com/png.latex?(%5Cmathbb%20R,%5Cmathfrak%20B(%5Cmathbb%20R))">, sin necesidad de volver al espacio muestral original. Es la razón por la que, en la práctica, casi nunca se especifica <img src="https://latex.codecogs.com/png.latex?%5COmega"> explícitamente al trabajar con variables aleatorias.</p>
+</div>
+</div>
+</section>
+<section id="probabilidades-en-un-espacio-laplaciano-ejercicio-2.4" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="probabilidades-en-un-espacio-laplaciano-ejercicio-2.4"><span class="header-section-number">4</span> Probabilidades en un espacio Laplaciano (ejercicio 2.4)</h2>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?%5COmega=%5C%7Ba,b,c,d,e,f%5C%7D"> un espacio Laplaciano (cada resultado con probabilidad <img src="https://latex.codecogs.com/png.latex?1/6">) y <img src="https://latex.codecogs.com/png.latex?X"> la variable aleatoria dada por la tabla de valores <img src="https://latex.codecogs.com/png.latex?X(a),%5Cldots,X(f)"> del enunciado (Blanco Castañeda, ejercicio 2.4).</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tabla pendiente de transcribir">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tabla pendiente de transcribir
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La tabla de valores <img src="https://latex.codecogs.com/png.latex?X(%5Comega)"> no se pudo recuperar de forma confiable ni del escaneo del libro ni de las notas manuscritas — en ambos casos la extracción de texto rompe la tabla. En vez de inventar los valores, queda pendiente completarla aquí con la tabla real del libro antes de publicar esta sección.</p>
+</div>
+</div>
+<p>Con la tabla completa, se pide calcular:</p>
+<ol type="a">
+<li><img src="https://latex.codecogs.com/png.latex?P(X=1%7B,%7D5)"></li>
+<li><img src="https://latex.codecogs.com/png.latex?P(%7CX-1%7C%5Cle%201%7B,%7D5)"></li>
+<li><img src="https://latex.codecogs.com/png.latex?P(X%5Cge%200%20%5Clor%20X%3C2)"></li>
+</ol>
+<div class="callout callout-style-default callout-important callout-titled" title="Método (independiente de la tabla)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Método (independiente de la tabla)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En un espacio Laplaciano, <img src="https://latex.codecogs.com/png.latex?P_X(%5C%7Bx_0%5C%7D)%20=%20P(X%5E%7B-1%7D(%5C%7Bx_0%5C%7D))"> se calcula contando cuántos <img src="https://latex.codecogs.com/png.latex?%5Comega%5Cin%5COmega"> satisfacen <img src="https://latex.codecogs.com/png.latex?X(%5Comega)=x_0">, y dividiendo por <img src="https://latex.codecogs.com/png.latex?%7C%5COmega%7C=6">. Para un evento como <img src="https://latex.codecogs.com/png.latex?%5C%7B%7CX-1%7C%5Cle%201%7B,%7D5%5C%7D">, primero se reescribe como <img src="https://latex.codecogs.com/png.latex?%5C%7B-0%7B,%7D5%5Cle%20X%5Cle%202%7B,%7D5%5C%7D">, se identifica <img src="https://latex.codecogs.com/png.latex?X%5E%7B-1%7D(%5B-0%7B,%7D5,%5C,2%7B,%7D5%5D)%5Csubset%5COmega">, y se cuenta.</p>
+</div>
+</div>
+</section>
+<section id="función-de-distribución-propiedades" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="función-de-distribución-propiedades"><span class="header-section-number">5</span> Función de distribución: propiedades</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema 2.24">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Teorema 2.24
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sea <img src="https://latex.codecogs.com/png.latex?X"> una variable aleatoria real definida sobre <img src="https://latex.codecogs.com/png.latex?(%5COmega,%5Cmathfrak%20F,P)"> y <img src="https://latex.codecogs.com/png.latex?F_X(x):=P(X%5Cle%20x)"> su función de distribución. Entonces:</p>
+<ol type="1">
+<li><img src="https://latex.codecogs.com/png.latex?F_X"> es <strong>creciente</strong>: si <img src="https://latex.codecogs.com/png.latex?x%5Cle%20y">, <img src="https://latex.codecogs.com/png.latex?F_X(x)%5Cle%20F_X(y)">.</li>
+<li><img src="https://latex.codecogs.com/png.latex?F_X"> es <strong>continua a derecha</strong>: <img src="https://latex.codecogs.com/png.latex?F_X(x%5E+):=%5Clim_%7Bh%5Cto0%5E+%7DF_X(x+h)=F_X(x)"> para todo <img src="https://latex.codecogs.com/png.latex?x%5Cin%5Cmathbb%20R">.</li>
+<li><img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bx%5Cto%5Cinfty%7DF_X(x)=1">.</li>
+<li><img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bx%5Cto-%5Cinfty%7DF_X(x)=0">.</li>
+</ol>
+</div>
+</div>
+<p><strong>Demostración de la continuidad a derecha.</strong> <img src="https://latex.codecogs.com/png.latex?F_X"> es continua a derecha en <img src="https://latex.codecogs.com/png.latex?a"> si para toda sucesión <img src="https://latex.codecogs.com/png.latex?(a_n)_n"> que decrece a <img src="https://latex.codecogs.com/png.latex?a">, <img src="https://latex.codecogs.com/png.latex?F_X(a_n)%5Cto%20F_X(a)">.</p>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?(a_n)_n"> decreciente con <img src="https://latex.codecogs.com/png.latex?a_n%5Cdownarrow%20a">. Definamos <img src="https://latex.codecogs.com/png.latex?A_n:=(-%5Cinfty,a_n%5D">. Como <img src="https://latex.codecogs.com/png.latex?(a_n)_n"> es decreciente, <img src="https://latex.codecogs.com/png.latex?(A_n)_n"> es una sucesión decreciente de conjuntos: <img src="https://latex.codecogs.com/png.latex?A_%7Bn+1%7D%5Csubset%20A_n">. Afirmamos que (verifique)</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbigcap_n%20A_n%20=%20(-%5Cinfty,a%5D"></p>
+<p>Con esto,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Clim_n%20F_X(a_n)%20=%20%5Clim_n%20P(X%5Cle%20a_n)%20=%20%5Clim_n%20P(X%5Cin%20A_n)%20=%20P%5CBig(X%5E%7B-1%7D%5CBig(%5Cbigcap_n%20A_n%5CBig)%5CBig)%20=%20P(X%5Cle%20a)%20=%20F_X(a)%0A"></p>
+<p>donde la penúltima igualdad usa la continuidad de <img src="https://latex.codecogs.com/png.latex?P"> respecto a sucesiones decrecientes de conjuntos (vista en la sección de <a href="../../../cursos/probabilidad/introduccion/index.html">introducción</a>). <img src="https://latex.codecogs.com/png.latex?%5Cblacksquare"></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre las otras tres propiedades del teorema (monotonía, límite en <img src="https://latex.codecogs.com/png.latex?+%5Cinfty"> y límite en <img src="https://latex.codecogs.com/png.latex?-%5Cinfty">), usando el mismo tipo de argumento: escriba el evento límite como <img src="https://latex.codecogs.com/png.latex?%5Cbigcup_n"> o <img src="https://latex.codecogs.com/png.latex?%5Cbigcap_n"> de eventos <img src="https://latex.codecogs.com/png.latex?%5C%7BX%5Cle%20x_n%5C%7D"> y use la continuidad de <img src="https://latex.codecogs.com/png.latex?P">.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Corolario 2.25">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Corolario 2.25
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sean <img src="https://latex.codecogs.com/png.latex?X"> una variable aleatoria real, <img src="https://latex.codecogs.com/png.latex?F_X"> su función de distribución y <img src="https://latex.codecogs.com/png.latex?a,b%5Cin%5Cmathbb%20R"> con <img src="https://latex.codecogs.com/png.latex?a%3Cb">. Entonces:</p>
+<ol type="1">
+<li><img src="https://latex.codecogs.com/png.latex?F_X(a%5E-):=%5Cdisplaystyle%5Clim_%7Bh%5Cto0%5E+%7DF_X(a-h)%20=%20P(X%3Ca)"></li>
+<li><img src="https://latex.codecogs.com/png.latex?P(a%5Cle%20X%5Cle%20b)%20=%20F_X(b)-F_X(a%5E-)"></li>
+<li><img src="https://latex.codecogs.com/png.latex?P(a%3C%20X%5Cle%20b)%20=%20F_X(b)-F_X(a)"></li>
+<li><img src="https://latex.codecogs.com/png.latex?P(a%5Cle%20X%3C%20b)%20=%20F_X(b%5E-)-F_X(a%5E-)"></li>
+<li><img src="https://latex.codecogs.com/png.latex?P(a%3C%20X%3C%20b)%20=%20F_X(b%5E-)-F_X(a)"></li>
+<li><img src="https://latex.codecogs.com/png.latex?P(X=a)%20=%20F_X(a)-F_X(a%5E-)"></li>
+<li>Si <img src="https://latex.codecogs.com/png.latex?P(a%3CX%3Cb)=0">, entonces <img src="https://latex.codecogs.com/png.latex?F_X"> es constante en <img src="https://latex.codecogs.com/png.latex?(a,b)">.</li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre todos los puntos de este corolario.</p>
+</div>
+</div>
+</section>
+<section id="una-función-de-distribución-para-un-lanzamiento-de-monedas-ejercicio-2.6" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="una-función-de-distribución-para-un-lanzamiento-de-monedas-ejercicio-2.6"><span class="header-section-number">6</span> Una función de distribución para un lanzamiento de monedas (ejercicio 2.6)</h2>
+<p>Se lanza una moneda corriente cuatro veces consecutivas. Sea <img src="https://latex.codecogs.com/png.latex?X"> el número de caras obtenidas. Hallar y graficar la función de distribución de <img src="https://latex.codecogs.com/png.latex?Y:=X-2">.</p>
+<p><img src="https://latex.codecogs.com/png.latex?X"> toma valores en <img src="https://latex.codecogs.com/png.latex?%5C%7B0,1,2,3,4%5C%7D."> Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X=k)%20=%20%5Cbinom%7B4%7D%7Bk%7D%5CBig(%5Cfrac12%5CBig)%5E4%20=%20%5Cfrac%7B%5Cbinom4k%7D%7B16%7D,%20%5Cqquad%20k=0,1,2,3,4"></p>
+<p>es decir <img src="https://latex.codecogs.com/png.latex?P(X=0)=P(X=4)=%5Ctfrac1%7B16%7D">, <img src="https://latex.codecogs.com/png.latex?P(X=1)=P(X=3)=%5Ctfrac4%7B16%7D">, <img src="https://latex.codecogs.com/png.latex?P(X=2)=%5Ctfrac6%7B16%7D">.</p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?Y=X-2">, <img src="https://latex.codecogs.com/png.latex?Y"> toma valores en <img src="https://latex.codecogs.com/png.latex?%5C%7B-2,-1,0,1,2%5C%7D"> con las mismas probabilidades (solo se recorre el índice). Sumando acumulativamente:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AF_Y(y)%20=%0A%5Cbegin%7Bcases%7D%0A0%20&amp;%20y%3C-2%20%5C%5C%0A1/16%20&amp;%20-2%5Cle%20y%3C-1%20%5C%5C%0A5/16%20&amp;%20-1%5Cle%20y%3C0%20%5C%5C%0A11/16%20&amp;%200%5Cle%20y%3C1%20%5C%5C%0A15/16%20&amp;%201%5Cle%20y%3C2%20%5C%5C%0A1%20&amp;%20y%5Cge2%0A%5Cend%7Bcases%7D%0A"></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">y_vals <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb1-2">p <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16</span></span>
+<span id="cb1-3">Fy <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">stepfun</span>(y_vals, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cumsum</span>(p)))</span>
+<span id="cb1-4"></span>
+<span id="cb1-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot</span>(Fy, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xlim =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ylim =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>),</span>
+<span id="cb1-6">     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xlab =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"y"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ylab =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expression</span>(F[Y](y)),</span>
+<span id="cb1-7">     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">main =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">do.points =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pch =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">19</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"steelblue"</span>,</span>
+<span id="cb1-8">     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">verticals =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)</span>
+<span id="cb1-9"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">abline</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">h =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lty =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gray60"</span>)</span></code></pre></div></div>
+<div class="cell-output-display">
+<div id="fig-Fy-x-menos-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-Fy-x-menos-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/probabilidad/vaintro/index_files/figure-html/fig-Fy-x-menos-2-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-Fy-x-menos-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Función de distribución de Y = X - 2
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Aplicación del corolario 2.25">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Aplicación del corolario 2.25
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La parte 6 del corolario (<img src="https://latex.codecogs.com/png.latex?P(X=a)=F_X(a)-F_X(a%5E-)">) aplicada a <img src="https://latex.codecogs.com/png.latex?F_Y"> recupera exactamente los saltos de la gráfica. Por ejemplo, en <img src="https://latex.codecogs.com/png.latex?y=-1"> (que corresponde a <img src="https://latex.codecogs.com/png.latex?X=1">):</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(Y=-1)%20=%20F_Y(-1)-F_Y(-1%5E-)%20=%20%5Cfrac%7B5%7D%7B16%7D-%5Cfrac1%7B16%7D%20=%20%5Cfrac%7B4%7D%7B16%7D%20=%20%5Cfrac14"></p>
+<p>y en <img src="https://latex.codecogs.com/png.latex?y=1"> (que corresponde a <img src="https://latex.codecogs.com/png.latex?X=3">):</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(Y=1)%20=%20F_Y(1)-F_Y(1%5E-)%20=%20%5Cfrac%7B15%7D%7B16%7D-%5Cfrac%7B11%7D%7B16%7D%20=%20%5Cfrac%7B4%7D%7B16%7D%20=%20%5Cfrac14"></p>
+<p>Los dos saltos son idénticos: <img src="https://latex.codecogs.com/png.latex?P(X=1)=P(X=3)=1/4">, reflejando la simetría de la binomial <img src="https://latex.codecogs.com/png.latex?(4,1/2)"> alrededor de <img src="https://latex.codecogs.com/png.latex?k=2">.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Por qué la función de distribución de <img src="https://latex.codecogs.com/png.latex?Y"> tiene <em>la misma forma</em> (los mismos saltos) que la de <img src="https://latex.codecogs.com/png.latex?X">, solo desplazada 2 unidades hacia la izquierda? Enuncie y demuestre, en general, la relación entre <img src="https://latex.codecogs.com/png.latex?F_X"> y <img src="https://latex.codecogs.com/png.latex?F_%7BX+c%7D"> para una constante <img src="https://latex.codecogs.com/png.latex?c%5Cin%5Cmathbb%20R">.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicios del libro">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicios del libro
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Haga los ejercicios 1–50 de la sección 2.5 (Blanco, <em>Probabilidad</em>).</p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/probabilidad/vaintro/</guid>
+  <pubDate>Sat, 29 Aug 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Taller 1</title>
   <dc:creator>Arturo Sanjuán</dc:creator>

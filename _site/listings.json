@@ -1,12 +1,20 @@
 [
   {
-    "listing": "/cursos/numerico/index.html",
+    "listing": "/cursos/probabilidad/index.html",
     "items": [
-      "/cursos/numerico/introduccion/index.html",
-      "/cursos/numerico/condicionamiento/index.html",
-      "/cursos/numerico/estabilidad/index.html",
-      "/cursos/numerico/taller-1/index.html",
-      "/cursos/numerico/matrices/index.html"
+      "/cursos/probabilidad/introduccion/index.html",
+      "/cursos/probabilidad/calculoprobabilidades/index.html",
+      "/cursos/probabilidad/condicional/index.html",
+      "/cursos/probabilidad/taller-1/index.html",
+      "/cursos/probabilidad/vaintro/index.html"
+    ]
+  },
+  {
+    "listing": "/cursos/index.html",
+    "items": [
+      "/cursos/numerico/index.html",
+      "/cursos/odes/index.html",
+      "/cursos/probabilidad/index.html"
     ]
   },
   {
@@ -21,20 +29,13 @@
     ]
   },
   {
-    "listing": "/cursos/index.html",
+    "listing": "/cursos/numerico/index.html",
     "items": [
-      "/cursos/numerico/index.html",
-      "/cursos/odes/index.html",
-      "/cursos/probabilidad/index.html"
-    ]
-  },
-  {
-    "listing": "/cursos/probabilidad/index.html",
-    "items": [
-      "/cursos/probabilidad/introduccion/index.html",
-      "/cursos/probabilidad/calculoprobabilidades/index.html",
-      "/cursos/probabilidad/condicional/index.html",
-      "/cursos/probabilidad/taller-1/index.html"
+      "/cursos/numerico/introduccion/index.html",
+      "/cursos/numerico/condicionamiento/index.html",
+      "/cursos/numerico/estabilidad/index.html",
+      "/cursos/numerico/taller-1/index.html",
+      "/cursos/numerico/matrices/index.html"
     ]
   }
 ]

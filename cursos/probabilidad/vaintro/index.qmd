@@ -1,0 +1,217 @@
+---
+title: "Variables aleatorias"
+subtitle: "σ-álgebra generada, distribución y función de distribución"
+description: "Definición de variable aleatoria real como función medible respecto a Borel, σ-álgebra generada por una variable aleatoria, la distribución inducida por una variable aleatoria y propiedades de la función de distribución, con ejemplos sobre un espacio de cuatro puntos y el conteo de caras en cuatro lanzamientos de una moneda."
+author: "Arturo Sanjuán"
+date: 2026-08-29
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 5
+---
+
+## Definición
+
+Sea $(\Omega,\mathfrak F, P)$ un espacio de probabilidad. Una **variable aleatoria real** es una función
+
+$$X:(\Omega,\mathfrak F)\to(\mathbb R,\mathfrak B(\mathbb R))$$
+
+que es $\mathfrak F/\mathfrak B(\mathbb R)$-medible, es decir, $X^{-1}(B)\in\mathfrak F$ para todo $B\in\mathfrak B(\mathbb R)$, donde $\mathfrak B(\mathbb R)$ es la σ-álgebra de Borel (la generada por los abiertos de $\mathbb R$).
+
+::: {.callout-important title="¿Por qué basta revisar los conjuntos $(-\infty,a]$?"}
+$\mathfrak B(\mathbb R)$ está generada por la familia $\{(-\infty,a] : a\in\mathbb R\}$. Como la imagen inversa se comporta bien con complementos y uniones,
+
+$$X^{-1}(A^c) = \big(X^{-1}(A)\big)^c \qquad X^{-1}\Big(\bigcup_n A_n\Big) = \bigcup_n X^{-1}(A_n)$$
+
+basta verificar $X^{-1}((-\infty,a])\in\mathfrak F$ para todo $a\in\mathbb R$: todos los demás borelianos (intervalos abiertos, semiabiertos, uniones numerables de estos) se obtienen de los $(-\infty,a]$ por complementos e intersecciones/uniones numerables. Por ejemplo:
+
+$$(a,b) = \Big(\bigcup_{n} (-\infty, b-\tfrac1n]\Big) \cap (-\infty,a]^c$$
+
+Esto simplifica muchísimo la verificación de que una función dada es una variable aleatoria: no hay que revisar *todo* $\mathfrak B(\mathbb R)$, solo la familia generadora.
+:::
+
+::: {.callout-note title="Ejercicio"}
+Aprenda de memoria las definiciones de función medible, variable aleatoria, σ-álgebra generada por una función y función de distribución. Sepa negarlas, ejemplificarlas y ejemplificar la negación.
+:::
+
+## Una σ-álgebra generada por una variable aleatoria (ejercicio 2.2)
+
+Sea $\Omega=\{1,2,3,4\}$. Determinar la menor σ-álgebra sobre $\Omega$ con respecto a la cual $X(\omega):=\omega+1$ es una variable aleatoria real.
+
+En otras palabras, queremos $\sigma(X)$, la σ-álgebra generada sobre $\Omega$ por $X:\Omega\to(\mathbb R,\mathfrak B(\mathbb R))$. Por la observación anterior, basta con enviar hacia atrás los conjuntos $(-\infty,a]$, $a\in\mathbb R$:
+
+$$X^{-1}\big((-\infty,a]\big) = \{\omega\in\Omega : \omega+1\le a\} = \{\omega\in\Omega : \omega\le a-1\}$$
+
+Como $\Omega=\{1,2,3,4\}$, basta distinguir en qué intervalo cae $a-1$:
+
+| Rango de $a$ | $\{\omega\le a-1\}$ | Preimagen |
+|---|---|---|
+| $a<2$ | ningún $\omega\in\Omega$ | $\varnothing$ |
+| $2\le a<3$ | $\omega=1$ | $\{1\}$ |
+| $3\le a<4$ | $\omega\in\{1,2\}$ | $\{1,2\}$ |
+| $4\le a<5$ | $\omega\in\{1,2,3\}$ | $\{1,2,3\}$ |
+| $a\ge5$ | $\omega\in\{1,2,3,4\}$ | $\Omega$ |
+
+Así que la familia generadora directa es $\mathcal F_0=\{\varnothing,\{1\},\{1,2\},\{1,2,3\},\Omega\}$. Ahora cerramos bajo las operaciones de σ-álgebra:
+
+**Complementos:** $\{1\}^c=\{2,3,4\}$, $\{1,2\}^c=\{3,4\}$, $\{1,2,3\}^c=\{4\}$.
+
+**Uniones (para aislar los singletons restantes):**
+$$\{1\}\cup\{3,4\}=\{1,3,4\} \quad\Rightarrow\quad \{1,3,4\}^c=\{2\}$$
+$$\{1,2\}\cup\{4\}=\{1,2,4\} \quad\Rightarrow\quad \{1,2,4\}^c=\{3\}$$
+
+::: {.callout-important title="Conclusión"}
+Ya tenemos los cuatro singletons $\{1\},\{2\},\{3\},\{4\}$ dentro de la σ-álgebra. Como toda σ-álgebra es cerrada bajo uniones (finitas, en este caso, porque $\Omega$ es finito), **cualquier** subconjunto de $\Omega$ se escribe como unión de singletons. Por lo tanto
+
+$$\sigma(X) = \mathcal P(\Omega)$$
+
+el conjunto de partes completo — y esto pasa **sin importar** qué medida de probabilidad $P$ se defina sobre $\Omega$; es una propiedad puramente de $X$ y de $\Omega$.
+:::
+
+
+## La distribución de una variable aleatoria
+
+::: {.callout-note title="Ejercicio"}
+Estudie del libro la demostración del siguiente teorema
+:::
+
+::: {.callout-tip title="Teorema 2.18"}
+Sea $X$ una variable aleatoria real definida sobre $(\Omega,\mathfrak F,P)$. La función $P_X$ definida sobre $\mathfrak B(\mathbb R)$ por
+
+$$P_X(B) := P\big(X^{-1}(B)\big) = P(X\in B), \qquad B\in\mathfrak B(\mathbb R)$$
+
+es una medida de probabilidad sobre $(\mathbb R,\mathfrak B(\mathbb R))$, llamada **distribución** (o **ley**) de $X$.
+:::
+
+
+::: {.callout-important title="Por qué importa"}
+Este teorema es lo que permite **olvidarse de $\Omega$**: una vez que conocemos $P_X$, toda pregunta probabilística sobre $X$ (¿$P(X\in B)$?) se responde dentro de $(\mathbb R,\mathfrak B(\mathbb R))$, sin necesidad de volver al espacio muestral original. Es la razón por la que, en la práctica, casi nunca se especifica $\Omega$ explícitamente al trabajar con variables aleatorias.
+:::
+
+## Probabilidades en un espacio Laplaciano (ejercicio 2.4)
+
+Sea $\Omega=\{a,b,c,d,e,f\}$ un espacio Laplaciano (cada resultado con probabilidad $1/6$) y $X$ la variable aleatoria dada por la tabla de valores $X(a),\ldots,X(f)$ del enunciado (Blanco Castañeda, ejercicio 2.4).
+
+::: {.callout-note title="Tabla pendiente de transcribir"}
+La tabla de valores $X(\omega)$ no se pudo recuperar de forma confiable ni del escaneo del libro ni de las notas manuscritas — en ambos casos la extracción de texto rompe la tabla. En vez de inventar los valores, queda pendiente completarla aquí con la tabla real del libro antes de publicar esta sección.
+:::
+
+Con la tabla completa, se pide calcular:
+
+a) $P(X=1{,}5)$
+b) $P(|X-1|\le 1{,}5)$
+c) $P(X\ge 0 \lor X<2)$
+
+::: {.callout-important title="Método (independiente de la tabla)"}
+En un espacio Laplaciano, $P_X(\{x_0\}) = P(X^{-1}(\{x_0\}))$ se calcula contando cuántos $\omega\in\Omega$ satisfacen $X(\omega)=x_0$, y dividiendo por $|\Omega|=6$. Para un evento como $\{|X-1|\le 1{,}5\}$, primero se reescribe como $\{-0{,}5\le X\le 2{,}5\}$, se identifica $X^{-1}([-0{,}5,\,2{,}5])\subset\Omega$, y se cuenta.
+:::
+
+## Función de distribución: propiedades
+
+::: {.callout-tip title="Teorema 2.24"}
+Sea $X$ una variable aleatoria real definida sobre $(\Omega,\mathfrak F,P)$ y $F_X(x):=P(X\le x)$ su función de distribución. Entonces:
+
+1. $F_X$ es **creciente**: si $x\le y$, $F_X(x)\le F_X(y)$.
+2. $F_X$ es **continua a derecha**: $F_X(x^+):=\lim_{h\to0^+}F_X(x+h)=F_X(x)$ para todo $x\in\mathbb R$.
+3. $\lim_{x\to\infty}F_X(x)=1$.
+4. $\lim_{x\to-\infty}F_X(x)=0$.
+:::
+
+**Demostración de la continuidad a derecha.** $F_X$ es continua a derecha en $a$ si para toda sucesión $(a_n)_n$ que decrece a $a$, $F_X(a_n)\to F_X(a)$.
+
+Sea $(a_n)_n$ decreciente con $a_n\downarrow a$. Definamos $A_n:=(-\infty,a_n]$. Como $(a_n)_n$ es decreciente, $(A_n)_n$ es una sucesión decreciente de conjuntos: $A_{n+1}\subset A_n$. Afirmamos que (verifique)
+
+$$\bigcap_n A_n = (-\infty,a]$$
+
+
+Con esto,
+
+$$
+\lim_n F_X(a_n) = \lim_n P(X\le a_n) = \lim_n P(X\in A_n) = P\Big(X^{-1}\Big(\bigcap_n A_n\Big)\Big) = P(X\le a) = F_X(a)
+$$
+
+donde la penúltima igualdad usa la continuidad de $P$ respecto a sucesiones decrecientes de conjuntos (vista en la sección de [introducción](../introduccion/index.qmd)). $\blacksquare$
+
+::: {.callout-note title="Tarea"}
+Demuestre las otras tres propiedades del teorema (monotonía, límite en $+\infty$ y límite en $-\infty$), usando el mismo tipo de argumento: escriba el evento límite como $\bigcup_n$ o $\bigcap_n$ de eventos $\{X\le x_n\}$ y use la continuidad de $P$.
+:::
+
+::: {.callout-tip title="Corolario 2.25"}
+Sean $X$ una variable aleatoria real, $F_X$ su función de distribución y $a,b\in\mathbb R$ con $a<b$. Entonces:
+
+1. $F_X(a^-):=\displaystyle\lim_{h\to0^+}F_X(a-h) = P(X<a)$
+2. $P(a\le X\le b) = F_X(b)-F_X(a^-)$
+3. $P(a< X\le b) = F_X(b)-F_X(a)$
+4. $P(a\le X< b) = F_X(b^-)-F_X(a^-)$
+5. $P(a< X< b) = F_X(b^-)-F_X(a)$
+6. $P(X=a) = F_X(a)-F_X(a^-)$
+7. Si $P(a<X<b)=0$, entonces $F_X$ es constante en $(a,b)$.
+:::
+
+::: {.callout-note title="Tarea"}
+Demuestre todos los puntos de este corolario.
+:::
+
+## Una función de distribución para un lanzamiento de monedas (ejercicio 2.6)
+
+Se lanza una moneda corriente cuatro veces consecutivas. Sea $X$ el número de caras obtenidas. Hallar y graficar la función de distribución de $Y:=X-2$.
+
+$X$ toma valores en $\{0,1,2,3,4\}.$ Entonces
+
+$$P(X=k) = \binom{4}{k}\Big(\frac12\Big)^4 = \frac{\binom4k}{16}, \qquad k=0,1,2,3,4$$
+
+es decir $P(X=0)=P(X=4)=\tfrac1{16}$, $P(X=1)=P(X=3)=\tfrac4{16}$, $P(X=2)=\tfrac6{16}$.
+
+Como $Y=X-2$, $Y$ toma valores en $\{-2,-1,0,1,2\}$ con las mismas probabilidades (solo se recorre el índice). Sumando acumulativamente:
+
+$$
+F_Y(y) =
+\begin{cases}
+0 & y<-2 \\
+1/16 & -2\le y<-1 \\
+5/16 & -1\le y<0 \\
+11/16 & 0\le y<1 \\
+15/16 & 1\le y<2 \\
+1 & y\ge2
+\end{cases}
+$$
+
+```{r}
+#| label: fig-Fy-x-menos-2
+#| fig-cap: "Función de distribución de Y = X - 2"
+y_vals <- c(-2, -1, 0, 1, 2)
+p <- c(1, 4, 6, 4, 1) / 16
+Fy <- stepfun(y_vals, c(0, cumsum(p)))
+
+plot(Fy, xlim = c(-3, 3), ylim = c(0, 1),
+     xlab = "y", ylab = expression(F[Y](y)),
+     main = "", do.points = TRUE, pch = 19, col = "steelblue",
+     verticals = TRUE)
+abline(h = c(0, 1), lty = 3, col = "gray60")
+```
+
+::: {.callout-tip title="Aplicación del corolario 2.25"}
+La parte 6 del corolario ($P(X=a)=F_X(a)-F_X(a^-)$) aplicada a $F_Y$ recupera exactamente los saltos de la gráfica. Por ejemplo, en $y=-1$ (que corresponde a $X=1$):
+
+$$P(Y=-1) = F_Y(-1)-F_Y(-1^-) = \frac{5}{16}-\frac1{16} = \frac{4}{16} = \frac14$$
+
+y en $y=1$ (que corresponde a $X=3$):
+
+$$P(Y=1) = F_Y(1)-F_Y(1^-) = \frac{15}{16}-\frac{11}{16} = \frac{4}{16} = \frac14$$
+
+Los dos saltos son idénticos: $P(X=1)=P(X=3)=1/4$, reflejando la simetría de la binomial $(4,1/2)$ alrededor de $k=2$.
+:::
+
+::: {.callout-note title="Ejercicio"}
+¿Por qué la función de distribución de $Y$ tiene *la misma forma* (los mismos saltos) que la de $X$, solo desplazada 2 unidades hacia la izquierda? Enuncie y demuestre, en general, la relación entre $F_X$ y $F_{X+c}$ para una constante $c\in\mathbb R$.
+:::
+
+::: {.callout-note title="Ejercicios del libro"}
+Haga los ejercicios 1–50 de la sección 2.5 (Blanco, *Probabilidad*).
+:::
