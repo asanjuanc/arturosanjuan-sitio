@@ -70,6 +70,8 @@ website:
         - cursos/probabilidad/calculoprobabilidades/index.qmd
         - cursos/probabilidad/condicional/index.qmd
         - cursos/probabilidad/taller-1/index.qmd
+        - cursos/probabilidad/vaintro/index.qmd
+        - cursos/probabilidad/vadiscretas/index.qmd
 
 format:
   html:
@@ -78,4 +80,3 @@ format:
       - brand
     css: styles.css
     toc: true
-

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Distribuciones discretas notables</title>
+<style>
+  :root{
+    --bg:#ffffff;
+    --surface:#f6f7f5;
+    --border:#dfe3e2;
+    --text:#1c1e1c;
+    --text-secondary:#5c5f5c;
+    --masa:#2b6ca8;
+    --acum:#c8541f;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--text);
+    background:var(--bg);
+    padding:1rem;
+  }
+  .mono{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-variant-numeric:tabular-nums;
+  }
+  .widget{
+    max-width:820px;
+    margin:0 auto;
+  }
+  .controls{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:0.75rem 1.25rem;
+    padding-bottom:0.9rem;
+    border-bottom:1px solid var(--border);
+    margin-bottom:0.9rem;
+  }
+  .control-group{
+    display:flex;
+    align-items:center;
+    gap:0.5rem;
+  }
+  label{
+    font-size:0.85rem;
+    color:var(--text-secondary);
+    white-space:nowrap;
+  }
+  select{
+    font-size:0.85rem;
+    padding:0.35rem 0.5rem;
+    border:1px solid var(--border);
+    border-radius:5px;
+    background:var(--bg);
+    color:var(--text);
+  }
+  input[type="range"]{
+    width:130px;
+    accent-color:var(--masa);
+  }
+  .param-value{
+    min-width:2.6em;
+    display:inline-block;
+    text-align:right;
+  }
+  .view-toggle{
+    display:flex;
+    gap:0.4rem;
+  }
+  .view-toggle button{
+    font-size:0.85rem;
+    padding:0.4rem 0.85rem;
+    border:1px solid var(--border);
+    background:var(--bg);
+    color:var(--text);
+    border-radius:5px;
+    cursor:pointer;
+  }
+  .view-toggle button:hover{ background:var(--surface); }
+  .view-toggle button.active{
+    background:var(--text);
+    color:#fff;
+    border-color:var(--text);
+  }
+  .params-panel{
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.75rem 1.25rem;
+    margin-bottom:0.9rem;
+  }
+  .stats{
+    display:flex;
+    flex-wrap:wrap;
+    gap:1.25rem;
+    margin-bottom:0.75rem;
+    font-size:0.85rem;
+  }
+  .stat-label{ color:var(--text-secondary); margin-right:0.35rem; }
+  .stat-value{ font-weight:600; }
+  .chart-wrap{
+    position:relative;
+    width:100%;
+    height:280px;
+    margin-bottom:0.4rem;
+  }
+  canvas{ width:100%; height:100%; display:block; }
+  .caption{
+    font-size:0.78rem;
+    color:var(--text-secondary);
+    margin-top:0.5rem;
+  }
+  .notice{
+    font-size:0.78rem;
+    color:var(--text-secondary);
+    margin-top:0.3rem;
+    font-style:italic;
+  }
+</style>
+</head>
+<body>
+
+<div class="widget">
+
+  <div class="controls">
+    <div class="control-group">
+      <label for="dist-select">Distribución</label>
+      <select id="dist-select">
+        <option value="uniforme">Uniforme discreta</option>
+        <option value="bernoulli">Bernoulli</option>
+        <option value="binomial" selected>Binomial</option>
+        <option value="poisson">Poisson</option>
+        <option value="hipergeometrica">Hipergeométrica</option>
+        <option value="geometrica">Geométrica</option>
+        <option value="binomialneg">Binomial negativa</option>
+      </select>
+    </div>
+    <div class="view-toggle">
+      <button id="btn-masa" class="active">Masa</button>
+      <button id="btn-acum">Acumulada</button>
+    </div>
+  </div>
+
+  <div class="params-panel" id="params-panel"></div>
+
+  <div class="stats">
+    <span><span class="stat-label">E[X]</span><span id="stat-mean" class="stat-value mono">—</span></span>
+    <span><span class="stat-label">Var(X)</span><span id="stat-var" class="stat-value mono">—</span></span>
+    <span><span class="stat-label">soporte mostrado</span><span id="stat-support" class="stat-value mono">—</span></span>
+  </div>
+
+  <div class="chart-wrap">
+    <canvas id="chart" role="img" aria-label="Gráfica de la función de masa o de distribución de la variable seleccionada"></canvas>
+  </div>
+
+  <p class="notice" id="notice"></p>
+
+  <p class="caption">Esta gráfica calcula la función exacta (de masa o acumulada) a partir de la fórmula cerrada de la distribución elegida; no es una simulación. Cambie de distribución y mueva los parámetros para comparar formas.</p>
+
+</div>
+
+<script>
+(function(){
+
+  var MAX_BARS = 120;
+  var TAIL_CUTOFF = 0.9995;
+
+  function logFactorial(m){
+    if (m < 0) return -Infinity;
+    var s = 0;
+    for (var i = 2; i <= m; i++) s += Math.log(i);
+    return s;
+  }
+
+  function choose(n, k){
+    if (k < 0 || k > n) return 0;
+    return Math.exp(logFactorial(n) - logFactorial(k) - logFactorial(n - k));
+  }
+
+  function poissonPmf(k, lambda){
+    return Math.exp(-lambda + k * Math.log(lambda) - logFactorial(k));
+  }
+
+  // --- definición de cada distribución: parámetros, rangos de sliders, pmf, media/varianza ---
+  var DISTS = {
+    uniforme: {
+      label: "Uniforme discreta",
+      params: [
+        { key: "N", label: "N", min: 2, max: 20, step: 1, value: 6 }
+      ],
+      pmf: function(p){
+        var N = p.N, ks = [], vals = [];
+        for (var k = 1; k <= N; k++){ ks.push(k); vals.push(1 / N); }
+        return { ks: ks, vals: vals, truncated: false };
+      },
+      mean: function(p){ return (p.N + 1) / 2; },
+      variance: function(p){ return (p.N * p.N - 1) / 12; }
+    },
+    bernoulli: {
+      label: "Bernoulli",
+      params: [
+        { key: "p", label: "p", min: 0.01, max: 0.99, step: 0.01, value: 0.5 }
+      ],
+      pmf: function(p){
+        return { ks: [0, 1], vals: [1 - p.p, p.p], truncated: false };
+      },
+      mean: function(p){ return p.p; },
+      variance: function(p){ return p.p * (1 - p.p); }
+    },
+    binomial: {
+      label: "Binomial",
+      params: [
+        { key: "n", label: "n", min: 1, max: 50, step: 1, value: 10 },
+        { key: "p", label: "p", min: 0.01, max: 0.99, step: 0.01, value: 0.2 }
+      ],
+      pmf: function(p){
+        var n = p.n, pp = p.p, ks = [], vals = [];
+        for (var k = 0; k <= n; k++){
+          ks.push(k);
+          vals.push(choose(n, k) * Math.pow(pp, k) * Math.pow(1 - pp, n - k));
+        }
+        return { ks: ks, vals: vals, truncated: false };
+      },
+      mean: function(p){ return p.n * p.p; },
+      variance: function(p){ return p.n * p.p * (1 - p.p); }
+    },
+    poisson: {
+      label: "Poisson",
+      params: [
+        { key: "lambda", label: "λ", min: 0.1, max: 20, step: 0.1, value: 2 }
+      ],
+      pmf: function(p){
+        var lambda = p.lambda, ks = [], vals = [], cum = 0, k = 0, truncated = false;
+        while (true){
+          var v = poissonPmf(k, lambda);
+          ks.push(k); vals.push(v); cum += v;
+          k++;
+          if (ks.length >= MAX_BARS){ truncated = cum < TAIL_CUTOFF; break; }
+          if (cum >= TAIL_CUTOFF && k > lambda) break;
+        }
+        return { ks: ks, vals: vals, truncated: truncated, coverage: cum };
+      },
+      mean: function(p){ return p.lambda; },
+      variance: function(p){ return p.lambda; }
+    },
+    hipergeometrica: {
+      label: "Hipergeométrica",
+      params: [
+        { key: "N", label: "N", min: 5, max: 60, step: 1, value: 25 },
+        { key: "R", label: "R", min: 0, max: 60, step: 1, value: 5 },
+        { key: "n", label: "n", min: 1, max: 60, step: 1, value: 4 }
+      ],
+      clamp: function(p){
+        p.R = Math.min(p.R, p.N);
+        p.n = Math.min(p.n, p.N);
+        return p;
+      },
+      pmf: function(p){
+        var N = p.N, R = p.R, n = p.n;
+        var kmin = Math.max(0, n - (N - R)), kmax = Math.min(n, R);
+        var ks = [], vals = [];
+        var denom = choose(N, n);
+        for (var k = kmin; k <= kmax; k++){
+          ks.push(k);
+          vals.push(denom > 0 ? (choose(R, k) * choose(N - R, n - k)) / denom : 0);
+        }
+        return { ks: ks, vals: vals, truncated: false };
+      },
+      mean: function(p){ return p.n * p.R / p.N; },
+      variance: function(p){
+        var N = p.N, R = p.R, n = p.n;
+        if (N <= 1) return 0;
+        var frac = R / N;
+        return n * frac * (1 - frac) * (N - n) / (N - 1);
+      }
+    },
+    geometrica: {
+      label: "Geométrica",
+      params: [
+        { key: "p", label: "p", min: 0.01, max: 0.99, step: 0.01, value: 0.3 }
+      ],
+      pmf: function(p){
+        var pp = p.p, ks = [], vals = [], cum = 0, k = 1, truncated = false;
+        while (true){
+          var v = pp * Math.pow(1 - pp, k - 1);
+          ks.push(k); vals.push(v); cum += v;
+          k++;
+          if (ks.length >= MAX_BARS){ truncated = cum < TAIL_CUTOFF; break; }
+          if (cum >= TAIL_CUTOFF) break;
+        }
+        return { ks: ks, vals: vals, truncated: truncated, coverage: cum };
+      },
+      mean: function(p){ return 1 / p.p; },
+      variance: function(p){ return (1 - p.p) / (p.p * p.p); }
+    },
+    binomialneg: {
+      label: "Binomial negativa",
+      params: [
+        { key: "r", label: "r", min: 1, max: 15, step: 1, value: 3 },
+        { key: "p", label: "p", min: 0.01, max: 0.99, step: 0.01, value: 0.3 }
+      ],
+      pmf: function(p){
+        var r = p.r, pp = p.p, ks = [], vals = [], cum = 0, k = r, truncated = false;
+        while (true){
+          var v = choose(k - 1, r - 1) * Math.pow(pp, r) * Math.pow(1 - pp, k - r);
+          ks.push(k); vals.push(v); cum += v;
+          k++;
+          if (ks.length >= MAX_BARS){ truncated = cum < TAIL_CUTOFF; break; }
+          if (cum >= TAIL_CUTOFF) break;
+        }
+        return { ks: ks, vals: vals, truncated: truncated, coverage: cum };
+      },
+      mean: function(p){ return p.r / p.p; },
+      variance: function(p){ return p.r * (1 - p.p) / (p.p * p.p); }
+    }
+  };
+
+  var distSelect = document.getElementById('dist-select');
+  var paramsPanel = document.getElementById('params-panel');
+  var btnMasa = document.getElementById('btn-masa');
+  var btnAcum = document.getElementById('btn-acum');
+  var statMean = document.getElementById('stat-mean');
+  var statVar = document.getElementById('stat-var');
+  var statSupport = document.getElementById('stat-support');
+  var notice = document.getElementById('notice');
+  var canvas = document.getElementById('chart');
+  var ctx = canvas.getContext('2d');
+
+  var currentDist = 'binomial';
+  var view = 'masa';
+  var paramValues = {};
+
+  function initParamValues(distKey){
+    var def = DISTS[distKey];
+    var vals = {};
+    def.params.forEach(function(p){ vals[p.key] = p.value; });
+    return vals;
+  }
+
+  paramValues = initParamValues(currentDist);
+
+  function buildParamsPanel(){
+    var def = DISTS[currentDist];
+    paramsPanel.innerHTML = '';
+    def.params.forEach(function(p){
+      var group = document.createElement('div');
+      group.className = 'control-group';
+
+      var lbl = document.createElement('label');
+      lbl.textContent = p.label;
+      lbl.setAttribute('for', 'param-' + p.key);
+
+      var input = document.createElement('input');
+      input.type = 'range';
+      input.id = 'param-' + p.key;
+      input.min = p.min;
+      input.max = p.max;
+      input.step = p.step;
+      input.value = paramValues[p.key];
+
+      var out = document.createElement('span');
+      out.className = 'param-value mono';
+      out.id = 'param-out-' + p.key;
+      out.textContent = formatParam(paramValues[p.key], p.step);
+
+      input.addEventListener('input', function(){
+        var v = parseFloat(input.value);
+        paramValues[p.key] = v;
+        if (def.clamp){
+          paramValues = def.clamp(paramValues);
+          def.params.forEach(function(pp){
+            var el = document.getElementById('param-' + pp.key);
+            var elOut = document.getElementById('param-out-' + pp.key);
+            if (el){ el.value = paramValues[pp.key]; elOut.textContent = formatParam(paramValues[pp.key], pp.step); }
+          });
+        }
+        out.textContent = formatParam(paramValues[p.key], p.step);
+        update();
+      });
+
+      group.appendChild(lbl);
+      group.appendChild(input);
+      group.appendChild(out);
+      paramsPanel.appendChild(group);
+    });
+  }
+
+  function formatParam(v, step){
+    if (step >= 1) return String(Math.round(v));
+    return v.toFixed(2);
+  }
+
+  function formatNumber(v){
+    if (!isFinite(v)) return '—';
+    if (Math.abs(v) < 1e-9) return '0';
+    return v.toFixed(3).replace(/\.?0+$/, '');
+  }
+
+  function update(){
+    var def = DISTS[currentDist];
+    var result = def.pmf(paramValues);
+    var ks = result.ks, vals = result.vals;
+
+    var mean = def.mean(paramValues);
+    var variance = def.variance(paramValues);
+    statMean.textContent = formatNumber(mean);
+    statVar.textContent = formatNumber(variance);
+    statSupport.textContent = ks[0] + ' … ' + ks[ks.length - 1] + ' (' + ks.length + ' valores)';
+
+    if (result.truncated){
+      var pct = (result.coverage * 100).toFixed(1);
+      notice.textContent = 'Cola truncada para poder graficar: se muestran los primeros ' + ks.length + ' valores, que cubren ' + pct + '% de la probabilidad total.';
+    } else {
+      notice.textContent = '';
+    }
+
+    draw(ks, vals);
+  }
+
+  function resizeCanvas(){
+    var rect = canvas.parentElement.getBoundingClientRect();
+    var dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    update();
+  }
+
+  function draw(ks, vals){
+    if (!ks || ks.length === 0) return;
+
+    var rect = canvas.parentElement.getBoundingClientRect();
+    var w = rect.width, h = rect.height;
+    ctx.clearRect(0, 0, w, h);
+
+    var padL = 40, padR = 14, padT = 12, padB = 26;
+    var plotW = w - padL - padR;
+    var plotH = h - padT - padB;
+
+    var n = ks.length;
+    var barW = plotW / n;
+
+    var cdf = [];
+    var acc = 0;
+    for (var i = 0; i < n; i++){ acc += vals[i]; cdf.push(acc); }
+
+    var yMax = view === 'masa' ? Math.max.apply(null, vals) * 1.2 : 1;
+
+    ctx.strokeStyle = '#e6e8e5';
+    ctx.lineWidth = 1;
+    var gridLines = 4;
+    for (var gy = 0; gy <= gridLines; gy++){
+      var y = padT + plotH * (gy / gridLines);
+      ctx.beginPath();
+      ctx.moveTo(padL, y);
+      ctx.lineTo(padL + plotW, y);
+      ctx.stroke();
+    }
+
+    ctx.fillStyle = '#8a8d89';
+    ctx.font = '10px ui-monospace, monospace';
+    ctx.textAlign = 'right';
+    for (var gy2 = 0; gy2 <= gridLines; gy2++){
+      var val = yMax * (1 - gy2 / gridLines);
+      var yy = padT + plotH * (gy2 / gridLines);
+      ctx.fillText(val.toFixed(view === 'masa' ? 3 : 2), padL - 6, yy + 3);
+    }
+
+    ctx.strokeStyle = '#c3c6c1';
+    ctx.beginPath();
+    ctx.moveTo(padL, padT);
+    ctx.lineTo(padL, padT + plotH);
+    ctx.lineTo(padL + plotW, padT + plotH);
+    ctx.stroke();
+
+    var color = view === 'masa' ? getComputedStyle(document.documentElement).getPropertyValue('--masa').trim()
+                                 : getComputedStyle(document.documentElement).getPropertyValue('--acum').trim();
+
+    if (view === 'masa'){
+      ctx.fillStyle = color;
+      for (var j = 0; j < n; j++){
+        var barH = (vals[j] / yMax) * plotH;
+        var x = padL + j * barW;
+        ctx.fillRect(x + barW * 0.12, padT + plotH - barH, barW * 0.76, barH);
+      }
+    } else {
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      var prevY = padT + plotH;
+      for (var k = 0; k < n; k++){
+        var xL = padL + k * barW;
+        var xR = padL + (k + 1) * barW;
+        var yLevel = padT + plotH * (1 - cdf[k] / yMax);
+        ctx.moveTo(xL, prevY);
+        ctx.lineTo(xL, yLevel);
+        ctx.lineTo(xR, yLevel);
+        prevY = yLevel;
+      }
+      ctx.stroke();
+    }
+
+    // etiquetas del eje x: no todas si hay demasiadas categorías
+    ctx.fillStyle = '#8a8d89';
+    ctx.textAlign = 'center';
+    ctx.font = '10px ui-monospace, monospace';
+    var labelEvery = Math.max(1, Math.ceil(n / 14));
+    for (var m = 0; m < n; m += labelEvery){
+      var xc = padL + m * barW + barW / 2;
+      ctx.fillText(String(ks[m]), xc, padT + plotH + 14);
+    }
+  }
+
+  function setView(v){
+    view = v;
+    btnMasa.classList.toggle('active', v === 'masa');
+    btnAcum.classList.toggle('active', v === 'acumulada');
+    update();
+  }
+
+  distSelect.addEventListener('change', function(){
+    currentDist = distSelect.value;
+    paramValues = initParamValues(currentDist);
+    buildParamsPanel();
+    update();
+  });
+
+  btnMasa.addEventListener('click', function(){ setView('masa'); });
+  btnAcum.addEventListener('click', function(){ setView('acumulada'); });
+
+  window.addEventListener('resize', resizeCanvas);
+
+  buildParamsPanel();
+  resizeCanvas();
+})();
+</script>
+
+</body>
+</html>

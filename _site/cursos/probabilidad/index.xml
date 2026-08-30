@@ -15,7 +15,804 @@
 <link>https://arturosanjuan.xyz/cursos/probabilidad/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Sat, 29 Aug 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 05 Sep 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Variables aleatorias discretas</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/probabilidad/vadiscretas/</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="repaso-de-la-distribución-a-la-función-de-masa" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="repaso-de-la-distribución-a-la-función-de-masa"><span class="header-section-number">1</span> Repaso: de la distribución a la función de masa</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Repase las definiciones de variable aleatoria discreta y de variable aleatoria continua, la definición de función de masa (función de probabilidad), y cómo se reconstruye la función de masa a partir de la función de distribución en el caso discreto. Vea la sección de <a href="../../../cursos/probabilidad/vaintro/index.html">variables aleatorias</a> y el libro de Blanco Castañeda.</p>
+</div>
+</div>
+<p>Recordemos el hecho central: si <img src="https://latex.codecogs.com/png.latex?X"> es discreta, <img src="https://latex.codecogs.com/png.latex?F_X"> solo puede tener a lo más una cantidad numerable de saltos, y el salto en cada punto <img src="https://latex.codecogs.com/png.latex?x"> es exactamente <img src="https://latex.codecogs.com/png.latex?P(X=x)%20=%20F_X(x)-F_X(x%5E-)"> (corolario 2.25, parte 6, visto en la sección anterior). Esto permite pasar de <img src="https://latex.codecogs.com/png.latex?F_X"> a la función de masa sin perder información: basta con localizar los puntos de discontinuidad y medir el tamaño de cada salto.</p>
+</section>
+<section id="el-teorema-de-descomposición-de-jordan" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="el-teorema-de-descomposición-de-jordan"><span class="header-section-number">2</span> El teorema de descomposición de Jordan</h2>
+<p>No toda función de distribución es puramente discreta ni puramente continua. El teorema siguiente muestra que, en general, cualquier función de distribución se descompone como combinación convexa de una parte discreta y una parte continua.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema (descomposición de Jordan)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Teorema (descomposición de Jordan)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sea <img src="https://latex.codecogs.com/png.latex?F"> una función de distribución arbitraria. Entonces existen <img src="https://latex.codecogs.com/png.latex?%5Calpha%5Cin%5B0,1%5D">, una función de distribución discreta <img src="https://latex.codecogs.com/png.latex?F_d"> y una función de distribución continua <img src="https://latex.codecogs.com/png.latex?F_c"> tales que</p>
+<p><img src="https://latex.codecogs.com/png.latex?F%20=%20%5Calpha%20F_d%20+%20(1-%5Calpha)%20F_c"></p>
+</div>
+</div>
+<p><strong>Demostración.</strong> Toda función monótona tiene a lo más una cantidad numerable de discontinuidades (hecho estándar de análisis real); en particular, <img src="https://latex.codecogs.com/png.latex?F"> tiene a lo más una cantidad numerable de saltos. Sean <img src="https://latex.codecogs.com/png.latex?x_1,x_2,%5Cldots"> los puntos donde <img src="https://latex.codecogs.com/png.latex?F"> salta, y sea</p>
+<p><img src="https://latex.codecogs.com/png.latex?p_n%20:=%20F(x_n)-F(x_n%5E-)"></p>
+<p>la magnitud del salto en <img src="https://latex.codecogs.com/png.latex?x_n">. Como <img src="https://latex.codecogs.com/png.latex?F"> es no decreciente y acotada entre <img src="https://latex.codecogs.com/png.latex?0"> y <img src="https://latex.codecogs.com/png.latex?1">, la serie <img src="https://latex.codecogs.com/png.latex?%5Csum_n%20p_n"> converge; definimos <img src="https://latex.codecogs.com/png.latex?%5Calpha:=%5Csum_n%20p_n%5Cin%5B0,1%5D">.</p>
+<p>Si <img src="https://latex.codecogs.com/png.latex?%5Calpha=0"> no hay saltos y <img src="https://latex.codecogs.com/png.latex?F"> ya es continua (<img src="https://latex.codecogs.com/png.latex?F_c:=F">). Si <img src="https://latex.codecogs.com/png.latex?%5Calpha%3E0">, definimos</p>
+<p><img src="https://latex.codecogs.com/png.latex?F_d(x)%20:=%20%5Calpha%5E%7B-1%7D%5Csum_%7Bx_n%5Cle%20x%7D%20p_n"></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Verifique que <img src="https://latex.codecogs.com/png.latex?F_d">, definida así, es en efecto una función de distribución discreta: que es no decreciente, continua a derecha, y que <img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bx%5Cto-%5Cinfty%7DF_d(x)=0">, <img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bx%5Cto%5Cinfty%7DF_d(x)=1">.</p>
+</div>
+</div>
+<p>Si <img src="https://latex.codecogs.com/png.latex?%5Calpha=1"> entonces <img src="https://latex.codecogs.com/png.latex?F=F_d"> y ya terminamos. Si <img src="https://latex.codecogs.com/png.latex?%5Calpha%3C1">, definimos</p>
+<p><img src="https://latex.codecogs.com/png.latex?F_c(x)%20:=%20%5Cfrac%7BF(x)-%5Calpha%20F_d(x)%7D%7B1-%5Calpha%7D"></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Verifique que <img src="https://latex.codecogs.com/png.latex?F_c"> es una función de distribución continua: en particular, que no tiene saltos, es decir, que en cada <img src="https://latex.codecogs.com/png.latex?x_n"> el salto de <img src="https://latex.codecogs.com/png.latex?F"> queda enteramente absorbido por <img src="https://latex.codecogs.com/png.latex?%5Calpha%20F_d">.</p>
+</div>
+</div>
+<p>En cualquier caso, <img src="https://latex.codecogs.com/png.latex?F=%5Calpha%20F_d+(1-%5Calpha)F_c">, lo que demuestra el teorema. <img src="https://latex.codecogs.com/png.latex?%5Cblacksquare"></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Qué dice realmente el teorema">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Qué dice realmente el teorema
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El teorema no dice que toda variable aleatoria sea “mitad discreta, mitad continua”. Dice que la parte discreta de cualquier distribución (sus saltos) se puede aislar por completo, y que lo que queda después de retirarle esa parte es necesariamente continuo. La constante <img src="https://latex.codecogs.com/png.latex?%5Calpha"> mide qué tanto de la probabilidad total vive en los saltos.</p>
+</div>
+</div>
+<section id="ejemplo-una-distribución-mixta" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="ejemplo-una-distribución-mixta"><span class="header-section-number">2.1</span> Ejemplo: una distribución mixta</h3>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sea <img src="https://latex.codecogs.com/png.latex?X"> una variable aleatoria con función de distribución</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AF(x)%20=%0A%5Cbegin%7Bcases%7D%0A0%20&amp;%20x%3C1%5C%5C%0A%5Cdfrac12+%5Cdfrac%7Bx-1%7D%7B4%7D%20&amp;%201%5Cle%20x%3C2%5C%5C%0A1%20&amp;%20x%5Cge%202%0A%5Cend%7Bcases%7D%0A"></p>
+<p><img src="https://latex.codecogs.com/png.latex?F"> tiene un salto en <img src="https://latex.codecogs.com/png.latex?x=1"> de magnitud <img src="https://latex.codecogs.com/png.latex?1/2"> y otro en <img src="https://latex.codecogs.com/png.latex?x=2"> de magnitud <img src="https://latex.codecogs.com/png.latex?1/4"> (pues <img src="https://latex.codecogs.com/png.latex?F(2%5E-)=3/4"> y <img src="https://latex.codecogs.com/png.latex?F(2)=1">). Así, <img src="https://latex.codecogs.com/png.latex?%5Calpha=1/2+1/4=3/4">.</p>
+<p><strong>Parte discreta.</strong></p>
+<p><img src="https://latex.codecogs.com/png.latex?F_d(x)%20=%20%5Cbegin%7Bcases%7D%200%20&amp;%20x%3C1%20%5C%5C%20(1/2)/(3/4)=2/3%20&amp;%201%5Cle%20x%3C2%20%5C%5C%201%20&amp;%20x%5Cge%202%5Cend%7Bcases%7D"></p>
+<p>La función de masa asociada es <img src="https://latex.codecogs.com/png.latex?P_d(X%7B=%7D1)=F_d(1)=2/3"> y <img src="https://latex.codecogs.com/png.latex?P_d(X%7B=%7D2)=1-2/3=1/3">.</p>
+<p><strong>Parte continua.</strong> Para <img src="https://latex.codecogs.com/png.latex?1%5Cle%20x%3C2">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?F_c(x)%20=%20%5Cfrac%7BF(x)-%5Ctfrac34%20F_d(x)%7D%7B%5Ctfrac14%7D%20=%20%5Cfrac%7B%5Cleft(%5Ctfrac12+%5Ctfrac%7Bx-1%7D4%5Cright)-%5Ctfrac34%5Ccdot%5Ctfrac23%7D%7B%5Ctfrac14%7D%20=%20%5Cfrac%7B(x-1)/4%7D%7B1/4%7D%20=%20x-1"></p>
+<p>es decir, <img src="https://latex.codecogs.com/png.latex?F_c"> es la función de distribución uniforme en <img src="https://latex.codecogs.com/png.latex?%5B1,2%5D">: no tiene saltos, tal como exige el teorema.</p>
+<p><strong>Verificación:</strong> <img src="https://latex.codecogs.com/png.latex?%5Ctfrac34%20F_d(x)+%5Ctfrac14%20F_c(x)%20=%20%5Ctfrac34%5Ccdot%5Ctfrac23+%5Ctfrac14(x-1)%20=%20%5Ctfrac12+%5Ctfrac%7Bx-1%7D4%20=%20F(x)"> para <img src="https://latex.codecogs.com/png.latex?1%5Cle%20x%3C2">. ✓</p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">F <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(x) <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ifelse</span>(x <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ifelse</span>(x <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> (x <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">curve</span>(F, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">from =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">to =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">n =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"steelblue"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lwd =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,</span>
+<span id="cb1-3">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xlab =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"x"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ylab =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"F(x)"</span>)</span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">points</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>), <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pch =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">19</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"firebrick"</span>)</span>
+<span id="cb1-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">points</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>), <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pch =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"firebrick"</span>)</span>
+<span id="cb1-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">abline</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">h =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lty =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gray60"</span>)</span></code></pre></div></div>
+<div class="cell-output-display">
+<div id="fig-F-mixta" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-F-mixta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/probabilidad/vadiscretas/index_files/figure-html/fig-F-mixta-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-F-mixta-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Función de distribución mixta del ejemplo, con salto de 1/2 en x=1, tramo uniforme en [1,2] y salto de 1/4 en x=2
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="algunas-distribuciones-discretas-notables" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="algunas-distribuciones-discretas-notables"><span class="header-section-number">3</span> Algunas distribuciones discretas notables</h2>
+<p>En esta sección repasamos las distribuciones discretas de uso más frecuente. En todos los casos, la función de masa se deduce contando: se trata siempre de identificar cuántos resultados elementales, en algún espacio de Laplace subyacente, producen cada valor de la variable.</p>
+<section id="uniforme-discreta" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="uniforme-discreta"><span class="header-section-number">3.1</span> Uniforme discreta</h3>
+<p>Ya la conocemos: si <img src="https://latex.codecogs.com/png.latex?X"> toma cada uno de los valores <img src="https://latex.codecogs.com/png.latex?1,%5Cldots,N"> con la misma probabilidad, <img src="https://latex.codecogs.com/png.latex?P(X=k)=1/N">. Es la traducción directa, en el lenguaje de variables aleatorias, del modelo de Laplace visto en la sección de <a href="../../../cursos/probabilidad/calculoprobabilidades/index.html">cálculo de probabilidades</a>.</p>
+</section>
+<section id="bernoulli" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="bernoulli"><span class="header-section-number">3.2</span> Bernoulli</h3>
+<p>Si un ensayo aleatorio tiene solo dos resultados posibles, éxito y fracaso, con <img src="https://latex.codecogs.com/png.latex?P(%5Ctext%7B%C3%A9xito%7D)=p">, la variable indicadora del éxito tiene distribución <strong>Bernoulli</strong> de parámetro <img src="https://latex.codecogs.com/png.latex?p">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X=x)%20=%20p%5Ex(1-p)%5E%7B1-x%7D,%20%5Cqquad%20x=0,1"></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Lanzar una moneda corriente y llamar éxito a obtener cara: <img src="https://latex.codecogs.com/png.latex?p=1/2">. Lanzar un dado corriente y llamar éxito a obtener un 2: <img src="https://latex.codecogs.com/png.latex?p=1/6">.</p>
+</div>
+</div>
+</section>
+<section id="binomial" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="binomial"><span class="header-section-number">3.3</span> Binomial</h3>
+<p>Si repetimos <img src="https://latex.codecogs.com/png.latex?n"> veces, de forma independiente, un ensayo de Bernoulli con probabilidad de éxito <img src="https://latex.codecogs.com/png.latex?p">, y <img src="https://latex.codecogs.com/png.latex?X"> cuenta el número total de éxitos, entonces <img src="https://latex.codecogs.com/png.latex?X"> tiene distribución <strong>binomial</strong> de parámetros <img src="https://latex.codecogs.com/png.latex?n"> y <img src="https://latex.codecogs.com/png.latex?p">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X=k)%20=%20%5Cbinom%7Bn%7D%7Bk%7Dp%5Ek(1-p)%5E%7Bn-k%7D,%20%5Cqquad%20k=0,1,%5Cldots,n"></p>
+<p>El coeficiente <img src="https://latex.codecogs.com/png.latex?%5Cbinom%20nk"> cuenta todas las formas de elegir cuáles de los <img src="https://latex.codecogs.com/png.latex?n"> ensayos resultan exitosos; una vez elegidos, la probabilidad de esa secuencia particular es <img src="https://latex.codecogs.com/png.latex?p%5Ek(1-p)%5E%7Bn-k%7D"> por independencia.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Es, en efecto, una función de masa">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Es, en efecto, una función de masa
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Por el teorema del binomio de Newton,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bk=0%7D%5En%20%5Cbinom%20nk%20p%5Ek(1-p)%5E%7Bn-k%7D%20=%20%5Cbig(p+(1-p)%5Cbig)%5En%20=%201"></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo: examen de opción múltiple">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo: examen de opción múltiple
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un examen de opción múltiple tiene <img src="https://latex.codecogs.com/png.latex?10"> preguntas, cada una con <img src="https://latex.codecogs.com/png.latex?5"> opciones. Un estudiante contesta al azar. ¿Cuál es la probabilidad de pasar, si pasar requiere al menos <img src="https://latex.codecogs.com/png.latex?6"> respuestas correctas?</p>
+<p>Cada pregunta es un ensayo de Bernoulli con <img src="https://latex.codecogs.com/png.latex?p=1/5">. Si <img src="https://latex.codecogs.com/png.latex?K"> es el número de respuestas correctas, <img src="https://latex.codecogs.com/png.latex?K%5Csim%20B(10,1/5)"> y</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(K%5Cge6)%20=%201-P(K%5Cle5)%20=%201-%5Csum_%7Bk=0%7D%5E%7B5%7D%5Cbinom%7B10%7D%7Bk%7D%5CBig(%5Cfrac15%5CBig)%5Ek%5CBig(%5Cfrac45%5CBig)%5E%7B10-k%7D%20=%20%5Cfrac%7B62201%7D%7B9765625%7D%5Capprox0%7B,%7D637%5C%25"></p>
+<p>En R, <code>1 - pbinom(5, 10, 1/5)</code> (equivalentemente, <code>pbinom(5, 10, 1/5, lower.tail = FALSE)</code>).</p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">k <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span></span>
+<span id="cb2-2">p <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dbinom</span>(k, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">prob =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>)</span>
+<span id="cb2-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">barplot</span>(p, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">names.arg =</span> k, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ifelse</span>(k <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"firebrick"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"steelblue"</span>),</span>
+<span id="cb2-4">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">border =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xlab =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"k"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ylab =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"P(K = k)"</span>)</span></code></pre></div></div>
+<div class="cell-output-display">
+<div id="fig-binom-examen" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-binom-examen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/probabilidad/vadiscretas/index_files/figure-html/fig-binom-examen-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-binom-examen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Función de masa de B(10, 1/5): en rojo, la región P(K≥6) que corresponde a pasar el examen adivinando
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="poisson-como-límite-de-la-binomial" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="poisson-como-límite-de-la-binomial"><span class="header-section-number">3.4</span> Poisson, como límite de la binomial</h3>
+<p>¿Qué ocurre con la binomial cuando <img src="https://latex.codecogs.com/png.latex?n%5Cto%5Cinfty"> y <img src="https://latex.codecogs.com/png.latex?p%5Cto0"> de tal manera que el número esperado de éxitos <img src="https://latex.codecogs.com/png.latex?np"> se mantiene fijo, digamos <img src="https://latex.codecogs.com/png.latex?np=%5Clambda">?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema (Poisson como límite de la binomial)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Teorema (Poisson como límite de la binomial)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si <img src="https://latex.codecogs.com/png.latex?p(n)%5Cto0"> y <img src="https://latex.codecogs.com/png.latex?np(n)%5Cto%5Clambda"> cuando <img src="https://latex.codecogs.com/png.latex?n%5Cto%5Cinfty">, entonces para cada <img src="https://latex.codecogs.com/png.latex?k"> fijo,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbinom%20nk%20p(n)%5Ek(1-p(n))%5E%7Bn-k%7D%20%5Cxrightarrow%5Bn%5Cto%5Cinfty%5D%7B%7D%20%5Cfrac%7B%5Clambda%5Ek%7D%7Bk!%7De%5E%7B-%5Clambda%7D"></p>
+</div>
+</div>
+<p><strong>Idea de la demostración.</strong> Escribiendo <img src="https://latex.codecogs.com/png.latex?p=p(n)"> y usando <img src="https://latex.codecogs.com/png.latex?np%5Cto%5Clambda">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbinom%20nk%20p%5Ek(1-p)%5E%7Bn-k%7D%20=%20%5Cfrac%7Bn(n-1)%5Ccdots(n-k+1)%7D%7Bn%5Ek%7D%5Ccdot%5Cfrac%7B(np)%5Ek%7D%7Bk!%7D%5Ccdot%5CBig(1-%5Cfrac%7Bnp%7D%7Bn%7D%5CBig)%5E%7Bn-k%7D"></p>
+<p>El primer factor tiende a <img src="https://latex.codecogs.com/png.latex?1"> (es un producto de <img src="https://latex.codecogs.com/png.latex?k"> términos, cada uno de la forma <img src="https://latex.codecogs.com/png.latex?1-j/n%5Cto1">), el segundo tiende a <img src="https://latex.codecogs.com/png.latex?%5Clambda%5Ek/k!">, y el tercero tiende a <img src="https://latex.codecogs.com/png.latex?e%5E%7B-%5Clambda%7D"> (el límite clásico <img src="https://latex.codecogs.com/png.latex?(1-%5Clambda/n)%5En%5Cto%20e%5E%7B-%5Clambda%7D">; cambiar el exponente de <img src="https://latex.codecogs.com/png.latex?n"> a <img src="https://latex.codecogs.com/png.latex?n-k"> no afecta el límite). <img src="https://latex.codecogs.com/png.latex?%5Cblacksquare"></p>
+<p>Esto motiva la definición: <img src="https://latex.codecogs.com/png.latex?X"> tiene distribución <strong>Poisson</strong> de parámetro <img src="https://latex.codecogs.com/png.latex?%5Clambda%3E0"> si</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X=k)%20=%20%5Cfrac%7B%5Clambda%5Ek%7D%7Bk!%7De%5E%7B-%5Clambda%7D,%20%5Cqquad%20k=0,1,2,%5Cldots"></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Verifique que, en efecto, <img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bk=0%7D%5E%5Cinfty%5Cfrac%7B%5Clambda%5Ek%7D%7Bk!%7De%5E%7B-%5Clambda%7D=1"> (use la serie de Taylor de <img src="https://latex.codecogs.com/png.latex?e%5E%5Clambda">).</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Nota histórica">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Nota histórica
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Poisson presentó esta distribución en 1837, en su tratado <em>Recherches sur la probabilité des jugements en matière criminelle et en matière civile</em>, en el contexto de estimar la probabilidad de error en veredictos de jurados.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo: la sala de cómputo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo: la sala de cómputo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En una sala de cómputo hay <img src="https://latex.codecogs.com/png.latex?20"> computadores. En horas pico, la probabilidad de que un computador esté ocupado es <img src="https://latex.codecogs.com/png.latex?0%7B,%7D9">. ¿Cuál es la probabilidad de encontrar al menos un computador desocupado?</p>
+<p><strong>Cálculo exacto.</strong> Sea <img src="https://latex.codecogs.com/png.latex?X"> el número de computadores ocupados; <img src="https://latex.codecogs.com/png.latex?X%5Csim%20B(20,0%7B,%7D9)">, y “ningún computador desocupado” es el evento <img src="https://latex.codecogs.com/png.latex?X=20">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(%5Ctext%7Btodos%20ocupados%7D)%20=%200%7B,%7D9%5E%7B20%7D%5Capprox0%7B,%7D1216%20%5Cqquad%5CRightarrow%5Cqquad%20P(%5Ctext%7Bal%20menos%20uno%20libre%7D)%20%5Capprox0%7B,%7D8784"></p>
+<p><strong>Aproximación Poisson.</strong> Como lo raro aquí es que un computador esté libre (<img src="https://latex.codecogs.com/png.latex?p_%7B%5Ctext%7Blibre%7D%7D=0%7B,%7D1">), llamamos <img src="https://latex.codecogs.com/png.latex?Y"> al número de computadores libres, con <img src="https://latex.codecogs.com/png.latex?%5Clambda=np_%7B%5Ctext%7Blibre%7D%7D=20(0%7B,%7D1)=2">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(Y=0)%5Capprox%20e%5E%7B-2%7D%5Capprox0%7B,%7D1353%20%5Cqquad%5CRightarrow%5Cqquad%20P(Y%5Cge1)%5Capprox1-e%5E%7B-2%7D%5Capprox0%7B,%7D8647"></p>
+<p>La aproximación (<img src="https://latex.codecogs.com/png.latex?0%7B,%7D8647">) se acerca razonablemente al valor exacto (<img src="https://latex.codecogs.com/png.latex?0%7B,%7D8784">), aunque aquí <img src="https://latex.codecogs.com/png.latex?p=0%7B,%7D1"> no es tan pequeño ni <img src="https://latex.codecogs.com/png.latex?n=20"> tan grande como para que la aproximación sea excelente.</p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">x <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12</span></span>
+<span id="cb3-2">exacta <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dbinom</span>(x, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">prob =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span>)</span>
+<span id="cb3-3">aprox <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dpois</span>(x, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lambda =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb3-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot</span>(x, exacta, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"h"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lwd =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"steelblue"</span>,</span>
+<span id="cb3-5">     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xlab =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"número de computadores libres"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ylab =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"probabilidad"</span>)</span>
+<span id="cb3-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">points</span>(x <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.15</span>, aprox, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"h"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lwd =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"firebrick"</span>)</span>
+<span id="cb3-7"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">legend</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"topright"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">legend =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Binomial(20, 0.1) exacta"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Poisson(2) aproximada"</span>),</span>
+<span id="cb3-8">       <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"steelblue"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"firebrick"</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lwd =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">bty =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"n"</span>)</span></code></pre></div></div>
+<div class="cell-output-display">
+<div id="fig-binom-poisson-computadores" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-binom-poisson-computadores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/probabilidad/vadiscretas/index_files/figure-html/fig-binom-poisson-computadores-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-binom-poisson-computadores-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: Binomial(20, 0.1) exacta (azul) contra su aproximación Poisson(2) (rojo), para el número de computadores libres
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicios del libro">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicios del libro
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Haga los ejercicios de la sección 3.4 del libro de Blanco relacionados con binomial y Poisson.</p>
+</div>
+</div>
+</section>
+<section id="hipergeométrica" class="level3" data-number="3.5">
+<h3 data-number="3.5" class="anchored" data-anchor-id="hipergeométrica"><span class="header-section-number">3.5</span> Hipergeométrica</h3>
+<p>Volvamos al modelo de urnas, pero ahora sin reemplazo. Si una urna tiene <img src="https://latex.codecogs.com/png.latex?N"> bolas, <img src="https://latex.codecogs.com/png.latex?R"> de un color (éxito) y <img src="https://latex.codecogs.com/png.latex?N-R"> de otro, y extraemos una muestra de tamaño <img src="https://latex.codecogs.com/png.latex?n"> sin reemplazo, el número <img src="https://latex.codecogs.com/png.latex?X"> de bolas de éxito en la muestra tiene distribución <strong>hipergeométrica</strong> de parámetros <img src="https://latex.codecogs.com/png.latex?n">, <img src="https://latex.codecogs.com/png.latex?R">, <img src="https://latex.codecogs.com/png.latex?N">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X=k)%20=%20%5Cfrac%7B%5Cbinom%20Rk%5Cbinom%7BN-R%7D%7Bn-k%7D%7D%7B%5Cbinom%20Nn%7D,%20%5Cqquad%20k=0,1,%5Cldots,n"></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea: verifique que es una función de masa">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea: verifique que es una función de masa
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Siga estos pasos para demostrar que <img src="https://latex.codecogs.com/png.latex?%5Csum_k%20P(X=k)=1">.</p>
+<ol type="1">
+<li>Aplique el teorema del binomio de Newton a la identidad <img src="https://latex.codecogs.com/png.latex?(1+z)%5ER(1+z)%5E%7BN-R%7D=(1+z)%5EN">.</li>
+<li>Iguale el coeficiente de <img src="https://latex.codecogs.com/png.latex?z%5En"> en ambos lados para obtener la identidad de Vandermonde: <img src="https://latex.codecogs.com/png.latex?%5Cbinom%20Nn%20=%20%5Csum_%7Bk=0%7D%5En%5Cbinom%20Rk%5Cbinom%7BN-R%7D%7Bn-k%7D">.</li>
+<li>Use esa identidad para concluir que <img src="https://latex.codecogs.com/png.latex?%5Csum_k%20P(X=k)=1">.</li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>De una urna con <img src="https://latex.codecogs.com/png.latex?25"> bolas numeradas del <img src="https://latex.codecogs.com/png.latex?1"> al <img src="https://latex.codecogs.com/png.latex?25"> se extraen <img src="https://latex.codecogs.com/png.latex?4"> bolas sin reemplazo. Usted apuesta a que al menos una de las cuatro tiene un número menor o igual a <img src="https://latex.codecogs.com/png.latex?5">. ¿Cuál es la probabilidad de ganar?</p>
+<p>Aquí <img src="https://latex.codecogs.com/png.latex?N=25">, <img src="https://latex.codecogs.com/png.latex?R=5"> (las bolas de éxito, numeradas de 1 a 5), <img src="https://latex.codecogs.com/png.latex?n=4">. Queremos <img src="https://latex.codecogs.com/png.latex?P(K%5Cge1)"> donde <img src="https://latex.codecogs.com/png.latex?K%5Csim%20Hg(4,5,25)">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(K=0)%20=%20%5Cfrac%7B%5Cbinom50%5Cbinom%7B20%7D%7B4%7D%7D%7B%5Cbinom%7B25%7D%7B4%7D%7D%20=%20%5Cfrac%7B969%7D%7B2530%7D%5Capprox0%7B,%7D383%20%5Cqquad%5CRightarrow%5Cqquad%20P(K%5Cge1)%20=%20%5Cfrac%7B1561%7D%7B2530%7D%5Capprox0%7B,%7D617"></p>
+<p>Es decir, aproximadamente <img src="https://latex.codecogs.com/png.latex?61%7B,%7D7%5C%25"> de probabilidad de ganar la apuesta.</p>
+</div>
+</div>
+</section>
+<section id="geométrica" class="level3" data-number="3.6">
+<h3 data-number="3.6" class="anchored" data-anchor-id="geométrica"><span class="header-section-number">3.6</span> Geométrica</h3>
+<p>Ahora cambiamos la pregunta: en vez de fijar el número de ensayos y contar éxitos, fijamos el número de éxitos deseado en <img src="https://latex.codecogs.com/png.latex?1"> y preguntamos cuántos ensayos hacen falta para conseguirlo. Si <img src="https://latex.codecogs.com/png.latex?X"> es el número de ensayos hasta el primer éxito (inclusive), con probabilidad de éxito <img src="https://latex.codecogs.com/png.latex?p"> en cada ensayo:</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X=k)%20=%20p(1-p)%5E%7Bk-1%7D,%20%5Cqquad%20k=1,2,%5Cldots"></p>
+<p>pues los primeros <img src="https://latex.codecogs.com/png.latex?k-1"> ensayos deben fallar y el <img src="https://latex.codecogs.com/png.latex?k">-ésimo debe tener éxito.</p>
+</section>
+<section id="binomial-negativa" class="level3" data-number="3.7">
+<h3 data-number="3.7" class="anchored" data-anchor-id="binomial-negativa"><span class="header-section-number">3.7</span> Binomial negativa</h3>
+<p>Generalizando: si <img src="https://latex.codecogs.com/png.latex?X"> es el número de ensayos necesarios para conseguir exactamente <img src="https://latex.codecogs.com/png.latex?r"> éxitos (el último ensayo es, por fuerza, un éxito, y los otros <img src="https://latex.codecogs.com/png.latex?r-1"> éxitos se reparten entre los primeros <img src="https://latex.codecogs.com/png.latex?k-1"> ensayos), <img src="https://latex.codecogs.com/png.latex?X"> tiene distribución <strong>binomial negativa</strong> de parámetros <img src="https://latex.codecogs.com/png.latex?r"> y <img src="https://latex.codecogs.com/png.latex?p">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X=k)%20=%20%5Cbinom%7Bk-1%7D%7Br-1%7Dp%5Er(1-p)%5E%7Bk-r%7D,%20%5Cqquad%20k=r,r+1,%5Cldots"></p>
+<p>La geométrica es el caso particular <img src="https://latex.codecogs.com/png.latex?r=1">.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea: verifique que es una función de masa">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea: verifique que es una función de masa
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Siga estos pasos para demostrar que <img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bk=r%7D%5E%5Cinfty%20P(X=k)=1">.</p>
+<ol type="1">
+<li>Cambie de variable <img src="https://latex.codecogs.com/png.latex?y:=k-r"> y reescriba la serie en términos de <img src="https://latex.codecogs.com/png.latex?y">, <img src="https://latex.codecogs.com/png.latex?r"> y <img src="https://latex.codecogs.com/png.latex?p">.</li>
+<li>Use la expansión en serie de Taylor de <img src="https://latex.codecogs.com/png.latex?(1-z)%5E%7B-r%7D"> alrededor de <img src="https://latex.codecogs.com/png.latex?z=0">, válida para <img src="https://latex.codecogs.com/png.latex?%7Cz%7C%3C1">: <img src="https://latex.codecogs.com/png.latex?(1-z)%5E%7B-r%7D%20=%20%5Csum_%7By=0%7D%5E%5Cinfty%5Cbinom%7By+r-1%7D%7Br-1%7Dz%5Ey">.</li>
+<li>Reemplace <img src="https://latex.codecogs.com/png.latex?z"> por <img src="https://latex.codecogs.com/png.latex?1-p"> y compare con la serie del paso 1.</li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo: una meta de ventas">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo: una meta de ventas
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un vendedor cierra una venta con probabilidad <img src="https://latex.codecogs.com/png.latex?0%7B,%7D3"> en cada llamada, de forma independiente. Su meta es lograr <img src="https://latex.codecogs.com/png.latex?3"> ventas. ¿Cuál es la probabilidad de alcanzar la meta justo en la octava llamada?</p>
+<p>Aquí <img src="https://latex.codecogs.com/png.latex?r=3">, <img src="https://latex.codecogs.com/png.latex?p=0%7B,%7D3">, <img src="https://latex.codecogs.com/png.latex?k=8">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X=8)%20=%20%5Cbinom%7B7%7D%7B2%7D(0%7B,%7D3)%5E3(0%7B,%7D7)%5E5%20%5Capprox0%7B,%7D0953"></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Cuidado con la convención de R">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Cuidado con la convención de R
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>dnbinom(x, size, prob)</code> en R <strong>no</strong> cuenta el número de ensayos <img src="https://latex.codecogs.com/png.latex?k"> (la convención de esta sección), sino el número de fracasos antes del éxito número <code>size</code>. Para usarla con nuestra <img src="https://latex.codecogs.com/png.latex?X">, hay que pasarle <img src="https://latex.codecogs.com/png.latex?x=k-r">, no <img src="https://latex.codecogs.com/png.latex?k">.</p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">r <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span></span>
+<span id="cb4-2">p <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span></span>
+<span id="cb4-3">k <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span></span>
+<span id="cb4-4"></span>
+<span id="cb4-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># fórmula de esta sección: P(X = k) = C(k-1, r-1) p^r (1-p)^(k-r)</span></span>
+<span id="cb4-6">manual <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">choose</span>(k <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, r <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> p<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">^</span>r <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> p)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">^</span>(k <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> r)</span>
+<span id="cb4-7"></span>
+<span id="cb4-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># equivalente en R: dnbinom cuenta fracasos, así que x = k - r</span></span>
+<span id="cb4-9">r_base <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dnbinom</span>(k <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> r, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size =</span> r, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">prob =</span> p)</span>
+<span id="cb4-10"></span>
+<span id="cb4-11">manual</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.09529569</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">r_base</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.09529569</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="panel-interactivo-distribuciones-discretas" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="panel-interactivo-distribuciones-discretas"><span class="header-section-number">4</span> Panel interactivo: distribuciones discretas</h2>
+<p>El siguiente panel calcula, de forma exacta y no por simulación, la función de masa y la función de distribución acumulada de las siete distribuciones vistas en esta sección. Elija una distribución, mueva los parámetros y compare cómo cambia la forma de cada función; para las distribuciones de soporte infinito (Poisson, geométrica, binomial negativa) la cola se trunca al llegar a una cobertura de probabilidad cercana a 1, y el panel lo indica explícitamente cuando eso ocurre.</p>
+<iframe src="notebooks/distribuciones.html" width="100%" height="620" style="border:1px solid #dfe3e2; border-radius:6px;" title="Panel interactivo de distribuciones discretas notables"></iframe>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicios del libro">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicios del libro
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Haga los ejercicios del capítulo 2 que se resuelvan usando la teoría de variables aleatorias discretas.</p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/probabilidad/vadiscretas/</guid>
+  <pubDate>Sat, 05 Sep 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Variables aleatorias</title>
   <dc:creator>Arturo Sanjuán</dc:creator>
@@ -461,7 +1258,7 @@ Figura&nbsp;1: Función de distribución de Y = X - 2
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Haga los ejercicios 1–50 de la sección 2.5 (Blanco, <em>Probabilidad</em>).</p>
+<p>Haga los ejercicios 2.1 al 2.8 de la sección 2.5 (Blanco, <em>Probabilidad</em>).</p>
 </div>
 </div>
 
