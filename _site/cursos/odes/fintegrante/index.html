@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Arturo Sanjuán">
+<meta name="description" content="Una ecuación no exacta puede volverse exacta si se multiplica por el factor correcto. Con esa idea se resuelve la ecuación de Bernoulli, y se cierra con una aplicación clásica: una sustancia radioactiva que se desintegra en otra, que a su vez se desintegra en una tercera.">
+
+<title>Factores Integrantes – Arturo Sanjuán</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../cursos/odes/homoexactas/index.html" rel="prev">
+<link href="../../../favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-06ef128ffaab2aaffa18b1038abc86f3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Arturo Sanjuán</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../cursos/index.html"> 
+<span class="menu-text">Cursos</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../cursos/odes/fintegrante/index.html">Factores Integrantes</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="sidebar-tools-main">
+    <a href="../../../cursos/odes/index.xml" title="RSS — Ecuaciones Diferenciales" class="quarto-navigation-tool px-1" aria-label="RSS — Ecuaciones Diferenciales"><i class="bi bi-rss"></i></a>
+</div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Ecuaciones Diferenciales</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/introduccion/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/familiasortogonales/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Familias Ortogonales</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/modelacion/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Modelación con Ecuaciones Diferenciales</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/polares/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Coordenadas Polares</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/movimiento/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Problemas de Movimiento</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/taller-1/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Taller 1</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/homoexactas/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Ecuaciones Homogéneas y Exactas</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/fintegrante/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Factores Integrantes</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#cuando-una-ecuación-no-exacta-se-puede-volver-exacta" id="toc-cuando-una-ecuación-no-exacta-se-puede-volver-exacta" class="nav-link active" data-scroll-target="#cuando-una-ecuación-no-exacta-se-puede-volver-exacta"><span class="header-section-number">1</span> Cuando una ecuación no exacta se puede volver exacta</a></li>
+  <li><a href="#ejercicio-simmons-sección-9-problema-2d" id="toc-ejercicio-simmons-sección-9-problema-2d" class="nav-link" data-scroll-target="#ejercicio-simmons-sección-9-problema-2d"><span class="header-section-number">2</span> Ejercicio (Simmons, sección 9, problema 2d)</a></li>
+  <li><a href="#la-ecuación-de-bernoulli" id="toc-la-ecuación-de-bernoulli" class="nav-link" data-scroll-target="#la-ecuación-de-bernoulli"><span class="header-section-number">3</span> La ecuación de Bernoulli</a></li>
+  <li><a href="#ejercicio-simmons-sección-10-problema-3a" id="toc-ejercicio-simmons-sección-10-problema-3a" class="nav-link" data-scroll-target="#ejercicio-simmons-sección-10-problema-3a"><span class="header-section-number">4</span> Ejercicio (Simmons, sección 10, problema 3a)</a></li>
+  <li><a href="#aplicación-una-cadena-de-desintegración-radioactiva" id="toc-aplicación-una-cadena-de-desintegración-radioactiva" class="nav-link" data-scroll-target="#aplicación-una-cadena-de-desintegración-radioactiva"><span class="header-section-number">5</span> Aplicación — una cadena de desintegración radioactiva</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Factores Integrantes</h1>
+<p class="subtitle lead">De ecuaciones no exactas a exactas, la ecuación de Bernoulli, y una aplicación a la desintegración radioactiva en cadena</p>
+</div>
+
+<div>
+  <div class="description">
+    Una ecuación no exacta puede volverse exacta si se multiplica por el factor correcto. Con esa idea se resuelve la ecuación de Bernoulli, y se cierra con una aplicación clásica: una sustancia radioactiva que se desintegra en otra, que a su vez se desintegra en una tercera.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor</div>
+    <div class="quarto-title-meta-contents">
+             <p>Arturo Sanjuán </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">29 de agosto de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="cuando-una-ecuación-no-exacta-se-puede-volver-exacta" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="cuando-una-ecuación-no-exacta-se-puede-volver-exacta"><span class="header-section-number">1</span> Cuando una ecuación no exacta se puede volver exacta</h2>
+<p>La sección anterior dejó una herramienta poderosa pero frágil: si <span class="math inline">\(M\,dx+N\,dy=0\)</span> es exacta, se resuelve por integración directa. El problema es que la exactitud es una coincidencia algebraica —basta cambiar un signo o un coeficiente para destruirla— así que la mayoría de las ecuaciones que uno encuentra en la práctica no son exactas tal como están escritas.</p>
+<p>La pregunta natural es si una ecuación no exacta se puede <em>forzar</em> a ser exacta multiplicándola por una función auxiliar <span class="math inline">\(\mu(x,y)\)</span>, de modo que</p>
+<p><span class="math display">\[\mu M\,dx+\mu N\,dy=0\]</span></p>
+<p>sí lo sea. A esa función <span class="math inline">\(\mu\)</span> se le llama <strong>factor integrante</strong>. Ya conoces un ejemplo sin saberlo: <span class="math inline">\(y\,dx-x\,dy=0\)</span> no es exacta, pero al multiplicarla por <span class="math inline">\(1/x^2\)</span> se convierte en <span class="math inline">\(-d(y/x)=0\)</span>, que se integra de inmediato. Euler, hacia la década de 1730, fue de los primeros en sistematizar esta idea de “multiplicador” para ecuaciones que de otro modo no cedían a los métodos conocidos.</p>
+<p><strong>¿Cuándo existe un factor así, y cómo se encuentra?</strong> Exigir que <span class="math inline">\(\mu M\,dx+\mu N\,dy=0\)</span> sea exacta significa exigir</p>
+<p><span class="math display">\[\frac{\partial(\mu M)}{\partial y}=\frac{\partial(\mu N)}{\partial x} \quad\Longrightarrow\quad \mu_y M+\mu M_y = \mu_x N+\mu N_x\]</span></p>
+<p>En general esto es una ecuación en derivadas parciales para <span class="math inline">\(\mu\)</span>, tan difícil como la original. Pero si uno <em>supone</em> que <span class="math inline">\(\mu\)</span> depende solo de <span class="math inline">\(x\)</span> (es decir, <span class="math inline">\(\mu_y=0\)</span>), la ecuación colapsa a una EDO de primer orden en <span class="math inline">\(\mu\)</span>:</p>
+<p><span class="math display">\[\mu_x N = \mu(M_y-N_x) \quad\Longrightarrow\quad \frac{\mu'}{\mu} = \frac{M_y-N_x}{N}\]</span></p>
+<p>Si el lado derecho resulta depender solo de <span class="math inline">\(x\)</span> —llamémoslo <span class="math inline">\(g(x)\)</span>— entonces se puede integrar directamente:</p>
+<p><span class="math display">\[\mu(x) = e^{\int g(x)\,dx}, \qquad g(x)=\frac{M_y-N_x}{N}\]</span></p>
+<p>Por simetría, si en cambio <span class="math inline">\(\mu\)</span> depende solo de <span class="math inline">\(y\)</span>, el mismo argumento da</p>
+<p><span class="math display">\[\mu(y) = e^{\int h(y)\,dy}, \qquad h(y)=\frac{N_x-M_y}{M}\]</span></p>
+<p>En ambos casos la receta es la misma: calcular la expresión indicada, comprobar que depende de una sola variable, e integrarla. Si no depende de una sola variable, este método particular no aplica y hace falta otra estrategia (agrupar términos reconociendo diferenciales conocidas, buscar <span class="math inline">\(\mu\)</span> como función de <span class="math inline">\(xy\)</span> o de <span class="math inline">\(x+y\)</span>, etc.).</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">/* Ejemplo: y dx + (x^2 y - x) dy = 0, no exacta */</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cn">M</span>: <span class="cn">y</span>;</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cn">N</span>: <span class="cn">x</span>^<span class="dv">2</span>*<span class="cn">y</span> - <span class="cn">x</span>;</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(<span class="cn">M</span>,<span class="cn">y</span>) - <span class="fu">diff</span>(<span class="cn">N</span>,<span class="cn">x</span>);  <span class="co">/* no es cero: no es exacta */</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">/* buscamos mu(x): (M_y - N_x)/N debe depender solo de x */</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cn">g</span>: <span class="fu">ratsimp</span>((<span class="fu">diff</span>(<span class="cn">M</span>,<span class="cn">y</span>) - <span class="fu">diff</span>(<span class="cn">N</span>,<span class="cn">x</span>))/<span class="cn">N</span>);</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="cn">mu</span>: <span class="fu">exp</span>(<span class="fu">integrate</span>(<span class="cn">g</span>,<span class="cn">x</span>));</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="cn">mu</span>;  <span class="co">/* mu = 1/x^2 */</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">/* comprobacion de exactitud tras multiplicar */</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="cn">Mp</span>: <span class="cn">mu</span>*<span class="cn">M</span>; <span class="cn">Np</span>: <span class="cn">mu</span>*<span class="cn">N</span>;</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ratsimp</span>(<span class="fu">diff</span>(<span class="cn">Mp</span>,<span class="cn">y</span>) - <span class="fu">diff</span>(<span class="cn">Np</span>,<span class="cn">x</span>));  <span class="co">/* debe dar 0 */</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</section>
+<section id="ejercicio-simmons-sección-9-problema-2d" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="ejercicio-simmons-sección-9-problema-2d"><span class="header-section-number">2</span> Ejercicio (Simmons, sección 9, problema 2d)</h2>
+<p><span class="math display">\[e^x\,dx+\left(e^x\cot y+2y\csc y\right)dy=0\]</span></p>
+<p><strong>Probando exactitud.</strong> Con <span class="math inline">\(M=e^x\)</span> y <span class="math inline">\(N=e^x\cot y+2y\csc y\)</span>: <span class="math inline">\(M_y=0\)</span> y <span class="math inline">\(N_x=e^x\cot y\)</span>, así que <span class="math inline">\(M_y\neq N_x\)</span> y la ecuación <strong>no</strong> es exacta.</p>
+<p><strong>Buscando el factor integrante.</strong> Como <span class="math inline">\(M\)</span> no depende de <span class="math inline">\(y\)</span>, probamos <span class="math inline">\(\mu(y)\)</span>:</p>
+<p><span class="math display">\[h(y)=\frac{N_x-M_y}{M}=\frac{e^x\cot y}{e^x}=\cot y\]</span></p>
+<p>que depende solo de <span class="math inline">\(y\)</span>. Entonces</p>
+<p><span class="math display">\[\mu(y) = e^{\int\cot y\,dy} = e^{\ln(\sin y)} = \sin y\]</span></p>
+<p><strong>Multiplicando por <span class="math inline">\(\mu=\sin y\)</span></strong>, la ecuación se transforma en</p>
+<p><span class="math display">\[e^x\sin y\,dx+\left(e^x\cos y+2y\right)dy=0\]</span></p>
+<p>y ahora sí es exacta: <span class="math inline">\(\dfrac{\partial}{\partial y}(e^x\sin y)=e^x\cos y=\dfrac{\partial}{\partial x}(e^x\cos y+2y)\)</span>.</p>
+<p><strong>Integrando.</strong> De <span class="math inline">\(f_x=e^x\sin y\)</span> se sigue <span class="math inline">\(f=e^x\sin y+g(y)\)</span>. Derivando respecto a <span class="math inline">\(y\)</span> e igualando a <span class="math inline">\(N'=e^x\cos y+2y\)</span>:</p>
+<p><span class="math display">\[e^x\cos y+g'(y) = e^x\cos y+2y \quad\Longrightarrow\quad g'(y)=2y \quad\Longrightarrow\quad g(y)=y^2\]</span></p>
+<p><span class="math display">\[\boxed{e^x\sin y+y^2=C}\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cn">M</span>: <span class="fu">exp</span>(<span class="cn">x</span>);</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cn">N</span>: <span class="fu">exp</span>(<span class="cn">x</span>)*<span class="fu">cot</span>(<span class="cn">y</span>) + <span class="dv">2</span>*<span class="cn">y</span>*<span class="fu">csc</span>(<span class="cn">y</span>);</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cn">h</span>: <span class="fu">ratsimp</span>((<span class="fu">diff</span>(<span class="cn">N</span>,<span class="cn">x</span>) - <span class="fu">diff</span>(<span class="cn">M</span>,<span class="cn">y</span>))/<span class="cn">M</span>);   <span class="co">/* h(y) = cot(y) */</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="cn">mu</span>: <span class="fu">trigsimp</span>(<span class="fu">exp</span>(<span class="fu">integrate</span>(<span class="cn">h</span>,<span class="cn">y</span>)));        <span class="co">/* mu = sin(y)   */</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="cn">Mp</span>: <span class="fu">ratsimp</span>(<span class="cn">mu</span>*<span class="cn">M</span>);</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="cn">Np</span>: <span class="fu">trigsimp</span>(<span class="fu">ratsimp</span>(<span class="cn">mu</span>*<span class="cn">N</span>));</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ratsimp</span>(<span class="fu">diff</span>(<span class="cn">Mp</span>,<span class="cn">y</span>) - <span class="fu">diff</span>(<span class="cn">Np</span>,<span class="cn">x</span>));         <span class="co">/* chequeo: 0    */</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="cn">f</span>: <span class="fu">integrate</span>(<span class="cn">Mp</span>, <span class="cn">x</span>);</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="cn">gp</span>: <span class="fu">trigsimp</span>(<span class="fu">ratsimp</span>(<span class="cn">Np</span> - <span class="fu">diff</span>(<span class="cn">f</span>,<span class="cn">y</span>)));</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="cn">g</span>: <span class="fu">integrate</span>(<span class="cn">gp</span>, <span class="cn">y</span>);</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="cn">f</span> + <span class="cn">g</span>;   <span class="co">/* e^x*sin(y) + y^2 */</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</section>
+<section id="la-ecuación-de-bernoulli" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="la-ecuación-de-bernoulli"><span class="header-section-number">3</span> La ecuación de Bernoulli</h2>
+<p>Hay un tipo de ecuación no lineal que, aunque no es exacta ni lineal tal como se presenta, se reduce a una ecuación lineal con el cambio de variable correcto. Se trata de la <strong>ecuación de Bernoulli</strong>,</p>
+<p><span class="math display">\[\frac{dy}{dx}+P(x)y = Q(x)y^n\]</span></p>
+<p>llamada así por Jacob Bernoulli, quien la planteó en 1695 como un reto a sus contemporáneos (entre ellos su hermano Johann y Leibniz, quien la resolvió ese mismo año). Si <span class="math inline">\(n=0\)</span> o <span class="math inline">\(n=1\)</span> ya es lineal y no hay nada que reducir. Para cualquier otro <span class="math inline">\(n\)</span>, la sustitución</p>
+<p><span class="math display">\[z = y^{1-n}\]</span></p>
+<p>la convierte en una ecuación <strong>lineal</strong> en <span class="math inline">\(z\)</span>. La razón: derivando, <span class="math inline">\(z'=(1-n)y^{-n}y'\)</span>; dividiendo la ecuación original entre <span class="math inline">\(y^n\)</span>,</p>
+<p><span class="math display">\[y^{-n}y'+P(x)y^{1-n}=Q(x)\]</span></p>
+<p>y sustituyendo <span class="math inline">\(z=y^{1-n}\)</span> (con <span class="math inline">\(y^{-n}y' = \dfrac{z'}{1-n}\)</span>), queda</p>
+<p><span class="math display">\[\frac{z'}{1-n}+P(x)z=Q(x) \quad\Longrightarrow\quad z'+(1-n)P(x)z=(1-n)Q(x)\]</span></p>
+<p>que es lineal en <span class="math inline">\(z\)</span> y se resuelve con factor integrante como en la sección anterior del curso.</p>
+</section>
+<section id="ejercicio-simmons-sección-10-problema-3a" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="ejercicio-simmons-sección-10-problema-3a"><span class="header-section-number">4</span> Ejercicio (Simmons, sección 10, problema 3a)</h2>
+<p><span class="math display">\[xy'+y=x^4y^3\]</span></p>
+<p><strong>Identificando la ecuación.</strong> Dividiendo entre <span class="math inline">\(x\)</span>: <span class="math inline">\(y'+\dfrac{1}{x}y=x^3y^3\)</span>, que es Bernoulli con <span class="math inline">\(n=3\)</span>, <span class="math inline">\(P(x)=1/x\)</span>, <span class="math inline">\(Q(x)=x^3\)</span>.</p>
+<p><strong>Sustitución.</strong> Con <span class="math inline">\(n=3\)</span>, <span class="math inline">\(z=y^{1-n}=y^{-2}\)</span>. Dividiendo la ecuación entre <span class="math inline">\(y^3\)</span>:</p>
+<p><span class="math display">\[y^{-3}y'+\frac{1}{x}y^{-2}=x^3\]</span></p>
+<p>y con <span class="math inline">\(z=y^{-2}\)</span>, <span class="math inline">\(z'=-2y^{-3}y'\)</span>, es decir <span class="math inline">\(y^{-3}y'=-\dfrac{z'}{2}\)</span>:</p>
+<p><span class="math display">\[-\frac{z'}{2}+\frac{z}{x}=x^3 \quad\Longrightarrow\quad z'-\frac{2}{x}z=-2x^3\]</span></p>
+<p><strong>Resolviendo la ecuación lineal en <span class="math inline">\(z\)</span>.</strong> El factor integrante es</p>
+<p><span class="math display">\[e^{\int -2/x\,dx} = e^{-2\ln x} = x^{-2}\]</span></p>
+<p>Multiplicando y reconociendo la derivada de un producto:</p>
+<p><span class="math display">\[\left(x^{-2}z\right)' = -2x \quad\Longrightarrow\quad x^{-2}z = -x^2+C \quad\Longrightarrow\quad z = x^2\left(C-x^2\right)\]</span></p>
+<p><strong>Deshaciendo la sustitución.</strong> Como <span class="math inline">\(z=y^{-2}\)</span>:</p>
+<p><span class="math display">\[\boxed{y^{-2} = x^2(C-x^2) \quad\Longleftrightarrow\quad y = \pm\frac{1}{x\sqrt{C-x^2}}}\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">depends</span>(<span class="cn">y</span>,<span class="cn">x</span>);</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cn">edo</span>: <span class="cn">x</span>*<span class="do">'</span><span class="cn">diff</span>(<span class="cn">y</span>,<span class="cn">x</span>) + <span class="cn">y</span> = <span class="cn">x</span>^<span class="dv">4</span>*<span class="cn">y</span>^<span class="dv">3</span>;</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cn">n</span>: <span class="dv">3</span>;</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="cn">yprime</span>: <span class="fu">rhs</span>(<span class="fu">solve</span>(<span class="cn">edo</span>, <span class="do">'</span><span class="cn">diff</span>(<span class="cn">y</span>,<span class="cn">x</span>))[<span class="dv">1</span>]);</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">/* dz/dx en terminos de z, con z = y^(1-n) */</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="cn">dzdx</span>: <span class="fu">ratsimp</span>((<span class="dv">1</span>-<span class="cn">n</span>)*<span class="cn">y</span>^(-<span class="cn">n</span>)*<span class="cn">yprime</span>);</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="cn">dzdx_z</span>: <span class="fu">ratsimp</span>(<span class="fu">subst</span>(<span class="cn">y</span> = <span class="cn">z</span>^(<span class="dv">1</span>/(<span class="dv">1</span>-<span class="cn">n</span>)), <span class="cn">dzdx</span>));</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="cn">dzdx_z</span>;   <span class="co">/* 2*z/x - 2*x^3 */</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">/* ecuacion lineal en z */</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">depends</span>(<span class="cn">z</span>,<span class="cn">x</span>);</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="cn">edo_z</span>: <span class="do">'</span><span class="cn">diff</span>(<span class="cn">z</span>,<span class="cn">x</span>) - (<span class="dv">2</span>/<span class="cn">x</span>)*<span class="cn">z</span> = <span class="dv">-2</span>*<span class="cn">x</span>^<span class="dv">3</span>;</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="cn">sol_z</span>: <span class="fu">ode2</span>(<span class="cn">edo_z</span>, <span class="cn">z</span>, <span class="cn">x</span>);</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="cn">sol_z</span>;    <span class="co">/* z = x^2*(%c - x^2) */</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</section>
+<section id="aplicación-una-cadena-de-desintegración-radioactiva" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="aplicación-una-cadena-de-desintegración-radioactiva"><span class="header-section-number">5</span> Aplicación — una cadena de desintegración radioactiva</h2>
+<p>Una sustancia radioactiva <span class="math inline">\(A\)</span> se desintegra en una segunda sustancia <span class="math inline">\(B\)</span>, y <span class="math inline">\(B\)</span> a su vez se desintegra en una tercera sustancia <span class="math inline">\(C\)</span> (este es, de hecho, el comportamiento real de muchas cadenas de desintegración natural, como la del uranio-238 hasta llegar al plomo estable). Sea <span class="math inline">\(N_0\)</span> la cantidad inicial de <span class="math inline">\(A\)</span>, y sean <span class="math inline">\(k_1,k_2\)</span> las constantes de desintegración de cada paso. Si <span class="math inline">\(x(t)\)</span> y <span class="math inline">\(y(t)\)</span> son las cantidades de <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> en el instante <span class="math inline">\(t\)</span>:</p>
+<p><span class="math display">\[\frac{dx}{dt}=-k_1x, \qquad x(0)=N_0\]</span></p>
+<p><span class="math display">\[\frac{dy}{dt}=k_1x-k_2y, \qquad y(0)=0\]</span></p>
+<p>La primera ecuación es de variables separables y da <span class="math inline">\(x(t)=N_0e^{-k_1t}\)</span>: el mecanismo de desintegración simple que ya se estudió en la sección de modelación. La segunda dice que <span class="math inline">\(B\)</span> gana lo que <span class="math inline">\(A\)</span> pierde (el término <span class="math inline">\(+k_1x\)</span>) pero al mismo tiempo se desintegra por su cuenta (el término <span class="math inline">\(-k_2y\)</span>).</p>
+<p><strong>Resolviendo para <span class="math inline">\(y(t)\)</span>.</strong> Sustituyendo <span class="math inline">\(x(t)=N_0e^{-k_1t}\)</span> en la segunda ecuación, queda una ecuación <strong>lineal</strong> de primer orden en <span class="math inline">\(y\)</span>:</p>
+<p><span class="math display">\[\frac{dy}{dt}+k_2y = k_1N_0e^{-k_1t}\]</span></p>
+<p>El factor integrante es <span class="math inline">\(e^{k_2t}\)</span>:</p>
+<p><span class="math display">\[\left(e^{k_2t}y\right)' = k_1N_0e^{(k_2-k_1)t}\]</span></p>
+<p>Integrando y despejando <span class="math inline">\(y\)</span>:</p>
+<p><span class="math display">\[y(t) = \frac{k_1N_0}{k_2-k_1}e^{-k_1t}+Ce^{-k_2t}\]</span></p>
+<p>Con la condición inicial <span class="math inline">\(y(0)=0\)</span> se obtiene <span class="math inline">\(C=-\dfrac{k_1N_0}{k_2-k_1}\)</span>, así que</p>
+<p><span class="math display">\[\boxed{y(t) = \frac{k_1N_0}{k_2-k_1}\left(e^{-k_1t}-e^{-k_2t}\right)}\]</span></p>
+<p>(esta fórmula asume <span class="math inline">\(k_1\neq k_2\)</span>; si las dos tasas coinciden, el mismo procedimiento con integración directa da <span class="math inline">\(y(t)=k_1N_0\,t\,e^{-k_1t}\)</span>). Por conservación de la materia, la cantidad de <span class="math inline">\(C\)</span> es simplemente lo que falta: <span class="math inline">\(z(t)=N_0-x(t)-y(t)\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Un detalle cualitativo: B siempre tiene un máximo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Un detalle cualitativo: B siempre tiene un máximo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Mientras <span class="math inline">\(A\)</span> todavía existe, alimenta a <span class="math inline">\(B\)</span> más rápido de lo que <span class="math inline">\(B\)</span> se desintegra, así que <span class="math inline">\(y(t)\)</span> crece. Pero a medida que <span class="math inline">\(A\)</span> se agota, ese suministro cae, y en algún momento la desintegración de <span class="math inline">\(B\)</span> hacia <span class="math inline">\(C\)</span> empieza a dominar: <span class="math inline">\(y(t)\)</span> alcanza un máximo y luego decae hacia cero. Ese instante se encuentra en <span class="math inline">\(y'(t^*)=0\)</span>:</p>
+<p><span class="math display">\[t^* = \frac{\ln(k_1/k_2)}{k_1-k_2}\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">depends</span>(<span class="cn">x</span>,<span class="cn">t</span>);</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">depends</span>(<span class="cn">y</span>,<span class="cn">t</span>);</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="cn">edoA</span>: <span class="do">'</span><span class="cn">diff</span>(<span class="cn">x</span>,<span class="cn">t</span>) = -<span class="cn">k1</span>*<span class="cn">x</span>;</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="cn">solA</span>: <span class="fu">ic1</span>(<span class="fu">ode2</span>(<span class="cn">edoA</span>, <span class="cn">x</span>, <span class="cn">t</span>), <span class="cn">t</span>=<span class="dv">0</span>, <span class="cn">x</span>=<span class="cn">N0</span>);</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="cn">xt_expr</span>: <span class="fu">rhs</span>(<span class="cn">solA</span>);</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="cn">edoB</span>: <span class="do">'</span><span class="cn">diff</span>(<span class="cn">y</span>,<span class="cn">t</span>) = <span class="cn">k1</span>*<span class="cn">xt_expr</span> - <span class="cn">k2</span>*<span class="cn">y</span>;</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="cn">solB</span>: <span class="fu">ic1</span>(<span class="fu">ode2</span>(<span class="cn">edoB</span>, <span class="cn">y</span>, <span class="cn">t</span>), <span class="cn">t</span>=<span class="dv">0</span>, <span class="cn">y</span>=<span class="dv">0</span>);</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="cn">yt_expr</span>: <span class="fu">radcan</span>(<span class="fu">rhs</span>(<span class="cn">solB</span>));</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">/* chequeo: yt_expr debe satisfacer la EDO original */</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">radcan</span>(<span class="fu">diff</span>(<span class="cn">yt_expr</span>,<span class="cn">t</span>) - (<span class="cn">k1</span>*<span class="cn">xt_expr</span> - <span class="cn">k2</span>*<span class="cn">yt_expr</span>));   <span class="co">/* debe dar 0 */</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">/* ejemplo numerico: N0=100, k1=0.3, k2=0.1 */</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="cn">vals</span>: [<span class="cn">N0</span>=<span class="dv">100</span>, <span class="cn">k1</span>=<span class="fl">0.3</span>, <span class="cn">k2</span>=<span class="fl">0.1</span>];</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="cn">xnum</span>(<span class="cn">t</span>) := <span class="do">''</span>(<span class="fu">subst</span>(<span class="cn">vals</span>, <span class="cn">xt_expr</span>));</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="cn">ynum</span>(<span class="cn">t</span>) := <span class="do">''</span>(<span class="fu">subst</span>(<span class="cn">vals</span>, <span class="cn">yt_expr</span>));</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="cn">znum</span>(<span class="cn">t</span>) := <span class="dv">100</span> - <span class="cn">xnum</span>(<span class="cn">t</span>) - <span class="cn">ynum</span>(<span class="cn">t</span>);</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="cn">tmax_expr</span>: <span class="fu">log</span>(<span class="cn">k1</span>/<span class="cn">k2</span>)/(<span class="cn">k1</span>-<span class="cn">k2</span>);</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="cn">tmax_num</span>: <span class="fu">float</span>(<span class="fu">subst</span>(<span class="cn">vals</span>, <span class="cn">tmax_expr</span>));</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"t* = "</span>, <span class="cn">tmax_num</span>, <span class="st">"  y(t*) = "</span>, <span class="fu">float</span>(<span class="cn">ynum</span>(<span class="cn">tmax_num</span>)));</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">draw</span>);</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="fu">draw2d</span>(</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  <span class="cn">terminal</span> = <span class="cn">png</span>, <span class="cn">file_name</span> = <span class="st">"cadena"</span>,</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  <span class="cn">xlabel</span> = <span class="st">"t"</span>, <span class="cn">ylabel</span> = <span class="st">"cantidad"</span>,</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>  <span class="cn">color</span> = <span class="cn">blue</span>, <span class="cn">key</span> = <span class="st">"A(t)"</span>, <span class="cn">explicit</span>(<span class="cn">xnum</span>(<span class="cn">t</span>), <span class="cn">t</span>, <span class="dv">0</span>, <span class="dv">30</span>),</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>  <span class="cn">color</span> = <span class="cn">red</span>, <span class="cn">key</span> = <span class="st">"B(t)"</span>, <span class="cn">explicit</span>(<span class="cn">ynum</span>(<span class="cn">t</span>), <span class="cn">t</span>, <span class="dv">0</span>, <span class="dv">30</span>),</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>  <span class="cn">color</span> = <span class="st">"dark-green"</span>, <span class="cn">key</span> = <span class="st">"C(t)"</span>, <span class="cn">explicit</span>(<span class="cn">znum</span>(<span class="cn">t</span>), <span class="cn">t</span>, <span class="dv">0</span>, <span class="dv">30</span>)</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>);</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Simulador — cadena de desintegración A → B → C">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Simulador — cadena de desintegración A → B → C
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div style="border:1px solid #ddd;border-radius:8px;padding:16px;max-width:640px;margin:1em auto;font-family:sans-serif;">
+  <canvas id="cad-canvas" width="580" height="380" style="width:100%;height:auto;background:#fff;"></canvas>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;margin-top:10px;">
+    <label>Tasa $k_1$ ($A\to B$): <span id="cad-k1-val">0.30</span>
+      <input type="range" id="cad-k1" min="0.02" max="1" step="0.01" value="0.3" style="width:100%;">
+    </label>
+    <label>Tasa $k_2$ ($B\to C$): <span id="cad-k2-val">0.10</span>
+      <input type="range" id="cad-k2" min="0.02" max="1" step="0.01" value="0.1" style="width:100%;">
+    </label>
+  </div>
+  <p style="font-size:0.9em;color:#555;margin-top:10px;">
+    $N_0=100$ fijo (no cambia la forma de las curvas, solo la escala). Azul: $A(t)$; rojo: $B(t)$;
+    verde: $C(t)$. El punto rojo marca el máximo de $B$
+    ($t^*=$ <span id="cad-tstar">-</span>, $B_{max}=$ <span id="cad-ymax">-</span>). Prueba acercar
+    $k_1$ y $k_2$: el máximo de $B$ se vuelve más ancho y bajo; con $k_1\gg k_2$, $B$ crece rápido y
+    decae lento (cuello de botella en el segundo paso); con $k_1\ll k_2$ ocurre lo opuesto.
+  </p>
+</div>
+<script>
+(function(){
+  const canvas = document.getElementById('cad-canvas');
+  const ctx = canvas.getContext('2d');
+  const k1s = document.getElementById('cad-k1');
+  const k2s = document.getElementById('cad-k2');
+  const k1valEl = document.getElementById('cad-k1-val');
+  const k2valEl = document.getElementById('cad-k2-val');
+  const tstarEl = document.getElementById('cad-tstar');
+  const ymaxEl = document.getElementById('cad-ymax');
+
+  const N0 = 100;
+  const YMAX_FIJO = 100; // fijo, ya que N0 no cambia
+  const W = canvas.width, H = canvas.height;
+  const margin = {left: 55, right: 20, top: 30, bottom: 40};
+
+  function A(t, k1){ return N0*Math.exp(-k1*t); }
+  function B(t, k1, k2){
+    if (Math.abs(k1-k2) < 1e-4) return N0*k1*t*Math.exp(-k1*t);
+    return (k1*N0/(k2-k1))*(Math.exp(-k1*t) - Math.exp(-k2*t));
+  }
+  function C(t, k1, k2){ return N0 - A(t,k1) - B(t,k1,k2); }
+
+  function peak(k1, k2){
+    if (Math.abs(k1-k2) < 1e-4) return [1/k1, N0/Math.E];
+    const ts = Math.log(k1/k2)/(k1-k2);
+    return [ts, B(ts,k1,k2)];
+  }
+
+  function draw(){
+    const k1 = parseFloat(k1s.value);
+    const k2 = parseFloat(k2s.value);
+    k1valEl.textContent = k1.toFixed(2);
+    k2valEl.textContent = k2.toFixed(2);
+
+    const [tstar, ymax] = peak(k1, k2);
+    tstarEl.textContent = tstar.toFixed(2);
+    ymaxEl.textContent = ymax.toFixed(1);
+
+    const Tmax = Math.max(5/Math.min(k1,k2), 3*tstar);
+
+    ctx.clearRect(0,0,W,H);
+    const plotW = W - margin.left - margin.right;
+    const plotH = H - margin.top - margin.bottom;
+
+    function toPx(t, v){
+      const px = margin.left + (t/Tmax) * plotW;
+      const py = margin.top + plotH - (v/YMAX_FIJO) * plotH;
+      return [px, py];
+    }
+
+    // ejes
+    ctx.strokeStyle = '#333'; ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(margin.left, margin.top);
+    ctx.lineTo(margin.left, margin.top + plotH);
+    ctx.lineTo(margin.left + plotW, margin.top + plotH);
+    ctx.stroke();
+
+    function curva(fn, color){
+      ctx.strokeStyle = color; ctx.lineWidth = 2.2;
+      ctx.beginPath();
+      let first = true;
+      for (let t = 0; t <= Tmax; t += Tmax/300) {
+        const [px, py] = toPx(t, fn(t));
+        if (first) { ctx.moveTo(px,py); first = false; } else ctx.lineTo(px,py);
+      }
+      ctx.stroke();
+    }
+
+    curva((t) => A(t,k1), '#1f77b4');
+    curva((t) => B(t,k1,k2), '#d62728');
+    curva((t) => C(t,k1,k2), '#2f7d32');
+
+    // punto maximo de B
+    const [mx, my] = toPx(tstar, ymax);
+    ctx.fillStyle = '#d62728';
+    ctx.beginPath(); ctx.arc(mx, my, 4.5, 0, 2*Math.PI); ctx.fill();
+
+    // leyenda
+    const leg = [['A(t)','#1f77b4'], ['B(t)','#d62728'], ['C(t)','#2f7d32']];
+    ctx.font = '12px sans-serif';
+    leg.forEach(([label,color], i) => {
+      const lx = margin.left + 10 + i*70, ly = margin.top - 12;
+      ctx.fillStyle = color;
+      ctx.fillRect(lx, ly-8, 10, 10);
+      ctx.fillStyle = '#333';
+      ctx.fillText(label, lx+14, ly);
+    });
+
+    // etiquetas de ejes
+    ctx.fillStyle = '#333'; ctx.font = '12px sans-serif';
+    ctx.fillText('t', margin.left + plotW - 8, margin.top + plotH + 20);
+    ctx.save();
+    ctx.translate(14, margin.top + plotH/2);
+    ctx.rotate(-Math.PI/2);
+    ctx.fillText('cantidad', 0, 0);
+    ctx.restore();
+    ctx.fillText('0', margin.left - 12, margin.top + plotH + 4);
+  }
+
+  [k1s, k2s].forEach(el => el.addEventListener('input', draw));
+  draw();
+})();
+</script>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Hacer los ejercicios de la sección 9 (factores integrantes) y sección 10, problema 3 (Bernoulli) del Simmons, comprobando cada resultado con Maxima. Además, resolver la cadena de desintegración para el caso <span class="math inline">\(k_1=k_2\)</span> (integrando directamente, sin la fórmula general de arriba) y verificar que coincide con el límite <span class="math inline">\(k_2\to k_1\)</span> de la solución obtenida.</p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/arturosanjuan\.xyz");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="preferred_color_scheme">
+<input type="hidden" id="giscus-alt-theme" value="preferred_color_scheme">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "asanjuanc/arturosanjuan-sitio";
+    script.dataset.repoId = "R_kgDOTzuHrw";
+    script.dataset.category = "Comentarios";
+    script.dataset.categoryId = "DIC_kwDOTzuHr84DD_eD";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "es";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../../cursos/odes/homoexactas/index.html" class="pagination-link" aria-label="Ecuaciones Homogéneas y Exactas">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Ecuaciones Homogéneas y Exactas</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

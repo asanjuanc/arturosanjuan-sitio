@@ -37,12 +37,15 @@ website:
           href: cursos/odes/index.xml
           text: "RSS — Ecuaciones Diferenciales"
       contents:
-        -- cursos/odes/index.qmd
+        - cursos/odes/index.qmd
         - cursos/odes/introduccion/index.qmd
         - cursos/odes/familiasortogonales/index.qmd
         - cursos/odes/modelacion/index.qmd
         - cursos/odes/polares/index.qmd
+        - cursos/odes/movimiento/index.qmd
         - cursos/odes/taller-1/index.qmd
+        - cursos/odes/homoexactas/index.qmd
+        - cursos/odes/fintegrante/index.qmd
     - id: numerico
       title: "Análisis Numérico"
       style: docked

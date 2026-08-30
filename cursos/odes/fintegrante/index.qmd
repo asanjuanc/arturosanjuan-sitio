@@ -1,0 +1,384 @@
+---
+title: "Factores Integrantes"
+subtitle: "De ecuaciones no exactas a exactas, la ecuación de Bernoulli, y una aplicación a la desintegración radioactiva en cadena"
+description: "Una ecuación no exacta puede volverse exacta si se multiplica por el factor correcto. Con esa idea se resuelve la ecuación de Bernoulli, y se cierra con una aplicación clásica: una sustancia radioactiva que se desintegra en otra, que a su vez se desintegra en una tercera."
+author: "Arturo Sanjuán"
+date: 2026-08-29
+image: "cadena.png"
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 7
+---
+
+## Cuando una ecuación no exacta se puede volver exacta
+
+La sección anterior dejó una herramienta poderosa pero frágil: si $M\,dx+N\,dy=0$ es exacta, se resuelve por integración directa. El problema es que la exactitud es una coincidencia algebraica —basta cambiar un signo o un coeficiente para destruirla— así que la mayoría de las ecuaciones que uno encuentra en la práctica no son exactas tal como están escritas.
+
+La pregunta natural es si una ecuación no exacta se puede *forzar* a ser exacta multiplicándola por una función auxiliar $\mu(x,y)$, de modo que
+
+$$\mu M\,dx+\mu N\,dy=0$$
+
+sí lo sea. A esa función $\mu$ se le llama **factor integrante**. Ya conoces un ejemplo sin saberlo: $y\,dx-x\,dy=0$ no es exacta, pero al multiplicarla por $1/x^2$ se convierte en $-d(y/x)=0$, que se integra de inmediato. Euler, hacia la década de 1730, fue de los primeros en sistematizar esta idea de "multiplicador" para ecuaciones que de otro modo no cedían a los métodos conocidos.
+
+**¿Cuándo existe un factor así, y cómo se encuentra?** Exigir que $\mu M\,dx+\mu N\,dy=0$ sea exacta significa exigir
+
+$$\frac{\partial(\mu M)}{\partial y}=\frac{\partial(\mu N)}{\partial x} \quad\Longrightarrow\quad \mu_y M+\mu M_y = \mu_x N+\mu N_x$$
+
+En general esto es una ecuación en derivadas parciales para $\mu$, tan difícil como la original. Pero si uno *supone* que $\mu$ depende solo de $x$ (es decir, $\mu_y=0$), la ecuación colapsa a una EDO de primer orden en $\mu$:
+
+$$\mu_x N = \mu(M_y-N_x) \quad\Longrightarrow\quad \frac{\mu'}{\mu} = \frac{M_y-N_x}{N}$$
+
+Si el lado derecho resulta depender solo de $x$ —llamémoslo $g(x)$— entonces se puede integrar directamente:
+
+$$\mu(x) = e^{\int g(x)\,dx}, \qquad g(x)=\frac{M_y-N_x}{N}$$
+
+Por simetría, si en cambio $\mu$ depende solo de $y$, el mismo argumento da
+
+$$\mu(y) = e^{\int h(y)\,dy}, \qquad h(y)=\frac{N_x-M_y}{M}$$
+
+En ambos casos la receta es la misma: calcular la expresión indicada, comprobar que depende de una sola variable, e integrarla. Si no depende de una sola variable, este método particular no aplica y hace falta otra estrategia (agrupar términos reconociendo diferenciales conocidas, buscar $\mu$ como función de $xy$ o de $x+y$, etc.).
+
+::: {.callout-note title="Haciendo las cuentas con Maxima"}
+```maxima
+kill(all);
+
+/* Ejemplo: y dx + (x^2 y - x) dy = 0, no exacta */
+M: y;
+N: x^2*y - x;
+diff(M,y) - diff(N,x);  /* no es cero: no es exacta */
+
+/* buscamos mu(x): (M_y - N_x)/N debe depender solo de x */
+g: ratsimp((diff(M,y) - diff(N,x))/N);
+mu: exp(integrate(g,x));
+mu;  /* mu = 1/x^2 */
+
+/* comprobacion de exactitud tras multiplicar */
+Mp: mu*M; Np: mu*N;
+ratsimp(diff(Mp,y) - diff(Np,x));  /* debe dar 0 */
+```
+:::
+
+## Ejercicio (Simmons, sección 9, problema 2d)
+
+$$e^x\,dx+\left(e^x\cot y+2y\csc y\right)dy=0$$
+
+**Probando exactitud.** Con $M=e^x$ y $N=e^x\cot y+2y\csc y$: $M_y=0$ y $N_x=e^x\cot y$, así que $M_y\neq N_x$ y la ecuación **no** es exacta.
+
+**Buscando el factor integrante.** Como $M$ no depende de $y$, probamos $\mu(y)$:
+
+$$h(y)=\frac{N_x-M_y}{M}=\frac{e^x\cot y}{e^x}=\cot y$$
+
+que depende solo de $y$. Entonces
+
+$$\mu(y) = e^{\int\cot y\,dy} = e^{\ln(\sin y)} = \sin y$$
+
+**Multiplicando por $\mu=\sin y$**, la ecuación se transforma en
+
+$$e^x\sin y\,dx+\left(e^x\cos y+2y\right)dy=0$$
+
+y ahora sí es exacta: $\dfrac{\partial}{\partial y}(e^x\sin y)=e^x\cos y=\dfrac{\partial}{\partial x}(e^x\cos y+2y)$.
+
+**Integrando.** De $f_x=e^x\sin y$ se sigue $f=e^x\sin y+g(y)$. Derivando respecto a $y$ e igualando a $N'=e^x\cos y+2y$:
+
+$$e^x\cos y+g'(y) = e^x\cos y+2y \quad\Longrightarrow\quad g'(y)=2y \quad\Longrightarrow\quad g(y)=y^2$$
+
+$$\boxed{e^x\sin y+y^2=C}$$
+
+::: {.callout-note title="Haciendo las cuentas con Maxima"}
+```maxima
+kill(all);
+M: exp(x);
+N: exp(x)*cot(y) + 2*y*csc(y);
+
+h: ratsimp((diff(N,x) - diff(M,y))/M);   /* h(y) = cot(y) */
+mu: trigsimp(exp(integrate(h,y)));        /* mu = sin(y)   */
+
+Mp: ratsimp(mu*M);
+Np: trigsimp(ratsimp(mu*N));
+ratsimp(diff(Mp,y) - diff(Np,x));         /* chequeo: 0    */
+
+f: integrate(Mp, x);
+gp: trigsimp(ratsimp(Np - diff(f,y)));
+g: integrate(gp, y);
+f + g;   /* e^x*sin(y) + y^2 */
+```
+:::
+
+## La ecuación de Bernoulli
+
+Hay un tipo de ecuación no lineal que, aunque no es exacta ni lineal tal como se presenta, se reduce a una ecuación lineal con el cambio de variable correcto. Se trata de la **ecuación de Bernoulli**,
+
+$$\frac{dy}{dx}+P(x)y = Q(x)y^n$$
+
+llamada así por Jacob Bernoulli, quien la planteó en 1695 como un reto a sus contemporáneos (entre ellos su hermano Johann y Leibniz, quien la resolvió ese mismo año). Si $n=0$ o $n=1$ ya es lineal y no hay nada que reducir. Para cualquier otro $n$, la sustitución
+
+$$z = y^{1-n}$$
+
+la convierte en una ecuación **lineal** en $z$. La razón: derivando, $z'=(1-n)y^{-n}y'$; dividiendo la ecuación original entre $y^n$,
+
+$$y^{-n}y'+P(x)y^{1-n}=Q(x)$$
+
+y sustituyendo $z=y^{1-n}$ (con $y^{-n}y' = \dfrac{z'}{1-n}$), queda
+
+$$\frac{z'}{1-n}+P(x)z=Q(x) \quad\Longrightarrow\quad z'+(1-n)P(x)z=(1-n)Q(x)$$
+
+que es lineal en $z$ y se resuelve con factor integrante como en la sección anterior del curso.
+
+## Ejercicio (Simmons, sección 10, problema 3a)
+
+$$xy'+y=x^4y^3$$
+
+**Identificando la ecuación.** Dividiendo entre $x$: $y'+\dfrac{1}{x}y=x^3y^3$, que es Bernoulli con $n=3$, $P(x)=1/x$, $Q(x)=x^3$.
+
+**Sustitución.** Con $n=3$, $z=y^{1-n}=y^{-2}$. Dividiendo la ecuación entre $y^3$:
+
+$$y^{-3}y'+\frac{1}{x}y^{-2}=x^3$$
+
+y con $z=y^{-2}$, $z'=-2y^{-3}y'$, es decir $y^{-3}y'=-\dfrac{z'}{2}$:
+
+$$-\frac{z'}{2}+\frac{z}{x}=x^3 \quad\Longrightarrow\quad z'-\frac{2}{x}z=-2x^3$$
+
+**Resolviendo la ecuación lineal en $z$.** El factor integrante es
+
+$$e^{\int -2/x\,dx} = e^{-2\ln x} = x^{-2}$$
+
+Multiplicando y reconociendo la derivada de un producto:
+
+$$\left(x^{-2}z\right)' = -2x \quad\Longrightarrow\quad x^{-2}z = -x^2+C \quad\Longrightarrow\quad z = x^2\left(C-x^2\right)$$
+
+**Deshaciendo la sustitución.** Como $z=y^{-2}$:
+
+$$\boxed{y^{-2} = x^2(C-x^2) \quad\Longleftrightarrow\quad y = \pm\frac{1}{x\sqrt{C-x^2}}}$$
+
+::: {.callout-note title="Haciendo las cuentas con Maxima"}
+```maxima
+kill(all);
+depends(y,x);
+edo: x*'diff(y,x) + y = x^4*y^3;
+
+n: 3;
+yprime: rhs(solve(edo, 'diff(y,x))[1]);
+
+/* dz/dx en terminos de z, con z = y^(1-n) */
+dzdx: ratsimp((1-n)*y^(-n)*yprime);
+dzdx_z: ratsimp(subst(y = z^(1/(1-n)), dzdx));
+dzdx_z;   /* 2*z/x - 2*x^3 */
+
+/* ecuacion lineal en z */
+depends(z,x);
+edo_z: 'diff(z,x) - (2/x)*z = -2*x^3;
+sol_z: ode2(edo_z, z, x);
+sol_z;    /* z = x^2*(%c - x^2) */
+```
+:::
+
+## Aplicación — una cadena de desintegración radioactiva
+
+Una sustancia radioactiva $A$ se desintegra en una segunda sustancia $B$, y $B$ a su vez se desintegra en una tercera sustancia $C$ (este es, de hecho, el comportamiento real de muchas cadenas de desintegración natural, como la del uranio-238 hasta llegar al plomo estable). Sea $N_0$ la cantidad inicial de $A$, y sean $k_1,k_2$ las constantes de desintegración de cada paso. Si $x(t)$ y $y(t)$ son las cantidades de $A$ y $B$ en el instante $t$:
+
+$$\frac{dx}{dt}=-k_1x, \qquad x(0)=N_0$$
+
+$$\frac{dy}{dt}=k_1x-k_2y, \qquad y(0)=0$$
+
+La primera ecuación es de variables separables y da $x(t)=N_0e^{-k_1t}$: el mecanismo de desintegración simple que ya se estudió en la sección de modelación. La segunda dice que $B$ gana lo que $A$ pierde (el término $+k_1x$) pero al mismo tiempo se desintegra por su cuenta (el término $-k_2y$).
+
+**Resolviendo para $y(t)$.** Sustituyendo $x(t)=N_0e^{-k_1t}$ en la segunda ecuación, queda una ecuación **lineal** de primer orden en $y$:
+
+$$\frac{dy}{dt}+k_2y = k_1N_0e^{-k_1t}$$
+
+El factor integrante es $e^{k_2t}$:
+
+$$\left(e^{k_2t}y\right)' = k_1N_0e^{(k_2-k_1)t}$$
+
+Integrando y despejando $y$:
+
+$$y(t) = \frac{k_1N_0}{k_2-k_1}e^{-k_1t}+Ce^{-k_2t}$$
+
+Con la condición inicial $y(0)=0$ se obtiene $C=-\dfrac{k_1N_0}{k_2-k_1}$, así que
+
+$$\boxed{y(t) = \frac{k_1N_0}{k_2-k_1}\left(e^{-k_1t}-e^{-k_2t}\right)}$$
+
+(esta fórmula asume $k_1\neq k_2$; si las dos tasas coinciden, el mismo procedimiento con integración directa da $y(t)=k_1N_0\,t\,e^{-k_1t}$). Por conservación de la materia, la cantidad de $C$ es simplemente lo que falta: $z(t)=N_0-x(t)-y(t)$.
+
+::: {.callout-tip title="Un detalle cualitativo: B siempre tiene un máximo"}
+Mientras $A$ todavía existe, alimenta a $B$ más rápido de lo que $B$ se desintegra, así que $y(t)$ crece. Pero a medida que $A$ se agota, ese suministro cae, y en algún momento la desintegración de $B$ hacia $C$ empieza a dominar: $y(t)$ alcanza un máximo y luego decae hacia cero. Ese instante se encuentra en $y'(t^*)=0$:
+
+$$t^* = \frac{\ln(k_1/k_2)}{k_1-k_2}$$
+:::
+
+::: {.callout-note title="Haciendo las cuentas con Maxima"}
+```maxima
+kill(all);
+depends(x,t);
+depends(y,t);
+
+edoA: 'diff(x,t) = -k1*x;
+solA: ic1(ode2(edoA, x, t), t=0, x=N0);
+xt_expr: rhs(solA);
+
+edoB: 'diff(y,t) = k1*xt_expr - k2*y;
+solB: ic1(ode2(edoB, y, t), t=0, y=0);
+yt_expr: radcan(rhs(solB));
+
+/* chequeo: yt_expr debe satisfacer la EDO original */
+radcan(diff(yt_expr,t) - (k1*xt_expr - k2*yt_expr));   /* debe dar 0 */
+
+/* ejemplo numerico: N0=100, k1=0.3, k2=0.1 */
+vals: [N0=100, k1=0.3, k2=0.1];
+xnum(t) := ''(subst(vals, xt_expr));
+ynum(t) := ''(subst(vals, yt_expr));
+znum(t) := 100 - xnum(t) - ynum(t);
+
+tmax_expr: log(k1/k2)/(k1-k2);
+tmax_num: float(subst(vals, tmax_expr));
+print("t* = ", tmax_num, "  y(t*) = ", float(ynum(tmax_num)));
+
+load(draw);
+draw2d(
+  terminal = png, file_name = "cadena",
+  xlabel = "t", ylabel = "cantidad",
+  color = blue, key = "A(t)", explicit(xnum(t), t, 0, 30),
+  color = red, key = "B(t)", explicit(ynum(t), t, 0, 30),
+  color = "dark-green", key = "C(t)", explicit(znum(t), t, 0, 30)
+);
+```
+:::
+
+::: {.callout-note title="Simulador — cadena de desintegración A → B → C"}
+```{=html}
+<div style="border:1px solid #ddd;border-radius:8px;padding:16px;max-width:640px;margin:1em auto;font-family:sans-serif;">
+  <canvas id="cad-canvas" width="580" height="380" style="width:100%;height:auto;background:#fff;"></canvas>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;margin-top:10px;">
+    <label>Tasa $k_1$ ($A\to B$): <span id="cad-k1-val">0.30</span>
+      <input type="range" id="cad-k1" min="0.02" max="1" step="0.01" value="0.3" style="width:100%;">
+    </label>
+    <label>Tasa $k_2$ ($B\to C$): <span id="cad-k2-val">0.10</span>
+      <input type="range" id="cad-k2" min="0.02" max="1" step="0.01" value="0.1" style="width:100%;">
+    </label>
+  </div>
+  <p style="font-size:0.9em;color:#555;margin-top:10px;">
+    $N_0=100$ fijo (no cambia la forma de las curvas, solo la escala). Azul: $A(t)$; rojo: $B(t)$;
+    verde: $C(t)$. El punto rojo marca el máximo de $B$
+    ($t^*=$ <span id="cad-tstar">-</span>, $B_{max}=$ <span id="cad-ymax">-</span>). Prueba acercar
+    $k_1$ y $k_2$: el máximo de $B$ se vuelve más ancho y bajo; con $k_1\gg k_2$, $B$ crece rápido y
+    decae lento (cuello de botella en el segundo paso); con $k_1\ll k_2$ ocurre lo opuesto.
+  </p>
+</div>
+<script>
+(function(){
+  const canvas = document.getElementById('cad-canvas');
+  const ctx = canvas.getContext('2d');
+  const k1s = document.getElementById('cad-k1');
+  const k2s = document.getElementById('cad-k2');
+  const k1valEl = document.getElementById('cad-k1-val');
+  const k2valEl = document.getElementById('cad-k2-val');
+  const tstarEl = document.getElementById('cad-tstar');
+  const ymaxEl = document.getElementById('cad-ymax');
+
+  const N0 = 100;
+  const YMAX_FIJO = 100; // fijo, ya que N0 no cambia
+  const W = canvas.width, H = canvas.height;
+  const margin = {left: 55, right: 20, top: 30, bottom: 40};
+
+  function A(t, k1){ return N0*Math.exp(-k1*t); }
+  function B(t, k1, k2){
+    if (Math.abs(k1-k2) < 1e-4) return N0*k1*t*Math.exp(-k1*t);
+    return (k1*N0/(k2-k1))*(Math.exp(-k1*t) - Math.exp(-k2*t));
+  }
+  function C(t, k1, k2){ return N0 - A(t,k1) - B(t,k1,k2); }
+
+  function peak(k1, k2){
+    if (Math.abs(k1-k2) < 1e-4) return [1/k1, N0/Math.E];
+    const ts = Math.log(k1/k2)/(k1-k2);
+    return [ts, B(ts,k1,k2)];
+  }
+
+  function draw(){
+    const k1 = parseFloat(k1s.value);
+    const k2 = parseFloat(k2s.value);
+    k1valEl.textContent = k1.toFixed(2);
+    k2valEl.textContent = k2.toFixed(2);
+
+    const [tstar, ymax] = peak(k1, k2);
+    tstarEl.textContent = tstar.toFixed(2);
+    ymaxEl.textContent = ymax.toFixed(1);
+
+    const Tmax = Math.max(5/Math.min(k1,k2), 3*tstar);
+
+    ctx.clearRect(0,0,W,H);
+    const plotW = W - margin.left - margin.right;
+    const plotH = H - margin.top - margin.bottom;
+
+    function toPx(t, v){
+      const px = margin.left + (t/Tmax) * plotW;
+      const py = margin.top + plotH - (v/YMAX_FIJO) * plotH;
+      return [px, py];
+    }
+
+    // ejes
+    ctx.strokeStyle = '#333'; ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(margin.left, margin.top);
+    ctx.lineTo(margin.left, margin.top + plotH);
+    ctx.lineTo(margin.left + plotW, margin.top + plotH);
+    ctx.stroke();
+
+    function curva(fn, color){
+      ctx.strokeStyle = color; ctx.lineWidth = 2.2;
+      ctx.beginPath();
+      let first = true;
+      for (let t = 0; t <= Tmax; t += Tmax/300) {
+        const [px, py] = toPx(t, fn(t));
+        if (first) { ctx.moveTo(px,py); first = false; } else ctx.lineTo(px,py);
+      }
+      ctx.stroke();
+    }
+
+    curva((t) => A(t,k1), '#1f77b4');
+    curva((t) => B(t,k1,k2), '#d62728');
+    curva((t) => C(t,k1,k2), '#2f7d32');
+
+    // punto maximo de B
+    const [mx, my] = toPx(tstar, ymax);
+    ctx.fillStyle = '#d62728';
+    ctx.beginPath(); ctx.arc(mx, my, 4.5, 0, 2*Math.PI); ctx.fill();
+
+    // leyenda
+    const leg = [['A(t)','#1f77b4'], ['B(t)','#d62728'], ['C(t)','#2f7d32']];
+    ctx.font = '12px sans-serif';
+    leg.forEach(([label,color], i) => {
+      const lx = margin.left + 10 + i*70, ly = margin.top - 12;
+      ctx.fillStyle = color;
+      ctx.fillRect(lx, ly-8, 10, 10);
+      ctx.fillStyle = '#333';
+      ctx.fillText(label, lx+14, ly);
+    });
+
+    // etiquetas de ejes
+    ctx.fillStyle = '#333'; ctx.font = '12px sans-serif';
+    ctx.fillText('t', margin.left + plotW - 8, margin.top + plotH + 20);
+    ctx.save();
+    ctx.translate(14, margin.top + plotH/2);
+    ctx.rotate(-Math.PI/2);
+    ctx.fillText('cantidad', 0, 0);
+    ctx.restore();
+    ctx.fillText('0', margin.left - 12, margin.top + plotH + 4);
+  }
+
+  [k1s, k2s].forEach(el => el.addEventListener('input', draw));
+  draw();
+})();
+</script>
+```
+:::
+
+::: {.callout-important title="Tarea"}
+Hacer los ejercicios de la sección 9 (factores integrantes) y sección 10, problema 3 (Bernoulli) del Simmons, comprobando cada resultado con Maxima. Además, resolver la cadena de desintegración para el caso $k_1=k_2$ (integrando directamente, sin la fórmula general de arriba) y verificar que coincide con el límite $k_2\to k_1$ de la solución obtenida.
+:::
