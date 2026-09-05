@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Arturo Sanjuán">
+<meta name="description" content="Dos maneras de bajar el orden de una ecuación diferencial, cuando falta la variable dependiente o cuando falta la independiente, resuelven la forma de una cadena colgante y revelan que el péndulo y el resorte obedecen, en el fondo, la misma ecuación.">
+
+<title>Reducción de Orden – Arturo Sanjuán</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../cursos/odes/fintegrante/index.html" rel="prev">
+<link href="../../../favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-06ef128ffaab2aaffa18b1038abc86f3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Arturo Sanjuán</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../cursos/index.html"> 
+<span class="menu-text">Cursos</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../cursos/odes/reduccionorden/index.html">Reducción de Orden</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="sidebar-tools-main">
+    <a href="../../../cursos/odes/index.xml" title="RSS — Ecuaciones Diferenciales" class="quarto-navigation-tool px-1" aria-label="RSS — Ecuaciones Diferenciales"><i class="bi bi-rss"></i></a>
+</div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Ecuaciones Diferenciales</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/introduccion/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/familiasortogonales/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Familias Ortogonales</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/modelacion/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Modelación con Ecuaciones Diferenciales</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/polares/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Coordenadas Polares</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/movimiento/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Problemas de Movimiento</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/taller-1/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Taller 1</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/homoexactas/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Ecuaciones Homogéneas y Exactas</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/fintegrante/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Factores Integrantes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/reduccionorden/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Reducción de Orden</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#cuando-el-orden-se-puede-bajar" id="toc-cuando-el-orden-se-puede-bajar" class="nav-link active" data-scroll-target="#cuando-el-orden-se-puede-bajar"><span class="header-section-number">1</span> Cuando el orden se puede bajar</a>
+  <ul class="collapse">
+  <li><a href="#falta-la-variable-dependiente-y" id="toc-falta-la-variable-dependiente-y" class="nav-link" data-scroll-target="#falta-la-variable-dependiente-y"><span class="header-section-number">1.1</span> Falta la variable dependiente <span class="math inline">\(y\)</span></a></li>
+  <li><a href="#falta-la-variable-independiente-x" id="toc-falta-la-variable-independiente-x" class="nav-link" data-scroll-target="#falta-la-variable-independiente-x"><span class="header-section-number">1.2</span> Falta la variable independiente <span class="math inline">\(x\)</span></a></li>
+  </ul></li>
+  <li><a href="#la-catenaria-la-forma-de-una-cadena-colgante" id="toc-la-catenaria-la-forma-de-una-cadena-colgante" class="nav-link" data-scroll-target="#la-catenaria-la-forma-de-una-cadena-colgante"><span class="header-section-number">2</span> La catenaria: la forma de una cadena colgante</a>
+  <ul class="collapse">
+  <li><a href="#resolviendo-por-reducción-de-orden" id="toc-resolviendo-por-reducción-de-orden" class="nav-link" data-scroll-target="#resolviendo-por-reducción-de-orden"><span class="header-section-number">2.1</span> Resolviendo por reducción de orden</a></li>
+  </ul></li>
+  <li><a href="#el-péndulo-y-el-resorte-la-misma-ecuación-dos-veces" id="toc-el-péndulo-y-el-resorte-la-misma-ecuación-dos-veces" class="nav-link" data-scroll-target="#el-péndulo-y-el-resorte-la-misma-ecuación-dos-veces"><span class="header-section-number">3</span> El péndulo y el resorte: la misma ecuación dos veces</a>
+  <ul class="collapse">
+  <li><a href="#el-péndulo-simple" id="toc-el-péndulo-simple" class="nav-link" data-scroll-target="#el-péndulo-simple"><span class="header-section-number">3.1</span> El péndulo simple</a></li>
+  <li><a href="#el-resorte-y-la-ley-de-hooke" id="toc-el-resorte-y-la-ley-de-hooke" class="nav-link" data-scroll-target="#el-resorte-y-la-ley-de-hooke"><span class="header-section-number">3.2</span> El resorte y la ley de Hooke</a></li>
+  <li><a href="#resolviendo-yomega2y0-por-reducción-de-orden" id="toc-resolviendo-yomega2y0-por-reducción-de-orden" class="nav-link" data-scroll-target="#resolviendo-yomega2y0-por-reducción-de-orden"><span class="header-section-number">3.3</span> Resolviendo <span class="math inline">\(y''+\omega^2y=0\)</span> por reducción de orden</a></li>
+  </ul></li>
+  <li><a href="#applet-dos-sistemas-la-misma-ecuación" id="toc-applet-dos-sistemas-la-misma-ecuación" class="nav-link" data-scroll-target="#applet-dos-sistemas-la-misma-ecuación"><span class="header-section-number">4</span> Applet: dos sistemas, la misma ecuación</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Reducción de Orden</h1>
+<p class="subtitle lead">La catenaria, el péndulo y el oscilador armónico</p>
+</div>
+
+<div>
+  <div class="description">
+    Dos maneras de bajar el orden de una ecuación diferencial, cuando falta la variable dependiente o cuando falta la independiente, resuelven la forma de una cadena colgante y revelan que el péndulo y el resorte obedecen, en el fondo, la misma ecuación.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor</div>
+    <div class="quarto-title-meta-contents">
+             <p>Arturo Sanjuán </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">15 de septiembre de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="cuando-el-orden-se-puede-bajar" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="cuando-el-orden-se-puede-bajar"><span class="header-section-number">1</span> Cuando el orden se puede bajar</h2>
+<p>La ecuación general de segundo orden es <span class="math inline">\(F(x,y,y',y'')=0\)</span>, y en general no hay ningún método sistemático para resolverla (de hecho, la mayoría de las ecuaciones de segundo orden no lineales simplemente no se pueden resolver en términos de funciones elementales). Pero hay dos situaciones estructurales, sorprendentemente comunes en las aplicaciones, en las que la ecuación se puede bajar a dos ecuaciones de primer orden que se resuelven una tras otra. En ambos casos el truco es el mismo: introducir <span class="math inline">\(p=y'\)</span> como nueva variable dependiente; la pregunta es solo respecto a qué variable conviene derivar <span class="math inline">\(p\)</span>.</p>
+<section id="falta-la-variable-dependiente-y" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="falta-la-variable-dependiente-y"><span class="header-section-number">1.1</span> Falta la variable dependiente <span class="math inline">\(y\)</span></h3>
+<p>Si <span class="math inline">\(y\)</span> no aparece explícitamente en la ecuación, esta se puede escribir como</p>
+<p><span class="math display">\[f(x,y',y'')=0\]</span></p>
+<p>En ese caso, con <span class="math inline">\(p=y'\)</span> y <span class="math inline">\(p'=y''\)</span> (derivando respecto a <span class="math inline">\(x\)</span>, como siempre), la ecuación se convierte en</p>
+<p><span class="math display">\[f(x,p,p')=0\]</span></p>
+<p>que ya es de primer orden en <span class="math inline">\(p\)</span>. Si se puede resolver para <span class="math inline">\(p(x)\)</span>, queda todavía una segunda integración, <span class="math inline">\(y=\int p\,dx\)</span>, para recuperar <span class="math inline">\(y\)</span>.</p>
+</section>
+<section id="falta-la-variable-independiente-x" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="falta-la-variable-independiente-x"><span class="header-section-number">1.2</span> Falta la variable independiente <span class="math inline">\(x\)</span></h3>
+<p>Si en cambio <span class="math inline">\(x\)</span> no aparece explícitamente, la ecuación tiene la forma</p>
+<p><span class="math display">\[g(y,y',y'')=0\]</span></p>
+<p>Aquí conviene, en cambio, tratar a <span class="math inline">\(p\)</span> como función de <span class="math inline">\(y\)</span> (no de <span class="math inline">\(x\)</span>), usando la regla de la cadena:</p>
+<p><span class="math display">\[y''=\frac{dp}{dx}=\frac{dp}{dy}\frac{dy}{dx}=p\frac{dp}{dy}\]</span></p>
+<p>así que la ecuación se convierte en</p>
+<p><span class="math display">\[g\!\left(y,p,p\frac{dp}{dy}\right)=0\]</span></p>
+<p>que es de primer orden, ahora con <span class="math inline">\(y\)</span> haciendo las veces de variable independiente. Este segundo caso es exactamente lo que ocurre, físicamente, cuando se usa conservación de la energía en un sistema mecánico: la energía cinética depende de <span class="math inline">\(p=v\)</span> y la potencial de <span class="math inline">\(y\)</span>, y derivar respecto a <span class="math inline">\(y\)</span> en vez de <span class="math inline">\(x\)</span> es, en el fondo, lo mismo que separar variables en la ecuación de energía.</p>
+<p>Veamos tres aplicaciones clásicas: la primera usa el primer caso (<span class="math inline">\(y\)</span> ausente), y las otras dos, que resultan ser la misma ecuación disfrazada dos veces, usan el segundo (<span class="math inline">\(x\)</span> ausente).</p>
+</section>
+</section>
+<section id="la-catenaria-la-forma-de-una-cadena-colgante" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="la-catenaria-la-forma-de-una-cadena-colgante"><span class="header-section-number">2</span> La catenaria: la forma de una cadena colgante</h2>
+<p>En 1690, Jakob Bernoulli planteó como reto público el problema de encontrar la curva que forma una cadena flexible colgada de sus dos extremos, bajo su propio peso (él mismo lo había intentado sin éxito). Al año siguiente, Leibniz, Huygens y Johann Bernoulli publicaron soluciones independientes. Fue Huygens quien le dio el nombre, del latín <em>catena</em>, cadena.</p>
+<p>Supongamos que el eje <span class="math inline">\(y\)</span> pasa por el punto más bajo de la cadena, y sea <span class="math inline">\(s\)</span> la longitud de arco medida desde ese punto hasta un punto variable <span class="math inline">\((x,y)\)</span>. Si <span class="math inline">\(w(s)\)</span> es la densidad lineal de la cadena, el trozo de cadena entre el punto más bajo y <span class="math inline">\((x,y)\)</span> está en equilibrio bajo tres fuerzas: la tensión horizontal <span class="math inline">\(T_0\)</span> en el punto más bajo, la tensión <span class="math inline">\(T\)</span> en <span class="math inline">\((x,y)\)</span> (que actúa a lo largo de la tangente, porque la cadena es flexible), y el peso de ese trozo de cadena, dirigido hacia abajo. Igualando las componentes horizontal y vertical,</p>
+<p><span class="math display">\[T\cos\theta=T_0,\qquad T\sin\theta=\int_0^s w(s)\,ds\]</span></p>
+<p>donde <span class="math inline">\(\theta\)</span> es el ángulo que forma la tangente con la horizontal. Dividiendo estas dos ecuaciones,</p>
+<p><span class="math display">\[\tan\theta=y'=\frac{1}{T_0}\int_0^s w(s)\,ds\]</span></p>
+<p>Derivando esta última igualdad respecto a <span class="math inline">\(x\)</span>, y usando que <span class="math inline">\(ds/dx=\sqrt{1+(y')^2}\)</span> (el elemento de arco),</p>
+<p><span class="math display">\[T_0y''=w(s)\frac{ds}{dx}=w(s)\sqrt{1+(y')^2}\]</span></p>
+<p>Para una cadena de densidad uniforme <span class="math inline">\(w(s)=w_0\)</span>, y llamando <span class="math inline">\(a=T_0/w_0\)</span>,</p>
+<p><span class="math display">\[ay''=\sqrt{1+(y')^2}\]</span></p>
+<p>Esta es una ecuación de segundo orden en la que <span class="math inline">\(y\)</span> no aparece explícitamente (solo <span class="math inline">\(y'\)</span> y <span class="math inline">\(y''\)</span>): el primer caso de la sección anterior.</p>
+<section id="resolviendo-por-reducción-de-orden" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="resolviendo-por-reducción-de-orden"><span class="header-section-number">2.1</span> Resolviendo por reducción de orden</h3>
+<p>Con <span class="math inline">\(p=y'\)</span>, la ecuación se convierte en</p>
+<p><span class="math display">\[ap'=\sqrt{1+p^2}\]</span></p>
+<p>Aquí conviene resistir la tentación de elevar al cuadrado ambos lados para deshacerse de la raíz (eso complica innecesariamente el álgebra y puede introducir soluciones falsas al final). En cambio, separamos variables directamente,</p>
+<p><span class="math display">\[\frac{dp}{\sqrt{1+p^2}}=\frac{dx}{a}\]</span></p>
+<p>y usamos el hecho de que la derivada de <span class="math inline">\(\operatorname{arcsenh}\)</span> es exactamente el integrando de la izquierda (<span class="math inline">\(\frac{d}{dp}\operatorname{arcsenh}(p)=1/\sqrt{1+p^2}\)</span>, lo cual se comprueba de inmediato derivando <span class="math inline">\(\operatorname{senh}\)</span>): la antiderivada aparece de una vez, sin sustituciones adicionales, <span class="math inline">\(\operatorname{arcsenh}(p)=\log\!\left(p+\sqrt{1+p^2}\right)\)</span>. Integrando ambos lados,</p>
+<p><span class="math display">\[\operatorname{arcsenh}(p)=\frac{x}{a}+C_1\]</span></p>
+<p>La pendiente en el punto más bajo es cero (<span class="math inline">\(p=0\)</span> cuando <span class="math inline">\(x=0\)</span>, por construcción del eje <span class="math inline">\(y\)</span>), así que <span class="math inline">\(C_1=0\)</span> y</p>
+<p><span class="math display">\[p=y'=\operatorname{senh}\!\left(\frac{x}{a}\right)\]</span></p>
+<p>Una segunda integración da, finalmente,</p>
+<p><span class="math display">\[\boxed{y=a\cosh\!\left(\frac{x}{a}\right)+C_2}\]</span></p>
+<p>que es la ecuación de la catenaria, con <span class="math inline">\(C_2\)</span> fijado por la altura del punto más bajo. El parámetro <span class="math inline">\(a=T_0/w_0\)</span> tiene una interpretación física directa: entre mayor la tensión horizontal <span class="math inline">\(T_0\)</span> frente al peso <span class="math inline">\(w_0\)</span>, más abierta y plana es la curva cerca del origen; entre menor, más cerrada y puntiaguda.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="catenaria.png" class="img-fluid figure-img"></p>
+<figcaption>La catenaria <span class="math inline">\(y=a\cosh(x/a)\)</span> para dos valores de <span class="math inline">\(a\)</span>. Entre mayor la tensión horizontal frente al peso, más plana es la curva cerca del punto más bajo.</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Una curiosidad que se prueba más adelante en el curso">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Una curiosidad que se prueba más adelante en el curso
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si esta curva se hace girar alrededor del eje <span class="math inline">\(x\)</span>, la superficie de revolución que se genera tiene, entre todas las superficies que se apoyan en los mismos dos círculos extremos, el área mínima posible. Esto no es evidente a partir de lo que hemos visto aquí (se demuestra con cálculo de variaciones, minimizando directamente la integral del área), pero es una razón más para que esta curva, además de resolver un problema de equilibrio de fuerzas, también resuelva un problema de optimización geométrica.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">/* Verificamos que y=a*cosh(x/a) resuelve a*y''=sqrt(1+(y')^2) */</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cn">y</span>: <span class="cn">a</span>*<span class="fu">cosh</span>(<span class="cn">x</span>/<span class="cn">a</span>);</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cn">yp</span>: <span class="fu">diff</span>(<span class="cn">y</span>,<span class="cn">x</span>);</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="cn">ypp</span>: <span class="fu">diff</span>(<span class="cn">y</span>,<span class="cn">x</span>,<span class="dv">2</span>);</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="cn">chequeo</span>: <span class="fu">trigsimp</span>(<span class="cn">a</span>*<span class="cn">ypp</span> - <span class="fu">sqrt</span>(<span class="dv">1</span>+<span class="cn">yp</span>^<span class="dv">2</span>));   <span class="co">/* debe dar 0 */</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cn">chequeo</span>;</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">/* Confirmamos la antiderivada usada arriba */</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">integrate</span>(<span class="dv">1</span>/<span class="fu">sqrt</span>(<span class="dv">1</span>+<span class="cn">p</span>^<span class="dv">2</span>), <span class="cn">p</span>);   <span class="co">/* da asinh(p), la forma log(p+sqrt(1+p^2)) */</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</section>
+</section>
+<section id="el-péndulo-y-el-resorte-la-misma-ecuación-dos-veces" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="el-péndulo-y-el-resorte-la-misma-ecuación-dos-veces"><span class="header-section-number">3</span> El péndulo y el resorte: la misma ecuación dos veces</h2>
+<section id="el-péndulo-simple" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="el-péndulo-simple"><span class="header-section-number">3.1</span> El péndulo simple</h3>
+<p>Consideremos ahora un péndulo: una masa <span class="math inline">\(m\)</span> al final de una cuerda de longitud <span class="math inline">\(a\)</span> y peso despreciable, con <span class="math inline">\(\theta\)</span> el ángulo que forma con la vertical, y <span class="math inline">\(\alpha\)</span> el ángulo (la amplitud) desde el que se suelta el péndulo, partiendo del reposo. Suponiendo que no hay resistencia del aire, la energía se conserva: la energía cinética en el ángulo <span class="math inline">\(\theta\)</span> más la energía potencial en <span class="math inline">\(\theta\)</span> es igual a la energía potencial inicial en <span class="math inline">\(\alpha\)</span> (donde la energía cinética es cero, porque se suelta desde el reposo):</p>
+<p><span class="math display">\[\frac12(a\dot\theta)^2+ga(1-\cos\theta)=ga(1-\cos\alpha)\]</span></p>
+<p>(la velocidad a lo largo del arco es <span class="math inline">\(a\dot\theta\)</span>, y la altura sobre el punto más bajo es <span class="math inline">\(a(1-\cos\theta)\)</span>; ya dividimos entre la masa <span class="math inline">\(m\)</span>). Despejando,</p>
+<p><span class="math display">\[\dot\theta^2=\frac{2g}{a}(\cos\theta-\cos\alpha)\]</span></p>
+<p>Este es exactamente el segundo caso de la sección anterior, aplicado directamente a la ecuación de movimiento. En efecto, la segunda ley de Newton a lo largo del arco da <span class="math inline">\(a\ddot\theta=-g\sin\theta\)</span>, y si en esa ecuación (donde <span class="math inline">\(x\)</span>, el tiempo, no aparece explícitamente) sustituimos <span class="math inline">\(p=\dot\theta\)</span> y <span class="math inline">\(\ddot\theta=p\,dp/d\theta\)</span>,</p>
+<p><span class="math display">\[ap\frac{dp}{d\theta}=-g\sin\theta\quad\Longrightarrow\quad ap\,dp=-g\sin\theta\,d\theta\quad\Longrightarrow\quad \frac{a}{2}p^2=g\cos\theta+C\]</span></p>
+<p>y con la condición inicial <span class="math inline">\(p=0\)</span> en <span class="math inline">\(\theta=\alpha\)</span> se obtiene <span class="math inline">\(C=-g\cos\alpha\)</span>: exactamente la misma ecuación de conservación de energía de arriba. Reducir el orden de una ecuación de movimiento y conservar la energía son, en el fondo, el mismo cálculo hecho dos veces.</p>
+<p><strong>El periodo exacto.</strong> Separando variables e integrando un cuarto de oscilación (de <span class="math inline">\(\theta=0\)</span> a <span class="math inline">\(\theta=\alpha\)</span>), el periodo completo resulta</p>
+<p><span class="math display">\[T=4\sqrt{\frac{a}{2g}}\int_0^\alpha \frac{d\theta}{\sqrt{\cos\theta-\cos\alpha}}\]</span></p>
+<p>Con la identidad del ángulo mitad <span class="math inline">\(\cos\theta=1-2\sin^2(\theta/2)\)</span> y la sustitución <span class="math inline">\(\sin(\theta/2)=k\sin\varphi\)</span>, con <span class="math inline">\(k=\sin(\alpha/2)\)</span> (de modo que <span class="math inline">\(\varphi\)</span> va de <span class="math inline">\(0\)</span> a <span class="math inline">\(\pi/2\)</span> cuando <span class="math inline">\(\theta\)</span> va de <span class="math inline">\(0\)</span> a <span class="math inline">\(\alpha\)</span>), esta integral se transforma en</p>
+<p><span class="math display">\[T=4\sqrt{\frac{a}{g}}\int_0^{\pi/2}\frac{d\varphi}{\sqrt{1-k^2\sin^2\varphi}}=4\sqrt{\frac{a}{g}}\,K(k)\]</span></p>
+<p>donde <span class="math inline">\(K(k)\)</span> es la <strong>integral elíptica completa de primera especie</strong>. No existe forma de escribir <span class="math inline">\(K(k)\)</span> en términos de funciones elementales: hay que evaluarla numéricamente o con tablas.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Una curiosidad histórica: el error circular de los relojes de péndulo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Una curiosidad histórica: el error circular de los relojes de péndulo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Como <span class="math inline">\(T\)</span> depende de <span class="math inline">\(\alpha\)</span>, un reloj de péndulo real se atrasa o adelanta según la amplitud con la que oscile; a este efecto se le llama, históricamente, el <em>error circular</em>. Christiaan Huygens, quien inventó el reloj de péndulo en 1656, descubrió que la única curva que hace que el periodo sea exactamente independiente de la amplitud (la propiedad <em>tautócrona</em>) no es el arco circular sino el cicloide, y llegó a construir relojes con mejillas cicloidales para forzar al péndulo a describir esa curva en vez de un arco de círculo. Es el mismo cicloide que resuelve el problema de la braquistócrona.</p>
+</div>
+</div>
+<p><strong>La aproximación de ángulo pequeño.</strong> Cuando <span class="math inline">\(\alpha\)</span> es pequeño, <span class="math inline">\(\sin\theta\approx\theta\)</span> (coinciden hasta la primera cifra decimal para <span class="math inline">\(\theta\)</span> menor a unos <span class="math inline">\(0.4\)</span> radianes), y la ecuación <span class="math inline">\(a\ddot\theta=-g\sin\theta\)</span> se aproxima por</p>
+<p><span class="math display">\[\ddot\theta+\frac{g}{a}\theta=0\]</span></p>
+<p>que es la ecuación del oscilador armónico simple, con <span class="math inline">\(\omega^2=g/a\)</span>. Su solución, sujeta a <span class="math inline">\(\theta(0)=\alpha\)</span> y <span class="math inline">\(\dot\theta(0)=0\)</span>, es <span class="math inline">\(\theta=\alpha\cos(\omega t)\)</span>, con periodo aproximado</p>
+<p><span class="math display">\[T_0=2\pi\sqrt{\frac{a}{g}}\]</span></p>
+<p>independiente de la amplitud <span class="math inline">\(\alpha\)</span>: esta es la razón, después de todo, por la que decimos coloquialmente que el péndulo es isócrono, aunque estrictamente solo lo es en el límite de oscilaciones pequeñas.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="periodo.png" class="img-fluid figure-img"></p>
+<figcaption>Razón entre el periodo exacto del péndulo y el periodo aproximado de ángulo pequeño, <span class="math inline">\(T_0=2\pi\sqrt{a/g}\)</span>, en función de la amplitud <span class="math inline">\(\alpha\)</span>. Para amplitudes menores a unos <span class="math inline">\(20°\)</span> la aproximación es excelente; más allá, el error circular crece con rapidez.</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">/* Comparamos el periodo exacto (integral eliptica, resuelta numericamente)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">   contra la aproximacion de angulo pequeno, para a=1, g=9.8 */</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cn">periodo_exacto</span>(<span class="cn">alpha_grados</span>) := <span class="fu">block</span>(</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  [<span class="cn">alpha</span>: <span class="cn">alpha_grados</span>*<span class="va">%pi</span>/<span class="dv">180</span>, <span class="cn">integral</span>],</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="cn">integral</span>: <span class="fu">quad_qags</span>(<span class="dv">1</span>/<span class="fu">sqrt</span>(<span class="fu">cos</span>(<span class="cn">theta</span>)-<span class="fu">cos</span>(<span class="cn">alpha</span>)), <span class="cn">theta</span>, <span class="dv">0</span>, <span class="cn">alpha</span> - <span class="fl">1e-9</span>)[<span class="dv">1</span>],</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span>*<span class="fu">sqrt</span>(<span class="dv">1</span>/(<span class="dv">2</span>*<span class="fl">9.8</span>))*<span class="cn">integral</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>);</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="cn">T0</span>: <span class="dv">2</span>*<span class="va">%pi</span>*<span class="fu">sqrt</span>(<span class="dv">1</span>/<span class="fl">9.8</span>);</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> <span class="cn">alpha_grados</span> <span class="kw">in</span> [<span class="dv">5</span>, <span class="dv">20</span>, <span class="dv">45</span>, <span class="dv">90</span>, <span class="dv">150</span>] <span class="kw">do</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"alpha="</span>, <span class="cn">alpha_grados</span>, <span class="st">"grados:  T_exacto/T0 = "</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="fu">float</span>(<span class="cn">periodo_exacto</span>(<span class="cn">alpha_grados</span>)/<span class="cn">T0</span>));</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">/* la razon crece de aproximadamente 1.0005 (alpha=5) a 1.76 (alpha=150):</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">   el error circular es despreciable para oscilaciones pequenas, pero</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">   muy real para amplitudes grandes */</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</section>
+<section id="el-resorte-y-la-ley-de-hooke" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="el-resorte-y-la-ley-de-hooke"><span class="header-section-number">3.2</span> El resorte y la ley de Hooke</h3>
+<p>Consideremos ahora una masa <span class="math inline">\(m\)</span> atada a un resorte de constante <span class="math inline">\(k\)</span>, sobre una superficie sin fricción, con <span class="math inline">\(x\)</span> la posición medida desde el equilibrio. La ley de Hooke dice que la fuerza restauradora es <span class="math inline">\(F=-kx\)</span> (el signo indica que se opone al desplazamiento). Por la segunda ley de Newton, <span class="math inline">\(m\ddot x=-kx\)</span>, es decir</p>
+<p><span class="math display">\[\ddot x+\frac{k}{m}x=0\]</span></p>
+<p>Con <span class="math inline">\(\omega^2=k/m\)</span>, esta es exactamente la misma ecuación que obtuvimos para el péndulo con ángulo pequeño. No es una coincidencia ni una simplificación forzada: los dos sistemas, uno gravitacional y otro elástico, comparten la misma estructura matemática porque en ambos la fuerza restauradora es, en la aproximación lineal, proporcional al desplazamiento y opuesta a él.</p>
+</section>
+<section id="resolviendo-yomega2y0-por-reducción-de-orden" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="resolviendo-yomega2y0-por-reducción-de-orden"><span class="header-section-number">3.3</span> Resolviendo <span class="math inline">\(y''+\omega^2y=0\)</span> por reducción de orden</h3>
+<p>Escribamos la ecuación en la variable genérica <span class="math inline">\(y\)</span> (que representa a <span class="math inline">\(\theta\)</span> en el péndulo o a <span class="math inline">\(x\)</span> en el resorte). Con <span class="math inline">\(p=y'\)</span> y <span class="math inline">\(y''=p\,dp/dy\)</span> (segundo caso, <span class="math inline">\(x\)</span> ausente),</p>
+<p><span class="math display">\[p\frac{dp}{dy}+\omega^2y=0\quad\Longrightarrow\quad p\,dp=-\omega^2y\,dy\quad\Longrightarrow\quad p^2+\omega^2y^2=C\]</span></p>
+<p>Esta constante <span class="math inline">\(C\)</span> es, salvo un factor, la energía total del sistema (cinética más potencial), conservada porque no hay fricción. Escribiendo <span class="math inline">\(C=\omega^2A^2\)</span>, con <span class="math inline">\(A\)</span> la amplitud,</p>
+<p><span class="math display">\[p=\frac{dy}{dx}=\pm\omega\sqrt{A^2-y^2}\quad\Longrightarrow\quad \frac{dy}{\sqrt{A^2-y^2}}=\pm\omega\,dx\]</span></p>
+<p>Integrando, <span class="math inline">\(\operatorname{arcsen}(y/A)=\pm\omega x+\varphi\)</span>, así que</p>
+<p><span class="math display">\[\boxed{y=A\sin(\omega x+\varphi)}\]</span></p>
+<p>La familia de curvas <span class="math inline">\(p^2+\omega^2y^2=C\)</span>, para distintos valores de <span class="math inline">\(C\)</span>, es una familia de elipses en el plano <span class="math inline">\((y,p)\)</span>: cada una corresponde a una amplitud de oscilación distinta, y el sistema recorre siempre la misma elipse, nunca salta de una a otra, porque no hay fricción que disipe o añada energía.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="fases.png" class="img-fluid figure-img"></p>
+<figcaption>Retrato de fase de <span class="math inline">\(y''+\omega^2y=0\)</span> tras la reducción de orden: las curvas de conservación <span class="math inline">\(p^2+\omega^2y^2=C\)</span> son elipses, cada una una amplitud de oscilación distinta. Las flechas marcan el sentido, horario, del recorrido.</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">depends</span>(<span class="cn">p</span>,<span class="cn">y</span>);</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">/* Reduccion de orden, caso x ausente: y''+w^2*y=0 */</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cn">edo</span>: <span class="cn">p</span>*<span class="do">'</span><span class="cn">diff</span>(<span class="cn">p</span>,<span class="cn">y</span>) + <span class="cn">w</span>^<span class="dv">2</span>*<span class="cn">y</span> = <span class="dv">0</span>;</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="cn">conservacion</span>: <span class="fu">ratsimp</span>(<span class="fu">integrate</span>(<span class="cn">p</span>,<span class="cn">p</span>) + <span class="cn">w</span>^<span class="dv">2</span>*<span class="fu">integrate</span>(<span class="cn">y</span>,<span class="cn">y</span>));  <span class="co">/* (p^2+w^2*y^2)/2 = C */</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="cn">conservacion</span>;</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">/* Verificacion final: y=A*sin(w*x+phi) satisface y''+w^2*y=0 */</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="cn">y_sol</span>: <span class="cn">A</span>*<span class="fu">sin</span>(<span class="cn">w</span>*<span class="cn">x</span>+<span class="cn">phi</span>);</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="cn">chequeo</span>: <span class="fu">ratsimp</span>(<span class="fu">diff</span>(<span class="cn">y_sol</span>,<span class="cn">x</span>,<span class="dv">2</span>) + <span class="cn">w</span>^<span class="dv">2</span>*<span class="cn">y_sol</span>);   <span class="co">/* debe dar 0 */</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="cn">chequeo</span>;</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</section>
+</section>
+<section id="applet-dos-sistemas-la-misma-ecuación" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="applet-dos-sistemas-la-misma-ecuación"><span class="header-section-number">4</span> Applet: dos sistemas, la misma ecuación</h2>
+<p>Para el péndulo, <span class="math inline">\(\omega=\sqrt{g/a}\)</span>; para el resorte, <span class="math inline">\(\omega=\sqrt{k/m}\)</span>. En ambos casos, soltando el sistema desde el reposo en su amplitud máxima, el movimiento es <span class="math inline">\(y=A\cos(\omega t)\)</span>: la misma proyección de un punto que gira uniformemente sobre un círculo de radio <span class="math inline">\(A\)</span> con velocidad angular <span class="math inline">\(\omega\)</span>. El siguiente simulador muestra esa conexión: el punto que gira sobre el círculo, a la izquierda, tiene en cada instante la misma altura que la curva trigonométrica que traza a la derecha; abajo se dibuja, en ese mismo instante, el sistema físico real que se haya seleccionado.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Simulador: el círculo de referencia, el péndulo y el resorte">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Simulador: el círculo de referencia, el péndulo y el resorte
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div style="border:1px solid #ddd;border-radius:8px;padding:16px;max-width:680px;margin:1em auto;font-family:sans-serif;">
+  <div style="display:flex;gap:16px;align-items:center;margin-bottom:10px;flex-wrap:wrap;font-size:0.95em;">
+    <strong>Sistema:</strong>
+    <label><input type="radio" name="ro-modo" id="ro-modo-pendulo" checked=""> Péndulo</label>
+    <label><input type="radio" name="ro-modo" id="ro-modo-resorte"> Resorte</label>
+    <span style="margin-left:auto;color:#555;">Periodo actual: $T\approx$ <span id="ro-periodo">-</span> s</span>
+  </div>
+
+  <canvas id="ro-canvas-circulo" width="640" height="230" style="width:100%;height:auto;background:#fff;"></canvas>
+  <canvas id="ro-canvas-fisico" width="640" height="190" style="width:100%;height:auto;background:#fff;margin-top:6px;"></canvas>
+
+  <div id="ro-controles-pendulo" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px;">
+    <label>$\alpha$ (ángulo inicial): <span id="ro-alpha-val">15</span>°
+      <input type="range" id="ro-alpha" min="2" max="40" step="1" value="15" style="width:100%;">
+    </label>
+    <label>$a$ (longitud): <span id="ro-a-val">1.00</span> m
+      <input type="range" id="ro-a" min="0.3" max="2" step="0.05" value="1" style="width:100%;">
+    </label>
+    <label>$g$ (gravedad): <span id="ro-g-val">9.80</span> m/s²
+      <input type="range" id="ro-g" min="1.6" max="25" step="0.1" value="9.8" style="width:100%;">
+    </label>
+  </div>
+
+  <div id="ro-controles-resorte" style="display:none;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px;">
+    <label>$k$ (constante del resorte): <span id="ro-k-val">10.0</span> N/m
+      <input type="range" id="ro-k" min="1" max="40" step="0.5" value="10" style="width:100%;">
+    </label>
+    <label>$m$ (masa): <span id="ro-m-val">1.00</span> kg
+      <input type="range" id="ro-m" min="0.2" max="5" step="0.1" value="1" style="width:100%;">
+    </label>
+    <label>$x_0$ (amplitud inicial): <span id="ro-x0-val">1.00</span>
+      <input type="range" id="ro-x0" min="0.2" max="2" step="0.1" value="1" style="width:100%;">
+    </label>
+  </div>
+
+  <p style="font-size:0.9em;color:#555;margin-top:10px;">
+    Izquierda: un punto gira sobre un círculo de radio $A$ (la amplitud) con velocidad angular $\omega$; su altura sobre el centro es $A\cos(\omega t)$. Derecha: esa misma altura, graficada contra el tiempo, es la curva $y=A\cos(\omega t)$. Abajo: el sistema físico real, péndulo o resorte, en ese mismo instante. Al cambiar de sistema o mover un control, la animación reinicia desde la amplitud máxima, como si el sistema se soltara de nuevo desde el reposo. Nota: el dibujo del péndulo usa la aproximación de ángulo pequeño; para $\alpha$ grande el movimiento real ya no es exactamente sinusoidal, como se explica arriba con la integral elíptica.
+  </p>
+</div>
+<script>
+(function(){
+  const canvasC = document.getElementById('ro-canvas-circulo');
+  const ctxC = canvasC.getContext('2d');
+  const canvasF = document.getElementById('ro-canvas-fisico');
+  const ctxF = canvasF.getContext('2d');
+
+  const modoPendulo = document.getElementById('ro-modo-pendulo');
+  const modoResorte = document.getElementById('ro-modo-resorte');
+  const ctrlPendulo = document.getElementById('ro-controles-pendulo');
+  const ctrlResorte = document.getElementById('ro-controles-resorte');
+
+  const alphaS = document.getElementById('ro-alpha');
+  const aS = document.getElementById('ro-a');
+  const gS = document.getElementById('ro-g');
+  const kS = document.getElementById('ro-k');
+  const mS = document.getElementById('ro-m');
+  const x0S = document.getElementById('ro-x0');
+
+  const alphaValEl = document.getElementById('ro-alpha-val');
+  const aValEl = document.getElementById('ro-a-val');
+  const gValEl = document.getElementById('ro-g-val');
+  const kValEl = document.getElementById('ro-k-val');
+  const mValEl = document.getElementById('ro-m-val');
+  const x0ValEl = document.getElementById('ro-x0-val');
+  const periodoEl = document.getElementById('ro-periodo');
+
+  let t = 0;
+  let lastTime = null;
+  let historia = [];
+
+  function actualizarModoUI(){
+    if (modoPendulo.checked) {
+      ctrlPendulo.style.display = 'grid';
+      ctrlResorte.style.display = 'none';
+    } else {
+      ctrlPendulo.style.display = 'none';
+      ctrlResorte.style.display = 'grid';
+    }
+    t = 0;
+    historia = [];
+  }
+
+  modoPendulo.addEventListener('change', actualizarModoUI);
+  modoResorte.addEventListener('change', actualizarModoUI);
+  [alphaS, aS, gS, kS, mS, x0S].forEach((el) => {
+    el.addEventListener('input', () => { t = 0; historia = []; });
+  });
+
+  function parametros(){
+    if (modoPendulo.checked) {
+      const alphaDeg = parseFloat(alphaS.value);
+      const a = parseFloat(aS.value);
+      const g = parseFloat(gS.value);
+      alphaValEl.textContent = alphaDeg.toFixed(0);
+      aValEl.textContent = a.toFixed(2);
+      gValEl.textContent = g.toFixed(2);
+      const omega = Math.sqrt(g / a);
+      const alphaRad = alphaDeg * Math.PI / 180;
+      return { omega: omega, amplitud: alphaRad, tipo: 'pendulo' };
+    } else {
+      const k = parseFloat(kS.value);
+      const m = parseFloat(mS.value);
+      const x0 = parseFloat(x0S.value);
+      kValEl.textContent = k.toFixed(1);
+      mValEl.textContent = m.toFixed(2);
+      x0ValEl.textContent = x0.toFixed(2);
+      const omega = Math.sqrt(k / m);
+      return { omega: omega, amplitud: x0, tipo: 'resorte' };
+    }
+  }
+
+  function dibujarCirculo(omega){
+    const W = canvasC.width, H = canvasC.height;
+    ctxC.clearRect(0, 0, W, H);
+
+    const cx = 95, cy = H / 2, R = 68;
+    ctxC.strokeStyle = '#999'; ctxC.lineWidth = 1;
+    ctxC.beginPath(); ctxC.arc(cx, cy, R, 0, 2 * Math.PI); ctxC.stroke();
+    ctxC.beginPath(); ctxC.moveTo(cx - R - 10, cy); ctxC.lineTo(cx + R + 10, cy); ctxC.stroke();
+    ctxC.beginPath(); ctxC.moveTo(cx, cy - R - 10); ctxC.lineTo(cx, cy + R + 10); ctxC.stroke();
+
+    const phi = omega * t;
+    const px = cx + R * Math.sin(phi);
+    const py = cy - R * Math.cos(phi);
+    const y_norm = Math.cos(phi);
+
+    const plotX0 = cx + R + 45;
+    const plotW = W - plotX0 - 15;
+    const T = 2 * Math.PI / omega;
+    const ventana = 2 * T;
+
+    ctxC.strokeStyle = '#999'; ctxC.lineWidth = 1;
+    ctxC.beginPath(); ctxC.moveTo(plotX0, cy - R - 10); ctxC.lineTo(plotX0, cy + R + 10); ctxC.stroke();
+    ctxC.beginPath(); ctxC.moveTo(plotX0, cy); ctxC.lineTo(plotX0 + plotW, cy); ctxC.stroke();
+
+    historia.push({ tt: t, y: y_norm });
+    while (historia.length && historia[0].tt < t - ventana) historia.shift();
+
+    ctxC.strokeStyle = '#1f77b4'; ctxC.lineWidth = 2.2;
+    ctxC.beginPath();
+    historia.forEach((p, i) => {
+      const px2 = plotX0 + ((p.tt - (t - ventana)) / ventana) * plotW;
+      const py2 = cy - p.y * R;
+      if (i === 0) ctxC.moveTo(px2, py2); else ctxC.lineTo(px2, py2);
+    });
+    ctxC.stroke();
+
+    const puntaX = plotX0 + plotW;
+    ctxC.setLineDash([4, 4]);
+    ctxC.strokeStyle = '#aaa';
+    ctxC.beginPath(); ctxC.moveTo(px, py); ctxC.lineTo(puntaX, py); ctxC.stroke();
+    ctxC.setLineDash([]);
+
+    ctxC.strokeStyle = '#d62728'; ctxC.lineWidth = 1.5;
+    ctxC.beginPath(); ctxC.moveTo(cx, cy); ctxC.lineTo(px, py); ctxC.stroke();
+
+    ctxC.fillStyle = '#d62728';
+    ctxC.beginPath(); ctxC.arc(px, py, 5, 0, 2 * Math.PI); ctxC.fill();
+    ctxC.beginPath(); ctxC.arc(puntaX, py, 5, 0, 2 * Math.PI); ctxC.fill();
+
+    ctxC.fillStyle = '#333'; ctxC.font = '13px sans-serif';
+    ctxC.fillText('y = A cos(ωt)', plotX0 + plotW / 2 - 48, cy - R - 14);
+    ctxC.fillText('t', plotX0 + plotW - 8, cy + R + 24);
+
+    if (periodoEl) periodoEl.textContent = T.toFixed(2);
+  }
+
+  function dibujarFisico(omega, amplitud, tipo){
+    const W = canvasF.width, H = canvasF.height;
+    ctxF.clearRect(0, 0, W, H);
+    const cx = W / 2;
+
+    function techo(x0, y0){
+      ctxF.strokeStyle = '#333'; ctxF.lineWidth = 2;
+      ctxF.beginPath(); ctxF.moveTo(x0 - 45, y0); ctxF.lineTo(x0 + 45, y0); ctxF.stroke();
+      for (let i = -40; i <= 40; i += 10) {
+        ctxF.beginPath(); ctxF.moveTo(x0 + i, y0); ctxF.lineTo(x0 + i - 8, y0 - 10); ctxF.stroke();
+      }
+    }
+
+    if (tipo === 'pendulo') {
+      const theta = amplitud * Math.cos(omega * t);
+      const pivotX = cx, pivotY = 18;
+      const L = 140;
+      const bobX = pivotX + L * Math.sin(theta);
+      const bobY = pivotY + L * Math.cos(theta);
+
+      techo(pivotX, pivotY);
+      ctxF.setLineDash([4, 4]); ctxF.strokeStyle = '#ccc';
+      ctxF.beginPath(); ctxF.moveTo(pivotX, pivotY); ctxF.lineTo(pivotX, pivotY + L); ctxF.stroke();
+      ctxF.setLineDash([]);
+
+      ctxF.strokeStyle = '#555'; ctxF.lineWidth = 2;
+      ctxF.beginPath(); ctxF.moveTo(pivotX, pivotY); ctxF.lineTo(bobX, bobY); ctxF.stroke();
+
+      ctxF.fillStyle = '#333'; ctxF.beginPath(); ctxF.arc(pivotX, pivotY, 3, 0, 2 * Math.PI); ctxF.fill();
+      ctxF.fillStyle = '#d62728'; ctxF.beginPath(); ctxF.arc(bobX, bobY, 13, 0, 2 * Math.PI); ctxF.fill();
+
+      ctxF.fillStyle = '#333'; ctxF.font = '13px sans-serif';
+      ctxF.fillText('θ(t) = α·cos(ωt)', 10, H - 12);
+    } else {
+      const x = amplitud * Math.cos(omega * t);
+      const anchorX = cx, anchorY = 15;
+      const L0 = 55;
+      const escala = 35;
+      const Lact = Math.max(20, L0 + x * escala);
+      const massY = anchorY + Lact;
+
+      techo(anchorX, anchorY);
+      ctxF.setLineDash([4, 4]); ctxF.strokeStyle = '#ccc';
+      ctxF.beginPath(); ctxF.moveTo(anchorX - 55, anchorY + L0); ctxF.lineTo(anchorX + 55, anchorY + L0); ctxF.stroke();
+      ctxF.setLineDash([]);
+
+      const nseg = 10;
+      ctxF.strokeStyle = '#555'; ctxF.lineWidth = 2;
+      ctxF.beginPath();
+      ctxF.moveTo(anchorX, anchorY);
+      for (let i = 1; i < nseg; i++) {
+        const yy = anchorY + (Lact * i) / nseg;
+        const xx = anchorX + (i % 2 === 0 ? 0 : (i % 4 === 1 ? 18 : -18));
+        ctxF.lineTo(xx, yy);
+      }
+      ctxF.lineTo(anchorX, massY);
+      ctxF.stroke();
+
+      ctxF.fillStyle = '#d62728';
+      ctxF.fillRect(anchorX - 22, massY, 44, 32);
+
+      ctxF.fillStyle = '#333'; ctxF.font = '13px sans-serif';
+      ctxF.fillText('x(t) = x₀·cos(ωt)', 10, H - 12);
+    }
+  }
+
+  function loop(timestamp){
+    if (lastTime === null) lastTime = timestamp;
+    const dt = Math.min((timestamp - lastTime) / 1000, 0.05);
+    lastTime = timestamp;
+    t += dt;
+
+    const p = parametros();
+    dibujarCirculo(p.omega);
+    dibujarFisico(p.omega, p.amplitud, p.tipo);
+
+    requestAnimationFrame(loop);
+  }
+
+  actualizarModoUI();
+  requestAnimationFrame(loop);
+})();
+</script>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Haga los ejercicios de la sección 11 (Reducción de Orden, problemas 1 y 3, páginas 85 a 88) y de la sección 12 (La Cadena Colgante, problemas 1 y 3, páginas 88 a 95) del Simmons, comprobando cada resultado con Maxima. Note que el problema 3 de la sección 12 es precisamente el caso de un puente colgante (un cable de peso despreciable que soporta una carga horizontal constante, en vez de su propio peso): compare la forma que obtiene con la catenaria de esta sección y explique, en un par de líneas, por qué son curvas distintas.</p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/arturosanjuan\.xyz");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="preferred_color_scheme">
+<input type="hidden" id="giscus-alt-theme" value="preferred_color_scheme">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "asanjuanc/arturosanjuan-sitio";
+    script.dataset.repoId = "R_kgDOTzuHrw";
+    script.dataset.category = "Comentarios";
+    script.dataset.categoryId = "DIC_kwDOTzuHr84DD_eD";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "es";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../../cursos/odes/fintegrante/index.html" class="pagination-link" aria-label="Factores Integrantes">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Factores Integrantes</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

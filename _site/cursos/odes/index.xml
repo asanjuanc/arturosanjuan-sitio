@@ -15,7 +15,793 @@
 <link>https://arturosanjuan.xyz/cursos/odes/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Tue, 08 Sep 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 15 Sep 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Reducción de Orden</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/odes/reduccionorden/</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="cuando-el-orden-se-puede-bajar" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="cuando-el-orden-se-puede-bajar"><span class="header-section-number">1</span> Cuando el orden se puede bajar</h2>
+<p>La ecuación general de segundo orden es <img src="https://latex.codecogs.com/png.latex?F(x,y,y',y'')=0">, y en general no hay ningún método sistemático para resolverla (de hecho, la mayoría de las ecuaciones de segundo orden no lineales simplemente no se pueden resolver en términos de funciones elementales). Pero hay dos situaciones estructurales, sorprendentemente comunes en las aplicaciones, en las que la ecuación se puede bajar a dos ecuaciones de primer orden que se resuelven una tras otra. En ambos casos el truco es el mismo: introducir <img src="https://latex.codecogs.com/png.latex?p=y'"> como nueva variable dependiente; la pregunta es solo respecto a qué variable conviene derivar <img src="https://latex.codecogs.com/png.latex?p">.</p>
+<section id="falta-la-variable-dependiente-y" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="falta-la-variable-dependiente-y"><span class="header-section-number">1.1</span> Falta la variable dependiente <img src="https://latex.codecogs.com/png.latex?y"></h3>
+<p>Si <img src="https://latex.codecogs.com/png.latex?y"> no aparece explícitamente en la ecuación, esta se puede escribir como</p>
+<p><img src="https://latex.codecogs.com/png.latex?f(x,y',y'')=0"></p>
+<p>En ese caso, con <img src="https://latex.codecogs.com/png.latex?p=y'"> y <img src="https://latex.codecogs.com/png.latex?p'=y''"> (derivando respecto a <img src="https://latex.codecogs.com/png.latex?x">, como siempre), la ecuación se convierte en</p>
+<p><img src="https://latex.codecogs.com/png.latex?f(x,p,p')=0"></p>
+<p>que ya es de primer orden en <img src="https://latex.codecogs.com/png.latex?p">. Si se puede resolver para <img src="https://latex.codecogs.com/png.latex?p(x)">, queda todavía una segunda integración, <img src="https://latex.codecogs.com/png.latex?y=%5Cint%20p%5C,dx">, para recuperar <img src="https://latex.codecogs.com/png.latex?y">.</p>
+</section>
+<section id="falta-la-variable-independiente-x" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="falta-la-variable-independiente-x"><span class="header-section-number">1.2</span> Falta la variable independiente <img src="https://latex.codecogs.com/png.latex?x"></h3>
+<p>Si en cambio <img src="https://latex.codecogs.com/png.latex?x"> no aparece explícitamente, la ecuación tiene la forma</p>
+<p><img src="https://latex.codecogs.com/png.latex?g(y,y',y'')=0"></p>
+<p>Aquí conviene, en cambio, tratar a <img src="https://latex.codecogs.com/png.latex?p"> como función de <img src="https://latex.codecogs.com/png.latex?y"> (no de <img src="https://latex.codecogs.com/png.latex?x">), usando la regla de la cadena:</p>
+<p><img src="https://latex.codecogs.com/png.latex?y''=%5Cfrac%7Bdp%7D%7Bdx%7D=%5Cfrac%7Bdp%7D%7Bdy%7D%5Cfrac%7Bdy%7D%7Bdx%7D=p%5Cfrac%7Bdp%7D%7Bdy%7D"></p>
+<p>así que la ecuación se convierte en</p>
+<p><img src="https://latex.codecogs.com/png.latex?g%5C!%5Cleft(y,p,p%5Cfrac%7Bdp%7D%7Bdy%7D%5Cright)=0"></p>
+<p>que es de primer orden, ahora con <img src="https://latex.codecogs.com/png.latex?y"> haciendo las veces de variable independiente. Este segundo caso es exactamente lo que ocurre, físicamente, cuando se usa conservación de la energía en un sistema mecánico: la energía cinética depende de <img src="https://latex.codecogs.com/png.latex?p=v"> y la potencial de <img src="https://latex.codecogs.com/png.latex?y">, y derivar respecto a <img src="https://latex.codecogs.com/png.latex?y"> en vez de <img src="https://latex.codecogs.com/png.latex?x"> es, en el fondo, lo mismo que separar variables en la ecuación de energía.</p>
+<p>Veamos tres aplicaciones clásicas: la primera usa el primer caso (<img src="https://latex.codecogs.com/png.latex?y"> ausente), y las otras dos, que resultan ser la misma ecuación disfrazada dos veces, usan el segundo (<img src="https://latex.codecogs.com/png.latex?x"> ausente).</p>
+</section>
+</section>
+<section id="la-catenaria-la-forma-de-una-cadena-colgante" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="la-catenaria-la-forma-de-una-cadena-colgante"><span class="header-section-number">2</span> La catenaria: la forma de una cadena colgante</h2>
+<p>En 1690, Jakob Bernoulli planteó como reto público el problema de encontrar la curva que forma una cadena flexible colgada de sus dos extremos, bajo su propio peso (él mismo lo había intentado sin éxito). Al año siguiente, Leibniz, Huygens y Johann Bernoulli publicaron soluciones independientes. Fue Huygens quien le dio el nombre, del latín <em>catena</em>, cadena.</p>
+<p>Supongamos que el eje <img src="https://latex.codecogs.com/png.latex?y"> pasa por el punto más bajo de la cadena, y sea <img src="https://latex.codecogs.com/png.latex?s"> la longitud de arco medida desde ese punto hasta un punto variable <img src="https://latex.codecogs.com/png.latex?(x,y)">. Si <img src="https://latex.codecogs.com/png.latex?w(s)"> es la densidad lineal de la cadena, el trozo de cadena entre el punto más bajo y <img src="https://latex.codecogs.com/png.latex?(x,y)"> está en equilibrio bajo tres fuerzas: la tensión horizontal <img src="https://latex.codecogs.com/png.latex?T_0"> en el punto más bajo, la tensión <img src="https://latex.codecogs.com/png.latex?T"> en <img src="https://latex.codecogs.com/png.latex?(x,y)"> (que actúa a lo largo de la tangente, porque la cadena es flexible), y el peso de ese trozo de cadena, dirigido hacia abajo. Igualando las componentes horizontal y vertical,</p>
+<p><img src="https://latex.codecogs.com/png.latex?T%5Ccos%5Ctheta=T_0,%5Cqquad%20T%5Csin%5Ctheta=%5Cint_0%5Es%20w(s)%5C,ds"></p>
+<p>donde <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> es el ángulo que forma la tangente con la horizontal. Dividiendo estas dos ecuaciones,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ctan%5Ctheta=y'=%5Cfrac%7B1%7D%7BT_0%7D%5Cint_0%5Es%20w(s)%5C,ds"></p>
+<p>Derivando esta última igualdad respecto a <img src="https://latex.codecogs.com/png.latex?x">, y usando que <img src="https://latex.codecogs.com/png.latex?ds/dx=%5Csqrt%7B1+(y')%5E2%7D"> (el elemento de arco),</p>
+<p><img src="https://latex.codecogs.com/png.latex?T_0y''=w(s)%5Cfrac%7Bds%7D%7Bdx%7D=w(s)%5Csqrt%7B1+(y')%5E2%7D"></p>
+<p>Para una cadena de densidad uniforme <img src="https://latex.codecogs.com/png.latex?w(s)=w_0">, y llamando <img src="https://latex.codecogs.com/png.latex?a=T_0/w_0">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?ay''=%5Csqrt%7B1+(y')%5E2%7D"></p>
+<p>Esta es una ecuación de segundo orden en la que <img src="https://latex.codecogs.com/png.latex?y"> no aparece explícitamente (solo <img src="https://latex.codecogs.com/png.latex?y'"> y <img src="https://latex.codecogs.com/png.latex?y''">): el primer caso de la sección anterior.</p>
+<section id="resolviendo-por-reducción-de-orden" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="resolviendo-por-reducción-de-orden"><span class="header-section-number">2.1</span> Resolviendo por reducción de orden</h3>
+<p>Con <img src="https://latex.codecogs.com/png.latex?p=y'">, la ecuación se convierte en</p>
+<p><img src="https://latex.codecogs.com/png.latex?ap'=%5Csqrt%7B1+p%5E2%7D"></p>
+<p>Aquí conviene resistir la tentación de elevar al cuadrado ambos lados para deshacerse de la raíz (eso complica innecesariamente el álgebra y puede introducir soluciones falsas al final). En cambio, separamos variables directamente,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bdp%7D%7B%5Csqrt%7B1+p%5E2%7D%7D=%5Cfrac%7Bdx%7D%7Ba%7D"></p>
+<p>y usamos el hecho de que la derivada de <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7Barcsenh%7D"> es exactamente el integrando de la izquierda (<img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bd%7D%7Bdp%7D%5Coperatorname%7Barcsenh%7D(p)=1/%5Csqrt%7B1+p%5E2%7D">, lo cual se comprueba de inmediato derivando <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7Bsenh%7D">): la antiderivada aparece de una vez, sin sustituciones adicionales, <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7Barcsenh%7D(p)=%5Clog%5C!%5Cleft(p+%5Csqrt%7B1+p%5E2%7D%5Cright)">. Integrando ambos lados,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7Barcsenh%7D(p)=%5Cfrac%7Bx%7D%7Ba%7D+C_1"></p>
+<p>La pendiente en el punto más bajo es cero (<img src="https://latex.codecogs.com/png.latex?p=0"> cuando <img src="https://latex.codecogs.com/png.latex?x=0">, por construcción del eje <img src="https://latex.codecogs.com/png.latex?y">), así que <img src="https://latex.codecogs.com/png.latex?C_1=0"> y</p>
+<p><img src="https://latex.codecogs.com/png.latex?p=y'=%5Coperatorname%7Bsenh%7D%5C!%5Cleft(%5Cfrac%7Bx%7D%7Ba%7D%5Cright)"></p>
+<p>Una segunda integración da, finalmente,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cboxed%7By=a%5Ccosh%5C!%5Cleft(%5Cfrac%7Bx%7D%7Ba%7D%5Cright)+C_2%7D"></p>
+<p>que es la ecuación de la catenaria, con <img src="https://latex.codecogs.com/png.latex?C_2"> fijado por la altura del punto más bajo. El parámetro <img src="https://latex.codecogs.com/png.latex?a=T_0/w_0"> tiene una interpretación física directa: entre mayor la tensión horizontal <img src="https://latex.codecogs.com/png.latex?T_0"> frente al peso <img src="https://latex.codecogs.com/png.latex?w_0">, más abierta y plana es la curva cerca del origen; entre menor, más cerrada y puntiaguda.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://arturosanjuan.xyz/cursos/odes/reduccionorden/catenaria.png" class="img-fluid figure-img"></p>
+<figcaption>La catenaria <img src="https://latex.codecogs.com/png.latex?y=a%5Ccosh(x/a)"> para dos valores de <img src="https://latex.codecogs.com/png.latex?a">. Entre mayor la tensión horizontal frente al peso, más plana es la curva cerca del punto más bajo.</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Una curiosidad que se prueba más adelante en el curso">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Una curiosidad que se prueba más adelante en el curso
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si esta curva se hace girar alrededor del eje <img src="https://latex.codecogs.com/png.latex?x">, la superficie de revolución que se genera tiene, entre todas las superficies que se apoyan en los mismos dos círculos extremos, el área mínima posible. Esto no es evidente a partir de lo que hemos visto aquí (se demuestra con cálculo de variaciones, minimizando directamente la integral del área), pero es una razón más para que esta curva, además de resolver un problema de equilibrio de fuerzas, también resuelva un problema de optimización geométrica.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kill</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">all</span>);</span>
+<span id="cb1-2"></span>
+<span id="cb1-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* Verificamos que y=a*cosh(x/a) resuelve a*y''=sqrt(1+(y')^2) */</span></span>
+<span id="cb1-4"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span>: <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">a</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cosh</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>/<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">a</span>);</span>
+<span id="cb1-5"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">yp</span>: <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>);</span>
+<span id="cb1-6"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">ypp</span>: <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>);</span>
+<span id="cb1-7"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">chequeo</span>: <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">trigsimp</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">a</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">ypp</span> - <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>+<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">yp</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>));   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* debe dar 0 */</span></span>
+<span id="cb1-8"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">chequeo</span>;</span>
+<span id="cb1-9"></span>
+<span id="cb1-10"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* Confirmamos la antiderivada usada arriba */</span></span>
+<span id="cb1-11"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">integrate</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>/<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>+<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">p</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>), <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">p</span>);   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* da asinh(p), la forma log(p+sqrt(1+p^2)) */</span></span></code></pre></div></div>
+</div>
+</div>
+</section>
+</section>
+<section id="el-péndulo-y-el-resorte-la-misma-ecuación-dos-veces" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="el-péndulo-y-el-resorte-la-misma-ecuación-dos-veces"><span class="header-section-number">3</span> El péndulo y el resorte: la misma ecuación dos veces</h2>
+<section id="el-péndulo-simple" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="el-péndulo-simple"><span class="header-section-number">3.1</span> El péndulo simple</h3>
+<p>Consideremos ahora un péndulo: una masa <img src="https://latex.codecogs.com/png.latex?m"> al final de una cuerda de longitud <img src="https://latex.codecogs.com/png.latex?a"> y peso despreciable, con <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> el ángulo que forma con la vertical, y <img src="https://latex.codecogs.com/png.latex?%5Calpha"> el ángulo (la amplitud) desde el que se suelta el péndulo, partiendo del reposo. Suponiendo que no hay resistencia del aire, la energía se conserva: la energía cinética en el ángulo <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> más la energía potencial en <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> es igual a la energía potencial inicial en <img src="https://latex.codecogs.com/png.latex?%5Calpha"> (donde la energía cinética es cero, porque se suelta desde el reposo):</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac12(a%5Cdot%5Ctheta)%5E2+ga(1-%5Ccos%5Ctheta)=ga(1-%5Ccos%5Calpha)"></p>
+<p>(la velocidad a lo largo del arco es <img src="https://latex.codecogs.com/png.latex?a%5Cdot%5Ctheta">, y la altura sobre el punto más bajo es <img src="https://latex.codecogs.com/png.latex?a(1-%5Ccos%5Ctheta)">; ya dividimos entre la masa <img src="https://latex.codecogs.com/png.latex?m">). Despejando,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cdot%5Ctheta%5E2=%5Cfrac%7B2g%7D%7Ba%7D(%5Ccos%5Ctheta-%5Ccos%5Calpha)"></p>
+<p>Este es exactamente el segundo caso de la sección anterior, aplicado directamente a la ecuación de movimiento. En efecto, la segunda ley de Newton a lo largo del arco da <img src="https://latex.codecogs.com/png.latex?a%5Cddot%5Ctheta=-g%5Csin%5Ctheta">, y si en esa ecuación (donde <img src="https://latex.codecogs.com/png.latex?x">, el tiempo, no aparece explícitamente) sustituimos <img src="https://latex.codecogs.com/png.latex?p=%5Cdot%5Ctheta"> y <img src="https://latex.codecogs.com/png.latex?%5Cddot%5Ctheta=p%5C,dp/d%5Ctheta">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?ap%5Cfrac%7Bdp%7D%7Bd%5Ctheta%7D=-g%5Csin%5Ctheta%5Cquad%5CLongrightarrow%5Cquad%20ap%5C,dp=-g%5Csin%5Ctheta%5C,d%5Ctheta%5Cquad%5CLongrightarrow%5Cquad%20%5Cfrac%7Ba%7D%7B2%7Dp%5E2=g%5Ccos%5Ctheta+C"></p>
+<p>y con la condición inicial <img src="https://latex.codecogs.com/png.latex?p=0"> en <img src="https://latex.codecogs.com/png.latex?%5Ctheta=%5Calpha"> se obtiene <img src="https://latex.codecogs.com/png.latex?C=-g%5Ccos%5Calpha">: exactamente la misma ecuación de conservación de energía de arriba. Reducir el orden de una ecuación de movimiento y conservar la energía son, en el fondo, el mismo cálculo hecho dos veces.</p>
+<p><strong>El periodo exacto.</strong> Separando variables e integrando un cuarto de oscilación (de <img src="https://latex.codecogs.com/png.latex?%5Ctheta=0"> a <img src="https://latex.codecogs.com/png.latex?%5Ctheta=%5Calpha">), el periodo completo resulta</p>
+<p><img src="https://latex.codecogs.com/png.latex?T=4%5Csqrt%7B%5Cfrac%7Ba%7D%7B2g%7D%7D%5Cint_0%5E%5Calpha%20%5Cfrac%7Bd%5Ctheta%7D%7B%5Csqrt%7B%5Ccos%5Ctheta-%5Ccos%5Calpha%7D%7D"></p>
+<p>Con la identidad del ángulo mitad <img src="https://latex.codecogs.com/png.latex?%5Ccos%5Ctheta=1-2%5Csin%5E2(%5Ctheta/2)"> y la sustitución <img src="https://latex.codecogs.com/png.latex?%5Csin(%5Ctheta/2)=k%5Csin%5Cvarphi">, con <img src="https://latex.codecogs.com/png.latex?k=%5Csin(%5Calpha/2)"> (de modo que <img src="https://latex.codecogs.com/png.latex?%5Cvarphi"> va de <img src="https://latex.codecogs.com/png.latex?0"> a <img src="https://latex.codecogs.com/png.latex?%5Cpi/2"> cuando <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> va de <img src="https://latex.codecogs.com/png.latex?0"> a <img src="https://latex.codecogs.com/png.latex?%5Calpha">), esta integral se transforma en</p>
+<p><img src="https://latex.codecogs.com/png.latex?T=4%5Csqrt%7B%5Cfrac%7Ba%7D%7Bg%7D%7D%5Cint_0%5E%7B%5Cpi/2%7D%5Cfrac%7Bd%5Cvarphi%7D%7B%5Csqrt%7B1-k%5E2%5Csin%5E2%5Cvarphi%7D%7D=4%5Csqrt%7B%5Cfrac%7Ba%7D%7Bg%7D%7D%5C,K(k)"></p>
+<p>donde <img src="https://latex.codecogs.com/png.latex?K(k)"> es la <strong>integral elíptica completa de primera especie</strong>. No existe forma de escribir <img src="https://latex.codecogs.com/png.latex?K(k)"> en términos de funciones elementales: hay que evaluarla numéricamente o con tablas.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Una curiosidad histórica: el error circular de los relojes de péndulo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Una curiosidad histórica: el error circular de los relojes de péndulo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Como <img src="https://latex.codecogs.com/png.latex?T"> depende de <img src="https://latex.codecogs.com/png.latex?%5Calpha">, un reloj de péndulo real se atrasa o adelanta según la amplitud con la que oscile; a este efecto se le llama, históricamente, el <em>error circular</em>. Christiaan Huygens, quien inventó el reloj de péndulo en 1656, descubrió que la única curva que hace que el periodo sea exactamente independiente de la amplitud (la propiedad <em>tautócrona</em>) no es el arco circular sino el cicloide, y llegó a construir relojes con mejillas cicloidales para forzar al péndulo a describir esa curva en vez de un arco de círculo. Es el mismo cicloide que resuelve el problema de la braquistócrona.</p>
+</div>
+</div>
+<p><strong>La aproximación de ángulo pequeño.</strong> Cuando <img src="https://latex.codecogs.com/png.latex?%5Calpha"> es pequeño, <img src="https://latex.codecogs.com/png.latex?%5Csin%5Ctheta%5Capprox%5Ctheta"> (coinciden hasta la primera cifra decimal para <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> menor a unos <img src="https://latex.codecogs.com/png.latex?0.4"> radianes), y la ecuación <img src="https://latex.codecogs.com/png.latex?a%5Cddot%5Ctheta=-g%5Csin%5Ctheta"> se aproxima por</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cddot%5Ctheta+%5Cfrac%7Bg%7D%7Ba%7D%5Ctheta=0"></p>
+<p>que es la ecuación del oscilador armónico simple, con <img src="https://latex.codecogs.com/png.latex?%5Comega%5E2=g/a">. Su solución, sujeta a <img src="https://latex.codecogs.com/png.latex?%5Ctheta(0)=%5Calpha"> y <img src="https://latex.codecogs.com/png.latex?%5Cdot%5Ctheta(0)=0">, es <img src="https://latex.codecogs.com/png.latex?%5Ctheta=%5Calpha%5Ccos(%5Comega%20t)">, con periodo aproximado</p>
+<p><img src="https://latex.codecogs.com/png.latex?T_0=2%5Cpi%5Csqrt%7B%5Cfrac%7Ba%7D%7Bg%7D%7D"></p>
+<p>independiente de la amplitud <img src="https://latex.codecogs.com/png.latex?%5Calpha">: esta es la razón, después de todo, por la que decimos coloquialmente que el péndulo es isócrono, aunque estrictamente solo lo es en el límite de oscilaciones pequeñas.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://arturosanjuan.xyz/cursos/odes/reduccionorden/periodo.png" class="img-fluid figure-img"></p>
+<figcaption>Razón entre el periodo exacto del péndulo y el periodo aproximado de ángulo pequeño, <img src="https://latex.codecogs.com/png.latex?T_0=2%5Cpi%5Csqrt%7Ba/g%7D">, en función de la amplitud <img src="https://latex.codecogs.com/png.latex?%5Calpha">. Para amplitudes menores a unos <img src="https://latex.codecogs.com/png.latex?20%C2%B0"> la aproximación es excelente; más allá, el error circular crece con rapidez.</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kill</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">all</span>);</span>
+<span id="cb2-2"></span>
+<span id="cb2-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* Comparamos el periodo exacto (integral eliptica, resuelta numericamente)</span></span>
+<span id="cb2-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">   contra la aproximacion de angulo pequeno, para a=1, g=9.8 */</span></span>
+<span id="cb2-5"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">periodo_exacto</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">alpha_grados</span>) := <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">block</span>(</span>
+<span id="cb2-6">  [<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">alpha</span>: <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">alpha_grados</span>*<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">%pi</span>/<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">180</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">integral</span>],</span>
+<span id="cb2-7">  <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">integral</span>: <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">quad_qags</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>/<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cos</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">theta</span>)-<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cos</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">alpha</span>)), <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">theta</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">alpha</span> - <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-9</span>)[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>],</span>
+<span id="cb2-8">  <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>/(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9.8</span>))*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">integral</span></span>
+<span id="cb2-9">);</span>
+<span id="cb2-10"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">T0</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">%pi</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>/<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9.8</span>);</span>
+<span id="cb2-11"></span>
+<span id="cb2-12"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">alpha_grados</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">45</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">90</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">150</span>] <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span></span>
+<span id="cb2-13">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"alpha="</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">alpha_grados</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"grados:  T_exacto/T0 = "</span>,</span>
+<span id="cb2-14">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">float</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">periodo_exacto</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">alpha_grados</span>)/<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">T0</span>));</span>
+<span id="cb2-15"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* la razon crece de aproximadamente 1.0005 (alpha=5) a 1.76 (alpha=150):</span></span>
+<span id="cb2-16"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">   el error circular es despreciable para oscilaciones pequenas, pero</span></span>
+<span id="cb2-17"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">   muy real para amplitudes grandes */</span></span></code></pre></div></div>
+</div>
+</div>
+</section>
+<section id="el-resorte-y-la-ley-de-hooke" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="el-resorte-y-la-ley-de-hooke"><span class="header-section-number">3.2</span> El resorte y la ley de Hooke</h3>
+<p>Consideremos ahora una masa <img src="https://latex.codecogs.com/png.latex?m"> atada a un resorte de constante <img src="https://latex.codecogs.com/png.latex?k">, sobre una superficie sin fricción, con <img src="https://latex.codecogs.com/png.latex?x"> la posición medida desde el equilibrio. La ley de Hooke dice que la fuerza restauradora es <img src="https://latex.codecogs.com/png.latex?F=-kx"> (el signo indica que se opone al desplazamiento). Por la segunda ley de Newton, <img src="https://latex.codecogs.com/png.latex?m%5Cddot%20x=-kx">, es decir</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cddot%20x+%5Cfrac%7Bk%7D%7Bm%7Dx=0"></p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?%5Comega%5E2=k/m">, esta es exactamente la misma ecuación que obtuvimos para el péndulo con ángulo pequeño. No es una coincidencia ni una simplificación forzada: los dos sistemas, uno gravitacional y otro elástico, comparten la misma estructura matemática porque en ambos la fuerza restauradora es, en la aproximación lineal, proporcional al desplazamiento y opuesta a él.</p>
+</section>
+<section id="resolviendo-yomega2y0-por-reducción-de-orden" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="resolviendo-yomega2y0-por-reducción-de-orden"><span class="header-section-number">3.3</span> Resolviendo <img src="https://latex.codecogs.com/png.latex?y''+%5Comega%5E2y=0"> por reducción de orden</h3>
+<p>Escribamos la ecuación en la variable genérica <img src="https://latex.codecogs.com/png.latex?y"> (que representa a <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> en el péndulo o a <img src="https://latex.codecogs.com/png.latex?x"> en el resorte). Con <img src="https://latex.codecogs.com/png.latex?p=y'"> y <img src="https://latex.codecogs.com/png.latex?y''=p%5C,dp/dy"> (segundo caso, <img src="https://latex.codecogs.com/png.latex?x"> ausente),</p>
+<p><img src="https://latex.codecogs.com/png.latex?p%5Cfrac%7Bdp%7D%7Bdy%7D+%5Comega%5E2y=0%5Cquad%5CLongrightarrow%5Cquad%20p%5C,dp=-%5Comega%5E2y%5C,dy%5Cquad%5CLongrightarrow%5Cquad%20p%5E2+%5Comega%5E2y%5E2=C"></p>
+<p>Esta constante <img src="https://latex.codecogs.com/png.latex?C"> es, salvo un factor, la energía total del sistema (cinética más potencial), conservada porque no hay fricción. Escribiendo <img src="https://latex.codecogs.com/png.latex?C=%5Comega%5E2A%5E2">, con <img src="https://latex.codecogs.com/png.latex?A"> la amplitud,</p>
+<p><img src="https://latex.codecogs.com/png.latex?p=%5Cfrac%7Bdy%7D%7Bdx%7D=%5Cpm%5Comega%5Csqrt%7BA%5E2-y%5E2%7D%5Cquad%5CLongrightarrow%5Cquad%20%5Cfrac%7Bdy%7D%7B%5Csqrt%7BA%5E2-y%5E2%7D%7D=%5Cpm%5Comega%5C,dx"></p>
+<p>Integrando, <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7Barcsen%7D(y/A)=%5Cpm%5Comega%20x+%5Cvarphi">, así que</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cboxed%7By=A%5Csin(%5Comega%20x+%5Cvarphi)%7D"></p>
+<p>La familia de curvas <img src="https://latex.codecogs.com/png.latex?p%5E2+%5Comega%5E2y%5E2=C">, para distintos valores de <img src="https://latex.codecogs.com/png.latex?C">, es una familia de elipses en el plano <img src="https://latex.codecogs.com/png.latex?(y,p)">: cada una corresponde a una amplitud de oscilación distinta, y el sistema recorre siempre la misma elipse, nunca salta de una a otra, porque no hay fricción que disipe o añada energía.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://arturosanjuan.xyz/cursos/odes/reduccionorden/fases.png" class="img-fluid figure-img"></p>
+<figcaption>Retrato de fase de <img src="https://latex.codecogs.com/png.latex?y''+%5Comega%5E2y=0"> tras la reducción de orden: las curvas de conservación <img src="https://latex.codecogs.com/png.latex?p%5E2+%5Comega%5E2y%5E2=C"> son elipses, cada una una amplitud de oscilación distinta. Las flechas marcan el sentido, horario, del recorrido.</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kill</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">all</span>);</span>
+<span id="cb3-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">depends</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">p</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span>);</span>
+<span id="cb3-3"></span>
+<span id="cb3-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* Reduccion de orden, caso x ausente: y''+w^2*y=0 */</span></span>
+<span id="cb3-5"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">edo</span>: <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">p</span>*<span class="do" style="color: #5E5E5E;
+background-color: null;
+font-style: italic;">'</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">p</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span>) + <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">w</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span> = <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>;</span>
+<span id="cb3-6"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">conservacion</span>: <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ratsimp</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">integrate</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">p</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">p</span>) + <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">w</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">integrate</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span>));  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* (p^2+w^2*y^2)/2 = C */</span></span>
+<span id="cb3-7"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">conservacion</span>;</span>
+<span id="cb3-8"></span>
+<span id="cb3-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* Verificacion final: y=A*sin(w*x+phi) satisface y''+w^2*y=0 */</span></span>
+<span id="cb3-10"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y_sol</span>: <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">A</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">w</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>+<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">phi</span>);</span>
+<span id="cb3-11"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">chequeo</span>: <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ratsimp</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y_sol</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) + <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">w</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y_sol</span>);   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* debe dar 0 */</span></span>
+<span id="cb3-12"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">chequeo</span>;</span></code></pre></div></div>
+</div>
+</div>
+</section>
+</section>
+<section id="applet-dos-sistemas-la-misma-ecuación" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="applet-dos-sistemas-la-misma-ecuación"><span class="header-section-number">4</span> Applet: dos sistemas, la misma ecuación</h2>
+<p>Para el péndulo, <img src="https://latex.codecogs.com/png.latex?%5Comega=%5Csqrt%7Bg/a%7D">; para el resorte, <img src="https://latex.codecogs.com/png.latex?%5Comega=%5Csqrt%7Bk/m%7D">. En ambos casos, soltando el sistema desde el reposo en su amplitud máxima, el movimiento es <img src="https://latex.codecogs.com/png.latex?y=A%5Ccos(%5Comega%20t)">: la misma proyección de un punto que gira uniformemente sobre un círculo de radio <img src="https://latex.codecogs.com/png.latex?A"> con velocidad angular <img src="https://latex.codecogs.com/png.latex?%5Comega">. El siguiente simulador muestra esa conexión: el punto que gira sobre el círculo, a la izquierda, tiene en cada instante la misma altura que la curva trigonométrica que traza a la derecha; abajo se dibuja, en ese mismo instante, el sistema físico real que se haya seleccionado.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Simulador: el círculo de referencia, el péndulo y el resorte">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Simulador: el círculo de referencia, el péndulo y el resorte
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div style="border:1px solid #ddd;border-radius:8px;padding:16px;max-width:680px;margin:1em auto;font-family:sans-serif;">
+  <div style="display:flex;gap:16px;align-items:center;margin-bottom:10px;flex-wrap:wrap;font-size:0.95em;">
+    <strong>Sistema:</strong>
+    <label><input type="radio" name="ro-modo" id="ro-modo-pendulo" checked=""> Péndulo</label>
+    <label><input type="radio" name="ro-modo" id="ro-modo-resorte"> Resorte</label>
+    <span style="margin-left:auto;color:#555;">Periodo actual: $T\approx$ <span id="ro-periodo">-</span> s</span>
+  </div>
+
+  <canvas id="ro-canvas-circulo" width="640" height="230" style="width:100%;height:auto;background:#fff;"></canvas>
+  <canvas id="ro-canvas-fisico" width="640" height="190" style="width:100%;height:auto;background:#fff;margin-top:6px;"></canvas>
+
+  <div id="ro-controles-pendulo" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px;">
+    <label>$\alpha$ (ángulo inicial): <span id="ro-alpha-val">15</span>°
+      <input type="range" id="ro-alpha" min="2" max="40" step="1" value="15" style="width:100%;">
+    </label>
+    <label>$a$ (longitud): <span id="ro-a-val">1.00</span> m
+      <input type="range" id="ro-a" min="0.3" max="2" step="0.05" value="1" style="width:100%;">
+    </label>
+    <label>$g$ (gravedad): <span id="ro-g-val">9.80</span> m/s²
+      <input type="range" id="ro-g" min="1.6" max="25" step="0.1" value="9.8" style="width:100%;">
+    </label>
+  </div>
+
+  <div id="ro-controles-resorte" style="display:none;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px;">
+    <label>$k$ (constante del resorte): <span id="ro-k-val">10.0</span> N/m
+      <input type="range" id="ro-k" min="1" max="40" step="0.5" value="10" style="width:100%;">
+    </label>
+    <label>$m$ (masa): <span id="ro-m-val">1.00</span> kg
+      <input type="range" id="ro-m" min="0.2" max="5" step="0.1" value="1" style="width:100%;">
+    </label>
+    <label>$x_0$ (amplitud inicial): <span id="ro-x0-val">1.00</span>
+      <input type="range" id="ro-x0" min="0.2" max="2" step="0.1" value="1" style="width:100%;">
+    </label>
+  </div>
+
+  <p style="font-size:0.9em;color:#555;margin-top:10px;">
+    Izquierda: un punto gira sobre un círculo de radio $A$ (la amplitud) con velocidad angular $\omega$; su altura sobre el centro es $A\cos(\omega t)$. Derecha: esa misma altura, graficada contra el tiempo, es la curva $y=A\cos(\omega t)$. Abajo: el sistema físico real, péndulo o resorte, en ese mismo instante. Al cambiar de sistema o mover un control, la animación reinicia desde la amplitud máxima, como si el sistema se soltara de nuevo desde el reposo. Nota: el dibujo del péndulo usa la aproximación de ángulo pequeño; para $\alpha$ grande el movimiento real ya no es exactamente sinusoidal, como se explica arriba con la integral elíptica.
+  </p>
+</div>
+<script>
+(function(){
+  const canvasC = document.getElementById('ro-canvas-circulo');
+  const ctxC = canvasC.getContext('2d');
+  const canvasF = document.getElementById('ro-canvas-fisico');
+  const ctxF = canvasF.getContext('2d');
+
+  const modoPendulo = document.getElementById('ro-modo-pendulo');
+  const modoResorte = document.getElementById('ro-modo-resorte');
+  const ctrlPendulo = document.getElementById('ro-controles-pendulo');
+  const ctrlResorte = document.getElementById('ro-controles-resorte');
+
+  const alphaS = document.getElementById('ro-alpha');
+  const aS = document.getElementById('ro-a');
+  const gS = document.getElementById('ro-g');
+  const kS = document.getElementById('ro-k');
+  const mS = document.getElementById('ro-m');
+  const x0S = document.getElementById('ro-x0');
+
+  const alphaValEl = document.getElementById('ro-alpha-val');
+  const aValEl = document.getElementById('ro-a-val');
+  const gValEl = document.getElementById('ro-g-val');
+  const kValEl = document.getElementById('ro-k-val');
+  const mValEl = document.getElementById('ro-m-val');
+  const x0ValEl = document.getElementById('ro-x0-val');
+  const periodoEl = document.getElementById('ro-periodo');
+
+  let t = 0;
+  let lastTime = null;
+  let historia = [];
+
+  function actualizarModoUI(){
+    if (modoPendulo.checked) {
+      ctrlPendulo.style.display = 'grid';
+      ctrlResorte.style.display = 'none';
+    } else {
+      ctrlPendulo.style.display = 'none';
+      ctrlResorte.style.display = 'grid';
+    }
+    t = 0;
+    historia = [];
+  }
+
+  modoPendulo.addEventListener('change', actualizarModoUI);
+  modoResorte.addEventListener('change', actualizarModoUI);
+  [alphaS, aS, gS, kS, mS, x0S].forEach((el) => {
+    el.addEventListener('input', () => { t = 0; historia = []; });
+  });
+
+  function parametros(){
+    if (modoPendulo.checked) {
+      const alphaDeg = parseFloat(alphaS.value);
+      const a = parseFloat(aS.value);
+      const g = parseFloat(gS.value);
+      alphaValEl.textContent = alphaDeg.toFixed(0);
+      aValEl.textContent = a.toFixed(2);
+      gValEl.textContent = g.toFixed(2);
+      const omega = Math.sqrt(g / a);
+      const alphaRad = alphaDeg * Math.PI / 180;
+      return { omega: omega, amplitud: alphaRad, tipo: 'pendulo' };
+    } else {
+      const k = parseFloat(kS.value);
+      const m = parseFloat(mS.value);
+      const x0 = parseFloat(x0S.value);
+      kValEl.textContent = k.toFixed(1);
+      mValEl.textContent = m.toFixed(2);
+      x0ValEl.textContent = x0.toFixed(2);
+      const omega = Math.sqrt(k / m);
+      return { omega: omega, amplitud: x0, tipo: 'resorte' };
+    }
+  }
+
+  function dibujarCirculo(omega){
+    const W = canvasC.width, H = canvasC.height;
+    ctxC.clearRect(0, 0, W, H);
+
+    const cx = 95, cy = H / 2, R = 68;
+    ctxC.strokeStyle = '#999'; ctxC.lineWidth = 1;
+    ctxC.beginPath(); ctxC.arc(cx, cy, R, 0, 2 * Math.PI); ctxC.stroke();
+    ctxC.beginPath(); ctxC.moveTo(cx - R - 10, cy); ctxC.lineTo(cx + R + 10, cy); ctxC.stroke();
+    ctxC.beginPath(); ctxC.moveTo(cx, cy - R - 10); ctxC.lineTo(cx, cy + R + 10); ctxC.stroke();
+
+    const phi = omega * t;
+    const px = cx + R * Math.sin(phi);
+    const py = cy - R * Math.cos(phi);
+    const y_norm = Math.cos(phi);
+
+    const plotX0 = cx + R + 45;
+    const plotW = W - plotX0 - 15;
+    const T = 2 * Math.PI / omega;
+    const ventana = 2 * T;
+
+    ctxC.strokeStyle = '#999'; ctxC.lineWidth = 1;
+    ctxC.beginPath(); ctxC.moveTo(plotX0, cy - R - 10); ctxC.lineTo(plotX0, cy + R + 10); ctxC.stroke();
+    ctxC.beginPath(); ctxC.moveTo(plotX0, cy); ctxC.lineTo(plotX0 + plotW, cy); ctxC.stroke();
+
+    historia.push({ tt: t, y: y_norm });
+    while (historia.length && historia[0].tt < t - ventana) historia.shift();
+
+    ctxC.strokeStyle = '#1f77b4'; ctxC.lineWidth = 2.2;
+    ctxC.beginPath();
+    historia.forEach((p, i) => {
+      const px2 = plotX0 + ((p.tt - (t - ventana)) / ventana) * plotW;
+      const py2 = cy - p.y * R;
+      if (i === 0) ctxC.moveTo(px2, py2); else ctxC.lineTo(px2, py2);
+    });
+    ctxC.stroke();
+
+    const puntaX = plotX0 + plotW;
+    ctxC.setLineDash([4, 4]);
+    ctxC.strokeStyle = '#aaa';
+    ctxC.beginPath(); ctxC.moveTo(px, py); ctxC.lineTo(puntaX, py); ctxC.stroke();
+    ctxC.setLineDash([]);
+
+    ctxC.strokeStyle = '#d62728'; ctxC.lineWidth = 1.5;
+    ctxC.beginPath(); ctxC.moveTo(cx, cy); ctxC.lineTo(px, py); ctxC.stroke();
+
+    ctxC.fillStyle = '#d62728';
+    ctxC.beginPath(); ctxC.arc(px, py, 5, 0, 2 * Math.PI); ctxC.fill();
+    ctxC.beginPath(); ctxC.arc(puntaX, py, 5, 0, 2 * Math.PI); ctxC.fill();
+
+    ctxC.fillStyle = '#333'; ctxC.font = '13px sans-serif';
+    ctxC.fillText('y = A cos(ωt)', plotX0 + plotW / 2 - 48, cy - R - 14);
+    ctxC.fillText('t', plotX0 + plotW - 8, cy + R + 24);
+
+    if (periodoEl) periodoEl.textContent = T.toFixed(2);
+  }
+
+  function dibujarFisico(omega, amplitud, tipo){
+    const W = canvasF.width, H = canvasF.height;
+    ctxF.clearRect(0, 0, W, H);
+    const cx = W / 2;
+
+    function techo(x0, y0){
+      ctxF.strokeStyle = '#333'; ctxF.lineWidth = 2;
+      ctxF.beginPath(); ctxF.moveTo(x0 - 45, y0); ctxF.lineTo(x0 + 45, y0); ctxF.stroke();
+      for (let i = -40; i <= 40; i += 10) {
+        ctxF.beginPath(); ctxF.moveTo(x0 + i, y0); ctxF.lineTo(x0 + i - 8, y0 - 10); ctxF.stroke();
+      }
+    }
+
+    if (tipo === 'pendulo') {
+      const theta = amplitud * Math.cos(omega * t);
+      const pivotX = cx, pivotY = 18;
+      const L = 140;
+      const bobX = pivotX + L * Math.sin(theta);
+      const bobY = pivotY + L * Math.cos(theta);
+
+      techo(pivotX, pivotY);
+      ctxF.setLineDash([4, 4]); ctxF.strokeStyle = '#ccc';
+      ctxF.beginPath(); ctxF.moveTo(pivotX, pivotY); ctxF.lineTo(pivotX, pivotY + L); ctxF.stroke();
+      ctxF.setLineDash([]);
+
+      ctxF.strokeStyle = '#555'; ctxF.lineWidth = 2;
+      ctxF.beginPath(); ctxF.moveTo(pivotX, pivotY); ctxF.lineTo(bobX, bobY); ctxF.stroke();
+
+      ctxF.fillStyle = '#333'; ctxF.beginPath(); ctxF.arc(pivotX, pivotY, 3, 0, 2 * Math.PI); ctxF.fill();
+      ctxF.fillStyle = '#d62728'; ctxF.beginPath(); ctxF.arc(bobX, bobY, 13, 0, 2 * Math.PI); ctxF.fill();
+
+      ctxF.fillStyle = '#333'; ctxF.font = '13px sans-serif';
+      ctxF.fillText('θ(t) = α·cos(ωt)', 10, H - 12);
+    } else {
+      const x = amplitud * Math.cos(omega * t);
+      const anchorX = cx, anchorY = 15;
+      const L0 = 55;
+      const escala = 35;
+      const Lact = Math.max(20, L0 + x * escala);
+      const massY = anchorY + Lact;
+
+      techo(anchorX, anchorY);
+      ctxF.setLineDash([4, 4]); ctxF.strokeStyle = '#ccc';
+      ctxF.beginPath(); ctxF.moveTo(anchorX - 55, anchorY + L0); ctxF.lineTo(anchorX + 55, anchorY + L0); ctxF.stroke();
+      ctxF.setLineDash([]);
+
+      const nseg = 10;
+      ctxF.strokeStyle = '#555'; ctxF.lineWidth = 2;
+      ctxF.beginPath();
+      ctxF.moveTo(anchorX, anchorY);
+      for (let i = 1; i < nseg; i++) {
+        const yy = anchorY + (Lact * i) / nseg;
+        const xx = anchorX + (i % 2 === 0 ? 0 : (i % 4 === 1 ? 18 : -18));
+        ctxF.lineTo(xx, yy);
+      }
+      ctxF.lineTo(anchorX, massY);
+      ctxF.stroke();
+
+      ctxF.fillStyle = '#d62728';
+      ctxF.fillRect(anchorX - 22, massY, 44, 32);
+
+      ctxF.fillStyle = '#333'; ctxF.font = '13px sans-serif';
+      ctxF.fillText('x(t) = x₀·cos(ωt)', 10, H - 12);
+    }
+  }
+
+  function loop(timestamp){
+    if (lastTime === null) lastTime = timestamp;
+    const dt = Math.min((timestamp - lastTime) / 1000, 0.05);
+    lastTime = timestamp;
+    t += dt;
+
+    const p = parametros();
+    dibujarCirculo(p.omega);
+    dibujarFisico(p.omega, p.amplitud, p.tipo);
+
+    requestAnimationFrame(loop);
+  }
+
+  actualizarModoUI();
+  requestAnimationFrame(loop);
+})();
+</script>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Haga los ejercicios de la sección 11 (Reducción de Orden, problemas 1 y 3, páginas 85 a 88) y de la sección 12 (La Cadena Colgante, problemas 1 y 3, páginas 88 a 95) del Simmons, comprobando cada resultado con Maxima. Note que el problema 3 de la sección 12 es precisamente el caso de un puente colgante (un cable de peso despreciable que soporta una carga horizontal constante, en vez de su propio peso): compare la forma que obtiene con la catenaria de esta sección y explique, en un par de líneas, por qué son curvas distintas.</p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/odes/reduccionorden/</guid>
+  <pubDate>Tue, 15 Sep 2026 05:00:00 GMT</pubDate>
+  <media:content url="https://arturosanjuan.xyz/cursos/odes/reduccionorden/catenaria.png" medium="image" type="image/png" height="95" width="144"/>
+</item>
 <item>
   <title>Ecuaciones Homogéneas y Exactas</title>
   <dc:creator>Arturo Sanjuán</dc:creator>

@@ -46,6 +46,7 @@ website:
         - cursos/odes/taller-1/index.qmd
         - cursos/odes/homoexactas/index.qmd
         - cursos/odes/fintegrante/index.qmd
+        - cursos/odes/reduccionorden/index.qmd
     - id: numerico
       title: "Análisis Numérico"
       style: docked

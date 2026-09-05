@@ -1,15 +1,5 @@
 [
   {
-    "listing": "/cursos/numerico/index.html",
-    "items": [
-      "/cursos/numerico/introduccion/index.html",
-      "/cursos/numerico/condicionamiento/index.html",
-      "/cursos/numerico/estabilidad/index.html",
-      "/cursos/numerico/taller-1/index.html",
-      "/cursos/numerico/matrices/index.html"
-    ]
-  },
-  {
     "listing": "/cursos/odes/index.html",
     "items": [
       "/cursos/odes/introduccion/index.html",
@@ -19,7 +9,18 @@
       "/cursos/odes/movimiento/index.html",
       "/cursos/odes/taller-1/index.html",
       "/cursos/odes/homoexactas/index.html",
-      "/cursos/odes/fintegrante/index.html"
+      "/cursos/odes/fintegrante/index.html",
+      "/cursos/odes/reduccionorden/index.html"
+    ]
+  },
+  {
+    "listing": "/cursos/numerico/index.html",
+    "items": [
+      "/cursos/numerico/introduccion/index.html",
+      "/cursos/numerico/condicionamiento/index.html",
+      "/cursos/numerico/estabilidad/index.html",
+      "/cursos/numerico/taller-1/index.html",
+      "/cursos/numerico/matrices/index.html"
     ]
   },
   {
