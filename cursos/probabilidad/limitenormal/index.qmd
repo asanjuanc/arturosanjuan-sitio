@@ -1,0 +1,237 @@
+---
+title: "La distribución normal como límite"
+subtitle: "El teorema de de Moivre y Laplace para la Poisson y para la binomial"
+description: "Demostración de que la suma de Poisson independientes es Poisson, la deducción de la aproximación normal a la Poisson mediante el método de Laplace aplicado directamente a la función de masa; la suma de Bernoulli es binomial, la media y varianza de la binomial, y su aproximación normal (teorema de de Moivre y Laplace)."
+author: "Arturo Sanjuán"
+date: 2026-09-05
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 8
+---
+
+En la sección anterior definimos la distribución normal y vimos, con la fórmula de Stirling, el método de Laplace: aproximar una función suave y muy picuda por una parábola alrededor de su máximo, y exponenciar para obtener una forma de campana. En esta sección aplicamos exactamente esa misma técnica dos veces más, directamente sobre la función de masa de la Poisson y de la binomial, para mostrar que ambas se aproximan a la normal cuando su parámetro (o su tamaño de muestra) crece. Este es el resultado que hoy se conoce como el **teorema de de Moivre y Laplace**, y es un caso particular de un fenómeno mucho más general, el teorema central del límite: casi cualquier suma de aportes independientes termina viéndose gaussiana, sin importar la forma de cada aporte individual.
+
+## La normal como límite de una Poisson
+
+### Preámbulo: la suma de Poisson independientes es Poisson
+
+::: {.callout-tip title="Proposición"}
+Si $Y_1,Y_2$ son independientes, con $Y_1\sim P(\lambda_1)$ y $Y_2\sim P(\lambda_2)$, entonces $Z:=Y_1+Y_2\sim P(\lambda_1+\lambda_2)$.
+:::
+
+**Demostración.**
+
+$$P(Z=k) = P(Y_1+Y_2=k) = \sum_{j=0}^k P(Y_1=k-j)\,P(Y_2=j) = \sum_{j=0}^k \frac{\lambda_1^{k-j}e^{-\lambda_1}}{(k-j)!}\cdot\frac{\lambda_2^j e^{-\lambda_2}}{j!}$$
+
+$$= e^{-(\lambda_1+\lambda_2)}\sum_{j=0}^k \frac{\lambda_1^{k-j}\lambda_2^j}{(k-j)!\,j!} = \frac{e^{-(\lambda_1+\lambda_2)}}{k!}\sum_{j=0}^k\binom kj \lambda_1^{k-j}\lambda_2^j = e^{-(\lambda_1+\lambda_2)}\frac{(\lambda_1+\lambda_2)^k}{k!}$$
+
+usando el binomio de Newton en el último paso. $\blacksquare$
+
+Por inducción, si $Y_1,\ldots,Y_n$ son independientes con $Y_i\sim P(\lambda_i)$, entonces $\sum_i Y_i \sim P(\sum_i\lambda_i)$. En particular, si todos comparten el mismo parámetro $\lambda$, la suma de $n$ de ellas es $P(n\lambda)$.
+
+::: {.callout-tip title="Ejemplo: erratas en un manuscrito"}
+Si en un manuscrito de $200$ páginas se espera encontrar, en promedio, $1$ error tipográfico por página (independiente de una página a otra), ¿cuál es la probabilidad de encontrar máximo $10$ errores en todo el manuscrito?
+
+Cada página aporta $\lambda=1$ (Poisson), y el total del manuscrito es la suma de $200$ de esas contribuciones independientes, así que el total $X\sim P(200)$. Entonces
+
+$$P(X\le10) \approx 4{,}1\times10^{-71} \approx 0$$
+
+En R, `ppois(10, 200, lower.tail = TRUE)`. Prácticamente imposible: aunque "máximo $10$ errores" suena a una meta modesta, comparado con la media de $200$ es una desviación enorme. En cambio, si preguntamos por a lo más $200$ errores (es decir, no más que la media),
+
+$$P(X\le200) \approx 0{,}5188$$
+:::
+
+```{r}
+#| label: manuscrito-poisson
+cat("P(X<=10)  =", ppois(10, 200), "\n")
+cat("P(X<=200) =", round(ppois(200, 200), 4), "\n")
+```
+
+### Qué pasa cuando el parámetro crece
+
+Suponga ahora que el número de páginas $\to\infty$; entonces $\lambda\to\infty$, y para que la pregunta siga teniendo sentido real, $k$ también debe crecer.
+
+::: {.callout-note title="Tarea"}
+Demuestre que si $X_\lambda\sim P(\lambda)$, su varianza es
+
+$$\sigma^2 = \sum_{k=0}^\infty (k-\lambda)^2\,\frac{e^{-\lambda}\lambda^k}{k!} = \lambda$$
+
+(sugerencia: escriba $k^2=k(k-1)+k$ y reduzca cada suma a la serie exponencial completa, igual que se hace para calcular la media).
+:::
+
+Como la media es $\lambda$ y la varianza también es $\lambda$, la desviación estándar es $\sqrt\lambda$. Definimos entonces
+
+$$Z := \frac{k-\lambda}{\sqrt\lambda}$$
+
+que mide cuántas desviaciones estándar nos hemos alejado de la media. Vamos a mostrar que $Z\to N(0,1)$, escribiendo $k=\lambda+\sqrt\lambda\,z$ para $z$ fijo y dejando $\lambda\to\infty$.
+
+### Deducción vía el método de Laplace
+
+Si $P_\lambda(k) = \dfrac1{k!}e^{-\lambda}\lambda^k$, entonces
+
+$$\log P_\lambda(k) = -\lambda+k\log\lambda-\log k!$$
+
+Usando Stirling, $\log k! \approx k\log k - k + \tfrac12\log(2\pi k)$, así que
+
+$$\log P_\lambda(k) = \underbrace{-\lambda+k\log\lambda-k\log k+k}_{\displaystyle \phi(k)} - \frac12\log(2\pi k)$$
+
+Usamos el método de Laplace de nuevo, tratando $\phi$ como función suave de $k$:
+
+$$\phi'(k) = \log\lambda-\log k-1+1 = \log\lambda-\log k$$
+
+Como si $k\mapsto\phi(k)$ fuera continua, $\phi$ alcanza su máximo en $k=\lambda$ (ahí $\phi'=0$), y en ese punto $\phi(\lambda)=0$. Taylor de orden $2$ alrededor de $\lambda$:
+
+$$\phi(\lambda+u) \approx \phi(\lambda)+\phi'(\lambda)u+\frac{\phi''(\lambda)}2u^2 = -\frac{u^2}{2\lambda}$$
+
+(pues $\phi''(k)=-1/k$, así que $\phi''(\lambda)=-1/\lambda$). Con $k=\lambda+\sqrt\lambda\,z$ (es decir $u=\sqrt\lambda\,z$),
+
+$$\phi(k) \approx -\frac{(\sqrt\lambda\,z)^2}\lambda = -z^2$$
+
+Falta la parte polinomial $-\tfrac12\log(2\pi k)$. Como $k=\lambda(1+z/\sqrt\lambda)$, si $\lambda\to\infty$ con $z$ fijo, $\log k = \log\lambda+\log(1+z/\sqrt\lambda)\to\log\lambda$, así que $-\tfrac12\log(2\pi k)\to-\tfrac12\log(2\pi\lambda)$. Juntando todo,
+
+$$\log P(X_\lambda=k) \longrightarrow -\frac{z^2}2-\frac12\log(2\pi\lambda)$$
+
+de donde
+
+$$P(X_\lambda=k) \sim \frac1{\sqrt{2\pi\lambda}}\,e^{-z^2/2}$$
+
+::: {.callout-important title="De masa a densidad"}
+$P(X_\lambda=k)$ es la masa de un punto, y por sí sola siempre tiende a $0$: no puede converger a nada interesante. Lo que sí converge es la densidad, es decir, la masa dividida entre el ancho de la celda que le corresponde. Los enteros $k$ están espaciados $1$ entre sí, pero en la variable $z=(k-\lambda)/\sqrt\lambda$ ese mismo espaciamiento es $1/\sqrt\lambda$. Por eso
+
+$$\text{densidad} = \frac{\text{masa}}{\text{ancho}} = \frac{P(X_\lambda=k)}{1/\sqrt\lambda} = \sqrt\lambda\,P(X_\lambda=k) \longrightarrow \frac1{\sqrt{2\pi}}e^{-z^2/2}$$
+
+que es exactamente la densidad normal estándar evaluada en $z$.
+:::
+
+::: {.callout-tip title="Teorema (de Moivre y Laplace para la Poisson)"}
+Si $X_\lambda\sim P(\lambda)$, entonces para cada $z\in\mathbb R$ fijo, y toda sucesión de enteros $k=k(\lambda)$ con $\dfrac{k-\lambda}{\sqrt\lambda}\to z$ cuando $\lambda\to\infty$,
+
+$$\sqrt\lambda\,P(X_\lambda=k) \longrightarrow \frac1{\sqrt{2\pi}}e^{-z^2/2}$$
+
+Equivalentemente, si $Z_\lambda := \dfrac{X_\lambda-\lambda}{\sqrt\lambda}$, entonces $Z_\lambda\to N(0,1)$.
+:::
+
+Volviendo al ejemplo del manuscrito: con $\lambda=200$, la probabilidad de que todos los errores estén por debajo de la media se aproxima con
+
+$$P_{200}(X\le200) \approx \frac1{\sqrt{2\pi}}\int_{-\infty}^0 e^{-z^2/2}\,dz = 0{,}5$$
+
+muy cerca del valor exacto, $0{,}5188$, calculado arriba.
+
+Esta aproximación mejora si se aplica la corrección de continuidad discutida más adelante para la binomial: como el entero $k=200$ representa en realidad la franja $[199{,}5,\,200{,}5]$, el evento $\{X\le200\}$ corresponde al intervalo continuo $(-\infty,\,200{,}5]$, no a $(-\infty,\,200]$. Con esa corrección,
+
+$$P_{200}(X\le200) \approx \frac1{\sqrt{2\pi}}\int_{-\infty}^{(200{,}5-200)/\sqrt{200}} e^{-z^2/2}\,dz \approx 0{,}5141$$
+
+más cerca todavía del valor exacto $0{,}5188$ que el $0,5$ obtenido sin la corrección.
+
+## La normal como límite de una binomial
+
+### Media y varianza de la binomial
+
+Repetimos el ejercicio de suma de variables aleatorias, ahora con este caso: si $I_i\sim\text{Bernoulli}(p)$ son independientes, entonces $X=\sum_{i=1}^n I_i \sim \text{Binomial}(n,p)$, con
+
+$$P(X=k) = \binom nk p^k q^{n-k} \qquad q:=1-p$$
+
+**La media es**
+
+$$\sum_{k=0}^n k\binom nk p^kq^{n-k} = \sum_{k=1}^n n\binom{n-1}{k-1}p^kq^{n-k} = np\sum_{k=1}^n\binom{n-1}{k-1}p^{k-1}q^{(n-1)-(k-1)} = np(p+q)^{n-1} = np$$
+
+usando la identidad $k\binom nk=n\binom{n-1}{k-1}$ y reindexando $j=k-1$.
+
+**La varianza.** Escribimos $k^2=k(k-1)+k$ y obtenemos, con la identidad análoga $k(k-1)\binom nk = n(n-1)\binom{n-2}{k-2}$,
+
+$$\sum_{k=0}^n k(k-1)\binom nk p^kq^{n-k} = n(n-1)p^2\sum_{k=2}^n\binom{n-2}{k-2}p^{k-2}q^{(n-2)-(k-2)} = n(n-1)p^2$$
+
+Así, $E(k^2)=n(n-1)p^2+np$, y con $\mu=np$,
+
+$$\sigma^2 = n(n-1)p^2+np-(np)^2 = np(1-p) = npq$$
+
+::: {.callout-note title="Camino alterno, más corto"}
+Como $X=\sum I_i$ con $I_i$ independientes, y cada $I_i$ tiene media $p$ y varianza $p(1-p)=pq$ (pues $I_i^2=I_i$, así que su varianza es $p-p^2$), la media y la varianza de una suma de variables independientes son la suma de las medias y de las varianzas respectivamente: $\mu=np$, $\sigma^2=npq$, sin sumar ninguna serie.
+:::
+
+### Estandarización y el método de Laplace
+
+Consideremos $Z=\dfrac{k-np}{\sqrt{npq}}$, que mide cuántas desviaciones estándar nos hemos alejado de la media. Si $X_n\sim\text{Binomial}(n,p)$, $p\in(0,1)$ fijo, entonces para $z\in\mathbb R$ fijo, para toda sucesión de enteros $k(n)$ tales que $\dfrac{k-np}{\sqrt{npq}}\to z$ cuando $n\to\infty$, veremos que $P(X_n=k)\to\varphi(z)/\sqrt{npq}$.
+
+Nuevamente por el método de Laplace:
+
+$$\log P(X=k) = \log n!-\log k!-\log(n-k)!+k\log p+(n-k)\log q$$
+
+Con Stirling ($\log m!\approx m\log m-m+\tfrac12\log(2\pi m)$) en los tres factoriales,
+
+$$\log P(X=k) = \underbrace{n\log n-k\log k-(n-k)\log(n-k)+k\log p+(n-k)\log q}_{\displaystyle\psi(k)} + \tfrac12\log(2\pi n)-\tfrac12\log(2\pi k)-\tfrac12\log(2\pi(n-k))$$
+
+$$\psi'(k) = -\log k-1+\log(n-k)+1+\log p-\log q = \log\left(\frac{(n-k)p}{kq}\right)$$
+
+$$\psi'(k)=0 \iff (n-k)p=kq \iff np-kp=k-kp \iff k=np$$
+
+que es lo que esperábamos: el máximo está en la media. Ahí,
+
+$$\psi''(np) = -\frac1{np}-\frac1{nq} = -\frac1{npq}$$
+
+Con $u=\sqrt{npq}\,z$, Taylor de orden $2$ da $\psi(np+u)\approx-\dfrac{u^2}{2npq}=-\dfrac{z^2}2$. La parte polinomial, evaluada en $k=np$, $n-k=nq$, se simplifica a $-\tfrac12\log(2\pi\,npq)$ (el mismo tipo de cancelación que en la Poisson). Entonces
+
+$$P(X=np+z\sqrt{npq}) \approx \frac1{\sqrt{2\pi\,npq}}e^{-z^2/2}$$
+
+::: {.callout-tip title="Teorema (de Moivre y Laplace para la binomial)"}
+Si $X_n\sim\text{Binomial}(n,p)$, $p\in(0,1)$ fijo, entonces para cada $z\in\mathbb R$ fijo, y toda sucesión de enteros $k(n)$ con $\dfrac{k-np}{\sqrt{npq}}\to z$ cuando $n\to\infty$,
+
+$$\sqrt{npq}\,P(X_n=k) \longrightarrow \frac1{\sqrt{2\pi}}e^{-z^2/2}$$
+
+Equivalentemente, si $Z_n:=\dfrac{X_n-np}{\sqrt{npq}}$, entonces $Z_n\to N(0,1)$.
+:::
+
+::: {.callout-important title="Dos límites distintos, no confundir"}
+Este es un límite diferente del que vimos en la sección de [variables aleatorias discretas](../vadiscretas/index.qmd), donde $n\to\infty$ y $p\to0$ manteniendo $np\to\lambda$ fijo (el régimen de sucesos raros, que da la aproximación de Poisson). Aquí, en cambio, $p$ se mantiene fijo y es $n$ el que crece sin control: es el mismo régimen de "muchos aportes independientes" que en la Poisson, solo que ahora los aportes son Bernoulli en vez de Poisson unitarias.
+:::
+
+## Ejemplo: cien lanzamientos de una moneda justa
+
+::: {.callout-tip title="Ejemplo"}
+Si lanzamos una moneda justa $100$ veces, $\mu=np=50$ y $\sigma=\sqrt{npq}=5$. ¿Cuál es la probabilidad de obtener entre $45$ y $55$ caras?
+
+**Cálculo exacto.**
+
+$$P(45\le X\le55) = F_X(55)-F_X(44)$$
+
+En R: `pbinom(55, 100, 0.5) - pbinom(44, 100, 0.5)`.
+
+**Usando la aproximación normal, sin corrección de continuidad** (un error apreciable):
+
+$$P\left(\frac{45-50}5\le Z\le\frac{55-50}5\right) = P(-1\le Z\le1) \approx 0{,}68$$
+
+**Extendiendo medio paso a cada lado** (corrección de continuidad: cada entero $k$ representa, en realidad, la franja $[k-\tfrac12,k+\tfrac12]$, así que el rango de enteros del $45$ al $55$ corresponde al intervalo continuo $[44{,}5,\,55{,}5]$):
+
+$$P\left(\frac{44{,}5-50}5\le Z\le\frac{55{,}5-50}5\right) \approx 0{,}72$$
+
+mucho más cerca del valor exacto.
+:::
+
+```{r}
+#| label: moneda-100-lanzamientos
+exacto <- pbinom(55, 100, 0.5) - pbinom(44, 100, 0.5)
+sin_cc <- pnorm(1) - pnorm(-1)
+con_cc <- pnorm(1.1) - pnorm(-1.1)
+cat("Exacto (binomial)               :", round(exacto, 4), "\n")
+cat("Aprox. normal, sin correccion   :", round(sin_cc, 4), "\n")
+cat("Aprox. normal, con correccion   :", round(con_cc, 4), "\n")
+```
+
+## Panel interactivo: de la binomial y la Poisson a la normal
+
+El siguiente panel muestra, lado a lado, la función de masa de una Binomial$(n,p)$ o de una Poisson$(\lambda)$ (según se elija) y la densidad normal con la misma media y varianza. Mueva los parámetros para ver cómo, a medida que $n$ (o $\lambda$) crece, las barras se acomodan cada vez mejor debajo de la curva.
+
+```{=html}
+<iframe src="notebooks/aproximacionnormal.html" width="100%" height="620" style="border:1px solid #dfe3e2; border-radius:6px;" title="Panel interactivo: binomial y Poisson aproximadas por la normal"></iframe>
+```
+
+::: {.callout-note title="Ejercicios del libro"}
+Haga los ejercicios del libro de Blanco Castañeda relacionados con la aproximación normal a la binomial y a la Poisson y los que involucren a  la distribuciones normal y uniforme.
+:::

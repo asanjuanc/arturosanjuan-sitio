@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Arturo Sanjuán">
-<meta name="description" content="Definición de variable aleatoria real como función medible respecto a Borel, σ-álgebra generada por una variable aleatoria, la distribución inducida por una variable aleatoria y propiedades de la función de distribución, con ejemplos sobre un espacio de cuatro puntos y el conteo de caras en cuatro lanzamientos de una moneda.">
+<meta name="description" content="Demostración de que la suma de Poisson independientes es Poisson, la deducción de la aproximación normal a la Poisson mediante el método de Laplace aplicado directamente a la función de masa; la suma de Bernoulli es binomial, la media y varianza de la binomial, y su aproximación normal (teorema de de Moivre y Laplace).">
 
-<title>Variables aleatorias – Arturo Sanjuán</title>
+<title>La distribución normal como límite – Arturo Sanjuán</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -73,8 +73,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
-<link href="../../../cursos/probabilidad/vadiscretas/index.html" rel="next">
-<link href="../../../cursos/probabilidad/taller-1/index.html" rel="prev">
+<link href="../../../cursos/probabilidad/vacontinuas/index.html" rel="prev">
 <link href="../../../favicon.png" rel="icon" type="image/png">
 <script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -180,7 +179,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../cursos/probabilidad/vaintro/index.html">Variables aleatorias</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../cursos/probabilidad/limitenormal/index.html">La distribución normal como límite</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -227,7 +226,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../cursos/probabilidad/vaintro/index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../../cursos/probabilidad/vaintro/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Variables aleatorias</span></a>
   </div>
 </li>
@@ -245,7 +244,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../cursos/probabilidad/limitenormal/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../cursos/probabilidad/limitenormal/index.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">La distribución normal como límite</span></a>
   </div>
 </li>
@@ -255,12 +254,19 @@ window.Quarto = {
     <h2 id="toc-title">Contenido</h2>
    
   <ul>
-  <li><a href="#definición" id="toc-definición" class="nav-link active" data-scroll-target="#definición"><span class="header-section-number">1</span> Definición</a></li>
-  <li><a href="#una-σ-álgebra-generada-por-una-variable-aleatoria-ejercicio-2.2" id="toc-una-σ-álgebra-generada-por-una-variable-aleatoria-ejercicio-2.2" class="nav-link" data-scroll-target="#una-σ-álgebra-generada-por-una-variable-aleatoria-ejercicio-2.2"><span class="header-section-number">2</span> Una σ-álgebra generada por una variable aleatoria (ejercicio 2.2)</a></li>
-  <li><a href="#la-distribución-de-una-variable-aleatoria" id="toc-la-distribución-de-una-variable-aleatoria" class="nav-link" data-scroll-target="#la-distribución-de-una-variable-aleatoria"><span class="header-section-number">3</span> La distribución de una variable aleatoria</a></li>
-  <li><a href="#probabilidades-en-un-espacio-laplaciano-ejercicio-2.4" id="toc-probabilidades-en-un-espacio-laplaciano-ejercicio-2.4" class="nav-link" data-scroll-target="#probabilidades-en-un-espacio-laplaciano-ejercicio-2.4"><span class="header-section-number">4</span> Probabilidades en un espacio Laplaciano (ejercicio 2.4)</a></li>
-  <li><a href="#función-de-distribución-propiedades" id="toc-función-de-distribución-propiedades" class="nav-link" data-scroll-target="#función-de-distribución-propiedades"><span class="header-section-number">5</span> Función de distribución: propiedades</a></li>
-  <li><a href="#una-función-de-distribución-para-un-lanzamiento-de-monedas-ejercicio-2.6" id="toc-una-función-de-distribución-para-un-lanzamiento-de-monedas-ejercicio-2.6" class="nav-link" data-scroll-target="#una-función-de-distribución-para-un-lanzamiento-de-monedas-ejercicio-2.6"><span class="header-section-number">6</span> Una función de distribución para un lanzamiento de monedas (ejercicio 2.6)</a></li>
+  <li><a href="#la-normal-como-límite-de-una-poisson" id="toc-la-normal-como-límite-de-una-poisson" class="nav-link active" data-scroll-target="#la-normal-como-límite-de-una-poisson"><span class="header-section-number">1</span> La normal como límite de una Poisson</a>
+  <ul class="collapse">
+  <li><a href="#preámbulo-la-suma-de-poisson-independientes-es-poisson" id="toc-preámbulo-la-suma-de-poisson-independientes-es-poisson" class="nav-link" data-scroll-target="#preámbulo-la-suma-de-poisson-independientes-es-poisson"><span class="header-section-number">1.1</span> Preámbulo: la suma de Poisson independientes es Poisson</a></li>
+  <li><a href="#qué-pasa-cuando-el-parámetro-crece" id="toc-qué-pasa-cuando-el-parámetro-crece" class="nav-link" data-scroll-target="#qué-pasa-cuando-el-parámetro-crece"><span class="header-section-number">1.2</span> Qué pasa cuando el parámetro crece</a></li>
+  <li><a href="#deducción-vía-el-método-de-laplace" id="toc-deducción-vía-el-método-de-laplace" class="nav-link" data-scroll-target="#deducción-vía-el-método-de-laplace"><span class="header-section-number">1.3</span> Deducción vía el método de Laplace</a></li>
+  </ul></li>
+  <li><a href="#la-normal-como-límite-de-una-binomial" id="toc-la-normal-como-límite-de-una-binomial" class="nav-link" data-scroll-target="#la-normal-como-límite-de-una-binomial"><span class="header-section-number">2</span> La normal como límite de una binomial</a>
+  <ul class="collapse">
+  <li><a href="#media-y-varianza-de-la-binomial" id="toc-media-y-varianza-de-la-binomial" class="nav-link" data-scroll-target="#media-y-varianza-de-la-binomial"><span class="header-section-number">2.1</span> Media y varianza de la binomial</a></li>
+  <li><a href="#estandarización-y-el-método-de-laplace" id="toc-estandarización-y-el-método-de-laplace" class="nav-link" data-scroll-target="#estandarización-y-el-método-de-laplace"><span class="header-section-number">2.2</span> Estandarización y el método de Laplace</a></li>
+  </ul></li>
+  <li><a href="#ejemplo-cien-lanzamientos-de-una-moneda-justa" id="toc-ejemplo-cien-lanzamientos-de-una-moneda-justa" class="nav-link" data-scroll-target="#ejemplo-cien-lanzamientos-de-una-moneda-justa"><span class="header-section-number">3</span> Ejemplo: cien lanzamientos de una moneda justa</a></li>
+  <li><a href="#panel-interactivo-de-la-binomial-y-la-poisson-a-la-normal" id="toc-panel-interactivo-de-la-binomial-y-la-poisson-a-la-normal" class="nav-link" data-scroll-target="#panel-interactivo-de-la-binomial-y-la-poisson-a-la-normal"><span class="header-section-number">4</span> Panel interactivo: de la binomial y la Poisson a la normal</a></li>
   </ul>
 </nav>
 </nav>
@@ -273,13 +279,13 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Variables aleatorias</h1>
-<p class="subtitle lead">σ-álgebra generada, distribución y función de distribución</p>
+<h1 class="title">La distribución normal como límite</h1>
+<p class="subtitle lead">El teorema de de Moivre y Laplace para la Poisson y para la binomial</p>
 </div>
 
 <div>
   <div class="description">
-    Definición de variable aleatoria real como función medible respecto a Borel, σ-álgebra generada por una variable aleatoria, la distribución inducida por una variable aleatoria y propiedades de la función de distribución, con ejemplos sobre un espacio de cuatro puntos y el conteo de caras en cuatro lanzamientos de una moneda.
+    Demostración de que la suma de Poisson independientes es Poisson, la deducción de la aproximación normal a la Poisson mediante el método de Laplace aplicado directamente a la función de masa; la suma de Bernoulli es binomial, la media y varianza de la binomial, y su aproximación normal (teorema de de Moivre y Laplace).
   </div>
 </div>
 
@@ -296,7 +302,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">29 de agosto de 2026</p>
+      <p class="date">5 de septiembre de 2026</p>
     </div>
   </div>
   
@@ -308,332 +314,248 @@ window.Quarto = {
 </header>
 
 
-<section id="definición" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="definición"><span class="header-section-number">1</span> Definición</h2>
-<p>Sea <span class="math inline">\((\Omega,\mathfrak F, P)\)</span> un espacio de probabilidad. Una <strong>variable aleatoria real</strong> es una función</p>
-<p><span class="math display">\[X:(\Omega,\mathfrak F)\to(\mathbb R,\mathfrak B(\mathbb R))\]</span></p>
-<p>que es <span class="math inline">\(\mathfrak F/\mathfrak B(\mathbb R)\)</span>-medible, es decir, <span class="math inline">\(X^{-1}(B)\in\mathfrak F\)</span> para todo <span class="math inline">\(B\in\mathfrak B(\mathbb R)\)</span>, donde <span class="math inline">\(\mathfrak B(\mathbb R)\)</span> es la σ-álgebra de Borel (la generada por los abiertos de <span class="math inline">\(\mathbb R\)</span>).</p>
-<div class="callout callout-style-default callout-important callout-titled" title="¿Por qué basta revisar los conjuntos $(-\infty,a]$?">
+<p>En la sección anterior definimos la distribución normal y vimos, con la fórmula de Stirling, el método de Laplace: aproximar una función suave y muy picuda por una parábola alrededor de su máximo, y exponenciar para obtener una forma de campana. En esta sección aplicamos exactamente esa misma técnica dos veces más, directamente sobre la función de masa de la Poisson y de la binomial, para mostrar que ambas se aproximan a la normal cuando su parámetro (o su tamaño de muestra) crece. Este es el resultado que hoy se conoce como el <strong>teorema de de Moivre y Laplace</strong>, y es un caso particular de un fenómeno mucho más general, el teorema central del límite: casi cualquier suma de aportes independientes termina viéndose gaussiana, sin importar la forma de cada aporte individual.</p>
+<section id="la-normal-como-límite-de-una-poisson" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="la-normal-como-límite-de-una-poisson"><span class="header-section-number">1</span> La normal como límite de una Poisson</h2>
+<section id="preámbulo-la-suma-de-poisson-independientes-es-poisson" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="preámbulo-la-suma-de-poisson-independientes-es-poisson"><span class="header-section-number">1.1</span> Preámbulo: la suma de Poisson independientes es Poisson</h3>
+<div class="callout callout-style-default callout-tip callout-titled" title="Proposición">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>¿Por qué basta revisar los conjuntos <span class="math inline">\((-\infty,a]\)</span>?
+<span class="screen-reader-only">Tip</span>Proposición
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><span class="math inline">\(\mathfrak B(\mathbb R)\)</span> está generada por la familia <span class="math inline">\(\{(-\infty,a] : a\in\mathbb R\}\)</span>. Como la imagen inversa se comporta bien con complementos y uniones,</p>
-<p><span class="math display">\[X^{-1}(A^c) = \big(X^{-1}(A)\big)^c \qquad X^{-1}\Big(\bigcup_n A_n\Big) = \bigcup_n X^{-1}(A_n)\]</span></p>
-<p>basta verificar <span class="math inline">\(X^{-1}((-\infty,a])\in\mathfrak F\)</span> para todo <span class="math inline">\(a\in\mathbb R\)</span>: todos los demás borelianos (intervalos abiertos, semiabiertos, uniones numerables de estos) se obtienen de los <span class="math inline">\((-\infty,a]\)</span> por complementos e intersecciones/uniones numerables. Por ejemplo:</p>
-<p><span class="math display">\[(a,b) = \Big(\bigcup_{n} (-\infty, b-\tfrac1n]\Big) \cap (-\infty,a]^c\]</span></p>
-<p>Esto simplifica muchísimo la verificación de que una función dada es una variable aleatoria: no hay que revisar <em>todo</em> <span class="math inline">\(\mathfrak B(\mathbb R)\)</span>, solo la familia generadora.</p>
+<p>Si <span class="math inline">\(Y_1,Y_2\)</span> son independientes, con <span class="math inline">\(Y_1\sim P(\lambda_1)\)</span> y <span class="math inline">\(Y_2\sim P(\lambda_2)\)</span>, entonces <span class="math inline">\(Z:=Y_1+Y_2\sim P(\lambda_1+\lambda_2)\)</span>.</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<p><strong>Demostración.</strong></p>
+<p><span class="math display">\[P(Z=k) = P(Y_1+Y_2=k) = \sum_{j=0}^k P(Y_1=k-j)\,P(Y_2=j) = \sum_{j=0}^k \frac{\lambda_1^{k-j}e^{-\lambda_1}}{(k-j)!}\cdot\frac{\lambda_2^j e^{-\lambda_2}}{j!}\]</span></p>
+<p><span class="math display">\[= e^{-(\lambda_1+\lambda_2)}\sum_{j=0}^k \frac{\lambda_1^{k-j}\lambda_2^j}{(k-j)!\,j!} = \frac{e^{-(\lambda_1+\lambda_2)}}{k!}\sum_{j=0}^k\binom kj \lambda_1^{k-j}\lambda_2^j = e^{-(\lambda_1+\lambda_2)}\frac{(\lambda_1+\lambda_2)^k}{k!}\]</span></p>
+<p>usando el binomio de Newton en el último paso. <span class="math inline">\(\blacksquare\)</span></p>
+<p>Por inducción, si <span class="math inline">\(Y_1,\ldots,Y_n\)</span> son independientes con <span class="math inline">\(Y_i\sim P(\lambda_i)\)</span>, entonces <span class="math inline">\(\sum_i Y_i \sim P(\sum_i\lambda_i)\)</span>. En particular, si todos comparten el mismo parámetro <span class="math inline">\(\lambda\)</span>, la suma de <span class="math inline">\(n\)</span> de ellas es <span class="math inline">\(P(n\lambda)\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo: erratas en un manuscrito">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Ejercicio
+<span class="screen-reader-only">Tip</span>Ejemplo: erratas en un manuscrito
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Aprenda de memoria las definiciones de función medible, variable aleatoria, σ-álgebra generada por una función y función de distribución. Sepa negarlas, ejemplificarlas y ejemplificar la negación.</p>
+<p>Si en un manuscrito de <span class="math inline">\(200\)</span> páginas se espera encontrar, en promedio, <span class="math inline">\(1\)</span> error tipográfico por página (independiente de una página a otra), ¿cuál es la probabilidad de encontrar máximo <span class="math inline">\(10\)</span> errores en todo el manuscrito?</p>
+<p>Cada página aporta <span class="math inline">\(\lambda=1\)</span> (Poisson), y el total del manuscrito es la suma de <span class="math inline">\(200\)</span> de esas contribuciones independientes, así que el total <span class="math inline">\(X\sim P(200)\)</span>. Entonces</p>
+<p><span class="math display">\[P(X\le10) \approx 4{,}1\times10^{-71} \approx 0\]</span></p>
+<p>En R, <code>ppois(10, 200, lower.tail = TRUE)</code>. Prácticamente imposible: aunque “máximo <span class="math inline">\(10\)</span> errores” suena a una meta modesta, comparado con la media de <span class="math inline">\(200\)</span> es una desviación enorme. En cambio, si preguntamos por a lo más <span class="math inline">\(200\)</span> errores (es decir, no más que la media),</p>
+<p><span class="math display">\[P(X\le200) \approx 0{,}5188\]</span></p>
 </div>
 </div>
-</section>
-<section id="una-σ-álgebra-generada-por-una-variable-aleatoria-ejercicio-2.2" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="una-σ-álgebra-generada-por-una-variable-aleatoria-ejercicio-2.2"><span class="header-section-number">2</span> Una σ-álgebra generada por una variable aleatoria (ejercicio 2.2)</h2>
-<p>Sea <span class="math inline">\(\Omega=\{1,2,3,4\}\)</span>. Determinar la menor σ-álgebra sobre <span class="math inline">\(\Omega\)</span> con respecto a la cual <span class="math inline">\(X(\omega):=\omega+1\)</span> es una variable aleatoria real.</p>
-<p>En otras palabras, queremos <span class="math inline">\(\sigma(X)\)</span>, la σ-álgebra generada sobre <span class="math inline">\(\Omega\)</span> por <span class="math inline">\(X:\Omega\to(\mathbb R,\mathfrak B(\mathbb R))\)</span>. Por la observación anterior, basta con enviar hacia atrás los conjuntos <span class="math inline">\((-\infty,a]\)</span>, <span class="math inline">\(a\in\mathbb R\)</span>:</p>
-<p><span class="math display">\[X^{-1}\big((-\infty,a]\big) = \{\omega\in\Omega : \omega+1\le a\} = \{\omega\in\Omega : \omega\le a-1\}\]</span></p>
-<p>Como <span class="math inline">\(\Omega=\{1,2,3,4\}\)</span>, basta distinguir en qué intervalo cae <span class="math inline">\(a-1\)</span>:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Rango de <span class="math inline">\(a\)</span></th>
-<th><span class="math inline">\(\{\omega\le a-1\}\)</span></th>
-<th>Preimagen</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(a&lt;2\)</span></td>
-<td>ningún <span class="math inline">\(\omega\in\Omega\)</span></td>
-<td><span class="math inline">\(\varnothing\)</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(2\le a&lt;3\)</span></td>
-<td><span class="math inline">\(\omega=1\)</span></td>
-<td><span class="math inline">\(\{1\}\)</span></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(3\le a&lt;4\)</span></td>
-<td><span class="math inline">\(\omega\in\{1,2\}\)</span></td>
-<td><span class="math inline">\(\{1,2\}\)</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(4\le a&lt;5\)</span></td>
-<td><span class="math inline">\(\omega\in\{1,2,3\}\)</span></td>
-<td><span class="math inline">\(\{1,2,3\}\)</span></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(a\ge5\)</span></td>
-<td><span class="math inline">\(\omega\in\{1,2,3,4\}\)</span></td>
-<td><span class="math inline">\(\Omega\)</span></td>
-</tr>
-</tbody>
-</table>
-<p>Así que la familia generadora directa es <span class="math inline">\(\mathcal F_0=\{\varnothing,\{1\},\{1,2\},\{1,2,3\},\Omega\}\)</span>. Ahora cerramos bajo las operaciones de σ-álgebra:</p>
-<p><strong>Complementos:</strong> <span class="math inline">\(\{1\}^c=\{2,3,4\}\)</span>, <span class="math inline">\(\{1,2\}^c=\{3,4\}\)</span>, <span class="math inline">\(\{1,2,3\}^c=\{4\}\)</span>.</p>
-<p><strong>Uniones (para aislar los singletons restantes):</strong> <span class="math display">\[\{1\}\cup\{3,4\}=\{1,3,4\} \quad\Rightarrow\quad \{1,3,4\}^c=\{2\}\]</span> <span class="math display">\[\{1,2\}\cup\{4\}=\{1,2,4\} \quad\Rightarrow\quad \{1,2,4\}^c=\{3\}\]</span></p>
-<div class="callout callout-style-default callout-important callout-titled" title="Conclusión">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Conclusión
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Ya tenemos los cuatro singletons <span class="math inline">\(\{1\},\{2\},\{3\},\{4\}\)</span> dentro de la σ-álgebra. Como toda σ-álgebra es cerrada bajo uniones (finitas, en este caso, porque <span class="math inline">\(\Omega\)</span> es finito), <strong>cualquier</strong> subconjunto de <span class="math inline">\(\Omega\)</span> se escribe como unión de singletons. Por lo tanto</p>
-<p><span class="math display">\[\sigma(X) = \mathcal P(\Omega)\]</span></p>
-<p>el conjunto de partes completo — y esto pasa <strong>sin importar</strong> qué medida de probabilidad <span class="math inline">\(P\)</span> se defina sobre <span class="math inline">\(\Omega\)</span>; es una propiedad puramente de <span class="math inline">\(X\)</span> y de <span class="math inline">\(\Omega\)</span>.</p>
-</div>
-</div>
-</section>
-<section id="la-distribución-de-una-variable-aleatoria" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="la-distribución-de-una-variable-aleatoria"><span class="header-section-number">3</span> La distribución de una variable aleatoria</h2>
-<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Ejercicio
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Estudie del libro la demostración del siguiente teorema</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Teorema 2.18">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Teorema 2.18
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Sea <span class="math inline">\(X\)</span> una variable aleatoria real definida sobre <span class="math inline">\((\Omega,\mathfrak F,P)\)</span>. La función <span class="math inline">\(P_X\)</span> definida sobre <span class="math inline">\(\mathfrak B(\mathbb R)\)</span> por</p>
-<p><span class="math display">\[P_X(B) := P\big(X^{-1}(B)\big) = P(X\in B), \qquad B\in\mathfrak B(\mathbb R)\]</span></p>
-<p>es una medida de probabilidad sobre <span class="math inline">\((\mathbb R,\mathfrak B(\mathbb R))\)</span>, llamada <strong>distribución</strong> (o <strong>ley</strong>) de <span class="math inline">\(X\)</span>.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled" title="Por qué importa">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Por qué importa
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Este teorema es lo que permite <strong>olvidarse de <span class="math inline">\(\Omega\)</span></strong>: una vez que conocemos <span class="math inline">\(P_X\)</span>, toda pregunta probabilística sobre <span class="math inline">\(X\)</span> (¿<span class="math inline">\(P(X\in B)\)</span>?) se responde dentro de <span class="math inline">\((\mathbb R,\mathfrak B(\mathbb R))\)</span>, sin necesidad de volver al espacio muestral original. Es la razón por la que, en la práctica, casi nunca se especifica <span class="math inline">\(\Omega\)</span> explícitamente al trabajar con variables aleatorias.</p>
-</div>
-</div>
-</section>
-<section id="probabilidades-en-un-espacio-laplaciano-ejercicio-2.4" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="probabilidades-en-un-espacio-laplaciano-ejercicio-2.4"><span class="header-section-number">4</span> Probabilidades en un espacio Laplaciano (ejercicio 2.4)</h2>
-<p>Sea <span class="math inline">\(\Omega=\{a,b,c,d,e,f\}\)</span> un espacio Laplaciano (cada resultado con probabilidad <span class="math inline">\(1/6\)</span>) y <span class="math inline">\(X\)</span> la variable aleatoria dada por la tabla de valores <span class="math inline">\(X(a),\ldots,X(f)\)</span> del enunciado (Blanco Castañeda, ejercicio 2.4).</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Tabla pendiente de transcribir">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Tabla pendiente de transcribir
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>La tabla de valores <span class="math inline">\(X(\omega)\)</span> no se pudo recuperar de forma confiable ni del escaneo del libro ni de las notas manuscritas — en ambos casos la extracción de texto rompe la tabla. En vez de inventar los valores, queda pendiente completarla aquí con la tabla real del libro antes de publicar esta sección.</p>
-</div>
-</div>
-<p>Con la tabla completa, se pide calcular:</p>
-<ol type="a">
-<li><span class="math inline">\(P(X=1{,}5)\)</span></li>
-<li><span class="math inline">\(P(|X-1|\le 1{,}5)\)</span></li>
-<li><span class="math inline">\(P(X\ge 0 \lor X&lt;2)\)</span></li>
-</ol>
-<div class="callout callout-style-default callout-important callout-titled" title="Método (independiente de la tabla)">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Método (independiente de la tabla)
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>En un espacio Laplaciano, <span class="math inline">\(P_X(\{x_0\}) = P(X^{-1}(\{x_0\}))\)</span> se calcula contando cuántos <span class="math inline">\(\omega\in\Omega\)</span> satisfacen <span class="math inline">\(X(\omega)=x_0\)</span>, y dividiendo por <span class="math inline">\(|\Omega|=6\)</span>. Para un evento como <span class="math inline">\(\{|X-1|\le 1{,}5\}\)</span>, primero se reescribe como <span class="math inline">\(\{-0{,}5\le X\le 2{,}5\}\)</span>, se identifica <span class="math inline">\(X^{-1}([-0{,}5,\,2{,}5])\subset\Omega\)</span>, y se cuenta.</p>
-</div>
-</div>
-</section>
-<section id="función-de-distribución-propiedades" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="función-de-distribución-propiedades"><span class="header-section-number">5</span> Función de distribución: propiedades</h2>
-<div class="callout callout-style-default callout-tip callout-titled" title="Teorema 2.24">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Teorema 2.24
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Sea <span class="math inline">\(X\)</span> una variable aleatoria real definida sobre <span class="math inline">\((\Omega,\mathfrak F,P)\)</span> y <span class="math inline">\(F_X(x):=P(X\le x)\)</span> su función de distribución. Entonces:</p>
-<ol type="1">
-<li><span class="math inline">\(F_X\)</span> es <strong>creciente</strong>: si <span class="math inline">\(x\le y\)</span>, <span class="math inline">\(F_X(x)\le F_X(y)\)</span>.</li>
-<li><span class="math inline">\(F_X\)</span> es <strong>continua a derecha</strong>: <span class="math inline">\(F_X(x^+):=\lim_{h\to0^+}F_X(x+h)=F_X(x)\)</span> para todo <span class="math inline">\(x\in\mathbb R\)</span>.</li>
-<li><span class="math inline">\(\lim_{x\to\infty}F_X(x)=1\)</span>.</li>
-<li><span class="math inline">\(\lim_{x\to-\infty}F_X(x)=0\)</span>.</li>
-</ol>
-</div>
-</div>
-<p><strong>Demostración de la continuidad a derecha.</strong> <span class="math inline">\(F_X\)</span> es continua a derecha en <span class="math inline">\(a\)</span> si para toda sucesión <span class="math inline">\((a_n)_n\)</span> que decrece a <span class="math inline">\(a\)</span>, <span class="math inline">\(F_X(a_n)\to F_X(a)\)</span>.</p>
-<p>Sea <span class="math inline">\((a_n)_n\)</span> decreciente con <span class="math inline">\(a_n\downarrow a\)</span>. Definamos <span class="math inline">\(A_n:=(-\infty,a_n]\)</span>. Como <span class="math inline">\((a_n)_n\)</span> es decreciente, <span class="math inline">\((A_n)_n\)</span> es una sucesión decreciente de conjuntos: <span class="math inline">\(A_{n+1}\subset A_n\)</span>. Afirmamos que (verifique)</p>
-<p><span class="math display">\[\bigcap_n A_n = (-\infty,a]\]</span></p>
-<p>Con esto,</p>
-<p><span class="math display">\[
-\lim_n F_X(a_n) = \lim_n P(X\le a_n) = \lim_n P(X\in A_n) = P\Big(X^{-1}\Big(\bigcap_n A_n\Big)\Big) = P(X\le a) = F_X(a)
-\]</span></p>
-<p>donde la penúltima igualdad usa la continuidad de <span class="math inline">\(P\)</span> respecto a sucesiones decrecientes de conjuntos (vista en la sección de <a href="../../../cursos/probabilidad/introduccion/index.html">introducción</a>). <span class="math inline">\(\blacksquare\)</span></p>
-<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Tarea
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Demuestre las otras tres propiedades del teorema (monotonía, límite en <span class="math inline">\(+\infty\)</span> y límite en <span class="math inline">\(-\infty\)</span>), usando el mismo tipo de argumento: escriba el evento límite como <span class="math inline">\(\bigcup_n\)</span> o <span class="math inline">\(\bigcap_n\)</span> de eventos <span class="math inline">\(\{X\le x_n\}\)</span> y use la continuidad de <span class="math inline">\(P\)</span>.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Corolario 2.25">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Corolario 2.25
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Sean <span class="math inline">\(X\)</span> una variable aleatoria real, <span class="math inline">\(F_X\)</span> su función de distribución y <span class="math inline">\(a,b\in\mathbb R\)</span> con <span class="math inline">\(a&lt;b\)</span>. Entonces:</p>
-<ol type="1">
-<li><span class="math inline">\(F_X(a^-):=\displaystyle\lim_{h\to0^+}F_X(a-h) = P(X&lt;a)\)</span></li>
-<li><span class="math inline">\(P(a\le X\le b) = F_X(b)-F_X(a^-)\)</span></li>
-<li><span class="math inline">\(P(a&lt; X\le b) = F_X(b)-F_X(a)\)</span></li>
-<li><span class="math inline">\(P(a\le X&lt; b) = F_X(b^-)-F_X(a^-)\)</span></li>
-<li><span class="math inline">\(P(a&lt; X&lt; b) = F_X(b^-)-F_X(a)\)</span></li>
-<li><span class="math inline">\(P(X=a) = F_X(a)-F_X(a^-)\)</span></li>
-<li>Si <span class="math inline">\(P(a&lt;X&lt;b)=0\)</span>, entonces <span class="math inline">\(F_X\)</span> es constante en <span class="math inline">\((a,b)\)</span>.</li>
-</ol>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Tarea
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Demuestre todos los puntos de este corolario.</p>
-</div>
-</div>
-</section>
-<section id="una-función-de-distribución-para-un-lanzamiento-de-monedas-ejercicio-2.6" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="una-función-de-distribución-para-un-lanzamiento-de-monedas-ejercicio-2.6"><span class="header-section-number">6</span> Una función de distribución para un lanzamiento de monedas (ejercicio 2.6)</h2>
-<p>Se lanza una moneda corriente cuatro veces consecutivas. Sea <span class="math inline">\(X\)</span> el número de caras obtenidas. Hallar y graficar la función de distribución de <span class="math inline">\(Y:=X-2\)</span>.</p>
-<p><span class="math inline">\(X\)</span> toma valores en <span class="math inline">\(\{0,1,2,3,4\}.\)</span> Entonces</p>
-<p><span class="math display">\[P(X=k) = \binom{4}{k}\Big(\frac12\Big)^4 = \frac{\binom4k}{16}, \qquad k=0,1,2,3,4\]</span></p>
-<p>es decir <span class="math inline">\(P(X=0)=P(X=4)=\tfrac1{16}\)</span>, <span class="math inline">\(P(X=1)=P(X=3)=\tfrac4{16}\)</span>, <span class="math inline">\(P(X=2)=\tfrac6{16}\)</span>.</p>
-<p>Como <span class="math inline">\(Y=X-2\)</span>, <span class="math inline">\(Y\)</span> toma valores en <span class="math inline">\(\{-2,-1,0,1,2\}\)</span> con las mismas probabilidades (solo se recorre el índice). Sumando acumulativamente:</p>
-<p><span class="math display">\[
-F_Y(y) =
-\begin{cases}
-0 &amp; y&lt;-2 \\
-1/16 &amp; -2\le y&lt;-1 \\
-5/16 &amp; -1\le y&lt;0 \\
-11/16 &amp; 0\le y&lt;1 \\
-15/16 &amp; 1\le y&lt;2 \\
-1 &amp; y\ge2
-\end{cases}
-\]</span></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>y_vals <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">4</span>, <span class="dv">1</span>) <span class="sc">/</span> <span class="dv">16</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Fy <span class="ot">&lt;-</span> <span class="fu">stepfun</span>(y_vals, <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">cumsum</span>(p)))</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Fy, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"y"</span>, <span class="at">ylab =</span> <span class="fu">expression</span>(F[Y](y)),</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">""</span>, <span class="at">do.points =</span> <span class="cn">TRUE</span>, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"steelblue"</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">verticals =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"gray60"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div id="fig-Fy-x-menos-2" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-Fy-x-menos-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="index_files/figure-html/fig-Fy-x-menos-2-1.png" class="img-fluid figure-img" width="672">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"P(X&lt;=10)  ="</span>, <span class="fu">ppois</span>(<span class="dv">10</span>, <span class="dv">200</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(X&lt;=10)  = 4.109585e-71 </code></pre>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-Fy-x-menos-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;1: Función de distribución de Y = X - 2
-</figcaption>
-</figure>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"P(X&lt;=200) ="</span>, <span class="fu">round</span>(<span class="fu">ppois</span>(<span class="dv">200</span>, <span class="dv">200</span>), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(X&lt;=200) = 0.5188 </code></pre>
 </div>
 </div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Aplicación del corolario 2.25">
+</section>
+<section id="qué-pasa-cuando-el-parámetro-crece" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="qué-pasa-cuando-el-parámetro-crece"><span class="header-section-number">1.2</span> Qué pasa cuando el parámetro crece</h3>
+<p>Suponga ahora que el número de páginas <span class="math inline">\(\to\infty\)</span>; entonces <span class="math inline">\(\lambda\to\infty\)</span>, y para que la pregunta siga teniendo sentido real, <span class="math inline">\(k\)</span> también debe crecer.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Aplicación del corolario 2.25
+<span class="screen-reader-only">Nota</span>Tarea
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>La parte 6 del corolario (<span class="math inline">\(P(X=a)=F_X(a)-F_X(a^-)\)</span>) aplicada a <span class="math inline">\(F_Y\)</span> recupera exactamente los saltos de la gráfica. Por ejemplo, en <span class="math inline">\(y=-1\)</span> (que corresponde a <span class="math inline">\(X=1\)</span>):</p>
-<p><span class="math display">\[P(Y=-1) = F_Y(-1)-F_Y(-1^-) = \frac{5}{16}-\frac1{16} = \frac{4}{16} = \frac14\]</span></p>
-<p>y en <span class="math inline">\(y=1\)</span> (que corresponde a <span class="math inline">\(X=3\)</span>):</p>
-<p><span class="math display">\[P(Y=1) = F_Y(1)-F_Y(1^-) = \frac{15}{16}-\frac{11}{16} = \frac{4}{16} = \frac14\]</span></p>
-<p>Los dos saltos son idénticos: <span class="math inline">\(P(X=1)=P(X=3)=1/4\)</span>, reflejando la simetría de la binomial <span class="math inline">\((4,1/2)\)</span> alrededor de <span class="math inline">\(k=2\)</span>.</p>
+<p>Demuestre que si <span class="math inline">\(X_\lambda\sim P(\lambda)\)</span>, su varianza es</p>
+<p><span class="math display">\[\sigma^2 = \sum_{k=0}^\infty (k-\lambda)^2\,\frac{e^{-\lambda}\lambda^k}{k!} = \lambda\]</span></p>
+<p>(sugerencia: escriba <span class="math inline">\(k^2=k(k-1)+k\)</span> y reduzca cada suma a la serie exponencial completa, igual que se hace para calcular la media).</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio">
+<p>Como la media es <span class="math inline">\(\lambda\)</span> y la varianza también es <span class="math inline">\(\lambda\)</span>, la desviación estándar es <span class="math inline">\(\sqrt\lambda\)</span>. Definimos entonces</p>
+<p><span class="math display">\[Z := \frac{k-\lambda}{\sqrt\lambda}\]</span></p>
+<p>que mide cuántas desviaciones estándar nos hemos alejado de la media. Vamos a mostrar que <span class="math inline">\(Z\to N(0,1)\)</span>, escribiendo <span class="math inline">\(k=\lambda+\sqrt\lambda\,z\)</span> para <span class="math inline">\(z\)</span> fijo y dejando <span class="math inline">\(\lambda\to\infty\)</span>.</p>
+</section>
+<section id="deducción-vía-el-método-de-laplace" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="deducción-vía-el-método-de-laplace"><span class="header-section-number">1.3</span> Deducción vía el método de Laplace</h3>
+<p>Si <span class="math inline">\(P_\lambda(k) = \dfrac1{k!}e^{-\lambda}\lambda^k\)</span>, entonces</p>
+<p><span class="math display">\[\log P_\lambda(k) = -\lambda+k\log\lambda-\log k!\]</span></p>
+<p>Usando Stirling, <span class="math inline">\(\log k! \approx k\log k - k + \tfrac12\log(2\pi k)\)</span>, así que</p>
+<p><span class="math display">\[\log P_\lambda(k) = \underbrace{-\lambda+k\log\lambda-k\log k+k}_{\displaystyle \phi(k)} - \frac12\log(2\pi k)\]</span></p>
+<p>Usamos el método de Laplace de nuevo, tratando <span class="math inline">\(\phi\)</span> como función suave de <span class="math inline">\(k\)</span>:</p>
+<p><span class="math display">\[\phi'(k) = \log\lambda-\log k-1+1 = \log\lambda-\log k\]</span></p>
+<p>Como si <span class="math inline">\(k\mapsto\phi(k)\)</span> fuera continua, <span class="math inline">\(\phi\)</span> alcanza su máximo en <span class="math inline">\(k=\lambda\)</span> (ahí <span class="math inline">\(\phi'=0\)</span>), y en ese punto <span class="math inline">\(\phi(\lambda)=0\)</span>. Taylor de orden <span class="math inline">\(2\)</span> alrededor de <span class="math inline">\(\lambda\)</span>:</p>
+<p><span class="math display">\[\phi(\lambda+u) \approx \phi(\lambda)+\phi'(\lambda)u+\frac{\phi''(\lambda)}2u^2 = -\frac{u^2}{2\lambda}\]</span></p>
+<p>(pues <span class="math inline">\(\phi''(k)=-1/k\)</span>, así que <span class="math inline">\(\phi''(\lambda)=-1/\lambda\)</span>). Con <span class="math inline">\(k=\lambda+\sqrt\lambda\,z\)</span> (es decir <span class="math inline">\(u=\sqrt\lambda\,z\)</span>),</p>
+<p><span class="math display">\[\phi(k) \approx -\frac{(\sqrt\lambda\,z)^2}\lambda = -z^2\]</span></p>
+<p>Falta la parte polinomial <span class="math inline">\(-\tfrac12\log(2\pi k)\)</span>. Como <span class="math inline">\(k=\lambda(1+z/\sqrt\lambda)\)</span>, si <span class="math inline">\(\lambda\to\infty\)</span> con <span class="math inline">\(z\)</span> fijo, <span class="math inline">\(\log k = \log\lambda+\log(1+z/\sqrt\lambda)\to\log\lambda\)</span>, así que <span class="math inline">\(-\tfrac12\log(2\pi k)\to-\tfrac12\log(2\pi\lambda)\)</span>. Juntando todo,</p>
+<p><span class="math display">\[\log P(X_\lambda=k) \longrightarrow -\frac{z^2}2-\frac12\log(2\pi\lambda)\]</span></p>
+<p>de donde</p>
+<p><span class="math display">\[P(X_\lambda=k) \sim \frac1{\sqrt{2\pi\lambda}}\,e^{-z^2/2}\]</span></p>
+<div class="callout callout-style-default callout-important callout-titled" title="De masa a densidad">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Ejercicio
+<span class="screen-reader-only">Importante</span>De masa a densidad
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>¿Por qué la función de distribución de <span class="math inline">\(Y\)</span> tiene <em>la misma forma</em> (los mismos saltos) que la de <span class="math inline">\(X\)</span>, solo desplazada 2 unidades hacia la izquierda? Enuncie y demuestre, en general, la relación entre <span class="math inline">\(F_X\)</span> y <span class="math inline">\(F_{X+c}\)</span> para una constante <span class="math inline">\(c\in\mathbb R\)</span>.</p>
+<p><span class="math inline">\(P(X_\lambda=k)\)</span> es la masa de un punto, y por sí sola siempre tiende a <span class="math inline">\(0\)</span>: no puede converger a nada interesante. Lo que sí converge es la densidad, es decir, la masa dividida entre el ancho de la celda que le corresponde. Los enteros <span class="math inline">\(k\)</span> están espaciados <span class="math inline">\(1\)</span> entre sí, pero en la variable <span class="math inline">\(z=(k-\lambda)/\sqrt\lambda\)</span> ese mismo espaciamiento es <span class="math inline">\(1/\sqrt\lambda\)</span>. Por eso</p>
+<p><span class="math display">\[\text{densidad} = \frac{\text{masa}}{\text{ancho}} = \frac{P(X_\lambda=k)}{1/\sqrt\lambda} = \sqrt\lambda\,P(X_\lambda=k) \longrightarrow \frac1{\sqrt{2\pi}}e^{-z^2/2}\]</span></p>
+<p>que es exactamente la densidad normal estándar evaluada en <span class="math inline">\(z\)</span>.</p>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema (de Moivre y Laplace para la Poisson)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Teorema (de Moivre y Laplace para la Poisson)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si <span class="math inline">\(X_\lambda\sim P(\lambda)\)</span>, entonces para cada <span class="math inline">\(z\in\mathbb R\)</span> fijo, y toda sucesión de enteros <span class="math inline">\(k=k(\lambda)\)</span> con <span class="math inline">\(\dfrac{k-\lambda}{\sqrt\lambda}\to z\)</span> cuando <span class="math inline">\(\lambda\to\infty\)</span>,</p>
+<p><span class="math display">\[\sqrt\lambda\,P(X_\lambda=k) \longrightarrow \frac1{\sqrt{2\pi}}e^{-z^2/2}\]</span></p>
+<p>Equivalentemente, si <span class="math inline">\(Z_\lambda := \dfrac{X_\lambda-\lambda}{\sqrt\lambda}\)</span>, entonces <span class="math inline">\(Z_\lambda\to N(0,1)\)</span>.</p>
+</div>
+</div>
+<p>Volviendo al ejemplo del manuscrito: con <span class="math inline">\(\lambda=200\)</span>, la probabilidad de que todos los errores estén por debajo de la media se aproxima con</p>
+<p><span class="math display">\[P_{200}(X\le200) \approx \frac1{\sqrt{2\pi}}\int_{-\infty}^0 e^{-z^2/2}\,dz = 0{,}5\]</span></p>
+<p>muy cerca del valor exacto, <span class="math inline">\(0{,}5188\)</span>, calculado arriba.</p>
+<p>Esta aproximación mejora si se aplica la corrección de continuidad discutida más adelante para la binomial: como el entero <span class="math inline">\(k=200\)</span> representa en realidad la franja <span class="math inline">\([199{,}5,\,200{,}5]\)</span>, el evento <span class="math inline">\(\{X\le200\}\)</span> corresponde al intervalo continuo <span class="math inline">\((-\infty,\,200{,}5]\)</span>, no a <span class="math inline">\((-\infty,\,200]\)</span>. Con esa corrección,</p>
+<p><span class="math display">\[P_{200}(X\le200) \approx \frac1{\sqrt{2\pi}}\int_{-\infty}^{(200{,}5-200)/\sqrt{200}} e^{-z^2/2}\,dz \approx 0{,}5141\]</span></p>
+<p>más cerca todavía del valor exacto <span class="math inline">\(0{,}5188\)</span> que el <span class="math inline">\(0,5\)</span> obtenido sin la corrección.</p>
+</section>
+</section>
+<section id="la-normal-como-límite-de-una-binomial" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="la-normal-como-límite-de-una-binomial"><span class="header-section-number">2</span> La normal como límite de una binomial</h2>
+<section id="media-y-varianza-de-la-binomial" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="media-y-varianza-de-la-binomial"><span class="header-section-number">2.1</span> Media y varianza de la binomial</h3>
+<p>Repetimos el ejercicio de suma de variables aleatorias, ahora con este caso: si <span class="math inline">\(I_i\sim\text{Bernoulli}(p)\)</span> son independientes, entonces <span class="math inline">\(X=\sum_{i=1}^n I_i \sim \text{Binomial}(n,p)\)</span>, con</p>
+<p><span class="math display">\[P(X=k) = \binom nk p^k q^{n-k} \qquad q:=1-p\]</span></p>
+<p><strong>La media es</strong></p>
+<p><span class="math display">\[\sum_{k=0}^n k\binom nk p^kq^{n-k} = \sum_{k=1}^n n\binom{n-1}{k-1}p^kq^{n-k} = np\sum_{k=1}^n\binom{n-1}{k-1}p^{k-1}q^{(n-1)-(k-1)} = np(p+q)^{n-1} = np\]</span></p>
+<p>usando la identidad <span class="math inline">\(k\binom nk=n\binom{n-1}{k-1}\)</span> y reindexando <span class="math inline">\(j=k-1\)</span>.</p>
+<p><strong>La varianza.</strong> Escribimos <span class="math inline">\(k^2=k(k-1)+k\)</span> y obtenemos, con la identidad análoga <span class="math inline">\(k(k-1)\binom nk = n(n-1)\binom{n-2}{k-2}\)</span>,</p>
+<p><span class="math display">\[\sum_{k=0}^n k(k-1)\binom nk p^kq^{n-k} = n(n-1)p^2\sum_{k=2}^n\binom{n-2}{k-2}p^{k-2}q^{(n-2)-(k-2)} = n(n-1)p^2\]</span></p>
+<p>Así, <span class="math inline">\(E(k^2)=n(n-1)p^2+np\)</span>, y con <span class="math inline">\(\mu=np\)</span>,</p>
+<p><span class="math display">\[\sigma^2 = n(n-1)p^2+np-(np)^2 = np(1-p) = npq\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Camino alterno, más corto">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Camino alterno, más corto
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Como <span class="math inline">\(X=\sum I_i\)</span> con <span class="math inline">\(I_i\)</span> independientes, y cada <span class="math inline">\(I_i\)</span> tiene media <span class="math inline">\(p\)</span> y varianza <span class="math inline">\(p(1-p)=pq\)</span> (pues <span class="math inline">\(I_i^2=I_i\)</span>, así que su varianza es <span class="math inline">\(p-p^2\)</span>), la media y la varianza de una suma de variables independientes son la suma de las medias y de las varianzas respectivamente: <span class="math inline">\(\mu=np\)</span>, <span class="math inline">\(\sigma^2=npq\)</span>, sin sumar ninguna serie.</p>
+</div>
+</div>
+</section>
+<section id="estandarización-y-el-método-de-laplace" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="estandarización-y-el-método-de-laplace"><span class="header-section-number">2.2</span> Estandarización y el método de Laplace</h3>
+<p>Consideremos <span class="math inline">\(Z=\dfrac{k-np}{\sqrt{npq}}\)</span>, que mide cuántas desviaciones estándar nos hemos alejado de la media. Si <span class="math inline">\(X_n\sim\text{Binomial}(n,p)\)</span>, <span class="math inline">\(p\in(0,1)\)</span> fijo, entonces para <span class="math inline">\(z\in\mathbb R\)</span> fijo, para toda sucesión de enteros <span class="math inline">\(k(n)\)</span> tales que <span class="math inline">\(\dfrac{k-np}{\sqrt{npq}}\to z\)</span> cuando <span class="math inline">\(n\to\infty\)</span>, veremos que <span class="math inline">\(P(X_n=k)\to\varphi(z)/\sqrt{npq}\)</span>.</p>
+<p>Nuevamente por el método de Laplace:</p>
+<p><span class="math display">\[\log P(X=k) = \log n!-\log k!-\log(n-k)!+k\log p+(n-k)\log q\]</span></p>
+<p>Con Stirling (<span class="math inline">\(\log m!\approx m\log m-m+\tfrac12\log(2\pi m)\)</span>) en los tres factoriales,</p>
+<p><span class="math display">\[\log P(X=k) = \underbrace{n\log n-k\log k-(n-k)\log(n-k)+k\log p+(n-k)\log q}_{\displaystyle\psi(k)} + \tfrac12\log(2\pi n)-\tfrac12\log(2\pi k)-\tfrac12\log(2\pi(n-k))\]</span></p>
+<p><span class="math display">\[\psi'(k) = -\log k-1+\log(n-k)+1+\log p-\log q = \log\left(\frac{(n-k)p}{kq}\right)\]</span></p>
+<p><span class="math display">\[\psi'(k)=0 \iff (n-k)p=kq \iff np-kp=k-kp \iff k=np\]</span></p>
+<p>que es lo que esperábamos: el máximo está en la media. Ahí,</p>
+<p><span class="math display">\[\psi''(np) = -\frac1{np}-\frac1{nq} = -\frac1{npq}\]</span></p>
+<p>Con <span class="math inline">\(u=\sqrt{npq}\,z\)</span>, Taylor de orden <span class="math inline">\(2\)</span> da <span class="math inline">\(\psi(np+u)\approx-\dfrac{u^2}{2npq}=-\dfrac{z^2}2\)</span>. La parte polinomial, evaluada en <span class="math inline">\(k=np\)</span>, <span class="math inline">\(n-k=nq\)</span>, se simplifica a <span class="math inline">\(-\tfrac12\log(2\pi\,npq)\)</span> (el mismo tipo de cancelación que en la Poisson). Entonces</p>
+<p><span class="math display">\[P(X=np+z\sqrt{npq}) \approx \frac1{\sqrt{2\pi\,npq}}e^{-z^2/2}\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema (de Moivre y Laplace para la binomial)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Teorema (de Moivre y Laplace para la binomial)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si <span class="math inline">\(X_n\sim\text{Binomial}(n,p)\)</span>, <span class="math inline">\(p\in(0,1)\)</span> fijo, entonces para cada <span class="math inline">\(z\in\mathbb R\)</span> fijo, y toda sucesión de enteros <span class="math inline">\(k(n)\)</span> con <span class="math inline">\(\dfrac{k-np}{\sqrt{npq}}\to z\)</span> cuando <span class="math inline">\(n\to\infty\)</span>,</p>
+<p><span class="math display">\[\sqrt{npq}\,P(X_n=k) \longrightarrow \frac1{\sqrt{2\pi}}e^{-z^2/2}\]</span></p>
+<p>Equivalentemente, si <span class="math inline">\(Z_n:=\dfrac{X_n-np}{\sqrt{npq}}\)</span>, entonces <span class="math inline">\(Z_n\to N(0,1)\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Dos límites distintos, no confundir">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Dos límites distintos, no confundir
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Este es un límite diferente del que vimos en la sección de <a href="../../../cursos/probabilidad/vadiscretas/index.html">variables aleatorias discretas</a>, donde <span class="math inline">\(n\to\infty\)</span> y <span class="math inline">\(p\to0\)</span> manteniendo <span class="math inline">\(np\to\lambda\)</span> fijo (el régimen de sucesos raros, que da la aproximación de Poisson). Aquí, en cambio, <span class="math inline">\(p\)</span> se mantiene fijo y es <span class="math inline">\(n\)</span> el que crece sin control: es el mismo régimen de “muchos aportes independientes” que en la Poisson, solo que ahora los aportes son Bernoulli en vez de Poisson unitarias.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="ejemplo-cien-lanzamientos-de-una-moneda-justa" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="ejemplo-cien-lanzamientos-de-una-moneda-justa"><span class="header-section-number">3</span> Ejemplo: cien lanzamientos de una moneda justa</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si lanzamos una moneda justa <span class="math inline">\(100\)</span> veces, <span class="math inline">\(\mu=np=50\)</span> y <span class="math inline">\(\sigma=\sqrt{npq}=5\)</span>. ¿Cuál es la probabilidad de obtener entre <span class="math inline">\(45\)</span> y <span class="math inline">\(55\)</span> caras?</p>
+<p><strong>Cálculo exacto.</strong></p>
+<p><span class="math display">\[P(45\le X\le55) = F_X(55)-F_X(44)\]</span></p>
+<p>En R: <code>pbinom(55, 100, 0.5) - pbinom(44, 100, 0.5)</code>.</p>
+<p><strong>Usando la aproximación normal, sin corrección de continuidad</strong> (un error apreciable):</p>
+<p><span class="math display">\[P\left(\frac{45-50}5\le Z\le\frac{55-50}5\right) = P(-1\le Z\le1) \approx 0{,}68\]</span></p>
+<p><strong>Extendiendo medio paso a cada lado</strong> (corrección de continuidad: cada entero <span class="math inline">\(k\)</span> representa, en realidad, la franja <span class="math inline">\([k-\tfrac12,k+\tfrac12]\)</span>, así que el rango de enteros del <span class="math inline">\(45\)</span> al <span class="math inline">\(55\)</span> corresponde al intervalo continuo <span class="math inline">\([44{,}5,\,55{,}5]\)</span>):</p>
+<p><span class="math display">\[P\left(\frac{44{,}5-50}5\le Z\le\frac{55{,}5-50}5\right) \approx 0{,}72\]</span></p>
+<p>mucho más cerca del valor exacto.</p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>exacto <span class="ot">&lt;-</span> <span class="fu">pbinom</span>(<span class="dv">55</span>, <span class="dv">100</span>, <span class="fl">0.5</span>) <span class="sc">-</span> <span class="fu">pbinom</span>(<span class="dv">44</span>, <span class="dv">100</span>, <span class="fl">0.5</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sin_cc <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(<span class="dv">1</span>) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>con_cc <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(<span class="fl">1.1</span>) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="fl">1.1</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Exacto (binomial)               :"</span>, <span class="fu">round</span>(exacto, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Exacto (binomial)               : 0.7287 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Aprox. normal, sin correccion   :"</span>, <span class="fu">round</span>(sin_cc, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Aprox. normal, sin correccion   : 0.6827 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Aprox. normal, con correccion   :"</span>, <span class="fu">round</span>(con_cc, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Aprox. normal, con correccion   : 0.7287 </code></pre>
+</div>
+</div>
+</section>
+<section id="panel-interactivo-de-la-binomial-y-la-poisson-a-la-normal" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="panel-interactivo-de-la-binomial-y-la-poisson-a-la-normal"><span class="header-section-number">4</span> Panel interactivo: de la binomial y la Poisson a la normal</h2>
+<p>El siguiente panel muestra, lado a lado, la función de masa de una Binomial<span class="math inline">\((n,p)\)</span> o de una Poisson<span class="math inline">\((\lambda)\)</span> (según se elija) y la densidad normal con la misma media y varianza. Mueva los parámetros para ver cómo, a medida que <span class="math inline">\(n\)</span> (o <span class="math inline">\(\lambda\)</span>) crece, las barras se acomodan cada vez mejor debajo de la curva.</p>
+<iframe src="notebooks/aproximacionnormal.html" width="100%" height="620" style="border:1px solid #dfe3e2; border-radius:6px;" title="Panel interactivo: binomial y Poisson aproximadas por la normal"></iframe>
 <div class="callout callout-style-default callout-note callout-titled" title="Ejercicios del libro">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -644,7 +566,7 @@ Figura&nbsp;1: Función de distribución de Y = X - 2
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Haga los ejercicios 2.1 al 2.8 de la sección 2.5 (Blanco, <em>Probabilidad</em>).</p>
+<p>Haga los ejercicios del libro de Blanco Castañeda relacionados con la aproximación normal a la binomial y a la Poisson y los que involucren a la distribuciones normal y uniforme.</p>
 </div>
 </div>
 
@@ -1083,14 +1005,11 @@ Figura&nbsp;1: Función de distribución de Y = X - 2
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../../cursos/probabilidad/taller-1/index.html" class="pagination-link" aria-label="Taller 1">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Taller 1</span>
+      <a href="../../../cursos/probabilidad/vacontinuas/index.html" class="pagination-link" aria-label="Variables aleatorias continuas y la distribución normal">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Variables aleatorias continuas y la distribución normal</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../cursos/probabilidad/vadiscretas/index.html" class="pagination-link" aria-label="Variables aleatorias discretas">
-        <span class="nav-page-text">Variables aleatorias discretas</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Arturo Sanjuán">
+<meta name="description" content="Definición de variable aleatoria continua y función de densidad; un interludio analítico que construye la función Gamma y la fórmula de Stirling mediante el método de Laplace, y la función Beta; la distribución normal, su verificación como función de densidad.">
+
+<title>Variables aleatorias continuas y la distribución normal – Arturo Sanjuán</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../cursos/probabilidad/limitenormal/index.html" rel="next">
+<link href="../../../cursos/probabilidad/vadiscretas/index.html" rel="prev">
+<link href="../../../favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-06ef128ffaab2aaffa18b1038abc86f3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Arturo Sanjuán</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../cursos/index.html"> 
+<span class="menu-text">Cursos</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../cursos/probabilidad/vacontinuas/index.html">Variables aleatorias continuas y la distribución normal</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="sidebar-tools-main">
+    <a href="../../../cursos/probabilidad/index.xml" title="RSS — Probabilidad" class="quarto-navigation-tool px-1" aria-label="RSS — Probabilidad"><i class="bi bi-rss"></i></a>
+</div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/probabilidad/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Probabilidad</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/probabilidad/introduccion/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/probabilidad/calculoprobabilidades/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cálculo de probabilidades</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/probabilidad/condicional/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Probabilidad condicional</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/probabilidad/taller-1/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Taller 1</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/probabilidad/vaintro/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables aleatorias</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/probabilidad/vadiscretas/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Variables aleatorias discretas</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/probabilidad/vacontinuas/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Variables aleatorias continuas y la distribución normal</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/probabilidad/limitenormal/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">La distribución normal como límite</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#variables-aleatorias-continuas-y-función-de-densidad" id="toc-variables-aleatorias-continuas-y-función-de-densidad" class="nav-link active" data-scroll-target="#variables-aleatorias-continuas-y-función-de-densidad"><span class="header-section-number">1</span> Variables aleatorias continuas y función de densidad</a>
+  <ul class="collapse">
+  <li><a href="#ejemplo-la-distribución-uniforme-continua" id="toc-ejemplo-la-distribución-uniforme-continua" class="nav-link" data-scroll-target="#ejemplo-la-distribución-uniforme-continua"><span class="header-section-number">1.1</span> Ejemplo: la distribución uniforme continua</a></li>
+  </ul></li>
+  <li><a href="#interludio-analítico-la-función-gamma" id="toc-interludio-analítico-la-función-gamma" class="nav-link" data-scroll-target="#interludio-analítico-la-función-gamma"><span class="header-section-number">2</span> Interludio analítico: la función Gamma</a>
+  <ul class="collapse">
+  <li><a href="#convergencia-de-las-integrales-que-definen-a-gamma" id="toc-convergencia-de-las-integrales-que-definen-a-gamma" class="nav-link" data-scroll-target="#convergencia-de-las-integrales-que-definen-a-gamma"><span class="header-section-number">2.1</span> Convergencia de las integrales que definen a Gamma</a></li>
+  <li><a href="#la-recursión-gamman1ngamman" id="toc-la-recursión-gamman1ngamman" class="nav-link" data-scroll-target="#la-recursión-gamman1ngamman"><span class="header-section-number">2.2</span> La recursión <span class="math inline">\(\Gamma(n+1)=n\,\Gamma(n)\)</span></a></li>
+  <li><a href="#la-integral-gaussiana-vía-coordenadas-polares" id="toc-la-integral-gaussiana-vía-coordenadas-polares" class="nav-link" data-scroll-target="#la-integral-gaussiana-vía-coordenadas-polares"><span class="header-section-number">2.3</span> La integral gaussiana, vía coordenadas polares</a></li>
+  <li><a href="#función-beta" id="toc-función-beta" class="nav-link" data-scroll-target="#función-beta"><span class="header-section-number">2.4</span> Función Beta</a></li>
+  </ul></li>
+  <li><a href="#fórmula-de-stirling-informal-vía-el-método-de-laplace" id="toc-fórmula-de-stirling-informal-vía-el-método-de-laplace" class="nav-link" data-scroll-target="#fórmula-de-stirling-informal-vía-el-método-de-laplace"><span class="header-section-number">3</span> Fórmula de Stirling (informal), vía el método de Laplace</a></li>
+  <li><a href="#la-distribución-normal" id="toc-la-distribución-normal" class="nav-link" data-scroll-target="#la-distribución-normal"><span class="header-section-number">4</span> La distribución normal</a></li>
+  <li><a href="#un-repaso-intuitivo-media-y-varianza" id="toc-un-repaso-intuitivo-media-y-varianza" class="nav-link" data-scroll-target="#un-repaso-intuitivo-media-y-varianza"><span class="header-section-number">5</span> Un repaso intuitivo: media y varianza</a></li>
+  <li><a href="#la-regla-empírica-68-95-y-99.7-por-ciento" id="toc-la-regla-empírica-68-95-y-99.7-por-ciento" class="nav-link" data-scroll-target="#la-regla-empírica-68-95-y-99.7-por-ciento"><span class="header-section-number">6</span> La regla empírica: 68, 95 y 99.7 por ciento</a></li>
+  <li><a href="#ejemplo-aplicado-control-de-calidad-en-fabricación" id="toc-ejemplo-aplicado-control-de-calidad-en-fabricación" class="nav-link" data-scroll-target="#ejemplo-aplicado-control-de-calidad-en-fabricación"><span class="header-section-number">7</span> Ejemplo aplicado: control de calidad en fabricación</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Variables aleatorias continuas y la distribución normal</h1>
+<p class="subtitle lead">Función de densidad, la función Gamma, la fórmula de Stirling, y la distribución normal</p>
+</div>
+
+<div>
+  <div class="description">
+    Definición de variable aleatoria continua y función de densidad; un interludio analítico que construye la función Gamma y la fórmula de Stirling mediante el método de Laplace, y la función Beta; la distribución normal, su verificación como función de densidad.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor</div>
+    <div class="quarto-title-meta-contents">
+             <p>Arturo Sanjuán </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">5 de septiembre de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="variables-aleatorias-continuas-y-función-de-densidad" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="variables-aleatorias-continuas-y-función-de-densidad"><span class="header-section-number">1</span> Variables aleatorias continuas y función de densidad</h2>
+<p>Sea <span class="math inline">\(X\)</span> una variable aleatoria. Se dice que <span class="math inline">\(X\)</span> es <strong>absolutamente continua</strong> si existe una función <span class="math inline">\(f_X\)</span> no negativa e integrable tal que</p>
+<p><span class="math display">\[F_X(x) = \int_{-\infty}^x f_X(u)\,du\]</span></p>
+<p>donde <span class="math inline">\(F_X\)</span> es la función de distribución de <span class="math inline">\(X\)</span>. A la función <span class="math inline">\(f_X\)</span> se le llama <strong>función de densidad</strong> de <span class="math inline">\(X\)</span>. De la definición se sigue de inmediato que</p>
+<p><span class="math display">\[\int_{-\infty}^\infty f_X(x)\,dx = 1\]</span></p>
+<p>Si queremos calcular, por ejemplo, <span class="math inline">\(P(a&lt;X\le b)\)</span>, basta con restar:</p>
+<p><span class="math display">\[P(a&lt;X\le b) = F_X(b)-F_X(a) = \int_a^b f_X(x)\,dx\]</span></p>
+<p>Esta fórmula se puede generalizar, usando teoría de la medida, a</p>
+<p><span class="math display">\[P(X\in B) = \int_B f_X(x)\,dx\]</span></p>
+<p>para cualquier boreliano <span class="math inline">\(B\)</span>, no solo para intervalos.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Un punto de honestidad, sin teoría de la medida">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Un punto de honestidad, sin teoría de la medida
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En este curso no tenemos teoría de la medida ni la integral de Lebesgue, así que la fórmula anterior necesita una precisión. La integral de Riemann, que es la que manejamos, solo se define directamente sobre intervalos (y uniones finitas de intervalos). La extensión de <span class="math inline">\(P(X\in B)=\int_B f_X\)</span> a un boreliano <span class="math inline">\(B\)</span> arbitrario no viene de la integral de Riemann en sí, sino de los axiomas de σ aditividad de la probabilidad: se aproxima <span class="math inline">\(B\)</span> por uniones de intervalos y se usa que <span class="math inline">\(P\)</span> es σ aditiva para pasar al límite. Vale la pena tener clara esta distinción, aunque en la práctica casi todos los conjuntos con los que trabajemos sean uniones de intervalos y la sutileza no se note.</p>
+</div>
+</div>
+<section id="ejemplo-la-distribución-uniforme-continua" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="ejemplo-la-distribución-uniforme-continua"><span class="header-section-number">1.1</span> Ejemplo: la distribución uniforme continua</h3>
+<p>Para <span class="math inline">\(a&lt;b\)</span>, la función</p>
+<p><span class="math display">\[f_X(x;a,b) = \frac{1}{b-a}\mathbb 1_{[a,b]}(x)\]</span></p>
+<p>es claramente una función de densidad (es no negativa, y su integral en <span class="math inline">\([a,b]\)</span> vale <span class="math inline">\((b-a)/(b-a)=1\)</span>), con función de distribución</p>
+<p><span class="math display">\[F_X(x;a,b) = \frac{x-a}{b-a}\mathbb 1_{[a,b)}(x) + \mathbb 1_{[b,\infty)}(x)\]</span></p>
+<p>Se nota <span class="math inline">\(X\sim U(a,b)\)</span>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dunif</span>(x, <span class="dv">2</span>, <span class="dv">5</span>), <span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">7</span>, <span class="at">n =</span> <span class="dv">1000</span>, <span class="at">col =</span> <span class="st">"steelblue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="fu">expression</span>(f[X](x)), <span class="at">main =</span> <span class="st">"Densidad"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">punif</span>(x, <span class="dv">2</span>, <span class="dv">5</span>), <span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">7</span>, <span class="at">n =</span> <span class="dv">1000</span>, <span class="at">col =</span> <span class="st">"firebrick"</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="fu">expression</span>(F[X](x)), <span class="at">main =</span> <span class="st">"Distribución"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-uniforme-continua" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-uniforme-continua-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-uniforme-continua-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-uniforme-continua-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Densidad y función de distribución de U(2, 5)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo: el tiempo de espera de un bus">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo: el tiempo de espera de un bus
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un bus pasa por una parada exactamente cada <span class="math inline">\(20\)</span> minutos, pero un pasajero llega a la parada en un instante al azar, sin saber cuánto falta para el próximo bus. Si <span class="math inline">\(T\)</span> es el tiempo de espera, en minutos, un modelo razonable es <span class="math inline">\(T\sim U(0,20)\)</span>: no hay ningún instante dentro de esos <span class="math inline">\(20\)</span> minutos que sea más probable que otro.</p>
+<p>¿Cuál es la probabilidad de esperar más de <span class="math inline">\(15\)</span> minutos?</p>
+<p><span class="math display">\[P(T&gt;15) = \frac{20-15}{20} = \frac14\]</span></p>
+<p>¿Y la probabilidad de esperar entre <span class="math inline">\(5\)</span> y <span class="math inline">\(10\)</span> minutos?</p>
+<p><span class="math display">\[P(5&lt;T&lt;10) = \frac{10-5}{20} = \frac14\]</span></p>
+</div>
+</div>
+</section>
+</section>
+<section id="interludio-analítico-la-función-gamma" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="interludio-analítico-la-función-gamma"><span class="header-section-number">2</span> Interludio analítico: la función Gamma</h2>
+<p>Antes de motivar y definir la distribución normal necesitamos dos herramientas: la función Gamma (que generaliza el factorial a los reales positivos) y, a partir de ella, la fórmula de Stirling, que usaremos más adelante para deducir la aproximación normal a la Poisson y a la binomial.</p>
+<section id="convergencia-de-las-integrales-que-definen-a-gamma" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="convergencia-de-las-integrales-que-definen-a-gamma"><span class="header-section-number">2.1</span> Convergencia de las integrales que definen a Gamma</h3>
+<div class="callout callout-style-default callout-tip callout-titled" title="Lema 1">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Lema 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para todo <span class="math inline">\(s\in\mathbb R\)</span>, la integral <span class="math inline">\(\displaystyle\int_1^\infty x^s e^{-x}\,dx\)</span> converge.</p>
+</div>
+</div>
+<p><strong>Demostración.</strong> Para <span class="math inline">\(x\ge1\)</span>, la serie de Taylor de <span class="math inline">\(e^x\)</span> da, para cualquier entero <span class="math inline">\(n\)</span>,</p>
+<p><span class="math display">\[e^x = 1+x+\frac{x^2}{2!}+\frac{x^3}{3!}+\cdots &gt; \frac{x^n}{n!}\]</span></p>
+<p>Por la propiedad arquimediana existe <span class="math inline">\(n_0\)</span> tal que <span class="math inline">\(n_0&gt;s+1\)</span>, y por ende <span class="math inline">\(x^{n_0}\ge x^{s+1}\)</span> (pues <span class="math inline">\(x\ge1\)</span>), de donde <span class="math inline">\(x^{n_0-s-1}\ge1\)</span>. Así,</p>
+<p><span class="math display">\[\frac{e^x}{x^s} &gt; \frac{x^{n_0}}{n_0!\,x^s} \ge \frac{x^{s+1}}{n_0!\,x^s} = \frac{x}{n_0!} \xrightarrow[x\to\infty]{}\infty\]</span></p>
+<p>De este modo, <span class="math inline">\(e^{-x}x^s\to0\)</span> cuando <span class="math inline">\(x\to\infty\)</span>, para todo <span class="math inline">\(s\in\mathbb R\)</span>. En particular, <span class="math inline">\(e^{-x}x^s/x^{-2}\to0\)</span>, así que existe <span class="math inline">\(x_0&gt;0\)</span> tal que <span class="math inline">\(e^{-x}x^s\le x^{-2}\)</span> para todo <span class="math inline">\(x\ge x_0\)</span>. Entonces</p>
+<p><span class="math display">\[\int_1^\infty x^s e^{-x}\,dx = \int_1^{x_0} x^s e^{-x}\,dx + \int_{x_0}^\infty x^s e^{-x}\,dx \le \int_1^{x_0} x^s e^{-x}\,dx + \int_{x_0}^\infty x^{-2}\,dx &lt; \infty\]</span></p>
+<p>pues el primer sumando es la integral de una función continua en un intervalo acotado, y el segundo converge por ser una <span class="math inline">\(p\)</span> integral con <span class="math inline">\(p=2&gt;1\)</span>. <span class="math inline">\(\blacksquare\)</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre que <span class="math inline">\(\displaystyle\int_0^1 t^{-s}\,dt\)</span> converge para <span class="math inline">\(s&lt;1\)</span> (calcule directamente la antiderivada de <span class="math inline">\(t^{-s}\)</span> y estudie cuándo el límite en <span class="math inline">\(0\)</span> es finito).</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="La función Gamma">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>La función Gamma
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La función</p>
+<p><span class="math display">\[\Gamma(s) := \int_0^\infty t^{s-1}e^{-t}\,dt\]</span></p>
+<p>converge para todo <span class="math inline">\(s&gt;0\)</span>: en <span class="math inline">\([1,\infty)\)</span> por el Lema 1 (con exponente <span class="math inline">\(s-1\)</span>), y en <span class="math inline">\((0,1]\)</span> porque <span class="math inline">\(t^{s-1}e^{-t}\le t^{s-1}\)</span> y <span class="math inline">\(\int_0^1 t^{-(1-s)}\,dt\)</span> converge para <span class="math inline">\(1-s&lt;1\)</span>, es decir para <span class="math inline">\(s&gt;0\)</span>, por la tarea anterior.</p>
+</div>
+</div>
+</section>
+<section id="la-recursión-gamman1ngamman" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="la-recursión-gamman1ngamman"><span class="header-section-number">2.2</span> La recursión <span class="math inline">\(\Gamma(n+1)=n\,\Gamma(n)\)</span></h3>
+<p>Calculemos primero <span class="math inline">\(\Gamma(1)\)</span>:</p>
+<p><span class="math display">\[\Gamma(1) = \int_0^\infty e^{-t}\,dt = 1\]</span></p>
+<p>Ahora, para <span class="math inline">\(n\)</span> entero positivo, integramos por partes con <span class="math inline">\(u=t^n\)</span>, <span class="math inline">\(dv=e^{-t}dt\)</span> (así <span class="math inline">\(du=nt^{n-1}dt\)</span>, <span class="math inline">\(v=-e^{-t}\)</span>):</p>
+<p><span class="math display">\[\Gamma(n+1) = \int_0^\infty t^n e^{-t}\,dt = \left.-t^n e^{-t}\right|_0^\infty + n\int_0^\infty t^{n-1}e^{-t}\,dt = n\,\Gamma(n)\]</span></p>
+<p>(el término de frontera se anula en ambos extremos: en <span class="math inline">\(0\)</span> porque <span class="math inline">\(n\ge1\)</span>, y en <span class="math inline">\(\infty\)</span> por el Lema 1). Con <span class="math inline">\(\Gamma(1)=1\)</span>, la recursión da <span class="math inline">\(\Gamma(2)=1\cdot\Gamma(1)=1\)</span>, <span class="math inline">\(\Gamma(3)=2\cdot\Gamma(2)=2\)</span>, <span class="math inline">\(\Gamma(4)=3\cdot\Gamma(3)=6\)</span>, y en general</p>
+<p><span class="math display">\[\Gamma(n+1) = n! \qquad\text{para } n=0,1,2,\ldots\]</span></p>
+<p>Es decir, <span class="math inline">\(\Gamma\)</span> generaliza el factorial a cualquier real positivo: para argumentos enteros recupera el factorial (desplazado en uno), y entre los enteros interpola de forma suave.</p>
+</section>
+<section id="la-integral-gaussiana-vía-coordenadas-polares" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="la-integral-gaussiana-vía-coordenadas-polares"><span class="header-section-number">2.3</span> La integral gaussiana, vía coordenadas polares</h3>
+<p>Necesitamos también <span class="math inline">\(\Gamma(1/2)\)</span>, y para eso hace falta calcular <span class="math inline">\(\int_0^\infty e^{-x^2}\,dx\)</span>. El truco clásico es elevar al cuadrado y pasar a coordenadas polares:</p>
+<p><span class="math display">\[\left(\int_0^\infty e^{-x^2}dx\right)^2 = \left(\int_0^\infty e^{-x^2}dx\right)\left(\int_0^\infty e^{-y^2}dy\right) = \int_0^\infty\int_0^\infty e^{-(x^2+y^2)}\,dy\,dx\]</span></p>
+<p>Con <span class="math inline">\(x=r\cos\theta\)</span>, <span class="math inline">\(y=r\sin\theta\)</span>, <span class="math inline">\(\theta\in(0,\pi/2)\)</span>, <span class="math inline">\(r\in(0,\infty)\)</span> (el cuadrante donde <span class="math inline">\(x,y&gt;0\)</span>), el jacobiano de la transformación es <span class="math inline">\(r\)</span>, así que</p>
+<p><span class="math display">\[\left(\int_0^\infty e^{-x^2}dx\right)^2 = \int_0^{\pi/2}\int_0^\infty e^{-r^2}\,r\,dr\,d\theta = \frac\pi2\left(-\frac12 e^{-r^2}\Big|_0^\infty\right) = \frac\pi2\cdot\frac12 = \frac\pi4\]</span></p>
+<p>Por lo tanto</p>
+<p><span class="math display">\[\int_0^\infty e^{-x^2}\,dx = \frac{\sqrt\pi}{2} \qquad\text{y}\qquad \int_{-\infty}^\infty e^{-x^2}\,dx = \sqrt\pi\]</span></p>
+<p>(la segunda igualdad usa que <span class="math inline">\(e^{-x^2}\)</span> es par). Con esto, sustituyendo <span class="math inline">\(t=u^2\)</span> (así <span class="math inline">\(dt=2u\,du\)</span>) en la definición de Gamma,</p>
+<p><span class="math display">\[\Gamma(1/2) = \int_0^\infty t^{-1/2}e^{-t}\,dt = \int_0^\infty u^{-1}\cdot 2u\,e^{-u^2}\,du = 2\int_0^\infty e^{-u^2}\,du = \sqrt\pi\]</span></p>
+<p>De la recursión <span class="math inline">\(\Gamma(n+1)=n\,\Gamma(n)\)</span>, ahora aplicada con argumentos semienteros, se obtienen todos los demás valores en <span class="math inline">\(\mathbb N+\tfrac12\)</span>:</p>
+<p><span class="math display">\[\Gamma(3/2)=\Gamma\left(1+\tfrac12\right) = \tfrac12\,\Gamma(1/2) = \frac{\sqrt\pi}2 \qquad \Gamma(5/2) = \tfrac32\,\Gamma(3/2) = \frac{3\sqrt\pi}4\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre por inducción que, para <span class="math inline">\(n=0,1,2,\ldots\)</span>,</p>
+<p><span class="math display">\[\Gamma\left(n+\frac12\right) = \frac{(2n)!}{4^n\,n!}\sqrt\pi\]</span></p>
+<p>y verifique la fórmula contra los casos <span class="math inline">\(n=1,2\)</span> ya calculados arriba.</p>
+</div>
+</div>
+</section>
+<section id="función-beta" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="función-beta"><span class="header-section-number">2.4</span> Función Beta</h3>
+<p>Para <span class="math inline">\(x,y&gt;0\)</span>, definimos</p>
+<p><span class="math display">\[B(x,y) := \int_0^1 t^{x-1}(1-t)^{y-1}\,dt\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea: convergencia">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea: convergencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Esta es una integral impropia en <span class="math inline">\(0^+\)</span> y en <span class="math inline">\(1^-\)</span>. Separe <span class="math inline">\(\int_0^1=\int_0^{1/2}+\int_{1/2}^1\)</span> y acote cada pedazo (en el primero, <span class="math inline">\((1-t)^{y-1}\le(1/2)^{y-1}\)</span>; en el segundo, de forma simétrica) para mostrar que ambos convergen cuando <span class="math inline">\(x,y&gt;0\)</span>, usando el mismo tipo de argumento del Lema 1.</p>
+</div>
+</div>
+<p>La relación entre <span class="math inline">\(B\)</span> y <span class="math inline">\(\Gamma\)</span> se obtiene con la misma idea de coordenadas polares de antes, generalizada. Partiendo de la sustitución <span class="math inline">\(t=u^2\)</span> en la definición de <span class="math inline">\(\Gamma\)</span> (como hicimos para <span class="math inline">\(\Gamma(1/2)\)</span>),</p>
+<p><span class="math display">\[\Gamma(x) = 2\int_0^\infty u^{2x-1}e^{-u^2}\,du \qquad \Gamma(y) = 2\int_0^\infty v^{2y-1}e^{-v^2}\,dv\]</span></p>
+<p>así que</p>
+<p><span class="math display">\[\Gamma(x)\Gamma(y) = 4\int_0^\infty\int_0^\infty u^{2x-1}v^{2y-1}e^{-(u^2+v^2)}\,du\,dv\]</span></p>
+<p>Con <span class="math inline">\(u=r\cos\theta\)</span>, <span class="math inline">\(v=r\sin\theta\)</span>, <span class="math inline">\(\theta\in(0,\pi/2)\)</span>, <span class="math inline">\(r&gt;0\)</span>:</p>
+<p><span class="math display">\[\Gamma(x)\Gamma(y) = 4\int_0^{\pi/2}(\cos\theta)^{2x-1}(\sin\theta)^{2y-1}\,d\theta\int_0^\infty r^{2x+2y-1}e^{-r^2}\,dr = 4\,\Gamma(x+y)\int_0^{\pi/2}(\cos\theta)^{2x-1}(\sin\theta)^{2y-1}\,d\theta\]</span></p>
+<p>(la integral en <span class="math inline">\(r\)</span> es, de nuevo, <span class="math inline">\(\Gamma(x+y)\)</span> vía <span class="math inline">\(t=r^2\)</span>). Falta reconocer la integral en <span class="math inline">\(\theta\)</span> como una <span class="math inline">\(B\)</span>. Con <span class="math inline">\(w=\sin^2\theta\)</span> (así <span class="math inline">\(dw=2\sin\theta\cos\theta\,d\theta\)</span>),</p>
+<p><span class="math display">\[4\int_0^{\pi/2}(\cos\theta)^{2x-1}(\sin\theta)^{2y-1}\,d\theta = 4\int_0^1 w^{y-1}(1-w)^{x-1}\cdot\frac12\,dw = 2\,B(x,y)\cdot\frac12\cdot 2 = B(x,y)\cdot 4\cdot\frac14\]</span></p>
+<p>es decir, esa integral vale exactamente <span class="math inline">\(B(x,y)/4\)</span> multiplicado por el <span class="math inline">\(4\)</span> de afuera, y se cancelan, dejando</p>
+<p><span class="math display">\[\Gamma(x)\Gamma(y) = \Gamma(x+y)\,B(x,y) \qquad\Longleftrightarrow\qquad B(x,y) = \frac{\Gamma(x)\Gamma(y)}{\Gamma(x+y)}\]</span></p>
+</section>
+</section>
+<section id="fórmula-de-stirling-informal-vía-el-método-de-laplace" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="fórmula-de-stirling-informal-vía-el-método-de-laplace"><span class="header-section-number">3</span> Fórmula de Stirling (informal), vía el método de Laplace</h2>
+<p>Necesitamos, para más adelante, saber cómo se comporta <span class="math inline">\(n!\)</span> cuando <span class="math inline">\(n\)</span> es grande. La técnica que usamos para deducirlo (aproximar una función suave y muy picuda por una parábola alrededor de su máximo) es la misma que reutilizaremos después para la aproximación normal a la Poisson y a la binomial, así que vale la pena verla aquí primero, en su forma más simple.</p>
+<p>Partimos de <span class="math inline">\(n! = \Gamma(n+1) = \int_0^\infty x^n e^{-x}\,dx = \int_0^\infty e^{n\ln x - x}\,dx\)</span>. El exponente <span class="math inline">\(f(x)=n\ln x - x\)</span> satisface <span class="math inline">\(f'(x)=n/x-1\)</span>, que es cero exactamente en <span class="math inline">\(x=n\)</span>: ahí el integrando alcanza su máximo.</p>
+<p>Hacemos el cambio de variable <span class="math inline">\(x=ny\)</span>:</p>
+<p><span class="math display">\[n! = n\int_0^\infty e^{n\ln(ny)-ny}\,dy = n\int_0^\infty e^{n\ln n + n\ln y - ny}\,dy = n^{n+1}\int_0^\infty e^{n(\ln y - y)}\,dy = \left(\frac ne\right)^n n\int_0^\infty e^{n(\ln y - y+1)}\,dy\]</span></p>
+<p>Sea <span class="math inline">\(g(y):=\ln y - y+1\)</span>. Como <span class="math inline">\(g'(y)=1/y-1\)</span>, <span class="math inline">\(g\)</span> alcanza su máximo en <span class="math inline">\(y=1\)</span>, donde <span class="math inline">\(g(1)=0\)</span> y <span class="math inline">\(g''(1)=-1\)</span>. Taylor de orden <span class="math inline">\(2\)</span> alrededor de <span class="math inline">\(y=1\)</span> da</p>
+<p><span class="math display">\[g(y) \approx g(1)+g'(1)(y-1)+\frac{g''(1)}2(y-1)^2 = -\frac{(y-1)^2}2\]</span></p>
+<p>Para <span class="math inline">\(n\)</span> grande, <span class="math inline">\(e^{ng(y)}\)</span> decrece muy rápido lejos de <span class="math inline">\(y=1\)</span>, así que la contribución de la integral está concentrada cerca de <span class="math inline">\(y\approx1\)</span>, y podemos reemplazar <span class="math inline">\(g\)</span> por su aproximación cuadrática y extender la integral a toda la recta:</p>
+<p><span class="math display">\[n! \approx \left(\frac ne\right)^n n\int_{-\infty}^\infty e^{-n(y-1)^2/2}\,dy\]</span></p>
+<p>Con <span class="math inline">\(z=(y-1)\sqrt n\)</span> (integral gaussiana, ya calculada arriba: <span class="math inline">\(\int e^{-z^2/2}dz=\sqrt{2\pi}\)</span>),</p>
+<p><span class="math display">\[n! \approx \left(\frac ne\right)^n n\cdot\frac{\sqrt{2\pi}}{\sqrt n} = \left(\frac ne\right)^n\sqrt{2\pi n}\]</span></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Fórmula de Stirling">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Fórmula de Stirling
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[n! \sim \left(\frac ne\right)^n\sqrt{2\pi n} \qquad\text{cuando } n\to\infty\]</span></p>
+<p>equivalentemente, <span class="math inline">\(\log n! \approx n\log n - n + \tfrac12\log(2\pi n)\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="la-distribución-normal" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="la-distribución-normal"><span class="header-section-number">4</span> La distribución normal</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Definición">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Definición
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(X\)</span> tiene distribución <strong>normal</strong> de parámetros <span class="math inline">\(\mu\)</span> (media) y <span class="math inline">\(\sigma\)</span> (desviación estándar) si su función de densidad es</p>
+<p><span class="math display">\[f_X(x;\mu,\sigma) = \frac1{\sqrt{2\pi}\,\sigma}\,e^{-\frac{(x-\mu)^2}{2\sigma^2}}\]</span></p>
+<p>Se nota <span class="math inline">\(X\sim N(\mu,\sigma^2)\)</span>. Cuando <span class="math inline">\(\mu=0\)</span> y <span class="math inline">\(\sigma=1\)</span> se llama <strong>normal estándar</strong>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre que <span class="math inline">\(f_X(\cdot;\mu,\sigma)\)</span> es, en efecto, una función de densidad: que es no negativa (inmediato) y que integra <span class="math inline">\(1\)</span>. Para lo segundo, sustituya <span class="math inline">\(u=(x-\mu)/\sigma\)</span> y use la integral gaussiana <span class="math inline">\(\int_{-\infty}^\infty e^{-u^2/2}\,du=\sqrt{2\pi}\)</span> deducida arriba (solo hay que reescalar: si <span class="math inline">\(\int e^{-x^2}dx=\sqrt\pi\)</span>, ¿cuánto vale <span class="math inline">\(\int e^{-u^2/2}du\)</span>?).</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Toda normal se puede estandarizar con el cambio de variable <span class="math inline">\(Z=\dfrac{X-\mu}\sigma\)</span>. Demuestre que si <span class="math inline">\(X\sim N(\mu,\sigma^2)\)</span> entonces <span class="math inline">\(Z\sim N(0,1)\)</span> (calcule la función de distribución de <span class="math inline">\(Z\)</span> en términos de la de <span class="math inline">\(X\)</span> y derive).</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Nota histórica">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Nota histórica
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La curva normal apareció por primera vez en 1733, en un pequeño panfleto en latín que <strong>Abraham de Moivre</strong> (matemático francés exiliado en Londres) circuló de forma privada entre algunos colegas, incorporado más tarde a la segunda edición de su libro <em>The Doctrine of Chances</em>. De Moivre no la obtuvo estudiando errores de medición ni fenómenos naturales, sino tratando de aproximar sumas de términos binomiales para juegos de azar, y para eso necesitó estimar <span class="math inline">\(n!\)</span> para <span class="math inline">\(n\)</span> grande, lo que lo llevó a la fórmula que hoy llamamos de Stirling (que de Moivre dedujo primero, y que James Stirling refinó poco después con la constante exacta <span class="math inline">\(\sqrt{2\pi}\)</span>, la misma fórmula que acabamos de deducir arriba).</p>
+<p>Casi ochenta años después, <strong>Carl Friedrich Gauss</strong> llegó a la misma curva de forma independiente, en 1809, en su tratado sobre el movimiento de los cuerpos celestes: mostró que si los errores de una observación astronómica se distribuyen así, la media aritmética de varias observaciones es la mejor estimación posible del valor verdadero, lo cual justificaba el método de mínimos cuadrados. Esta aplicación a la teoría de errores es la razón por la que la curva también se llama distribución <strong>gaussiana</strong>.</p>
+<p>Fue <strong>Pierre Simon Laplace</strong> quien conectó ambos hilos y les dio su alcance definitivo: entre 1810 y 1812 (en su <em>Théorie analytique des probabilités</em>) extendió el resultado puntual de de Moivre sobre la binomial a un enunciado general, el <strong>teorema central del límite</strong>, que explica por qué la misma curva aparece como límite de sumas de variables independientes casi sin importar su distribución original. Por eso el resultado que veremos en la próxima sección, sobre la Poisson y la binomial, se conoce como el <strong>teorema de de Moivre y Laplace</strong>.</p>
+<p>El nombre “distribución normal” es en realidad bastante posterior a las tres personas anteriores, y su origen exacto se disputa entre los historiadores: se atribuye, de forma independiente y hacia la década de 1870, a Charles Peirce, Francis Galton y Wilhelm Lexis, aunque fue Karl Pearson quien terminó de fijar el nombre en la literatura estadística hacia 1895. Es una pequeña ironía que la curva llevara casi siglo y medio circulando entre matemáticos antes de que alguien la llamara “normal”.</p>
+</div>
+</div>
+</section>
+<section id="un-repaso-intuitivo-media-y-varianza" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="un-repaso-intuitivo-media-y-varianza"><span class="header-section-number">5</span> Un repaso intuitivo: media y varianza</h2>
+<p>Antes de seguir, vale la pena detenerse un momento en qué miden <span class="math inline">\(\mu\)</span> y <span class="math inline">\(\sigma\)</span> en la fórmula de arriba, más allá de ser “parámetros”.</p>
+<p>Si <span class="math inline">\(X\)</span> es una variable aleatoria discreta con valores posibles <span class="math inline">\(x_1,x_2,\ldots\)</span>, la <strong>media</strong> de <span class="math inline">\(X\)</span> es el promedio de esos valores, ponderado por qué tan probable es cada uno:</p>
+<p><span class="math display">\[\mu = \sum_i x_i\,P(X=x_i)\]</span></p>
+<p>Es útil pensarla como un centro de masa: si en cada punto <span class="math inline">\(x_i\)</span> de la recta real colocaras una pesa de tamaño <span class="math inline">\(P(X=x_i)\)</span>, <span class="math inline">\(\mu\)</span> es el punto exacto donde la balanza queda equilibrada. No es necesariamente un valor que <span class="math inline">\(X\)</span> pueda tomar (el promedio de caras en dos lanzamientos de moneda es <span class="math inline">\(1\)</span>, que sí es alcanzable, pero el promedio del resultado de un dado es <span class="math inline">\(3{,}5\)</span>, que no lo es), es simplemente el centro alrededor del cual se reparte la probabilidad.</p>
+<p>La <strong>varianza</strong> mide qué tan dispersos están los valores posibles alrededor de esa media:</p>
+<p><span class="math display">\[\sigma^2 = \sum_i (x_i-\mu)^2\,P(X=x_i)\]</span></p>
+<p>Es el promedio, otra vez ponderado por probabilidad, de qué tan lejos (al cuadrado) cae cada valor posible respecto al centro de masa. Se eleva al cuadrado por dos razones: para que las desviaciones por encima y por debajo de la media no se cancelen entre sí al sumarlas, y para penalizar más las desviaciones grandes que las pequeñas. La raíz cuadrada de la varianza, <span class="math inline">\(\sigma\)</span>, se llama <strong>desviación estándar</strong>, y tiene la ventaja de quedar en las mismas unidades que <span class="math inline">\(X\)</span> (si <span class="math inline">\(X\)</span> mide milímetros, <span class="math inline">\(\sigma\)</span> también mide milímetros, mientras que <span class="math inline">\(\sigma^2\)</span> quedaría en milímetros al cuadrado, una cantidad sin interpretación física directa). Por eso, cuando se quiere describir qué tan disperso es algo en las unidades originales del problema, se cita <span class="math inline">\(\sigma\)</span>, no <span class="math inline">\(\sigma^2\)</span>.</p>
+<p>En la normal, <span class="math inline">\(\mu\)</span> y <span class="math inline">\(\sigma\)</span> son exactamente estos dos números: <span class="math inline">\(\mu\)</span> ubica el centro (y el único pico) de la curva, y <span class="math inline">\(\sigma\)</span> controla qué tan ancha o angosta es. Dos normales con la misma <span class="math inline">\(\mu\)</span> pero distinta <span class="math inline">\(\sigma\)</span> están centradas en el mismo punto, pero una es más alta y angosta (varianza chica) y la otra más baja y extendida (varianza grande), siempre con área total <span class="math inline">\(1\)</span> debajo de la curva.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="dv">0</span>, <span class="fl">0.5</span>), <span class="at">from =</span> <span class="sc">-</span><span class="dv">6</span>, <span class="at">to =</span> <span class="dv">6</span>, <span class="at">n =</span> <span class="dv">1000</span>, <span class="at">col =</span> <span class="st">"steelblue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="st">"densidad"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.85</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">"firebrick"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">n =</span> <span class="dv">1000</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="dv">0</span>, <span class="dv">2</span>), <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">"darkgreen"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">n =</span> <span class="dv">1000</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"sigma = 0.5"</span>, <span class="st">"sigma = 1"</span>, <span class="st">"sigma = 2"</span>),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"steelblue"</span>, <span class="st">"firebrick"</span>, <span class="st">"darkgreen"</span>), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">bty =</span> <span class="st">"n"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-normal-mu-sigma" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-normal-mu-sigma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-normal-mu-sigma-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-normal-mu-sigma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Tres normales con la misma media (mu=0) y distinta desviación estándar
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="la-regla-empírica-68-95-y-99.7-por-ciento" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="la-regla-empírica-68-95-y-99.7-por-ciento"><span class="header-section-number">6</span> La regla empírica: 68, 95 y 99.7 por ciento</h2>
+<p>Una consecuencia directa de la forma de la curva normal (y que vale para cualquier <span class="math inline">\(\mu,\sigma\)</span>, gracias a la estandarización) es qué tan concentrada está la probabilidad alrededor de la media, medida en unidades de <span class="math inline">\(\sigma\)</span>:</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Regla empírica">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Regla empírica
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si <span class="math inline">\(X\sim N(\mu,\sigma^2)\)</span>,</p>
+<p><span class="math display">\[P(\mu-\sigma\le X\le \mu+\sigma)\approx 0{,}6827 \qquad P(\mu-2\sigma\le X\le \mu+2\sigma)\approx 0{,}9545 \qquad P(\mu-3\sigma\le X\le \mu+3\sigma)\approx 0{,}9973\]</span></p>
+<p>Es decir, aproximadamente el <span class="math inline">\(68\%\)</span> de la probabilidad vive a menos de una desviación estándar de la media, el <span class="math inline">\(95\%\)</span> a menos de dos, y prácticamente todo (<span class="math inline">\(99{,}7\%\)</span>) a menos de tres.</p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"P(|Z| &lt;="</span>, k, <span class="st">") ="</span>, <span class="fu">round</span>(<span class="fu">pnorm</span>(k) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="sc">-</span>k), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(|Z| &lt;= 1 ) = 0.6827 
+P(|Z| &lt;= 2 ) = 0.9545 
+P(|Z| &lt;= 3 ) = 0.9973 </code></pre>
+</div>
+</div>
+</section>
+<section id="ejemplo-aplicado-control-de-calidad-en-fabricación" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="ejemplo-aplicado-control-de-calidad-en-fabricación"><span class="header-section-number">7</span> Ejemplo aplicado: control de calidad en fabricación</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Una fábrica produce tornillos cuya longitud, en milímetros, se modela como <span class="math inline">\(X\sim N(50,\,0{,}5^2)\)</span>: la media nominal es <span class="math inline">\(50\)</span>mm, con una desviación estándar de <span class="math inline">\(0{,}5\)</span>mm debida a variaciones normales del proceso de fabricación. Un tornillo pasa el control de calidad si su longitud está entre <span class="math inline">\(49\)</span>mm y <span class="math inline">\(51\)</span>mm.</p>
+<p><strong>¿Qué porcentaje de la producción pasa el control?</strong> Como <span class="math inline">\(49=50-2(0{,}5)\)</span> y <span class="math inline">\(51=50+2(0{,}5)\)</span>, el rango de aceptación es exactamente <span class="math inline">\([\mu-2\sigma,\mu+2\sigma]\)</span>, así que por la regla empírica</p>
+<p><span class="math display">\[P(49\le X\le51) \approx 0{,}9545\]</span></p>
+<p>Alrededor de un <span class="math inline">\(4{,}55\%\)</span> de la producción se rechaza.</p>
+<p><strong>¿Qué pasa si además se rechaza cualquier tornillo de más de <span class="math inline">\(51{,}5\)</span>mm, sin importar qué tan cerca esté del límite inferior?</strong> Aquí <span class="math inline">\(51{,}5=50+3(0{,}5)\)</span>, así que estandarizando, <span class="math inline">\(z=(51{,}5-50)/0{,}5=3\)</span>, y</p>
+<p><span class="math display">\[P(X&gt;51{,}5) = P(Z&gt;3) \approx \frac{1-0{,}9973}2 \approx 0{,}00135\]</span></p>
+<p>Es decir, apenas un poco más de un tornillo de cada mil se rechaza específicamente por exceder ese límite superior.</p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">50</span>; sigma <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"P(49&lt;=X&lt;=51)  ="</span>, <span class="fu">round</span>(<span class="fu">pnorm</span>(<span class="dv">51</span>, mu, sigma) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="dv">49</span>, mu, sigma), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(49&lt;=X&lt;=51)  = 0.9545 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"P(X &gt; 51.5)   ="</span>, <span class="fu">round</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="fl">51.5</span>, mu, sigma), <span class="dv">5</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(X &gt; 51.5)   = 0.00135 </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicios del libro">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicios del libro
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Haga los ejercicios de la sección correspondiente a variables aleatorias continuas y a la distribución normal en el libro de Blanco Castañeda.</p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/arturosanjuan\.xyz");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="preferred_color_scheme">
+<input type="hidden" id="giscus-alt-theme" value="preferred_color_scheme">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "asanjuanc/arturosanjuan-sitio";
+    script.dataset.repoId = "R_kgDOTzuHrw";
+    script.dataset.category = "Comentarios";
+    script.dataset.categoryId = "DIC_kwDOTzuHr84DD_eD";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "es";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../../cursos/probabilidad/vadiscretas/index.html" class="pagination-link" aria-label="Variables aleatorias discretas">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Variables aleatorias discretas</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../../cursos/probabilidad/limitenormal/index.html" class="pagination-link" aria-label="La distribución normal como límite">
+        <span class="nav-page-text">La distribución normal como límite</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

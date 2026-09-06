@@ -76,6 +76,8 @@ website:
         - cursos/probabilidad/taller-1/index.qmd
         - cursos/probabilidad/vaintro/index.qmd
         - cursos/probabilidad/vadiscretas/index.qmd
+        - cursos/probabilidad/vacontinuas/index.qmd
+        - cursos/probabilidad/limitenormal/index.qmd
 
 format:
   html:

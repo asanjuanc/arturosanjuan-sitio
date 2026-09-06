@@ -814,6 +814,1109 @@ font-style: inherit;">prob =</span> p)</span>
   <pubDate>Sat, 05 Sep 2026 05:00:00 GMT</pubDate>
 </item>
 <item>
+  <title>Variables aleatorias continuas y la distribución normal</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/probabilidad/vacontinuas/</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="variables-aleatorias-continuas-y-función-de-densidad" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="variables-aleatorias-continuas-y-función-de-densidad"><span class="header-section-number">1</span> Variables aleatorias continuas y función de densidad</h2>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?X"> una variable aleatoria. Se dice que <img src="https://latex.codecogs.com/png.latex?X"> es <strong>absolutamente continua</strong> si existe una función <img src="https://latex.codecogs.com/png.latex?f_X"> no negativa e integrable tal que</p>
+<p><img src="https://latex.codecogs.com/png.latex?F_X(x)%20=%20%5Cint_%7B-%5Cinfty%7D%5Ex%20f_X(u)%5C,du"></p>
+<p>donde <img src="https://latex.codecogs.com/png.latex?F_X"> es la función de distribución de <img src="https://latex.codecogs.com/png.latex?X">. A la función <img src="https://latex.codecogs.com/png.latex?f_X"> se le llama <strong>función de densidad</strong> de <img src="https://latex.codecogs.com/png.latex?X">. De la definición se sigue de inmediato que</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cint_%7B-%5Cinfty%7D%5E%5Cinfty%20f_X(x)%5C,dx%20=%201"></p>
+<p>Si queremos calcular, por ejemplo, <img src="https://latex.codecogs.com/png.latex?P(a%3CX%5Cle%20b)">, basta con restar:</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(a%3CX%5Cle%20b)%20=%20F_X(b)-F_X(a)%20=%20%5Cint_a%5Eb%20f_X(x)%5C,dx"></p>
+<p>Esta fórmula se puede generalizar, usando teoría de la medida, a</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X%5Cin%20B)%20=%20%5Cint_B%20f_X(x)%5C,dx"></p>
+<p>para cualquier boreliano <img src="https://latex.codecogs.com/png.latex?B">, no solo para intervalos.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Un punto de honestidad, sin teoría de la medida">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Un punto de honestidad, sin teoría de la medida
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En este curso no tenemos teoría de la medida ni la integral de Lebesgue, así que la fórmula anterior necesita una precisión. La integral de Riemann, que es la que manejamos, solo se define directamente sobre intervalos (y uniones finitas de intervalos). La extensión de <img src="https://latex.codecogs.com/png.latex?P(X%5Cin%20B)=%5Cint_B%20f_X"> a un boreliano <img src="https://latex.codecogs.com/png.latex?B"> arbitrario no viene de la integral de Riemann en sí, sino de los axiomas de σ aditividad de la probabilidad: se aproxima <img src="https://latex.codecogs.com/png.latex?B"> por uniones de intervalos y se usa que <img src="https://latex.codecogs.com/png.latex?P"> es σ aditiva para pasar al límite. Vale la pena tener clara esta distinción, aunque en la práctica casi todos los conjuntos con los que trabajemos sean uniones de intervalos y la sutileza no se note.</p>
+</div>
+</div>
+<section id="ejemplo-la-distribución-uniforme-continua" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="ejemplo-la-distribución-uniforme-continua"><span class="header-section-number">1.1</span> Ejemplo: la distribución uniforme continua</h3>
+<p>Para <img src="https://latex.codecogs.com/png.latex?a%3Cb">, la función</p>
+<p><img src="https://latex.codecogs.com/png.latex?f_X(x;a,b)%20=%20%5Cfrac%7B1%7D%7Bb-a%7D%5Cmathbb%201_%7B%5Ba,b%5D%7D(x)"></p>
+<p>es claramente una función de densidad (es no negativa, y su integral en <img src="https://latex.codecogs.com/png.latex?%5Ba,b%5D"> vale <img src="https://latex.codecogs.com/png.latex?(b-a)/(b-a)=1">), con función de distribución</p>
+<p><img src="https://latex.codecogs.com/png.latex?F_X(x;a,b)%20=%20%5Cfrac%7Bx-a%7D%7Bb-a%7D%5Cmathbb%201_%7B%5Ba,b)%7D(x)%20+%20%5Cmathbb%201_%7B%5Bb,%5Cinfty)%7D(x)"></p>
+<p>Se nota <img src="https://latex.codecogs.com/png.latex?X%5Csim%20U(a,b)">.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">par</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mfrow =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">curve</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dunif</span>(x, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">from =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">to =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">n =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"steelblue"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lwd =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,</span>
+<span id="cb1-3">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xlab =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"x"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ylab =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expression</span>(f[X](x)), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">main =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Densidad"</span>)</span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">curve</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">punif</span>(x, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">from =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">to =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">n =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"firebrick"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lwd =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,</span>
+<span id="cb1-5">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xlab =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"x"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ylab =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expression</span>(F[X](x)), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">main =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Distribución"</span>)</span></code></pre></div></div>
+<div class="cell-output-display">
+<div id="fig-uniforme-continua" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-uniforme-continua-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/probabilidad/vacontinuas/index_files/figure-html/fig-uniforme-continua-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-uniforme-continua-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Densidad y función de distribución de U(2, 5)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo: el tiempo de espera de un bus">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo: el tiempo de espera de un bus
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un bus pasa por una parada exactamente cada <img src="https://latex.codecogs.com/png.latex?20"> minutos, pero un pasajero llega a la parada en un instante al azar, sin saber cuánto falta para el próximo bus. Si <img src="https://latex.codecogs.com/png.latex?T"> es el tiempo de espera, en minutos, un modelo razonable es <img src="https://latex.codecogs.com/png.latex?T%5Csim%20U(0,20)">: no hay ningún instante dentro de esos <img src="https://latex.codecogs.com/png.latex?20"> minutos que sea más probable que otro.</p>
+<p>¿Cuál es la probabilidad de esperar más de <img src="https://latex.codecogs.com/png.latex?15"> minutos?</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(T%3E15)%20=%20%5Cfrac%7B20-15%7D%7B20%7D%20=%20%5Cfrac14"></p>
+<p>¿Y la probabilidad de esperar entre <img src="https://latex.codecogs.com/png.latex?5"> y <img src="https://latex.codecogs.com/png.latex?10"> minutos?</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(5%3CT%3C10)%20=%20%5Cfrac%7B10-5%7D%7B20%7D%20=%20%5Cfrac14"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="interludio-analítico-la-función-gamma" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="interludio-analítico-la-función-gamma"><span class="header-section-number">2</span> Interludio analítico: la función Gamma</h2>
+<p>Antes de motivar y definir la distribución normal necesitamos dos herramientas: la función Gamma (que generaliza el factorial a los reales positivos) y, a partir de ella, la fórmula de Stirling, que usaremos más adelante para deducir la aproximación normal a la Poisson y a la binomial.</p>
+<section id="convergencia-de-las-integrales-que-definen-a-gamma" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="convergencia-de-las-integrales-que-definen-a-gamma"><span class="header-section-number">2.1</span> Convergencia de las integrales que definen a Gamma</h3>
+<div class="callout callout-style-default callout-tip callout-titled" title="Lema 1">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Lema 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para todo <img src="https://latex.codecogs.com/png.latex?s%5Cin%5Cmathbb%20R">, la integral <img src="https://latex.codecogs.com/png.latex?%5Cdisplaystyle%5Cint_1%5E%5Cinfty%20x%5Es%20e%5E%7B-x%7D%5C,dx"> converge.</p>
+</div>
+</div>
+<p><strong>Demostración.</strong> Para <img src="https://latex.codecogs.com/png.latex?x%5Cge1">, la serie de Taylor de <img src="https://latex.codecogs.com/png.latex?e%5Ex"> da, para cualquier entero <img src="https://latex.codecogs.com/png.latex?n">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?e%5Ex%20=%201+x+%5Cfrac%7Bx%5E2%7D%7B2!%7D+%5Cfrac%7Bx%5E3%7D%7B3!%7D+%5Ccdots%20%3E%20%5Cfrac%7Bx%5En%7D%7Bn!%7D"></p>
+<p>Por la propiedad arquimediana existe <img src="https://latex.codecogs.com/png.latex?n_0"> tal que <img src="https://latex.codecogs.com/png.latex?n_0%3Es+1">, y por ende <img src="https://latex.codecogs.com/png.latex?x%5E%7Bn_0%7D%5Cge%20x%5E%7Bs+1%7D"> (pues <img src="https://latex.codecogs.com/png.latex?x%5Cge1">), de donde <img src="https://latex.codecogs.com/png.latex?x%5E%7Bn_0-s-1%7D%5Cge1">. Así,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Be%5Ex%7D%7Bx%5Es%7D%20%3E%20%5Cfrac%7Bx%5E%7Bn_0%7D%7D%7Bn_0!%5C,x%5Es%7D%20%5Cge%20%5Cfrac%7Bx%5E%7Bs+1%7D%7D%7Bn_0!%5C,x%5Es%7D%20=%20%5Cfrac%7Bx%7D%7Bn_0!%7D%20%5Cxrightarrow%5Bx%5Cto%5Cinfty%5D%7B%7D%5Cinfty"></p>
+<p>De este modo, <img src="https://latex.codecogs.com/png.latex?e%5E%7B-x%7Dx%5Es%5Cto0"> cuando <img src="https://latex.codecogs.com/png.latex?x%5Cto%5Cinfty">, para todo <img src="https://latex.codecogs.com/png.latex?s%5Cin%5Cmathbb%20R">. En particular, <img src="https://latex.codecogs.com/png.latex?e%5E%7B-x%7Dx%5Es/x%5E%7B-2%7D%5Cto0">, así que existe <img src="https://latex.codecogs.com/png.latex?x_0%3E0"> tal que <img src="https://latex.codecogs.com/png.latex?e%5E%7B-x%7Dx%5Es%5Cle%20x%5E%7B-2%7D"> para todo <img src="https://latex.codecogs.com/png.latex?x%5Cge%20x_0">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cint_1%5E%5Cinfty%20x%5Es%20e%5E%7B-x%7D%5C,dx%20=%20%5Cint_1%5E%7Bx_0%7D%20x%5Es%20e%5E%7B-x%7D%5C,dx%20+%20%5Cint_%7Bx_0%7D%5E%5Cinfty%20x%5Es%20e%5E%7B-x%7D%5C,dx%20%5Cle%20%5Cint_1%5E%7Bx_0%7D%20x%5Es%20e%5E%7B-x%7D%5C,dx%20+%20%5Cint_%7Bx_0%7D%5E%5Cinfty%20x%5E%7B-2%7D%5C,dx%20%3C%20%5Cinfty"></p>
+<p>pues el primer sumando es la integral de una función continua en un intervalo acotado, y el segundo converge por ser una <img src="https://latex.codecogs.com/png.latex?p"> integral con <img src="https://latex.codecogs.com/png.latex?p=2%3E1">. <img src="https://latex.codecogs.com/png.latex?%5Cblacksquare"></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre que <img src="https://latex.codecogs.com/png.latex?%5Cdisplaystyle%5Cint_0%5E1%20t%5E%7B-s%7D%5C,dt"> converge para <img src="https://latex.codecogs.com/png.latex?s%3C1"> (calcule directamente la antiderivada de <img src="https://latex.codecogs.com/png.latex?t%5E%7B-s%7D"> y estudie cuándo el límite en <img src="https://latex.codecogs.com/png.latex?0"> es finito).</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="La función Gamma">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>La función Gamma
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La función</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5CGamma(s)%20:=%20%5Cint_0%5E%5Cinfty%20t%5E%7Bs-1%7De%5E%7B-t%7D%5C,dt"></p>
+<p>converge para todo <img src="https://latex.codecogs.com/png.latex?s%3E0">: en <img src="https://latex.codecogs.com/png.latex?%5B1,%5Cinfty)"> por el Lema 1 (con exponente <img src="https://latex.codecogs.com/png.latex?s-1">), y en <img src="https://latex.codecogs.com/png.latex?(0,1%5D"> porque <img src="https://latex.codecogs.com/png.latex?t%5E%7Bs-1%7De%5E%7B-t%7D%5Cle%20t%5E%7Bs-1%7D"> y <img src="https://latex.codecogs.com/png.latex?%5Cint_0%5E1%20t%5E%7B-(1-s)%7D%5C,dt"> converge para <img src="https://latex.codecogs.com/png.latex?1-s%3C1">, es decir para <img src="https://latex.codecogs.com/png.latex?s%3E0">, por la tarea anterior.</p>
+</div>
+</div>
+</section>
+<section id="la-recursión-gamman1ngamman" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="la-recursión-gamman1ngamman"><span class="header-section-number">2.2</span> La recursión <img src="https://latex.codecogs.com/png.latex?%5CGamma(n+1)=n%5C,%5CGamma(n)"></h3>
+<p>Calculemos primero <img src="https://latex.codecogs.com/png.latex?%5CGamma(1)">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5CGamma(1)%20=%20%5Cint_0%5E%5Cinfty%20e%5E%7B-t%7D%5C,dt%20=%201"></p>
+<p>Ahora, para <img src="https://latex.codecogs.com/png.latex?n"> entero positivo, integramos por partes con <img src="https://latex.codecogs.com/png.latex?u=t%5En">, <img src="https://latex.codecogs.com/png.latex?dv=e%5E%7B-t%7Ddt"> (así <img src="https://latex.codecogs.com/png.latex?du=nt%5E%7Bn-1%7Ddt">, <img src="https://latex.codecogs.com/png.latex?v=-e%5E%7B-t%7D">):</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5CGamma(n+1)%20=%20%5Cint_0%5E%5Cinfty%20t%5En%20e%5E%7B-t%7D%5C,dt%20=%20%5Cleft.-t%5En%20e%5E%7B-t%7D%5Cright%7C_0%5E%5Cinfty%20+%20n%5Cint_0%5E%5Cinfty%20t%5E%7Bn-1%7De%5E%7B-t%7D%5C,dt%20=%20n%5C,%5CGamma(n)"></p>
+<p>(el término de frontera se anula en ambos extremos: en <img src="https://latex.codecogs.com/png.latex?0"> porque <img src="https://latex.codecogs.com/png.latex?n%5Cge1">, y en <img src="https://latex.codecogs.com/png.latex?%5Cinfty"> por el Lema 1). Con <img src="https://latex.codecogs.com/png.latex?%5CGamma(1)=1">, la recursión da <img src="https://latex.codecogs.com/png.latex?%5CGamma(2)=1%5Ccdot%5CGamma(1)=1">, <img src="https://latex.codecogs.com/png.latex?%5CGamma(3)=2%5Ccdot%5CGamma(2)=2">, <img src="https://latex.codecogs.com/png.latex?%5CGamma(4)=3%5Ccdot%5CGamma(3)=6">, y en general</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5CGamma(n+1)%20=%20n!%20%5Cqquad%5Ctext%7Bpara%20%7D%20n=0,1,2,%5Cldots"></p>
+<p>Es decir, <img src="https://latex.codecogs.com/png.latex?%5CGamma"> generaliza el factorial a cualquier real positivo: para argumentos enteros recupera el factorial (desplazado en uno), y entre los enteros interpola de forma suave.</p>
+</section>
+<section id="la-integral-gaussiana-vía-coordenadas-polares" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="la-integral-gaussiana-vía-coordenadas-polares"><span class="header-section-number">2.3</span> La integral gaussiana, vía coordenadas polares</h3>
+<p>Necesitamos también <img src="https://latex.codecogs.com/png.latex?%5CGamma(1/2)">, y para eso hace falta calcular <img src="https://latex.codecogs.com/png.latex?%5Cint_0%5E%5Cinfty%20e%5E%7B-x%5E2%7D%5C,dx">. El truco clásico es elevar al cuadrado y pasar a coordenadas polares:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cleft(%5Cint_0%5E%5Cinfty%20e%5E%7B-x%5E2%7Ddx%5Cright)%5E2%20=%20%5Cleft(%5Cint_0%5E%5Cinfty%20e%5E%7B-x%5E2%7Ddx%5Cright)%5Cleft(%5Cint_0%5E%5Cinfty%20e%5E%7B-y%5E2%7Ddy%5Cright)%20=%20%5Cint_0%5E%5Cinfty%5Cint_0%5E%5Cinfty%20e%5E%7B-(x%5E2+y%5E2)%7D%5C,dy%5C,dx"></p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?x=r%5Ccos%5Ctheta">, <img src="https://latex.codecogs.com/png.latex?y=r%5Csin%5Ctheta">, <img src="https://latex.codecogs.com/png.latex?%5Ctheta%5Cin(0,%5Cpi/2)">, <img src="https://latex.codecogs.com/png.latex?r%5Cin(0,%5Cinfty)"> (el cuadrante donde <img src="https://latex.codecogs.com/png.latex?x,y%3E0">), el jacobiano de la transformación es <img src="https://latex.codecogs.com/png.latex?r">, así que</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cleft(%5Cint_0%5E%5Cinfty%20e%5E%7B-x%5E2%7Ddx%5Cright)%5E2%20=%20%5Cint_0%5E%7B%5Cpi/2%7D%5Cint_0%5E%5Cinfty%20e%5E%7B-r%5E2%7D%5C,r%5C,dr%5C,d%5Ctheta%20=%20%5Cfrac%5Cpi2%5Cleft(-%5Cfrac12%20e%5E%7B-r%5E2%7D%5CBig%7C_0%5E%5Cinfty%5Cright)%20=%20%5Cfrac%5Cpi2%5Ccdot%5Cfrac12%20=%20%5Cfrac%5Cpi4"></p>
+<p>Por lo tanto</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cint_0%5E%5Cinfty%20e%5E%7B-x%5E2%7D%5C,dx%20=%20%5Cfrac%7B%5Csqrt%5Cpi%7D%7B2%7D%20%5Cqquad%5Ctext%7By%7D%5Cqquad%20%5Cint_%7B-%5Cinfty%7D%5E%5Cinfty%20e%5E%7B-x%5E2%7D%5C,dx%20=%20%5Csqrt%5Cpi"></p>
+<p>(la segunda igualdad usa que <img src="https://latex.codecogs.com/png.latex?e%5E%7B-x%5E2%7D"> es par). Con esto, sustituyendo <img src="https://latex.codecogs.com/png.latex?t=u%5E2"> (así <img src="https://latex.codecogs.com/png.latex?dt=2u%5C,du">) en la definición de Gamma,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5CGamma(1/2)%20=%20%5Cint_0%5E%5Cinfty%20t%5E%7B-1/2%7De%5E%7B-t%7D%5C,dt%20=%20%5Cint_0%5E%5Cinfty%20u%5E%7B-1%7D%5Ccdot%202u%5C,e%5E%7B-u%5E2%7D%5C,du%20=%202%5Cint_0%5E%5Cinfty%20e%5E%7B-u%5E2%7D%5C,du%20=%20%5Csqrt%5Cpi"></p>
+<p>De la recursión <img src="https://latex.codecogs.com/png.latex?%5CGamma(n+1)=n%5C,%5CGamma(n)">, ahora aplicada con argumentos semienteros, se obtienen todos los demás valores en <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%20N+%5Ctfrac12">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5CGamma(3/2)=%5CGamma%5Cleft(1+%5Ctfrac12%5Cright)%20=%20%5Ctfrac12%5C,%5CGamma(1/2)%20=%20%5Cfrac%7B%5Csqrt%5Cpi%7D2%20%5Cqquad%20%5CGamma(5/2)%20=%20%5Ctfrac32%5C,%5CGamma(3/2)%20=%20%5Cfrac%7B3%5Csqrt%5Cpi%7D4"></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre por inducción que, para <img src="https://latex.codecogs.com/png.latex?n=0,1,2,%5Cldots">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5CGamma%5Cleft(n+%5Cfrac12%5Cright)%20=%20%5Cfrac%7B(2n)!%7D%7B4%5En%5C,n!%7D%5Csqrt%5Cpi"></p>
+<p>y verifique la fórmula contra los casos <img src="https://latex.codecogs.com/png.latex?n=1,2"> ya calculados arriba.</p>
+</div>
+</div>
+</section>
+<section id="función-beta" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="función-beta"><span class="header-section-number">2.4</span> Función Beta</h3>
+<p>Para <img src="https://latex.codecogs.com/png.latex?x,y%3E0">, definimos</p>
+<p><img src="https://latex.codecogs.com/png.latex?B(x,y)%20:=%20%5Cint_0%5E1%20t%5E%7Bx-1%7D(1-t)%5E%7By-1%7D%5C,dt"></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea: convergencia">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea: convergencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Esta es una integral impropia en <img src="https://latex.codecogs.com/png.latex?0%5E+"> y en <img src="https://latex.codecogs.com/png.latex?1%5E-">. Separe <img src="https://latex.codecogs.com/png.latex?%5Cint_0%5E1=%5Cint_0%5E%7B1/2%7D+%5Cint_%7B1/2%7D%5E1"> y acote cada pedazo (en el primero, <img src="https://latex.codecogs.com/png.latex?(1-t)%5E%7By-1%7D%5Cle(1/2)%5E%7By-1%7D">; en el segundo, de forma simétrica) para mostrar que ambos convergen cuando <img src="https://latex.codecogs.com/png.latex?x,y%3E0">, usando el mismo tipo de argumento del Lema 1.</p>
+</div>
+</div>
+<p>La relación entre <img src="https://latex.codecogs.com/png.latex?B"> y <img src="https://latex.codecogs.com/png.latex?%5CGamma"> se obtiene con la misma idea de coordenadas polares de antes, generalizada. Partiendo de la sustitución <img src="https://latex.codecogs.com/png.latex?t=u%5E2"> en la definición de <img src="https://latex.codecogs.com/png.latex?%5CGamma"> (como hicimos para <img src="https://latex.codecogs.com/png.latex?%5CGamma(1/2)">),</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5CGamma(x)%20=%202%5Cint_0%5E%5Cinfty%20u%5E%7B2x-1%7De%5E%7B-u%5E2%7D%5C,du%20%5Cqquad%20%5CGamma(y)%20=%202%5Cint_0%5E%5Cinfty%20v%5E%7B2y-1%7De%5E%7B-v%5E2%7D%5C,dv"></p>
+<p>así que</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5CGamma(x)%5CGamma(y)%20=%204%5Cint_0%5E%5Cinfty%5Cint_0%5E%5Cinfty%20u%5E%7B2x-1%7Dv%5E%7B2y-1%7De%5E%7B-(u%5E2+v%5E2)%7D%5C,du%5C,dv"></p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?u=r%5Ccos%5Ctheta">, <img src="https://latex.codecogs.com/png.latex?v=r%5Csin%5Ctheta">, <img src="https://latex.codecogs.com/png.latex?%5Ctheta%5Cin(0,%5Cpi/2)">, <img src="https://latex.codecogs.com/png.latex?r%3E0">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5CGamma(x)%5CGamma(y)%20=%204%5Cint_0%5E%7B%5Cpi/2%7D(%5Ccos%5Ctheta)%5E%7B2x-1%7D(%5Csin%5Ctheta)%5E%7B2y-1%7D%5C,d%5Ctheta%5Cint_0%5E%5Cinfty%20r%5E%7B2x+2y-1%7De%5E%7B-r%5E2%7D%5C,dr%20=%204%5C,%5CGamma(x+y)%5Cint_0%5E%7B%5Cpi/2%7D(%5Ccos%5Ctheta)%5E%7B2x-1%7D(%5Csin%5Ctheta)%5E%7B2y-1%7D%5C,d%5Ctheta"></p>
+<p>(la integral en <img src="https://latex.codecogs.com/png.latex?r"> es, de nuevo, <img src="https://latex.codecogs.com/png.latex?%5CGamma(x+y)"> vía <img src="https://latex.codecogs.com/png.latex?t=r%5E2">). Falta reconocer la integral en <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> como una <img src="https://latex.codecogs.com/png.latex?B">. Con <img src="https://latex.codecogs.com/png.latex?w=%5Csin%5E2%5Ctheta"> (así <img src="https://latex.codecogs.com/png.latex?dw=2%5Csin%5Ctheta%5Ccos%5Ctheta%5C,d%5Ctheta">),</p>
+<p><img src="https://latex.codecogs.com/png.latex?4%5Cint_0%5E%7B%5Cpi/2%7D(%5Ccos%5Ctheta)%5E%7B2x-1%7D(%5Csin%5Ctheta)%5E%7B2y-1%7D%5C,d%5Ctheta%20=%204%5Cint_0%5E1%20w%5E%7By-1%7D(1-w)%5E%7Bx-1%7D%5Ccdot%5Cfrac12%5C,dw%20=%202%5C,B(x,y)%5Ccdot%5Cfrac12%5Ccdot%202%20=%20B(x,y)%5Ccdot%204%5Ccdot%5Cfrac14"></p>
+<p>es decir, esa integral vale exactamente <img src="https://latex.codecogs.com/png.latex?B(x,y)/4"> multiplicado por el <img src="https://latex.codecogs.com/png.latex?4"> de afuera, y se cancelan, dejando</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5CGamma(x)%5CGamma(y)%20=%20%5CGamma(x+y)%5C,B(x,y)%20%5Cqquad%5CLongleftrightarrow%5Cqquad%20B(x,y)%20=%20%5Cfrac%7B%5CGamma(x)%5CGamma(y)%7D%7B%5CGamma(x+y)%7D"></p>
+</section>
+</section>
+<section id="fórmula-de-stirling-informal-vía-el-método-de-laplace" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="fórmula-de-stirling-informal-vía-el-método-de-laplace"><span class="header-section-number">3</span> Fórmula de Stirling (informal), vía el método de Laplace</h2>
+<p>Necesitamos, para más adelante, saber cómo se comporta <img src="https://latex.codecogs.com/png.latex?n!"> cuando <img src="https://latex.codecogs.com/png.latex?n"> es grande. La técnica que usamos para deducirlo (aproximar una función suave y muy picuda por una parábola alrededor de su máximo) es la misma que reutilizaremos después para la aproximación normal a la Poisson y a la binomial, así que vale la pena verla aquí primero, en su forma más simple.</p>
+<p>Partimos de <img src="https://latex.codecogs.com/png.latex?n!%20=%20%5CGamma(n+1)%20=%20%5Cint_0%5E%5Cinfty%20x%5En%20e%5E%7B-x%7D%5C,dx%20=%20%5Cint_0%5E%5Cinfty%20e%5E%7Bn%5Cln%20x%20-%20x%7D%5C,dx">. El exponente <img src="https://latex.codecogs.com/png.latex?f(x)=n%5Cln%20x%20-%20x"> satisface <img src="https://latex.codecogs.com/png.latex?f'(x)=n/x-1">, que es cero exactamente en <img src="https://latex.codecogs.com/png.latex?x=n">: ahí el integrando alcanza su máximo.</p>
+<p>Hacemos el cambio de variable <img src="https://latex.codecogs.com/png.latex?x=ny">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?n!%20=%20n%5Cint_0%5E%5Cinfty%20e%5E%7Bn%5Cln(ny)-ny%7D%5C,dy%20=%20n%5Cint_0%5E%5Cinfty%20e%5E%7Bn%5Cln%20n%20+%20n%5Cln%20y%20-%20ny%7D%5C,dy%20=%20n%5E%7Bn+1%7D%5Cint_0%5E%5Cinfty%20e%5E%7Bn(%5Cln%20y%20-%20y)%7D%5C,dy%20=%20%5Cleft(%5Cfrac%20ne%5Cright)%5En%20n%5Cint_0%5E%5Cinfty%20e%5E%7Bn(%5Cln%20y%20-%20y+1)%7D%5C,dy"></p>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?g(y):=%5Cln%20y%20-%20y+1">. Como <img src="https://latex.codecogs.com/png.latex?g'(y)=1/y-1">, <img src="https://latex.codecogs.com/png.latex?g"> alcanza su máximo en <img src="https://latex.codecogs.com/png.latex?y=1">, donde <img src="https://latex.codecogs.com/png.latex?g(1)=0"> y <img src="https://latex.codecogs.com/png.latex?g''(1)=-1">. Taylor de orden <img src="https://latex.codecogs.com/png.latex?2"> alrededor de <img src="https://latex.codecogs.com/png.latex?y=1"> da</p>
+<p><img src="https://latex.codecogs.com/png.latex?g(y)%20%5Capprox%20g(1)+g'(1)(y-1)+%5Cfrac%7Bg''(1)%7D2(y-1)%5E2%20=%20-%5Cfrac%7B(y-1)%5E2%7D2"></p>
+<p>Para <img src="https://latex.codecogs.com/png.latex?n"> grande, <img src="https://latex.codecogs.com/png.latex?e%5E%7Bng(y)%7D"> decrece muy rápido lejos de <img src="https://latex.codecogs.com/png.latex?y=1">, así que la contribución de la integral está concentrada cerca de <img src="https://latex.codecogs.com/png.latex?y%5Capprox1">, y podemos reemplazar <img src="https://latex.codecogs.com/png.latex?g"> por su aproximación cuadrática y extender la integral a toda la recta:</p>
+<p><img src="https://latex.codecogs.com/png.latex?n!%20%5Capprox%20%5Cleft(%5Cfrac%20ne%5Cright)%5En%20n%5Cint_%7B-%5Cinfty%7D%5E%5Cinfty%20e%5E%7B-n(y-1)%5E2/2%7D%5C,dy"></p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?z=(y-1)%5Csqrt%20n"> (integral gaussiana, ya calculada arriba: <img src="https://latex.codecogs.com/png.latex?%5Cint%20e%5E%7B-z%5E2/2%7Ddz=%5Csqrt%7B2%5Cpi%7D">),</p>
+<p><img src="https://latex.codecogs.com/png.latex?n!%20%5Capprox%20%5Cleft(%5Cfrac%20ne%5Cright)%5En%20n%5Ccdot%5Cfrac%7B%5Csqrt%7B2%5Cpi%7D%7D%7B%5Csqrt%20n%7D%20=%20%5Cleft(%5Cfrac%20ne%5Cright)%5En%5Csqrt%7B2%5Cpi%20n%7D"></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Fórmula de Stirling">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Fórmula de Stirling
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><img src="https://latex.codecogs.com/png.latex?n!%20%5Csim%20%5Cleft(%5Cfrac%20ne%5Cright)%5En%5Csqrt%7B2%5Cpi%20n%7D%20%5Cqquad%5Ctext%7Bcuando%20%7D%20n%5Cto%5Cinfty"></p>
+<p>equivalentemente, <img src="https://latex.codecogs.com/png.latex?%5Clog%20n!%20%5Capprox%20n%5Clog%20n%20-%20n%20+%20%5Ctfrac12%5Clog(2%5Cpi%20n)">.</p>
+</div>
+</div>
+</section>
+<section id="la-distribución-normal" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="la-distribución-normal"><span class="header-section-number">4</span> La distribución normal</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Definición">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Definición
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><img src="https://latex.codecogs.com/png.latex?X"> tiene distribución <strong>normal</strong> de parámetros <img src="https://latex.codecogs.com/png.latex?%5Cmu"> (media) y <img src="https://latex.codecogs.com/png.latex?%5Csigma"> (desviación estándar) si su función de densidad es</p>
+<p><img src="https://latex.codecogs.com/png.latex?f_X(x;%5Cmu,%5Csigma)%20=%20%5Cfrac1%7B%5Csqrt%7B2%5Cpi%7D%5C,%5Csigma%7D%5C,e%5E%7B-%5Cfrac%7B(x-%5Cmu)%5E2%7D%7B2%5Csigma%5E2%7D%7D"></p>
+<p>Se nota <img src="https://latex.codecogs.com/png.latex?X%5Csim%20N(%5Cmu,%5Csigma%5E2)">. Cuando <img src="https://latex.codecogs.com/png.latex?%5Cmu=0"> y <img src="https://latex.codecogs.com/png.latex?%5Csigma=1"> se llama <strong>normal estándar</strong>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre que <img src="https://latex.codecogs.com/png.latex?f_X(%5Ccdot;%5Cmu,%5Csigma)"> es, en efecto, una función de densidad: que es no negativa (inmediato) y que integra <img src="https://latex.codecogs.com/png.latex?1">. Para lo segundo, sustituya <img src="https://latex.codecogs.com/png.latex?u=(x-%5Cmu)/%5Csigma"> y use la integral gaussiana <img src="https://latex.codecogs.com/png.latex?%5Cint_%7B-%5Cinfty%7D%5E%5Cinfty%20e%5E%7B-u%5E2/2%7D%5C,du=%5Csqrt%7B2%5Cpi%7D"> deducida arriba (solo hay que reescalar: si <img src="https://latex.codecogs.com/png.latex?%5Cint%20e%5E%7B-x%5E2%7Ddx=%5Csqrt%5Cpi">, ¿cuánto vale <img src="https://latex.codecogs.com/png.latex?%5Cint%20e%5E%7B-u%5E2/2%7Ddu">?).</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Toda normal se puede estandarizar con el cambio de variable <img src="https://latex.codecogs.com/png.latex?Z=%5Cdfrac%7BX-%5Cmu%7D%5Csigma">. Demuestre que si <img src="https://latex.codecogs.com/png.latex?X%5Csim%20N(%5Cmu,%5Csigma%5E2)"> entonces <img src="https://latex.codecogs.com/png.latex?Z%5Csim%20N(0,1)"> (calcule la función de distribución de <img src="https://latex.codecogs.com/png.latex?Z"> en términos de la de <img src="https://latex.codecogs.com/png.latex?X"> y derive).</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Nota histórica">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Nota histórica
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La curva normal apareció por primera vez en 1733, en un pequeño panfleto en latín que <strong>Abraham de Moivre</strong> (matemático francés exiliado en Londres) circuló de forma privada entre algunos colegas, incorporado más tarde a la segunda edición de su libro <em>The Doctrine of Chances</em>. De Moivre no la obtuvo estudiando errores de medición ni fenómenos naturales, sino tratando de aproximar sumas de términos binomiales para juegos de azar, y para eso necesitó estimar <img src="https://latex.codecogs.com/png.latex?n!"> para <img src="https://latex.codecogs.com/png.latex?n"> grande, lo que lo llevó a la fórmula que hoy llamamos de Stirling (que de Moivre dedujo primero, y que James Stirling refinó poco después con la constante exacta <img src="https://latex.codecogs.com/png.latex?%5Csqrt%7B2%5Cpi%7D">, la misma fórmula que acabamos de deducir arriba).</p>
+<p>Casi ochenta años después, <strong>Carl Friedrich Gauss</strong> llegó a la misma curva de forma independiente, en 1809, en su tratado sobre el movimiento de los cuerpos celestes: mostró que si los errores de una observación astronómica se distribuyen así, la media aritmética de varias observaciones es la mejor estimación posible del valor verdadero, lo cual justificaba el método de mínimos cuadrados. Esta aplicación a la teoría de errores es la razón por la que la curva también se llama distribución <strong>gaussiana</strong>.</p>
+<p>Fue <strong>Pierre Simon Laplace</strong> quien conectó ambos hilos y les dio su alcance definitivo: entre 1810 y 1812 (en su <em>Théorie analytique des probabilités</em>) extendió el resultado puntual de de Moivre sobre la binomial a un enunciado general, el <strong>teorema central del límite</strong>, que explica por qué la misma curva aparece como límite de sumas de variables independientes casi sin importar su distribución original. Por eso el resultado que veremos en la próxima sección, sobre la Poisson y la binomial, se conoce como el <strong>teorema de de Moivre y Laplace</strong>.</p>
+<p>El nombre “distribución normal” es en realidad bastante posterior a las tres personas anteriores, y su origen exacto se disputa entre los historiadores: se atribuye, de forma independiente y hacia la década de 1870, a Charles Peirce, Francis Galton y Wilhelm Lexis, aunque fue Karl Pearson quien terminó de fijar el nombre en la literatura estadística hacia 1895. Es una pequeña ironía que la curva llevara casi siglo y medio circulando entre matemáticos antes de que alguien la llamara “normal”.</p>
+</div>
+</div>
+</section>
+<section id="un-repaso-intuitivo-media-y-varianza" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="un-repaso-intuitivo-media-y-varianza"><span class="header-section-number">5</span> Un repaso intuitivo: media y varianza</h2>
+<p>Antes de seguir, vale la pena detenerse un momento en qué miden <img src="https://latex.codecogs.com/png.latex?%5Cmu"> y <img src="https://latex.codecogs.com/png.latex?%5Csigma"> en la fórmula de arriba, más allá de ser “parámetros”.</p>
+<p>Si <img src="https://latex.codecogs.com/png.latex?X"> es una variable aleatoria discreta con valores posibles <img src="https://latex.codecogs.com/png.latex?x_1,x_2,%5Cldots">, la <strong>media</strong> de <img src="https://latex.codecogs.com/png.latex?X"> es el promedio de esos valores, ponderado por qué tan probable es cada uno:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cmu%20=%20%5Csum_i%20x_i%5C,P(X=x_i)"></p>
+<p>Es útil pensarla como un centro de masa: si en cada punto <img src="https://latex.codecogs.com/png.latex?x_i"> de la recta real colocaras una pesa de tamaño <img src="https://latex.codecogs.com/png.latex?P(X=x_i)">, <img src="https://latex.codecogs.com/png.latex?%5Cmu"> es el punto exacto donde la balanza queda equilibrada. No es necesariamente un valor que <img src="https://latex.codecogs.com/png.latex?X"> pueda tomar (el promedio de caras en dos lanzamientos de moneda es <img src="https://latex.codecogs.com/png.latex?1">, que sí es alcanzable, pero el promedio del resultado de un dado es <img src="https://latex.codecogs.com/png.latex?3%7B,%7D5">, que no lo es), es simplemente el centro alrededor del cual se reparte la probabilidad.</p>
+<p>La <strong>varianza</strong> mide qué tan dispersos están los valores posibles alrededor de esa media:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2%20=%20%5Csum_i%20(x_i-%5Cmu)%5E2%5C,P(X=x_i)"></p>
+<p>Es el promedio, otra vez ponderado por probabilidad, de qué tan lejos (al cuadrado) cae cada valor posible respecto al centro de masa. Se eleva al cuadrado por dos razones: para que las desviaciones por encima y por debajo de la media no se cancelen entre sí al sumarlas, y para penalizar más las desviaciones grandes que las pequeñas. La raíz cuadrada de la varianza, <img src="https://latex.codecogs.com/png.latex?%5Csigma">, se llama <strong>desviación estándar</strong>, y tiene la ventaja de quedar en las mismas unidades que <img src="https://latex.codecogs.com/png.latex?X"> (si <img src="https://latex.codecogs.com/png.latex?X"> mide milímetros, <img src="https://latex.codecogs.com/png.latex?%5Csigma"> también mide milímetros, mientras que <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2"> quedaría en milímetros al cuadrado, una cantidad sin interpretación física directa). Por eso, cuando se quiere describir qué tan disperso es algo en las unidades originales del problema, se cita <img src="https://latex.codecogs.com/png.latex?%5Csigma">, no <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2">.</p>
+<p>En la normal, <img src="https://latex.codecogs.com/png.latex?%5Cmu"> y <img src="https://latex.codecogs.com/png.latex?%5Csigma"> son exactamente estos dos números: <img src="https://latex.codecogs.com/png.latex?%5Cmu"> ubica el centro (y el único pico) de la curva, y <img src="https://latex.codecogs.com/png.latex?%5Csigma"> controla qué tan ancha o angosta es. Dos normales con la misma <img src="https://latex.codecogs.com/png.latex?%5Cmu"> pero distinta <img src="https://latex.codecogs.com/png.latex?%5Csigma"> están centradas en el mismo punto, pero una es más alta y angosta (varianza chica) y la otra más baja y extendida (varianza grande), siempre con área total <img src="https://latex.codecogs.com/png.latex?1"> debajo de la curva.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">curve</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dnorm</span>(x, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">from =</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">to =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">n =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"steelblue"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lwd =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,</span>
+<span id="cb2-2">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xlab =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"x"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ylab =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"densidad"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ylim =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85</span>))</span>
+<span id="cb2-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">curve</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dnorm</span>(x, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">add =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"firebrick"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lwd =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">n =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>)</span>
+<span id="cb2-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">curve</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dnorm</span>(x, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">add =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"darkgreen"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lwd =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">n =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>)</span>
+<span id="cb2-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">legend</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"topright"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">legend =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sigma = 0.5"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sigma = 1"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sigma = 2"</span>),</span>
+<span id="cb2-6">       <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"steelblue"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"firebrick"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"darkgreen"</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lwd =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">bty =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"n"</span>)</span></code></pre></div></div>
+<div class="cell-output-display">
+<div id="fig-normal-mu-sigma" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-normal-mu-sigma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/probabilidad/vacontinuas/index_files/figure-html/fig-normal-mu-sigma-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-normal-mu-sigma-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Tres normales con la misma media (mu=0) y distinta desviación estándar
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="la-regla-empírica-68-95-y-99.7-por-ciento" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="la-regla-empírica-68-95-y-99.7-por-ciento"><span class="header-section-number">6</span> La regla empírica: 68, 95 y 99.7 por ciento</h2>
+<p>Una consecuencia directa de la forma de la curva normal (y que vale para cualquier <img src="https://latex.codecogs.com/png.latex?%5Cmu,%5Csigma">, gracias a la estandarización) es qué tan concentrada está la probabilidad alrededor de la media, medida en unidades de <img src="https://latex.codecogs.com/png.latex?%5Csigma">:</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Regla empírica">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Regla empírica
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si <img src="https://latex.codecogs.com/png.latex?X%5Csim%20N(%5Cmu,%5Csigma%5E2)">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(%5Cmu-%5Csigma%5Cle%20X%5Cle%20%5Cmu+%5Csigma)%5Capprox%200%7B,%7D6827%20%5Cqquad%20P(%5Cmu-2%5Csigma%5Cle%20X%5Cle%20%5Cmu+2%5Csigma)%5Capprox%200%7B,%7D9545%20%5Cqquad%20P(%5Cmu-3%5Csigma%5Cle%20X%5Cle%20%5Cmu+3%5Csigma)%5Capprox%200%7B,%7D9973"></p>
+<p>Es decir, aproximadamente el <img src="https://latex.codecogs.com/png.latex?68%5C%25"> de la probabilidad vive a menos de una desviación estándar de la media, el <img src="https://latex.codecogs.com/png.latex?95%5C%25"> a menos de dos, y prácticamente todo (<img src="https://latex.codecogs.com/png.latex?99%7B,%7D7%5C%25">) a menos de tres.</p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> (k <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>) {</span>
+<span id="cb3-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cat</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"P(|Z| &lt;="</span>, k, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">") ="</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pnorm</span>(k) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pnorm</span>(<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>k), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb3-3">}</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(|Z| &lt;= 1 ) = 0.6827 
+P(|Z| &lt;= 2 ) = 0.9545 
+P(|Z| &lt;= 3 ) = 0.9973 </code></pre>
+</div>
+</div>
+</section>
+<section id="ejemplo-aplicado-control-de-calidad-en-fabricación" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="ejemplo-aplicado-control-de-calidad-en-fabricación"><span class="header-section-number">7</span> Ejemplo aplicado: control de calidad en fabricación</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Una fábrica produce tornillos cuya longitud, en milímetros, se modela como <img src="https://latex.codecogs.com/png.latex?X%5Csim%20N(50,%5C,0%7B,%7D5%5E2)">: la media nominal es <img src="https://latex.codecogs.com/png.latex?50">mm, con una desviación estándar de <img src="https://latex.codecogs.com/png.latex?0%7B,%7D5">mm debida a variaciones normales del proceso de fabricación. Un tornillo pasa el control de calidad si su longitud está entre <img src="https://latex.codecogs.com/png.latex?49">mm y <img src="https://latex.codecogs.com/png.latex?51">mm.</p>
+<p><strong>¿Qué porcentaje de la producción pasa el control?</strong> Como <img src="https://latex.codecogs.com/png.latex?49=50-2(0%7B,%7D5)"> y <img src="https://latex.codecogs.com/png.latex?51=50+2(0%7B,%7D5)">, el rango de aceptación es exactamente <img src="https://latex.codecogs.com/png.latex?%5B%5Cmu-2%5Csigma,%5Cmu+2%5Csigma%5D">, así que por la regla empírica</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(49%5Cle%20X%5Cle51)%20%5Capprox%200%7B,%7D9545"></p>
+<p>Alrededor de un <img src="https://latex.codecogs.com/png.latex?4%7B,%7D55%5C%25"> de la producción se rechaza.</p>
+<p><strong>¿Qué pasa si además se rechaza cualquier tornillo de más de <img src="https://latex.codecogs.com/png.latex?51%7B,%7D5">mm, sin importar qué tan cerca esté del límite inferior?</strong> Aquí <img src="https://latex.codecogs.com/png.latex?51%7B,%7D5=50+3(0%7B,%7D5)">, así que estandarizando, <img src="https://latex.codecogs.com/png.latex?z=(51%7B,%7D5-50)/0%7B,%7D5=3">, y</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X%3E51%7B,%7D5)%20=%20P(Z%3E3)%20%5Capprox%20%5Cfrac%7B1-0%7B,%7D9973%7D2%20%5Capprox%200%7B,%7D00135"></p>
+<p>Es decir, apenas un poco más de un tornillo de cada mil se rechaza específicamente por exceder ese límite superior.</p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">mu <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>; sigma <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span></span>
+<span id="cb5-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cat</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"P(49&lt;=X&lt;=51)  ="</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pnorm</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">51</span>, mu, sigma) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pnorm</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">49</span>, mu, sigma), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(49&lt;=X&lt;=51)  = 0.9545 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cat</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"P(X &gt; 51.5)   ="</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pnorm</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">51.5</span>, mu, sigma), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(X &gt; 51.5)   = 0.00135 </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicios del libro">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicios del libro
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Haga los ejercicios de la sección correspondiente a variables aleatorias continuas y a la distribución normal en el libro de Blanco Castañeda.</p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/probabilidad/vacontinuas/</guid>
+  <pubDate>Sat, 05 Sep 2026 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>La distribución normal como límite</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/probabilidad/limitenormal/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>En la sección anterior definimos la distribución normal y vimos, con la fórmula de Stirling, el método de Laplace: aproximar una función suave y muy picuda por una parábola alrededor de su máximo, y exponenciar para obtener una forma de campana. En esta sección aplicamos exactamente esa misma técnica dos veces más, directamente sobre la función de masa de la Poisson y de la binomial, para mostrar que ambas se aproximan a la normal cuando su parámetro (o su tamaño de muestra) crece. Este es el resultado que hoy se conoce como el <strong>teorema de de Moivre y Laplace</strong>, y es un caso particular de un fenómeno mucho más general, el teorema central del límite: casi cualquier suma de aportes independientes termina viéndose gaussiana, sin importar la forma de cada aporte individual.</p>
+<section id="la-normal-como-límite-de-una-poisson" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="la-normal-como-límite-de-una-poisson"><span class="header-section-number">1</span> La normal como límite de una Poisson</h2>
+<section id="preámbulo-la-suma-de-poisson-independientes-es-poisson" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="preámbulo-la-suma-de-poisson-independientes-es-poisson"><span class="header-section-number">1.1</span> Preámbulo: la suma de Poisson independientes es Poisson</h3>
+<div class="callout callout-style-default callout-tip callout-titled" title="Proposición">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Proposición
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si <img src="https://latex.codecogs.com/png.latex?Y_1,Y_2"> son independientes, con <img src="https://latex.codecogs.com/png.latex?Y_1%5Csim%20P(%5Clambda_1)"> y <img src="https://latex.codecogs.com/png.latex?Y_2%5Csim%20P(%5Clambda_2)">, entonces <img src="https://latex.codecogs.com/png.latex?Z:=Y_1+Y_2%5Csim%20P(%5Clambda_1+%5Clambda_2)">.</p>
+</div>
+</div>
+<p><strong>Demostración.</strong></p>
+<p><img src="https://latex.codecogs.com/png.latex?P(Z=k)%20=%20P(Y_1+Y_2=k)%20=%20%5Csum_%7Bj=0%7D%5Ek%20P(Y_1=k-j)%5C,P(Y_2=j)%20=%20%5Csum_%7Bj=0%7D%5Ek%20%5Cfrac%7B%5Clambda_1%5E%7Bk-j%7De%5E%7B-%5Clambda_1%7D%7D%7B(k-j)!%7D%5Ccdot%5Cfrac%7B%5Clambda_2%5Ej%20e%5E%7B-%5Clambda_2%7D%7D%7Bj!%7D"></p>
+<p><img src="https://latex.codecogs.com/png.latex?=%20e%5E%7B-(%5Clambda_1+%5Clambda_2)%7D%5Csum_%7Bj=0%7D%5Ek%20%5Cfrac%7B%5Clambda_1%5E%7Bk-j%7D%5Clambda_2%5Ej%7D%7B(k-j)!%5C,j!%7D%20=%20%5Cfrac%7Be%5E%7B-(%5Clambda_1+%5Clambda_2)%7D%7D%7Bk!%7D%5Csum_%7Bj=0%7D%5Ek%5Cbinom%20kj%20%5Clambda_1%5E%7Bk-j%7D%5Clambda_2%5Ej%20=%20e%5E%7B-(%5Clambda_1+%5Clambda_2)%7D%5Cfrac%7B(%5Clambda_1+%5Clambda_2)%5Ek%7D%7Bk!%7D"></p>
+<p>usando el binomio de Newton en el último paso. <img src="https://latex.codecogs.com/png.latex?%5Cblacksquare"></p>
+<p>Por inducción, si <img src="https://latex.codecogs.com/png.latex?Y_1,%5Cldots,Y_n"> son independientes con <img src="https://latex.codecogs.com/png.latex?Y_i%5Csim%20P(%5Clambda_i)">, entonces <img src="https://latex.codecogs.com/png.latex?%5Csum_i%20Y_i%20%5Csim%20P(%5Csum_i%5Clambda_i)">. En particular, si todos comparten el mismo parámetro <img src="https://latex.codecogs.com/png.latex?%5Clambda">, la suma de <img src="https://latex.codecogs.com/png.latex?n"> de ellas es <img src="https://latex.codecogs.com/png.latex?P(n%5Clambda)">.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo: erratas en un manuscrito">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo: erratas en un manuscrito
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si en un manuscrito de <img src="https://latex.codecogs.com/png.latex?200"> páginas se espera encontrar, en promedio, <img src="https://latex.codecogs.com/png.latex?1"> error tipográfico por página (independiente de una página a otra), ¿cuál es la probabilidad de encontrar máximo <img src="https://latex.codecogs.com/png.latex?10"> errores en todo el manuscrito?</p>
+<p>Cada página aporta <img src="https://latex.codecogs.com/png.latex?%5Clambda=1"> (Poisson), y el total del manuscrito es la suma de <img src="https://latex.codecogs.com/png.latex?200"> de esas contribuciones independientes, así que el total <img src="https://latex.codecogs.com/png.latex?X%5Csim%20P(200)">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X%5Cle10)%20%5Capprox%204%7B,%7D1%5Ctimes10%5E%7B-71%7D%20%5Capprox%200"></p>
+<p>En R, <code>ppois(10, 200, lower.tail = TRUE)</code>. Prácticamente imposible: aunque “máximo <img src="https://latex.codecogs.com/png.latex?10"> errores” suena a una meta modesta, comparado con la media de <img src="https://latex.codecogs.com/png.latex?200"> es una desviación enorme. En cambio, si preguntamos por a lo más <img src="https://latex.codecogs.com/png.latex?200"> errores (es decir, no más que la media),</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X%5Cle200)%20%5Capprox%200%7B,%7D5188"></p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cat</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"P(X&lt;=10)  ="</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ppois</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">200</span>), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(X&lt;=10)  = 4.109585e-71 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cat</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"P(X&lt;=200) ="</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ppois</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">200</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">200</span>), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(X&lt;=200) = 0.5188 </code></pre>
+</div>
+</div>
+</section>
+<section id="qué-pasa-cuando-el-parámetro-crece" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="qué-pasa-cuando-el-parámetro-crece"><span class="header-section-number">1.2</span> Qué pasa cuando el parámetro crece</h3>
+<p>Suponga ahora que el número de páginas <img src="https://latex.codecogs.com/png.latex?%5Cto%5Cinfty">; entonces <img src="https://latex.codecogs.com/png.latex?%5Clambda%5Cto%5Cinfty">, y para que la pregunta siga teniendo sentido real, <img src="https://latex.codecogs.com/png.latex?k"> también debe crecer.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre que si <img src="https://latex.codecogs.com/png.latex?X_%5Clambda%5Csim%20P(%5Clambda)">, su varianza es</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2%20=%20%5Csum_%7Bk=0%7D%5E%5Cinfty%20(k-%5Clambda)%5E2%5C,%5Cfrac%7Be%5E%7B-%5Clambda%7D%5Clambda%5Ek%7D%7Bk!%7D%20=%20%5Clambda"></p>
+<p>(sugerencia: escriba <img src="https://latex.codecogs.com/png.latex?k%5E2=k(k-1)+k"> y reduzca cada suma a la serie exponencial completa, igual que se hace para calcular la media).</p>
+</div>
+</div>
+<p>Como la media es <img src="https://latex.codecogs.com/png.latex?%5Clambda"> y la varianza también es <img src="https://latex.codecogs.com/png.latex?%5Clambda">, la desviación estándar es <img src="https://latex.codecogs.com/png.latex?%5Csqrt%5Clambda">. Definimos entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?Z%20:=%20%5Cfrac%7Bk-%5Clambda%7D%7B%5Csqrt%5Clambda%7D"></p>
+<p>que mide cuántas desviaciones estándar nos hemos alejado de la media. Vamos a mostrar que <img src="https://latex.codecogs.com/png.latex?Z%5Cto%20N(0,1)">, escribiendo <img src="https://latex.codecogs.com/png.latex?k=%5Clambda+%5Csqrt%5Clambda%5C,z"> para <img src="https://latex.codecogs.com/png.latex?z"> fijo y dejando <img src="https://latex.codecogs.com/png.latex?%5Clambda%5Cto%5Cinfty">.</p>
+</section>
+<section id="deducción-vía-el-método-de-laplace" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="deducción-vía-el-método-de-laplace"><span class="header-section-number">1.3</span> Deducción vía el método de Laplace</h3>
+<p>Si <img src="https://latex.codecogs.com/png.latex?P_%5Clambda(k)%20=%20%5Cdfrac1%7Bk!%7De%5E%7B-%5Clambda%7D%5Clambda%5Ek">, entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clog%20P_%5Clambda(k)%20=%20-%5Clambda+k%5Clog%5Clambda-%5Clog%20k!"></p>
+<p>Usando Stirling, <img src="https://latex.codecogs.com/png.latex?%5Clog%20k!%20%5Capprox%20k%5Clog%20k%20-%20k%20+%20%5Ctfrac12%5Clog(2%5Cpi%20k)">, así que</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clog%20P_%5Clambda(k)%20=%20%5Cunderbrace%7B-%5Clambda+k%5Clog%5Clambda-k%5Clog%20k+k%7D_%7B%5Cdisplaystyle%20%5Cphi(k)%7D%20-%20%5Cfrac12%5Clog(2%5Cpi%20k)"></p>
+<p>Usamos el método de Laplace de nuevo, tratando <img src="https://latex.codecogs.com/png.latex?%5Cphi"> como función suave de <img src="https://latex.codecogs.com/png.latex?k">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cphi'(k)%20=%20%5Clog%5Clambda-%5Clog%20k-1+1%20=%20%5Clog%5Clambda-%5Clog%20k"></p>
+<p>Como si <img src="https://latex.codecogs.com/png.latex?k%5Cmapsto%5Cphi(k)"> fuera continua, <img src="https://latex.codecogs.com/png.latex?%5Cphi"> alcanza su máximo en <img src="https://latex.codecogs.com/png.latex?k=%5Clambda"> (ahí <img src="https://latex.codecogs.com/png.latex?%5Cphi'=0">), y en ese punto <img src="https://latex.codecogs.com/png.latex?%5Cphi(%5Clambda)=0">. Taylor de orden <img src="https://latex.codecogs.com/png.latex?2"> alrededor de <img src="https://latex.codecogs.com/png.latex?%5Clambda">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cphi(%5Clambda+u)%20%5Capprox%20%5Cphi(%5Clambda)+%5Cphi'(%5Clambda)u+%5Cfrac%7B%5Cphi''(%5Clambda)%7D2u%5E2%20=%20-%5Cfrac%7Bu%5E2%7D%7B2%5Clambda%7D"></p>
+<p>(pues <img src="https://latex.codecogs.com/png.latex?%5Cphi''(k)=-1/k">, así que <img src="https://latex.codecogs.com/png.latex?%5Cphi''(%5Clambda)=-1/%5Clambda">). Con <img src="https://latex.codecogs.com/png.latex?k=%5Clambda+%5Csqrt%5Clambda%5C,z"> (es decir <img src="https://latex.codecogs.com/png.latex?u=%5Csqrt%5Clambda%5C,z">),</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cphi(k)%20%5Capprox%20-%5Cfrac%7B(%5Csqrt%5Clambda%5C,z)%5E2%7D%5Clambda%20=%20-z%5E2"></p>
+<p>Falta la parte polinomial <img src="https://latex.codecogs.com/png.latex?-%5Ctfrac12%5Clog(2%5Cpi%20k)">. Como <img src="https://latex.codecogs.com/png.latex?k=%5Clambda(1+z/%5Csqrt%5Clambda)">, si <img src="https://latex.codecogs.com/png.latex?%5Clambda%5Cto%5Cinfty"> con <img src="https://latex.codecogs.com/png.latex?z"> fijo, <img src="https://latex.codecogs.com/png.latex?%5Clog%20k%20=%20%5Clog%5Clambda+%5Clog(1+z/%5Csqrt%5Clambda)%5Cto%5Clog%5Clambda">, así que <img src="https://latex.codecogs.com/png.latex?-%5Ctfrac12%5Clog(2%5Cpi%20k)%5Cto-%5Ctfrac12%5Clog(2%5Cpi%5Clambda)">. Juntando todo,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clog%20P(X_%5Clambda=k)%20%5Clongrightarrow%20-%5Cfrac%7Bz%5E2%7D2-%5Cfrac12%5Clog(2%5Cpi%5Clambda)"></p>
+<p>de donde</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X_%5Clambda=k)%20%5Csim%20%5Cfrac1%7B%5Csqrt%7B2%5Cpi%5Clambda%7D%7D%5C,e%5E%7B-z%5E2/2%7D"></p>
+<div class="callout callout-style-default callout-important callout-titled" title="De masa a densidad">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>De masa a densidad
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><img src="https://latex.codecogs.com/png.latex?P(X_%5Clambda=k)"> es la masa de un punto, y por sí sola siempre tiende a <img src="https://latex.codecogs.com/png.latex?0">: no puede converger a nada interesante. Lo que sí converge es la densidad, es decir, la masa dividida entre el ancho de la celda que le corresponde. Los enteros <img src="https://latex.codecogs.com/png.latex?k"> están espaciados <img src="https://latex.codecogs.com/png.latex?1"> entre sí, pero en la variable <img src="https://latex.codecogs.com/png.latex?z=(k-%5Clambda)/%5Csqrt%5Clambda"> ese mismo espaciamiento es <img src="https://latex.codecogs.com/png.latex?1/%5Csqrt%5Clambda">. Por eso</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bdensidad%7D%20=%20%5Cfrac%7B%5Ctext%7Bmasa%7D%7D%7B%5Ctext%7Bancho%7D%7D%20=%20%5Cfrac%7BP(X_%5Clambda=k)%7D%7B1/%5Csqrt%5Clambda%7D%20=%20%5Csqrt%5Clambda%5C,P(X_%5Clambda=k)%20%5Clongrightarrow%20%5Cfrac1%7B%5Csqrt%7B2%5Cpi%7D%7De%5E%7B-z%5E2/2%7D"></p>
+<p>que es exactamente la densidad normal estándar evaluada en <img src="https://latex.codecogs.com/png.latex?z">.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema (de Moivre y Laplace para la Poisson)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Teorema (de Moivre y Laplace para la Poisson)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si <img src="https://latex.codecogs.com/png.latex?X_%5Clambda%5Csim%20P(%5Clambda)">, entonces para cada <img src="https://latex.codecogs.com/png.latex?z%5Cin%5Cmathbb%20R"> fijo, y toda sucesión de enteros <img src="https://latex.codecogs.com/png.latex?k=k(%5Clambda)"> con <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7Bk-%5Clambda%7D%7B%5Csqrt%5Clambda%7D%5Cto%20z"> cuando <img src="https://latex.codecogs.com/png.latex?%5Clambda%5Cto%5Cinfty">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Csqrt%5Clambda%5C,P(X_%5Clambda=k)%20%5Clongrightarrow%20%5Cfrac1%7B%5Csqrt%7B2%5Cpi%7D%7De%5E%7B-z%5E2/2%7D"></p>
+<p>Equivalentemente, si <img src="https://latex.codecogs.com/png.latex?Z_%5Clambda%20:=%20%5Cdfrac%7BX_%5Clambda-%5Clambda%7D%7B%5Csqrt%5Clambda%7D">, entonces <img src="https://latex.codecogs.com/png.latex?Z_%5Clambda%5Cto%20N(0,1)">.</p>
+</div>
+</div>
+<p>Volviendo al ejemplo del manuscrito: con <img src="https://latex.codecogs.com/png.latex?%5Clambda=200">, la probabilidad de que todos los errores estén por debajo de la media se aproxima con</p>
+<p><img src="https://latex.codecogs.com/png.latex?P_%7B200%7D(X%5Cle200)%20%5Capprox%20%5Cfrac1%7B%5Csqrt%7B2%5Cpi%7D%7D%5Cint_%7B-%5Cinfty%7D%5E0%20e%5E%7B-z%5E2/2%7D%5C,dz%20=%200%7B,%7D5"></p>
+<p>muy cerca del valor exacto, <img src="https://latex.codecogs.com/png.latex?0%7B,%7D5188">, calculado arriba.</p>
+<p>Esta aproximación mejora si se aplica la corrección de continuidad discutida más adelante para la binomial: como el entero <img src="https://latex.codecogs.com/png.latex?k=200"> representa en realidad la franja <img src="https://latex.codecogs.com/png.latex?%5B199%7B,%7D5,%5C,200%7B,%7D5%5D">, el evento <img src="https://latex.codecogs.com/png.latex?%5C%7BX%5Cle200%5C%7D"> corresponde al intervalo continuo <img src="https://latex.codecogs.com/png.latex?(-%5Cinfty,%5C,200%7B,%7D5%5D">, no a <img src="https://latex.codecogs.com/png.latex?(-%5Cinfty,%5C,200%5D">. Con esa corrección,</p>
+<p><img src="https://latex.codecogs.com/png.latex?P_%7B200%7D(X%5Cle200)%20%5Capprox%20%5Cfrac1%7B%5Csqrt%7B2%5Cpi%7D%7D%5Cint_%7B-%5Cinfty%7D%5E%7B(200%7B,%7D5-200)/%5Csqrt%7B200%7D%7D%20e%5E%7B-z%5E2/2%7D%5C,dz%20%5Capprox%200%7B,%7D5141"></p>
+<p>más cerca todavía del valor exacto <img src="https://latex.codecogs.com/png.latex?0%7B,%7D5188"> que el <img src="https://latex.codecogs.com/png.latex?0,5"> obtenido sin la corrección.</p>
+</section>
+</section>
+<section id="la-normal-como-límite-de-una-binomial" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="la-normal-como-límite-de-una-binomial"><span class="header-section-number">2</span> La normal como límite de una binomial</h2>
+<section id="media-y-varianza-de-la-binomial" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="media-y-varianza-de-la-binomial"><span class="header-section-number">2.1</span> Media y varianza de la binomial</h3>
+<p>Repetimos el ejercicio de suma de variables aleatorias, ahora con este caso: si <img src="https://latex.codecogs.com/png.latex?I_i%5Csim%5Ctext%7BBernoulli%7D(p)"> son independientes, entonces <img src="https://latex.codecogs.com/png.latex?X=%5Csum_%7Bi=1%7D%5En%20I_i%20%5Csim%20%5Ctext%7BBinomial%7D(n,p)">, con</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X=k)%20=%20%5Cbinom%20nk%20p%5Ek%20q%5E%7Bn-k%7D%20%5Cqquad%20q:=1-p"></p>
+<p><strong>La media es</strong></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bk=0%7D%5En%20k%5Cbinom%20nk%20p%5Ekq%5E%7Bn-k%7D%20=%20%5Csum_%7Bk=1%7D%5En%20n%5Cbinom%7Bn-1%7D%7Bk-1%7Dp%5Ekq%5E%7Bn-k%7D%20=%20np%5Csum_%7Bk=1%7D%5En%5Cbinom%7Bn-1%7D%7Bk-1%7Dp%5E%7Bk-1%7Dq%5E%7B(n-1)-(k-1)%7D%20=%20np(p+q)%5E%7Bn-1%7D%20=%20np"></p>
+<p>usando la identidad <img src="https://latex.codecogs.com/png.latex?k%5Cbinom%20nk=n%5Cbinom%7Bn-1%7D%7Bk-1%7D"> y reindexando <img src="https://latex.codecogs.com/png.latex?j=k-1">.</p>
+<p><strong>La varianza.</strong> Escribimos <img src="https://latex.codecogs.com/png.latex?k%5E2=k(k-1)+k"> y obtenemos, con la identidad análoga <img src="https://latex.codecogs.com/png.latex?k(k-1)%5Cbinom%20nk%20=%20n(n-1)%5Cbinom%7Bn-2%7D%7Bk-2%7D">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bk=0%7D%5En%20k(k-1)%5Cbinom%20nk%20p%5Ekq%5E%7Bn-k%7D%20=%20n(n-1)p%5E2%5Csum_%7Bk=2%7D%5En%5Cbinom%7Bn-2%7D%7Bk-2%7Dp%5E%7Bk-2%7Dq%5E%7B(n-2)-(k-2)%7D%20=%20n(n-1)p%5E2"></p>
+<p>Así, <img src="https://latex.codecogs.com/png.latex?E(k%5E2)=n(n-1)p%5E2+np">, y con <img src="https://latex.codecogs.com/png.latex?%5Cmu=np">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2%20=%20n(n-1)p%5E2+np-(np)%5E2%20=%20np(1-p)%20=%20npq"></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Camino alterno, más corto">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Camino alterno, más corto
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Como <img src="https://latex.codecogs.com/png.latex?X=%5Csum%20I_i"> con <img src="https://latex.codecogs.com/png.latex?I_i"> independientes, y cada <img src="https://latex.codecogs.com/png.latex?I_i"> tiene media <img src="https://latex.codecogs.com/png.latex?p"> y varianza <img src="https://latex.codecogs.com/png.latex?p(1-p)=pq"> (pues <img src="https://latex.codecogs.com/png.latex?I_i%5E2=I_i">, así que su varianza es <img src="https://latex.codecogs.com/png.latex?p-p%5E2">), la media y la varianza de una suma de variables independientes son la suma de las medias y de las varianzas respectivamente: <img src="https://latex.codecogs.com/png.latex?%5Cmu=np">, <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2=npq">, sin sumar ninguna serie.</p>
+</div>
+</div>
+</section>
+<section id="estandarización-y-el-método-de-laplace" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="estandarización-y-el-método-de-laplace"><span class="header-section-number">2.2</span> Estandarización y el método de Laplace</h3>
+<p>Consideremos <img src="https://latex.codecogs.com/png.latex?Z=%5Cdfrac%7Bk-np%7D%7B%5Csqrt%7Bnpq%7D%7D">, que mide cuántas desviaciones estándar nos hemos alejado de la media. Si <img src="https://latex.codecogs.com/png.latex?X_n%5Csim%5Ctext%7BBinomial%7D(n,p)">, <img src="https://latex.codecogs.com/png.latex?p%5Cin(0,1)"> fijo, entonces para <img src="https://latex.codecogs.com/png.latex?z%5Cin%5Cmathbb%20R"> fijo, para toda sucesión de enteros <img src="https://latex.codecogs.com/png.latex?k(n)"> tales que <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7Bk-np%7D%7B%5Csqrt%7Bnpq%7D%7D%5Cto%20z"> cuando <img src="https://latex.codecogs.com/png.latex?n%5Cto%5Cinfty">, veremos que <img src="https://latex.codecogs.com/png.latex?P(X_n=k)%5Cto%5Cvarphi(z)/%5Csqrt%7Bnpq%7D">.</p>
+<p>Nuevamente por el método de Laplace:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clog%20P(X=k)%20=%20%5Clog%20n!-%5Clog%20k!-%5Clog(n-k)!+k%5Clog%20p+(n-k)%5Clog%20q"></p>
+<p>Con Stirling (<img src="https://latex.codecogs.com/png.latex?%5Clog%20m!%5Capprox%20m%5Clog%20m-m+%5Ctfrac12%5Clog(2%5Cpi%20m)">) en los tres factoriales,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clog%20P(X=k)%20=%20%5Cunderbrace%7Bn%5Clog%20n-k%5Clog%20k-(n-k)%5Clog(n-k)+k%5Clog%20p+(n-k)%5Clog%20q%7D_%7B%5Cdisplaystyle%5Cpsi(k)%7D%20+%20%5Ctfrac12%5Clog(2%5Cpi%20n)-%5Ctfrac12%5Clog(2%5Cpi%20k)-%5Ctfrac12%5Clog(2%5Cpi(n-k))"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cpsi'(k)%20=%20-%5Clog%20k-1+%5Clog(n-k)+1+%5Clog%20p-%5Clog%20q%20=%20%5Clog%5Cleft(%5Cfrac%7B(n-k)p%7D%7Bkq%7D%5Cright)"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cpsi'(k)=0%20%5Ciff%20(n-k)p=kq%20%5Ciff%20np-kp=k-kp%20%5Ciff%20k=np"></p>
+<p>que es lo que esperábamos: el máximo está en la media. Ahí,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cpsi''(np)%20=%20-%5Cfrac1%7Bnp%7D-%5Cfrac1%7Bnq%7D%20=%20-%5Cfrac1%7Bnpq%7D"></p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?u=%5Csqrt%7Bnpq%7D%5C,z">, Taylor de orden <img src="https://latex.codecogs.com/png.latex?2"> da <img src="https://latex.codecogs.com/png.latex?%5Cpsi(np+u)%5Capprox-%5Cdfrac%7Bu%5E2%7D%7B2npq%7D=-%5Cdfrac%7Bz%5E2%7D2">. La parte polinomial, evaluada en <img src="https://latex.codecogs.com/png.latex?k=np">, <img src="https://latex.codecogs.com/png.latex?n-k=nq">, se simplifica a <img src="https://latex.codecogs.com/png.latex?-%5Ctfrac12%5Clog(2%5Cpi%5C,npq)"> (el mismo tipo de cancelación que en la Poisson). Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X=np+z%5Csqrt%7Bnpq%7D)%20%5Capprox%20%5Cfrac1%7B%5Csqrt%7B2%5Cpi%5C,npq%7D%7De%5E%7B-z%5E2/2%7D"></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema (de Moivre y Laplace para la binomial)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Teorema (de Moivre y Laplace para la binomial)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si <img src="https://latex.codecogs.com/png.latex?X_n%5Csim%5Ctext%7BBinomial%7D(n,p)">, <img src="https://latex.codecogs.com/png.latex?p%5Cin(0,1)"> fijo, entonces para cada <img src="https://latex.codecogs.com/png.latex?z%5Cin%5Cmathbb%20R"> fijo, y toda sucesión de enteros <img src="https://latex.codecogs.com/png.latex?k(n)"> con <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7Bk-np%7D%7B%5Csqrt%7Bnpq%7D%7D%5Cto%20z"> cuando <img src="https://latex.codecogs.com/png.latex?n%5Cto%5Cinfty">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Csqrt%7Bnpq%7D%5C,P(X_n=k)%20%5Clongrightarrow%20%5Cfrac1%7B%5Csqrt%7B2%5Cpi%7D%7De%5E%7B-z%5E2/2%7D"></p>
+<p>Equivalentemente, si <img src="https://latex.codecogs.com/png.latex?Z_n:=%5Cdfrac%7BX_n-np%7D%7B%5Csqrt%7Bnpq%7D%7D">, entonces <img src="https://latex.codecogs.com/png.latex?Z_n%5Cto%20N(0,1)">.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Dos límites distintos, no confundir">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Dos límites distintos, no confundir
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Este es un límite diferente del que vimos en la sección de <a href="../../../cursos/probabilidad/vadiscretas/index.html">variables aleatorias discretas</a>, donde <img src="https://latex.codecogs.com/png.latex?n%5Cto%5Cinfty"> y <img src="https://latex.codecogs.com/png.latex?p%5Cto0"> manteniendo <img src="https://latex.codecogs.com/png.latex?np%5Cto%5Clambda"> fijo (el régimen de sucesos raros, que da la aproximación de Poisson). Aquí, en cambio, <img src="https://latex.codecogs.com/png.latex?p"> se mantiene fijo y es <img src="https://latex.codecogs.com/png.latex?n"> el que crece sin control: es el mismo régimen de “muchos aportes independientes” que en la Poisson, solo que ahora los aportes son Bernoulli en vez de Poisson unitarias.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="ejemplo-cien-lanzamientos-de-una-moneda-justa" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="ejemplo-cien-lanzamientos-de-una-moneda-justa"><span class="header-section-number">3</span> Ejemplo: cien lanzamientos de una moneda justa</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si lanzamos una moneda justa <img src="https://latex.codecogs.com/png.latex?100"> veces, <img src="https://latex.codecogs.com/png.latex?%5Cmu=np=50"> y <img src="https://latex.codecogs.com/png.latex?%5Csigma=%5Csqrt%7Bnpq%7D=5">. ¿Cuál es la probabilidad de obtener entre <img src="https://latex.codecogs.com/png.latex?45"> y <img src="https://latex.codecogs.com/png.latex?55"> caras?</p>
+<p><strong>Cálculo exacto.</strong></p>
+<p><img src="https://latex.codecogs.com/png.latex?P(45%5Cle%20X%5Cle55)%20=%20F_X(55)-F_X(44)"></p>
+<p>En R: <code>pbinom(55, 100, 0.5) - pbinom(44, 100, 0.5)</code>.</p>
+<p><strong>Usando la aproximación normal, sin corrección de continuidad</strong> (un error apreciable):</p>
+<p><img src="https://latex.codecogs.com/png.latex?P%5Cleft(%5Cfrac%7B45-50%7D5%5Cle%20Z%5Cle%5Cfrac%7B55-50%7D5%5Cright)%20=%20P(-1%5Cle%20Z%5Cle1)%20%5Capprox%200%7B,%7D68"></p>
+<p><strong>Extendiendo medio paso a cada lado</strong> (corrección de continuidad: cada entero <img src="https://latex.codecogs.com/png.latex?k"> representa, en realidad, la franja <img src="https://latex.codecogs.com/png.latex?%5Bk-%5Ctfrac12,k+%5Ctfrac12%5D">, así que el rango de enteros del <img src="https://latex.codecogs.com/png.latex?45"> al <img src="https://latex.codecogs.com/png.latex?55"> corresponde al intervalo continuo <img src="https://latex.codecogs.com/png.latex?%5B44%7B,%7D5,%5C,55%7B,%7D5%5D">):</p>
+<p><img src="https://latex.codecogs.com/png.latex?P%5Cleft(%5Cfrac%7B44%7B,%7D5-50%7D5%5Cle%20Z%5Cle%5Cfrac%7B55%7B,%7D5-50%7D5%5Cright)%20%5Capprox%200%7B,%7D72"></p>
+<p>mucho más cerca del valor exacto.</p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">exacto <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pbinom</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">55</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pbinom</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">44</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb5-2">sin_cc <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pnorm</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pnorm</span>(<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb5-3">con_cc <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pnorm</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.1</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pnorm</span>(<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.1</span>)</span>
+<span id="cb5-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cat</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Exacto (binomial)               :"</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(exacto, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Exacto (binomial)               : 0.7287 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cat</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Aprox. normal, sin correccion   :"</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(sin_cc, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Aprox. normal, sin correccion   : 0.6827 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cat</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Aprox. normal, con correccion   :"</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(con_cc, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Aprox. normal, con correccion   : 0.7287 </code></pre>
+</div>
+</div>
+</section>
+<section id="panel-interactivo-de-la-binomial-y-la-poisson-a-la-normal" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="panel-interactivo-de-la-binomial-y-la-poisson-a-la-normal"><span class="header-section-number">4</span> Panel interactivo: de la binomial y la Poisson a la normal</h2>
+<p>El siguiente panel muestra, lado a lado, la función de masa de una Binomial<img src="https://latex.codecogs.com/png.latex?(n,p)"> o de una Poisson<img src="https://latex.codecogs.com/png.latex?(%5Clambda)"> (según se elija) y la densidad normal con la misma media y varianza. Mueva los parámetros para ver cómo, a medida que <img src="https://latex.codecogs.com/png.latex?n"> (o <img src="https://latex.codecogs.com/png.latex?%5Clambda">) crece, las barras se acomodan cada vez mejor debajo de la curva.</p>
+<iframe src="notebooks/aproximacionnormal.html" width="100%" height="620" style="border:1px solid #dfe3e2; border-radius:6px;" title="Panel interactivo: binomial y Poisson aproximadas por la normal"></iframe>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicios del libro">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicios del libro
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Haga los ejercicios del libro de Blanco Castañeda relacionados con la aproximación normal a la binomial y a la Poisson y los que involucren a la distribuciones normal y uniforme.</p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/probabilidad/limitenormal/</guid>
+  <pubDate>Sat, 05 Sep 2026 05:00:00 GMT</pubDate>
+</item>
+<item>
   <title>Variables aleatorias</title>
   <dc:creator>Arturo Sanjuán</dc:creator>
   <link>https://arturosanjuan.xyz/cursos/probabilidad/vaintro/</link>
