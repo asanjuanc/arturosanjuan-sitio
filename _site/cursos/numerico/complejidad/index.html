@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Arturo Sanjuán">
-<meta name="description" content="Problemas vs.&nbsp;algoritmos, el método de Horner, estabilidad, error hacia atrás, y el análisis completo del ejercicio 1.4.2 (condicionamiento vs.&nbsp;inestabilidad para f(x)=(e^x-1)/x.">
+<meta name="description" content="Definición formal de la notación o pequeña, O grande y equivalencia asintótica; conteo de flops de un algoritmo, con el ejemplo del producto matriz vector; y una breve conexión con la distinción entre las clases de complejidad P y NP.">
 
-<title>Estabilidad – Arturo Sanjuán</title>
+<title>Complejidad – Arturo Sanjuán</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -73,8 +73,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
-<link href="../../../cursos/numerico/taller-1/index.html" rel="next">
-<link href="../../../cursos/numerico/condicionamiento/index.html" rel="prev">
+<link href="../../../cursos/numerico/matrices/index.html" rel="prev">
 <link href="../../../favicon.png" rel="icon" type="image/png">
 <script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -180,7 +179,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../cursos/numerico/estabilidad/index.html">Estabilidad</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../cursos/numerico/complejidad/index.html">Complejidad</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -215,7 +214,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../cursos/numerico/estabilidad/index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../../cursos/numerico/estabilidad/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Estabilidad</span></a>
   </div>
 </li>
@@ -233,7 +232,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../cursos/numerico/complejidad/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../cursos/numerico/complejidad/index.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Complejidad</span></a>
   </div>
 </li>
@@ -243,14 +242,14 @@ window.Quarto = {
     <h2 id="toc-title">Contenido</h2>
    
   <ul>
-  <li><a href="#problemas-vs.-algoritmos" id="toc-problemas-vs.-algoritmos" class="nav-link active" data-scroll-target="#problemas-vs.-algoritmos"><span class="header-section-number">1</span> Problemas vs.&nbsp;algoritmos</a></li>
-  <li><a href="#estudio-de-caso-evaluación-de-un-polinomio-el-método-de-horner" id="toc-estudio-de-caso-evaluación-de-un-polinomio-el-método-de-horner" class="nav-link" data-scroll-target="#estudio-de-caso-evaluación-de-un-polinomio-el-método-de-horner"><span class="header-section-number">2</span> Estudio de caso: evaluación de un polinomio — el método de Horner</a></li>
-  <li><a href="#ejercicio-1.4.2-fx-dfracex-1x" id="toc-ejercicio-1.4.2-fx-dfracex-1x" class="nav-link" data-scroll-target="#ejercicio-1.4.2-fx-dfracex-1x"><span class="header-section-number">3</span> Ejercicio 1.4.2 — <span class="math inline">\(f(x) = \dfrac{e^x-1}{x}\)</span></a>
+  <li><a href="#notación-de-landau-la-o-pequeña" id="toc-notación-de-landau-la-o-pequeña" class="nav-link active" data-scroll-target="#notación-de-landau-la-o-pequeña"><span class="header-section-number">1</span> Notación de Landau: la <span class="math inline">\(o\)</span> pequeña</a></li>
+  <li><a href="#la-o-grande-y-la-equivalencia-asintótica" id="toc-la-o-grande-y-la-equivalencia-asintótica" class="nav-link" data-scroll-target="#la-o-grande-y-la-equivalencia-asintótica"><span class="header-section-number">2</span> La <span class="math inline">\(O\)</span> grande y la equivalencia asintótica</a></li>
+  <li><a href="#conteo-de-flops" id="toc-conteo-de-flops" class="nav-link" data-scroll-target="#conteo-de-flops"><span class="header-section-number">3</span> Conteo de flops</a></li>
+  <li><a href="#ejemplo-flops-del-producto-matriz-vector" id="toc-ejemplo-flops-del-producto-matriz-vector" class="nav-link" data-scroll-target="#ejemplo-flops-del-producto-matriz-vector"><span class="header-section-number">4</span> Ejemplo: flops del producto matriz-vector</a>
   <ul class="collapse">
-  <li><a href="#a-número-de-condición-y-su-máximomínimo-en--11" id="toc-a-número-de-condición-y-su-máximomínimo-en--11" class="nav-link" data-scroll-target="#a-número-de-condición-y-su-máximomínimo-en--11"><span class="header-section-number">3.1</span> (a) Número de condición y su máximo/mínimo en <span class="math inline">\([-1,1]\)</span></a></li>
-  <li><a href="#bd-dos-algoritmos-para-el-mismo-problema" id="toc-bd-dos-algoritmos-para-el-mismo-problema" class="nav-link" data-scroll-target="#bd-dos-algoritmos-para-el-mismo-problema"><span class="header-section-number">3.2</span> (b)–(d) Dos algoritmos para el mismo problema</a></li>
+  <li><a href="#un-aparte-las-clases-p-y-np" id="toc-un-aparte-las-clases-p-y-np" class="nav-link" data-scroll-target="#un-aparte-las-clases-p-y-np"><span class="header-section-number">4.1</span> Un aparte: las clases P y NP</a></li>
   </ul></li>
-  <li><a href="#conexión-con-la-nota-de-condicionamiento" id="toc-conexión-con-la-nota-de-condicionamiento" class="nav-link" data-scroll-target="#conexión-con-la-nota-de-condicionamiento"><span class="header-section-number">4</span> Conexión con la nota de condicionamiento</a></li>
+  <li><a href="#comparando-teoría-y-práctica-gráficas-log-log" id="toc-comparando-teoría-y-práctica-gráficas-log-log" class="nav-link" data-scroll-target="#comparando-teoría-y-práctica-gráficas-log-log"><span class="header-section-number">5</span> Comparando teoría y práctica: gráficas log-log</a></li>
   </ul>
 </nav>
 </nav>
@@ -263,13 +262,13 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Estabilidad</h1>
-<p class="subtitle lead">Algoritmos y estabilidad ejemplo con f(x)=(e^x-1)/x).</p>
+<h1 class="title">Complejidad</h1>
+<p class="subtitle lead">Notación de Landau y conteo de flops</p>
 </div>
 
 <div>
   <div class="description">
-    Problemas vs.&nbsp;algoritmos, el método de Horner, estabilidad, error hacia atrás, y el análisis completo del ejercicio 1.4.2 (condicionamiento vs.&nbsp;inestabilidad para f(x)=(e^x-1)/x.
+    Definición formal de la notación o pequeña, O grande y equivalencia asintótica; conteo de flops de un algoritmo, con el ejemplo del producto matriz vector; y una breve conexión con la distinción entre las clases de complejidad P y NP.
   </div>
 </div>
 
@@ -286,7 +285,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">23 de agosto de 2026</p>
+      <p class="date">6 de septiembre de 2026</p>
     </div>
   </div>
   
@@ -298,35 +297,12 @@ window.Quarto = {
 </header>
 
 
-<section id="problemas-vs.-algoritmos" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="problemas-vs.-algoritmos"><span class="header-section-number">1</span> Problemas vs.&nbsp;algoritmos</h2>
-<p>Un problema matemático idealizado se puede representar como una función <span class="math inline">\(a \mapsto f(a)\)</span>: a partir de un dato <span class="math inline">\(a\)</span>, se produce exactamente el resultado <span class="math inline">\(f(a)\)</span>. En la práctica, casi nunca podemos calcular <span class="math inline">\(f(a)\)</span> de manera exacta con un número finito de pasos aritméticos; en su lugar, construimos un <strong>algoritmo</strong>, otra función <span class="math inline">\(a \mapsto \tilde f(a)\)</span>, que aproxima a <span class="math inline">\(f\)</span> mediante una sucesión finita de operaciones elementales.</p>
-<p>Un mismo problema <span class="math inline">\(f\)</span> puede tener muchos algoritmos <span class="math inline">\(\tilde f\)</span> distintos que lo aproximan — y, como veremos, no todos son igual de buenos, incluso cuando matemáticamente (con aritmética exacta) producen el mismo resultado.</p>
-</section>
-<section id="estudio-de-caso-evaluación-de-un-polinomio-el-método-de-horner" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="estudio-de-caso-evaluación-de-un-polinomio-el-método-de-horner"><span class="header-section-number">2</span> Estudio de caso: evaluación de un polinomio — el método de Horner</h2>
-<p>Antes de hablar de estabilidad numérica, vale la pena ver un ejemplo de que “distintos algoritmos para el mismo problema” no es solo una cuestión de precisión: también puede ser una cuestión de <strong>eficiencia</strong>.</p>
-<p>Consideremos <span class="math display">\[p(x) = 5x^3 + 4x^2 + 3x + 2.\]</span></p>
-<p><strong>Evaluación directa.</strong> Calculamos <span class="math inline">\(x^2\)</span> (1 producto), luego <span class="math inline">\(x^3 = x^2\cdot x\)</span> (1 producto más), y finalmente los tres productos <span class="math inline">\(5x^3\)</span>, <span class="math inline">\(4x^2\)</span>, <span class="math inline">\(3x\)</span> (3 productos). En total: <strong>5 productos</strong> y <strong>3 sumas</strong> — 8 operaciones aritméticas.</p>
-<p><strong>Método de Horner.</strong> Reescribimos <span class="math inline">\(p\)</span> anidando la variable: <span class="math display">\[p(x) = ((5x+4)x+3)x+2.\]</span> Cada uno de los tres paréntesis cuesta exactamente 1 producto y 1 suma: <strong>3 productos</strong> y <strong>3 sumas</strong> — 6 operaciones en total.</p>
-<p><span class="math display">\[\frac{8-6}{8} = 0{,}25\]</span></p>
-<p>El método de Horner ahorra el <strong>25%</strong> del esfuerzo computacional respecto a la evaluación directa, y esta ventaja crece con el grado del polinomio: para grado <span class="math inline">\(n\)</span>, la evaluación directa requiere <span class="math inline">\(O(n^2)\)</span> productos (si no se reutiliza <span class="math inline">\(x^k\)</span>) o al menos <span class="math inline">\(2n-1\)</span> productos y <span class="math inline">\(n\)</span> sumas incluso reutilizando potencias, mientras que Horner siempre usa exactamente <span class="math inline">\(n\)</span> productos y <span class="math inline">\(n\)</span> sumas.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">    horner(coefs, x)</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="st">Evalúa el polinomio con coeficientes `coefs = [a_n, a_{n-1}, ..., a_1, a_0]`</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">(de mayor a menor grado) en el punto `x`, usando el método de Horner.</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">horner</span>(coefs, x)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    resultado <span class="op">=</span> coefs[<span class="fl">1</span>]</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c <span class="kw">in</span> coefs[<span class="fl">2</span><span class="op">:</span><span class="kw">end</span>]</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        resultado <span class="op">=</span> resultado <span class="op">*</span> x <span class="op">+</span> c</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> resultado</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fu">horner</span>([<span class="fl">5</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">2</span>], <span class="fl">2.0</span>)   <span class="co"># p(2) = 5·8 + 4·4 + 3·2 + 2 = 64</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<pre><code>horner([5, 4, 3, 2], 2.0) = 64.0</code></pre>
+<section id="notación-de-landau-la-o-pequeña" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="notación-de-landau-la-o-pequeña"><span class="header-section-number">1</span> Notación de Landau: la <span class="math inline">\(o\)</span> pequeña</h2>
+<p>Hasta ahora hemos medido el tamaño de un error con normas y números de condición. Para comparar el costo de dos algoritmos necesitamos otro lenguaje: la notación asintótica de Landau, la misma que se usa para describir el comportamiento local de una función cerca de un punto y también el comportamiento de un algoritmo cuando el tamaño del problema crece.</p>
+<p>Decimos que <span class="math inline">\(f(x) = o(g(x))\)</span> cuando <span class="math inline">\(x \to a\)</span> si <span class="math display">\[\lim_{x\to a} \frac{f(x)}{g(x)} = 0,\]</span> suponiendo que <span class="math inline">\(g(x) \neq 0\)</span> cerca de <span class="math inline">\(a\)</span>. Cuando no se especifica <span class="math inline">\(a\)</span>, en esta notación se sobreentiende <span class="math inline">\(x \to 0\)</span>: la <span class="math inline">\(o\)</span> pequeña se usa casi siempre para describir comportamiento local cerca de un punto, y conviene fijar ese punto en el origen salvo que se diga lo contrario.</p>
+<p>Por ejemplo, <span class="math inline">\(f(x) = o(1)\)</span> cuando <span class="math inline">\(x \to a\)</span> dice simplemente que <span class="math inline">\(f(x) \to 0\)</span>; y <span class="math inline">\(f(x) = o(x)\)</span> dice que <span class="math inline">\(f(x)/x \to 0\)</span>.</p>
+<p>La derivada misma se puede definir en este lenguaje. Si <span class="math inline">\(f\)</span> es derivable en <span class="math inline">\(a\)</span>, <span class="math display">\[\lim_{h\to 0} \frac{f(a+h) - f(a)}{h} = f'(a),\]</span> lo cual equivale a decir que <span class="math display">\[\frac{f(a+h) - f(a) - f'(a)h}{h} \to 0 \quad \text{cuando } h \to 0,\]</span> es decir, <span class="math display">\[f(a+h) = f(a) + f'(a)h + o(h). \qquad (\ast)\]</span> El término <span class="math inline">\(o(h)\)</span> se interpreta como una función que se va a cero más rápido que <span class="math inline">\(h\)</span> cuando <span class="math inline">\(h \to 0\)</span> (por ejemplo, <span class="math inline">\(h^2\)</span>). Así, la derivada en <span class="math inline">\(a\)</span> queda definida por la fórmula <span class="math inline">\((\ast)\)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Tarea">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -337,159 +313,148 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Estudiar el algoritmo de Horner en Julia (por ejemplo, comparándolo contra <code>Polynomials.jl</code> o contra la evaluación directa con <code>@time</code>/<code>@allocated</code> para verificar el ahorro) y resolver los ejercicios y estudiar la sección 1.3 (“Algorithms”) del FNC. Diga en sus palabras qué es condicionamiento, qué es estabilidad, cómo se relacionan. Ejemplifique. Diga en sus palabras qué entiende por hacia atrás y estabilidad. Ejemplifique.</p>
+<ol type="a">
+<li><p>Use la fórmula <span class="math inline">\((\ast)\)</span> con <span class="math inline">\(f(x) = x^2\)</span> para identificar explícitamente quién es la función <span class="math inline">\(o(h)\)</span> en ese caso.</p></li>
+<li><p>Reescriba el teorema de Taylor de orden <span class="math inline">\(p\)</span> usando la notación <span class="math inline">\(o\)</span>, completando <span class="math display">\[f(a+h) = f(a) + f'(a)h + \cdots + \frac{f^{(p)}(a)}{p!}h^p + \underline{\qquad}.\]</span></p></li>
+<li><p>Demuestre que <span class="math inline">\(x^p = o(e^x)\)</span> cuando <span class="math inline">\(x \to \infty\)</span>, para todo entero <span class="math inline">\(p \ge 0\)</span> (esto dice que la exponencial crece más rápido que cualquier polinomio). Demuestre también que <span class="math inline">\(e^{-x} = o(x^{-p})\)</span> cuando <span class="math inline">\(x \to \infty\)</span>, para todo <span class="math inline">\(p\)</span>. ¿Qué quiere decir esto en palabras?</p></li>
+</ol>
 </div>
 </div>
 </section>
-<section id="ejercicio-1.4.2-fx-dfracex-1x" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="ejercicio-1.4.2-fx-dfracex-1x"><span class="header-section-number">3</span> Ejercicio 1.4.2 — <span class="math inline">\(f(x) = \dfrac{e^x-1}{x}\)</span></h2>
-<section id="a-número-de-condición-y-su-máximomínimo-en--11" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="a-número-de-condición-y-su-máximomínimo-en--11"><span class="header-section-number">3.1</span> (a) Número de condición y su máximo/mínimo en <span class="math inline">\([-1,1]\)</span></h3>
-<p>Con <span class="math inline">\(f(x)=(e^x-1)/x\)</span> (extendida por continuidad, <span class="math inline">\(f(0)=1\)</span>): <span class="math display">\[f'(x) = \frac{xe^x - (e^x-1)}{x^2} = \frac{(x-1)e^x+1}{x^2}\]</span> <span class="math display">\[\kappa_f(x) = \left|x\cdot\frac{f'(x)}{f(x)}\right| = \left|\frac{(x-1)e^x+1}{e^x-1}\right|\]</span></p>
-<p>Derivando <span class="math inline">\(\kappa_f\)</span> (tratando el signo del numerador y denominador con cuidado, como en la nota de condicionamiento), se encuentra que el signo de <span class="math inline">\(\kappa_f'(x)\)</span> está gobernado por <span class="math inline">\(x(e^x-x-1)\)</span>, y como <span class="math inline">\(e^x-x-1\ge0\)</span> para todo <span class="math inline">\(x\)</span> real (con igualdad solo en <span class="math inline">\(x=0\)</span>), <span class="math inline">\(\kappa_f\)</span> es <strong>decreciente en <span class="math inline">\((-1,0)\)</span> y creciente en <span class="math inline">\((0,1)\)</span></strong>: tiene forma de “V”, con mínimo en <span class="math inline">\(x=0\)</span> y máximo en uno de los dos extremos del intervalo.</p>
-<p>Evaluando en los extremos: <span class="math display">\[\kappa_f(1) = \left|\frac{(1-1)e+1}{e-1}\right| = \frac{1}{e-1} \approx 0{,}5820, \qquad \kappa_f(-1) = \left|\frac{-2e^{-1}+1}{e^{-1}-1}\right| \approx 0{,}4180\]</span></p>
-<p><span class="math display">\[\boxed{\max_{[-1,1]}\kappa_f = \kappa_f(1) = \dfrac{1}{e-1}\approx 0{,}582, \qquad \min_{[-1,1]}\kappa_f = \kappa_f(0) = 0}\]</span></p>
-<p>Verificación en Julia (evaluando <span class="math inline">\(\kappa_f\)</span> numéricamente en una malla fina, sin depender de la simplificación simbólica — también se puede hacer con <code>Symbolics.jl</code> derivando <code>f</code> automáticamente):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">ForwardDiff</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(x) <span class="op">=</span> x <span class="op">==</span> <span class="fl">0</span> ? <span class="fl">1.0</span> <span class="op">:</span> (<span class="fu">exp</span>(x) <span class="op">-</span> <span class="fl">1</span>)<span class="op">/</span>x</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">κ</span>(x) <span class="op">=</span> <span class="fu">abs</span>(x <span class="op">*</span> ForwardDiff.<span class="fu">derivative</span>(f, x) <span class="op">/</span> <span class="fu">f</span>(x))</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>xs <span class="op">=</span> <span class="fu">range</span>(<span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span>, length<span class="op">=</span><span class="fl">20001</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>kmax, imax <span class="op">=</span> <span class="fu">findmax</span>(<span class="fu">κ</span>.(xs))</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>kmin, imin <span class="op">=</span> <span class="fu">findmin</span>(<span class="fu">κ</span>.(xs))</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> xs[imax], kmax   <span class="co"># (1.0, 0.5819767068693265)</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> xs[imin], kmin   <span class="co"># (0.0, 0.0)</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> <span class="fl">1</span><span class="op">/</span>(<span class="fu">exp</span>(<span class="fl">1</span>)<span class="op">-</span><span class="fl">1</span>)      <span class="co"># 0.5819767068693265  -- coincide exactamente</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<pre><code>(xs[imax], kmax) = (1.0, 0.5819767068693265)
-(xs[imin], kmin) = (0.0, 0.0)
-1 / (exp(1) - 1) = 0.5819767068693265</code></pre>
-<p>Confirmado: <span class="math inline">\(\kappa_f(0)=0\)</span> (el problema está <strong>óptimamente condicionado</strong> cerca de cero) y <span class="math inline">\(\kappa_f\)</span> crece muy poco en <span class="math inline">\([-1,1]\)</span>, alcanzando apenas <span class="math inline">\(\approx0{,}58\)</span>. Este es exactamente el mismo problema bien condicionado que ya vimos en la nota de condicionamiento — aquí lo confirmamos cuantitativamente en todo el intervalo <span class="math inline">\([-1,1]\)</span>, no solo en el límite <span class="math inline">\(x\to0\)</span>.</p>
-</section>
-<section id="bd-dos-algoritmos-para-el-mismo-problema" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="bd-dos-algoritmos-para-el-mismo-problema"><span class="header-section-number">3.2</span> (b)–(d) Dos algoritmos para el mismo problema</h3>
-<p><strong>Algoritmo ingenuo:</strong> evaluar <span class="math inline">\(f(x)\)</span> tal cual, con la resta explícita.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">f_ingenuo</span>(x) <span class="op">=</span> (<span class="fu">exp</span>(x) <span class="op">-</span> <span class="fl">1</span>)<span class="op">/</span>x</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Algoritmo por serie de Maclaurin (8 términos):</strong> <span class="math display">\[f(x) \approx p(x) = 1 + \frac{x}{2!} + \frac{x^2}{3!} + \cdots + \frac{x^7}{8!}\]</span></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">p_maclaurin</span>(x)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> <span class="fl">0.0</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> <span class="fl">0</span><span class="op">:</span><span class="fl">7</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        s <span class="op">+=</span> x<span class="op">^</span>k <span class="op">/</span> <span class="fu">factorial</span>(k<span class="op">+</span><span class="fl">1</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> s</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Evaluando ambos en <span class="math inline">\(x=10^{-2},10^{-3},\ldots,10^{-11}\)</span> y comparando contra un valor de referencia de alta precisión:</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-<col style="width: 20%">
-</colgroup>
-<thead>
-<tr class="header">
-<th><span class="math inline">\(x\)</span></th>
-<th>ingenuo</th>
-<th>Maclaurin (8 términos)</th>
-<th>error rel. ingenuo</th>
-<th>error rel. Maclaurin</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(10^{-2}\)</span></td>
-<td><span class="math inline">\(1{,}005016708416795\)</span></td>
-<td><span class="math inline">\(1{,}005016708416806\)</span></td>
-<td><span class="math inline">\(1{,}08\times10^{-14}\)</span></td>
-<td><span class="math inline">\(1{,}8\times10^{-16}\)</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(10^{-3}\)</span></td>
-<td><span class="math inline">\(1{,}000500166708385\)</span></td>
-<td><span class="math inline">\(1{,}000500166708342\)</span></td>
-<td><span class="math inline">\(4{,}29\times10^{-14}\)</span></td>
-<td><span class="math inline">\(7{,}5\times10^{-17}\)</span></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(10^{-4}\)</span></td>
-<td><span class="math inline">\(1{,}000050001667141\)</span></td>
-<td><span class="math inline">\(1{,}000050001666708\)</span></td>
-<td><span class="math inline">\(4{,}33\times10^{-13}\)</span></td>
-<td><span class="math inline">\(9{,}8\times10^{-17}\)</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(10^{-5}\)</span></td>
-<td><span class="math inline">\(1{,}000005000006965\)</span></td>
-<td><span class="math inline">\(1{,}000005000016667\)</span></td>
-<td><span class="math inline">\(9{,}70\times10^{-12}\)</span></td>
-<td><span class="math inline">\(7{,}5\times10^{-18}\)</span></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(10^{-6}\)</span></td>
-<td><span class="math inline">\(1{,}000000499962184\)</span></td>
-<td><span class="math inline">\(1{,}000000500000167\)</span></td>
-<td><span class="math inline">\(3{,}80\times10^{-11}\)</span></td>
-<td><span class="math inline">\(1{,}6\times10^{-16}\)</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(10^{-7}\)</span></td>
-<td><span class="math inline">\(1{,}000000049433680\)</span></td>
-<td><span class="math inline">\(1{,}000000050000002\)</span></td>
-<td><span class="math inline">\(5{,}66\times10^{-10}\)</span></td>
-<td><span class="math inline">\(2{,}8\times10^{-17}\)</span></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(10^{-8}\)</span></td>
-<td><span class="math inline">\(0{,}999999993922529\)</span></td>
-<td><span class="math inline">\(1{,}000000005000000\)</span></td>
-<td><span class="math inline">\(1{,}11\times10^{-8}\)</span></td>
-<td><span class="math inline">\(4{,}7\times10^{-17}\)</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(10^{-9}\)</span></td>
-<td><span class="math inline">\(1{,}000000082740371\)</span></td>
-<td><span class="math inline">\(1{,}000000000500000\)</span></td>
-<td><span class="math inline">\(8{,}22\times10^{-8}\)</span></td>
-<td><span class="math inline">\(4{,}1\times10^{-17}\)</span></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(10^{-10}\)</span></td>
-<td><span class="math inline">\(1{,}000000082740371\)</span></td>
-<td><span class="math inline">\(1{,}000000000050000\)</span></td>
-<td><span class="math inline">\(8{,}27\times10^{-8}\)</span></td>
-<td><span class="math inline">\(4{,}1\times10^{-18}\)</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(10^{-11}\)</span></td>
-<td><span class="math inline">\(1{,}000000082740371\)</span></td>
-<td><span class="math inline">\(1{,}000000000005000\)</span></td>
-<td><span class="math inline">\(8{,}27\times10^{-8}\)</span></td>
-<td><span class="math inline">\(4{,}1\times10^{-19}\)</span></td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-important callout-titled" title="¿Cuál es más preciso, y por qué?">
+<section id="la-o-grande-y-la-equivalencia-asintótica" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="la-o-grande-y-la-equivalencia-asintótica"><span class="header-section-number">2</span> La <span class="math inline">\(O\)</span> grande y la equivalencia asintótica</h2>
+<p>La <span class="math inline">\(o\)</span> pequeña sirve para decir que algo es despreciable frente a otra cantidad. Para decir que algo está acotado por otra cantidad, sin ser necesariamente despreciable, se usa la <span class="math inline">\(O\)</span> grande.</p>
+<p>Decimos que <span class="math inline">\(f(x) = O(g(x))\)</span> cuando <span class="math inline">\(x \to a\)</span> (la misma definición sirve para sucesiones, con <span class="math inline">\(n \to \infty\)</span>) si <span class="math inline">\(f(x)/g(x)\)</span> permanece acotado cerca de <span class="math inline">\(a\)</span>. Aquí la convención por defecto es distinta a la de la <span class="math inline">\(o\)</span> pequeña: si no se especifica <span class="math inline">\(a\)</span>, se sobreentiende <span class="math inline">\(x \to \infty\)</span> (o <span class="math inline">\(n \to \infty\)</span> para sucesiones), porque la <span class="math inline">\(O\)</span> grande es la que usamos para describir cuánto crece un algoritmo cuando el tamaño del problema crece, no el comportamiento local cerca de un punto.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>¿Cuál es más preciso, y por qué?
+<span class="screen-reader-only">Nota</span>Tarea
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>El algoritmo de Maclaurin es dramáticamente más preciso: mantiene error relativo cercano a <span class="math inline">\(\epsilon_{\text{mach}}\)</span> (<span class="math inline">\(\sim10^{-16}\)</span>–<span class="math inline">\(10^{-17}\)</span>) en <strong>todo</strong> el rango, mientras que el ingenuo se degrada progresivamente — de <span class="math inline">\(10^{-14}\)</span> en <span class="math inline">\(x=10^{-2}\)</span> a <span class="math inline">\(\sim10^{-8}\)</span> en <span class="math inline">\(x\le10^{-9}\)</span>, donde el error deja de crecer porque toca el límite de lo que la representación de <span class="math inline">\(x\)</span> misma permite distinguir.</p>
-<p>La razón es exactamente la del Ejemplo 1.4.1: el algoritmo ingenuo calcula <span class="math inline">\(e^x\)</span> (que para <span class="math inline">\(x\)</span> pequeño está muy cerca de <span class="math inline">\(1\)</span>) y luego <strong>resta <span class="math inline">\(1\)</span></strong>, cancelando los primeros dígitos compartidos y dejando expuesto el ruido de redondeo de <span class="math inline">\(e^x\)</span> como si fuera señal. El polinomio de Maclaurin, en cambio, <strong>nunca resta cantidades parecidas</strong>: todos sus términos <span class="math inline">\(x^k/(k{+}1)!\)</span> para <span class="math inline">\(x&gt;0\)</span> son positivos y decrecientes, así que solo hay sumas de cantidades del mismo signo — sin cancelación posible.</p>
-<p>Nótese que <span class="math inline">\(\kappa_f(x)\to0\)</span> cuando <span class="math inline">\(x\to0\)</span>: el <strong>problema</strong> se vuelve más fácil, no más difícil, cerca de cero. La degradación del algoritmo ingenuo no tiene nada que ver con el condicionamiento — es pura <strong>inestabilidad algorítmica</strong>, el mismo fenómeno ya documentado para <span class="math inline">\((e^x-1)/x\)</span> en la nota de condicionamiento, ahora cuantificado en todo el intervalo <span class="math inline">\([-1,1]\)</span> y comparado explícitamente contra una alternativa estable.</p>
+<p>Demuestre que la definición anterior es equivalente a pedir <span class="math display">\[\limsup_{x \to a} \left| \frac{f(x)}{g(x)} \right| &lt; \infty.\]</span></p>
+</div>
+</div>
+<p>Un tercer símbolo, más fino que la <span class="math inline">\(O\)</span>, es la equivalencia asintótica: decimos que <span class="math inline">\(f \sim g\)</span> cuando <span class="math inline">\(x \to a\)</span> si <span class="math display">\[\lim_{x\to a} \frac{f(x)}{g(x)} = 1.\]</span> Por ejemplo, <span class="math inline">\(\operatorname{sen}(x) \sim x\)</span> cuando <span class="math inline">\(x \to 0\)</span>, y <span class="math inline">\(\operatorname{sen}(1/n) \sim 1/n\)</span> cuando <span class="math inline">\(n \to \infty\)</span>.</p>
+<p>Veamos con cuidado, directamente desde la definición, que <span class="math inline">\(2n^3 - 3n^2 + 1 = O(n^3)\)</span>. El cociente <span class="math display">\[\frac{2n^3 - 3n^2 + 1}{n^3} = 2 - \frac{3}{n} + \frac{1}{n^3}\]</span> tiende a <span class="math inline">\(2\)</span> cuando <span class="math inline">\(n \to \infty\)</span>, así que existe <span class="math inline">\(n_0\)</span> tal que para todo <span class="math inline">\(n \ge n_0\)</span> ese cociente es menor que, digamos, <span class="math inline">\(2{,}1\)</span>: en particular está acotado, que es justamente lo que pide la definición de <span class="math inline">\(O\)</span>.</p>
+<p>Este argumento se generaliza de inmediato: si <span class="math inline">\(f\)</span> y <span class="math inline">\(g\)</span> son positivas y el límite <span class="math inline">\(\lim_{n\to\infty} f(n)/g(n)\)</span> existe y es finito, entonces automáticamente <span class="math inline">\(f(n) = O(g(n))\)</span>, porque un cociente convergente en particular está acotado.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre con cuidado la afirmación anterior, y úsela para mostrar que cualquier polinomio de grado <span class="math inline">\(p\)</span> es <span class="math inline">\(O(n^p)\)</span>.</p>
+</div>
+</div>
+<p>Con esta observación es fácil clasificar sumas que aparecen todo el tiempo al contar operaciones. Por ejemplo, <span class="math display">\[\sum_{k=1}^n k = \frac{n(n+1)}{2} = \frac{n^2}{2} + \frac{n}{2} \sim \frac{n^2}{2},\]</span> así que <span class="math inline">\(\sum_{k=1}^n k = O(n^2)\)</span>. Técnicamente también es cierto que <span class="math inline">\(\sum_{k=1}^n k = O(n^3)\)</span>, o de cualquier potencia mayor, pero esa afirmación, aunque verdadera, casi no dice nada: en la práctica siempre buscamos la función <span class="math inline">\(g\)</span> más pequeña posible para la cual <span class="math inline">\(f=O(g)\)</span> se cumple, porque es ahí donde la notación aporta información útil. El mismo argumento con la suma de cuadrados da <span class="math inline">\(\sum_{k=1}^n k^2 \sim n^3/3 = O(n^3)\)</span>, y en general <span class="math inline">\(\sum_{k=1}^n k^p \sim n^{p+1}/(p+1) = O(n^{p+1})\)</span>.</p>
+</section>
+<section id="conteo-de-flops" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="conteo-de-flops"><span class="header-section-number">3</span> Conteo de flops</h2>
+<p>Un <strong>flop</strong> (<em>floating point operation</em>) es una suma, resta, multiplicación, división o raíz cuadrada entre números de punto flotante. <strong>FLOPS</strong> (con S final) son flops por segundo, la unidad con la que se mide la capacidad de cómputo de una máquina. Se usan los prefijos usuales de potencias de mil:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Prefijo</th>
+<th style="text-align: center;">Símbolo</th>
+<th style="text-align: center;">Factor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">kilo</td>
+<td style="text-align: center;">K</td>
+<td style="text-align: center;"><span class="math inline">\(10^3\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">mega</td>
+<td style="text-align: center;">M</td>
+<td style="text-align: center;"><span class="math inline">\(10^6\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">giga</td>
+<td style="text-align: center;">G</td>
+<td style="text-align: center;"><span class="math inline">\(10^9\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">tera</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;"><span class="math inline">\(10^{12}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">peta</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;"><span class="math inline">\(10^{15}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Para dar un par de puntos de referencia: el supercomputador Lonestar6 (TACC) tiene una capacidad de cómputo del orden de <span class="math inline">\(3\)</span> PFLOPS, es decir, unas <span class="math inline">\(3\times10^{15}\)</span> operaciones de punto flotante por segundo. Un computador portátil corriente, como los que usamos en clase, es menor que un 1 TFLOPS.</p>
+<p>En Julia, <code>LinearAlgebra.peakflops()</code> mide directamente la capacidad de tu propia máquina, y <code>BenchmarkTools.jl</code> (para medir tiempos), junto con alguna herramienta de conteo de flops, permite estimar cuántas operaciones de punto flotante consume una función específica.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Corra <code>LinearAlgebra.peakflops()</code> en su propia máquina y reporte el resultado en GFLOPS o MFLOPS, según corresponda. Después compare ese número contra dos referencias más: un datacenter grande (del orden de <span class="math inline">\(10^{20}\)</span> FLOPS) y una estimación de cuántos flops equivalentes podría hacer un ser humano. ¿Qué tan lejos está su máquina de cada extremo?</p>
 </div>
 </div>
 </section>
+<section id="ejemplo-flops-del-producto-matriz-vector" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="ejemplo-flops-del-producto-matriz-vector"><span class="header-section-number">4</span> Ejemplo: flops del producto matriz-vector</h2>
+<p>Supongamos que <span class="math inline">\(A \in \mathbb{R}^{n\times n}\)</span> y <span class="math inline">\(x \in \mathbb{R}^n\)</span>, y queremos calcular <span class="math inline">\(y = Ax\)</span>. Cada componente de <span class="math inline">\(y\)</span> es <span class="math display">\[y_i = \sum_{j=1}^n a_{ij} x_j,\]</span> que cuesta <span class="math inline">\(n\)</span> productos y <span class="math inline">\(n-1\)</span> sumas: unas <span class="math inline">\(2n\)</span> operaciones si no nos preocupamos por el término de orden inferior. En código, el patrón para calcular una sola fila <span class="math inline">\(i\)</span> se ve así:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> j <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>n</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    y[i] <span class="op">+=</span> A[i, j] <span class="op">*</span> x[j]</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Complete el programa repitiendo este patrón para cada fila <span class="math inline">\(i=1,\dots,n\)</span>, sin ver el texto guía o esta nota.</p>
+</div>
+</div>
+<p>Ese bucle interno tiene dos operaciones de punto flotante (una suma y un producto) repetidas <span class="math inline">\(n\)</span> veces, y hay que repetirlo para cada una de las <span class="math inline">\(n\)</span> filas. El total es <span class="math display">\[\sum_{i=1}^n (2n) = 2n \cdot n = 2n^2,\]</span> es decir, la cuenta crece del orden de <span class="math inline">\(n^2\)</span> operaciones de punto flotante: el algoritmo es <span class="math inline">\(O(n^2)\)</span>.</p>
+<p>Vale la pena ser precisos sobre qué mide esto. Cuando decimos que un algoritmo tiene complejidad computacional (temporal) <span class="math inline">\(O(n^2)\)</span>, estamos contando exclusivamente el número de operaciones aritméticas en función del tamaño de la entrada, sin tener en cuenta todavía los recursos concretos de la máquina donde corre: acceso a memoria, caché, paralelismo. Esa es una capa adicional, real e importante en la práctica, que dejamos de lado por ahora para quedarnos con la pregunta puramente matemática de cuántas operaciones exige el algoritmo.</p>
+<section id="un-aparte-las-clases-p-y-np" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="un-aparte-las-clases-p-y-np"><span class="header-section-number">4.1</span> Un aparte: las clases P y NP</h3>
+<p>La misma notación <span class="math inline">\(O(n^k)\)</span> que acabamos de usar para clasificar un algoritmo es también el lenguaje con el que se define una de las distinciones más importantes de las ciencias de la computación. Se dice que un problema está en la clase <strong>P</strong> si existe un algoritmo que lo resuelve en tiempo <span class="math inline">\(O(n^k)\)</span> para algún <span class="math inline">\(k\)</span> fijo, es decir, en tiempo polinomial en el tamaño <span class="math inline">\(n\)</span> de la entrada: el producto matriz vector que acabamos de contar, con su <span class="math inline">\(O(n^2)\)</span>, es un ejemplo perfectamente ordinario de un problema en P.</p>
+<p>La clase <strong>NP</strong> es más sutil, y la diferencia está en qué es lo que se pide que sea polinomial. Un problema está en NP si, dado un candidato a solución, existe un algoritmo que verifica esa solución en tiempo <span class="math inline">\(O(n^k)\)</span>, aunque no se conozca ningún algoritmo que encuentre esa solución en tiempo polinomial. El ejemplo clásico es un rompecabezas combinatorio: comprobar que un subconjunto dado de números suma exactamente el valor pedido, o que una asignación dada de valores de verdad satisface una fórmula lógica, toma tiempo polinomial. Pero encontrar ese subconjunto o esa asignación, si no se tiene mejor idea que probar todas las combinaciones posibles, exige recorrer un número de candidatos que crece como <span class="math inline">\(2^n\)</span>. Ya demostramos arriba, en la tarea sobre <span class="math inline">\(x^p=o(e^x)\)</span>, que una exponencial termina superando a cualquier polinomio, sin importar qué tan grande sea el exponente <span class="math inline">\(k\)</span>; por eso <span class="math inline">\(O(2^n)\)</span> es, en la práctica, una barrera mucho más severa que cualquier <span class="math inline">\(O(n^k)\)</span>, aun para <span class="math inline">\(k\)</span> grande.</p>
+<p>Todo problema en P está también en NP: si se puede resolver en tiempo polinomial, en particular se puede verificar una solución en tiempo polinomial (basta con resolverlo uno mismo y comparar). La pregunta de si esa inclusión es en realidad una igualdad, es decir, si <strong>P = NP</strong>, si todo problema cuya solución se puede verificar rápido también se puede encontrar rápido, sigue abierta. Es uno de los siete problemas del milenio del Instituto Clay, y a pesar de varios anuncios de solución a lo largo de los años (ninguno resistió la revisión de la comunidad), hasta la fecha nadie ha demostrado ni que P = NP ni que P ≠ NP.</p>
 </section>
-<section id="conexión-con-la-nota-de-condicionamiento" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="conexión-con-la-nota-de-condicionamiento"><span class="header-section-number">4</span> Conexión con la nota de condicionamiento</h2>
-<p>Este ejercicio es la contraparte natural de lo visto en la nota anterior: allí establecimos que <span class="math inline">\((e^x-1)/x\)</span> es un problema bien condicionado cerca de cero (<span class="math inline">\(\kappa_f(0)=0\)</span>); aquí confirmamos que esa buena condición se sostiene en todo <span class="math inline">\([-1,1]\)</span> (máximo <span class="math inline">\(\approx0{,}582\)</span>), y mostramos <strong>dos algoritmos concretos</strong> para el mismo problema — uno inestable (cancelación explícita) y uno estable (serie de Maclaurin, sin resta de cantidades parecidas) — cuantificando la brecha entre ellos. Es exactamente el mismo patrón del Ejemplo 1.4.1: problema bien condicionado, algoritmo mal elegido, error inexplicable por el condicionamiento — y una alternativa que lo resuelve sin cambiar el problema, solo la ruta de cálculo.</p>
+</section>
+<section id="comparando-teoría-y-práctica-gráficas-log-log" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="comparando-teoría-y-práctica-gráficas-log-log"><span class="header-section-number">5</span> Comparando teoría y práctica: gráficas log-log</h2>
+<p>El conteo de flops da una predicción teórica de cómo debería crecer el tiempo de ejecución de un algoritmo, pero conviene contrastarla con mediciones reales (por ejemplo, con <code>@time</code> o <code>BenchmarkTools.jl</code>). Si el tiempo de un algoritmo obedece <span class="math inline">\(t \approx Cn^p\)</span> para alguna constante <span class="math inline">\(C\)</span> y algún exponente <span class="math inline">\(p\)</span> (el mismo <span class="math inline">\(p\)</span> que predice el conteo de flops), tomando logaritmo en ambos lados se obtiene <span class="math display">\[\log(t) \approx \log(C) + p\,\log(n).\]</span> Esta es la ecuación de una recta en el plano <span class="math inline">\((\log n,\log t)\)</span>, con pendiente <span class="math inline">\(p\)</span>. Por eso, al graficar tiempos medidos contra <span class="math inline">\(n\)</span> en escala log-log, un algoritmo de complejidad <span class="math inline">\(O(n^p)\)</span> debería verse como una línea recta de pendiente aproximadamente <span class="math inline">\(p\)</span>: la pendiente medida en la gráfica se compara directamente contra el exponente que predijo el conteo de flops, y una discrepancia entre ambos es indicio de que la implementación real no se comporta como el conteo teórico predice (acceso a memoria, alojamiento innecesario de arreglos, etc.).</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Haga todos los ejercicios de la sección eficiencia computacional de matrices del libro de Driscoll y Braun.</p>
+</div>
+</div>
 
 
 </section>
@@ -926,14 +891,11 @@ window.Quarto = {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../../cursos/numerico/condicionamiento/index.html" class="pagination-link" aria-label="Condicionamiento">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Condicionamiento</span>
+      <a href="../../../cursos/numerico/matrices/index.html" class="pagination-link" aria-label="Sistemas lineales e interpolación">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Sistemas lineales e interpolación</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../cursos/numerico/taller-1/index.html" class="pagination-link" aria-label="Taller 1">
-        <span class="nav-page-text">Taller 1</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

@@ -616,6 +616,198 @@ font-style: inherit;">end</span></span></code></pre></div></div>
   <pubDate>Fri, 11 Sep 2026 05:00:00 GMT</pubDate>
 </item>
 <item>
+  <title>Complejidad</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/numerico/complejidad/</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="notación-de-landau-la-o-pequeña" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="notación-de-landau-la-o-pequeña"><span class="header-section-number">1</span> Notación de Landau: la <img src="https://latex.codecogs.com/png.latex?o"> pequeña</h2>
+<p>Hasta ahora hemos medido el tamaño de un error con normas y números de condición. Para comparar el costo de dos algoritmos necesitamos otro lenguaje: la notación asintótica de Landau, la misma que se usa para describir el comportamiento local de una función cerca de un punto y también el comportamiento de un algoritmo cuando el tamaño del problema crece.</p>
+<p>Decimos que <img src="https://latex.codecogs.com/png.latex?f(x)%20=%20o(g(x))"> cuando <img src="https://latex.codecogs.com/png.latex?x%20%5Cto%20a"> si <img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bx%5Cto%20a%7D%20%5Cfrac%7Bf(x)%7D%7Bg(x)%7D%20=%200,"> suponiendo que <img src="https://latex.codecogs.com/png.latex?g(x)%20%5Cneq%200"> cerca de <img src="https://latex.codecogs.com/png.latex?a">. Cuando no se especifica <img src="https://latex.codecogs.com/png.latex?a">, en esta notación se sobreentiende <img src="https://latex.codecogs.com/png.latex?x%20%5Cto%200">: la <img src="https://latex.codecogs.com/png.latex?o"> pequeña se usa casi siempre para describir comportamiento local cerca de un punto, y conviene fijar ese punto en el origen salvo que se diga lo contrario.</p>
+<p>Por ejemplo, <img src="https://latex.codecogs.com/png.latex?f(x)%20=%20o(1)"> cuando <img src="https://latex.codecogs.com/png.latex?x%20%5Cto%20a"> dice simplemente que <img src="https://latex.codecogs.com/png.latex?f(x)%20%5Cto%200">; y <img src="https://latex.codecogs.com/png.latex?f(x)%20=%20o(x)"> dice que <img src="https://latex.codecogs.com/png.latex?f(x)/x%20%5Cto%200">.</p>
+<p>La derivada misma se puede definir en este lenguaje. Si <img src="https://latex.codecogs.com/png.latex?f"> es derivable en <img src="https://latex.codecogs.com/png.latex?a">, <img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bh%5Cto%200%7D%20%5Cfrac%7Bf(a+h)%20-%20f(a)%7D%7Bh%7D%20=%20f'(a),"> lo cual equivale a decir que <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bf(a+h)%20-%20f(a)%20-%20f'(a)h%7D%7Bh%7D%20%5Cto%200%20%5Cquad%20%5Ctext%7Bcuando%20%7D%20h%20%5Cto%200,"> es decir, <img src="https://latex.codecogs.com/png.latex?f(a+h)%20=%20f(a)%20+%20f'(a)h%20+%20o(h).%20%5Cqquad%20(%5Cast)"> El término <img src="https://latex.codecogs.com/png.latex?o(h)"> se interpreta como una función que se va a cero más rápido que <img src="https://latex.codecogs.com/png.latex?h"> cuando <img src="https://latex.codecogs.com/png.latex?h%20%5Cto%200"> (por ejemplo, <img src="https://latex.codecogs.com/png.latex?h%5E2">). Así, la derivada en <img src="https://latex.codecogs.com/png.latex?a"> queda definida por la fórmula <img src="https://latex.codecogs.com/png.latex?(%5Cast)">.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li><p>Use la fórmula <img src="https://latex.codecogs.com/png.latex?(%5Cast)"> con <img src="https://latex.codecogs.com/png.latex?f(x)%20=%20x%5E2"> para identificar explícitamente quién es la función <img src="https://latex.codecogs.com/png.latex?o(h)"> en ese caso.</p></li>
+<li><p>Reescriba el teorema de Taylor de orden <img src="https://latex.codecogs.com/png.latex?p"> usando la notación <img src="https://latex.codecogs.com/png.latex?o">, completando <img src="https://latex.codecogs.com/png.latex?f(a+h)%20=%20f(a)%20+%20f'(a)h%20+%20%5Ccdots%20+%20%5Cfrac%7Bf%5E%7B(p)%7D(a)%7D%7Bp!%7Dh%5Ep%20+%20%5Cunderline%7B%5Cqquad%7D."></p></li>
+<li><p>Demuestre que <img src="https://latex.codecogs.com/png.latex?x%5Ep%20=%20o(e%5Ex)"> cuando <img src="https://latex.codecogs.com/png.latex?x%20%5Cto%20%5Cinfty">, para todo entero <img src="https://latex.codecogs.com/png.latex?p%20%5Cge%200"> (esto dice que la exponencial crece más rápido que cualquier polinomio). Demuestre también que <img src="https://latex.codecogs.com/png.latex?e%5E%7B-x%7D%20=%20o(x%5E%7B-p%7D)"> cuando <img src="https://latex.codecogs.com/png.latex?x%20%5Cto%20%5Cinfty">, para todo <img src="https://latex.codecogs.com/png.latex?p">. ¿Qué quiere decir esto en palabras?</p></li>
+</ol>
+</div>
+</div>
+</section>
+<section id="la-o-grande-y-la-equivalencia-asintótica" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="la-o-grande-y-la-equivalencia-asintótica"><span class="header-section-number">2</span> La <img src="https://latex.codecogs.com/png.latex?O"> grande y la equivalencia asintótica</h2>
+<p>La <img src="https://latex.codecogs.com/png.latex?o"> pequeña sirve para decir que algo es despreciable frente a otra cantidad. Para decir que algo está acotado por otra cantidad, sin ser necesariamente despreciable, se usa la <img src="https://latex.codecogs.com/png.latex?O"> grande.</p>
+<p>Decimos que <img src="https://latex.codecogs.com/png.latex?f(x)%20=%20O(g(x))"> cuando <img src="https://latex.codecogs.com/png.latex?x%20%5Cto%20a"> (la misma definición sirve para sucesiones, con <img src="https://latex.codecogs.com/png.latex?n%20%5Cto%20%5Cinfty">) si <img src="https://latex.codecogs.com/png.latex?f(x)/g(x)"> permanece acotado cerca de <img src="https://latex.codecogs.com/png.latex?a">. Aquí la convención por defecto es distinta a la de la <img src="https://latex.codecogs.com/png.latex?o"> pequeña: si no se especifica <img src="https://latex.codecogs.com/png.latex?a">, se sobreentiende <img src="https://latex.codecogs.com/png.latex?x%20%5Cto%20%5Cinfty"> (o <img src="https://latex.codecogs.com/png.latex?n%20%5Cto%20%5Cinfty"> para sucesiones), porque la <img src="https://latex.codecogs.com/png.latex?O"> grande es la que usamos para describir cuánto crece un algoritmo cuando el tamaño del problema crece, no el comportamiento local cerca de un punto.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre que la definición anterior es equivalente a pedir <img src="https://latex.codecogs.com/png.latex?%5Climsup_%7Bx%20%5Cto%20a%7D%20%5Cleft%7C%20%5Cfrac%7Bf(x)%7D%7Bg(x)%7D%20%5Cright%7C%20%3C%20%5Cinfty."></p>
+</div>
+</div>
+<p>Un tercer símbolo, más fino que la <img src="https://latex.codecogs.com/png.latex?O">, es la equivalencia asintótica: decimos que <img src="https://latex.codecogs.com/png.latex?f%20%5Csim%20g"> cuando <img src="https://latex.codecogs.com/png.latex?x%20%5Cto%20a"> si <img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bx%5Cto%20a%7D%20%5Cfrac%7Bf(x)%7D%7Bg(x)%7D%20=%201."> Por ejemplo, <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7Bsen%7D(x)%20%5Csim%20x"> cuando <img src="https://latex.codecogs.com/png.latex?x%20%5Cto%200">, y <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7Bsen%7D(1/n)%20%5Csim%201/n"> cuando <img src="https://latex.codecogs.com/png.latex?n%20%5Cto%20%5Cinfty">.</p>
+<p>Veamos con cuidado, directamente desde la definición, que <img src="https://latex.codecogs.com/png.latex?2n%5E3%20-%203n%5E2%20+%201%20=%20O(n%5E3)">. El cociente <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B2n%5E3%20-%203n%5E2%20+%201%7D%7Bn%5E3%7D%20=%202%20-%20%5Cfrac%7B3%7D%7Bn%7D%20+%20%5Cfrac%7B1%7D%7Bn%5E3%7D"> tiende a <img src="https://latex.codecogs.com/png.latex?2"> cuando <img src="https://latex.codecogs.com/png.latex?n%20%5Cto%20%5Cinfty">, así que existe <img src="https://latex.codecogs.com/png.latex?n_0"> tal que para todo <img src="https://latex.codecogs.com/png.latex?n%20%5Cge%20n_0"> ese cociente es menor que, digamos, <img src="https://latex.codecogs.com/png.latex?2%7B,%7D1">: en particular está acotado, que es justamente lo que pide la definición de <img src="https://latex.codecogs.com/png.latex?O">.</p>
+<p>Este argumento se generaliza de inmediato: si <img src="https://latex.codecogs.com/png.latex?f"> y <img src="https://latex.codecogs.com/png.latex?g"> son positivas y el límite <img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bn%5Cto%5Cinfty%7D%20f(n)/g(n)"> existe y es finito, entonces automáticamente <img src="https://latex.codecogs.com/png.latex?f(n)%20=%20O(g(n))">, porque un cociente convergente en particular está acotado.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre con cuidado la afirmación anterior, y úsela para mostrar que cualquier polinomio de grado <img src="https://latex.codecogs.com/png.latex?p"> es <img src="https://latex.codecogs.com/png.latex?O(n%5Ep)">.</p>
+</div>
+</div>
+<p>Con esta observación es fácil clasificar sumas que aparecen todo el tiempo al contar operaciones. Por ejemplo, <img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bk=1%7D%5En%20k%20=%20%5Cfrac%7Bn(n+1)%7D%7B2%7D%20=%20%5Cfrac%7Bn%5E2%7D%7B2%7D%20+%20%5Cfrac%7Bn%7D%7B2%7D%20%5Csim%20%5Cfrac%7Bn%5E2%7D%7B2%7D,"> así que <img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bk=1%7D%5En%20k%20=%20O(n%5E2)">. Técnicamente también es cierto que <img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bk=1%7D%5En%20k%20=%20O(n%5E3)">, o de cualquier potencia mayor, pero esa afirmación, aunque verdadera, casi no dice nada: en la práctica siempre buscamos la función <img src="https://latex.codecogs.com/png.latex?g"> más pequeña posible para la cual <img src="https://latex.codecogs.com/png.latex?f=O(g)"> se cumple, porque es ahí donde la notación aporta información útil. El mismo argumento con la suma de cuadrados da <img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bk=1%7D%5En%20k%5E2%20%5Csim%20n%5E3/3%20=%20O(n%5E3)">, y en general <img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bk=1%7D%5En%20k%5Ep%20%5Csim%20n%5E%7Bp+1%7D/(p+1)%20=%20O(n%5E%7Bp+1%7D)">.</p>
+</section>
+<section id="conteo-de-flops" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="conteo-de-flops"><span class="header-section-number">3</span> Conteo de flops</h2>
+<p>Un <strong>flop</strong> (<em>floating point operation</em>) es una suma, resta, multiplicación, división o raíz cuadrada entre números de punto flotante. <strong>FLOPS</strong> (con S final) son flops por segundo, la unidad con la que se mide la capacidad de cómputo de una máquina. Se usan los prefijos usuales de potencias de mil:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Prefijo</th>
+<th style="text-align: center;">Símbolo</th>
+<th style="text-align: center;">Factor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">kilo</td>
+<td style="text-align: center;">K</td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?10%5E3"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">mega</td>
+<td style="text-align: center;">M</td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?10%5E6"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">giga</td>
+<td style="text-align: center;">G</td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?10%5E9"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">tera</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?10%5E%7B12%7D"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">peta</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?10%5E%7B15%7D"></td>
+</tr>
+</tbody>
+</table>
+<p>Para dar un par de puntos de referencia: el supercomputador Lonestar6 (TACC) tiene una capacidad de cómputo del orden de <img src="https://latex.codecogs.com/png.latex?3"> PFLOPS, es decir, unas <img src="https://latex.codecogs.com/png.latex?3%5Ctimes10%5E%7B15%7D"> operaciones de punto flotante por segundo. Un computador portátil corriente, como los que usamos en clase, es menor que un 1 TFLOPS.</p>
+<p>En Julia, <code>LinearAlgebra.peakflops()</code> mide directamente la capacidad de tu propia máquina, y <code>BenchmarkTools.jl</code> (para medir tiempos), junto con alguna herramienta de conteo de flops, permite estimar cuántas operaciones de punto flotante consume una función específica.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Corra <code>LinearAlgebra.peakflops()</code> en su propia máquina y reporte el resultado en GFLOPS o MFLOPS, según corresponda. Después compare ese número contra dos referencias más: un datacenter grande (del orden de <img src="https://latex.codecogs.com/png.latex?10%5E%7B20%7D"> FLOPS) y una estimación de cuántos flops equivalentes podría hacer un ser humano. ¿Qué tan lejos está su máquina de cada extremo?</p>
+</div>
+</div>
+</section>
+<section id="ejemplo-flops-del-producto-matriz-vector" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="ejemplo-flops-del-producto-matriz-vector"><span class="header-section-number">4</span> Ejemplo: flops del producto matriz-vector</h2>
+<p>Supongamos que <img src="https://latex.codecogs.com/png.latex?A%20%5Cin%20%5Cmathbb%7BR%7D%5E%7Bn%5Ctimes%20n%7D"> y <img src="https://latex.codecogs.com/png.latex?x%20%5Cin%20%5Cmathbb%7BR%7D%5En">, y queremos calcular <img src="https://latex.codecogs.com/png.latex?y%20=%20Ax">. Cada componente de <img src="https://latex.codecogs.com/png.latex?y"> es <img src="https://latex.codecogs.com/png.latex?y_i%20=%20%5Csum_%7Bj=1%7D%5En%20a_%7Bij%7D%20x_j,"> que cuesta <img src="https://latex.codecogs.com/png.latex?n"> productos y <img src="https://latex.codecogs.com/png.latex?n-1"> sumas: unas <img src="https://latex.codecogs.com/png.latex?2n"> operaciones si no nos preocupamos por el término de orden inferior. En código, el patrón para calcular una sola fila <img src="https://latex.codecogs.com/png.latex?i"> se ve así:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> j <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span>n</span>
+<span id="cb1-2">    y[i] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+=</span> A[i, j] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x[j]</span>
+<span id="cb1-3"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span></code></pre></div></div>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Complete el programa repitiendo este patrón para cada fila <img src="https://latex.codecogs.com/png.latex?i=1,%5Cdots,n">, sin ver el texto guía o esta nota.</p>
+</div>
+</div>
+<p>Ese bucle interno tiene dos operaciones de punto flotante (una suma y un producto) repetidas <img src="https://latex.codecogs.com/png.latex?n"> veces, y hay que repetirlo para cada una de las <img src="https://latex.codecogs.com/png.latex?n"> filas. El total es <img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bi=1%7D%5En%20(2n)%20=%202n%20%5Ccdot%20n%20=%202n%5E2,"> es decir, la cuenta crece del orden de <img src="https://latex.codecogs.com/png.latex?n%5E2"> operaciones de punto flotante: el algoritmo es <img src="https://latex.codecogs.com/png.latex?O(n%5E2)">.</p>
+<p>Vale la pena ser precisos sobre qué mide esto. Cuando decimos que un algoritmo tiene complejidad computacional (temporal) <img src="https://latex.codecogs.com/png.latex?O(n%5E2)">, estamos contando exclusivamente el número de operaciones aritméticas en función del tamaño de la entrada, sin tener en cuenta todavía los recursos concretos de la máquina donde corre: acceso a memoria, caché, paralelismo. Esa es una capa adicional, real e importante en la práctica, que dejamos de lado por ahora para quedarnos con la pregunta puramente matemática de cuántas operaciones exige el algoritmo.</p>
+<section id="un-aparte-las-clases-p-y-np" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="un-aparte-las-clases-p-y-np"><span class="header-section-number">4.1</span> Un aparte: las clases P y NP</h3>
+<p>La misma notación <img src="https://latex.codecogs.com/png.latex?O(n%5Ek)"> que acabamos de usar para clasificar un algoritmo es también el lenguaje con el que se define una de las distinciones más importantes de las ciencias de la computación. Se dice que un problema está en la clase <strong>P</strong> si existe un algoritmo que lo resuelve en tiempo <img src="https://latex.codecogs.com/png.latex?O(n%5Ek)"> para algún <img src="https://latex.codecogs.com/png.latex?k"> fijo, es decir, en tiempo polinomial en el tamaño <img src="https://latex.codecogs.com/png.latex?n"> de la entrada: el producto matriz vector que acabamos de contar, con su <img src="https://latex.codecogs.com/png.latex?O(n%5E2)">, es un ejemplo perfectamente ordinario de un problema en P.</p>
+<p>La clase <strong>NP</strong> es más sutil, y la diferencia está en qué es lo que se pide que sea polinomial. Un problema está en NP si, dado un candidato a solución, existe un algoritmo que verifica esa solución en tiempo <img src="https://latex.codecogs.com/png.latex?O(n%5Ek)">, aunque no se conozca ningún algoritmo que encuentre esa solución en tiempo polinomial. El ejemplo clásico es un rompecabezas combinatorio: comprobar que un subconjunto dado de números suma exactamente el valor pedido, o que una asignación dada de valores de verdad satisface una fórmula lógica, toma tiempo polinomial. Pero encontrar ese subconjunto o esa asignación, si no se tiene mejor idea que probar todas las combinaciones posibles, exige recorrer un número de candidatos que crece como <img src="https://latex.codecogs.com/png.latex?2%5En">. Ya demostramos arriba, en la tarea sobre <img src="https://latex.codecogs.com/png.latex?x%5Ep=o(e%5Ex)">, que una exponencial termina superando a cualquier polinomio, sin importar qué tan grande sea el exponente <img src="https://latex.codecogs.com/png.latex?k">; por eso <img src="https://latex.codecogs.com/png.latex?O(2%5En)"> es, en la práctica, una barrera mucho más severa que cualquier <img src="https://latex.codecogs.com/png.latex?O(n%5Ek)">, aun para <img src="https://latex.codecogs.com/png.latex?k"> grande.</p>
+<p>Todo problema en P está también en NP: si se puede resolver en tiempo polinomial, en particular se puede verificar una solución en tiempo polinomial (basta con resolverlo uno mismo y comparar). La pregunta de si esa inclusión es en realidad una igualdad, es decir, si <strong>P = NP</strong>, si todo problema cuya solución se puede verificar rápido también se puede encontrar rápido, sigue abierta. Es uno de los siete problemas del milenio del Instituto Clay, y a pesar de varios anuncios de solución a lo largo de los años (ninguno resistió la revisión de la comunidad), hasta la fecha nadie ha demostrado ni que P = NP ni que P ≠ NP.</p>
+</section>
+</section>
+<section id="comparando-teoría-y-práctica-gráficas-log-log" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="comparando-teoría-y-práctica-gráficas-log-log"><span class="header-section-number">5</span> Comparando teoría y práctica: gráficas log-log</h2>
+<p>El conteo de flops da una predicción teórica de cómo debería crecer el tiempo de ejecución de un algoritmo, pero conviene contrastarla con mediciones reales (por ejemplo, con <code>@time</code> o <code>BenchmarkTools.jl</code>). Si el tiempo de un algoritmo obedece <img src="https://latex.codecogs.com/png.latex?t%20%5Capprox%20Cn%5Ep"> para alguna constante <img src="https://latex.codecogs.com/png.latex?C"> y algún exponente <img src="https://latex.codecogs.com/png.latex?p"> (el mismo <img src="https://latex.codecogs.com/png.latex?p"> que predice el conteo de flops), tomando logaritmo en ambos lados se obtiene <img src="https://latex.codecogs.com/png.latex?%5Clog(t)%20%5Capprox%20%5Clog(C)%20+%20p%5C,%5Clog(n)."> Esta es la ecuación de una recta en el plano <img src="https://latex.codecogs.com/png.latex?(%5Clog%20n,%5Clog%20t)">, con pendiente <img src="https://latex.codecogs.com/png.latex?p">. Por eso, al graficar tiempos medidos contra <img src="https://latex.codecogs.com/png.latex?n"> en escala log-log, un algoritmo de complejidad <img src="https://latex.codecogs.com/png.latex?O(n%5Ep)"> debería verse como una línea recta de pendiente aproximadamente <img src="https://latex.codecogs.com/png.latex?p">: la pendiente medida en la gráfica se compara directamente contra el exponente que predijo el conteo de flops, y una discrepancia entre ambos es indicio de que la implementación real no se comporta como el conteo teórico predice (acceso a memoria, alojamiento innecesario de arreglos, etc.).</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Haga todos los ejercicios de la sección eficiencia computacional de matrices del libro de Driscoll y Braun.</p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/numerico/complejidad/</guid>
+  <pubDate>Sun, 06 Sep 2026 05:00:00 GMT</pubDate>
+</item>
+<item>
   <title>Taller 1</title>
   <dc:creator>Arturo Sanjuán</dc:creator>
   <link>https://arturosanjuan.xyz/cursos/numerico/taller-1/</link>

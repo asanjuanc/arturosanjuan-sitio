@@ -61,6 +61,7 @@ website:
         - cursos/numerico/estabilidad/index.qmd
         - cursos/numerico/taller-1/index.qmd
         - cursos/numerico/matrices/index.qmd
+        - cursos/numerico/complejidad/index.qmd
     - id: probabilidad
       title: "Probabilidad"
       style: docked

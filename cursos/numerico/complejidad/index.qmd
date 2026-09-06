@@ -1,0 +1,133 @@
+---
+title: "Complejidad"
+subtitle: "Notación de Landau y conteo de flops"
+description: "Definición formal de la notación o pequeña, O grande y equivalencia asintótica; conteo de flops de un algoritmo, con el ejemplo del producto matriz vector; y una breve conexión con la distinción entre las clases de complejidad P y NP."
+author: "Arturo Sanjuán"
+date: 2026-09-06
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 6
+---
+
+## Notación de Landau: la $o$ pequeña
+
+Hasta ahora hemos medido el tamaño de un error con normas y números de condición. Para comparar el costo de dos algoritmos necesitamos otro lenguaje: la notación asintótica de Landau, la misma que se usa para describir el comportamiento local de una función cerca de un punto y también el comportamiento de un algoritmo cuando el tamaño del problema crece.
+
+Decimos que $f(x) = o(g(x))$ cuando $x \to a$ si
+$$\lim_{x\to a} \frac{f(x)}{g(x)} = 0,$$
+suponiendo que $g(x) \neq 0$ cerca de $a$. Cuando no se especifica $a$, en esta notación se sobreentiende $x \to 0$: la $o$ pequeña se usa casi siempre para describir comportamiento local cerca de un punto, y conviene fijar ese punto en el origen salvo que se diga lo contrario.
+
+Por ejemplo, $f(x) = o(1)$ cuando $x \to a$ dice simplemente que $f(x) \to 0$; y $f(x) = o(x)$ dice que $f(x)/x \to 0$.
+
+La derivada misma se puede definir en este lenguaje. Si $f$ es derivable en $a$,
+$$\lim_{h\to 0} \frac{f(a+h) - f(a)}{h} = f'(a),$$
+lo cual equivale a decir que
+$$\frac{f(a+h) - f(a) - f'(a)h}{h} \to 0 \quad \text{cuando } h \to 0,$$
+es decir,
+$$f(a+h) = f(a) + f'(a)h + o(h). \qquad (\ast)$$
+El término $o(h)$ se interpreta como una función que se va a cero más rápido que $h$ cuando $h \to 0$ (por ejemplo, $h^2$). Así, la derivada en $a$ queda definida por la fórmula $(\ast)$.
+
+::: {.callout-note title="Tarea"}
+a) Use la fórmula $(\ast)$ con $f(x) = x^2$ para identificar explícitamente quién es la función $o(h)$ en ese caso.
+
+b) Reescriba el teorema de Taylor de orden $p$ usando la notación $o$, completando
+$$f(a+h) = f(a) + f'(a)h + \cdots + \frac{f^{(p)}(a)}{p!}h^p + \underline{\qquad}.$$
+
+c) Demuestre que $x^p = o(e^x)$ cuando $x \to \infty$, para todo entero $p \ge 0$ (esto dice que la exponencial crece más rápido que cualquier polinomio). Demuestre también que $e^{-x} = o(x^{-p})$ cuando $x \to \infty$, para todo $p$. ¿Qué quiere decir esto en palabras?
+:::
+
+## La $O$ grande y la equivalencia asintótica
+
+La $o$ pequeña sirve para decir que algo es despreciable frente a otra cantidad. Para decir que algo está acotado por otra cantidad, sin ser necesariamente despreciable, se usa la $O$ grande.
+
+Decimos que $f(x) = O(g(x))$ cuando $x \to a$ (la misma definición sirve para sucesiones, con $n \to \infty$) si $f(x)/g(x)$ permanece acotado cerca de $a$. Aquí la convención por defecto es distinta a la de la $o$ pequeña: si no se especifica $a$, se sobreentiende $x \to \infty$ (o $n \to \infty$ para sucesiones), porque la $O$ grande es la que usamos para describir cuánto crece un algoritmo cuando el tamaño del problema crece, no el comportamiento local cerca de un punto.
+
+::: {.callout-note title="Tarea"}
+Demuestre que la definición anterior es equivalente a pedir
+$$\limsup_{x \to a} \left| \frac{f(x)}{g(x)} \right| < \infty.$$
+:::
+
+Un tercer símbolo, más fino que la $O$, es la equivalencia asintótica: decimos que $f \sim g$ cuando $x \to a$ si
+$$\lim_{x\to a} \frac{f(x)}{g(x)} = 1.$$
+Por ejemplo, $\operatorname{sen}(x) \sim x$ cuando $x \to 0$, y $\operatorname{sen}(1/n) \sim 1/n$ cuando $n \to \infty$.
+
+Veamos con cuidado, directamente desde la definición, que $2n^3 - 3n^2 + 1 = O(n^3)$. El cociente
+$$\frac{2n^3 - 3n^2 + 1}{n^3} = 2 - \frac{3}{n} + \frac{1}{n^3}$$
+tiende a $2$ cuando $n \to \infty$, así que existe $n_0$ tal que para todo $n \ge n_0$ ese cociente es menor que, digamos, $2{,}1$: en particular está acotado, que es justamente lo que pide la definición de $O$.
+
+Este argumento se generaliza de inmediato: si $f$ y $g$ son positivas y el límite $\lim_{n\to\infty} f(n)/g(n)$ existe y es finito, entonces automáticamente $f(n) = O(g(n))$, porque un cociente convergente en particular está acotado.
+
+::: {.callout-note title="Tarea"}
+Demuestre con cuidado la afirmación anterior, y úsela para mostrar que cualquier polinomio de grado $p$ es $O(n^p)$.
+:::
+
+Con esta observación es fácil clasificar sumas que aparecen todo el tiempo al contar operaciones. Por ejemplo,
+$$\sum_{k=1}^n k = \frac{n(n+1)}{2} = \frac{n^2}{2} + \frac{n}{2} \sim \frac{n^2}{2},$$
+así que $\sum_{k=1}^n k = O(n^2)$. Técnicamente también es cierto que $\sum_{k=1}^n k = O(n^3)$, o de cualquier potencia mayor, pero esa afirmación, aunque verdadera, casi no dice nada: en la práctica siempre buscamos la función $g$ más pequeña posible para la cual $f=O(g)$ se cumple, porque es ahí donde la notación aporta información útil. El mismo argumento con la suma de cuadrados da $\sum_{k=1}^n k^2 \sim n^3/3 = O(n^3)$, y en general $\sum_{k=1}^n k^p \sim n^{p+1}/(p+1) = O(n^{p+1})$.
+
+## Conteo de flops
+
+Un **flop** (*floating point operation*) es una suma, resta, multiplicación, división o raíz cuadrada entre números de punto flotante. **FLOPS** (con S final) son flops por segundo, la unidad con la que se mide la capacidad de cómputo de una máquina. Se usan los prefijos usuales de potencias de mil:
+
+| Prefijo | Símbolo | Factor |
+|:---:|:---:|:---:|
+| kilo | K | $10^3$ |
+| mega | M | $10^6$ |
+| giga | G | $10^9$ |
+| tera | T | $10^{12}$ |
+| peta | P | $10^{15}$ |
+
+Para dar un par de puntos de referencia: el supercomputador Lonestar6 (TACC) tiene una capacidad de cómputo del orden de $3$ PFLOPS, es decir, unas $3\times10^{15}$ operaciones de punto flotante por segundo. Un computador portátil corriente, como los que usamos en clase, es menor que un 1 TFLOPS.
+
+En Julia, `LinearAlgebra.peakflops()` mide directamente la capacidad de tu propia máquina, y `BenchmarkTools.jl` (para medir tiempos), junto con alguna herramienta de conteo de flops, permite estimar cuántas operaciones de punto flotante consume una función específica.
+
+::: {.callout-note title="Tarea"}
+Corra `LinearAlgebra.peakflops()` en su propia máquina y reporte el resultado en GFLOPS o MFLOPS, según corresponda. Después compare ese número contra dos referencias más: un datacenter grande (del orden de $10^{20}$ FLOPS) y una estimación de cuántos flops equivalentes podría hacer un ser humano. ¿Qué tan lejos está su máquina de cada extremo?
+:::
+
+## Ejemplo: flops del producto matriz-vector
+
+Supongamos que $A \in \mathbb{R}^{n\times n}$ y $x \in \mathbb{R}^n$, y queremos calcular $y = Ax$. Cada componente de $y$ es
+$$y_i = \sum_{j=1}^n a_{ij} x_j,$$
+que cuesta $n$ productos y $n-1$ sumas: unas $2n$ operaciones si no nos preocupamos por el término de orden inferior. En código, el patrón para calcular una sola fila $i$ se ve así:
+
+```julia
+for j in 1:n
+    y[i] += A[i, j] * x[j]
+end
+```
+
+::: {.callout-note title="Tarea"}
+Complete el programa repitiendo este patrón para cada fila $i=1,\dots,n$, sin ver el texto guía o esta nota.
+:::
+
+Ese bucle interno tiene dos operaciones de punto flotante (una suma y un producto) repetidas $n$ veces, y hay que repetirlo para cada una de las $n$ filas. El total es
+$$\sum_{i=1}^n (2n) = 2n \cdot n = 2n^2,$$
+es decir, la cuenta crece del orden de $n^2$ operaciones de punto flotante: el algoritmo es $O(n^2)$.
+
+Vale la pena ser precisos sobre qué mide esto. Cuando decimos que un algoritmo tiene complejidad computacional (temporal) $O(n^2)$, estamos contando exclusivamente el número de operaciones aritméticas en función del tamaño de la entrada, sin tener en cuenta todavía los recursos concretos de la máquina donde corre: acceso a memoria, caché, paralelismo. Esa es una capa adicional, real e importante en la práctica, que dejamos de lado por ahora para quedarnos con la pregunta puramente matemática de cuántas operaciones exige el algoritmo.
+
+### Un aparte: las clases P y NP
+
+La misma notación $O(n^k)$ que acabamos de usar para clasificar un algoritmo es también el lenguaje con el que se define una de las distinciones más importantes de las ciencias de la computación. Se dice que un problema está en la clase **P** si existe un algoritmo que lo resuelve en tiempo $O(n^k)$ para algún $k$ fijo, es decir, en tiempo polinomial en el tamaño $n$ de la entrada: el producto matriz vector que acabamos de contar, con su $O(n^2)$, es un ejemplo perfectamente ordinario de un problema en P.
+
+La clase **NP** es más sutil, y la diferencia está en qué es lo que se pide que sea polinomial. Un problema está en NP si, dado un candidato a solución, existe un algoritmo que verifica esa solución en tiempo $O(n^k)$, aunque no se conozca ningún algoritmo que encuentre esa solución en tiempo polinomial. El ejemplo clásico es un rompecabezas combinatorio: comprobar que un subconjunto dado de números suma exactamente el valor pedido, o que una asignación dada de valores de verdad satisface una fórmula lógica, toma tiempo polinomial. Pero encontrar ese subconjunto o esa asignación, si no se tiene mejor idea que probar todas las combinaciones posibles, exige recorrer un número de candidatos que crece como $2^n$. Ya demostramos arriba, en la tarea sobre $x^p=o(e^x)$, que una exponencial termina superando a cualquier polinomio, sin importar qué tan grande sea el exponente $k$; por eso $O(2^n)$ es, en la práctica, una barrera mucho más severa que cualquier $O(n^k)$, aun para $k$ grande.
+
+Todo problema en P está también en NP: si se puede resolver en tiempo polinomial, en particular se puede verificar una solución en tiempo polinomial (basta con resolverlo uno mismo y comparar). La pregunta de si esa inclusión es en realidad una igualdad, es decir, si **P = NP**, si todo problema cuya solución se puede verificar rápido también se puede encontrar rápido, sigue abierta. Es uno de los siete problemas del milenio del Instituto Clay, y a pesar de varios anuncios de solución a lo largo de los años (ninguno resistió la revisión de la comunidad), hasta la fecha nadie ha demostrado ni que P = NP ni que P ≠ NP.
+
+## Comparando teoría y práctica: gráficas log-log
+
+El conteo de flops da una predicción teórica de cómo debería crecer el tiempo de ejecución de un algoritmo, pero conviene contrastarla con mediciones reales (por ejemplo, con `@time` o `BenchmarkTools.jl`). Si el tiempo de un algoritmo obedece $t \approx Cn^p$ para alguna constante $C$ y algún exponente $p$ (el mismo $p$ que predice el conteo de flops), tomando logaritmo en ambos lados se obtiene
+$$\log(t) \approx \log(C) + p\,\log(n).$$
+Esta es la ecuación de una recta en el plano $(\log n,\log t)$, con pendiente $p$. Por eso, al graficar tiempos medidos contra $n$ en escala log-log, un algoritmo de complejidad $O(n^p)$ debería verse como una línea recta de pendiente aproximadamente $p$: la pendiente medida en la gráfica se compara directamente contra el exponente que predijo el conteo de flops, y una discrepancia entre ambos es indicio de que la implementación real no se comporta como el conteo teórico predice (acceso a memoria, alojamiento innecesario de arreglos, etc.).
+
+::: {.callout-note title="Tarea"}
+Haga todos los ejercicios de la sección eficiencia computacional de matrices del libro de Driscoll y Braun.
+:::
