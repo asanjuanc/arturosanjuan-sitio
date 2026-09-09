@@ -15,7 +15,218 @@
 <link>https://arturosanjuan.xyz/cursos/numerico/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Fri, 11 Sep 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 16 Sep 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Normas matriciales y condicionamiento</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/numerico/normas/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>Hasta ahora hemos medido el tamaño de un vector con una norma. Para hablar del condicionamiento de un sistema lineal completo necesitamos también medir el tamaño de una matriz, y resulta que no cualquier manera razonable de hacerlo sirve para ese propósito.</p>
+<section id="de-vectores-a-matrices-la-norma-de-frobenius" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="de-vectores-a-matrices-la-norma-de-frobenius"><span class="header-section-number">1</span> De vectores a matrices: la norma de Frobenius</h2>
+<p>Una matriz <img src="https://latex.codecogs.com/png.latex?A"> de tamaño <img src="https://latex.codecogs.com/png.latex?m%5Ctimes%20n"> se puede acomodar como un vector de <img src="https://latex.codecogs.com/png.latex?mn"> entradas, simplemente apilando sus columnas una encima de la otra. Cualquier norma vectorial aplicada a ese vector aplanado es, automáticamente, una función que cumple los tres axiomas de norma sobre el espacio de matrices (positividad, homogeneidad, desigualdad triangular), porque esos axiomas se preservan bajo cualquier reacomodo lineal de las entradas.</p>
+<p>La elección más natural es la norma 2 del vector aplanado, que recibe nombre propio.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Definición: norma de Frobenius">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Definición: norma de Frobenius
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><img src="https://latex.codecogs.com/png.latex?%5C%7CA%5C%7C_F%20=%20%5Cleft(%5Csum_%7Bi=1%7D%5Em%5Csum_%7Bj=1%7D%5En%20%7CA_%7Bij%7D%7C%5E2%5Cright)%5E%7B1/2%7D"></p>
+</div>
+</div>
+<p>Es exactamente lo que calcula la función <code>norm</code> de Julia cuando se le pasa una matriz.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre que la norma de Frobenius es, en efecto, una norma.</p>
+</div>
+</div>
+</section>
+<section id="por-qué-exigir-submultiplicatividad" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="por-qué-exigir-submultiplicatividad"><span class="header-section-number">2</span> ¿Por qué exigir submultiplicatividad?</h2>
+<p>Los tres axiomas de norma no son, sin embargo, todo lo que en análisis numérico le pedimos a una norma matricial. La propiedad adicional que realmente importa es</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5C%7CAB%5C%7C%20%5Cle%20%5C%7CA%5C%7C%5Ccdot%5C%7CB%5C%7C,"></p>
+<p>llamada <strong>submultiplicatividad</strong>. Es la propiedad que garantiza que el producto de matrices sea una operación continua: sin ella no se puede acotar de forma consistente el error al multiplicar matrices, ni definir el número de condición como vamos a hacerlo más abajo. (Esto es, de hecho, un caso particular de un resultado general de análisis funcional sobre continuidad de aplicaciones bilineales acotadas; ver por ejemplo Rudin o Kreyszig, se sale del curso.)</p>
+<p>Lo importante es que <strong>no toda norma vectorial aplicada a la matriz aplanada es submultiplicativa</strong>, aunque cumpla los tres axiomas sin problema. Considera <img src="https://latex.codecogs.com/png.latex?%5C%7CA%5C%7C_%7B%5Cmax%7D%20:=%20%5Cmax_%7Bij%7D%7CA_%7Bij%7D%7C">, que es perfectamente válida como norma vectorial. Con</p>
+<p><img src="https://latex.codecogs.com/png.latex?A%20=%20B%20=%20%5Cbegin%7Bbmatrix%7D%201%20&amp;%201%20%5C%5C%201%20&amp;%201%5Cend%7Bbmatrix%7D"></p>
+<p>tenemos <img src="https://latex.codecogs.com/png.latex?%5C%7CA%5C%7C_%7B%5Cmax%7D=%5C%7CB%5C%7C_%7B%5Cmax%7D=1">, pero</p>
+<p><img src="https://latex.codecogs.com/png.latex?AB%20=%20%5Cbegin%7Bbmatrix%7D%202%20&amp;%202%20%5C%5C%202%20&amp;%202%5Cend%7Bbmatrix%7D,%20%5Cqquad%20%5C%7CAB%5C%7C_%7B%5Cmax%7D=2%20%3E%201%20=%20%5C%7CA%5C%7C_%7B%5Cmax%7D%5C%7CB%5C%7C_%7B%5Cmax%7D."></p>
+<p>Entonces <img src="https://latex.codecogs.com/png.latex?%5C%7C%5Ccdot%5C%7C_%7B%5Cmax%7D">, aunque es una norma legítima sobre el espacio de matrices, no es una norma <em>matricial</em> en el sentido que necesitamos.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Usando la desigualdad de Cauchy–Schwarz, demuestre que la norma de Frobenius sí es submultiplicativa.</p>
+</div>
+</div>
+</section>
+<section id="normas-inducidas" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="normas-inducidas"><span class="header-section-number">3</span> Normas inducidas</h2>
+<p>Por la razón anterior, en la práctica se prefiere construir la norma matricial a partir de una norma vectorial de otra manera, viendo a <img src="https://latex.codecogs.com/png.latex?A"> como una transformación lineal en vez de como una lista de números.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Definición: norma inducida">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Definición: norma inducida
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dada una norma vectorial <img src="https://latex.codecogs.com/png.latex?%5C%7C%5Ccdot%5C%7C_p">, la norma matricial que induce sobre cualquier matriz <img src="https://latex.codecogs.com/png.latex?A"> de <img src="https://latex.codecogs.com/png.latex?m%5Ctimes%20n"> es</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5C%7CA%5C%7C_p%20=%20%5Cmax_%7B%5C%7Cx%5C%7C_p=1%7D%20%5C%7CAx%5C%7C_p%20=%20%5Cmax_%7Bx%5Cneq%200%7D%20%5Cfrac%7B%5C%7CAx%5C%7C_p%7D%7B%5C%7Cx%5C%7C_p%7D."></p>
+</div>
+</div>
+<p>El máximo existe (no es solo un supremo) porque la esfera unitaria <img src="https://latex.codecogs.com/png.latex?%5C%7Bx:%5C%7Cx%5C%7C_p=1%5C%7D"> es compacta en dimensión finita y <img src="https://latex.codecogs.com/png.latex?x%5Cmapsto%20%5C%7CAx%5C%7C_p"> es continua, así que por el teorema de Weierstrass el máximo se alcanza en algún punto.</p>
+<p>Vale la pena señalar también que en dimensión finita (<img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En">, <img src="https://latex.codecogs.com/png.latex?%5Cmathcal%7BM%7D_%7Bm%5Ctimes%20n%7D">, <img src="https://latex.codecogs.com/png.latex?P_%7B%5Cleq%20n%7D">) todas las normas (matriciales o no) son equivalentes: generan la misma noción de convergencia. Concretamente, si <img src="https://latex.codecogs.com/png.latex?%5C%7C%5Ccdot%5C%7C"> y <img src="https://latex.codecogs.com/png.latex?%5C%7C%5Ccdot%5C%7C'"> son dos normas cualesquiera sobre un espacio de dimensión finita, existen constantes <img src="https://latex.codecogs.com/png.latex?%5Calpha,%5Cbeta%3E0"> tales que <img src="https://latex.codecogs.com/png.latex?%5Calpha%5C%7Cx%5C%7C%5Cle%5C%7Cx%5C%7C'%5Cle%5Cbeta%5C%7Cx%5C%7C"> para todo <img src="https://latex.codecogs.com/png.latex?x">. Este es otro resultado de análisis funcional que no vamos a demostrar aquí.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre que <img src="https://latex.codecogs.com/png.latex?%5C%7C%5Ccdot%5C%7C_1">, <img src="https://latex.codecogs.com/png.latex?%5C%7C%5Ccdot%5C%7C_2"> y <img src="https://latex.codecogs.com/png.latex?%5C%7C%5Ccdot%5C%7C_%5Cinfty"> son equivalentes en <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En">, encontrando explícitamente las constantes correspondientes.</p>
+</div>
+</div>
+<p>A diferencia de lo que pasó con <img src="https://latex.codecogs.com/png.latex?%5C%7C%5Ccdot%5C%7C_%7B%5Cmax%7D">, la submultiplicatividad de una norma inducida no cuesta ningún trabajo extra: viene incluida gratis en la definición. Para cualquier <img src="https://latex.codecogs.com/png.latex?x"> con <img src="https://latex.codecogs.com/png.latex?%5C%7Cx%5C%7C=1">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5C%7CABx%5C%7C%20=%20%5C%7CA(Bx)%5C%7C%20%5Cle%20%5C%7CA%5C%7C%5Ccdot%5C%7CBx%5C%7C%20%5Cle%20%5C%7CA%5C%7C%5Ccdot%5C%7CB%5C%7C%5Ccdot%5C%7Cx%5C%7C%20=%20%5C%7CA%5C%7C%5Ccdot%5C%7CB%5C%7C,"></p>
+<p>y tomando el máximo sobre <img src="https://latex.codecogs.com/png.latex?x"> se obtiene <img src="https://latex.codecogs.com/png.latex?%5C%7CAB%5C%7C%5Cle%5C%7CA%5C%7C%5Ccdot%5C%7CB%5C%7C"> directamente, sin necesidad de ninguna desigualdad auxiliar como Cauchy–Schwarz.</p>
+<p>Como el máximo de <img src="https://latex.codecogs.com/png.latex?%5C%7CAx%5C%7C"> se alcanza en algún <img src="https://latex.codecogs.com/png.latex?x_%7B%5Cmax%7D"> de la esfera unitaria, y toda norma cumple <img src="https://latex.codecogs.com/png.latex?%5C%7C%7B-x%7D%5C%7C=%5C%7Cx%5C%7C">, el vector <img src="https://latex.codecogs.com/png.latex?-x_%7B%5Cmax%7D"> también está en la esfera y también alcanza el máximo (porque <img src="https://latex.codecogs.com/png.latex?A(-x_%7B%5Cmax%7D)=-Ax_%7B%5Cmax%7D"> tiene la misma norma). Es decir, el maximizador nunca es único: siempre viene en un par <img src="https://latex.codecogs.com/png.latex?%5Cpm%20x_%7B%5Cmax%7D">.</p>
+</section>
+<section id="interpretación-geométrica" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="interpretación-geométrica"><span class="header-section-number">4</span> Interpretación geométrica</h2>
+<p>Si transformamos la esfera unitaria (en la norma que estemos usando) mediante <img src="https://latex.codecogs.com/png.latex?A">, la imagen es una especie de elipse (o hiperelipsoide) que queda encerrada en la esfera de radio <img src="https://latex.codecogs.com/png.latex?%5C%7CA%5C%7C">, y la toca en al menos ese par de puntos antípodas. En ese sentido, <img src="https://latex.codecogs.com/png.latex?%5C%7CA%5C%7C"> mide cuánto puede <em>expandir</em> <img src="https://latex.codecogs.com/png.latex?A"> a un vector unitario en el mejor de los casos. El análogo para medir cuánto puede <em>encoger</em> es el mínimo en vez del máximo,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Csigma_%7B%5Cmin%7D(A)%20:=%20%5Cmin_%7B%5C%7Cx%5C%7C=1%7D%5C%7CAx%5C%7C,"></p>
+<p>que también se alcanza por compacidad. En el capítulo de análisis matricial vamos a ver que <img src="https://latex.codecogs.com/png.latex?%5C%7CA%5C%7C_2"> y <img src="https://latex.codecogs.com/png.latex?%5Csigma_%7B%5Cmin%7D(A)"> son, respectivamente, el mayor y el menor valor singular de <img src="https://latex.codecogs.com/png.latex?A">.</p>
+</section>
+<section id="fórmulas-explícitas-para-a_infty-y-a_1" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="fórmulas-explícitas-para-a_infty-y-a_1"><span class="header-section-number">5</span> Fórmulas explícitas para <img src="https://latex.codecogs.com/png.latex?%5C%7CA%5C%7C_%5Cinfty"> y <img src="https://latex.codecogs.com/png.latex?%5C%7CA%5C%7C_1"></h2>
+<p>Para la mayoría de las normas inducidas, calcular <img src="https://latex.codecogs.com/png.latex?%5C%7CA%5C%7C_p"> exactamente requiere resolver un problema de optimización. Dos casos son la excepción.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Teorema">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Teorema
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><img src="https://latex.codecogs.com/png.latex?%5C%7CA%5C%7C_%5Cinfty%20=%20%5Cmax_%7B1%5Cle%20i%5Cle%20m%7D%20%5Csum_%7Bj=1%7D%5En%20%7CA_%7Bij%7D%7C%20%5Cqquad%5Ctext%7B(m%C3%A1xima%20suma%20por%20filas)%7D"> <img src="https://latex.codecogs.com/png.latex?%5C%7CA%5C%7C_1%20=%20%5Cmax_%7B1%5Cle%20j%5Cle%20n%7D%20%5Csum_%7Bi=1%7D%5Em%20%7CA_%7Bij%7D%7C%20%5Cqquad%5Ctext%7B(m%C3%A1xima%20suma%20por%20columnas)%7D"></p>
+</div>
+</div>
+<p><strong>Demostración para <img src="https://latex.codecogs.com/png.latex?%5C%7CA%5C%7C_1">.</strong> Sea <img src="https://latex.codecogs.com/png.latex?C_j=%5Csum_i%7CA_%7Bij%7D%7C"> y <img src="https://latex.codecogs.com/png.latex?C=%5Cmax_j%20C_j">. Para <img src="https://latex.codecogs.com/png.latex?x"> con <img src="https://latex.codecogs.com/png.latex?%5C%7Cx%5C%7C_1%5Cle1">, intercambiando el orden de las sumas,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5C%7CAx%5C%7C_1%20=%20%5Csum_i%5CBig%7C%5Csum_j%20A_%7Bij%7Dx_j%5CBig%7C%20%5Cle%20%5Csum_j%20%7Cx_j%7C%5Csum_i%7CA_%7Bij%7D%7C%20=%20%5Csum_j%20%7Cx_j%7C%5C,C_j%20%5Cle%20C%5Csum_j%7Cx_j%7C%20%5Cle%20C,"></p>
+<p>así que <img src="https://latex.codecogs.com/png.latex?%5C%7CA%5C%7C_1%5Cle%20C">. Para ver que se alcanza, sea <img src="https://latex.codecogs.com/png.latex?j%5E*"> la columna con la suma máxima y toma <img src="https://latex.codecogs.com/png.latex?x=%5Cmathbf%7Be%7D_%7Bj%5E*%7D"> (el vector canónico), que da <img src="https://latex.codecogs.com/png.latex?Ax"> igual a la columna <img src="https://latex.codecogs.com/png.latex?j%5E*"> de <img src="https://latex.codecogs.com/png.latex?A">, así que <img src="https://latex.codecogs.com/png.latex?%5C%7CAx%5C%7C_1=C_%7Bj%5E*%7D=C">. Combinando, <img src="https://latex.codecogs.com/png.latex?%5C%7CA%5C%7C_1=C">.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre la fórmula para la norma <img src="https://latex.codecogs.com/png.latex?%5Cinfty">.</p>
+</div>
+</div>
+<p>Nótese que en ambas demostraciones el vector que alcanza el máximo es un vértice de la bola unitaria correspondiente y por eso hay una fórmula cerrada tan simple: basta identificar el vértice correcto. La bola unitaria <img src="https://latex.codecogs.com/png.latex?%5Cell_2">, en cambio, es redonda y no tiene vértices, así que no existe una fórmula así de simple para <img src="https://latex.codecogs.com/png.latex?%5C%7CA%5C%7C_2"> en términos de las entradas de <img src="https://latex.codecogs.com/png.latex?A">.</p>
+</section>
+<section id="el-número-de-condición" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="el-número-de-condición"><span class="header-section-number">6</span> El número de condición</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Definición">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Definición
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para <img src="https://latex.codecogs.com/png.latex?A"> invertible, el <strong>número de condición</strong> (en una norma inducida dada) es</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ckappa(A)%20=%20%5C%7CA%5C%7C%5Ccdot%5C%7CA%5E%7B-1%7D%5C%7C."></p>
+</div>
+</div>
+<p>Como <img src="https://latex.codecogs.com/png.latex?1=%5C%7CI%5C%7C=%5C%7CAA%5E%7B-1%7D%5C%7C%5Cle%5C%7CA%5C%7C%5C%7CA%5E%7B-1%7D%5C%7C">, siempre se tiene <img src="https://latex.codecogs.com/png.latex?%5Ckappa(A)%5Cge1">, y <img src="https://latex.codecogs.com/png.latex?%5Ckappa(A)=1"> es el mejor condicionamiento posible. Si <img src="https://latex.codecogs.com/png.latex?A"> es singular, convenimos <img src="https://latex.codecogs.com/png.latex?%5Ckappa(A)=%5Cinfty">; y en la práctica, si <img src="https://latex.codecogs.com/png.latex?%5Ckappa(A)%3E%5Cepsilon_%7B%5Ctext%7Bmach%7D%7D%5E%7B-1%7D">, la matriz es efectivamente singular para efectos computacionales.</p>
+<section id="perturbando-b" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="perturbando-b"><span class="header-section-number">6.1</span> Perturbando <img src="https://latex.codecogs.com/png.latex?b"></h3>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?Ax=b"> y considera el sistema perturbado <img src="https://latex.codecogs.com/png.latex?A(x+%5CDelta%20x)%20=%20b+%5CDelta%20b"> (mismo <img src="https://latex.codecogs.com/png.latex?A">, lado derecho perturbado). Restando el sistema original,</p>
+<p><img src="https://latex.codecogs.com/png.latex?A%5CDelta%20x%20=%20%5CDelta%20b%20%5Cquad%5CLongrightarrow%5Cquad%20%5CDelta%20x%20=%20A%5E%7B-1%7D%5CDelta%20b%20%5Cquad%5CLongrightarrow%5Cquad%20%5C%7C%5CDelta%20x%5C%7C%20%5Cle%20%5C%7CA%5E%7B-1%7D%5C%7C%5C,%5C%7C%5CDelta%20b%5C%7C."></p>
+<p>Dividiendo por <img src="https://latex.codecogs.com/png.latex?%5C%7Cx%5C%7C"> y multiplicando y dividiendo por <img src="https://latex.codecogs.com/png.latex?%5C%7CA%5C%7C">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%5C%7C%5CDelta%20x%5C%7C%7D%7B%5C%7Cx%5C%7C%7D%20%5Cle%20%5C%7CA%5E%7B-1%7D%5C%7C%5C%7CA%5C%7C%5Ccdot%5Cfrac%7B%5C%7C%5CDelta%20b%5C%7C%7D%7B%5C%7CA%5C%7C%5C%7Cx%5C%7C%7D%20%5Cle%20%5Ckappa(A)%5C,%5Cfrac%7B%5C%7C%5CDelta%20b%5C%7C%7D%7B%5C%7Cb%5C%7C%7D,"></p>
+<p>usando en el último paso que <img src="https://latex.codecogs.com/png.latex?%5C%7Cb%5C%7C=%5C%7CAx%5C%7C%5Cle%5C%7CA%5C%7C%5C%7Cx%5C%7C">.</p>
+</section>
+<section id="perturbando-a" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="perturbando-a"><span class="header-section-number">6.2</span> Perturbando <img src="https://latex.codecogs.com/png.latex?A"></h3>
+<p>Ahora considera <img src="https://latex.codecogs.com/png.latex?(A+%5CDelta%20A)(x+%5CDelta%20x)%20=%20b">, con el mismo <img src="https://latex.codecogs.com/png.latex?b">. Expandiendo y usando <img src="https://latex.codecogs.com/png.latex?Ax=b">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?A%5CDelta%20x%20+%20%5CDelta%20A%5C,x%20+%20%5CDelta%20A%5C,%5CDelta%20x%20=%200%20%5Cquad%5CLongrightarrow%5Cquad%20%5CDelta%20x%20=%20-A%5E%7B-1%7D%5CDelta%20A%5C,(x+%5CDelta%20x)."></p>
+<p>Tomando normas,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5C%7C%5CDelta%20x%5C%7C%20%5Cle%20%5C%7CA%5E%7B-1%7D%5C%7C%5C,%5C%7C%5CDelta%20A%5C%7C%5C,%5C%7Cx+%5CDelta%20x%5C%7C%20%5Cquad%5CLongrightarrow%5Cquad%20%5Cfrac%7B%5C%7C%5CDelta%20x%5C%7C%7D%7B%5C%7Cx+%5CDelta%20x%5C%7C%7D%20%5Cle%20%5Ckappa(A)%5C,%5Cfrac%7B%5C%7C%5CDelta%20A%5C%7C%7D%7B%5C%7CA%5C%7C%7D."></p>
+<p>Cuando <img src="https://latex.codecogs.com/png.latex?%5CDelta%20A%5Cto0">, también <img src="https://latex.codecogs.com/png.latex?%5CDelta%20x%5Cto0"> (de la propia ecuación despejada arriba), así que <img src="https://latex.codecogs.com/png.latex?%5C%7Cx+%5CDelta%20x%5C%7C%5Cto%5C%7Cx%5C%7C">, y en ese límite se obtiene</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%5C%7C%5CDelta%20x%5C%7C%7D%7B%5C%7Cx%5C%7C%7D%20%5Cle%20%5Ckappa(A)%5C,%5Cfrac%7B%5C%7C%5CDelta%20A%5C%7C%7D%7B%5C%7CA%5C%7C%7D%20%5Cqquad%20(%5C%7C%5CDelta%20A%5C%7C%5Cto0)."></p>
+<p>Es la razón por la que en el enunciado general aparece la aclaración “en el límite <img src="https://latex.codecogs.com/png.latex?%5C%7C%5CDelta%20A%5C%7C%5Cto0">”: la desigualdad, tal como está, es de primer orden, no exacta para cualquier <img src="https://latex.codecogs.com/png.latex?%5CDelta%20A">.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Conexión con el ejercicio 2.7.11">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Conexión con el ejercicio 2.7.11
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si además se sabe que <img src="https://latex.codecogs.com/png.latex?%5C%7CA%5E%7B-1%7D%5CDelta%20A%5C%7C%3C1">, el ejercicio de la serie de Neumann que ya resolvió (¿<img src="https://latex.codecogs.com/png.latex?(I-A)%5E%7B-1%7D=%5Csum_k%20A%5Ek"> cuando <img src="https://latex.codecogs.com/png.latex?%5C%7CA%5C%7C%3C1">?) permite volver exacta la cota anterior, sin tomar ningún límite: reagrupando <img src="https://latex.codecogs.com/png.latex?%5CDelta%20x=-A%5E%7B-1%7D%5CDelta%20A%5C,x%20-%20A%5E%7B-1%7D%5CDelta%20A%5C,%5CDelta%20x"> se llega a <img src="https://latex.codecogs.com/png.latex?(I+A%5E%7B-1%7D%5CDelta%20A)%5CDelta%20x=-A%5E%7B-1%7D%5CDelta%20A%5C,x">, y usando <img src="https://latex.codecogs.com/png.latex?%5C%7C(I+E)%5E%7B-1%7D%5C%7C%5Cle%20%5Cfrac%7B1%7D%7B1-%5C%7CE%5C%7C%7D"> (la misma cota de la serie geométrica) se obtiene</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%5C%7C%5CDelta%20x%5C%7C%7D%7B%5C%7Cx%5C%7C%7D%20%5Cle%20%5Cfrac%7B%5Ckappa(A)%5Cdfrac%7B%5C%7C%5CDelta%20A%5C%7C%7D%7B%5C%7CA%5C%7C%7D%7D%7B1-%5Ckappa(A)%5Cdfrac%7B%5C%7C%5CDelta%20A%5C%7C%7D%7B%5C%7CA%5C%7C%7D%7D."></p>
+</div>
+</div>
+</section>
+</section>
+<section id="residuo-y-error-hacia-atrás" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="residuo-y-error-hacia-atrás"><span class="header-section-number">7</span> Residuo y error hacia atrás</h2>
+<p>Suponga que <img src="https://latex.codecogs.com/png.latex?Ax=b"> y que <img src="https://latex.codecogs.com/png.latex?%5Ctilde%20x"> es una solución aproximada (por ejemplo, calculada en punto flotante). El <strong>residuo</strong> es</p>
+<p><img src="https://latex.codecogs.com/png.latex?r%20=%20b%20-%20A%5Ctilde%20x."></p>
+<p>Por construcción, <img src="https://latex.codecogs.com/png.latex?A%5Ctilde%20x%20=%20b%20-%20r">, es decir: <img src="https://latex.codecogs.com/png.latex?%5Ctilde%20x"> es la solución <em>exacta</em> de un sistema con el mismo <img src="https://latex.codecogs.com/png.latex?A"> pero lado derecho perturbado <img src="https://latex.codecogs.com/png.latex?%5Ctilde%20b%20=%20b-r">. El <strong>error hacia atrás</strong> relativo es entonces <img src="https://latex.codecogs.com/png.latex?%5C%7Cr%5C%7C/%5C%7Cb%5C%7C">, y combinándolo con el teorema de la sección anterior,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%5C%7C%5Ctilde%20x%20-%20x%5C%7C%7D%7B%5C%7Cx%5C%7C%7D%20%5Cle%20%5Ckappa(A)%5C,%5Cfrac%7B%5C%7Cr%5C%7C%7D%7B%5C%7Cb%5C%7C%7D."></p>
+<p>Esta desigualdad separa dos preguntas que conviene no mezclar: qué tan pequeño es el error hacia atrás (una propiedad del <em>algoritmo</em>), y cómo ese error se traduce en error hacia adelante <img src="https://latex.codecogs.com/png.latex?%5C%7C%5Ctilde%20x-x%5C%7C/%5C%7Cx%5C%7C"> (una propiedad del <em>problema</em>, gobernada por <img src="https://latex.codecogs.com/png.latex?%5Ckappa(A)">).</p>
+<p>El residuo es una cantidad local y verificable: calcularlo es solo una multiplicación matriz-vector y una resta, y no depende en absoluto de qué tan sensible sea el problema que se está resolviendo. Si <img src="https://latex.codecogs.com/png.latex?%5Ctilde%20x"> proviene de un algoritmo bien diseñado (eliminación gaussiana con pivoteo parcial, por ejemplo), cada operación de punto flotante individual comete un error relativo del orden de <img src="https://latex.codecogs.com/png.latex?%5Cepsilon_%7B%5Ctext%7Bmach%7D%7D">, y un algoritmo <strong>estable hacia atrás</strong> es, por definición, uno en el que esos errores se acumulan de manera controlada, sin amplificarse entre sí, de modo que el resultado final <img src="https://latex.codecogs.com/png.latex?%5Ctilde%20x"> termina siendo la solución exacta de un problema cercano: <img src="https://latex.codecogs.com/png.latex?%5C%7C%5CDelta%20A%5C%7C/%5C%7CA%5C%7C"> (o <img src="https://latex.codecogs.com/png.latex?%5C%7C%5CDelta%20b%5C%7C/%5C%7Cb%5C%7C">) del orden de <img src="https://latex.codecogs.com/png.latex?%5Cepsilon_%7B%5Ctext%7Bmach%7D%7D">. Esta garantía es una propiedad del algoritmo y <strong>no depende de <img src="https://latex.codecogs.com/png.latex?%5Ckappa(A)"></strong> en absoluto.</p>
+<p>Esto es exactamente el eje de “problema vs.&nbsp;algoritmo” que hemos venido trabajando, llevado a su forma más concreta. El número de condición mide qué tan sensible es el <em>problema</em>: cuánto se amplifica una perturbación de los datos al pasar a la solución. La estabilidad hacia atrás mide qué tan bien se comporta el <em>algoritmo</em>: si logra mantener pequeño el residuo, sin importar qué tan sensible sea el problema. Son propiedades independientes: un algoritmo puede ser perfectamente estable (residuo minúsculo) y aun así producir un error hacia adelante enorme, si se aplica a un problema con <img src="https://latex.codecogs.com/png.latex?%5Ckappa(A)"> muy grande. La desigualdad de esta sección es precisamente la que traduce ese error hacia atrás minúsculo en el error hacia adelante, amplificado por <img src="https://latex.codecogs.com/png.latex?%5Ckappa(A)">.</p>
+<p>Una demostración numérica natural para ilustrar esta distinción: tomar una matriz de Hilbert (mal condicionada), resolver <img src="https://latex.codecogs.com/png.latex?Ax=b"> con <code>\</code> en Julia, y verificar que el residuo <img src="https://latex.codecogs.com/png.latex?%5C%7Cb-A%5Ctilde%20x%5C%7C"> sale minúsculo (estabilidad hacia atrás intacta) mientras que el error hacia adelante <img src="https://latex.codecogs.com/png.latex?%5C%7C%5Ctilde%20x-x%5C%7C/%5C%7Cx%5C%7C"> sale grande, amplificado por <img src="https://latex.codecogs.com/png.latex?%5Ckappa(A)">.</p>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/numerico/normas/</guid>
+  <pubDate>Wed, 16 Sep 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Sistemas lineales e interpolación</title>
   <dc:creator>Arturo Sanjuán</dc:creator>
