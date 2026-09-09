@@ -1,16 +1,24 @@
 [
   {
-    "listing": "/cursos/odes/index.html",
+    "listing": "/cursos/probabilidad/index.html",
     "items": [
-      "/cursos/odes/introduccion/index.html",
-      "/cursos/odes/familiasortogonales/index.html",
-      "/cursos/odes/polares/index.html",
-      "/cursos/odes/modelacion/index.html",
-      "/cursos/odes/movimiento/index.html",
-      "/cursos/odes/taller-1/index.html",
-      "/cursos/odes/homoexactas/index.html",
-      "/cursos/odes/fintegrante/index.html",
-      "/cursos/odes/reduccionorden/index.html"
+      "/cursos/probabilidad/introduccion/index.html",
+      "/cursos/probabilidad/calculoprobabilidades/index.html",
+      "/cursos/probabilidad/condicional/index.html",
+      "/cursos/probabilidad/taller-1/index.html",
+      "/cursos/probabilidad/vaintro/index.html",
+      "/cursos/probabilidad/vadiscretas/index.html",
+      "/cursos/probabilidad/vacontinuas/index.html",
+      "/cursos/probabilidad/limitenormal/index.html",
+      "/cursos/probabilidad/continuasespeciales/index.html"
+    ]
+  },
+  {
+    "listing": "/cursos/index.html",
+    "items": [
+      "/cursos/numerico/index.html",
+      "/cursos/odes/index.html",
+      "/cursos/probabilidad/index.html"
     ]
   },
   {
@@ -27,24 +35,17 @@
     ]
   },
   {
-    "listing": "/cursos/index.html",
+    "listing": "/cursos/odes/index.html",
     "items": [
-      "/cursos/numerico/index.html",
-      "/cursos/odes/index.html",
-      "/cursos/probabilidad/index.html"
-    ]
-  },
-  {
-    "listing": "/cursos/probabilidad/index.html",
-    "items": [
-      "/cursos/probabilidad/introduccion/index.html",
-      "/cursos/probabilidad/calculoprobabilidades/index.html",
-      "/cursos/probabilidad/condicional/index.html",
-      "/cursos/probabilidad/taller-1/index.html",
-      "/cursos/probabilidad/vaintro/index.html",
-      "/cursos/probabilidad/vadiscretas/index.html",
-      "/cursos/probabilidad/vacontinuas/index.html",
-      "/cursos/probabilidad/limitenormal/index.html"
+      "/cursos/odes/introduccion/index.html",
+      "/cursos/odes/familiasortogonales/index.html",
+      "/cursos/odes/polares/index.html",
+      "/cursos/odes/modelacion/index.html",
+      "/cursos/odes/movimiento/index.html",
+      "/cursos/odes/taller-1/index.html",
+      "/cursos/odes/homoexactas/index.html",
+      "/cursos/odes/fintegrante/index.html",
+      "/cursos/odes/reduccionorden/index.html"
     ]
   }
 ]

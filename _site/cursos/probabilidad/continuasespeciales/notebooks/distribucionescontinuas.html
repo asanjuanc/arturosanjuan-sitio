@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Distribuciones continuas notables</title>
+<style>
+  :root{
+    --bg:#ffffff;
+    --surface:#f6f7f5;
+    --border:#dfe3e2;
+    --text:#1c1e1c;
+    --text-secondary:#5c5f5c;
+    --densidad:#2b6ca8;
+    --acum:#c8541f;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--text);
+    background:var(--bg);
+    padding:1rem;
+  }
+  .mono{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-variant-numeric:tabular-nums;
+  }
+  .widget{
+    max-width:820px;
+    margin:0 auto;
+  }
+  .controls{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:0.75rem 1.25rem;
+    padding-bottom:0.9rem;
+    border-bottom:1px solid var(--border);
+    margin-bottom:0.9rem;
+  }
+  .control-group{
+    display:flex;
+    align-items:center;
+    gap:0.5rem;
+  }
+  label{
+    font-size:0.85rem;
+    color:var(--text-secondary);
+    white-space:nowrap;
+  }
+  select{
+    font-size:0.85rem;
+    padding:0.35rem 0.5rem;
+    border:1px solid var(--border);
+    border-radius:5px;
+    background:var(--bg);
+    color:var(--text);
+  }
+  input[type="range"]{
+    width:130px;
+    accent-color:var(--densidad);
+  }
+  .param-value{
+    min-width:2.8em;
+    display:inline-block;
+    text-align:right;
+  }
+  .view-toggle{
+    display:flex;
+    gap:0.4rem;
+  }
+  .view-toggle button{
+    font-size:0.85rem;
+    padding:0.4rem 0.85rem;
+    border:1px solid var(--border);
+    background:var(--bg);
+    color:var(--text);
+    border-radius:5px;
+    cursor:pointer;
+  }
+  .view-toggle button:hover{ background:var(--surface); }
+  .view-toggle button.active{
+    background:var(--text);
+    color:#fff;
+    border-color:var(--text);
+  }
+  .params-panel{
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.75rem 1.25rem;
+    margin-bottom:0.9rem;
+  }
+  .stats{
+    display:flex;
+    flex-wrap:wrap;
+    gap:1.25rem;
+    margin-bottom:0.75rem;
+    font-size:0.85rem;
+  }
+  .stat-label{ color:var(--text-secondary); margin-right:0.35rem; }
+  .stat-value{ font-weight:600; }
+  .chart-wrap{
+    position:relative;
+    width:100%;
+    height:280px;
+    margin-bottom:0.4rem;
+  }
+  canvas{ width:100%; height:100%; display:block; }
+  .caption{
+    font-size:0.78rem;
+    color:var(--text-secondary);
+    margin-top:0.5rem;
+  }
+  .notice{
+    font-size:0.78rem;
+    color:var(--text-secondary);
+    margin-top:0.3rem;
+    font-style:italic;
+  }
+</style>
+</head>
+<body>
+
+<div class="widget">
+
+  <div class="controls">
+    <div class="control-group">
+      <label for="dist-select">Distribución</label>
+      <select id="dist-select">
+        <option value="uniforme">Uniforme continua</option>
+        <option value="normal">Normal</option>
+        <option value="exponencial" selected>Exponencial</option>
+        <option value="gamma">Gamma</option>
+        <option value="beta">Beta</option>
+      </select>
+    </div>
+    <div class="view-toggle">
+      <button id="btn-densidad" class="active">Densidad</button>
+      <button id="btn-acum">Acumulada</button>
+    </div>
+  </div>
+
+  <div class="params-panel" id="params-panel"></div>
+
+  <div class="stats">
+    <span><span class="stat-label">E[X]</span><span id="stat-mean" class="stat-value mono">—</span></span>
+    <span><span class="stat-label">Var(X)</span><span id="stat-var" class="stat-value mono">—</span></span>
+    <span><span class="stat-label">rango mostrado</span><span id="stat-range" class="stat-value mono">—</span></span>
+  </div>
+
+  <div class="chart-wrap">
+    <canvas id="chart" role="img" aria-label="Gráfica de la densidad o de la función de distribución de la variable seleccionada"></canvas>
+  </div>
+
+  <p class="notice" id="notice"></p>
+
+  <p class="caption">La densidad se calcula con la fórmula cerrada de cada distribución (usando la función Gamma vía la aproximación de Lanczos para Gamma y Beta). La acumulada se obtiene integrando numéricamente esa misma densidad (regla del trapecio) sobre el rango mostrado, no es una simulación.</p>
+
+</div>
+
+<script>
+(function(){
+
+  var N_POINTS = 600;
+
+  // --- aproximación de Lanczos para ln Gamma(x), x>0 ---
+  var LANCZOS_G = 7;
+  var LANCZOS_C = [
+    0.99999999999980993, 676.5203681218851, -1259.1392167224028,
+    771.32342877765313, -176.61502916214059, 12.507343278686905,
+    -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7
+  ];
+  function lnGamma(x){
+    if (x < 0.5){
+      return Math.log(Math.PI / Math.sin(Math.PI * x)) - lnGamma(1 - x);
+    }
+    x -= 1;
+    var a = LANCZOS_C[0];
+    var t = x + LANCZOS_G + 0.5;
+    for (var i = 1; i < LANCZOS_G + 2; i++) a += LANCZOS_C[i] / (x + i);
+    return 0.5 * Math.log(2 * Math.PI) + (x + 0.5) * Math.log(t) - t + Math.log(a);
+  }
+  function lnBeta(a, b){ return lnGamma(a) + lnGamma(b) - lnGamma(a + b); }
+
+  // --- definición de cada distribución ---
+  var DISTS = {
+    uniforme: {
+      label: "Uniforme continua",
+      params: [
+        { key: "a", label: "a", min: -5, max: 5, step: 0.1, value: 0 },
+        { key: "b", label: "b", min: -5, max: 10, step: 0.1, value: 5 }
+      ],
+      clamp: function(p){ if (p.b <= p.a) p.b = p.a + 0.1; return p; },
+      fixedRange: [-6, 11],
+      range: function(p){ var pad = 0.08 * (p.b - p.a); return [p.a - pad, p.b + pad]; },
+      density: function(x, p){ return (x >= p.a && x <= p.b) ? 1 / (p.b - p.a) : 0; },
+      mean: function(p){ return (p.a + p.b) / 2; },
+      variance: function(p){ return Math.pow(p.b - p.a, 2) / 12; }
+    },
+    normal: {
+      label: "Normal",
+      params: [
+        { key: "mu", label: "μ", min: -3, max: 3, step: 0.1, value: 0 },
+        { key: "sigma", label: "σ", min: 0.2, max: 3, step: 0.1, value: 1 }
+      ],
+      range: function(p){ return [p.mu - 4 * p.sigma, p.mu + 4 * p.sigma]; },
+      density: function(x, p){
+        var z = (x - p.mu) / p.sigma;
+        return Math.exp(-0.5 * z * z) / (p.sigma * Math.sqrt(2 * Math.PI));
+      },
+      mean: function(p){ return p.mu; },
+      variance: function(p){ return p.sigma * p.sigma; }
+    },
+    exponencial: {
+      label: "Exponencial",
+      params: [
+        { key: "lambda", label: "λ", min: 0.2, max: 4, step: 0.1, value: 1 }
+      ],
+      range: function(p){ return [0, 7 / p.lambda]; },
+      density: function(x, p){ return x >= 0 ? p.lambda * Math.exp(-p.lambda * x) : 0; },
+      mean: function(p){ return 1 / p.lambda; },
+      variance: function(p){ return 1 / (p.lambda * p.lambda); }
+    },
+    gamma: {
+      label: "Gamma",
+      params: [
+        { key: "alpha", label: "α", min: 0.3, max: 6, step: 0.1, value: 2 },
+        { key: "lambda", label: "λ", min: 0.5, max: 3, step: 0.1, value: 1 }
+      ],
+      range: function(p){
+        var mean = p.alpha / p.lambda, sd = Math.sqrt(p.alpha) / p.lambda;
+        return [0, Math.max(mean + 6 * sd, 4 / p.lambda)];
+      },
+      density: function(x, p){
+        if (x <= 0) return 0;
+        var lnf = p.alpha * Math.log(p.lambda) - lnGamma(p.alpha) + (p.alpha - 1) * Math.log(x) - p.lambda * x;
+        return Math.exp(lnf);
+      },
+      mean: function(p){ return p.alpha / p.lambda; },
+      variance: function(p){ return p.alpha / (p.lambda * p.lambda); }
+    },
+    beta: {
+      label: "Beta",
+      params: [
+        { key: "alpha", label: "α", min: 0.2, max: 15, step: 0.1, value: 2 },
+        { key: "beta", label: "β", min: 0.2, max: 15, step: 0.1, value: 4 }
+      ],
+      range: function(){ return [0, 1]; },
+      density: function(x, p){
+        if (x <= 0 || x >= 1) return 0;
+        var lnf = (p.alpha - 1) * Math.log(x) + (p.beta - 1) * Math.log(1 - x) - lnBeta(p.alpha, p.beta);
+        return Math.exp(lnf);
+      },
+      mean: function(p){ return p.alpha / (p.alpha + p.beta); },
+      variance: function(p){
+        var s = p.alpha + p.beta;
+        return (p.alpha * p.beta) / (s * s * (s + 1));
+      }
+    }
+  };
+
+  var distSelect = document.getElementById('dist-select');
+  var paramsPanel = document.getElementById('params-panel');
+  var btnDensidad = document.getElementById('btn-densidad');
+  var btnAcum = document.getElementById('btn-acum');
+  var statMean = document.getElementById('stat-mean');
+  var statVar = document.getElementById('stat-var');
+  var statRange = document.getElementById('stat-range');
+  var notice = document.getElementById('notice');
+  var canvas = document.getElementById('chart');
+  var ctx = canvas.getContext('2d');
+
+  var currentDist = 'exponencial';
+  var view = 'densidad';
+  var paramValues = {};
+  var currentFixedRange = [0, 1];
+
+  function initParamValues(distKey){
+    var def = DISTS[distKey];
+    var vals = {};
+    def.params.forEach(function(p){ vals[p.key] = p.value; });
+    return vals;
+  }
+
+  // El rango que se grafica se fija una vez por distribución, barriendo las
+  // esquinas (min/max) de todos los parámetros, para que mover un slider
+  // cambie la curva DENTRO de un marco fijo en vez de reescalar el eje x
+  // junto con ella (lo que hacía casi invisible el efecto de mover, por
+  // ejemplo, la escala de la exponencial o de la Gamma).
+  function computeFixedRange(distKey){
+    var def = DISTS[distKey];
+    if (def.fixedRange) return def.fixedRange;
+    var combos = [{}];
+    def.params.forEach(function(p){
+      var next = [];
+      combos.forEach(function(c){
+        var c1 = {}, c2 = {};
+        for (var k in c){ c1[k] = c[k]; c2[k] = c[k]; }
+        c1[p.key] = p.min; c2[p.key] = p.max;
+        next.push(c1); next.push(c2);
+      });
+      combos = next;
+    });
+    var lo = Infinity, hi = -Infinity;
+    combos.forEach(function(c){
+      var r = def.range(c);
+      if (r[0] < lo) lo = r[0];
+      if (r[1] > hi) hi = r[1];
+    });
+    return [lo, hi];
+  }
+
+  paramValues = initParamValues(currentDist);
+  currentFixedRange = computeFixedRange(currentDist);
+
+  function buildParamsPanel(){
+    var def = DISTS[currentDist];
+    paramsPanel.innerHTML = '';
+    def.params.forEach(function(p){
+      var group = document.createElement('div');
+      group.className = 'control-group';
+
+      var lbl = document.createElement('label');
+      lbl.textContent = p.label;
+      lbl.setAttribute('for', 'param-' + p.key);
+
+      var input = document.createElement('input');
+      input.type = 'range';
+      input.id = 'param-' + p.key;
+      input.min = p.min;
+      input.max = p.max;
+      input.step = p.step;
+      input.value = paramValues[p.key];
+
+      var out = document.createElement('span');
+      out.className = 'param-value mono';
+      out.id = 'param-out-' + p.key;
+      out.textContent = formatParam(paramValues[p.key]);
+
+      input.addEventListener('input', function(){
+        var v = parseFloat(input.value);
+        paramValues[p.key] = v;
+        if (def.clamp){
+          paramValues = def.clamp(paramValues);
+          def.params.forEach(function(pp){
+            var el = document.getElementById('param-' + pp.key);
+            var elOut = document.getElementById('param-out-' + pp.key);
+            if (el){ el.value = paramValues[pp.key]; elOut.textContent = formatParam(paramValues[pp.key]); }
+          });
+        }
+        out.textContent = formatParam(paramValues[p.key]);
+        update();
+      });
+
+      group.appendChild(lbl);
+      group.appendChild(input);
+      group.appendChild(out);
+      paramsPanel.appendChild(group);
+    });
+  }
+
+  function formatParam(v){ return v.toFixed(1); }
+
+  function formatNumber(v){
+    if (!isFinite(v)) return '—';
+    if (Math.abs(v) < 1e-9) return '0';
+    return v.toFixed(3).replace(/\.?0+$/, '');
+  }
+
+  // --- calcula la densidad en una malla y la acumulada por trapecios ---
+  function computeCurves(){
+    var def = DISTS[currentDist];
+    var xmin = currentFixedRange[0], xmax = currentFixedRange[1];
+    var xs = [], dens = [];
+    var step = (xmax - xmin) / N_POINTS;
+    for (var i = 0; i <= N_POINTS; i++){
+      var x = xmin + i * step;
+      xs.push(x);
+      dens.push(def.density(x, paramValues));
+    }
+    var cdf = [0];
+    for (var j = 1; j <= N_POINTS; j++){
+      var trapecio = 0.5 * (dens[j] + dens[j - 1]) * step;
+      cdf.push(cdf[j - 1] + trapecio);
+    }
+    return { xs: xs, dens: dens, cdf: cdf, xmin: xmin, xmax: xmax };
+  }
+
+  function update(){
+    var def = DISTS[currentDist];
+    var mean = def.mean(paramValues);
+    var variance = def.variance(paramValues);
+    statMean.textContent = formatNumber(mean);
+    statVar.textContent = formatNumber(variance);
+
+    var curves = computeCurves();
+    statRange.textContent = '[' + curves.xmin.toFixed(2) + ', ' + curves.xmax.toFixed(2) + ']';
+
+    var coverage = curves.cdf[curves.cdf.length - 1];
+    if (coverage < 0.995){
+      notice.textContent = 'El rango mostrado cubre ' + (coverage * 100).toFixed(1) + '% de la probabilidad total; la cola restante queda fuera de la gráfica.';
+    } else {
+      notice.textContent = '';
+    }
+
+    draw(curves);
+  }
+
+  function resizeCanvas(){
+    var rect = canvas.parentElement.getBoundingClientRect();
+    var dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    update();
+  }
+
+  function draw(curves){
+    var rect = canvas.parentElement.getBoundingClientRect();
+    var w = rect.width, h = rect.height;
+    ctx.clearRect(0, 0, w, h);
+
+    var padL = 44, padR = 14, padT = 12, padB = 26;
+    var plotW = w - padL - padR;
+    var plotH = h - padT - padB;
+
+    var ys = view === 'densidad' ? curves.dens : curves.cdf;
+    var yMax = view === 'densidad' ? Math.max.apply(null, ys) * 1.15 : 1;
+    if (!isFinite(yMax) || yMax <= 0) yMax = 1;
+
+    ctx.strokeStyle = '#e6e8e5';
+    ctx.lineWidth = 1;
+    var gridLines = 4;
+    for (var gy = 0; gy <= gridLines; gy++){
+      var y = padT + plotH * (gy / gridLines);
+      ctx.beginPath();
+      ctx.moveTo(padL, y);
+      ctx.lineTo(padL + plotW, y);
+      ctx.stroke();
+    }
+
+    ctx.fillStyle = '#8a8d89';
+    ctx.font = '10px ui-monospace, monospace';
+    ctx.textAlign = 'right';
+    for (var gy2 = 0; gy2 <= gridLines; gy2++){
+      var val = yMax * (1 - gy2 / gridLines);
+      var yy = padT + plotH * (gy2 / gridLines);
+      ctx.fillText(val.toFixed(view === 'densidad' ? 3 : 2), padL - 6, yy + 3);
+    }
+
+    ctx.strokeStyle = '#c3c6c1';
+    ctx.beginPath();
+    ctx.moveTo(padL, padT);
+    ctx.lineTo(padL, padT + plotH);
+    ctx.lineTo(padL + plotW, padT + plotH);
+    ctx.stroke();
+
+    var n = curves.xs.length;
+    var xToPx = function(i){ return padL + (i / (n - 1)) * plotW; };
+    var yToPx = function(v){ return padT + plotH * (1 - Math.min(v, yMax) / yMax); };
+
+    var color = view === 'densidad'
+      ? getComputedStyle(document.documentElement).getPropertyValue('--densidad').trim()
+      : getComputedStyle(document.documentElement).getPropertyValue('--acum').trim();
+
+    if (view === 'densidad'){
+      ctx.fillStyle = color + '22';
+      ctx.beginPath();
+      ctx.moveTo(xToPx(0), padT + plotH);
+      for (var i = 0; i < n; i++) ctx.lineTo(xToPx(i), yToPx(ys[i]));
+      ctx.lineTo(xToPx(n - 1), padT + plotH);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    for (var k = 0; k < n; k++){
+      var px = xToPx(k), py = yToPx(ys[k]);
+      if (k === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+
+    // etiquetas del eje x
+    ctx.fillStyle = '#8a8d89';
+    ctx.textAlign = 'center';
+    ctx.font = '10px ui-monospace, monospace';
+    var ticks = 6;
+    for (var t = 0; t <= ticks; t++){
+      var idx = Math.round((t / ticks) * (n - 1));
+      var xc = xToPx(idx);
+      ctx.fillText(curves.xs[idx].toFixed(2), xc, padT + plotH + 14);
+    }
+  }
+
+  function setView(v){
+    view = v;
+    btnDensidad.classList.toggle('active', v === 'densidad');
+    btnAcum.classList.toggle('active', v === 'acumulada');
+    update();
+  }
+
+  distSelect.addEventListener('change', function(){
+    currentDist = distSelect.value;
+    paramValues = initParamValues(currentDist);
+    currentFixedRange = computeFixedRange(currentDist);
+    buildParamsPanel();
+    update();
+  });
+
+  btnDensidad.addEventListener('click', function(){ setView('densidad'); });
+  btnAcum.addEventListener('click', function(){ setView('acumulada'); });
+
+  window.addEventListener('resize', resizeCanvas);
+
+  buildParamsPanel();
+  resizeCanvas();
+})();
+</script>
+
+</body>
+</html>

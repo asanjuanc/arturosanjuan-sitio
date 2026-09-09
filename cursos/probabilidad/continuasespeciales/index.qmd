@@ -1,0 +1,354 @@
+---
+title: "Distribuciones continuas notables"
+subtitle: "Exponencial, Gamma y Beta: cómo se llega a ellas, no solo cómo se ven"
+description: "El proceso de Poisson en tiempo continuo como generador común; la exponencial por dos caminos (cola del proceso y ausencia de memoria); la Gamma por la cola de Poisson y por el límite de la Binomial Negativa, con su generalización a forma real vía la función Gamma; la Beta por estadísticos de orden y por la vía bayesiana de Bayes y Laplace; el teorema de cambio de variable con ejemplos de uniforme a uniforme, de normal a Gamma y de uniforme a exponencial; la familia exponencial y cómo se particulariza en cada una; panel interactivo comparando las cinco distribuciones continuas del curso."
+author: "Arturo Sanjuán"
+date: 2026-09-09
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 9
+---
+
+En la sección de [variables aleatorias discretas](../vadiscretas/index.qmd) construimos la Poisson como límite de la Binomial. Ese mismo límite, mirado en tiempo continuo en vez de en un instante fijo, genera casi todo el contenido de esta sección: la exponencial, la Gamma y, con un paso adicional, la Beta. La idea es no presentar estas tres distribuciones como una lista de fórmulas que hay que memorizar, sino mostrar que cada una responde una pregunta concreta sobre el mismo proceso aleatorio, y que además, cuando esa pregunta no tiene una historia de conteo detrás (como pasa con parámetros no enteros), hay una ruta igual de honesta por otro camino: ajustar momentos a datos reales, o transformar una variable que ya conocemos.
+
+## El proceso de Poisson en tiempo continuo
+
+Retomamos la construcción de la Poisson, pero dejando correr el tiempo en vez de fijarlo. Partimos el intervalo $[0,t]$ en $n$ pedacitos de tamaño $\Delta t = t/n$. En cada pedacito hay un "éxito" (una llamada, una desintegración, un cliente) con probabilidad aproximada
+
+$$p \approx \lambda\,\Delta t$$
+
+donde $\lambda$ es la tasa, el número promedio de éxitos por unidad de tiempo (no es una probabilidad, por eso puede ser cualquier número positivo; lo que sí es una probabilidad es $p=\lambda\Delta t$, el producto de una tasa por un pedacito de tiempo, igual que una densidad $f(x)$ no es una probabilidad pero $f(x)\,dx$ sí lo es). Llamamos $N_t$ al número de éxitos en $[0,t]$. Por construcción $N_t\sim\text{Binomial}(n,\lambda\Delta t)$, y con $n\to\infty$ (equivalentemente $\Delta t\to0$), el mismo teorema de la sección anterior da
+
+$$N_t \sim \text{Poisson}(\lambda t)$$
+
+A esta familia de variables, una para cada $t\ge0$, construidas todas sobre la misma dispersión aleatoria de puntos en la recta de tiempo, se le llama el **proceso de Poisson** de tasa $\lambda$.
+
+::: {.callout-important title="Qué es $N_t$ y qué no es"}
+$N_t$ no es una sola variable aleatoria, es una familia: una Poisson$(\lambda t)$ distinta para cada $t$ que elijas, todas construidas sobre la misma escena aleatoria (los mismos puntos en la recta). Si $t_1<t_2$, entonces $N_{t_1}\le N_{t_2}$ siempre, porque contar hasta $t_2$ incluye todo lo que ya se contó hasta $t_1$. Esto las distingue de, por ejemplo, dos Poisson independientes: $N_{t_1}$ y $N_{t_2}$ están fuertemente correlacionadas entre sí, no son independientes.
+:::
+
+## La distribución exponencial
+
+### Método A: la cola del proceso
+
+Sea $T$ el instante de la primera llegada. La clave es que $\{T>t\}$ y $\{N_t=0\}$ son **el mismo evento**, no una aproximación: si no hubo ninguna llegada en $[0,t]$, la primera llegada todavía no ha ocurrido, y viceversa. Entonces
+
+$$P(T>t) = P(N_t=0) = e^{-\lambda t}\,\frac{(\lambda t)^0}{0!} = e^{-\lambda t}$$
+
+de donde $F_T(t)=1-e^{-\lambda t}$ y, derivando,
+
+$$f_T(t) = \lambda\,e^{-\lambda t}, \qquad t>0$$
+
+Se dice que $T\sim\text{Exponencial}(\lambda)$.
+
+### Método B: ausencia de memoria
+
+Hay una segunda ruta, que no necesita el proceso de Poisson para nada, solo pide una propiedad razonable: que el tiempo de espera no recuerde cuánto tiempo ya pasó. Formalmente, con $g(t):=P(T>t)$, la condición es
+
+$$P(T>s+t\mid T>s) = P(T>t) \qquad\text{para todo } s,t\ge0$$
+
+Como $\{T>s+t\}\subset\{T>s\}$, el lado izquierdo es $g(s+t)/g(s)$, así que la condición se vuelve la **ecuación funcional de Cauchy**
+
+$$g(s+t) = g(s)\,g(t)$$
+
+::: {.callout-tip title="Teorema (análisis real)"}
+La única solución monótona (no creciente, y no idénticamente $0$ ni $1$) de $g(s+t)=g(s)g(t)$ para $s,t\ge0$ es $g(t)=e^{-\lambda t}$ para algún $\lambda\ge0$.
+:::
+
+**Idea de la demostración.** Sea $g(1)=e^{-\lambda}$ para algún $\lambda$. Por inducción, $g(n)=g(1)^n=e^{-\lambda n}$ para $n$ entero. De $g(1)=g(q\cdot\tfrac1q)=g(\tfrac1q)^q$ se obtiene $g(\tfrac1q)=e^{-\lambda/q}$, y en general $g(p/q)=e^{-\lambda p/q}$ para todo racional. La monotonía de $g$ extiende la fórmula a todo real $t\ge0$: si $t$ no es racional, se aproxima por sucesiones de racionales por encima y por debajo, y $g$ queda atrapada entre los dos límites, que coinciden. $\blacksquare$
+
+Las dos rutas no son coincidencia: la propiedad de incrementos independientes del proceso de Poisson es justamente lo que hace que, tras esperar $s$ sin que llegue nada, el reloj se reinicie. El método B parte de esa propiedad como axioma, sin necesitar creer en ningún proceso de fondo.
+
+::: {.callout-important title="Nota histórica"}
+La distribución exponencial entra a la teoría de la probabilidad de la mano de la ingeniería telefónica. En 1909, **Agner Krarup Erlang**, trabajando para la compañía telefónica de Copenhague, publicó en *The Theory of Probabilities and Telephone Conversations* la demostración de que si las llamadas entran al azar, el número de llamadas en un intervalo sigue una ley de Poisson, y los intervalos entre llamadas resultan exponenciales. Es exactamente el argumento del Método A, aplicado a un problema de ingeniería real un siglo antes de este curso.
+:::
+
+::: {.callout-tip title="Ejemplo: la central telefónica (Erlang)"}
+Una central recibe llamadas a una tasa de $6$ llamadas por hora. Sea $T$ el tiempo hasta la próxima llamada. ¿Cuál es la probabilidad de esperar más de $10$ minutos?
+
+Primero, unidades consistentes: $\lambda=6$ llamadas/hora $=0{,}1$ llamadas/minuto (con $t$ en minutos, $\lambda t$ debe salir sin unidades). Entonces $T\sim\text{Exponencial}(0{,}1)$ y
+
+$$P(T>10) = 1-F_T(10) = e^{-0{,}1\cdot10} = e^{-1} \approx 0{,}3679$$
+
+Casi el $37\%$ de las veces hay que esperar más de diez minutos por la siguiente llamada.
+:::
+
+```{r}
+#| label: exponencial-central-telefonica
+1 - pexp(10, rate = 0.1)
+```
+
+## La distribución Gamma
+
+### Método A: la cola de Poisson, y una cancelación telescópica
+
+Generalizamos el argumento anterior a $T_n$, el tiempo hasta la $n$-ésima llegada. Otra vez por equivalencia de eventos, "la $n$-ésima llegada no ha pasado en $t$" es lo mismo que "hubo menos de $n$ llegadas en $[0,t]$":
+
+$$S(t) := P(T_n>t) = P(N_t\le n-1) = \sum_{k=0}^{n-1} e^{-\lambda t}\,\frac{(\lambda t)^k}{k!}$$
+
+Derivando término a término (regla del producto en cada sumando, usando $k\cdot\frac1{k!}=\frac1{(k-1)!}$ para bajar el exponente en cada pedazo), la suma se telescopea casi por completo: todos los términos intermedios se cancelan contra la misma suma corrida un lugar, y solo sobrevive el último término no emparejado.
+
+$$S'(t) = -\lambda^n\,t^{n-1}\,e^{-\lambda t}\,/(n-1)!$$
+
+y como $f_{T_n}(t)=-S'(t)$,
+
+$$f_{T_n}(t) = \frac{\lambda^n\,t^{n-1}\,e^{-\lambda t}}{(n-1)!}, \qquad t>0$$
+
+Esta es la densidad **Gamma** de forma entera $n$ y tasa $\lambda$ (también llamada **Erlang**$(n,\lambda)$).
+
+::: {.callout-note title="Tarea"}
+Demuestre que, en efecto, $f_{T_n}$ de arriba es una función de densidad, es decir, que $\displaystyle\int_0^\infty f_{T_n}(t)\,dt=1$. Verifique además, derivando $S(t)$ término a término con cuidado, que la cancelación telescópica descrita arriba es exacta (no aproximada) para todo $n\ge1$.
+:::
+
+### Una ruta alterna: el límite de la Binomial Negativa
+
+Hay una segunda manera de llegar al mismo lugar, que no necesita sumar ni derivar nada, solo tomar un límite, exactamente el mismo que convierte la Binomial en Poisson pero aplicado un nivel más arriba.
+
+Recuerde que $\text{Binomial\ Negativa}(n,p)$ cuenta cuántos ensayos hacen falta hasta el $n$-ésimo éxito:
+
+$$P(W_n=k) = \binom{k-1}{n-1}p^n(1-p)^{k-n}$$
+
+Con $p=\lambda\Delta t$ y $k=t/\Delta t$, y $\Delta t\to0$:
+
+- $\displaystyle\binom{k-1}{n-1}=\frac{(k-1)(k-2)\cdots(k-n+1)}{(n-1)!}\sim\frac{k^{n-1}}{(n-1)!}$ (son $n-1$ factores, cada uno $\approx k$)
+- $(1-\lambda\Delta t)^{k-n}\to e^{-\lambda t}$ (el mismo límite que da Poisson desde Binomial)
+
+Sustituyendo $k=t/\Delta t$ y agrupando potencias de $\Delta t$:
+
+$$P(W_n=k) \approx \frac{(t/\Delta t)^{n-1}}{(n-1)!}\,(\lambda\Delta t)^n\,e^{-\lambda t} = \frac{\lambda^n t^{n-1}}{(n-1)!}\,e^{-\lambda t}\cdot\Delta t$$
+
+Dividiendo entre $\Delta t$ (la receta de siempre: masa entre ancho de la celda da densidad),
+
+$$\frac{P(W_n=k)}{\Delta t} \longrightarrow \frac{\lambda^n t^{n-1}e^{-\lambda t}}{(n-1)!} = f_{T_n}(t)$$
+
+la misma densidad Gamma, sin sumar ni derivar. El hecho de que $p^n\to0$ no es un problema: el combinatorio $\binom{k-1}{n-1}$ diverge exactamente a la velocidad inversa necesaria para que sobreviva un único factor de $\Delta t$ en el producto, sin importar qué tan grande sea $n$, que es justo la condición para que dividir entre $\Delta t$ deje un límite finito.
+
+::: {.callout-note title="Consistencia con la suma de exponenciales"}
+$\text{Binomial\ Negativa}(n,p)$ es exactamente la suma de $n$ variables $\text{Geométrica}(p)$ independientes (esperar el $n$-ésimo éxito es esperar el primero, más esperar el segundo después del primero, y así sucesivamente). Eso discretiza la afirmación $T_n=$ suma de $n$ exponenciales independientes, así que las dos rutas no solo llegan al mismo lugar, están contadas por la misma historia en el mundo discreto.
+:::
+
+### Generalización a forma real, vía la función Gamma
+
+Todo lo anterior exige $n$ entero, porque $(n-1)!$ solo tiene sentido ahí. La pregunta natural es la misma que le plantearon a Euler en 1729 (ver la [sección anterior](../vacontinuas/index.qmd) para la función $\Gamma$), pero aplicada ahora al normalizador de una densidad en vez de al factorial mismo: ¿qué pasa si se quiere una forma $\alpha$ que no sea entera? Se reemplaza $(n-1)!$ por $\Gamma(\alpha)$:
+
+::: {.callout-tip title="Definición: distribución Gamma"}
+$X\sim\text{Gamma}(\alpha,\lambda)$, con $\alpha>0$ (forma) y $\lambda>0$ (tasa), si
+
+$$f_X(x) = \frac{\lambda^\alpha}{\Gamma(\alpha)}\,x^{\alpha-1}\,e^{-\lambda x}, \qquad x>0$$
+
+Con $\theta:=1/\lambda$ (la **escala**), $\text{media}=\alpha\theta$, $\text{varianza}=\alpha\theta^2$.
+:::
+
+::: {.callout-important title="Nota histórica"}
+La interpolación del factorial la resolvió **Leonhard Euler** en dos cartas a Christian Goldbach, la primera del 13 de octubre de 1729 con el producto infinito, la segunda del 8 de enero de 1730 con la forma integral. Casi dos siglos después, **A. K. Erlang** (1909) llegó al caso de forma entera desde la ingeniería telefónica, tiempos de espera hasta el $n$-ésimo evento de un proceso de Poisson: la distribución Erlang lleva su nombre por eso. **Karl Pearson**, en 1895, llegó al caso de forma real por un camino completamente distinto, ajustando curvas asimétricas a datos biométricos sin ningún proceso de llegadas de por medio; la llamó originalmente tipo III en su sistema de curvas, y solo hasta los años treinta se renombró como distribución Gamma. Dos problemas sin relación aparente, telefonía y bioestadística, llegando a la misma fórmula.
+:::
+
+### Interpretación de los parámetros
+
+Con $\theta=1/\lambda$, $\text{media}=\alpha\theta$ separa limpiamente dos papeles:
+
+- $\theta$ es la **escala**: tiene las mismas unidades que $X$, y fija el tamaño típico de los valores sin decir nada sobre la forma. Multiplicar todos los datos por una constante $c$ multiplica $\theta$ por $c$, pero no cambia $\alpha$.
+- $\alpha$ es la **forma**, y la manera más útil de leerla es
+
+$$\frac{\text{varianza}}{\text{media}^2} = \frac1\alpha$$
+
+es decir, $\alpha$ es el inverso del cuadrado del coeficiente de variación. $\alpha$ grande ($\text{CV}$ chico) da una curva apretada y casi simétrica alrededor de su media; $\alpha$ cercano a $1$ da muchísima variabilidad relativa y una cola derecha pesada ($\alpha=1$ es exactamente la exponencial). La asimetría de la Gamma es $2/\sqrt\alpha$.
+
+::: {.callout-tip title="Ejemplo aplicado: precipitación mensual en Bogotá"}
+La precipitación mensual es una de las aplicaciones clásicas de la Gamma en hidrología: es positiva, asimétrica a la derecha, y sin ninguna razón para que su varianza esté atada rígidamente a su media como en la Poisson. Estos son los datos de precipitación mensual (mm) de la estación Enfermería, campus de la Universidad Nacional en Bogotá, de octubre de 2023 a octubre de 2024:
+
+$$97{,}9,\ \ 70{,}9,\ \ 79{,}9,\ \ 34{,}7,\ \ 132{,}9,\ \ 17{,}9,\ \ 90{,}5,\ \ 99{,}2,\ \ 86{,}9,\ \ 51{,}9,\ \ 21{,}5,\ \ 71{,}4,\ \ 153{,}2$$
+
+La media muestral es $m\approx77{,}6$ mm y la varianza muestral $s^2\approx1477{,}4$ mm². Igualando momentos, $\hat\lambda=m/s^2\approx0{,}0525$ mm$^{-1}$ y $\hat\alpha=m^2/s^2\approx4{,}08$: no es un accidente que salga no entero, es literalmente lo que hace falta para reproducir esa media y esa varianza, sin ninguna historia de "cuatro eventos de lluvia acumulándose" detrás.
+
+**Interpretación de los parámetros ajustados:**
+
+- escala $\hat\theta=1/\hat\lambda\approx19{,}04$ mm: el tamaño natural de las fluctuaciones mensuales
+- media $=\hat\alpha\hat\theta\approx77{,}6$ mm: el promedio mensual observado, por construcción
+- coeficiente de variación $=1/\sqrt{4{,}08}\approx0{,}495$: mes a mes la lluvia varía típicamente cerca de la mitad de su propio promedio
+- asimetría $\approx0{,}99$: cola derecha moderada, consistente con que ocasionalmente hay meses muy lluviosos sin que sea un evento absurdamente raro
+
+Con el modelo ajustado, la probabilidad de que un mes supere los $150$ mm es $P(X>150)\approx0{,}049$, y de superar los $100$ mm, $P(X>100)\approx0{,}243$. En los datos reales, $1$ de los $13$ meses (octubre de 2024, con $153{,}2$ mm) superó los $150$ mm, razonablemente cerca del $4{,}9\%$ del modelo dado lo pequeña que es la muestra.
+:::
+
+```{r}
+#| label: gamma-lluvia-bogota
+datos <- c(97.9, 70.9, 79.9, 34.7, 132.9, 17.9, 90.5, 99.2, 86.9, 51.9, 21.5, 71.4, 153.2)
+m  <- mean(datos)
+s2 <- mean((datos - m)^2)   # varianza poblacional, para no complicar con n-1
+lambda_hat <- m / s2
+alpha_hat  <- m^2 / s2
+cat("media =", round(m, 2), "  varianza =", round(s2, 2), "\n")
+cat("alpha =", round(alpha_hat, 3), "  lambda =", round(lambda_hat, 5), "\n")
+cat("P(X > 150) =", round(1 - pgamma(150, shape = alpha_hat, rate = lambda_hat), 4), "\n")
+cat("P(X > 100) =", round(1 - pgamma(100, shape = alpha_hat, rate = lambda_hat), 4), "\n")
+```
+
+## La distribución Beta
+
+### Método A: estadísticos de orden y la cola binomial
+
+Sean $U_1,\ldots,U_n$ uniformes en $(0,1)$ independientes, y sea $U_{(k)}$ el $k$-ésimo valor más chico entre ellas (el $k$-ésimo **estadístico de orden**). El punto de partida es esta equivalencia de eventos:
+
+$$\{U_{(k)}\le u\} = \{\text{al menos } k \text{ de las } n \text{ uniformes son} \le u\}$$
+
+**Por qué son el mismo evento.** Si $U_{(k)}\le u$, entonces también $U_{(1)}\le\cdots\le U_{(k)}\le u$ (los $k$ más chicos), así que al menos $k$ valores quedan por debajo de $u$. Recíprocamente, si $U_{(k)}>u$, entonces $U_{(k)},U_{(k+1)},\ldots,U_{(n)}$ son todos mayores que $u$, y a lo más el único que podría quedar por debajo es $U_{(1)}$, así que hay menos de $k$ valores por debajo de $u$. Las dos afirmaciones no pueden separarse, son la misma cosa vista desde dos ángulos.
+
+Cada uniforme cae por debajo de $u$ con probabilidad exactamente $u$ (así se define ser uniforme en $(0,1)$: la probabilidad de cualquier evento es su longitud), así que "al menos $k$ éxitos en $n$ ensayos Bernoulli($u$)" es una cola binomial:
+
+$$F(u) = P(U_{(k)}\le u) = \sum_{j=k}^n \binom nj u^j(1-u)^{n-j}$$
+
+**La derivada, con cuidado.** Derivando término a término con la regla del producto,
+
+$$F'(u) = \sum_{j=k}^n\binom nj\, j\,u^{j-1}(1-u)^{n-j} \;-\; \sum_{j=k}^n\binom nj(n-j)\,u^j(1-u)^{n-j-1}$$
+
+Usando $\binom nj j=n\binom{n-1}{j-1}$ y $\binom nj(n-j)=n\binom{n-1}j$, y reindexando la primera suma con $i=j-1$ (que corre de $k-1$ a $n-1$), ambas sumas quedan escritas con los mismos términos $\binom{n-1}m u^m(1-u)^{n-1-m}$, la primera arrancando un lugar antes que la segunda (el término $j=n$ de la segunda suma se anula solo, porque $\binom{n-1}{n}=0$). Todo se cancela salvo el término sobrante de la primera suma, el de $i=k-1$:
+
+$$F'(u) = n\binom{n-1}{k-1}u^{k-1}(1-u)^{n-k} = \frac{n!}{(k-1)!(n-k)!}\,u^{k-1}(1-u)^{n-k}$$
+
+Esta es la densidad **Beta**$(k,\,n-k+1)$.
+
+### Método B: la vía bayesiana
+
+No hace falta ningún estadístico de orden, solo el teorema de Bayes de la [sección de probabilidad condicional](../condicional/index.qmd), aplicado con un parámetro continuo. Sean $n$ ensayos Bernoulli($\theta$) con $\theta$ desconocido, prior uniforme $g(\theta)=1$ en $(0,1)$, y se observan $k$ éxitos. La densidad posterior es
+
+$$g(\theta\mid k) \propto P(k\text{ éxitos}\mid\theta)\,g(\theta) = \binom nk\theta^k(1-\theta)^{n-k}$$
+
+Normalizando con la integral Beta (ya definida en la [sección anterior](../vacontinuas/index.qmd)),
+
+$$g(\theta\mid k) = \frac{\theta^k(1-\theta)^{n-k}}{B(k+1,\,n-k+1)} \;\sim\; \text{Beta}(k+1,\,n-k+1)$$
+
+Note el corrimiento de índice respecto al Método A: el $k$-ésimo estadístico de orden de $n$ uniformes es Beta$(k,n-k+1)$; la posterior tras $k$ éxitos en $n$ ensayos es Beta$(k+1,n-k+1)$. No es casualidad, las dos identidades salen de la misma cola binomial, preguntada desde ángulos distintos.
+
+::: {.callout-important title="Nota histórica"}
+La Beta aparece por primera vez, sin ese nombre, en el ensayo póstumo de **Thomas Bayes** de 1763: dados $n$ ensayos Bernoulli con $k$ éxitos y un prior uniforme, su cálculo de la distribución posterior es exactamente lo que hoy reconocemos como una densidad Beta. Once años después, sin conocer el trabajo de Bayes, **Pierre-Simon Laplace** generalizó el argumento en su *Mémoire sur la probabilité des causes par les événements* (1774), el nacimiento de la probabilidad inversa. Más de un siglo más tarde, **Karl Pearson** llegó al mismo objeto por un tercer camino, ajuste de curvas a datos (su tipo I), y fue **Jacques Binet** quien finalmente le dio el nombre de función Beta.
+:::
+
+### Ejemplo con $\alpha,\beta$ enteros: la interpretación de estadístico de orden
+
+::: {.callout-tip title="Ejemplo"}
+Hay un hecho que conecta esto con el proceso de Poisson de arriba: condicionado a que ocurrieron exactamente $n$ llegadas en $[0,T]$, los $n$ instantes de llegada, sin ordenar, tienen la misma distribución que $n$ uniformes independientes en $(0,T)$. El proceso, al condicionar sobre el conteo, olvida por completo su tasa.
+
+Con la central de $\lambda=6$ llamadas/hora otra vez: si en una hora entraron exactamente $5$ llamadas, el instante de la segunda llamada es el segundo estadístico de orden de $5$ uniformes en $(0,60\text{ min})$, es decir $\text{Beta}(2,4)$ reescalada a minutos. Aquí $\alpha=2$ y $\beta=4$ son enteros con la interpretación directa del Método A: $\alpha=k=2$ es la posición que se pide (segundo más chico) y $\beta=n-k+1=4$ cuenta lo que falta ($n-k=3$ valores por encima, más el $+1$ de la fórmula).
+
+$$P(2^\text{a} \text{ llamada antes del minuto }  20) = P\left(U_{(2)}\le\tfrac13\right) \approx 0{,}539$$
+:::
+
+```{r}
+#| label: beta-orden-central
+pbeta(1/3, 2, 4)
+```
+
+### Ejemplo con $\alpha,\beta$ reales: ajustados de una muestra
+
+::: {.callout-tip title="Ejemplo"}
+Cuando $\alpha,\beta$ no salen de contar posiciones sino de ajustar una proporción observada, se estiman por momentos, exactamente igual que se hizo con la Gamma. Si $m$ y $s^2$ son la media y varianza muestrales de una proporción (algo que vive naturalmente en $(0,1)$), con $t:=\alpha+\beta$ (el "tamaño total" de la Beta),
+
+$$\hat t = \frac{m(1-m)}{s^2}-1, \qquad \hat\alpha = m\,\hat t, \qquad \hat\beta = (1-m)\,\hat t$$
+
+Ocho turnos de un servidor registran esta fracción de tiempo ocupado: $0{,}62,\ 0{,}71,\ 0{,}55,\ 0{,}68,\ 0{,}74,\ 0{,}59,\ 0{,}66,\ 0{,}70$. La media es $m\approx0{,}656$ y la varianza $s^2\approx0{,}00367$, de donde
+
+$$\hat\alpha\approx39{,}6, \qquad \hat\beta\approx20{,}8$$
+
+Ninguno de los dos es entero, y no hay ninguna historia de "$40$ éxitos de algo" detrás: son los números que hacen que la Beta reproduzca la media y la varianza observadas de la ocupación. Aquí $\alpha$ y $\beta$ ya no se leen como posiciones, sino como pseudo conteos de éxito y de fracaso que resumen qué tan concentrada está la proporción alrededor de su media (entre más grandes ambos, más apretada la curva alrededor de $m$, por la misma razón que $1/\alpha$ mide variabilidad relativa en la Gamma).
+:::
+
+```{r}
+#| label: beta-momentos-servidor
+datos <- c(0.62, 0.71, 0.55, 0.68, 0.74, 0.59, 0.66, 0.70)
+m  <- mean(datos)
+s2 <- mean((datos - m)^2)
+t_hat <- m * (1 - m) / s2 - 1
+alpha_hat <- m * t_hat
+beta_hat  <- (1 - m) * t_hat
+cat("alpha =", round(alpha_hat, 2), "  beta =", round(beta_hat, 2), "\n")
+```
+
+## El teorema de cambio de variable
+
+Todas las distribuciones anteriores se pueden obtener también como funciones de una sola variable aleatoria ya conocida, casi siempre una uniforme. La herramienta es este teorema:
+
+::: {.callout-tip title="Teorema (cambio de variable)"}
+Sea $X$ continua con densidad $f_X$, y sea $g$ estrictamente monótona y derivable, con inversa $g^{-1}$ derivable. Si $Y=g(X)$, entonces $Y$ es continua con densidad
+
+$$f_Y(y) = f_X\big(g^{-1}(y)\big)\,\left|\frac{d}{dy}g^{-1}(y)\right|$$
+
+en el rango de $g$, y $0$ fuera de él.
+:::
+
+**Demostración.** Si $g$ es creciente, $F_Y(y)=P(g(X)\le y)=P(X\le g^{-1}(y))=F_X(g^{-1}(y))$; derivando con la regla de la cadena, $f_Y(y)=f_X(g^{-1}(y))\,(g^{-1})'(y)$, y $(g^{-1})'>0$ porque $g^{-1}$ también es creciente. Si $g$ es decreciente, $F_Y(y)=P(X\ge g^{-1}(y))=1-F_X(g^{-1}(y))$, y derivando, $f_Y(y)=-f_X(g^{-1}(y))(g^{-1})'(y)$, que es positivo porque ahora $(g^{-1})'<0$. Los dos casos se resumen con el valor absoluto. $\blacksquare$
+
+### Ejemplo: de uniforme a uniforme
+
+Sea $U\sim U(0,1)$ y $g(u)=1-u$, decreciente, $g^{-1}(v)=1-v$, $(g^{-1})'(v)=-1$. Entonces
+
+$$f_V(v) = f_U(1-v)\,|{-1}| = 1, \qquad 0<v<1$$
+
+así que $V=1-U\sim U(0,1)$ también. Más útil en la práctica es el caso afín general: con $g(u)=au+b$, $a>0$ (creciente), $g^{-1}(v)=(v-b)/a$, $(g^{-1})'(v)=1/a$, y
+
+$$f_V(v) = 1\cdot\frac1a = \frac1a, \qquad b<v<a+b$$
+
+es decir $V=aU+b\sim U(b,a+b)$. Esta es literalmente la manera de simular cualquier uniforme en un intervalo arbitrario a partir de una uniforme estándar.
+
+El cambio de variable aquí es lineal, así que no deforma nada: estira o desplaza el intervalo, pero como la densidad de $U$ es plana, el resultado sigue siendo plano. La forma (uniforme) sobrevive porque el factor $|(g^{-1})'(v)|$ es constante.
+
+### Ejemplo: de normal a Gamma
+
+Sea $Z\sim N(0,1)$ y $Y=Z^2$. Aquí $g(z)=z^2$ no es monótona en todo $\mathbb R$ (tiene dos preimágenes, $\pm\sqrt y$), así que se suman las dos contribuciones:
+
+$$f_Y(y) = f_Z(\sqrt y)\left|\frac{d}{dy}\sqrt y\right| + f_Z(-\sqrt y)\left|\frac{d}{dy}(-\sqrt y)\right| = 2\cdot\frac1{\sqrt{2\pi}}e^{-y/2}\cdot\frac1{2\sqrt y} = \frac1{\sqrt{2\pi y}}\,e^{-y/2}$$
+
+Comparando con $\text{Gamma}(\alpha,\lambda)$ en $\alpha=\tfrac12,\lambda=\tfrac12$: $\dfrac{(1/2)^{1/2}}{\Gamma(1/2)}y^{-1/2}e^{-y/2}$, y como ya sabemos que $\Gamma(1/2)=\sqrt\pi$ (de la sección anterior), $\dfrac{1/\sqrt2}{\sqrt\pi}=\dfrac1{\sqrt{2\pi}}$. Coincide exactamente:
+
+$$Z^2 \sim \text{Gamma}\!\left(\tfrac12,\tfrac12\right)$$
+
+Aquí $\alpha=1/2$ no salió de ajustar momentos a datos, salió de una transformación exacta de una variable que ya se conocía. Cerca de $z=0$, intervalos chiquitos de $z$ se mapean a intervalos todavía más chiquitos de $y=z^2$, pero el factor $1/(2\sqrt y)$ compensa sobrecargando esa región, y por eso la densidad Gamma con $\alpha<1$ diverge (de forma integrable) cerca de $0$.
+
+### Ejemplo: de uniforme a exponencial
+
+Sea $U\sim U(0,1)$ y $g(u)=-\ln(u)/\lambda$, decreciente en $(0,1)$, $g^{-1}(t)=e^{-\lambda t}$, $(g^{-1})'(t)=-\lambda e^{-\lambda t}$. Entonces
+
+$$f_T(t) = f_U(e^{-\lambda t})\,|{-\lambda e^{-\lambda t}}| = 1\cdot\lambda e^{-\lambda t} = \lambda e^{-\lambda t}, \qquad t>0$$
+
+así que $T=-\ln(U)/\lambda\sim\text{Exponencial}(\lambda)$: el mismo Método A del principio de la sección, ahora obtenido por transformación en vez de por el proceso de Poisson.
+
+Cerca de $u\to0^+$, $g(u)=-\ln(u)/\lambda\to\infty$ muy rápido: pedacitos diminutos de $u$ cerca de $0$, aunque tienen la misma probabilidad que cualquier otro pedacito del mismo tamaño (porque $U$ es uniforme), se estiran sobre un rango enorme de $t$. Ahí nace la cola derecha larga de la exponencial: no es una propiedad nueva que aparece de la nada, es pura consecuencia de la curvatura de $g$.
+
+::: {.callout-note title="Tarea"}
+Use el teorema de cambio de variable para mostrar que, si $U\sim U(0,1)$ y $g(u)=1-(1-u)^{1/n}$, entonces $V=g(U)$ tiene distribución $\text{Beta}(1,n)$ (la distribución del mínimo de $n$ uniformes independientes).
+:::
+
+## La familia exponencial
+
+Muchas de las distribuciones de este curso comparten la misma forma funcional:
+
+$$f(x;\theta) = h(x)\,\exp\big(\eta(\theta)\,T(x)-A(\theta)\big)$$
+
+llamada **familia exponencial**. No es solo una curiosidad taxonómica: es la razón profunda de que el prior uniforme y la Binomial combinen tan limpio en una posterior Beta (Método B de arriba), porque las dos comparten el mismo estadístico $T$, y de que existan estadísticos suficientes bien portados para casi todo lo que hemos visto.
+
+- **Exponencial**($\lambda$): $f(x;\lambda)=\lambda e^{-\lambda x}=\exp(\ln\lambda-\lambda x)$, con $h(x)=1$, $\eta(\lambda)=-\lambda$, $T(x)=x$, $A(\lambda)=-\ln\lambda$.
+- **Gamma**($\alpha,\lambda$): $f(x;\alpha,\lambda)=\exp\big((\alpha-1)\ln x - \lambda x + \alpha\ln\lambda - \ln\Gamma(\alpha)\big)$, con dos estadísticos, $T_1(x)=\ln x$ y $T_2(x)=x$.
+- **Beta**($\alpha,\beta$): $f(x;\alpha,\beta)=\exp\big((\alpha-1)\ln x + (\beta-1)\ln(1-x) - \ln B(\alpha,\beta)\big)$, con $T_1(x)=\ln x$, $T_2(x)=\ln(1-x)$.
+
+::: {.callout-important title="Quién se queda afuera"}
+La uniforme no cabe en este marco: su soporte $(a,b)$ depende de los parámetros, y eso rompe la condición de regularidad que la familia exponencial exige (el soporte de $f(x;\theta)$ debe ser el mismo para todo $\theta$). Es el contraejemplo clásico de libro de texto, y vale la pena tenerlo presente para no pensar que esta clasificación explica absolutamente todo.
+:::
+
+## Panel interactivo: densidad y acumulada
+
+El siguiente panel dibuja la densidad o la función de distribución de cualquiera de las cinco continuas del curso (Uniforme, Normal, Exponencial, Gamma, Beta), con sus parámetros ajustables.
+
+```{=html}
+<iframe src="notebooks/distribucionescontinuas.html" width="100%" height="640" style="border:1px solid #dfe3e2; border-radius:6px;" title="Panel interactivo: distribuciones continuas notables"></iframe>
+```
+
+::: {.callout-note title="Ejercicios del libro"}
+Haga los ejercicios del libro de Blanco Castañeda relacionados con las distribuciones exponencial, Gamma y Beta, incluidos los de la propiedad de ausencia de memoria y los de cambio de variable.
+:::

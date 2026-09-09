@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Arturo Sanjuán">
+<meta name="description" content="El proceso de Poisson en tiempo continuo como generador común; la exponencial por dos caminos (cola del proceso y ausencia de memoria); la Gamma por la cola de Poisson y por el límite de la Binomial Negativa, con su generalización a forma real vía la función Gamma; la Beta por estadísticos de orden y por la vía bayesiana de Bayes y Laplace; el teorema de cambio de variable con ejemplos de uniforme a uniforme, de normal a Gamma y de uniforme a exponencial; la familia exponencial y cómo se particulariza en cada una; panel interactivo comparando las cinco distribuciones continuas del curso.">
+
+<title>Distribuciones continuas notables – Arturo Sanjuán</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-06ef128ffaab2aaffa18b1038abc86f3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Arturo Sanjuán</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../cursos/index.html"> 
+<span class="menu-text">Cursos</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#el-proceso-de-poisson-en-tiempo-continuo" id="toc-el-proceso-de-poisson-en-tiempo-continuo" class="nav-link active" data-scroll-target="#el-proceso-de-poisson-en-tiempo-continuo"><span class="header-section-number">1</span> El proceso de Poisson en tiempo continuo</a></li>
+  <li><a href="#la-distribución-exponencial" id="toc-la-distribución-exponencial" class="nav-link" data-scroll-target="#la-distribución-exponencial"><span class="header-section-number">2</span> La distribución exponencial</a>
+  <ul class="collapse">
+  <li><a href="#método-a-la-cola-del-proceso" id="toc-método-a-la-cola-del-proceso" class="nav-link" data-scroll-target="#método-a-la-cola-del-proceso"><span class="header-section-number">2.1</span> Método A: la cola del proceso</a></li>
+  <li><a href="#método-b-ausencia-de-memoria" id="toc-método-b-ausencia-de-memoria" class="nav-link" data-scroll-target="#método-b-ausencia-de-memoria"><span class="header-section-number">2.2</span> Método B: ausencia de memoria</a></li>
+  </ul></li>
+  <li><a href="#la-distribución-gamma" id="toc-la-distribución-gamma" class="nav-link" data-scroll-target="#la-distribución-gamma"><span class="header-section-number">3</span> La distribución Gamma</a>
+  <ul class="collapse">
+  <li><a href="#método-a-la-cola-de-poisson-y-una-cancelación-telescópica" id="toc-método-a-la-cola-de-poisson-y-una-cancelación-telescópica" class="nav-link" data-scroll-target="#método-a-la-cola-de-poisson-y-una-cancelación-telescópica"><span class="header-section-number">3.1</span> Método A: la cola de Poisson, y una cancelación telescópica</a></li>
+  <li><a href="#una-ruta-alterna-el-límite-de-la-binomial-negativa" id="toc-una-ruta-alterna-el-límite-de-la-binomial-negativa" class="nav-link" data-scroll-target="#una-ruta-alterna-el-límite-de-la-binomial-negativa"><span class="header-section-number">3.2</span> Una ruta alterna: el límite de la Binomial Negativa</a></li>
+  <li><a href="#generalización-a-forma-real-vía-la-función-gamma" id="toc-generalización-a-forma-real-vía-la-función-gamma" class="nav-link" data-scroll-target="#generalización-a-forma-real-vía-la-función-gamma"><span class="header-section-number">3.3</span> Generalización a forma real, vía la función Gamma</a></li>
+  <li><a href="#interpretación-de-los-parámetros" id="toc-interpretación-de-los-parámetros" class="nav-link" data-scroll-target="#interpretación-de-los-parámetros"><span class="header-section-number">3.4</span> Interpretación de los parámetros</a></li>
+  </ul></li>
+  <li><a href="#la-distribución-beta" id="toc-la-distribución-beta" class="nav-link" data-scroll-target="#la-distribución-beta"><span class="header-section-number">4</span> La distribución Beta</a>
+  <ul class="collapse">
+  <li><a href="#método-a-estadísticos-de-orden-y-la-cola-binomial" id="toc-método-a-estadísticos-de-orden-y-la-cola-binomial" class="nav-link" data-scroll-target="#método-a-estadísticos-de-orden-y-la-cola-binomial"><span class="header-section-number">4.1</span> Método A: estadísticos de orden y la cola binomial</a></li>
+  <li><a href="#método-b-la-vía-bayesiana" id="toc-método-b-la-vía-bayesiana" class="nav-link" data-scroll-target="#método-b-la-vía-bayesiana"><span class="header-section-number">4.2</span> Método B: la vía bayesiana</a></li>
+  <li><a href="#ejemplo-con-alphabeta-enteros-la-interpretación-de-estadístico-de-orden" id="toc-ejemplo-con-alphabeta-enteros-la-interpretación-de-estadístico-de-orden" class="nav-link" data-scroll-target="#ejemplo-con-alphabeta-enteros-la-interpretación-de-estadístico-de-orden"><span class="header-section-number">4.3</span> Ejemplo con <span class="math inline">\(\alpha,\beta\)</span> enteros: la interpretación de estadístico de orden</a></li>
+  <li><a href="#ejemplo-con-alphabeta-reales-ajustados-de-una-muestra" id="toc-ejemplo-con-alphabeta-reales-ajustados-de-una-muestra" class="nav-link" data-scroll-target="#ejemplo-con-alphabeta-reales-ajustados-de-una-muestra"><span class="header-section-number">4.4</span> Ejemplo con <span class="math inline">\(\alpha,\beta\)</span> reales: ajustados de una muestra</a></li>
+  </ul></li>
+  <li><a href="#el-teorema-de-cambio-de-variable" id="toc-el-teorema-de-cambio-de-variable" class="nav-link" data-scroll-target="#el-teorema-de-cambio-de-variable"><span class="header-section-number">5</span> El teorema de cambio de variable</a>
+  <ul class="collapse">
+  <li><a href="#ejemplo-de-uniforme-a-uniforme" id="toc-ejemplo-de-uniforme-a-uniforme" class="nav-link" data-scroll-target="#ejemplo-de-uniforme-a-uniforme"><span class="header-section-number">5.1</span> Ejemplo: de uniforme a uniforme</a></li>
+  <li><a href="#ejemplo-de-normal-a-gamma" id="toc-ejemplo-de-normal-a-gamma" class="nav-link" data-scroll-target="#ejemplo-de-normal-a-gamma"><span class="header-section-number">5.2</span> Ejemplo: de normal a Gamma</a></li>
+  <li><a href="#ejemplo-de-uniforme-a-exponencial" id="toc-ejemplo-de-uniforme-a-exponencial" class="nav-link" data-scroll-target="#ejemplo-de-uniforme-a-exponencial"><span class="header-section-number">5.3</span> Ejemplo: de uniforme a exponencial</a></li>
+  </ul></li>
+  <li><a href="#la-familia-exponencial" id="toc-la-familia-exponencial" class="nav-link" data-scroll-target="#la-familia-exponencial"><span class="header-section-number">6</span> La familia exponencial</a></li>
+  <li><a href="#panel-interactivo-densidad-y-acumulada" id="toc-panel-interactivo-densidad-y-acumulada" class="nav-link" data-scroll-target="#panel-interactivo-densidad-y-acumulada"><span class="header-section-number">7</span> Panel interactivo: densidad y acumulada</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Distribuciones continuas notables</h1>
+<p class="subtitle lead">Exponencial, Gamma y Beta: cómo se llega a ellas, no solo cómo se ven</p>
+</div>
+
+<div>
+  <div class="description">
+    El proceso de Poisson en tiempo continuo como generador común; la exponencial por dos caminos (cola del proceso y ausencia de memoria); la Gamma por la cola de Poisson y por el límite de la Binomial Negativa, con su generalización a forma real vía la función Gamma; la Beta por estadísticos de orden y por la vía bayesiana de Bayes y Laplace; el teorema de cambio de variable con ejemplos de uniforme a uniforme, de normal a Gamma y de uniforme a exponencial; la familia exponencial y cómo se particulariza en cada una; panel interactivo comparando las cinco distribuciones continuas del curso.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor</div>
+    <div class="quarto-title-meta-contents">
+             <p>Arturo Sanjuán </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">9 de septiembre de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>En la sección de <a href="../../../cursos/probabilidad/vadiscretas/index.html">variables aleatorias discretas</a> construimos la Poisson como límite de la Binomial. Ese mismo límite, mirado en tiempo continuo en vez de en un instante fijo, genera casi todo el contenido de esta sección: la exponencial, la Gamma y, con un paso adicional, la Beta. La idea es no presentar estas tres distribuciones como una lista de fórmulas que hay que memorizar, sino mostrar que cada una responde una pregunta concreta sobre el mismo proceso aleatorio, y que además, cuando esa pregunta no tiene una historia de conteo detrás (como pasa con parámetros no enteros), hay una ruta igual de honesta por otro camino: ajustar momentos a datos reales, o transformar una variable que ya conocemos.</p>
+<section id="el-proceso-de-poisson-en-tiempo-continuo" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="el-proceso-de-poisson-en-tiempo-continuo"><span class="header-section-number">1</span> El proceso de Poisson en tiempo continuo</h2>
+<p>Retomamos la construcción de la Poisson, pero dejando correr el tiempo en vez de fijarlo. Partimos el intervalo <span class="math inline">\([0,t]\)</span> en <span class="math inline">\(n\)</span> pedacitos de tamaño <span class="math inline">\(\Delta t = t/n\)</span>. En cada pedacito hay un “éxito” (una llamada, una desintegración, un cliente) con probabilidad aproximada</p>
+<p><span class="math display">\[p \approx \lambda\,\Delta t\]</span></p>
+<p>donde <span class="math inline">\(\lambda\)</span> es la tasa, el número promedio de éxitos por unidad de tiempo (no es una probabilidad, por eso puede ser cualquier número positivo; lo que sí es una probabilidad es <span class="math inline">\(p=\lambda\Delta t\)</span>, el producto de una tasa por un pedacito de tiempo, igual que una densidad <span class="math inline">\(f(x)\)</span> no es una probabilidad pero <span class="math inline">\(f(x)\,dx\)</span> sí lo es). Llamamos <span class="math inline">\(N_t\)</span> al número de éxitos en <span class="math inline">\([0,t]\)</span>. Por construcción <span class="math inline">\(N_t\sim\text{Binomial}(n,\lambda\Delta t)\)</span>, y con <span class="math inline">\(n\to\infty\)</span> (equivalentemente <span class="math inline">\(\Delta t\to0\)</span>), el mismo teorema de la sección anterior da</p>
+<p><span class="math display">\[N_t \sim \text{Poisson}(\lambda t)\]</span></p>
+<p>A esta familia de variables, una para cada <span class="math inline">\(t\ge0\)</span>, construidas todas sobre la misma dispersión aleatoria de puntos en la recta de tiempo, se le llama el <strong>proceso de Poisson</strong> de tasa <span class="math inline">\(\lambda\)</span>.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Qué es $N_t$ y qué no es">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Qué es <span class="math inline">\(N_t\)</span> y qué no es
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(N_t\)</span> no es una sola variable aleatoria, es una familia: una Poisson<span class="math inline">\((\lambda t)\)</span> distinta para cada <span class="math inline">\(t\)</span> que elijas, todas construidas sobre la misma escena aleatoria (los mismos puntos en la recta). Si <span class="math inline">\(t_1&lt;t_2\)</span>, entonces <span class="math inline">\(N_{t_1}\le N_{t_2}\)</span> siempre, porque contar hasta <span class="math inline">\(t_2\)</span> incluye todo lo que ya se contó hasta <span class="math inline">\(t_1\)</span>. Esto las distingue de, por ejemplo, dos Poisson independientes: <span class="math inline">\(N_{t_1}\)</span> y <span class="math inline">\(N_{t_2}\)</span> están fuertemente correlacionadas entre sí, no son independientes.</p>
+</div>
+</div>
+</section>
+<section id="la-distribución-exponencial" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="la-distribución-exponencial"><span class="header-section-number">2</span> La distribución exponencial</h2>
+<section id="método-a-la-cola-del-proceso" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="método-a-la-cola-del-proceso"><span class="header-section-number">2.1</span> Método A: la cola del proceso</h3>
+<p>Sea <span class="math inline">\(T\)</span> el instante de la primera llegada. La clave es que <span class="math inline">\(\{T&gt;t\}\)</span> y <span class="math inline">\(\{N_t=0\}\)</span> son <strong>el mismo evento</strong>, no una aproximación: si no hubo ninguna llegada en <span class="math inline">\([0,t]\)</span>, la primera llegada todavía no ha ocurrido, y viceversa. Entonces</p>
+<p><span class="math display">\[P(T&gt;t) = P(N_t=0) = e^{-\lambda t}\,\frac{(\lambda t)^0}{0!} = e^{-\lambda t}\]</span></p>
+<p>de donde <span class="math inline">\(F_T(t)=1-e^{-\lambda t}\)</span> y, derivando,</p>
+<p><span class="math display">\[f_T(t) = \lambda\,e^{-\lambda t}, \qquad t&gt;0\]</span></p>
+<p>Se dice que <span class="math inline">\(T\sim\text{Exponencial}(\lambda)\)</span>.</p>
+</section>
+<section id="método-b-ausencia-de-memoria" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="método-b-ausencia-de-memoria"><span class="header-section-number">2.2</span> Método B: ausencia de memoria</h3>
+<p>Hay una segunda ruta, que no necesita el proceso de Poisson para nada, solo pide una propiedad razonable: que el tiempo de espera no recuerde cuánto tiempo ya pasó. Formalmente, con <span class="math inline">\(g(t):=P(T&gt;t)\)</span>, la condición es</p>
+<p><span class="math display">\[P(T&gt;s+t\mid T&gt;s) = P(T&gt;t) \qquad\text{para todo } s,t\ge0\]</span></p>
+<p>Como <span class="math inline">\(\{T&gt;s+t\}\subset\{T&gt;s\}\)</span>, el lado izquierdo es <span class="math inline">\(g(s+t)/g(s)\)</span>, así que la condición se vuelve la <strong>ecuación funcional de Cauchy</strong></p>
+<p><span class="math display">\[g(s+t) = g(s)\,g(t)\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema (análisis real)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Teorema (análisis real)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La única solución monótona (no creciente, y no idénticamente <span class="math inline">\(0\)</span> ni <span class="math inline">\(1\)</span>) de <span class="math inline">\(g(s+t)=g(s)g(t)\)</span> para <span class="math inline">\(s,t\ge0\)</span> es <span class="math inline">\(g(t)=e^{-\lambda t}\)</span> para algún <span class="math inline">\(\lambda\ge0\)</span>.</p>
+</div>
+</div>
+<p><strong>Idea de la demostración.</strong> Sea <span class="math inline">\(g(1)=e^{-\lambda}\)</span> para algún <span class="math inline">\(\lambda\)</span>. Por inducción, <span class="math inline">\(g(n)=g(1)^n=e^{-\lambda n}\)</span> para <span class="math inline">\(n\)</span> entero. De <span class="math inline">\(g(1)=g(q\cdot\tfrac1q)=g(\tfrac1q)^q\)</span> se obtiene <span class="math inline">\(g(\tfrac1q)=e^{-\lambda/q}\)</span>, y en general <span class="math inline">\(g(p/q)=e^{-\lambda p/q}\)</span> para todo racional. La monotonía de <span class="math inline">\(g\)</span> extiende la fórmula a todo real <span class="math inline">\(t\ge0\)</span>: si <span class="math inline">\(t\)</span> no es racional, se aproxima por sucesiones de racionales por encima y por debajo, y <span class="math inline">\(g\)</span> queda atrapada entre los dos límites, que coinciden. <span class="math inline">\(\blacksquare\)</span></p>
+<p>Las dos rutas no son coincidencia: la propiedad de incrementos independientes del proceso de Poisson es justamente lo que hace que, tras esperar <span class="math inline">\(s\)</span> sin que llegue nada, el reloj se reinicie. El método B parte de esa propiedad como axioma, sin necesitar creer en ningún proceso de fondo.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Nota histórica">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Nota histórica
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La distribución exponencial entra a la teoría de la probabilidad de la mano de la ingeniería telefónica. En 1909, <strong>Agner Krarup Erlang</strong>, trabajando para la compañía telefónica de Copenhague, publicó en <em>The Theory of Probabilities and Telephone Conversations</em> la demostración de que si las llamadas entran al azar, el número de llamadas en un intervalo sigue una ley de Poisson, y los intervalos entre llamadas resultan exponenciales. Es exactamente el argumento del Método A, aplicado a un problema de ingeniería real un siglo antes de este curso.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo: la central telefónica (Erlang)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo: la central telefónica (Erlang)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Una central recibe llamadas a una tasa de <span class="math inline">\(6\)</span> llamadas por hora. Sea <span class="math inline">\(T\)</span> el tiempo hasta la próxima llamada. ¿Cuál es la probabilidad de esperar más de <span class="math inline">\(10\)</span> minutos?</p>
+<p>Primero, unidades consistentes: <span class="math inline">\(\lambda=6\)</span> llamadas/hora <span class="math inline">\(=0{,}1\)</span> llamadas/minuto (con <span class="math inline">\(t\)</span> en minutos, <span class="math inline">\(\lambda t\)</span> debe salir sin unidades). Entonces <span class="math inline">\(T\sim\text{Exponencial}(0{,}1)\)</span> y</p>
+<p><span class="math display">\[P(T&gt;10) = 1-F_T(10) = e^{-0{,}1\cdot10} = e^{-1} \approx 0{,}3679\]</span></p>
+<p>Casi el <span class="math inline">\(37\%\)</span> de las veces hay que esperar más de diez minutos por la siguiente llamada.</p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pexp</span>(<span class="dv">10</span>, <span class="at">rate =</span> <span class="fl">0.1</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3678794</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="la-distribución-gamma" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="la-distribución-gamma"><span class="header-section-number">3</span> La distribución Gamma</h2>
+<section id="método-a-la-cola-de-poisson-y-una-cancelación-telescópica" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="método-a-la-cola-de-poisson-y-una-cancelación-telescópica"><span class="header-section-number">3.1</span> Método A: la cola de Poisson, y una cancelación telescópica</h3>
+<p>Generalizamos el argumento anterior a <span class="math inline">\(T_n\)</span>, el tiempo hasta la <span class="math inline">\(n\)</span>-ésima llegada. Otra vez por equivalencia de eventos, “la <span class="math inline">\(n\)</span>-ésima llegada no ha pasado en <span class="math inline">\(t\)</span>” es lo mismo que “hubo menos de <span class="math inline">\(n\)</span> llegadas en <span class="math inline">\([0,t]\)</span>”:</p>
+<p><span class="math display">\[S(t) := P(T_n&gt;t) = P(N_t\le n-1) = \sum_{k=0}^{n-1} e^{-\lambda t}\,\frac{(\lambda t)^k}{k!}\]</span></p>
+<p>Derivando término a término (regla del producto en cada sumando, usando <span class="math inline">\(k\cdot\frac1{k!}=\frac1{(k-1)!}\)</span> para bajar el exponente en cada pedazo), la suma se telescopea casi por completo: todos los términos intermedios se cancelan contra la misma suma corrida un lugar, y solo sobrevive el último término no emparejado.</p>
+<p><span class="math display">\[S'(t) = -\lambda^n\,t^{n-1}\,e^{-\lambda t}\,/(n-1)!\]</span></p>
+<p>y como <span class="math inline">\(f_{T_n}(t)=-S'(t)\)</span>,</p>
+<p><span class="math display">\[f_{T_n}(t) = \frac{\lambda^n\,t^{n-1}\,e^{-\lambda t}}{(n-1)!}, \qquad t&gt;0\]</span></p>
+<p>Esta es la densidad <strong>Gamma</strong> de forma entera <span class="math inline">\(n\)</span> y tasa <span class="math inline">\(\lambda\)</span> (también llamada <strong>Erlang</strong><span class="math inline">\((n,\lambda)\)</span>).</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre que, en efecto, <span class="math inline">\(f_{T_n}\)</span> de arriba es una función de densidad, es decir, que <span class="math inline">\(\displaystyle\int_0^\infty f_{T_n}(t)\,dt=1\)</span>. Verifique además, derivando <span class="math inline">\(S(t)\)</span> término a término con cuidado, que la cancelación telescópica descrita arriba es exacta (no aproximada) para todo <span class="math inline">\(n\ge1\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="una-ruta-alterna-el-límite-de-la-binomial-negativa" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="una-ruta-alterna-el-límite-de-la-binomial-negativa"><span class="header-section-number">3.2</span> Una ruta alterna: el límite de la Binomial Negativa</h3>
+<p>Hay una segunda manera de llegar al mismo lugar, que no necesita sumar ni derivar nada, solo tomar un límite, exactamente el mismo que convierte la Binomial en Poisson pero aplicado un nivel más arriba.</p>
+<p>Recuerde que <span class="math inline">\(\text{Binomial\ Negativa}(n,p)\)</span> cuenta cuántos ensayos hacen falta hasta el <span class="math inline">\(n\)</span>-ésimo éxito:</p>
+<p><span class="math display">\[P(W_n=k) = \binom{k-1}{n-1}p^n(1-p)^{k-n}\]</span></p>
+<p>Con <span class="math inline">\(p=\lambda\Delta t\)</span> y <span class="math inline">\(k=t/\Delta t\)</span>, y <span class="math inline">\(\Delta t\to0\)</span>:</p>
+<ul>
+<li><span class="math inline">\(\displaystyle\binom{k-1}{n-1}=\frac{(k-1)(k-2)\cdots(k-n+1)}{(n-1)!}\sim\frac{k^{n-1}}{(n-1)!}\)</span> (son <span class="math inline">\(n-1\)</span> factores, cada uno <span class="math inline">\(\approx k\)</span>)</li>
+<li><span class="math inline">\((1-\lambda\Delta t)^{k-n}\to e^{-\lambda t}\)</span> (el mismo límite que da Poisson desde Binomial)</li>
+</ul>
+<p>Sustituyendo <span class="math inline">\(k=t/\Delta t\)</span> y agrupando potencias de <span class="math inline">\(\Delta t\)</span>:</p>
+<p><span class="math display">\[P(W_n=k) \approx \frac{(t/\Delta t)^{n-1}}{(n-1)!}\,(\lambda\Delta t)^n\,e^{-\lambda t} = \frac{\lambda^n t^{n-1}}{(n-1)!}\,e^{-\lambda t}\cdot\Delta t\]</span></p>
+<p>Dividiendo entre <span class="math inline">\(\Delta t\)</span> (la receta de siempre: masa entre ancho de la celda da densidad),</p>
+<p><span class="math display">\[\frac{P(W_n=k)}{\Delta t} \longrightarrow \frac{\lambda^n t^{n-1}e^{-\lambda t}}{(n-1)!} = f_{T_n}(t)\]</span></p>
+<p>la misma densidad Gamma, sin sumar ni derivar. El hecho de que <span class="math inline">\(p^n\to0\)</span> no es un problema: el combinatorio <span class="math inline">\(\binom{k-1}{n-1}\)</span> diverge exactamente a la velocidad inversa necesaria para que sobreviva un único factor de <span class="math inline">\(\Delta t\)</span> en el producto, sin importar qué tan grande sea <span class="math inline">\(n\)</span>, que es justo la condición para que dividir entre <span class="math inline">\(\Delta t\)</span> deje un límite finito.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Consistencia con la suma de exponenciales">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Consistencia con la suma de exponenciales
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(\text{Binomial\ Negativa}(n,p)\)</span> es exactamente la suma de <span class="math inline">\(n\)</span> variables <span class="math inline">\(\text{Geométrica}(p)\)</span> independientes (esperar el <span class="math inline">\(n\)</span>-ésimo éxito es esperar el primero, más esperar el segundo después del primero, y así sucesivamente). Eso discretiza la afirmación <span class="math inline">\(T_n=\)</span> suma de <span class="math inline">\(n\)</span> exponenciales independientes, así que las dos rutas no solo llegan al mismo lugar, están contadas por la misma historia en el mundo discreto.</p>
+</div>
+</div>
+</section>
+<section id="generalización-a-forma-real-vía-la-función-gamma" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="generalización-a-forma-real-vía-la-función-gamma"><span class="header-section-number">3.3</span> Generalización a forma real, vía la función Gamma</h3>
+<p>Todo lo anterior exige <span class="math inline">\(n\)</span> entero, porque <span class="math inline">\((n-1)!\)</span> solo tiene sentido ahí. La pregunta natural es la misma que le plantearon a Euler en 1729 (ver la <a href="../../../cursos/probabilidad/vacontinuas/index.html">sección anterior</a> para la función <span class="math inline">\(\Gamma\)</span>), pero aplicada ahora al normalizador de una densidad en vez de al factorial mismo: ¿qué pasa si se quiere una forma <span class="math inline">\(\alpha\)</span> que no sea entera? Se reemplaza <span class="math inline">\((n-1)!\)</span> por <span class="math inline">\(\Gamma(\alpha)\)</span>:</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Definición: distribución Gamma">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Definición: distribución Gamma
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(X\sim\text{Gamma}(\alpha,\lambda)\)</span>, con <span class="math inline">\(\alpha&gt;0\)</span> (forma) y <span class="math inline">\(\lambda&gt;0\)</span> (tasa), si</p>
+<p><span class="math display">\[f_X(x) = \frac{\lambda^\alpha}{\Gamma(\alpha)}\,x^{\alpha-1}\,e^{-\lambda x}, \qquad x&gt;0\]</span></p>
+<p>Con <span class="math inline">\(\theta:=1/\lambda\)</span> (la <strong>escala</strong>), <span class="math inline">\(\text{media}=\alpha\theta\)</span>, <span class="math inline">\(\text{varianza}=\alpha\theta^2\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Nota histórica">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Nota histórica
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La interpolación del factorial la resolvió <strong>Leonhard Euler</strong> en dos cartas a Christian Goldbach, la primera del 13 de octubre de 1729 con el producto infinito, la segunda del 8 de enero de 1730 con la forma integral. Casi dos siglos después, <strong>A. K. Erlang</strong> (1909) llegó al caso de forma entera desde la ingeniería telefónica, tiempos de espera hasta el <span class="math inline">\(n\)</span>-ésimo evento de un proceso de Poisson: la distribución Erlang lleva su nombre por eso. <strong>Karl Pearson</strong>, en 1895, llegó al caso de forma real por un camino completamente distinto, ajustando curvas asimétricas a datos biométricos sin ningún proceso de llegadas de por medio; la llamó originalmente tipo III en su sistema de curvas, y solo hasta los años treinta se renombró como distribución Gamma. Dos problemas sin relación aparente, telefonía y bioestadística, llegando a la misma fórmula.</p>
+</div>
+</div>
+</section>
+<section id="interpretación-de-los-parámetros" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="interpretación-de-los-parámetros"><span class="header-section-number">3.4</span> Interpretación de los parámetros</h3>
+<p>Con <span class="math inline">\(\theta=1/\lambda\)</span>, <span class="math inline">\(\text{media}=\alpha\theta\)</span> separa limpiamente dos papeles:</p>
+<ul>
+<li><span class="math inline">\(\theta\)</span> es la <strong>escala</strong>: tiene las mismas unidades que <span class="math inline">\(X\)</span>, y fija el tamaño típico de los valores sin decir nada sobre la forma. Multiplicar todos los datos por una constante <span class="math inline">\(c\)</span> multiplica <span class="math inline">\(\theta\)</span> por <span class="math inline">\(c\)</span>, pero no cambia <span class="math inline">\(\alpha\)</span>.</li>
+<li><span class="math inline">\(\alpha\)</span> es la <strong>forma</strong>, y la manera más útil de leerla es</li>
+</ul>
+<p><span class="math display">\[\frac{\text{varianza}}{\text{media}^2} = \frac1\alpha\]</span></p>
+<p>es decir, <span class="math inline">\(\alpha\)</span> es el inverso del cuadrado del coeficiente de variación. <span class="math inline">\(\alpha\)</span> grande (<span class="math inline">\(\text{CV}\)</span> chico) da una curva apretada y casi simétrica alrededor de su media; <span class="math inline">\(\alpha\)</span> cercano a <span class="math inline">\(1\)</span> da muchísima variabilidad relativa y una cola derecha pesada (<span class="math inline">\(\alpha=1\)</span> es exactamente la exponencial). La asimetría de la Gamma es <span class="math inline">\(2/\sqrt\alpha\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo aplicado: precipitación mensual en Bogotá">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo aplicado: precipitación mensual en Bogotá
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La precipitación mensual es una de las aplicaciones clásicas de la Gamma en hidrología: es positiva, asimétrica a la derecha, y sin ninguna razón para que su varianza esté atada rígidamente a su media como en la Poisson. Estos son los datos de precipitación mensual (mm) de la estación Enfermería, campus de la Universidad Nacional en Bogotá, de octubre de 2023 a octubre de 2024:</p>
+<p><span class="math display">\[97{,}9,\ \ 70{,}9,\ \ 79{,}9,\ \ 34{,}7,\ \ 132{,}9,\ \ 17{,}9,\ \ 90{,}5,\ \ 99{,}2,\ \ 86{,}9,\ \ 51{,}9,\ \ 21{,}5,\ \ 71{,}4,\ \ 153{,}2\]</span></p>
+<p>La media muestral es <span class="math inline">\(m\approx77{,}6\)</span> mm y la varianza muestral <span class="math inline">\(s^2\approx1477{,}4\)</span> mm². Igualando momentos, <span class="math inline">\(\hat\lambda=m/s^2\approx0{,}0525\)</span> mm<span class="math inline">\(^{-1}\)</span> y <span class="math inline">\(\hat\alpha=m^2/s^2\approx4{,}08\)</span>: no es un accidente que salga no entero, es literalmente lo que hace falta para reproducir esa media y esa varianza, sin ninguna historia de “cuatro eventos de lluvia acumulándose” detrás.</p>
+<p><strong>Interpretación de los parámetros ajustados:</strong></p>
+<ul>
+<li>escala <span class="math inline">\(\hat\theta=1/\hat\lambda\approx19{,}04\)</span> mm: el tamaño natural de las fluctuaciones mensuales</li>
+<li>media <span class="math inline">\(=\hat\alpha\hat\theta\approx77{,}6\)</span> mm: el promedio mensual observado, por construcción</li>
+<li>coeficiente de variación <span class="math inline">\(=1/\sqrt{4{,}08}\approx0{,}495\)</span>: mes a mes la lluvia varía típicamente cerca de la mitad de su propio promedio</li>
+<li>asimetría <span class="math inline">\(\approx0{,}99\)</span>: cola derecha moderada, consistente con que ocasionalmente hay meses muy lluviosos sin que sea un evento absurdamente raro</li>
+</ul>
+<p>Con el modelo ajustado, la probabilidad de que un mes supere los <span class="math inline">\(150\)</span> mm es <span class="math inline">\(P(X&gt;150)\approx0{,}049\)</span>, y de superar los <span class="math inline">\(100\)</span> mm, <span class="math inline">\(P(X&gt;100)\approx0{,}243\)</span>. En los datos reales, <span class="math inline">\(1\)</span> de los <span class="math inline">\(13\)</span> meses (octubre de 2024, con <span class="math inline">\(153{,}2\)</span> mm) superó los <span class="math inline">\(150\)</span> mm, razonablemente cerca del <span class="math inline">\(4{,}9\%\)</span> del modelo dado lo pequeña que es la muestra.</p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">97.9</span>, <span class="fl">70.9</span>, <span class="fl">79.9</span>, <span class="fl">34.7</span>, <span class="fl">132.9</span>, <span class="fl">17.9</span>, <span class="fl">90.5</span>, <span class="fl">99.2</span>, <span class="fl">86.9</span>, <span class="fl">51.9</span>, <span class="fl">21.5</span>, <span class="fl">71.4</span>, <span class="fl">153.2</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>m  <span class="ot">&lt;-</span> <span class="fu">mean</span>(datos)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>s2 <span class="ot">&lt;-</span> <span class="fu">mean</span>((datos <span class="sc">-</span> m)<span class="sc">^</span><span class="dv">2</span>)   <span class="co"># varianza poblacional, para no complicar con n-1</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>lambda_hat <span class="ot">&lt;-</span> m <span class="sc">/</span> s2</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>alpha_hat  <span class="ot">&lt;-</span> m<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> s2</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"media ="</span>, <span class="fu">round</span>(m, <span class="dv">2</span>), <span class="st">"  varianza ="</span>, <span class="fu">round</span>(s2, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>media = 77.6   varianza = 1477.37 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"alpha ="</span>, <span class="fu">round</span>(alpha_hat, <span class="dv">3</span>), <span class="st">"  lambda ="</span>, <span class="fu">round</span>(lambda_hat, <span class="dv">5</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>alpha = 4.076   lambda = 0.05253 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"P(X &gt; 150) ="</span>, <span class="fu">round</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pgamma</span>(<span class="dv">150</span>, <span class="at">shape =</span> alpha_hat, <span class="at">rate =</span> lambda_hat), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(X &gt; 150) = 0.0494 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"P(X &gt; 100) ="</span>, <span class="fu">round</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pgamma</span>(<span class="dv">100</span>, <span class="at">shape =</span> alpha_hat, <span class="at">rate =</span> lambda_hat), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(X &gt; 100) = 0.2429 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="la-distribución-beta" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="la-distribución-beta"><span class="header-section-number">4</span> La distribución Beta</h2>
+<section id="método-a-estadísticos-de-orden-y-la-cola-binomial" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="método-a-estadísticos-de-orden-y-la-cola-binomial"><span class="header-section-number">4.1</span> Método A: estadísticos de orden y la cola binomial</h3>
+<p>Sean <span class="math inline">\(U_1,\ldots,U_n\)</span> uniformes en <span class="math inline">\((0,1)\)</span> independientes, y sea <span class="math inline">\(U_{(k)}\)</span> el <span class="math inline">\(k\)</span>-ésimo valor más chico entre ellas (el <span class="math inline">\(k\)</span>-ésimo <strong>estadístico de orden</strong>). El punto de partida es esta equivalencia de eventos:</p>
+<p><span class="math display">\[\{U_{(k)}\le u\} = \{\text{al menos } k \text{ de las } n \text{ uniformes son} \le u\}\]</span></p>
+<p><strong>Por qué son el mismo evento.</strong> Si <span class="math inline">\(U_{(k)}\le u\)</span>, entonces también <span class="math inline">\(U_{(1)}\le\cdots\le U_{(k)}\le u\)</span> (los <span class="math inline">\(k\)</span> más chicos), así que al menos <span class="math inline">\(k\)</span> valores quedan por debajo de <span class="math inline">\(u\)</span>. Recíprocamente, si <span class="math inline">\(U_{(k)}&gt;u\)</span>, entonces <span class="math inline">\(U_{(k)},U_{(k+1)},\ldots,U_{(n)}\)</span> son todos mayores que <span class="math inline">\(u\)</span>, y a lo más el único que podría quedar por debajo es <span class="math inline">\(U_{(1)}\)</span>, así que hay menos de <span class="math inline">\(k\)</span> valores por debajo de <span class="math inline">\(u\)</span>. Las dos afirmaciones no pueden separarse, son la misma cosa vista desde dos ángulos.</p>
+<p>Cada uniforme cae por debajo de <span class="math inline">\(u\)</span> con probabilidad exactamente <span class="math inline">\(u\)</span> (así se define ser uniforme en <span class="math inline">\((0,1)\)</span>: la probabilidad de cualquier evento es su longitud), así que “al menos <span class="math inline">\(k\)</span> éxitos en <span class="math inline">\(n\)</span> ensayos Bernoulli(<span class="math inline">\(u\)</span>)” es una cola binomial:</p>
+<p><span class="math display">\[F(u) = P(U_{(k)}\le u) = \sum_{j=k}^n \binom nj u^j(1-u)^{n-j}\]</span></p>
+<p><strong>La derivada, con cuidado.</strong> Derivando término a término con la regla del producto,</p>
+<p><span class="math display">\[F'(u) = \sum_{j=k}^n\binom nj\, j\,u^{j-1}(1-u)^{n-j} \;-\; \sum_{j=k}^n\binom nj(n-j)\,u^j(1-u)^{n-j-1}\]</span></p>
+<p>Usando <span class="math inline">\(\binom nj j=n\binom{n-1}{j-1}\)</span> y <span class="math inline">\(\binom nj(n-j)=n\binom{n-1}j\)</span>, y reindexando la primera suma con <span class="math inline">\(i=j-1\)</span> (que corre de <span class="math inline">\(k-1\)</span> a <span class="math inline">\(n-1\)</span>), ambas sumas quedan escritas con los mismos términos <span class="math inline">\(\binom{n-1}m u^m(1-u)^{n-1-m}\)</span>, la primera arrancando un lugar antes que la segunda (el término <span class="math inline">\(j=n\)</span> de la segunda suma se anula solo, porque <span class="math inline">\(\binom{n-1}{n}=0\)</span>). Todo se cancela salvo el término sobrante de la primera suma, el de <span class="math inline">\(i=k-1\)</span>:</p>
+<p><span class="math display">\[F'(u) = n\binom{n-1}{k-1}u^{k-1}(1-u)^{n-k} = \frac{n!}{(k-1)!(n-k)!}\,u^{k-1}(1-u)^{n-k}\]</span></p>
+<p>Esta es la densidad <strong>Beta</strong><span class="math inline">\((k,\,n-k+1)\)</span>.</p>
+</section>
+<section id="método-b-la-vía-bayesiana" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="método-b-la-vía-bayesiana"><span class="header-section-number">4.2</span> Método B: la vía bayesiana</h3>
+<p>No hace falta ningún estadístico de orden, solo el teorema de Bayes de la <a href="../../../cursos/probabilidad/condicional/index.html">sección de probabilidad condicional</a>, aplicado con un parámetro continuo. Sean <span class="math inline">\(n\)</span> ensayos Bernoulli(<span class="math inline">\(\theta\)</span>) con <span class="math inline">\(\theta\)</span> desconocido, prior uniforme <span class="math inline">\(g(\theta)=1\)</span> en <span class="math inline">\((0,1)\)</span>, y se observan <span class="math inline">\(k\)</span> éxitos. La densidad posterior es</p>
+<p><span class="math display">\[g(\theta\mid k) \propto P(k\text{ éxitos}\mid\theta)\,g(\theta) = \binom nk\theta^k(1-\theta)^{n-k}\]</span></p>
+<p>Normalizando con la integral Beta (ya definida en la <a href="../../../cursos/probabilidad/vacontinuas/index.html">sección anterior</a>),</p>
+<p><span class="math display">\[g(\theta\mid k) = \frac{\theta^k(1-\theta)^{n-k}}{B(k+1,\,n-k+1)} \;\sim\; \text{Beta}(k+1,\,n-k+1)\]</span></p>
+<p>Note el corrimiento de índice respecto al Método A: el <span class="math inline">\(k\)</span>-ésimo estadístico de orden de <span class="math inline">\(n\)</span> uniformes es Beta<span class="math inline">\((k,n-k+1)\)</span>; la posterior tras <span class="math inline">\(k\)</span> éxitos en <span class="math inline">\(n\)</span> ensayos es Beta<span class="math inline">\((k+1,n-k+1)\)</span>. No es casualidad, las dos identidades salen de la misma cola binomial, preguntada desde ángulos distintos.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Nota histórica">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Nota histórica
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La Beta aparece por primera vez, sin ese nombre, en el ensayo póstumo de <strong>Thomas Bayes</strong> de 1763: dados <span class="math inline">\(n\)</span> ensayos Bernoulli con <span class="math inline">\(k\)</span> éxitos y un prior uniforme, su cálculo de la distribución posterior es exactamente lo que hoy reconocemos como una densidad Beta. Once años después, sin conocer el trabajo de Bayes, <strong>Pierre-Simon Laplace</strong> generalizó el argumento en su <em>Mémoire sur la probabilité des causes par les événements</em> (1774), el nacimiento de la probabilidad inversa. Más de un siglo más tarde, <strong>Karl Pearson</strong> llegó al mismo objeto por un tercer camino, ajuste de curvas a datos (su tipo I), y fue <strong>Jacques Binet</strong> quien finalmente le dio el nombre de función Beta.</p>
+</div>
+</div>
+</section>
+<section id="ejemplo-con-alphabeta-enteros-la-interpretación-de-estadístico-de-orden" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="ejemplo-con-alphabeta-enteros-la-interpretación-de-estadístico-de-orden"><span class="header-section-number">4.3</span> Ejemplo con <span class="math inline">\(\alpha,\beta\)</span> enteros: la interpretación de estadístico de orden</h3>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Hay un hecho que conecta esto con el proceso de Poisson de arriba: condicionado a que ocurrieron exactamente <span class="math inline">\(n\)</span> llegadas en <span class="math inline">\([0,T]\)</span>, los <span class="math inline">\(n\)</span> instantes de llegada, sin ordenar, tienen la misma distribución que <span class="math inline">\(n\)</span> uniformes independientes en <span class="math inline">\((0,T)\)</span>. El proceso, al condicionar sobre el conteo, olvida por completo su tasa.</p>
+<p>Con la central de <span class="math inline">\(\lambda=6\)</span> llamadas/hora otra vez: si en una hora entraron exactamente <span class="math inline">\(5\)</span> llamadas, el instante de la segunda llamada es el segundo estadístico de orden de <span class="math inline">\(5\)</span> uniformes en <span class="math inline">\((0,60\text{ min})\)</span>, es decir <span class="math inline">\(\text{Beta}(2,4)\)</span> reescalada a minutos. Aquí <span class="math inline">\(\alpha=2\)</span> y <span class="math inline">\(\beta=4\)</span> son enteros con la interpretación directa del Método A: <span class="math inline">\(\alpha=k=2\)</span> es la posición que se pide (segundo más chico) y <span class="math inline">\(\beta=n-k+1=4\)</span> cuenta lo que falta (<span class="math inline">\(n-k=3\)</span> valores por encima, más el <span class="math inline">\(+1\)</span> de la fórmula).</p>
+<p><span class="math display">\[P(2^\text{a} \text{ llamada antes del minuto }  20) = P\left(U_{(2)}\le\tfrac13\right) \approx 0{,}539\]</span></p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pbeta</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">4</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5390947</code></pre>
+</div>
+</div>
+</section>
+<section id="ejemplo-con-alphabeta-reales-ajustados-de-una-muestra" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="ejemplo-con-alphabeta-reales-ajustados-de-una-muestra"><span class="header-section-number">4.4</span> Ejemplo con <span class="math inline">\(\alpha,\beta\)</span> reales: ajustados de una muestra</h3>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cuando <span class="math inline">\(\alpha,\beta\)</span> no salen de contar posiciones sino de ajustar una proporción observada, se estiman por momentos, exactamente igual que se hizo con la Gamma. Si <span class="math inline">\(m\)</span> y <span class="math inline">\(s^2\)</span> son la media y varianza muestrales de una proporción (algo que vive naturalmente en <span class="math inline">\((0,1)\)</span>), con <span class="math inline">\(t:=\alpha+\beta\)</span> (el “tamaño total” de la Beta),</p>
+<p><span class="math display">\[\hat t = \frac{m(1-m)}{s^2}-1, \qquad \hat\alpha = m\,\hat t, \qquad \hat\beta = (1-m)\,\hat t\]</span></p>
+<p>Ocho turnos de un servidor registran esta fracción de tiempo ocupado: <span class="math inline">\(0{,}62,\ 0{,}71,\ 0{,}55,\ 0{,}68,\ 0{,}74,\ 0{,}59,\ 0{,}66,\ 0{,}70\)</span>. La media es <span class="math inline">\(m\approx0{,}656\)</span> y la varianza <span class="math inline">\(s^2\approx0{,}00367\)</span>, de donde</p>
+<p><span class="math display">\[\hat\alpha\approx39{,}6, \qquad \hat\beta\approx20{,}8\]</span></p>
+<p>Ninguno de los dos es entero, y no hay ninguna historia de “<span class="math inline">\(40\)</span> éxitos de algo” detrás: son los números que hacen que la Beta reproduzca la media y la varianza observadas de la ocupación. Aquí <span class="math inline">\(\alpha\)</span> y <span class="math inline">\(\beta\)</span> ya no se leen como posiciones, sino como pseudo conteos de éxito y de fracaso que resumen qué tan concentrada está la proporción alrededor de su media (entre más grandes ambos, más apretada la curva alrededor de <span class="math inline">\(m\)</span>, por la misma razón que <span class="math inline">\(1/\alpha\)</span> mide variabilidad relativa en la Gamma).</p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.62</span>, <span class="fl">0.71</span>, <span class="fl">0.55</span>, <span class="fl">0.68</span>, <span class="fl">0.74</span>, <span class="fl">0.59</span>, <span class="fl">0.66</span>, <span class="fl">0.70</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>m  <span class="ot">&lt;-</span> <span class="fu">mean</span>(datos)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>s2 <span class="ot">&lt;-</span> <span class="fu">mean</span>((datos <span class="sc">-</span> m)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>t_hat <span class="ot">&lt;-</span> m <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> m) <span class="sc">/</span> s2 <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>alpha_hat <span class="ot">&lt;-</span> m <span class="sc">*</span> t_hat</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>beta_hat  <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">-</span> m) <span class="sc">*</span> t_hat</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"alpha ="</span>, <span class="fu">round</span>(alpha_hat, <span class="dv">2</span>), <span class="st">"  beta ="</span>, <span class="fu">round</span>(beta_hat, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>alpha = 39.64   beta = 20.77 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="el-teorema-de-cambio-de-variable" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="el-teorema-de-cambio-de-variable"><span class="header-section-number">5</span> El teorema de cambio de variable</h2>
+<p>Todas las distribuciones anteriores se pueden obtener también como funciones de una sola variable aleatoria ya conocida, casi siempre una uniforme. La herramienta es este teorema:</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema (cambio de variable)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Teorema (cambio de variable)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sea <span class="math inline">\(X\)</span> continua con densidad <span class="math inline">\(f_X\)</span>, y sea <span class="math inline">\(g\)</span> estrictamente monótona y derivable, con inversa <span class="math inline">\(g^{-1}\)</span> derivable. Si <span class="math inline">\(Y=g(X)\)</span>, entonces <span class="math inline">\(Y\)</span> es continua con densidad</p>
+<p><span class="math display">\[f_Y(y) = f_X\big(g^{-1}(y)\big)\,\left|\frac{d}{dy}g^{-1}(y)\right|\]</span></p>
+<p>en el rango de <span class="math inline">\(g\)</span>, y <span class="math inline">\(0\)</span> fuera de él.</p>
+</div>
+</div>
+<p><strong>Demostración.</strong> Si <span class="math inline">\(g\)</span> es creciente, <span class="math inline">\(F_Y(y)=P(g(X)\le y)=P(X\le g^{-1}(y))=F_X(g^{-1}(y))\)</span>; derivando con la regla de la cadena, <span class="math inline">\(f_Y(y)=f_X(g^{-1}(y))\,(g^{-1})'(y)\)</span>, y <span class="math inline">\((g^{-1})'&gt;0\)</span> porque <span class="math inline">\(g^{-1}\)</span> también es creciente. Si <span class="math inline">\(g\)</span> es decreciente, <span class="math inline">\(F_Y(y)=P(X\ge g^{-1}(y))=1-F_X(g^{-1}(y))\)</span>, y derivando, <span class="math inline">\(f_Y(y)=-f_X(g^{-1}(y))(g^{-1})'(y)\)</span>, que es positivo porque ahora <span class="math inline">\((g^{-1})'&lt;0\)</span>. Los dos casos se resumen con el valor absoluto. <span class="math inline">\(\blacksquare\)</span></p>
+<section id="ejemplo-de-uniforme-a-uniforme" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="ejemplo-de-uniforme-a-uniforme"><span class="header-section-number">5.1</span> Ejemplo: de uniforme a uniforme</h3>
+<p>Sea <span class="math inline">\(U\sim U(0,1)\)</span> y <span class="math inline">\(g(u)=1-u\)</span>, decreciente, <span class="math inline">\(g^{-1}(v)=1-v\)</span>, <span class="math inline">\((g^{-1})'(v)=-1\)</span>. Entonces</p>
+<p><span class="math display">\[f_V(v) = f_U(1-v)\,|{-1}| = 1, \qquad 0&lt;v&lt;1\]</span></p>
+<p>así que <span class="math inline">\(V=1-U\sim U(0,1)\)</span> también. Más útil en la práctica es el caso afín general: con <span class="math inline">\(g(u)=au+b\)</span>, <span class="math inline">\(a&gt;0\)</span> (creciente), <span class="math inline">\(g^{-1}(v)=(v-b)/a\)</span>, <span class="math inline">\((g^{-1})'(v)=1/a\)</span>, y</p>
+<p><span class="math display">\[f_V(v) = 1\cdot\frac1a = \frac1a, \qquad b&lt;v&lt;a+b\]</span></p>
+<p>es decir <span class="math inline">\(V=aU+b\sim U(b,a+b)\)</span>. Esta es literalmente la manera de simular cualquier uniforme en un intervalo arbitrario a partir de una uniforme estándar.</p>
+<p>El cambio de variable aquí es lineal, así que no deforma nada: estira o desplaza el intervalo, pero como la densidad de <span class="math inline">\(U\)</span> es plana, el resultado sigue siendo plano. La forma (uniforme) sobrevive porque el factor <span class="math inline">\(|(g^{-1})'(v)|\)</span> es constante.</p>
+</section>
+<section id="ejemplo-de-normal-a-gamma" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="ejemplo-de-normal-a-gamma"><span class="header-section-number">5.2</span> Ejemplo: de normal a Gamma</h3>
+<p>Sea <span class="math inline">\(Z\sim N(0,1)\)</span> y <span class="math inline">\(Y=Z^2\)</span>. Aquí <span class="math inline">\(g(z)=z^2\)</span> no es monótona en todo <span class="math inline">\(\mathbb R\)</span> (tiene dos preimágenes, <span class="math inline">\(\pm\sqrt y\)</span>), así que se suman las dos contribuciones:</p>
+<p><span class="math display">\[f_Y(y) = f_Z(\sqrt y)\left|\frac{d}{dy}\sqrt y\right| + f_Z(-\sqrt y)\left|\frac{d}{dy}(-\sqrt y)\right| = 2\cdot\frac1{\sqrt{2\pi}}e^{-y/2}\cdot\frac1{2\sqrt y} = \frac1{\sqrt{2\pi y}}\,e^{-y/2}\]</span></p>
+<p>Comparando con <span class="math inline">\(\text{Gamma}(\alpha,\lambda)\)</span> en <span class="math inline">\(\alpha=\tfrac12,\lambda=\tfrac12\)</span>: <span class="math inline">\(\dfrac{(1/2)^{1/2}}{\Gamma(1/2)}y^{-1/2}e^{-y/2}\)</span>, y como ya sabemos que <span class="math inline">\(\Gamma(1/2)=\sqrt\pi\)</span> (de la sección anterior), <span class="math inline">\(\dfrac{1/\sqrt2}{\sqrt\pi}=\dfrac1{\sqrt{2\pi}}\)</span>. Coincide exactamente:</p>
+<p><span class="math display">\[Z^2 \sim \text{Gamma}\!\left(\tfrac12,\tfrac12\right)\]</span></p>
+<p>Aquí <span class="math inline">\(\alpha=1/2\)</span> no salió de ajustar momentos a datos, salió de una transformación exacta de una variable que ya se conocía. Cerca de <span class="math inline">\(z=0\)</span>, intervalos chiquitos de <span class="math inline">\(z\)</span> se mapean a intervalos todavía más chiquitos de <span class="math inline">\(y=z^2\)</span>, pero el factor <span class="math inline">\(1/(2\sqrt y)\)</span> compensa sobrecargando esa región, y por eso la densidad Gamma con <span class="math inline">\(\alpha&lt;1\)</span> diverge (de forma integrable) cerca de <span class="math inline">\(0\)</span>.</p>
+</section>
+<section id="ejemplo-de-uniforme-a-exponencial" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="ejemplo-de-uniforme-a-exponencial"><span class="header-section-number">5.3</span> Ejemplo: de uniforme a exponencial</h3>
+<p>Sea <span class="math inline">\(U\sim U(0,1)\)</span> y <span class="math inline">\(g(u)=-\ln(u)/\lambda\)</span>, decreciente en <span class="math inline">\((0,1)\)</span>, <span class="math inline">\(g^{-1}(t)=e^{-\lambda t}\)</span>, <span class="math inline">\((g^{-1})'(t)=-\lambda e^{-\lambda t}\)</span>. Entonces</p>
+<p><span class="math display">\[f_T(t) = f_U(e^{-\lambda t})\,|{-\lambda e^{-\lambda t}}| = 1\cdot\lambda e^{-\lambda t} = \lambda e^{-\lambda t}, \qquad t&gt;0\]</span></p>
+<p>así que <span class="math inline">\(T=-\ln(U)/\lambda\sim\text{Exponencial}(\lambda)\)</span>: el mismo Método A del principio de la sección, ahora obtenido por transformación en vez de por el proceso de Poisson.</p>
+<p>Cerca de <span class="math inline">\(u\to0^+\)</span>, <span class="math inline">\(g(u)=-\ln(u)/\lambda\to\infty\)</span> muy rápido: pedacitos diminutos de <span class="math inline">\(u\)</span> cerca de <span class="math inline">\(0\)</span>, aunque tienen la misma probabilidad que cualquier otro pedacito del mismo tamaño (porque <span class="math inline">\(U\)</span> es uniforme), se estiran sobre un rango enorme de <span class="math inline">\(t\)</span>. Ahí nace la cola derecha larga de la exponencial: no es una propiedad nueva que aparece de la nada, es pura consecuencia de la curvatura de <span class="math inline">\(g\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use el teorema de cambio de variable para mostrar que, si <span class="math inline">\(U\sim U(0,1)\)</span> y <span class="math inline">\(g(u)=1-(1-u)^{1/n}\)</span>, entonces <span class="math inline">\(V=g(U)\)</span> tiene distribución <span class="math inline">\(\text{Beta}(1,n)\)</span> (la distribución del mínimo de <span class="math inline">\(n\)</span> uniformes independientes).</p>
+</div>
+</div>
+</section>
+</section>
+<section id="la-familia-exponencial" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="la-familia-exponencial"><span class="header-section-number">6</span> La familia exponencial</h2>
+<p>Muchas de las distribuciones de este curso comparten la misma forma funcional:</p>
+<p><span class="math display">\[f(x;\theta) = h(x)\,\exp\big(\eta(\theta)\,T(x)-A(\theta)\big)\]</span></p>
+<p>llamada <strong>familia exponencial</strong>. No es solo una curiosidad taxonómica: es la razón profunda de que el prior uniforme y la Binomial combinen tan limpio en una posterior Beta (Método B de arriba), porque las dos comparten el mismo estadístico <span class="math inline">\(T\)</span>, y de que existan estadísticos suficientes bien portados para casi todo lo que hemos visto.</p>
+<ul>
+<li><strong>Exponencial</strong>(<span class="math inline">\(\lambda\)</span>): <span class="math inline">\(f(x;\lambda)=\lambda e^{-\lambda x}=\exp(\ln\lambda-\lambda x)\)</span>, con <span class="math inline">\(h(x)=1\)</span>, <span class="math inline">\(\eta(\lambda)=-\lambda\)</span>, <span class="math inline">\(T(x)=x\)</span>, <span class="math inline">\(A(\lambda)=-\ln\lambda\)</span>.</li>
+<li><strong>Gamma</strong>(<span class="math inline">\(\alpha,\lambda\)</span>): <span class="math inline">\(f(x;\alpha,\lambda)=\exp\big((\alpha-1)\ln x - \lambda x + \alpha\ln\lambda - \ln\Gamma(\alpha)\big)\)</span>, con dos estadísticos, <span class="math inline">\(T_1(x)=\ln x\)</span> y <span class="math inline">\(T_2(x)=x\)</span>.</li>
+<li><strong>Beta</strong>(<span class="math inline">\(\alpha,\beta\)</span>): <span class="math inline">\(f(x;\alpha,\beta)=\exp\big((\alpha-1)\ln x + (\beta-1)\ln(1-x) - \ln B(\alpha,\beta)\big)\)</span>, con <span class="math inline">\(T_1(x)=\ln x\)</span>, <span class="math inline">\(T_2(x)=\ln(1-x)\)</span>.</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled" title="Quién se queda afuera">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Quién se queda afuera
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La uniforme no cabe en este marco: su soporte <span class="math inline">\((a,b)\)</span> depende de los parámetros, y eso rompe la condición de regularidad que la familia exponencial exige (el soporte de <span class="math inline">\(f(x;\theta)\)</span> debe ser el mismo para todo <span class="math inline">\(\theta\)</span>). Es el contraejemplo clásico de libro de texto, y vale la pena tenerlo presente para no pensar que esta clasificación explica absolutamente todo.</p>
+</div>
+</div>
+</section>
+<section id="panel-interactivo-densidad-y-acumulada" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="panel-interactivo-densidad-y-acumulada"><span class="header-section-number">7</span> Panel interactivo: densidad y acumulada</h2>
+<p>El siguiente panel dibuja la densidad o la función de distribución de cualquiera de las cinco continuas del curso (Uniforme, Normal, Exponencial, Gamma, Beta), con sus parámetros ajustables.</p>
+<iframe src="notebooks/distribucionescontinuas.html" width="100%" height="640" style="border:1px solid #dfe3e2; border-radius:6px;" title="Panel interactivo: distribuciones continuas notables"></iframe>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicios del libro">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicios del libro
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Haga los ejercicios del libro de Blanco Castañeda relacionados con las distribuciones exponencial, Gamma y Beta, incluidos los de la propiedad de ausencia de memoria y los de cambio de variable.</p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/arturosanjuan\.xyz");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="preferred_color_scheme">
+<input type="hidden" id="giscus-alt-theme" value="preferred_color_scheme">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "asanjuanc/arturosanjuan-sitio";
+    script.dataset.repoId = "R_kgDOTzuHrw";
+    script.dataset.category = "Comentarios";
+    script.dataset.categoryId = "DIC_kwDOTzuHr84DD_eD";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "es";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
