@@ -1,0 +1,25 @@
+diff --git a/_quarto.yml b/_quarto.yml
+index dd6da1a..236bf43 100644
+--- a/_quarto.yml
++++ b/_quarto.yml
+@@ -61,6 +61,7 @@ website:
+         - cursos/numerico/estabilidad/index.qmd
+         - cursos/numerico/taller-1/index.qmd
+         - cursos/numerico/matrices/index.qmd
++        - cursos/numerico/normas/index.qmd
+         - cursos/numerico/complejidad/index.qmd
+     - id: probabilidad
+       title: "Probabilidad"
+diff --git a/cursos/numerico/complejidad/index.qmd b/cursos/numerico/complejidad/index.qmd
+index 03d255d..c1542a9 100644
+--- a/cursos/numerico/complejidad/index.qmd
++++ b/cursos/numerico/complejidad/index.qmd
+@@ -13,7 +13,7 @@ format:
+     code-fold: false
+     smooth-scroll: true
+     highlight-style: github
+-order: 6
++order: 7
+ ---
+ 
+ ## Notación de Landau: la $o$ pequeña

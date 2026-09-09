@@ -1,0 +1,185 @@
+---
+title: "Factorización LU"
+subtitle: "Productos exteriores, eliminación gaussiana y pivoteo parcial"
+description: "Derivación completa de la factorización LU vía productos exteriores, con el ejercicio 2.4.1(a) resuelto paso a paso; conteo de flops de la factorización y de las sustituciones triangulares; y la razón y el mecanismo del pivoteo parcial que usa Julia por defecto (Driscoll y Braun, secciones 2.4 y 2.6)."
+author: "Arturo Sanjuán"
+date: 2026-09-13
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 6
+---
+
+En la nota de sistemas lineales prometimos volver sobre esto: triangularizar un sistema hace barata la sustitución, y ahora construimos esa triangularización. Seguimos la sección 2.4 del libro de Driscoll y Braun, con la misma notación de productos exteriores.
+
+## Productos exteriores
+
+Si $\mathbf{u}\in\mathbb{R}^m$ y $\mathbf{v}\in\mathbb{R}^n$, el producto exterior $\mathbf{u}\mathbf{v}^T$ es la matriz de $m\times n$ con entrada $(i,j)$ igual a $u_iv_j$. A diferencia del producto interior $\mathbf{u}^T\mathbf{v}$ (un número), el producto exterior siempre produce una matriz, y esa matriz tiene rango 1: todas sus columnas son múltiplos de $\mathbf{u}$.
+
+::: {.callout-note title="Teorema"}
+Si las columnas de $\mathbf{A}$ son $\mathbf{a}_1,\ldots,\mathbf{a}_n$ y las filas de $\mathbf{B}$ son $\mathbf{b}_1^T,\ldots,\mathbf{b}_n^T$, entonces
+$$\mathbf{A}\mathbf{B} = \sum_{k=1}^n \mathbf{a}_k\mathbf{b}_k^T.$$
+:::
+
+Esto no es más que reagrupar la fórmula usual del producto matricial: la entrada $(i,j)$ de $\mathbf{A}\mathbf{B}$ es $\sum_k A_{ik}B_{kj}$, y agrupando por $k$ en vez de por $(i,j)$ se obtiene exactamente la suma de productos exteriores de arriba, uno por cada valor de $k$.
+
+::: {.callout-note title="Tarea"}
+Verifique el teorema anterior con un caso concreto: tome $\mathbf{A}$ de $3\times2$ y $\mathbf{B}$ de $2\times3$, calcule $\mathbf{A}\mathbf{B}$ de la manera usual, y compárelo contra la suma de los dos productos exteriores $\mathbf{a}_1\mathbf{b}_1^T+\mathbf{a}_2\mathbf{b}_2^T$.
+:::
+
+## De productos exteriores a factorización triangular
+
+Apliquemos el teorema al caso $\mathbf{L}\mathbf{U}$, con $\mathbf{L}$ triangular inferior unitaria (unos en la diagonal, ceros encima) y $\mathbf{U}$ triangular superior. Llamando $\boldsymbol{\ell}_k$ a las columnas de $\mathbf{L}$ y $\mathbf{u}_k^T$ a las filas de $\mathbf{U}$,
+$$\mathbf{L}\mathbf{U} = \sum_{k=1}^n \boldsymbol{\ell}_k\mathbf{u}_k^T.$$
+
+Multiplicando por $\mathbf{e}_1^T$ a la izquierda, solo sobrevive el término con $k=1$: las demás columnas de $\mathbf{L}$ tienen un cero en la primera entrada (por ser triangular inferior), así que $\mathbf{e}_1^T\boldsymbol{\ell}_k=0$ para $k>1$, y $\mathbf{e}_1^T\boldsymbol{\ell}_1=L_{11}=1$. Entonces
+$$\mathbf{e}_1^T(\mathbf{L}\mathbf{U}) = \mathbf{u}_1^T,$$
+es decir, la primera fila de $\mathbf{L}\mathbf{U}$ es simplemente $\mathbf{u}_1^T$. De manera análoga, multiplicando por $\mathbf{e}_1$ a la derecha solo sobrevive $\mathbf{u}_1^T\mathbf{e}_1=U_{11}$, y se obtiene
+$$(\mathbf{L}\mathbf{U})\mathbf{e}_1 = U_{11}\boldsymbol{\ell}_1,$$
+así que la primera columna de $\mathbf{L}\mathbf{U}$ es la primera columna de $\mathbf{L}$, escalada por $U_{11}$.
+
+Si queremos $\mathbf{L}\mathbf{U}=\mathbf{A}$, estas dos identidades despejan de inmediato
+$$\mathbf{u}_1^T = \mathbf{A}_{1,:}, \qquad \boldsymbol{\ell}_1 = \frac{\mathbf{A}_{:,1}}{A_{11}}.$$
+Restar el producto exterior $\boldsymbol{\ell}_1\mathbf{u}_1^T$ de $\mathbf{A}$ cancela exactamente esa primera fila y esa primera columna (por construcción, ese producto exterior las reproduce), y lo que queda es un problema idéntico, un tamaño más chico. Repitiendo el argumento sobre lo que queda, fila y columna por fila y columna, se obtienen $\mathbf{L}$ y $\mathbf{U}$ completas.
+
+::: {.callout-note title="Definición: matriz triangular unitaria"}
+Una matriz triangular $\mathbf{T}$ de $n\times n$ es unitaria si $T_{11}=\cdots=T_{nn}=1$.
+:::
+
+::: {.callout-note title="Definición: factorización LU"}
+Dada una matriz $\mathbf{A}$ de $n\times n$, su factorización LU es $\mathbf{A}=\mathbf{L}\mathbf{U}$ con $\mathbf{L}$ triangular inferior unitaria y $\mathbf{U}$ triangular superior.
+:::
+
+Exigir que $\mathbf{L}$ sea unitaria no es arbitrario: entre las $n^2$ entradas de $\mathbf{L}$ y las $n^2$ de $\mathbf{U}$ solo $n^2+n$ son independientes ($\mathbf{A}$ tiene apenas $n^2$ entradas para determinar $2n^2$ incógnitas), y fijar la diagonal de $\mathbf{L}$ en unos es la manera más simple de eliminar los $n$ grados de libertad sobrantes.
+
+## Derivación completa: ejercicio 2.4.1(a)
+
+Apliquemos el procedimiento anterior a
+$$\mathbf{A}_1 = \begin{bmatrix} 2 & 3 & 4 \\ 4 & 5 & 10 \\ 4 & 8 & 2 \end{bmatrix}.$$
+Usamos el subíndice en $\mathbf{A}_k$ para la matriz de trabajo en cada paso.
+
+**Paso $k=1$.** La primera fila de $\mathbf{U}$ es la primera fila de $\mathbf{A}_1$, y la primera columna de $\mathbf{L}$ es la primera columna de $\mathbf{A}_1$ entre el pivote $A_{11}=2$:
+$$\mathbf{u}_1^T = \begin{bmatrix}2&3&4\end{bmatrix}, \qquad \boldsymbol{\ell}_1 = \frac12\begin{bmatrix}2\\4\\4\end{bmatrix}=\begin{bmatrix}1\\2\\2\end{bmatrix}.$$
+Restando el producto exterior,
+$$\boldsymbol{\ell}_1\mathbf{u}_1^T=\begin{bmatrix}2&3&4\\4&6&8\\4&6&8\end{bmatrix} \quad\Longrightarrow\quad \mathbf{A}_2=\mathbf{A}_1-\boldsymbol{\ell}_1\mathbf{u}_1^T=\begin{bmatrix}0&0&0\\0&-1&2\\0&2&-6\end{bmatrix}.$$
+Nótese que la primera fila y la primera columna quedan exactamente en cero, tal como garantizan las dos identidades de la sección anterior.
+
+**Paso $k=2$.** Trabajando ahora sobre $\mathbf{A}_2$,
+$$\mathbf{u}_2^T = \begin{bmatrix}0&-1&2\end{bmatrix}, \qquad \boldsymbol{\ell}_2 = \frac{1}{-1}\begin{bmatrix}0\\-1\\2\end{bmatrix}=\begin{bmatrix}0\\1\\-2\end{bmatrix}.$$
+$$\boldsymbol{\ell}_2\mathbf{u}_2^T=\begin{bmatrix}0&0&0\\0&-1&2\\0&2&-4\end{bmatrix} \quad\Longrightarrow\quad \mathbf{A}_3=\mathbf{A}_2-\boldsymbol{\ell}_2\mathbf{u}_2^T=\begin{bmatrix}0&0&0\\0&0&0\\0&0&-2\end{bmatrix}.$$
+
+**Último elemento.** Con $n=3$ el ciclo de productos exteriores corre solo para $k=1,2$; el último pivote se lee directamente, $U_{33}=(\mathbf{A}_3)_{33}=-2$.
+
+Ensamblando cada $\mathbf{u}_k^T$ como fila de $\mathbf{U}$ y cada $\boldsymbol{\ell}_k$ como columna de $\mathbf{L}$ (con la última columna de $\mathbf{L}$ igual a $\mathbf{e}_3$),
+$$\mathbf{L} = \begin{bmatrix} 1&0&0\\2&1&0\\2&-2&1\end{bmatrix}, \qquad \mathbf{U} = \begin{bmatrix}2&3&4\\0&-1&2\\0&0&-2\end{bmatrix}.$$
+Multiplicando se verifica $\mathbf{L}\mathbf{U}=\mathbf{A}_1$ exactamente.
+
+```julia
+"""
+    lu_ingenua(A)
+
+Factorización LU sin pivoteo. En cada paso k copia la fila k de U y
+la columna k de L desde la submatriz activa, y actualiza solo esa
+submatriz con el producto exterior ℓ_k uₖᵀ (no toca las entradas ya
+puestas en cero). No es apta para producción, pero deja ver a simple
+vista el costo de la factorización.
+"""
+function lu_ingenua(A)
+    n = size(A, 1)
+    T = float(copy(A))
+    L = diagm(ones(n))
+    U = zeros(n, n)
+    for k in 1:n
+        U[k, k:n] = T[k, k:n]
+        if k < n
+            L[k+1:n, k] = T[k+1:n, k] / U[k, k]
+            for i in k+1:n, j in k+1:n
+                T[i, j] -= L[i, k] * U[k, j]
+            end
+        end
+    end
+    return L, U
+end
+```
+
+::: {.callout-note title="Tarea"}
+Corra `lu_ingenua` sobre la matriz de esta sección y confirme que reproduce exactamente $\mathbf{L}$ y $\mathbf{U}$ calculadas a mano. Después hágalo también con el inciso (b) del ejercicio 2.4.1.
+:::
+
+## Conteo de flops
+
+Veamos qué le cuesta a la computadora el procedimiento anterior sobre una matriz genérica de $n\times n$. En el paso $k$, con $k=1,\ldots,n-1$, quedan $n-k$ filas y columnas por procesar (las primeras $k$ ya están resueltas).
+
+Calcular $\boldsymbol{\ell}_k$ cuesta $n-k$ divisiones, una por cada entrada de la columna debajo de la diagonal. Actualizar la submatriz activa restando $\boldsymbol{\ell}_k\mathbf{u}_k^T$ cuesta $(n-k)^2$ multiplicaciones, una por cada entrada del producto exterior, y otras $(n-k)^2$ restas. Copiar $\mathbf{u}_k^T$ no cuesta ninguna operación aritmética: es solo lectura.
+
+Sumando sobre los $n-1$ pasos, y usando la equivalencia asintótica $\sum_{j=1}^n j^2\sim n^3/3$ que ya establecimos en la nota de complejidad,
+$$\sum_{k=1}^{n-1}(n-k)^2 = \sum_{j=1}^{n-1} j^2 \sim \frac{n^3}{3}.$$
+Las divisiones, en cambio, suman $\sum_{k=1}^{n-1}(n-k)=\sum_{j=1}^{n-1}j\sim n^2/2$, un orden inferior que no afecta el término dominante.
+
+El total de multiplicaciones más restas es entonces $\sim n^3/3+n^3/3=\dfrac{2}{3}n^3$, y las divisiones aportan solo $O(n^2)$. La factorización LU cuesta, en flops,
+$$\frac{2}{3}n^3 + O(n^2),$$
+es decir, $O(n^3)$: el mismo orden que la eliminación gaussiana directa, porque son, de hecho, el mismo algoritmo escrito de otra manera.
+
+::: {.callout-note title="Tarea"}
+Repita el argumento anterior contando por separado las multiplicaciones y las restas (en vez de agruparlas), y confirme que cada una por separado es $\sim n^3/3$. Sume después el costo de resolver $\mathbf{L}\mathbf{z}=\mathbf{b}$ y $\mathbf{U}\mathbf{x}=\mathbf{z}$ (ya contado en la nota de sistemas lineales, $\sim n^2/2$ cada una) al costo de la factorización, y concluya que resolver un sistema completo $\mathbf{A}\mathbf{x}=\mathbf{b}$ por LU cuesta $\dfrac23n^3+O(n^2)$.
+:::
+
+Vale la pena remarcar por qué esto importa en la práctica. Si hay que resolver $\mathbf{A}\mathbf{x}=\mathbf{b}_1,\mathbf{A}\mathbf{x}=\mathbf{b}_2,\ldots$ con la misma matriz y muchos lados derechos distintos, factorizar una sola vez ($\frac23n^3$, hecho una vez) y reutilizar $\mathbf{L},\mathbf{U}$ en cada sustitución triangular ($O(n^2)$ cada vez) es muchísimo más barato que resolver cada sistema desde cero. Es la razón detrás de guardar el resultado de `lu(A)` cuando se van a resolver muchos sistemas con la misma matriz, en vez de llamar `A \ b` repetidamente.
+
+## ¿Qué falla sin pivotear?
+
+El procedimiento anterior tiene un punto débil evidente: si en algún paso $U_{kk}=0$, la división que define $\boldsymbol{\ell}_k$ es imposible y el algoritmo se detiene. Pero el problema real es más sutil, y aparece incluso cuando ningún pivote es exactamente cero.
+
+Considere
+$$\mathbf{A} = \begin{bmatrix} \epsilon & 1 \\ 1 & 2 \end{bmatrix}$$
+con $\epsilon>0$ pequeño, y el sistema $\mathbf{A}\mathbf{x}=\mathbf{b}$ con solución exacta $\mathbf{x}=(1,1)$. Sin pivotear, el multiplicador es $\ell_{21}=1/\epsilon$, un número enorme, y
+$$U_{22} = 2-\frac1\epsilon\cdot1 = 2-\frac1\epsilon.$$
+En aritmética exacta esto no es ningún problema. Pero en punto flotante, cuando $1/\epsilon$ es mucho más grande que $2$, la resta $2-1/\epsilon$ pierde por completo la contribución del $2$: es la misma cancelación catastrófica escondida dentro de una entrada intermedia que ya vimos en el ejercicio 2.3.7 de la nota de sistemas lineales, aquí producida por el algoritmo mismo y no por los datos originales del problema.
+
+| $\epsilon$ | $x_1$ sin pivotear | error | $x_1$ con pivoteo | error |
+|---|---|---|---|---|
+| $10^{-8}$ | $0{,}999999993922529$ | $6{,}08\times10^{-9}$ | $1{,}0000000000000002$ | $2{,}22\times10^{-16}$ |
+| $10^{-12}$ | $0{,}999866855977416$ | $1{,}331\times10^{-4}$ | $1{,}0$ | $0$ |
+| $10^{-16}$ | $2{,}220446049250313$ | $1{,}220$ | $1{,}0000000000000002$ | $2{,}22\times10^{-16}$ |
+
+Con $\epsilon=10^{-16}$ el algoritmo sin pivotear entrega $x_1\approx2{,}22$ en vez de $1$: una falla total, no un simple error de redondeo. Pivotear (intercambiar las dos filas antes de eliminar, para que el pivote sea el $1$ y no el $\epsilon$) mantiene el error en precisión de máquina en los tres casos. El sistema $\mathbf{A}\mathbf{x}=\mathbf{b}$ en sí está perfectamente condicionado para $\epsilon$ pequeño (basta ver que las entradas de $\mathbf{A}^{-1}$ permanecen moderadas); la falla es enteramente del algoritmo, no del problema. Es el mismo eje de siempre, problema contra algoritmo, ahora con nombre propio: estabilidad.
+
+::: {.callout-note title="Definición: pivoteo parcial"}
+Al eliminar en la columna $k$, se elige como pivote la entrada de esa columna, entre las filas todavía disponibles, con mayor valor absoluto, y se intercambian filas para llevarla a la posición $(k,k)$ antes de continuar.
+:::
+
+Esa regla, elegir siempre el pivote más grande disponible, es justamente la que evita que los multiplicadores crezcan sin control: como el pivote es el más grande de la columna, todo multiplicador queda acotado por $1$ en valor absoluto. La factorización resultante ya no es $\mathbf{A}=\mathbf{L}\mathbf{U}$ exactamente, sino
+$$\mathbf{A}[p,:] = \mathbf{L}\mathbf{U},$$
+donde $p$ es el vector que registra el orden en que se usaron las filas como pivote. Para resolver $\mathbf{A}\mathbf{x}=\mathbf{b}$ basta con permutar $\mathbf{b}$ de la misma manera antes de las dos sustituciones triangulares: $\mathbf{L}\mathbf{z}=\mathbf{b}[p]$ y luego $\mathbf{U}\mathbf{x}=\mathbf{z}$.
+
+## Cómo lo hace Julia por defecto
+
+`lu(A)` en Julia devuelve un objeto con tres componentes, accesibles como `F.L`, `F.U` y `F.p`, que cumplen exactamente la relación anterior:
+
+```julia
+F = lu(A)
+F.L * F.U == A[F.p, :]   # true
+```
+
+La estrategia de selección de pivote por defecto se llama `RowMaximum()`, la misma regla de arriba, y se puede desactivar explícitamente con `lu(A, NoPivot())` si alguna vez se quiere reproducir a propósito la versión inestable. Internamente, para matrices de punto flotante, Julia no ejecuta el ciclo con productos exteriores tal como lo escribimos aquí, sino que delega en `LAPACK.getrf!`, la rutina estándar de la industria, organizada en bloques para aprovechar operaciones vectorizadas de álgebra lineal (BLAS) y ser eficiente en memoria caché. El operador `\` usa este mismo mecanismo automáticamente al resolver `A \ b`.
+
+Con los factores ya calculados, resolver un sistema nuevo con la misma matriz es
+
+```julia
+z = F.L \ b[F.p]
+x = F.U \ z
+```
+
+exactamente la sustitución hacia adelante y hacia atrás de la nota de sistemas lineales, con el lado derecho permutado primero.
+
+::: {.callout-note title="Tarea"}
+Resuelva a mano el ejercicio 2.6.1(a) del libro: la factorización LU con pivoteo parcial de la misma matriz de la sección anterior,
+$$\begin{bmatrix} 2 & 3 & 4 \\ 4 & 5 & 10 \\ 4 & 8 & 2 \end{bmatrix},$$
+y compare el resultado contra la factorización sin pivotear que ya calculamos arriba. ¿En qué paso difiere la elección de pivote? Haga después el inciso (b), con la matriz de $4\times4$ del mismo ejercicio.
+:::

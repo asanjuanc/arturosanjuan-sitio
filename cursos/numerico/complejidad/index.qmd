@@ -13,7 +13,7 @@ format:
     code-fold: false
     smooth-scroll: true
     highlight-style: github
-order: 6
+order: 7
 ---
 
 ## Notación de Landau: la $o$ pequeña

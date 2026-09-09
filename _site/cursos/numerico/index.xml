@@ -228,6 +228,379 @@
   <pubDate>Wed, 16 Sep 2026 05:00:00 GMT</pubDate>
 </item>
 <item>
+  <title>Factorización LU</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/numerico/lu/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>En la nota de sistemas lineales prometimos volver sobre esto: triangularizar un sistema hace barata la sustitución, y ahora construimos esa triangularización. Seguimos la sección 2.4 del libro de Driscoll y Braun, con la misma notación de productos exteriores.</p>
+<section id="productos-exteriores" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="productos-exteriores"><span class="header-section-number">1</span> Productos exteriores</h2>
+<p>Si <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bu%7D%5Cin%5Cmathbb%7BR%7D%5Em"> y <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bv%7D%5Cin%5Cmathbb%7BR%7D%5En">, el producto exterior <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bu%7D%5Cmathbf%7Bv%7D%5ET"> es la matriz de <img src="https://latex.codecogs.com/png.latex?m%5Ctimes%20n"> con entrada <img src="https://latex.codecogs.com/png.latex?(i,j)"> igual a <img src="https://latex.codecogs.com/png.latex?u_iv_j">. A diferencia del producto interior <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bu%7D%5ET%5Cmathbf%7Bv%7D"> (un número), el producto exterior siempre produce una matriz, y esa matriz tiene rango 1: todas sus columnas son múltiplos de <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bu%7D">.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Teorema">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Teorema
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si las columnas de <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BA%7D"> son <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Ba%7D_1,%5Cldots,%5Cmathbf%7Ba%7D_n"> y las filas de <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BB%7D"> son <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bb%7D_1%5ET,%5Cldots,%5Cmathbf%7Bb%7D_n%5ET">, entonces <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BA%7D%5Cmathbf%7BB%7D%20=%20%5Csum_%7Bk=1%7D%5En%20%5Cmathbf%7Ba%7D_k%5Cmathbf%7Bb%7D_k%5ET."></p>
+</div>
+</div>
+<p>Esto no es más que reagrupar la fórmula usual del producto matricial: la entrada <img src="https://latex.codecogs.com/png.latex?(i,j)"> de <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BA%7D%5Cmathbf%7BB%7D"> es <img src="https://latex.codecogs.com/png.latex?%5Csum_k%20A_%7Bik%7DB_%7Bkj%7D">, y agrupando por <img src="https://latex.codecogs.com/png.latex?k"> en vez de por <img src="https://latex.codecogs.com/png.latex?(i,j)"> se obtiene exactamente la suma de productos exteriores de arriba, uno por cada valor de <img src="https://latex.codecogs.com/png.latex?k">.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Verifique el teorema anterior con un caso concreto: tome <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BA%7D"> de <img src="https://latex.codecogs.com/png.latex?3%5Ctimes2"> y <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BB%7D"> de <img src="https://latex.codecogs.com/png.latex?2%5Ctimes3">, calcule <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BA%7D%5Cmathbf%7BB%7D"> de la manera usual, y compárelo contra la suma de los dos productos exteriores <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Ba%7D_1%5Cmathbf%7Bb%7D_1%5ET+%5Cmathbf%7Ba%7D_2%5Cmathbf%7Bb%7D_2%5ET">.</p>
+</div>
+</div>
+</section>
+<section id="de-productos-exteriores-a-factorización-triangular" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="de-productos-exteriores-a-factorización-triangular"><span class="header-section-number">2</span> De productos exteriores a factorización triangular</h2>
+<p>Apliquemos el teorema al caso <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BL%7D%5Cmathbf%7BU%7D">, con <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BL%7D"> triangular inferior unitaria (unos en la diagonal, ceros encima) y <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BU%7D"> triangular superior. Llamando <img src="https://latex.codecogs.com/png.latex?%5Cboldsymbol%7B%5Cell%7D_k"> a las columnas de <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BL%7D"> y <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bu%7D_k%5ET"> a las filas de <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BU%7D">, <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BL%7D%5Cmathbf%7BU%7D%20=%20%5Csum_%7Bk=1%7D%5En%20%5Cboldsymbol%7B%5Cell%7D_k%5Cmathbf%7Bu%7D_k%5ET."></p>
+<p>Multiplicando por <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Be%7D_1%5ET"> a la izquierda, solo sobrevive el término con <img src="https://latex.codecogs.com/png.latex?k=1">: las demás columnas de <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BL%7D"> tienen un cero en la primera entrada (por ser triangular inferior), así que <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Be%7D_1%5ET%5Cboldsymbol%7B%5Cell%7D_k=0"> para <img src="https://latex.codecogs.com/png.latex?k%3E1">, y <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Be%7D_1%5ET%5Cboldsymbol%7B%5Cell%7D_1=L_%7B11%7D=1">. Entonces <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Be%7D_1%5ET(%5Cmathbf%7BL%7D%5Cmathbf%7BU%7D)%20=%20%5Cmathbf%7Bu%7D_1%5ET,"> es decir, la primera fila de <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BL%7D%5Cmathbf%7BU%7D"> es simplemente <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bu%7D_1%5ET">. De manera análoga, multiplicando por <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Be%7D_1"> a la derecha solo sobrevive <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bu%7D_1%5ET%5Cmathbf%7Be%7D_1=U_%7B11%7D">, y se obtiene <img src="https://latex.codecogs.com/png.latex?(%5Cmathbf%7BL%7D%5Cmathbf%7BU%7D)%5Cmathbf%7Be%7D_1%20=%20U_%7B11%7D%5Cboldsymbol%7B%5Cell%7D_1,"> así que la primera columna de <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BL%7D%5Cmathbf%7BU%7D"> es la primera columna de <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BL%7D">, escalada por <img src="https://latex.codecogs.com/png.latex?U_%7B11%7D">.</p>
+<p>Si queremos <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BL%7D%5Cmathbf%7BU%7D=%5Cmathbf%7BA%7D">, estas dos identidades despejan de inmediato <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bu%7D_1%5ET%20=%20%5Cmathbf%7BA%7D_%7B1,:%7D,%20%5Cqquad%20%5Cboldsymbol%7B%5Cell%7D_1%20=%20%5Cfrac%7B%5Cmathbf%7BA%7D_%7B:,1%7D%7D%7BA_%7B11%7D%7D."> Restar el producto exterior <img src="https://latex.codecogs.com/png.latex?%5Cboldsymbol%7B%5Cell%7D_1%5Cmathbf%7Bu%7D_1%5ET"> de <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BA%7D"> cancela exactamente esa primera fila y esa primera columna (por construcción, ese producto exterior las reproduce), y lo que queda es un problema idéntico, un tamaño más chico. Repitiendo el argumento sobre lo que queda, fila y columna por fila y columna, se obtienen <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BL%7D"> y <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BU%7D"> completas.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Definición: matriz triangular unitaria">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Definición: matriz triangular unitaria
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Una matriz triangular <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BT%7D"> de <img src="https://latex.codecogs.com/png.latex?n%5Ctimes%20n"> es unitaria si <img src="https://latex.codecogs.com/png.latex?T_%7B11%7D=%5Ccdots=T_%7Bnn%7D=1">.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Definición: factorización LU">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Definición: factorización LU
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dada una matriz <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BA%7D"> de <img src="https://latex.codecogs.com/png.latex?n%5Ctimes%20n">, su factorización LU es <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BA%7D=%5Cmathbf%7BL%7D%5Cmathbf%7BU%7D"> con <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BL%7D"> triangular inferior unitaria y <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BU%7D"> triangular superior.</p>
+</div>
+</div>
+<p>Exigir que <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BL%7D"> sea unitaria no es arbitrario: entre las <img src="https://latex.codecogs.com/png.latex?n%5E2"> entradas de <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BL%7D"> y las <img src="https://latex.codecogs.com/png.latex?n%5E2"> de <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BU%7D"> solo <img src="https://latex.codecogs.com/png.latex?n%5E2+n"> son independientes (<img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BA%7D"> tiene apenas <img src="https://latex.codecogs.com/png.latex?n%5E2"> entradas para determinar <img src="https://latex.codecogs.com/png.latex?2n%5E2"> incógnitas), y fijar la diagonal de <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BL%7D"> en unos es la manera más simple de eliminar los <img src="https://latex.codecogs.com/png.latex?n"> grados de libertad sobrantes.</p>
+</section>
+<section id="derivación-completa-ejercicio-2.4.1a" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="derivación-completa-ejercicio-2.4.1a"><span class="header-section-number">3</span> Derivación completa: ejercicio 2.4.1(a)</h2>
+<p>Apliquemos el procedimiento anterior a <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BA%7D_1%20=%20%5Cbegin%7Bbmatrix%7D%202%20&amp;%203%20&amp;%204%20%5C%5C%204%20&amp;%205%20&amp;%2010%20%5C%5C%204%20&amp;%208%20&amp;%202%20%5Cend%7Bbmatrix%7D."> Usamos el subíndice en <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BA%7D_k"> para la matriz de trabajo en cada paso.</p>
+<p><strong>Paso <img src="https://latex.codecogs.com/png.latex?k=1">.</strong> La primera fila de <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BU%7D"> es la primera fila de <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BA%7D_1">, y la primera columna de <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BL%7D"> es la primera columna de <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BA%7D_1"> entre el pivote <img src="https://latex.codecogs.com/png.latex?A_%7B11%7D=2">: <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bu%7D_1%5ET%20=%20%5Cbegin%7Bbmatrix%7D2&amp;3&amp;4%5Cend%7Bbmatrix%7D,%20%5Cqquad%20%5Cboldsymbol%7B%5Cell%7D_1%20=%20%5Cfrac12%5Cbegin%7Bbmatrix%7D2%5C%5C4%5C%5C4%5Cend%7Bbmatrix%7D=%5Cbegin%7Bbmatrix%7D1%5C%5C2%5C%5C2%5Cend%7Bbmatrix%7D."> Restando el producto exterior, <img src="https://latex.codecogs.com/png.latex?%5Cboldsymbol%7B%5Cell%7D_1%5Cmathbf%7Bu%7D_1%5ET=%5Cbegin%7Bbmatrix%7D2&amp;3&amp;4%5C%5C4&amp;6&amp;8%5C%5C4&amp;6&amp;8%5Cend%7Bbmatrix%7D%20%5Cquad%5CLongrightarrow%5Cquad%20%5Cmathbf%7BA%7D_2=%5Cmathbf%7BA%7D_1-%5Cboldsymbol%7B%5Cell%7D_1%5Cmathbf%7Bu%7D_1%5ET=%5Cbegin%7Bbmatrix%7D0&amp;0&amp;0%5C%5C0&amp;-1&amp;2%5C%5C0&amp;2&amp;-6%5Cend%7Bbmatrix%7D."> Nótese que la primera fila y la primera columna quedan exactamente en cero, tal como garantizan las dos identidades de la sección anterior.</p>
+<p><strong>Paso <img src="https://latex.codecogs.com/png.latex?k=2">.</strong> Trabajando ahora sobre <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BA%7D_2">, <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bu%7D_2%5ET%20=%20%5Cbegin%7Bbmatrix%7D0&amp;-1&amp;2%5Cend%7Bbmatrix%7D,%20%5Cqquad%20%5Cboldsymbol%7B%5Cell%7D_2%20=%20%5Cfrac%7B1%7D%7B-1%7D%5Cbegin%7Bbmatrix%7D0%5C%5C-1%5C%5C2%5Cend%7Bbmatrix%7D=%5Cbegin%7Bbmatrix%7D0%5C%5C1%5C%5C-2%5Cend%7Bbmatrix%7D."> <img src="https://latex.codecogs.com/png.latex?%5Cboldsymbol%7B%5Cell%7D_2%5Cmathbf%7Bu%7D_2%5ET=%5Cbegin%7Bbmatrix%7D0&amp;0&amp;0%5C%5C0&amp;-1&amp;2%5C%5C0&amp;2&amp;-4%5Cend%7Bbmatrix%7D%20%5Cquad%5CLongrightarrow%5Cquad%20%5Cmathbf%7BA%7D_3=%5Cmathbf%7BA%7D_2-%5Cboldsymbol%7B%5Cell%7D_2%5Cmathbf%7Bu%7D_2%5ET=%5Cbegin%7Bbmatrix%7D0&amp;0&amp;0%5C%5C0&amp;0&amp;0%5C%5C0&amp;0&amp;-2%5Cend%7Bbmatrix%7D."></p>
+<p><strong>Último elemento.</strong> Con <img src="https://latex.codecogs.com/png.latex?n=3"> el ciclo de productos exteriores corre solo para <img src="https://latex.codecogs.com/png.latex?k=1,2">; el último pivote se lee directamente, <img src="https://latex.codecogs.com/png.latex?U_%7B33%7D=(%5Cmathbf%7BA%7D_3)_%7B33%7D=-2">.</p>
+<p>Ensamblando cada <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bu%7D_k%5ET"> como fila de <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BU%7D"> y cada <img src="https://latex.codecogs.com/png.latex?%5Cboldsymbol%7B%5Cell%7D_k"> como columna de <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BL%7D"> (con la última columna de <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BL%7D"> igual a <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Be%7D_3">), <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BL%7D%20=%20%5Cbegin%7Bbmatrix%7D%201&amp;0&amp;0%5C%5C2&amp;1&amp;0%5C%5C2&amp;-2&amp;1%5Cend%7Bbmatrix%7D,%20%5Cqquad%20%5Cmathbf%7BU%7D%20=%20%5Cbegin%7Bbmatrix%7D2&amp;3&amp;4%5C%5C0&amp;-1&amp;2%5C%5C0&amp;0&amp;-2%5Cend%7Bbmatrix%7D."> Multiplicando se verifica <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BL%7D%5Cmathbf%7BU%7D=%5Cmathbf%7BA%7D_1"> exactamente.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"""</span></span>
+<span id="cb1-2"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">    lu_ingenua(A)</span></span>
+<span id="cb1-3"></span>
+<span id="cb1-4"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Factorización LU sin pivoteo. En cada paso k copia la fila k de U y</span></span>
+<span id="cb1-5"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">la columna k de L desde la submatriz activa, y actualiza solo esa</span></span>
+<span id="cb1-6"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">submatriz con el producto exterior ℓ_k uₖᵀ (no toca las entradas ya</span></span>
+<span id="cb1-7"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">puestas en cero). No es apta para producción, pero deja ver a simple</span></span>
+<span id="cb1-8"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">vista el costo de la factorización.</span></span>
+<span id="cb1-9"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"""</span></span>
+<span id="cb1-10"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">lu_ingenua</span>(A)</span>
+<span id="cb1-11">    n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">size</span>(A, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb1-12">    T <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">float</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">copy</span>(A))</span>
+<span id="cb1-13">    L <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diagm</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ones</span>(n))</span>
+<span id="cb1-14">    U <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">zeros</span>(n, n)</span>
+<span id="cb1-15">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> k <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span>n</span>
+<span id="cb1-16">        U[k, k<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span>n] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> T[k, k<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span>n]</span>
+<span id="cb1-17">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> k <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> n</span>
+<span id="cb1-18">            L[k<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span>n, k] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> T[k<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span>n, k] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> U[k, k]</span>
+<span id="cb1-19">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> k<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span>n, j <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> k<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span>n</span>
+<span id="cb1-20">                T[i, j] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-=</span> L[i, k] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> U[k, j]</span>
+<span id="cb1-21">            <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span>
+<span id="cb1-22">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span>
+<span id="cb1-23">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span>
+<span id="cb1-24">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> L, U</span>
+<span id="cb1-25"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span></code></pre></div></div>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Corra <code>lu_ingenua</code> sobre la matriz de esta sección y confirme que reproduce exactamente <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BL%7D"> y <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BU%7D"> calculadas a mano. Después hágalo también con el inciso (b) del ejercicio 2.4.1.</p>
+</div>
+</div>
+</section>
+<section id="conteo-de-flops" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="conteo-de-flops"><span class="header-section-number">4</span> Conteo de flops</h2>
+<p>Veamos qué le cuesta a la computadora el procedimiento anterior sobre una matriz genérica de <img src="https://latex.codecogs.com/png.latex?n%5Ctimes%20n">. En el paso <img src="https://latex.codecogs.com/png.latex?k">, con <img src="https://latex.codecogs.com/png.latex?k=1,%5Cldots,n-1">, quedan <img src="https://latex.codecogs.com/png.latex?n-k"> filas y columnas por procesar (las primeras <img src="https://latex.codecogs.com/png.latex?k"> ya están resueltas).</p>
+<p>Calcular <img src="https://latex.codecogs.com/png.latex?%5Cboldsymbol%7B%5Cell%7D_k"> cuesta <img src="https://latex.codecogs.com/png.latex?n-k"> divisiones, una por cada entrada de la columna debajo de la diagonal. Actualizar la submatriz activa restando <img src="https://latex.codecogs.com/png.latex?%5Cboldsymbol%7B%5Cell%7D_k%5Cmathbf%7Bu%7D_k%5ET"> cuesta <img src="https://latex.codecogs.com/png.latex?(n-k)%5E2"> multiplicaciones, una por cada entrada del producto exterior, y otras <img src="https://latex.codecogs.com/png.latex?(n-k)%5E2"> restas. Copiar <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bu%7D_k%5ET"> no cuesta ninguna operación aritmética: es solo lectura.</p>
+<p>Sumando sobre los <img src="https://latex.codecogs.com/png.latex?n-1"> pasos, y usando la equivalencia asintótica <img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bj=1%7D%5En%20j%5E2%5Csim%20n%5E3/3"> que ya establecimos en la nota de complejidad, <img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bk=1%7D%5E%7Bn-1%7D(n-k)%5E2%20=%20%5Csum_%7Bj=1%7D%5E%7Bn-1%7D%20j%5E2%20%5Csim%20%5Cfrac%7Bn%5E3%7D%7B3%7D."> Las divisiones, en cambio, suman <img src="https://latex.codecogs.com/png.latex?%5Csum_%7Bk=1%7D%5E%7Bn-1%7D(n-k)=%5Csum_%7Bj=1%7D%5E%7Bn-1%7Dj%5Csim%20n%5E2/2">, un orden inferior que no afecta el término dominante.</p>
+<p>El total de multiplicaciones más restas es entonces <img src="https://latex.codecogs.com/png.latex?%5Csim%20n%5E3/3+n%5E3/3=%5Cdfrac%7B2%7D%7B3%7Dn%5E3">, y las divisiones aportan solo <img src="https://latex.codecogs.com/png.latex?O(n%5E2)">. La factorización LU cuesta, en flops, <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B2%7D%7B3%7Dn%5E3%20+%20O(n%5E2),"> es decir, <img src="https://latex.codecogs.com/png.latex?O(n%5E3)">: el mismo orden que la eliminación gaussiana directa, porque son, de hecho, el mismo algoritmo escrito de otra manera.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Repita el argumento anterior contando por separado las multiplicaciones y las restas (en vez de agruparlas), y confirme que cada una por separado es <img src="https://latex.codecogs.com/png.latex?%5Csim%20n%5E3/3">. Sume después el costo de resolver <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BL%7D%5Cmathbf%7Bz%7D=%5Cmathbf%7Bb%7D"> y <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BU%7D%5Cmathbf%7Bx%7D=%5Cmathbf%7Bz%7D"> (ya contado en la nota de sistemas lineales, <img src="https://latex.codecogs.com/png.latex?%5Csim%20n%5E2/2"> cada una) al costo de la factorización, y concluya que resolver un sistema completo <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BA%7D%5Cmathbf%7Bx%7D=%5Cmathbf%7Bb%7D"> por LU cuesta <img src="https://latex.codecogs.com/png.latex?%5Cdfrac23n%5E3+O(n%5E2)">.</p>
+</div>
+</div>
+<p>Vale la pena remarcar por qué esto importa en la práctica. Si hay que resolver <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BA%7D%5Cmathbf%7Bx%7D=%5Cmathbf%7Bb%7D_1,%5Cmathbf%7BA%7D%5Cmathbf%7Bx%7D=%5Cmathbf%7Bb%7D_2,%5Cldots"> con la misma matriz y muchos lados derechos distintos, factorizar una sola vez (<img src="https://latex.codecogs.com/png.latex?%5Cfrac23n%5E3">, hecho una vez) y reutilizar <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BL%7D,%5Cmathbf%7BU%7D"> en cada sustitución triangular (<img src="https://latex.codecogs.com/png.latex?O(n%5E2)"> cada vez) es muchísimo más barato que resolver cada sistema desde cero. Es la razón detrás de guardar el resultado de <code>lu(A)</code> cuando se van a resolver muchos sistemas con la misma matriz, en vez de llamar <code>A \ b</code> repetidamente.</p>
+</section>
+<section id="qué-falla-sin-pivotear" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="qué-falla-sin-pivotear"><span class="header-section-number">5</span> ¿Qué falla sin pivotear?</h2>
+<p>El procedimiento anterior tiene un punto débil evidente: si en algún paso <img src="https://latex.codecogs.com/png.latex?U_%7Bkk%7D=0">, la división que define <img src="https://latex.codecogs.com/png.latex?%5Cboldsymbol%7B%5Cell%7D_k"> es imposible y el algoritmo se detiene. Pero el problema real es más sutil, y aparece incluso cuando ningún pivote es exactamente cero.</p>
+<p>Considere <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BA%7D%20=%20%5Cbegin%7Bbmatrix%7D%20%5Cepsilon%20&amp;%201%20%5C%5C%201%20&amp;%202%20%5Cend%7Bbmatrix%7D"> con <img src="https://latex.codecogs.com/png.latex?%5Cepsilon%3E0"> pequeño, y el sistema <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BA%7D%5Cmathbf%7Bx%7D=%5Cmathbf%7Bb%7D"> con solución exacta <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bx%7D=(1,1)">. Sin pivotear, el multiplicador es <img src="https://latex.codecogs.com/png.latex?%5Cell_%7B21%7D=1/%5Cepsilon">, un número enorme, y <img src="https://latex.codecogs.com/png.latex?U_%7B22%7D%20=%202-%5Cfrac1%5Cepsilon%5Ccdot1%20=%202-%5Cfrac1%5Cepsilon."> En aritmética exacta esto no es ningún problema. Pero en punto flotante, cuando <img src="https://latex.codecogs.com/png.latex?1/%5Cepsilon"> es mucho más grande que <img src="https://latex.codecogs.com/png.latex?2">, la resta <img src="https://latex.codecogs.com/png.latex?2-1/%5Cepsilon"> pierde por completo la contribución del <img src="https://latex.codecogs.com/png.latex?2">: es la misma cancelación catastrófica escondida dentro de una entrada intermedia que ya vimos en el ejercicio 2.3.7 de la nota de sistemas lineales, aquí producida por el algoritmo mismo y no por los datos originales del problema.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><img src="https://latex.codecogs.com/png.latex?%5Cepsilon"></th>
+<th><img src="https://latex.codecogs.com/png.latex?x_1"> sin pivotear</th>
+<th>error</th>
+<th><img src="https://latex.codecogs.com/png.latex?x_1"> con pivoteo</th>
+<th>error</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E%7B-8%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D999999993922529"></td>
+<td><img src="https://latex.codecogs.com/png.latex?6%7B,%7D08%5Ctimes10%5E%7B-9%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?1%7B,%7D0000000000000002"></td>
+<td><img src="https://latex.codecogs.com/png.latex?2%7B,%7D22%5Ctimes10%5E%7B-16%7D"></td>
+</tr>
+<tr class="even">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E%7B-12%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D999866855977416"></td>
+<td><img src="https://latex.codecogs.com/png.latex?1%7B,%7D331%5Ctimes10%5E%7B-4%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?1%7B,%7D0"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0"></td>
+</tr>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?10%5E%7B-16%7D"></td>
+<td><img src="https://latex.codecogs.com/png.latex?2%7B,%7D220446049250313"></td>
+<td><img src="https://latex.codecogs.com/png.latex?1%7B,%7D220"></td>
+<td><img src="https://latex.codecogs.com/png.latex?1%7B,%7D0000000000000002"></td>
+<td><img src="https://latex.codecogs.com/png.latex?2%7B,%7D22%5Ctimes10%5E%7B-16%7D"></td>
+</tr>
+</tbody>
+</table>
+<p>Con <img src="https://latex.codecogs.com/png.latex?%5Cepsilon=10%5E%7B-16%7D"> el algoritmo sin pivotear entrega <img src="https://latex.codecogs.com/png.latex?x_1%5Capprox2%7B,%7D22"> en vez de <img src="https://latex.codecogs.com/png.latex?1">: una falla total, no un simple error de redondeo. Pivotear (intercambiar las dos filas antes de eliminar, para que el pivote sea el <img src="https://latex.codecogs.com/png.latex?1"> y no el <img src="https://latex.codecogs.com/png.latex?%5Cepsilon">) mantiene el error en precisión de máquina en los tres casos. El sistema <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BA%7D%5Cmathbf%7Bx%7D=%5Cmathbf%7Bb%7D"> en sí está perfectamente condicionado para <img src="https://latex.codecogs.com/png.latex?%5Cepsilon"> pequeño (basta ver que las entradas de <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BA%7D%5E%7B-1%7D"> permanecen moderadas); la falla es enteramente del algoritmo, no del problema. Es el mismo eje de siempre, problema contra algoritmo, ahora con nombre propio: estabilidad.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Definición: pivoteo parcial">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Definición: pivoteo parcial
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Al eliminar en la columna <img src="https://latex.codecogs.com/png.latex?k">, se elige como pivote la entrada de esa columna, entre las filas todavía disponibles, con mayor valor absoluto, y se intercambian filas para llevarla a la posición <img src="https://latex.codecogs.com/png.latex?(k,k)"> antes de continuar.</p>
+</div>
+</div>
+<p>Esa regla, elegir siempre el pivote más grande disponible, es justamente la que evita que los multiplicadores crezcan sin control: como el pivote es el más grande de la columna, todo multiplicador queda acotado por <img src="https://latex.codecogs.com/png.latex?1"> en valor absoluto. La factorización resultante ya no es <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BA%7D=%5Cmathbf%7BL%7D%5Cmathbf%7BU%7D"> exactamente, sino <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BA%7D%5Bp,:%5D%20=%20%5Cmathbf%7BL%7D%5Cmathbf%7BU%7D,"> donde <img src="https://latex.codecogs.com/png.latex?p"> es el vector que registra el orden en que se usaron las filas como pivote. Para resolver <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BA%7D%5Cmathbf%7Bx%7D=%5Cmathbf%7Bb%7D"> basta con permutar <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bb%7D"> de la misma manera antes de las dos sustituciones triangulares: <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BL%7D%5Cmathbf%7Bz%7D=%5Cmathbf%7Bb%7D%5Bp%5D"> y luego <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7BU%7D%5Cmathbf%7Bx%7D=%5Cmathbf%7Bz%7D">.</p>
+</section>
+<section id="cómo-lo-hace-julia-por-defecto" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="cómo-lo-hace-julia-por-defecto"><span class="header-section-number">6</span> Cómo lo hace Julia por defecto</h2>
+<p><code>lu(A)</code> en Julia devuelve un objeto con tres componentes, accesibles como <code>F.L</code>, <code>F.U</code> y <code>F.p</code>, que cumplen exactamente la relación anterior:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1">F <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">lu</span>(A)</span>
+<span id="cb2-2">F.L <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> F.U <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> A[F.p, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span>]   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># true</span></span></code></pre></div></div>
+<p>La estrategia de selección de pivote por defecto se llama <code>RowMaximum()</code>, la misma regla de arriba, y se puede desactivar explícitamente con <code>lu(A, NoPivot())</code> si alguna vez se quiere reproducir a propósito la versión inestable. Internamente, para matrices de punto flotante, Julia no ejecuta el ciclo con productos exteriores tal como lo escribimos aquí, sino que delega en <code>LAPACK.getrf!</code>, la rutina estándar de la industria, organizada en bloques para aprovechar operaciones vectorizadas de álgebra lineal (BLAS) y ser eficiente en memoria caché. El operador <code>\</code> usa este mismo mecanismo automáticamente al resolver <code>A \ b</code>.</p>
+<p>Con los factores ya calculados, resolver un sistema nuevo con la misma matriz es</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1">z <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> F.L <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span> b[F.p]</span>
+<span id="cb3-2">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> F.U <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span> z</span></code></pre></div></div>
+<p>exactamente la sustitución hacia adelante y hacia atrás de la nota de sistemas lineales, con el lado derecho permutado primero.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Resuelva a mano el ejercicio 2.6.1(a) del libro: la factorización LU con pivoteo parcial de la misma matriz de la sección anterior, <img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%202%20&amp;%203%20&amp;%204%20%5C%5C%204%20&amp;%205%20&amp;%2010%20%5C%5C%204%20&amp;%208%20&amp;%202%20%5Cend%7Bbmatrix%7D,"> y compare el resultado contra la factorización sin pivotear que ya calculamos arriba. ¿En qué paso difiere la elección de pivote? Haga después el inciso (b), con la matriz de <img src="https://latex.codecogs.com/png.latex?4%5Ctimes4"> del mismo ejercicio.</p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/numerico/lu/</guid>
+  <pubDate>Sun, 13 Sep 2026 05:00:00 GMT</pubDate>
+</item>
+<item>
   <title>Sistemas lineales e interpolación</title>
   <dc:creator>Arturo Sanjuán</dc:creator>
   <link>https://arturosanjuan.xyz/cursos/numerico/matrices/</link>

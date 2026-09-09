@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Arturo Sanjuán">
+<meta name="description" content="Derivación completa de la factorización LU vía productos exteriores, con el ejercicio 2.4.1(a) resuelto paso a paso; conteo de flops de la factorización y de las sustituciones triangulares; y la razón y el mecanismo del pivoteo parcial que usa Julia por defecto (Driscoll y Braun, secciones 2.4 y 2.6).">
+
+<title>Factorización LU – Arturo Sanjuán</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../cursos/numerico/complejidad/index.html" rel="prev">
+<link href="../../../favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-06ef128ffaab2aaffa18b1038abc86f3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Arturo Sanjuán</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../cursos/index.html"> 
+<span class="menu-text">Cursos</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../cursos/numerico/lu/index.html">Factorización LU</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="sidebar-tools-main">
+    <a href="../../../cursos/numerico/index.xml" title="RSS — Análisis Numérico" class="quarto-navigation-tool px-1" aria-label="RSS — Análisis Numérico"><i class="bi bi-rss"></i></a>
+</div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/numerico/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis Numérico</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/numerico/introduccion/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/numerico/condicionamiento/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Condicionamiento</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/numerico/estabilidad/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estabilidad</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/numerico/taller-1/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Taller 1</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/numerico/matrices/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sistemas lineales e interpolación</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/numerico/normas/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Normas matriciales y condicionamiento</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/numerico/complejidad/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Complejidad</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/numerico/lu/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Factorización LU</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#productos-exteriores" id="toc-productos-exteriores" class="nav-link active" data-scroll-target="#productos-exteriores"><span class="header-section-number">1</span> Productos exteriores</a></li>
+  <li><a href="#de-productos-exteriores-a-factorización-triangular" id="toc-de-productos-exteriores-a-factorización-triangular" class="nav-link" data-scroll-target="#de-productos-exteriores-a-factorización-triangular"><span class="header-section-number">2</span> De productos exteriores a factorización triangular</a></li>
+  <li><a href="#derivación-completa-ejercicio-2.4.1a" id="toc-derivación-completa-ejercicio-2.4.1a" class="nav-link" data-scroll-target="#derivación-completa-ejercicio-2.4.1a"><span class="header-section-number">3</span> Derivación completa: ejercicio 2.4.1(a)</a></li>
+  <li><a href="#conteo-de-flops" id="toc-conteo-de-flops" class="nav-link" data-scroll-target="#conteo-de-flops"><span class="header-section-number">4</span> Conteo de flops</a></li>
+  <li><a href="#qué-falla-sin-pivotear" id="toc-qué-falla-sin-pivotear" class="nav-link" data-scroll-target="#qué-falla-sin-pivotear"><span class="header-section-number">5</span> ¿Qué falla sin pivotear?</a></li>
+  <li><a href="#cómo-lo-hace-julia-por-defecto" id="toc-cómo-lo-hace-julia-por-defecto" class="nav-link" data-scroll-target="#cómo-lo-hace-julia-por-defecto"><span class="header-section-number">6</span> Cómo lo hace Julia por defecto</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Factorización LU</h1>
+<p class="subtitle lead">Productos exteriores, eliminación gaussiana y pivoteo parcial</p>
+</div>
+
+<div>
+  <div class="description">
+    Derivación completa de la factorización LU vía productos exteriores, con el ejercicio 2.4.1(a) resuelto paso a paso; conteo de flops de la factorización y de las sustituciones triangulares; y la razón y el mecanismo del pivoteo parcial que usa Julia por defecto (Driscoll y Braun, secciones 2.4 y 2.6).
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor</div>
+    <div class="quarto-title-meta-contents">
+             <p>Arturo Sanjuán </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">13 de septiembre de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>En la nota de sistemas lineales prometimos volver sobre esto: triangularizar un sistema hace barata la sustitución, y ahora construimos esa triangularización. Seguimos la sección 2.4 del libro de Driscoll y Braun, con la misma notación de productos exteriores.</p>
+<section id="productos-exteriores" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="productos-exteriores"><span class="header-section-number">1</span> Productos exteriores</h2>
+<p>Si <span class="math inline">\(\mathbf{u}\in\mathbb{R}^m\)</span> y <span class="math inline">\(\mathbf{v}\in\mathbb{R}^n\)</span>, el producto exterior <span class="math inline">\(\mathbf{u}\mathbf{v}^T\)</span> es la matriz de <span class="math inline">\(m\times n\)</span> con entrada <span class="math inline">\((i,j)\)</span> igual a <span class="math inline">\(u_iv_j\)</span>. A diferencia del producto interior <span class="math inline">\(\mathbf{u}^T\mathbf{v}\)</span> (un número), el producto exterior siempre produce una matriz, y esa matriz tiene rango 1: todas sus columnas son múltiplos de <span class="math inline">\(\mathbf{u}\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Teorema">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Teorema
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si las columnas de <span class="math inline">\(\mathbf{A}\)</span> son <span class="math inline">\(\mathbf{a}_1,\ldots,\mathbf{a}_n\)</span> y las filas de <span class="math inline">\(\mathbf{B}\)</span> son <span class="math inline">\(\mathbf{b}_1^T,\ldots,\mathbf{b}_n^T\)</span>, entonces <span class="math display">\[\mathbf{A}\mathbf{B} = \sum_{k=1}^n \mathbf{a}_k\mathbf{b}_k^T.\]</span></p>
+</div>
+</div>
+<p>Esto no es más que reagrupar la fórmula usual del producto matricial: la entrada <span class="math inline">\((i,j)\)</span> de <span class="math inline">\(\mathbf{A}\mathbf{B}\)</span> es <span class="math inline">\(\sum_k A_{ik}B_{kj}\)</span>, y agrupando por <span class="math inline">\(k\)</span> en vez de por <span class="math inline">\((i,j)\)</span> se obtiene exactamente la suma de productos exteriores de arriba, uno por cada valor de <span class="math inline">\(k\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Verifique el teorema anterior con un caso concreto: tome <span class="math inline">\(\mathbf{A}\)</span> de <span class="math inline">\(3\times2\)</span> y <span class="math inline">\(\mathbf{B}\)</span> de <span class="math inline">\(2\times3\)</span>, calcule <span class="math inline">\(\mathbf{A}\mathbf{B}\)</span> de la manera usual, y compárelo contra la suma de los dos productos exteriores <span class="math inline">\(\mathbf{a}_1\mathbf{b}_1^T+\mathbf{a}_2\mathbf{b}_2^T\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="de-productos-exteriores-a-factorización-triangular" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="de-productos-exteriores-a-factorización-triangular"><span class="header-section-number">2</span> De productos exteriores a factorización triangular</h2>
+<p>Apliquemos el teorema al caso <span class="math inline">\(\mathbf{L}\mathbf{U}\)</span>, con <span class="math inline">\(\mathbf{L}\)</span> triangular inferior unitaria (unos en la diagonal, ceros encima) y <span class="math inline">\(\mathbf{U}\)</span> triangular superior. Llamando <span class="math inline">\(\boldsymbol{\ell}_k\)</span> a las columnas de <span class="math inline">\(\mathbf{L}\)</span> y <span class="math inline">\(\mathbf{u}_k^T\)</span> a las filas de <span class="math inline">\(\mathbf{U}\)</span>, <span class="math display">\[\mathbf{L}\mathbf{U} = \sum_{k=1}^n \boldsymbol{\ell}_k\mathbf{u}_k^T.\]</span></p>
+<p>Multiplicando por <span class="math inline">\(\mathbf{e}_1^T\)</span> a la izquierda, solo sobrevive el término con <span class="math inline">\(k=1\)</span>: las demás columnas de <span class="math inline">\(\mathbf{L}\)</span> tienen un cero en la primera entrada (por ser triangular inferior), así que <span class="math inline">\(\mathbf{e}_1^T\boldsymbol{\ell}_k=0\)</span> para <span class="math inline">\(k&gt;1\)</span>, y <span class="math inline">\(\mathbf{e}_1^T\boldsymbol{\ell}_1=L_{11}=1\)</span>. Entonces <span class="math display">\[\mathbf{e}_1^T(\mathbf{L}\mathbf{U}) = \mathbf{u}_1^T,\]</span> es decir, la primera fila de <span class="math inline">\(\mathbf{L}\mathbf{U}\)</span> es simplemente <span class="math inline">\(\mathbf{u}_1^T\)</span>. De manera análoga, multiplicando por <span class="math inline">\(\mathbf{e}_1\)</span> a la derecha solo sobrevive <span class="math inline">\(\mathbf{u}_1^T\mathbf{e}_1=U_{11}\)</span>, y se obtiene <span class="math display">\[(\mathbf{L}\mathbf{U})\mathbf{e}_1 = U_{11}\boldsymbol{\ell}_1,\]</span> así que la primera columna de <span class="math inline">\(\mathbf{L}\mathbf{U}\)</span> es la primera columna de <span class="math inline">\(\mathbf{L}\)</span>, escalada por <span class="math inline">\(U_{11}\)</span>.</p>
+<p>Si queremos <span class="math inline">\(\mathbf{L}\mathbf{U}=\mathbf{A}\)</span>, estas dos identidades despejan de inmediato <span class="math display">\[\mathbf{u}_1^T = \mathbf{A}_{1,:}, \qquad \boldsymbol{\ell}_1 = \frac{\mathbf{A}_{:,1}}{A_{11}}.\]</span> Restar el producto exterior <span class="math inline">\(\boldsymbol{\ell}_1\mathbf{u}_1^T\)</span> de <span class="math inline">\(\mathbf{A}\)</span> cancela exactamente esa primera fila y esa primera columna (por construcción, ese producto exterior las reproduce), y lo que queda es un problema idéntico, un tamaño más chico. Repitiendo el argumento sobre lo que queda, fila y columna por fila y columna, se obtienen <span class="math inline">\(\mathbf{L}\)</span> y <span class="math inline">\(\mathbf{U}\)</span> completas.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Definición: matriz triangular unitaria">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Definición: matriz triangular unitaria
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Una matriz triangular <span class="math inline">\(\mathbf{T}\)</span> de <span class="math inline">\(n\times n\)</span> es unitaria si <span class="math inline">\(T_{11}=\cdots=T_{nn}=1\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Definición: factorización LU">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Definición: factorización LU
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dada una matriz <span class="math inline">\(\mathbf{A}\)</span> de <span class="math inline">\(n\times n\)</span>, su factorización LU es <span class="math inline">\(\mathbf{A}=\mathbf{L}\mathbf{U}\)</span> con <span class="math inline">\(\mathbf{L}\)</span> triangular inferior unitaria y <span class="math inline">\(\mathbf{U}\)</span> triangular superior.</p>
+</div>
+</div>
+<p>Exigir que <span class="math inline">\(\mathbf{L}\)</span> sea unitaria no es arbitrario: entre las <span class="math inline">\(n^2\)</span> entradas de <span class="math inline">\(\mathbf{L}\)</span> y las <span class="math inline">\(n^2\)</span> de <span class="math inline">\(\mathbf{U}\)</span> solo <span class="math inline">\(n^2+n\)</span> son independientes (<span class="math inline">\(\mathbf{A}\)</span> tiene apenas <span class="math inline">\(n^2\)</span> entradas para determinar <span class="math inline">\(2n^2\)</span> incógnitas), y fijar la diagonal de <span class="math inline">\(\mathbf{L}\)</span> en unos es la manera más simple de eliminar los <span class="math inline">\(n\)</span> grados de libertad sobrantes.</p>
+</section>
+<section id="derivación-completa-ejercicio-2.4.1a" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="derivación-completa-ejercicio-2.4.1a"><span class="header-section-number">3</span> Derivación completa: ejercicio 2.4.1(a)</h2>
+<p>Apliquemos el procedimiento anterior a <span class="math display">\[\mathbf{A}_1 = \begin{bmatrix} 2 &amp; 3 &amp; 4 \\ 4 &amp; 5 &amp; 10 \\ 4 &amp; 8 &amp; 2 \end{bmatrix}.\]</span> Usamos el subíndice en <span class="math inline">\(\mathbf{A}_k\)</span> para la matriz de trabajo en cada paso.</p>
+<p><strong>Paso <span class="math inline">\(k=1\)</span>.</strong> La primera fila de <span class="math inline">\(\mathbf{U}\)</span> es la primera fila de <span class="math inline">\(\mathbf{A}_1\)</span>, y la primera columna de <span class="math inline">\(\mathbf{L}\)</span> es la primera columna de <span class="math inline">\(\mathbf{A}_1\)</span> entre el pivote <span class="math inline">\(A_{11}=2\)</span>: <span class="math display">\[\mathbf{u}_1^T = \begin{bmatrix}2&amp;3&amp;4\end{bmatrix}, \qquad \boldsymbol{\ell}_1 = \frac12\begin{bmatrix}2\\4\\4\end{bmatrix}=\begin{bmatrix}1\\2\\2\end{bmatrix}.\]</span> Restando el producto exterior, <span class="math display">\[\boldsymbol{\ell}_1\mathbf{u}_1^T=\begin{bmatrix}2&amp;3&amp;4\\4&amp;6&amp;8\\4&amp;6&amp;8\end{bmatrix} \quad\Longrightarrow\quad \mathbf{A}_2=\mathbf{A}_1-\boldsymbol{\ell}_1\mathbf{u}_1^T=\begin{bmatrix}0&amp;0&amp;0\\0&amp;-1&amp;2\\0&amp;2&amp;-6\end{bmatrix}.\]</span> Nótese que la primera fila y la primera columna quedan exactamente en cero, tal como garantizan las dos identidades de la sección anterior.</p>
+<p><strong>Paso <span class="math inline">\(k=2\)</span>.</strong> Trabajando ahora sobre <span class="math inline">\(\mathbf{A}_2\)</span>, <span class="math display">\[\mathbf{u}_2^T = \begin{bmatrix}0&amp;-1&amp;2\end{bmatrix}, \qquad \boldsymbol{\ell}_2 = \frac{1}{-1}\begin{bmatrix}0\\-1\\2\end{bmatrix}=\begin{bmatrix}0\\1\\-2\end{bmatrix}.\]</span> <span class="math display">\[\boldsymbol{\ell}_2\mathbf{u}_2^T=\begin{bmatrix}0&amp;0&amp;0\\0&amp;-1&amp;2\\0&amp;2&amp;-4\end{bmatrix} \quad\Longrightarrow\quad \mathbf{A}_3=\mathbf{A}_2-\boldsymbol{\ell}_2\mathbf{u}_2^T=\begin{bmatrix}0&amp;0&amp;0\\0&amp;0&amp;0\\0&amp;0&amp;-2\end{bmatrix}.\]</span></p>
+<p><strong>Último elemento.</strong> Con <span class="math inline">\(n=3\)</span> el ciclo de productos exteriores corre solo para <span class="math inline">\(k=1,2\)</span>; el último pivote se lee directamente, <span class="math inline">\(U_{33}=(\mathbf{A}_3)_{33}=-2\)</span>.</p>
+<p>Ensamblando cada <span class="math inline">\(\mathbf{u}_k^T\)</span> como fila de <span class="math inline">\(\mathbf{U}\)</span> y cada <span class="math inline">\(\boldsymbol{\ell}_k\)</span> como columna de <span class="math inline">\(\mathbf{L}\)</span> (con la última columna de <span class="math inline">\(\mathbf{L}\)</span> igual a <span class="math inline">\(\mathbf{e}_3\)</span>), <span class="math display">\[\mathbf{L} = \begin{bmatrix} 1&amp;0&amp;0\\2&amp;1&amp;0\\2&amp;-2&amp;1\end{bmatrix}, \qquad \mathbf{U} = \begin{bmatrix}2&amp;3&amp;4\\0&amp;-1&amp;2\\0&amp;0&amp;-2\end{bmatrix}.\]</span> Multiplicando se verifica <span class="math inline">\(\mathbf{L}\mathbf{U}=\mathbf{A}_1\)</span> exactamente.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">    lu_ingenua(A)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="st">Factorización LU sin pivoteo. En cada paso k copia la fila k de U y</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">la columna k de L desde la submatriz activa, y actualiza solo esa</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">submatriz con el producto exterior ℓ_k uₖᵀ (no toca las entradas ya</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">puestas en cero). No es apta para producción, pero deja ver a simple</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">vista el costo de la factorización.</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">lu_ingenua</span>(A)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="fu">size</span>(A, <span class="fl">1</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    T <span class="op">=</span> <span class="fu">float</span>(<span class="fu">copy</span>(A))</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    L <span class="op">=</span> <span class="fu">diagm</span>(<span class="fu">ones</span>(n))</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    U <span class="op">=</span> <span class="fu">zeros</span>(n, n)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>n</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        U[k, k<span class="op">:</span>n] <span class="op">=</span> T[k, k<span class="op">:</span>n]</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> k <span class="op">&lt;</span> n</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>            L[k<span class="op">+</span><span class="fl">1</span><span class="op">:</span>n, k] <span class="op">=</span> T[k<span class="op">+</span><span class="fl">1</span><span class="op">:</span>n, k] <span class="op">/</span> U[k, k]</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> i <span class="kw">in</span> k<span class="op">+</span><span class="fl">1</span><span class="op">:</span>n, j <span class="kw">in</span> k<span class="op">+</span><span class="fl">1</span><span class="op">:</span>n</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>                T[i, j] <span class="op">-=</span> L[i, k] <span class="op">*</span> U[k, j]</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">end</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> L, U</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Corra <code>lu_ingenua</code> sobre la matriz de esta sección y confirme que reproduce exactamente <span class="math inline">\(\mathbf{L}\)</span> y <span class="math inline">\(\mathbf{U}\)</span> calculadas a mano. Después hágalo también con el inciso (b) del ejercicio 2.4.1.</p>
+</div>
+</div>
+</section>
+<section id="conteo-de-flops" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="conteo-de-flops"><span class="header-section-number">4</span> Conteo de flops</h2>
+<p>Veamos qué le cuesta a la computadora el procedimiento anterior sobre una matriz genérica de <span class="math inline">\(n\times n\)</span>. En el paso <span class="math inline">\(k\)</span>, con <span class="math inline">\(k=1,\ldots,n-1\)</span>, quedan <span class="math inline">\(n-k\)</span> filas y columnas por procesar (las primeras <span class="math inline">\(k\)</span> ya están resueltas).</p>
+<p>Calcular <span class="math inline">\(\boldsymbol{\ell}_k\)</span> cuesta <span class="math inline">\(n-k\)</span> divisiones, una por cada entrada de la columna debajo de la diagonal. Actualizar la submatriz activa restando <span class="math inline">\(\boldsymbol{\ell}_k\mathbf{u}_k^T\)</span> cuesta <span class="math inline">\((n-k)^2\)</span> multiplicaciones, una por cada entrada del producto exterior, y otras <span class="math inline">\((n-k)^2\)</span> restas. Copiar <span class="math inline">\(\mathbf{u}_k^T\)</span> no cuesta ninguna operación aritmética: es solo lectura.</p>
+<p>Sumando sobre los <span class="math inline">\(n-1\)</span> pasos, y usando la equivalencia asintótica <span class="math inline">\(\sum_{j=1}^n j^2\sim n^3/3\)</span> que ya establecimos en la nota de complejidad, <span class="math display">\[\sum_{k=1}^{n-1}(n-k)^2 = \sum_{j=1}^{n-1} j^2 \sim \frac{n^3}{3}.\]</span> Las divisiones, en cambio, suman <span class="math inline">\(\sum_{k=1}^{n-1}(n-k)=\sum_{j=1}^{n-1}j\sim n^2/2\)</span>, un orden inferior que no afecta el término dominante.</p>
+<p>El total de multiplicaciones más restas es entonces <span class="math inline">\(\sim n^3/3+n^3/3=\dfrac{2}{3}n^3\)</span>, y las divisiones aportan solo <span class="math inline">\(O(n^2)\)</span>. La factorización LU cuesta, en flops, <span class="math display">\[\frac{2}{3}n^3 + O(n^2),\]</span> es decir, <span class="math inline">\(O(n^3)\)</span>: el mismo orden que la eliminación gaussiana directa, porque son, de hecho, el mismo algoritmo escrito de otra manera.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Repita el argumento anterior contando por separado las multiplicaciones y las restas (en vez de agruparlas), y confirme que cada una por separado es <span class="math inline">\(\sim n^3/3\)</span>. Sume después el costo de resolver <span class="math inline">\(\mathbf{L}\mathbf{z}=\mathbf{b}\)</span> y <span class="math inline">\(\mathbf{U}\mathbf{x}=\mathbf{z}\)</span> (ya contado en la nota de sistemas lineales, <span class="math inline">\(\sim n^2/2\)</span> cada una) al costo de la factorización, y concluya que resolver un sistema completo <span class="math inline">\(\mathbf{A}\mathbf{x}=\mathbf{b}\)</span> por LU cuesta <span class="math inline">\(\dfrac23n^3+O(n^2)\)</span>.</p>
+</div>
+</div>
+<p>Vale la pena remarcar por qué esto importa en la práctica. Si hay que resolver <span class="math inline">\(\mathbf{A}\mathbf{x}=\mathbf{b}_1,\mathbf{A}\mathbf{x}=\mathbf{b}_2,\ldots\)</span> con la misma matriz y muchos lados derechos distintos, factorizar una sola vez (<span class="math inline">\(\frac23n^3\)</span>, hecho una vez) y reutilizar <span class="math inline">\(\mathbf{L},\mathbf{U}\)</span> en cada sustitución triangular (<span class="math inline">\(O(n^2)\)</span> cada vez) es muchísimo más barato que resolver cada sistema desde cero. Es la razón detrás de guardar el resultado de <code>lu(A)</code> cuando se van a resolver muchos sistemas con la misma matriz, en vez de llamar <code>A \ b</code> repetidamente.</p>
+</section>
+<section id="qué-falla-sin-pivotear" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="qué-falla-sin-pivotear"><span class="header-section-number">5</span> ¿Qué falla sin pivotear?</h2>
+<p>El procedimiento anterior tiene un punto débil evidente: si en algún paso <span class="math inline">\(U_{kk}=0\)</span>, la división que define <span class="math inline">\(\boldsymbol{\ell}_k\)</span> es imposible y el algoritmo se detiene. Pero el problema real es más sutil, y aparece incluso cuando ningún pivote es exactamente cero.</p>
+<p>Considere <span class="math display">\[\mathbf{A} = \begin{bmatrix} \epsilon &amp; 1 \\ 1 &amp; 2 \end{bmatrix}\]</span> con <span class="math inline">\(\epsilon&gt;0\)</span> pequeño, y el sistema <span class="math inline">\(\mathbf{A}\mathbf{x}=\mathbf{b}\)</span> con solución exacta <span class="math inline">\(\mathbf{x}=(1,1)\)</span>. Sin pivotear, el multiplicador es <span class="math inline">\(\ell_{21}=1/\epsilon\)</span>, un número enorme, y <span class="math display">\[U_{22} = 2-\frac1\epsilon\cdot1 = 2-\frac1\epsilon.\]</span> En aritmética exacta esto no es ningún problema. Pero en punto flotante, cuando <span class="math inline">\(1/\epsilon\)</span> es mucho más grande que <span class="math inline">\(2\)</span>, la resta <span class="math inline">\(2-1/\epsilon\)</span> pierde por completo la contribución del <span class="math inline">\(2\)</span>: es la misma cancelación catastrófica escondida dentro de una entrada intermedia que ya vimos en el ejercicio 2.3.7 de la nota de sistemas lineales, aquí producida por el algoritmo mismo y no por los datos originales del problema.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(\epsilon\)</span></th>
+<th><span class="math inline">\(x_1\)</span> sin pivotear</th>
+<th>error</th>
+<th><span class="math inline">\(x_1\)</span> con pivoteo</th>
+<th>error</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(10^{-8}\)</span></td>
+<td><span class="math inline">\(0{,}999999993922529\)</span></td>
+<td><span class="math inline">\(6{,}08\times10^{-9}\)</span></td>
+<td><span class="math inline">\(1{,}0000000000000002\)</span></td>
+<td><span class="math inline">\(2{,}22\times10^{-16}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(10^{-12}\)</span></td>
+<td><span class="math inline">\(0{,}999866855977416\)</span></td>
+<td><span class="math inline">\(1{,}331\times10^{-4}\)</span></td>
+<td><span class="math inline">\(1{,}0\)</span></td>
+<td><span class="math inline">\(0\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(10^{-16}\)</span></td>
+<td><span class="math inline">\(2{,}220446049250313\)</span></td>
+<td><span class="math inline">\(1{,}220\)</span></td>
+<td><span class="math inline">\(1{,}0000000000000002\)</span></td>
+<td><span class="math inline">\(2{,}22\times10^{-16}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Con <span class="math inline">\(\epsilon=10^{-16}\)</span> el algoritmo sin pivotear entrega <span class="math inline">\(x_1\approx2{,}22\)</span> en vez de <span class="math inline">\(1\)</span>: una falla total, no un simple error de redondeo. Pivotear (intercambiar las dos filas antes de eliminar, para que el pivote sea el <span class="math inline">\(1\)</span> y no el <span class="math inline">\(\epsilon\)</span>) mantiene el error en precisión de máquina en los tres casos. El sistema <span class="math inline">\(\mathbf{A}\mathbf{x}=\mathbf{b}\)</span> en sí está perfectamente condicionado para <span class="math inline">\(\epsilon\)</span> pequeño (basta ver que las entradas de <span class="math inline">\(\mathbf{A}^{-1}\)</span> permanecen moderadas); la falla es enteramente del algoritmo, no del problema. Es el mismo eje de siempre, problema contra algoritmo, ahora con nombre propio: estabilidad.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Definición: pivoteo parcial">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Definición: pivoteo parcial
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Al eliminar en la columna <span class="math inline">\(k\)</span>, se elige como pivote la entrada de esa columna, entre las filas todavía disponibles, con mayor valor absoluto, y se intercambian filas para llevarla a la posición <span class="math inline">\((k,k)\)</span> antes de continuar.</p>
+</div>
+</div>
+<p>Esa regla, elegir siempre el pivote más grande disponible, es justamente la que evita que los multiplicadores crezcan sin control: como el pivote es el más grande de la columna, todo multiplicador queda acotado por <span class="math inline">\(1\)</span> en valor absoluto. La factorización resultante ya no es <span class="math inline">\(\mathbf{A}=\mathbf{L}\mathbf{U}\)</span> exactamente, sino <span class="math display">\[\mathbf{A}[p,:] = \mathbf{L}\mathbf{U},\]</span> donde <span class="math inline">\(p\)</span> es el vector que registra el orden en que se usaron las filas como pivote. Para resolver <span class="math inline">\(\mathbf{A}\mathbf{x}=\mathbf{b}\)</span> basta con permutar <span class="math inline">\(\mathbf{b}\)</span> de la misma manera antes de las dos sustituciones triangulares: <span class="math inline">\(\mathbf{L}\mathbf{z}=\mathbf{b}[p]\)</span> y luego <span class="math inline">\(\mathbf{U}\mathbf{x}=\mathbf{z}\)</span>.</p>
+</section>
+<section id="cómo-lo-hace-julia-por-defecto" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="cómo-lo-hace-julia-por-defecto"><span class="header-section-number">6</span> Cómo lo hace Julia por defecto</h2>
+<p><code>lu(A)</code> en Julia devuelve un objeto con tres componentes, accesibles como <code>F.L</code>, <code>F.U</code> y <code>F.p</code>, que cumplen exactamente la relación anterior:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>F <span class="op">=</span> <span class="fu">lu</span>(A)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>F.L <span class="op">*</span> F.U <span class="op">==</span> A[F.p, <span class="op">:</span>]   <span class="co"># true</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>La estrategia de selección de pivote por defecto se llama <code>RowMaximum()</code>, la misma regla de arriba, y se puede desactivar explícitamente con <code>lu(A, NoPivot())</code> si alguna vez se quiere reproducir a propósito la versión inestable. Internamente, para matrices de punto flotante, Julia no ejecuta el ciclo con productos exteriores tal como lo escribimos aquí, sino que delega en <code>LAPACK.getrf!</code>, la rutina estándar de la industria, organizada en bloques para aprovechar operaciones vectorizadas de álgebra lineal (BLAS) y ser eficiente en memoria caché. El operador <code>\</code> usa este mismo mecanismo automáticamente al resolver <code>A \ b</code>.</p>
+<p>Con los factores ya calculados, resolver un sistema nuevo con la misma matriz es</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> F.L <span class="op">\</span> b[F.p]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> F.U <span class="op">\</span> z</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>exactamente la sustitución hacia adelante y hacia atrás de la nota de sistemas lineales, con el lado derecho permutado primero.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Resuelva a mano el ejercicio 2.6.1(a) del libro: la factorización LU con pivoteo parcial de la misma matriz de la sección anterior, <span class="math display">\[\begin{bmatrix} 2 &amp; 3 &amp; 4 \\ 4 &amp; 5 &amp; 10 \\ 4 &amp; 8 &amp; 2 \end{bmatrix},\]</span> y compare el resultado contra la factorización sin pivotear que ya calculamos arriba. ¿En qué paso difiere la elección de pivote? Haga después el inciso (b), con la matriz de <span class="math inline">\(4\times4\)</span> del mismo ejercicio.</p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/arturosanjuan\.xyz");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="preferred_color_scheme">
+<input type="hidden" id="giscus-alt-theme" value="preferred_color_scheme">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "asanjuanc/arturosanjuan-sitio";
+    script.dataset.repoId = "R_kgDOTzuHrw";
+    script.dataset.category = "Comentarios";
+    script.dataset.categoryId = "DIC_kwDOTzuHr84DD_eD";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "es";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../../cursos/numerico/complejidad/index.html" class="pagination-link" aria-label="Complejidad">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Complejidad</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
