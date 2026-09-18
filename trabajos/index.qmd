@@ -1,0 +1,21 @@
+---
+title: "Trabajos"
+---
+
+
+Documentos de trabajo, tesis y notas de clase de distintas etapas de mi formación y carrera. En español.
+
+- Sanjuán, A. (1999). *El Dual de $L^\infty$.* Trabajo final para el curso de Análisis Funcional con la profesora Myriam Muñoz de Özak. [PDF](files/Sanjuan1999.pdf)
+- Sanjuán, A. (2002). *Algunos Aspectos Geométricos de las Ecuaciones Diferenciales Ordinarias.* Trabajo de grado, Universidad Nacional de Colombia. [PDF](files/Sanjuan2002.pdf)
+- Sanjuán, A. (2005). *Soluciones Débiles para la Ecuación de Onda Semilineal.* Trabajo de grado de maestría, Universidad Nacional de Colombia. [PDF](files/Sanjuan2005.pdf)
+- Sanjuán, A. (2009). *Notas en Problemas Elípticos Superlineales.* Notas de estudio, Doctorado en Ciencias Matemáticas, Universidad Nacional de Colombia. [PDF](files/Sanjuan2009.pdf)
+- Sanjuán, A. (2012). *Una Aplicación del Teorema del Paso de la Montaña a un Problema Elíptico Superlineal.* Documento preparado para el Segundo Taller de Análisis No Lineal y Ecuaciones Diferenciales Parciales, Universidad Nacional de Colombia. [PDF](files/Sanjuan2012.pdf)
+- Sanjuán, A. (2012b). *Existencia de Soluciones Doble Periódicas de una Ecuación de Onda Semilineal con No Linealidad No Monótona y Forzamiento en $L^p$.* Detalles para el caso doble periódico del artículo publicado en Discrete and Continuous Dynamical Systems, Series S. [PDF](files/Sanjuan2012b.pdf)
+- Sanjuán, A. (2015). *Membranas Vibrantes.* Tesis de doctorado en Ciencias Matemáticas, Universidad Nacional de Colombia. [PDF](files/Sanjuan2015.pdf)
+- Sanjuán, A. (2015). *El Operador de D'Alembert bajo las Condiciones de Frontera Dirichlet Periódicas Unidimensionales.* Trabajo de ascenso para la categoría Profesor Asociado, Universidad Distrital Francisco José de Caldas. [PDF](files/ascenso-asociado-sanjuan-arturo.pdf)
+- Sanjuán, A. (2015). *Pequeños Planetas Fantásticos: Una Mirada desde el Cálculo.* Trabajo para la IX Jornada de Matemáticas del Proyecto Curricular de Matemáticas, Universidad Distrital Francisco José de Caldas. [PDF](files/pequenosplanetas.pdf)
+- Sanjuán, A. (2017). *Bifurcación, Caos y Catástrofes.* Presentación, X Jornada de las Matemáticas. [PDF](files/presentacion.pdf)
+- Sanjuán, A. (2019). *La Ecuación de Onda Semilineal con Condiciones de Periodicidad Doble.* Trabajo de ascenso para la categoría Profesor Titular. [PDF](files/motherfile.pdf)
+- Sanjuán, A. (2019). *Pequeños Universos y el Método de Cuadratura.* Cursillo para el V Taller de Análisis No Lineal y Ecuaciones Diferenciales Parciales. [PDF](files/cuadratura.pdf)
+- Sanjuán, A. (2023). *Una Aplicación del Análisis Complejo al Álgebra Lineal* Presentación para la I Semana de la Ciencia Universidad Distrital Francisco José de Caldas [PDF](files/cauchy-cayley.pdf)
+- Sanjuán, A. (2025). *Una introducción a las ecuaciones con retardo y algunas aplicaciones a la biología* Curso para La XVIII Jornada de la Ciencia y el Seminario de Análisis Matemático de la Unviersidad Nacional -- Sede Manizales [PDF](files/curso-ecuacionesconretardo.pdf)

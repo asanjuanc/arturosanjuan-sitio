@@ -1,5 +1,25 @@
 ---
-title: "About"
+title: "Acerca de"
 ---
 
-About this site
+*[🇺🇸 English version](about.en.qmd)*
+
+Soy profesor titular en el área de matemáticas de la Universidad Distrital Francisco José de Caldas, en Bogotá, y hago parte de los grupos de investigación MESCUD y CMyT. Estudié pregrado, maestría y doctorado en Matemáticas en la Universidad Nacional de Colombia, bajo la dirección de los profesores Alfonso Castro (Harvey Mudd College) y Francisco Caicedo (Universidad Nacional de Colombia). Antes de llegar a la Universidad Distrital fui profesor en la Universidad de los Andes.
+
+Mi trabajo está en el análisis no lineal aplicado a ecuaciones diferenciales parciales, con énfasis en la ecuación de onda semilineal con condiciones Dirichlet periódicas, problemas elípticos de frontera, ecuaciones diferenciales ordinarias singulares de cuarto orden (modelos de nanovigas y MEMS) y ecuaciones funcional diferenciales con retardo. Combino métodos topológicos, como el grado de Leray Schauder, con métodos numéricos como disparo, elementos finitos y técnicas espectrales o FFT.
+
+## Estancias de investigación
+
+Entre febrero y mayo de 2018 estuve en la Universidad de Buenos Aires y el Centro Latinoamericano de Formación Interdisciplinaria (CELFI), trabajando en ecuaciones funcional diferenciales aplicadas a biología bajo la dirección de Pablo Amster. Entre mayo y agosto del mismo año estuve en la Universidad Complutense de Madrid, trabajando en soluciones a problemas elípticos superlineales bajo la dirección de Rosa Pardo.
+
+## Distinciones y servicio académico
+
+En 2016 recibí una mención de honor con la medalla Yu Takeuchi, otorgada por la Academia Colombiana de Ciencias Exactas, Físicas y Naturales a los mejores trabajos en ciencias matemáticas.
+
+Soy revisor de la American Mathematical Society (AMS) y secretario de la Sociedad Colombiana de Matemáticas (SCM). Dirijo el Semillero en Análisis Matemático (SAMAT) de la Universidad Distrital, un espacio de formación en investigación para estudiantes de pregrado, con el que organizamos el I Encuentro Juvenil en Ecuaciones Diferenciales en abril de 2025.
+
+## Contacto
+
+Correo: <aasanjuanc@udistrital.edu.co>
+
+Para la lista completa de publicaciones, el CV en PDF y mis perfiles académicos, ve a la página de [Research](/research/index.qmd). Los trabajos y notas más antiguos, casi todos en español, están en [Trabajos](/trabajos/index.qmd).

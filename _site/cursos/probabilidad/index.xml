@@ -25,6 +25,7 @@
 
 
 
+
 <p>En la sección de <a href="../../../cursos/probabilidad/vadiscretas/index.html">variables aleatorias discretas</a> construimos la Poisson como límite de la Binomial. Ese mismo límite, mirado en tiempo continuo en vez de en un instante fijo, genera casi todo el contenido de esta sección: la exponencial, la Gamma y, con un paso adicional, la Beta. La idea es no presentar estas tres distribuciones como una lista de fórmulas que hay que memorizar, sino mostrar que cada una responde una pregunta concreta sobre el mismo proceso aleatorio, y que además, cuando esa pregunta no tiene una historia de conteo detrás (como pasa con parámetros no enteros), hay una ruta igual de honesta por otro camino: ajustar momentos a datos reales, o transformar una variable que ya conocemos.</p>
 <section id="el-proceso-de-poisson-en-tiempo-continuo" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="el-proceso-de-poisson-en-tiempo-continuo"><span class="header-section-number">1</span> El proceso de Poisson en tiempo continuo</h2>
@@ -716,6 +717,7 @@ font-style: inherit;">"</span>)</span></code></pre></div></div>
   <dc:creator>Arturo Sanjuán</dc:creator>
   <link>https://arturosanjuan.xyz/cursos/probabilidad/vadiscretas/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -1517,6 +1519,7 @@ font-style: inherit;">prob =</span> p)</span>
 
 
 
+
 <section id="variables-aleatorias-continuas-y-función-de-densidad" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="variables-aleatorias-continuas-y-función-de-densidad"><span class="header-section-number">1</span> Variables aleatorias continuas y función de densidad</h2>
 <p>Sea <img src="https://latex.codecogs.com/png.latex?X"> una variable aleatoria. Se dice que <img src="https://latex.codecogs.com/png.latex?X"> es <strong>absolutamente continua</strong> si existe una función <img src="https://latex.codecogs.com/png.latex?f_X"> no negativa e integrable tal que</p>
@@ -2222,6 +2225,7 @@ font-style: inherit;">"</span>)</span></code></pre></div></div>
 
 
 
+
 <p>En la sección anterior definimos la distribución normal y vimos, con la fórmula de Stirling, el método de Laplace: aproximar una función suave y muy picuda por una parábola alrededor de su máximo, y exponenciar para obtener una forma de campana. En esta sección aplicamos exactamente esa misma técnica dos veces más, directamente sobre la función de masa de la Poisson y de la binomial, para mostrar que ambas se aproximan a la normal cuando su parámetro (o su tamaño de muestra) crece. Este es el resultado que hoy se conoce como el <strong>teorema de de Moivre y Laplace</strong>, y es un caso particular de un fenómeno mucho más general, el teorema central del límite: casi cualquier suma de aportes independientes termina viéndose gaussiana, sin importar la forma de cada aporte individual.</p>
 <section id="la-normal-como-límite-de-una-poisson" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="la-normal-como-límite-de-una-poisson"><span class="header-section-number">1</span> La normal como límite de una Poisson</h2>
@@ -2616,6 +2620,7 @@ font-style: inherit;">"</span>)</span></code></pre></div></div>
   <dc:creator>Arturo Sanjuán</dc:creator>
   <link>https://arturosanjuan.xyz/cursos/probabilidad/vaintro/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -3076,6 +3081,7 @@ Figura&nbsp;1: Función de distribución de Y = X - 2
 
 
 
+
 <p>Una fábrica de bombillos produce en dos líneas distintas, con tasas de falla distintas. En este taller van a recorrer el mismo objeto (un bombillo defectuoso o no) bajo tres modelos probabilísticos diferentes: un espacio muestral discreto con su σ-álgebra, un lote ya fabricado y fijo (Laplace clásico), y un proceso de fabricación en dos etapas (probabilidad total, Bayes e independencia). El hilo que conecta los tres es la pregunta: ¿qué estructura matemática le corresponde a cada situación aleatoria, y por qué no es la misma en los tres casos?</p>
 <section id="espacio-muestral-y-una-σ-álgebra-más-pequeña" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="espacio-muestral-y-una-σ-álgebra-más-pequeña"><span class="header-section-number">1</span> Espacio muestral y una σ-álgebra más pequeña</h2>
@@ -3224,6 +3230,7 @@ Figura&nbsp;1: Función de distribución de Y = X - 2
   <dc:creator>Arturo Sanjuán</dc:creator>
   <link>https://arturosanjuan.xyz/cursos/probabilidad/condicional/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -3509,6 +3516,7 @@ Figura&nbsp;1: Función de distribución de Y = X - 2
   <dc:creator>Arturo Sanjuán</dc:creator>
   <link>https://arturosanjuan.xyz/cursos/probabilidad/calculoprobabilidades/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -3897,6 +3905,7 @@ Figura&nbsp;1: Función de distribución de Y = X - 2
   <dc:creator>Arturo Sanjuán</dc:creator>
   <link>https://arturosanjuan.xyz/cursos/probabilidad/introduccion/</link>
   <description><![CDATA[ 
+
 
 
 

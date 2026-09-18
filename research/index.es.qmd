@@ -1,0 +1,36 @@
+---
+title: "Investigación"
+---
+
+*[🇺🇸 english](index.qmd)*
+
+## Líneas de interés
+
+Trabajo en análisis no lineal aplicado a ecuaciones diferenciales parciales. Mi foco principal es la ecuación de onda semilineal con condiciones Dirichlet periódicas, junto con problemas elípticos de frontera, ecuaciones diferenciales ordinarias singulares de cuarto orden que surgen en modelos de nanovigas y MEMS, y ecuaciones funcional diferenciales con retardo. Combino métodos topológicos, en particular la teoría del grado de Leray Schauder, con métodos numéricos como disparo, elementos finitos y técnicas espectrales o FFT.
+
+Los trabajos, tesis y notas de clase más antiguos, casi todos en español, están reunidos aparte en la página de [Trabajos](/trabajos/index.qmd).
+
+
+## Publicaciones seleccionadas
+
+- Caicedo, J. F., Castro, A., Duque, R., y Sanjuán, A. (2014). Existence of solutions for a semilinear wave equation with non-monotone nonlinearity. *Discrete and Continuous Dynamical Systems, Series S*, 7(69), pp. 1193 a 1202. [Enlace a la revista](https://aimsciences.org/journals/displayArticlesnew.jsp?paperID=10032)
+- Caicedo, J. F., Castro, A., y Sanjuán, A. (2017). Bifurcation at infinity for a semilinear wave equation. *Discrete and Continuous Dynamical Systems, Series A*, 37(4), pp. 1857 a 1865. [Enlace a la revista](https://aimsciences.org/journals/displayArticlesnew.jsp?paperID=13559)
+- Caicedo, J. F., Castro, A., Duque, R., y Sanjuán, A. (2017). The semilinear wave equation with non-monotone nonlinearity: a survey. *Rendiconti dell'Istituto di Matematica dell'Università di Trieste*, 49, pp. 207 a 214. [Enlace a la revista](https://www.openstarts.units.it/handle/10077/16213)
+- Pardo, R., y Sanjuán, A. (2020). Asymptotic behavior of positive radial solutions to elliptic equations approaching critical growth. *Electronic Journal of Differential Equations*, 114, pp. 1 a 17.  [Journal link](https://ejde.math.txstate.edu/Volumes/2020/114/abstr.html)
+- Amster, P., Epstein, J., y Sanjuán, A. (2021). Periodic solutions for systems of functional differential semilinear equations at resonance. *Topological Methods in Nonlinear Analysis*, 58(2), pp. 591 a 607. [Journal link](https://projecteuclid.org/journals/topological-methods-in-nonlinear-analysis/volume-58/issue-2/Periodic-solutions-for-systems-of-functional-differential-semilinear-equations-at/10.12775/TMNA.2020.078.full)
+- Sanjuán, A. (2026). Existence and computation of periodic solutions for the semilinear Gompertz equation with discrete delay. En *Proceedings of the Fourth Colombian Conference on Applied and Industrial Mathematics (MAPI 4)*. Springer. Aceptado.
+- Rodriguez, F., y Sanjuán, A. (2026). A system of semilinear wave equations with non-monotone nonlinearity. Dedicado al profesor Alfonso Castro. Enviado a *Electronic Journal of Differential Equations*, número especial en honor a Alfonso Castro.
+
+## Hoja de vida
+
+Hoja de vida completa: [descargar el PDF](/files/cv_sanjuan.pdf)
+
+## En otros sitios
+
+- [ORCID](https://orcid.org/0000-0002-0309-8299)
+- [Google Scholar](https://scholar.google.com/citations?user=FTpPHoUAAAAJ&hl=es)
+- [MathSciNet](https://mathscinet.ams.org/mathscinet/MRAuthorID/1069196)
+- [Scopus](https://www.scopus.com/authid/detail.uri?authorId=56326396000)
+- [Mathematics Genealogy Project](https://www.mathgenealogy.org/id.php?id=191294)
+- [CvLAC](https://scienti.minciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0001066633)
+- [GitHub](https://github.com/asanjuanc)

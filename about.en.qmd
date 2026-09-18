@@ -1,0 +1,26 @@
+---
+title: "About"
+lang: en
+---
+
+*[🇨🇴 Versión en español](about.qmd)*
+
+I am a full professor in the mathematics department at Universidad Distrital Francisco José de Caldas, in Bogotá, and I belong to the research groups MESCUD and CMyT. I studied for my undergraduate, master's, and doctoral degrees in mathematics at Universidad Nacional de Colombia, under the supervision of professors Alfonso Castro (Harvey Mudd College) and Francisco Caicedo (Universidad Nacional de Colombia). Before joining Universidad Distrital I was a professor at Universidad de los Andes.
+
+My work is in nonlinear analysis applied to partial differential equations, with an emphasis on the semilinear wave equation under Dirichlet periodic conditions, elliptic boundary value problems, singular fourth order ordinary differential equations arising in nanobeam and MEMS models, and delay functional differential equations. I combine topological methods, such as Leray Schauder degree theory, with numerical methods such as shooting methods, finite elements, and spectral or FFT techniques.
+
+## Research stays
+
+Between February and May 2018 I was at Universidad de Buenos Aires and the Centro Latinoamericano de Formación Interdisciplinaria (CELFI), working on functional differential equations applied to biology under the supervision of Pablo Amster. Between May and August of the same year I was at Universidad Complutense de Madrid, working on solutions to superlinear elliptic problems under the supervision of Rosa Pardo.
+
+## Distinctions and academic service
+
+In 2016 I received an honorable mention with the Yu Takeuchi medal, awarded by the Colombian Academy of Exact, Physical, and Natural Sciences for the best work in mathematical sciences.
+
+I am a reviewer for the American Mathematical Society (AMS) and secretary of the Sociedad Colombiana de Matemáticas (SCM). I direct the Semillero en Análisis Matemático (SAMAT) at Universidad Distrital, an undergraduate research training group, through which we organized the I Encuentro Juvenil en Ecuaciones Diferenciales in April 2025.
+
+## Contact
+
+Email: <aasanjuanc@udistrital.edu.co>
+
+For the full list of publications, the CV in PDF, and my academic profiles, see the [Research](/research/index.qmd) page. Older working papers and notes, mostly in Spanish, are on the [Papers](/trabajos/index.qmd) page.

@@ -25,6 +25,7 @@
 
 
 
+
 <p>Hasta ahora hemos medido el tamaño de un vector con una norma. Para hablar del condicionamiento de un sistema lineal completo necesitamos también medir el tamaño de una matriz, y resulta que no cualquier manera razonable de hacerlo sirve para ese propósito.</p>
 <section id="de-vectores-a-matrices-la-norma-de-frobenius" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="de-vectores-a-matrices-la-norma-de-frobenius"><span class="header-section-number">1</span> De vectores a matrices: la norma de Frobenius</h2>
@@ -232,6 +233,7 @@
   <dc:creator>Arturo Sanjuán</dc:creator>
   <link>https://arturosanjuan.xyz/cursos/numerico/lu/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -605,6 +607,7 @@ font-style: inherit;">\</span> z</span></code></pre></div></div>
   <dc:creator>Arturo Sanjuán</dc:creator>
   <link>https://arturosanjuan.xyz/cursos/numerico/matrices/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -1208,6 +1211,7 @@ font-style: inherit;">end</span></span></code></pre></div></div>
 
 
 
+
 <section id="notación-de-landau-la-o-pequeña" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="notación-de-landau-la-o-pequeña"><span class="header-section-number">1</span> Notación de Landau: la <img src="https://latex.codecogs.com/png.latex?o"> pequeña</h2>
 <p>Hasta ahora hemos medido el tamaño de un error con normas y números de condición. Para comparar el costo de dos algoritmos necesitamos otro lenguaje: la notación asintótica de Landau, la misma que se usa para describir el comportamiento local de una función cerca de un punto y también el comportamiento de un algoritmo cuando el tamaño del problema crece.</p>
@@ -1396,6 +1400,7 @@ font-style: inherit;">end</span></span></code></pre></div></div>
   <dc:creator>Arturo Sanjuán</dc:creator>
   <link>https://arturosanjuan.xyz/cursos/numerico/taller-1/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -1672,6 +1677,7 @@ font-style: inherit;">BigFloat</span>(x)))</span></code></pre></div></div>
   <dc:creator>Arturo Sanjuán</dc:creator>
   <link>https://arturosanjuan.xyz/cursos/numerico/estabilidad/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -2090,6 +2096,7 @@ font-style: inherit;">end</span></span></code></pre></div></div>
 
 
 
+
 <section id="cancelación-catastrófica-o-pérdida-de-significancia" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="cancelación-catastrófica-o-pérdida-de-significancia"><span class="header-section-number">1</span> Cancelación catastrófica o pérdida de significancia</h2>
 <p>Consideremos la sucesión</p>
@@ -2283,6 +2290,7 @@ font-style: inherit;">end</span></span></code></pre></div></div>
   <dc:creator>Arturo Sanjuán</dc:creator>
   <link>https://arturosanjuan.xyz/cursos/numerico/introduccion/</link>
   <description><![CDATA[ 
+
 
 
 

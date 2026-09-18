@@ -1,15 +1,13 @@
 ---
-title: "Home"
+title-block-style: none
+title: ""
 comments: false
-date: 2026-08-23
 ---
+
+*[🇺🇸 english](index.en.qmd)*
 
 ![Laguna Negra Mongua, Boyacá Colombia](laguna.jpeg)
 
-
-
-Soy profesor titular en la Universidad Distrital Francisco José de Caldas y hago parte de los grupos de investigación MESCUD y CMyT. Realicé mis estudios de pregrado, maestría y doctorado en Matemáticas en la Universidad Nacional de Colombia, bajo la dirección de los profesores Alfonso Castro (Harvey Mudd College) y Francisco Caicedo (Universidad Nacional de Colombia). Anteriormente, fui docente de planta en la Universidad de los Andes en Bogotá.
+Soy profesor titular en la [Universidad Distrital Francisco José de Caldas](https://pi.udistrital.edu.co/Unidad-Ciencias-Matematicas/node/188) y hago parte de los grupos de investigación MESCUD y CMyT. Realicé mis estudios de pregrado, maestría y doctorado en Matemáticas en la Universidad Nacional de Colombia, bajo la dirección de los profesores Alfonso Castro (Harvey Mudd College) y Francisco Caicedo (Universidad Nacional de Colombia). Anteriormente, fui docente de planta en la Universidad de los Andes en Bogotá.
 
 Mi investigación se centra en ecuaciones diferenciales parciales y funcional-diferenciales mediante métodos topológicos, con especial énfasis en la ecuación de onda semilineal con condiciones Dirichlet-periódicas.
-
-Correo: [aasanjuanc@udistrital.edu.co](mailto:aasanjuanc@udistrital.edu.co)

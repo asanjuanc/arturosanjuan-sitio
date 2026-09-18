@@ -26,8 +26,19 @@ website:
       language: "es"
   navbar:
     left:
+      - href: research/index.qmd
+        text: research
       - href: cursos/index.qmd
-        text: Cursos
+        text: cursos
+      - href: trabajos/index.qmd
+        text: trabajos
+      - href: about.qmd
+        text: about
+      - href: links.qmd
+        text: contacto
+    right:
+      - href: files/cv_sanjuan.pdf
+        text: CV
   sidebar:
     - id: odes
       title: "Ecuaciones Diferenciales"
@@ -81,11 +92,12 @@ website:
         - cursos/probabilidad/vadiscretas/index.qmd
         - cursos/probabilidad/vacontinuas/index.qmd
         - cursos/probabilidad/limitenormal/index.qmd
+        - cursos/probabilidad/continuasespeciales/index.qmd
 
 format:
   html:
     theme:
-      - yeti
-      - brand
+      light: yeti
+      dark: darkly
     css: styles.css
     toc: true

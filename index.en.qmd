@@ -1,0 +1,26 @@
+---
+title-block-style: none
+title: ""
+comments: false
+lang: en
+---
+
+*[🇨🇴 español](index.qmd)*
+
+![Laguna Negra Mongua, Boyacá Colombia](laguna.jpeg)
+
+I am a professor at [Universidad Distrital Francisco José de Caldas](https://pi.udistrital.edu.co/Unidad-Ciencias-Matematicas/node/188) and belong to the research groups MESCUD and CMyT. I completed my undergraduate, master's, and doctoral studies in mathematics at Universidad Nacional de Colombia, under the supervision of professors Alfonso Castro (Harvey Mudd College) and Francisco Caicedo (Universidad Nacional de Colombia). Before that, I was a faculty member at Universidad de los Andes in Bogotá.
+
+My research focuses on partial and functional differential equations using topological methods, with particular emphasis on the semilinear wave equation under Dirichlet periodic conditions.
+
+Email: [aasanjuanc@udistrital.edu.co](mailto:aasanjuanc@udistrital.edu.co)
+
+*Elsewhere*
+
+- [ORCID](https://orcid.org/0000-0002-0309-8299)
+- [Google Scholar](https://scholar.google.com/citations?user=FTpPHoUAAAAJ&hl=en)
+- [MathSciNet](https://mathscinet.ams.org/mathscinet/MRAuthorID/1069196)
+- [Scopus](https://www.scopus.com/authid/detail.uri?authorId=56326396000)
+- [Mathematics Genealogy Project](https://www.mathgenealogy.org/id.php?id=191294)
+- [CvLAC](https://scienti.minciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0001066633)
+- [GitHub](https://github.com/asanjuanc)

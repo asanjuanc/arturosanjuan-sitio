@@ -25,6 +25,7 @@
 
 
 
+
 <section id="cuando-el-orden-se-puede-bajar" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="cuando-el-orden-se-puede-bajar"><span class="header-section-number">1</span> Cuando el orden se puede bajar</h2>
 <p>La ecuación general de segundo orden es <img src="https://latex.codecogs.com/png.latex?F(x,y,y',y'')=0">, y en general no hay ningún método sistemático para resolverla (de hecho, la mayoría de las ecuaciones de segundo orden no lineales simplemente no se pueden resolver en términos de funciones elementales). Pero hay dos situaciones estructurales, sorprendentemente comunes en las aplicaciones, en las que la ecuación se puede bajar a dos ecuaciones de primer orden que se resuelven una tras otra. En ambos casos el truco es el mismo: introducir <img src="https://latex.codecogs.com/png.latex?p=y'"> como nueva variable dependiente; la pregunta es solo respecto a qué variable conviene derivar <img src="https://latex.codecogs.com/png.latex?p">.</p>
@@ -807,6 +808,7 @@ font-style: inherit;">chequeo</span>;</span></code></pre></div></div>
   <dc:creator>Arturo Sanjuán</dc:creator>
   <link>https://arturosanjuan.xyz/cursos/odes/homoexactas/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -1735,6 +1737,7 @@ font-style: inherit;">circulos</span>));</span></code></pre></div></div>
 
 
 
+
 <p>Una ecuación diferencial no siempre nace de la misma manera. En este taller van a recorrer tres orígenes distintos de una EDO: una condición geométrica local, una ley física de proporcionalidad, y un principio mecánico que reduce una ecuación de segundo orden a una de primer orden.</p>
 <section id="familias-de-curvas-ortogonales" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="familias-de-curvas-ortogonales"><span class="header-section-number">1</span> Familias de curvas ortogonales</h2>
@@ -1844,6 +1847,7 @@ font-style: inherit;">circulos</span>));</span></code></pre></div></div>
   <dc:creator>Arturo Sanjuán</dc:creator>
   <link>https://arturosanjuan.xyz/cursos/odes/fintegrante/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -2889,6 +2893,7 @@ font-style: inherit;">30</span>)</span>
 
 
 
+
 <section id="coordenadas-polares" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="coordenadas-polares"><span class="header-section-number">1</span> Coordenadas polares</h2>
 <p>Un punto en el plano se puede describir con la distancia <img src="https://latex.codecogs.com/png.latex?r"> al origen (el <strong>polo</strong>) y el ángulo <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> respecto al eje <img src="https://latex.codecogs.com/png.latex?x"> (el <strong>eje polar</strong>). La relación con las coordenadas cartesianas es</p>
@@ -3541,6 +3546,7 @@ font-style: inherit;">2</span>);</span></code></pre></div></div>
 
 
 
+
 <section id="de-galileo-a-newton-la-ecuación-del-movimiento" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="de-galileo-a-newton-la-ecuación-del-movimiento"><span class="header-section-number">1</span> De Galileo a Newton: la ecuación del movimiento</h2>
 <p>La segunda ley de Newton, en su versión abreviada, dice que la fuerza aplicada sobre un objeto es proporcional a la aceleración que produce, y la constante de proporcionalidad es la masa:</p>
@@ -4072,6 +4078,7 @@ font-style: inherit;">tsuelo</span>)</span>
   <dc:creator>Arturo Sanjuán</dc:creator>
   <link>https://arturosanjuan.xyz/cursos/odes/familiasortogonales/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -4822,6 +4829,7 @@ font-style: inherit;">/* debe dar exactamente 1 */</span></span></code></pre></d
   <dc:creator>Arturo Sanjuán</dc:creator>
   <link>https://arturosanjuan.xyz/cursos/odes/modelacion/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -5770,6 +5778,7 @@ font-style: inherit;">/* ~27.46 min */</span></span></code></pre></div></div>
   <dc:creator>Arturo Sanjuán</dc:creator>
   <link>https://arturosanjuan.xyz/cursos/odes/introduccion/</link>
   <description><![CDATA[ 
+
 
 
 
