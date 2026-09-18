@@ -5,7 +5,7 @@ lang: en
 
 *[🇨🇴 Versión en español](about.qmd)*
 
-I am a full professor in the mathematics department at Universidad Distrital Francisco José de Caldas, in Bogotá, and I belong to the research groups MESCUD and CMyT. I studied for my undergraduate, master's, and doctoral degrees in mathematics at Universidad Nacional de Colombia, under the supervision of professors Alfonso Castro (Harvey Mudd College) and Francisco Caicedo (Universidad Nacional de Colombia). Before joining Universidad Distrital I was a professor at Universidad de los Andes.
+I am a professor in the mathematics department at Universidad Distrital Francisco José de Caldas, in Bogotá, and I belong to the research groups MESCUD and CMyT. I studied for my undergraduate, master's, and doctoral degrees in mathematics at Universidad Nacional de Colombia, under the supervision of professors Alfonso Castro (Harvey Mudd College) and Francisco Caicedo (Universidad Nacional de Colombia). Before joining Universidad Distrital I was a professor at Universidad de los Andes.
 
 My work is in nonlinear analysis applied to partial differential equations, with an emphasis on the semilinear wave equation under Dirichlet periodic conditions, elliptic boundary value problems, singular fourth order ordinary differential equations arising in nanobeam and MEMS models, and delay functional differential equations. I combine topological methods, such as Leray Schauder degree theory, with numerical methods such as shooting methods, finite elements, and spectral or FFT techniques.
 
