@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Arturo Sanjuán">
+<meta name="description" content="Taller en equipos de hasta tres personas, con solución, sobre cuatro técnicas distintas: una ecuación homogénea y una que se reduce de orden, en un problema de persecución naval planteado por Bouguer en 1732, y una ecuación con factor integrante y una exacta, en un problema de electrostática entre dos alambres cargados.">
 
-<title>Investigación – Arturo Sanjuán</title>
+<title>Taller 2 – Arturo Sanjuán</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -29,28 +31,28 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../favicon.png" rel="icon" type="image/png">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-20e8419ce0e5e504df81ebb4f0516dd0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-690a39555877842da32c80663def9b9f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-20e8419ce0e5e504df81ebb4f0516dd0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-5a1953863e1f72ef3b996ef827f01ca7.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-06ef128ffaab2aaffa18b1038abc86f3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-979bd06565eab1ad32ed49e916b209dc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/bootstrap/bootstrap-06ef128ffaab2aaffa18b1038abc86f3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -78,12 +80,42 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Buscar"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="../styles.css">
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
 </head>
 
-<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+<body class="docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -252,7 +284,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../index.html">
+    <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">Arturo Sanjuán</span>
     </a>
   </div>
@@ -263,29 +295,29 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../research/index.html"> 
+    <a class="nav-link" href="../../../research/index.html"> 
 <span class="menu-text">research</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../cursos/index.html"> 
+    <a class="nav-link" href="../../../cursos/index.html"> 
 <span class="menu-text">cursos</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../trabajos/index.html"> 
+    <a class="nav-link" href="../../../trabajos/index.html"> 
 <span class="menu-text">trabajos</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../about.html"> 
+    <a class="nav-link" href="../../../about.html"> 
 <span class="menu-text">about</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../links.html"> 
+    <a class="nav-link" href="../../../links.html"> 
 <span class="menu-text">contacto</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../files/cv_sanjuan.pdf"> 
+    <a class="nav-link" href="../../../files/cv_sanjuan.pdf"> 
 <span class="menu-text">CV</span></a>
   </li>  
 </ul>
@@ -299,18 +331,21 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">En esta página</h2>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
    
   <ul>
-  <li><a href="#líneas-de-interés" id="toc-líneas-de-interés" class="nav-link active" data-scroll-target="#líneas-de-interés">Líneas de interés</a></li>
-  <li><a href="#publicaciones-seleccionadas" id="toc-publicaciones-seleccionadas" class="nav-link" data-scroll-target="#publicaciones-seleccionadas">Publicaciones seleccionadas</a></li>
-  <li><a href="#hoja-de-vida" id="toc-hoja-de-vida" class="nav-link" data-scroll-target="#hoja-de-vida">Hoja de vida</a></li>
-  <li><a href="#en-otros-sitios" id="toc-en-otros-sitios" class="nav-link" data-scroll-target="#en-otros-sitios">En otros sitios</a></li>
+  <li><a href="#el-cruce-del-estrecho" id="toc-el-cruce-del-estrecho" class="nav-link active" data-scroll-target="#el-cruce-del-estrecho"><span class="header-section-number">1</span> El cruce del estrecho</a></li>
+  <li><a href="#la-persecución-directa" id="toc-la-persecución-directa" class="nav-link" data-scroll-target="#la-persecución-directa"><span class="header-section-number">2</span> La persecución directa</a></li>
+  <li><a href="#el-circuito-de-carga" id="toc-el-circuito-de-carga" class="nav-link" data-scroll-target="#el-circuito-de-carga"><span class="header-section-number">3</span> El circuito de carga</a></li>
+  <li><a href="#líneas-de-campo" id="toc-líneas-de-campo" class="nav-link" data-scroll-target="#líneas-de-campo"><span class="header-section-number">4</span> Líneas de campo</a></li>
   </ul>
 </nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -318,14 +353,32 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Investigación</h1>
+<h1 class="title">Taller 2</h1>
+<p class="subtitle lead">Cuatro caminos hacia una ecuación diferencial, en dos escenarios: persecución naval y electromagnetismo</p>
 </div>
 
+<div>
+  <div class="description">
+    Taller en equipos de hasta tres personas, con solución, sobre cuatro técnicas distintas: una ecuación homogénea y una que se reduce de orden, en un problema de persecución naval planteado por Bouguer en 1732, y una ecuación con factor integrante y una exacta, en un problema de electrostática entre dos alambres cargados.
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Autor</div>
+    <div class="quarto-title-meta-contents">
+             <p>Arturo Sanjuán </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">22 de septiembre de 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -335,40 +388,131 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><em><a href="../research/index.html">🇺🇸 english</a></em></p>
-<section id="líneas-de-interés" class="level2">
-<h2 class="anchored" data-anchor-id="líneas-de-interés">Líneas de interés</h2>
-<p>Trabajo en análisis no lineal aplicado a ecuaciones diferenciales parciales. Mi foco principal es la ecuación de onda semilineal con condiciones Dirichlet periódicas, junto con problemas elípticos de frontera, ecuaciones diferenciales ordinarias singulares de cuarto orden que surgen en modelos de nanovigas y MEMS, y ecuaciones funcional diferenciales con retardo. Combino métodos topológicos, en particular la teoría del grado de Leray Schauder, con métodos numéricos como disparo, elementos finitos y técnicas espectrales o FFT.</p>
-<p>Los trabajos, tesis y notas de clase más antiguos, casi todos en español, están reunidos aparte en la página de <a href="../trabajos/index.html">Trabajos</a>.</p>
+<p>Este taller recorre dos escenarios distintos, y en cada uno dos orígenes distintos de una EDO. El primero es un problema de persecución naval, planteado y resuelto por primera vez por Pierre Bouguer en 1732: ahí aparecen una ecuación homogénea y una que se reduce de orden. El segundo es un problema de electrostática, con un circuito y un campo entre dos alambres cargados: ahí aparecen una ecuación con factor integrante y una exacta.</p>
+<section id="el-cruce-del-estrecho" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="el-cruce-del-estrecho"><span class="header-section-number">1</span> El cruce del estrecho</h2>
+<p>Un contrabandista debe cruzar, en su bote, un estrecho de agua para llegar donde lo espera un cómplice, en la orilla opuesta. Una corriente empuja el agua con rapidez constante <span class="math inline">\(a\)</span> en dirección perpendicular al estrecho. El bote avanza con rapidez constante <span class="math inline">\(b\)</span> relativa al agua, y su capitán lo dirige en todo instante directamente hacia el punto de encuentro.</p>
+<p>Coloquen el punto de encuentro en el origen y el estrecho a lo largo del eje <span class="math inline">\(x\)</span>, de modo que el bote parte del punto <span class="math inline">\((w,0)\)</span> y la corriente actúa en la dirección negativa de <span class="math inline">\(y\)</span>.</p>
+<ol type="1">
+<li><strong>Deducción.</strong> Muestren que las componentes de la velocidad del bote son <span class="math display">\[\frac{dx}{dt} = -\frac{bx}{\sqrt{x^2+y^2}}, \quad \frac{dy}{dt} = -\frac{by}{\sqrt{x^2+y^2}} - a\]</span> Divídanlas para obtener <span class="math inline">\(dy/dx\)</span> y verifiquen que la ecuación resultante es homogénea.</li>
+<li><strong>Resuélvanla</strong> con la sustitución <span class="math inline">\(y=vx\)</span>, y muestren que la familia de soluciones puede escribirse como <span class="math inline">\(y+\sqrt{x^2+y^2}=Ax^{k+1}\)</span>, con <span class="math inline">\(k=a/b\)</span>.</li>
+<li><strong>Condición inicial.</strong> Usando que el bote parte de <span class="math inline">\((w,0)\)</span>, hallen <span class="math inline">\(A\)</span> en términos de <span class="math inline">\(w\)</span> y <span class="math inline">\(k\)</span>, y despejen <span class="math inline">\(y\)</span> como función explícita de <span class="math inline">\(x\)</span>.</li>
+<li><strong>Interpretación.</strong> ¿Para qué valores de <span class="math inline">\(k=a/b\)</span> llega el bote exactamente al punto de encuentro cuando <span class="math inline">\(x\to0\)</span>? ¿Qué le ocurre a la trayectoria si la corriente es tan rápida como el bote, o más rápida todavía?</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dividiendo las dos componentes de la velocidad,</p>
+<p><span class="math display">\[\frac{dy}{dx} = \frac{a\sqrt{x^2+y^2}+by}{bx}\]</span></p>
+<p>que es homogénea (numerador y denominador son homogéneos de grado 1). Con <span class="math inline">\(y=vx\)</span> y <span class="math inline">\(k=a/b\)</span>:</p>
+<p><span class="math display">\[v+x\frac{dv}{dx}=k\sqrt{1+v^2}+v \;\Longrightarrow\; \frac{dv}{\sqrt{1+v^2}}=k\frac{dx}{x} \;\Longrightarrow\; v+\sqrt{1+v^2}=Ax^k\]</span></p>
+<p>Multiplicando por <span class="math inline">\(x\)</span>: <span class="math inline">\(y+\sqrt{x^2+y^2}=Ax^{k+1}\)</span>. Con <span class="math inline">\(x=w\)</span>, <span class="math inline">\(y=0\)</span>: <span class="math inline">\(A=w^{-k}\)</span>, y despejando <span class="math inline">\(y\)</span>,</p>
+<p><span class="math display">\[y(x) = \frac{w}{2}\left[\left(\frac{x}{w}\right)^{k+1}-\left(\frac{x}{w}\right)^{1-k}\right]\]</span></p>
+<p>Cuando <span class="math inline">\(x\to0^+\)</span>: si <span class="math inline">\(k&lt;1\)</span>, <span class="math inline">\(y\to0\)</span> y el bote llega exactamente al punto de encuentro; si <span class="math inline">\(k=1\)</span>, <span class="math inline">\(y\to-w/2\)</span>, llega a la orilla pero desviado medio ancho del estrecho; si <span class="math inline">\(k&gt;1\)</span>, <span class="math inline">\(y\to-\infty\)</span>, nunca cruza. El umbral está en <span class="math inline">\(k=a/b=1\)</span>: basta con que el bote sea apenas más lento que la corriente para que el cruce fracase.</p>
+</div>
+</div>
 </section>
-<section id="publicaciones-seleccionadas" class="level2">
-<h2 class="anchored" data-anchor-id="publicaciones-seleccionadas">Publicaciones seleccionadas</h2>
-<ul>
-<li>Caicedo, J. F., Castro, A., Duque, R., y Sanjuán, A. (2014). Existence of solutions for a semilinear wave equation with non-monotone nonlinearity. <em>Discrete and Continuous Dynamical Systems, Series S</em>, 7(69), pp.&nbsp;1193 a 1202. <a href="https://aimsciences.org/journals/displayArticlesnew.jsp?paperID=10032">Enlace a la revista</a></li>
-<li>Caicedo, J. F., Castro, A., y Sanjuán, A. (2017). Bifurcation at infinity for a semilinear wave equation. <em>Discrete and Continuous Dynamical Systems, Series A</em>, 37(4), pp.&nbsp;1857 a 1865. <a href="https://aimsciences.org/journals/displayArticlesnew.jsp?paperID=13559">Enlace a la revista</a></li>
-<li>Caicedo, J. F., Castro, A., Duque, R., y Sanjuán, A. (2017). The semilinear wave equation with non-monotone nonlinearity: a survey. <em>Rendiconti dell’Istituto di Matematica dell’Università di Trieste</em>, 49, pp.&nbsp;207 a 214. <a href="https://www.openstarts.units.it/handle/10077/16213">Enlace a la revista</a></li>
-<li>Pardo, R., y Sanjuán, A. (2020). Asymptotic behavior of positive radial solutions to elliptic equations approaching critical growth. <em>Electronic Journal of Differential Equations</em>, 114, pp.&nbsp;1 a 17. <a href="https://ejde.math.txstate.edu/Volumes/2020/114/abstr.html">Enlace a la revista</a></li>
-<li>Amster, P., Epstein, J., y Sanjuán, A. (2021). Periodic solutions for systems of functional differential semilinear equations at resonance. <em>Topological Methods in Nonlinear Analysis</em>, 58(2), pp.&nbsp;591 a 607. <a href="https://projecteuclid.org/journals/topological-methods-in-nonlinear-analysis/volume-58/issue-2/Periodic-solutions-for-systems-of-functional-differential-semilinear-equations-at/10.12775/TMNA.2020.078.full">Enlace a la revista</a></li>
-<li>Caicedo, J. F., Castro, A., Duque, R., and Sanjuán, A. (2023). A semilinear wave equation with non-monotone nonlinearity. <em>Electronic Journal of Differential Equations</em>, Special Issue in Honor of John W. Neuberger, 02, pp.&nbsp;81 to 86. <a href="https://ejde.math.txstate.edu/special/02/c1/abstr.html">Enlace a la revista</a></li>
-<li>Sanjuán, A. (2026). Existence and computation of periodic solutions for the semilinear Gompertz equation with discrete delay. En <em>Proceedings of the Fourth Colombian Conference on Applied and Industrial Mathematics (MAPI 4)</em>. Springer. Aceptado.</li>
-<li>Rodriguez, F., y Sanjuán, A. (2026). A system of semilinear wave equations with non-monotone nonlinearity. Dedicado al profesor Alfonso Castro. Enviado a <em>Electronic Journal of Differential Equations</em>, número especial en honor a Alfonso Castro.</li>
-</ul>
+<section id="la-persecución-directa" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="la-persecución-directa"><span class="header-section-number">2</span> La persecución directa</h2>
+<p>El cómplice, al ver que ha sido descubierto, decide huir en línea recta a lo largo de la costa (el eje <span class="math inline">\(y\)</span>) con rapidez constante <span class="math inline">\(a\)</span>. Un guardacostas, que parte del punto <span class="math inline">\((c,0)\)</span>, lo persigue con rapidez constante <span class="math inline">\(b&gt;a\)</span>, apuntando en todo instante directamente hacia la posición actual del fugitivo.</p>
+<p>Con el mismo procedimiento de la sección anterior (eliminando el tiempo entre las dos componentes de la velocidad, y derivando una vez más respecto a <span class="math inline">\(x\)</span>), puede mostrarse que la trayectoria <span class="math inline">\(y(x)\)</span> del guardacostas satisface</p>
+<p><span class="math display">\[x\frac{d^2y}{dx^2} = k\sqrt{1+\left(\frac{dy}{dx}\right)^2}, \quad k=\frac{a}{b}\]</span></p>
+<p>con las condiciones iniciales <span class="math inline">\(x=c\)</span>, <span class="math inline">\(y=0\)</span>, <span class="math inline">\(y'=0\)</span> (el guardacostas arranca apuntando horizontalmente, pues el fugitivo está justo enfrente de él).</p>
+<ol type="1">
+<li><strong>Reducción de orden.</strong> Sea <span class="math inline">\(p=dy/dx\)</span>. Reescriban la ecuación como una ecuación de primer orden, separable, en <span class="math inline">\(p\)</span> y <span class="math inline">\(x\)</span>. Intégrenla y muestren que <span class="math inline">\(p=\frac12\left[(x/c)^k-(c/x)^k\right]\)</span>.</li>
+<li><strong>Intégrenla otra vez</strong>, usando <span class="math inline">\(y(c)=0\)</span>, para hallar <span class="math inline">\(y(x)\)</span> de forma explícita.</li>
+<li><strong>El alcance.</strong> Con <span class="math inline">\(k=1/2\)</span> y <span class="math inline">\(c=4\)</span> millas náuticas, hallen el valor de <span class="math inline">\(y\)</span> al que llega la persecución cuando <span class="math inline">\(x\to0\)</span> (el punto donde el guardacostas alcanza al fugitivo).</li>
+<li><strong>Interpretación.</strong> ¿Por qué la condición <span class="math inline">\(k&lt;1\)</span>, es decir <span class="math inline">\(b&gt;a\)</span>, es indispensable para que el guardacostas alcance al fugitivo en algún punto finito?</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con <span class="math inline">\(p=y'\)</span>, <span class="math inline">\(\dfrac{dp}{\sqrt{1+p^2}}=k\dfrac{dx}{x}\)</span>, e integrando,</p>
+<p><span class="math display">\[\operatorname{asinh}(p) = k\ln x + C\]</span></p>
+<p>Con <span class="math inline">\(p=0\)</span> en <span class="math inline">\(x=c\)</span>: <span class="math inline">\(C=-k\ln c\)</span>, así que</p>
+<p><span class="math display">\[p = \sinh\big(k\ln(x/c)\big) = \frac12\left[\left(\frac{x}{c}\right)^k-\left(\frac{c}{x}\right)^k\right]\]</span></p>
+<p>Con <span class="math inline">\(k=1/2\)</span>, <span class="math inline">\(c=4\)</span>: <span class="math inline">\(p(x)=\dfrac{\sqrt x}{4}-\dfrac{1}{\sqrt x}\)</span>, e integrando de nuevo con <span class="math inline">\(y(4)=0\)</span>,</p>
+<p><span class="math display">\[y(x) = \frac16 x^{3/2} - 2\sqrt x + \frac83\]</span></p>
+<p>Cuando <span class="math inline">\(x\to0^+\)</span> los dos primeros términos se anulan y <span class="math inline">\(y\to 8/3\)</span> millas náuticas, el punto donde el guardacostas alcanza al fugitivo (coincide con la fórmula cerrada <span class="math inline">\(y=\dfrac{ck}{1-k^2}=\dfrac{4\cdot\frac12}{1-\frac14}=\dfrac83\)</span>).</p>
+<p>La integral que da <span class="math inline">\(y(x)\)</span> converge en <span class="math inline">\(x=0\)</span> solo porque el exponente de <span class="math inline">\(x^{1-k}\)</span> es positivo, es decir <span class="math inline">\(k&lt;1\)</span>. Si el guardacostas no fuera más rápido que el fugitivo, <span class="math inline">\(x\)</span> se acercaría a <span class="math inline">\(0\)</span> pero <span class="math inline">\(y\)</span> crecería sin límite: la persecución nunca terminaría en un punto finito.</p>
+</div>
+</div>
 </section>
-<section id="hoja-de-vida" class="level2">
-<h2 class="anchored" data-anchor-id="hoja-de-vida">Hoja de vida</h2>
-<p>Hoja de vida completa: <a href="../files/cv_sanjuan.pdf">descargar el PDF</a></p>
+<section id="el-circuito-de-carga" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="el-circuito-de-carga"><span class="header-section-number">3</span> El circuito de carga</h2>
+<p>En un circuito en serie con una resistencia <span class="math inline">\(R\)</span>, un capacitor de capacitancia <span class="math inline">\(C\)</span> y una fuente de voltaje constante <span class="math inline">\(E\)</span>, la ley de voltajes de Kirchhoff da la ecuación para el voltaje <span class="math inline">\(v_C(t)\)</span> en el capacitor:</p>
+<p><span class="math display">\[RC\,\frac{dv_C}{dt} + v_C = E, \quad v_C(0)=0\]</span></p>
+<ol type="1">
+<li><strong>Factor integrante.</strong> Escriban la ecuación en la forma estándar <span class="math inline">\((v_C)'+Pv_C=Q\)</span>, identifiquen el factor integrante, y resuelvan para mostrar que <span class="math inline">\(v_C(t)=E\left(1-e^{-t/(RC)}\right)\)</span>.</li>
+<li><strong>Los números.</strong> Con <span class="math inline">\(R=4.7\)</span> kΩ, <span class="math inline">\(C=220\)</span> µF y <span class="math inline">\(E=9\)</span> V, escriban la expresión explícita de <span class="math inline">\(v_C(t)\)</span> en voltios, con <span class="math inline">\(t\)</span> en segundos.</li>
+<li><strong>Interpretación.</strong> ¿Cuánto tiempo tarda el capacitor en alcanzar el 80% del voltaje de la fuente?</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En forma estándar, <span class="math inline">\(v_C'+\dfrac{1}{RC}v_C=\dfrac{E}{RC}\)</span>, con factor integrante <span class="math inline">\(\mu=e^{t/(RC)}\)</span>:</p>
+<p><span class="math display">\[\frac{d}{dt}\left[v_C e^{t/(RC)}\right] = \frac{E}{RC}e^{t/(RC)} \;\Longrightarrow\; v_C(t) = E\left(1-e^{-t/(RC)}\right)\]</span></p>
+<p>Con <span class="math inline">\(R=4700\ \Omega\)</span>, <span class="math inline">\(C=220\times10^{-6}\)</span> F: <span class="math inline">\(RC=1.034\)</span> s, así que <span class="math inline">\(v_C(t)=9\left(1-e^{-t/1.034}\right)\)</span> V.</p>
+<p>Para el 80%: <span class="math inline">\(0.8(9)=9\left(1-e^{-t/1.034}\right) \Rightarrow e^{-t/1.034}=0.2 \Rightarrow t=1.034\ln5 \approx \textbf{1.66 s}\)</span>.</p>
+</div>
+</div>
 </section>
-<section id="en-otros-sitios" class="level2">
-<h2 class="anchored" data-anchor-id="en-otros-sitios">En otros sitios</h2>
-<ul>
-<li><a href="https://orcid.org/0000-0002-0309-8299">ORCID</a></li>
-<li><a href="https://scholar.google.com/citations?user=FTpPHoUAAAAJ&amp;hl=es">Google Scholar</a></li>
-<li><a href="https://mathscinet.ams.org/mathscinet/MRAuthorID/1069196">MathSciNet</a></li>
-<li><a href="https://www.scopus.com/authid/detail.uri?authorId=56326396000">Scopus</a></li>
-<li><a href="https://www.mathgenealogy.org/id.php?id=191294">Mathematics Genealogy Project</a></li>
-<li><a href="https://scienti.minciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0001066633">CvLAC</a></li>
-<li><a href="https://github.com/asanjuanc">GitHub</a></li>
-</ul>
+<section id="líneas-de-campo" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="líneas-de-campo"><span class="header-section-number">4</span> Líneas de campo</h2>
+<p>Dos alambres delgados, perpendiculares al plano <span class="math inline">\(xy\)</span> y cargados con densidades lineales de carga opuestas, <span class="math inline">\(+\lambda\)</span> y <span class="math inline">\(-\lambda\)</span>, están separados una distancia <span class="math inline">\(2a\)</span>. El potencial eléctrico en un punto del plano es <span class="math inline">\(V=2k\lambda[\ln r_2-\ln r_1]\)</span>, con <span class="math inline">\(r_1,r_2\)</span> las distancias a cada alambre y <span class="math inline">\(k=1/(4\pi\varepsilon_0)\approx8.99\times10^9\)</span> N·m²/C².</p>
+<p>Coloquen los alambres en <span class="math inline">\((a,0)\)</span> y <span class="math inline">\((-a,0)\)</span> y trabajen con las coordenadas adimensionales <span class="math inline">\(\xi=X/a\)</span>, <span class="math inline">\(\eta=Y/a\)</span>, de modo que <span class="math inline">\(V=2k\lambda\cdot\varphi(\xi,\eta)\)</span>, con</p>
+<p><span class="math display">\[\varphi(\xi,\eta) = \frac12\ln\left[(\xi+1)^2+\eta^2\right] - \frac12\ln\left[(\xi-1)^2+\eta^2\right]\]</span></p>
+<p>Las curvas <span class="math inline">\(\varphi=\text{const}\)</span> son las líneas equipotenciales; las líneas de campo eléctrico son, en cada punto, perpendiculares a ellas.</p>
+<ol type="1">
+<li><strong>Planteo.</strong> Las líneas de campo satisfacen <span class="math inline">\(Md\xi+Nd\eta=0\)</span>, con <span class="math inline">\(M=\partial\varphi/\partial\eta\)</span> y <span class="math inline">\(N=-\partial\varphi/\partial\xi\)</span>. Calculen <span class="math inline">\(M\)</span> y <span class="math inline">\(N\)</span> explícitamente, y verifiquen que la ecuación es exacta.</li>
+<li><strong>Resuélvanla</strong>, integrando <span class="math inline">\(M\)</span> respecto a <span class="math inline">\(\xi\)</span> y ajustando con <span class="math inline">\(N\)</span>, para mostrar que las líneas de campo satisfacen <span class="math inline">\(\arctan\left(\frac{\xi+1}{\eta}\right)-\arctan\left(\frac{\xi-1}{\eta}\right)=\text{const}\)</span>.</li>
+<li><strong>Interpretación geométrica.</strong> Usando la identidad de la tangente de una diferencia, muestren que esta condición equivale a que <span class="math inline">\((\xi,\eta)\)</span> esté sobre una circunferencia que pasa por los dos alambres.</li>
+<li><strong>Los números.</strong> Con <span class="math inline">\(\lambda=5\)</span> nC/m y <span class="math inline">\(a=1\)</span> cm, hallen el potencial <span class="math inline">\(V\)</span> en el punto <span class="math inline">\(X=0.5\)</span> cm, <span class="math inline">\(Y=0.5\)</span> cm.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[M=\varphi_\eta=\frac{-4\xi\eta}{D}, \qquad N=-\varphi_\xi=\frac{2\xi^2-2\eta^2-2}{D}, \qquad D=\left[(\xi+1)^2+\eta^2\right]\left[(\xi-1)^2+\eta^2\right]\]</span></p>
+<p><span class="math inline">\(M_\eta=N_\xi\)</span> se cumple porque <span class="math inline">\(\varphi\)</span> es armónica (<span class="math inline">\(\varphi_{\xi\xi}+\varphi_{\eta\eta}=0\)</span>) fuera de los alambres, que es justamente la condición que hace de <span class="math inline">\(\varphi\)</span> un potencial electrostático válido. Integrando <span class="math inline">\(M\)</span> respecto a <span class="math inline">\(\xi\)</span> y ajustando con <span class="math inline">\(N\)</span> (el término que falta resulta ser cero),</p>
+<p><span class="math display">\[\psi(\xi,\eta) = \arctan\left(\frac{\xi+1}{\eta}\right) - \arctan\left(\frac{\xi-1}{\eta}\right) = \text{const}\]</span></p>
+<p>Con la identidad <span class="math inline">\(\tan(A-B)=\dfrac{\tan A-\tan B}{1+\tan A\tan B}\)</span>,</p>
+<p><span class="math display">\[\tan(\text{const}) = \frac{2\eta}{\xi^2+\eta^2-1}\]</span></p>
+<p>y llamando <span class="math inline">\(D_0=\cot(\text{const})\)</span>,</p>
+<p><span class="math display">\[\xi^2+\eta^2-2D_0\eta-1=0 \;\Longrightarrow\; \xi^2+(\eta-D_0)^2=1+D_0^2\]</span></p>
+<p>circunferencias centradas en el eje <span class="math inline">\(\eta\)</span> que, en <span class="math inline">\((\xi,\eta)=(\pm1,0)\)</span>, dan <span class="math inline">\(1+0-0-1=0\)</span>: pasan exactamente por los dos alambres, como debe ser, pues son las fuentes y sumideros del campo.</p>
+<p>Con <span class="math inline">\(\lambda=5\times10^{-9}\)</span> C/m, <span class="math inline">\(a=1\)</span> cm: <span class="math inline">\(2k\lambda\approx89.9\)</span> V. En <span class="math inline">\(\xi=\eta=0.5\)</span>,</p>
+<p><span class="math display">\[\varphi(0.5,0.5) = \frac12\ln(2.5)-\frac12\ln(0.5) = \frac12\ln5 \approx 0.805\]</span></p>
+<p><span class="math display">\[V \approx 89.9\times0.805 \approx \textbf{72.3 V}\]</span></p>
+</div>
+</div>
 
 
 </section>
@@ -824,4 +968,5 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

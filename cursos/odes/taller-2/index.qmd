@@ -1,0 +1,140 @@
+---
+title: "Taller 2"
+subtitle: "Cuatro caminos hacia una ecuación diferencial, en dos escenarios: persecución naval y electromagnetismo"
+description: "Taller en equipos de hasta tres personas, con solución, sobre cuatro técnicas distintas: una ecuación homogénea y una que se reduce de orden, en un problema de persecución naval planteado por Bouguer en 1732, y una ecuación con factor integrante y una exacta, en un problema de electrostática entre dos alambres cargados."
+author: "Arturo Sanjuán"
+date: 2026-09-22
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 9
+---
+
+Este taller recorre dos escenarios distintos, y en cada uno dos orígenes distintos de una EDO. El primero es un problema de persecución naval, planteado y resuelto por primera vez por Pierre Bouguer en 1732: ahí aparecen una ecuación homogénea y una que se reduce de orden. El segundo es un problema de electrostática, con un circuito y un campo entre dos alambres cargados: ahí aparecen una ecuación con factor integrante y una exacta.
+
+## El cruce del estrecho
+
+Un contrabandista debe cruzar, en su bote, un estrecho de agua para llegar donde lo espera un cómplice, en la orilla opuesta. Una corriente empuja el agua con rapidez constante $a$ en dirección perpendicular al estrecho. El bote avanza con rapidez constante $b$ relativa al agua, y su capitán lo dirige en todo instante directamente hacia el punto de encuentro.
+
+Coloquen el punto de encuentro en el origen y el estrecho a lo largo del eje $x$, de modo que el bote parte del punto $(w,0)$ y la corriente actúa en la dirección negativa de $y$.
+
+1. **Deducción.** Muestren que las componentes de la velocidad del bote son
+$$\frac{dx}{dt} = -\frac{bx}{\sqrt{x^2+y^2}}, \quad \frac{dy}{dt} = -\frac{by}{\sqrt{x^2+y^2}} - a$$
+Divídanlas para obtener $dy/dx$ y verifiquen que la ecuación resultante es homogénea.
+2. **Resuélvanla** con la sustitución $y=vx$, y muestren que la familia de soluciones puede escribirse como $y+\sqrt{x^2+y^2}=Ax^{k+1}$, con $k=a/b$.
+3. **Condición inicial.** Usando que el bote parte de $(w,0)$, hallen $A$ en términos de $w$ y $k$, y despejen $y$ como función explícita de $x$.
+4. **Interpretación.** ¿Para qué valores de $k=a/b$ llega el bote exactamente al punto de encuentro cuando $x\to0$? ¿Qué le ocurre a la trayectoria si la corriente es tan rápida como el bote, o más rápida todavía?
+
+::: {.callout-tip title="Solución"}
+Dividiendo las dos componentes de la velocidad,
+
+$$\frac{dy}{dx} = \frac{a\sqrt{x^2+y^2}+by}{bx}$$
+
+que es homogénea (numerador y denominador son homogéneos de grado 1). Con $y=vx$ y $k=a/b$:
+
+$$v+x\frac{dv}{dx}=k\sqrt{1+v^2}+v \;\Longrightarrow\; \frac{dv}{\sqrt{1+v^2}}=k\frac{dx}{x} \;\Longrightarrow\; v+\sqrt{1+v^2}=Ax^k$$
+
+Multiplicando por $x$: $y+\sqrt{x^2+y^2}=Ax^{k+1}$. Con $x=w$, $y=0$: $A=w^{-k}$, y despejando $y$,
+
+$$y(x) = \frac{w}{2}\left[\left(\frac{x}{w}\right)^{k+1}-\left(\frac{x}{w}\right)^{1-k}\right]$$
+
+Cuando $x\to0^+$: si $k<1$, $y\to0$ y el bote llega exactamente al punto de encuentro; si $k=1$, $y\to-w/2$, llega a la orilla pero desviado medio ancho del estrecho; si $k>1$, $y\to-\infty$, nunca cruza. El umbral está en $k=a/b=1$: basta con que el bote sea apenas más lento que la corriente para que el cruce fracase.
+:::
+
+## La persecución directa
+
+El cómplice, al ver que ha sido descubierto, decide huir en línea recta a lo largo de la costa (el eje $y$) con rapidez constante $a$. Un guardacostas, que parte del punto $(c,0)$, lo persigue con rapidez constante $b>a$, apuntando en todo instante directamente hacia la posición actual del fugitivo.
+
+Con el mismo procedimiento de la sección anterior (eliminando el tiempo entre las dos componentes de la velocidad, y derivando una vez más respecto a $x$), puede mostrarse que la trayectoria $y(x)$ del guardacostas satisface
+
+$$x\frac{d^2y}{dx^2} = k\sqrt{1+\left(\frac{dy}{dx}\right)^2}, \quad k=\frac{a}{b}$$
+
+con las condiciones iniciales $x=c$, $y=0$, $y'=0$ (el guardacostas arranca apuntando horizontalmente, pues el fugitivo está justo enfrente de él).
+
+1. **Reducción de orden.** Sea $p=dy/dx$. Reescriban la ecuación como una ecuación de primer orden, separable, en $p$ y $x$. Intégrenla y muestren que $p=\frac12\left[(x/c)^k-(c/x)^k\right]$.
+2. **Intégrenla otra vez**, usando $y(c)=0$, para hallar $y(x)$ de forma explícita.
+3. **El alcance.** Con $k=1/2$ y $c=4$ millas náuticas, hallen el valor de $y$ al que llega la persecución cuando $x\to0$ (el punto donde el guardacostas alcanza al fugitivo).
+4. **Interpretación.** ¿Por qué la condición $k<1$, es decir $b>a$, es indispensable para que el guardacostas alcance al fugitivo en algún punto finito?
+
+::: {.callout-tip title="Solución"}
+Con $p=y'$, $\dfrac{dp}{\sqrt{1+p^2}}=k\dfrac{dx}{x}$, e integrando,
+
+$$\operatorname{asinh}(p) = k\ln x + C$$
+
+Con $p=0$ en $x=c$: $C=-k\ln c$, así que
+
+$$p = \sinh\big(k\ln(x/c)\big) = \frac12\left[\left(\frac{x}{c}\right)^k-\left(\frac{c}{x}\right)^k\right]$$
+
+Con $k=1/2$, $c=4$: $p(x)=\dfrac{\sqrt x}{4}-\dfrac{1}{\sqrt x}$, e integrando de nuevo con $y(4)=0$,
+
+$$y(x) = \frac16 x^{3/2} - 2\sqrt x + \frac83$$
+
+Cuando $x\to0^+$ los dos primeros términos se anulan y $y\to 8/3$ millas náuticas, el punto donde el guardacostas alcanza al fugitivo (coincide con la fórmula cerrada $y=\dfrac{ck}{1-k^2}=\dfrac{4\cdot\frac12}{1-\frac14}=\dfrac83$).
+
+La integral que da $y(x)$ converge en $x=0$ solo porque el exponente de $x^{1-k}$ es positivo, es decir $k<1$. Si el guardacostas no fuera más rápido que el fugitivo, $x$ se acercaría a $0$ pero $y$ crecería sin límite: la persecución nunca terminaría en un punto finito.
+:::
+
+## El circuito de carga
+
+En un circuito en serie con una resistencia $R$, un capacitor de capacitancia $C$ y una fuente de voltaje constante $E$, la ley de voltajes de Kirchhoff da la ecuación para el voltaje $v_C(t)$ en el capacitor:
+
+$$RC\,\frac{dv_C}{dt} + v_C = E, \quad v_C(0)=0$$
+
+1. **Factor integrante.** Escriban la ecuación en la forma estándar $(v_C)'+Pv_C=Q$, identifiquen el factor integrante, y resuelvan para mostrar que $v_C(t)=E\left(1-e^{-t/(RC)}\right)$.
+2. **Los números.** Con $R=4.7$ kΩ, $C=220$ µF y $E=9$ V, escriban la expresión explícita de $v_C(t)$ en voltios, con $t$ en segundos.
+3. **Interpretación.** ¿Cuánto tiempo tarda el capacitor en alcanzar el 80% del voltaje de la fuente?
+
+::: {.callout-tip title="Solución"}
+En forma estándar, $v_C'+\dfrac{1}{RC}v_C=\dfrac{E}{RC}$, con factor integrante $\mu=e^{t/(RC)}$:
+
+$$\frac{d}{dt}\left[v_C e^{t/(RC)}\right] = \frac{E}{RC}e^{t/(RC)} \;\Longrightarrow\; v_C(t) = E\left(1-e^{-t/(RC)}\right)$$
+
+Con $R=4700\ \Omega$, $C=220\times10^{-6}$ F: $RC=1.034$ s, así que $v_C(t)=9\left(1-e^{-t/1.034}\right)$ V.
+
+Para el 80%: $0.8(9)=9\left(1-e^{-t/1.034}\right) \Rightarrow e^{-t/1.034}=0.2 \Rightarrow t=1.034\ln5 \approx \textbf{1.66 s}$.
+:::
+
+## Líneas de campo
+
+Dos alambres delgados, perpendiculares al plano $xy$ y cargados con densidades lineales de carga opuestas, $+\lambda$ y $-\lambda$, están separados una distancia $2a$. El potencial eléctrico en un punto del plano es $V=2k\lambda[\ln r_2-\ln r_1]$, con $r_1,r_2$ las distancias a cada alambre y $k=1/(4\pi\varepsilon_0)\approx8.99\times10^9$ N·m²/C².
+
+Coloquen los alambres en $(a,0)$ y $(-a,0)$ y trabajen con las coordenadas adimensionales $\xi=X/a$, $\eta=Y/a$, de modo que $V=2k\lambda\cdot\varphi(\xi,\eta)$, con
+
+$$\varphi(\xi,\eta) = \frac12\ln\left[(\xi+1)^2+\eta^2\right] - \frac12\ln\left[(\xi-1)^2+\eta^2\right]$$
+
+Las curvas $\varphi=\text{const}$ son las líneas equipotenciales; las líneas de campo eléctrico son, en cada punto, perpendiculares a ellas.
+
+1. **Planteo.** Las líneas de campo satisfacen $Md\xi+Nd\eta=0$, con $M=\partial\varphi/\partial\eta$ y $N=-\partial\varphi/\partial\xi$. Calculen $M$ y $N$ explícitamente, y verifiquen que la ecuación es exacta.
+2. **Resuélvanla**, integrando $M$ respecto a $\xi$ y ajustando con $N$, para mostrar que las líneas de campo satisfacen $\arctan\left(\frac{\xi+1}{\eta}\right)-\arctan\left(\frac{\xi-1}{\eta}\right)=\text{const}$.
+3. **Interpretación geométrica.** Usando la identidad de la tangente de una diferencia, muestren que esta condición equivale a que $(\xi,\eta)$ esté sobre una circunferencia que pasa por los dos alambres.
+4. **Los números.** Con $\lambda=5$ nC/m y $a=1$ cm, hallen el potencial $V$ en el punto $X=0.5$ cm, $Y=0.5$ cm.
+
+::: {.callout-tip title="Solución"}
+$$M=\varphi_\eta=\frac{-4\xi\eta}{D}, \qquad N=-\varphi_\xi=\frac{2\xi^2-2\eta^2-2}{D}, \qquad D=\left[(\xi+1)^2+\eta^2\right]\left[(\xi-1)^2+\eta^2\right]$$
+
+$M_\eta=N_\xi$ se cumple porque $\varphi$ es armónica ($\varphi_{\xi\xi}+\varphi_{\eta\eta}=0$) fuera de los alambres, que es justamente la condición que hace de $\varphi$ un potencial electrostático válido. Integrando $M$ respecto a $\xi$ y ajustando con $N$ (el término que falta resulta ser cero),
+
+$$\psi(\xi,\eta) = \arctan\left(\frac{\xi+1}{\eta}\right) - \arctan\left(\frac{\xi-1}{\eta}\right) = \text{const}$$
+
+Con la identidad $\tan(A-B)=\dfrac{\tan A-\tan B}{1+\tan A\tan B}$,
+
+$$\tan(\text{const}) = \frac{2\eta}{\xi^2+\eta^2-1}$$
+
+y llamando $D_0=\cot(\text{const})$,
+
+$$\xi^2+\eta^2-2D_0\eta-1=0 \;\Longrightarrow\; \xi^2+(\eta-D_0)^2=1+D_0^2$$
+
+circunferencias centradas en el eje $\eta$ que, en $(\xi,\eta)=(\pm1,0)$, dan $1+0-0-1=0$: pasan exactamente por los dos alambres, como debe ser, pues son las fuentes y sumideros del campo.
+
+Con $\lambda=5\times10^{-9}$ C/m, $a=1$ cm: $2k\lambda\approx89.9$ V. En $\xi=\eta=0.5$,
+
+$$\varphi(0.5,0.5) = \frac12\ln(2.5)-\frac12\ln(0.5) = \frac12\ln5 \approx 0.805$$
+
+$$V \approx 89.9\times0.805 \approx \textbf{72.3 V}$$
+:::

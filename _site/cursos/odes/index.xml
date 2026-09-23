@@ -15,7 +15,150 @@
 <link>https://arturosanjuan.xyz/cursos/odes/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Tue, 15 Sep 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 22 Sep 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Taller 2</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/odes/taller-2/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Este taller recorre dos escenarios distintos, y en cada uno dos orígenes distintos de una EDO. El primero es un problema de persecución naval, planteado y resuelto por primera vez por Pierre Bouguer en 1732: ahí aparecen una ecuación homogénea y una que se reduce de orden. El segundo es un problema de electrostática, con un circuito y un campo entre dos alambres cargados: ahí aparecen una ecuación con factor integrante y una exacta.</p>
+<section id="el-cruce-del-estrecho" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="el-cruce-del-estrecho"><span class="header-section-number">1</span> El cruce del estrecho</h2>
+<p>Un contrabandista debe cruzar, en su bote, un estrecho de agua para llegar donde lo espera un cómplice, en la orilla opuesta. Una corriente empuja el agua con rapidez constante <img src="https://latex.codecogs.com/png.latex?a"> en dirección perpendicular al estrecho. El bote avanza con rapidez constante <img src="https://latex.codecogs.com/png.latex?b"> relativa al agua, y su capitán lo dirige en todo instante directamente hacia el punto de encuentro.</p>
+<p>Coloquen el punto de encuentro en el origen y el estrecho a lo largo del eje <img src="https://latex.codecogs.com/png.latex?x">, de modo que el bote parte del punto <img src="https://latex.codecogs.com/png.latex?(w,0)"> y la corriente actúa en la dirección negativa de <img src="https://latex.codecogs.com/png.latex?y">.</p>
+<ol type="1">
+<li><strong>Deducción.</strong> Muestren que las componentes de la velocidad del bote son <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bdx%7D%7Bdt%7D%20=%20-%5Cfrac%7Bbx%7D%7B%5Csqrt%7Bx%5E2+y%5E2%7D%7D,%20%5Cquad%20%5Cfrac%7Bdy%7D%7Bdt%7D%20=%20-%5Cfrac%7Bby%7D%7B%5Csqrt%7Bx%5E2+y%5E2%7D%7D%20-%20a"> Divídanlas para obtener <img src="https://latex.codecogs.com/png.latex?dy/dx"> y verifiquen que la ecuación resultante es homogénea.</li>
+<li><strong>Resuélvanla</strong> con la sustitución <img src="https://latex.codecogs.com/png.latex?y=vx">, y muestren que la familia de soluciones puede escribirse como <img src="https://latex.codecogs.com/png.latex?y+%5Csqrt%7Bx%5E2+y%5E2%7D=Ax%5E%7Bk+1%7D">, con <img src="https://latex.codecogs.com/png.latex?k=a/b">.</li>
+<li><strong>Condición inicial.</strong> Usando que el bote parte de <img src="https://latex.codecogs.com/png.latex?(w,0)">, hallen <img src="https://latex.codecogs.com/png.latex?A"> en términos de <img src="https://latex.codecogs.com/png.latex?w"> y <img src="https://latex.codecogs.com/png.latex?k">, y despejen <img src="https://latex.codecogs.com/png.latex?y"> como función explícita de <img src="https://latex.codecogs.com/png.latex?x">.</li>
+<li><strong>Interpretación.</strong> ¿Para qué valores de <img src="https://latex.codecogs.com/png.latex?k=a/b"> llega el bote exactamente al punto de encuentro cuando <img src="https://latex.codecogs.com/png.latex?x%5Cto0">? ¿Qué le ocurre a la trayectoria si la corriente es tan rápida como el bote, o más rápida todavía?</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dividiendo las dos componentes de la velocidad,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bdy%7D%7Bdx%7D%20=%20%5Cfrac%7Ba%5Csqrt%7Bx%5E2+y%5E2%7D+by%7D%7Bbx%7D"></p>
+<p>que es homogénea (numerador y denominador son homogéneos de grado 1). Con <img src="https://latex.codecogs.com/png.latex?y=vx"> y <img src="https://latex.codecogs.com/png.latex?k=a/b">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?v+x%5Cfrac%7Bdv%7D%7Bdx%7D=k%5Csqrt%7B1+v%5E2%7D+v%20%5C;%5CLongrightarrow%5C;%20%5Cfrac%7Bdv%7D%7B%5Csqrt%7B1+v%5E2%7D%7D=k%5Cfrac%7Bdx%7D%7Bx%7D%20%5C;%5CLongrightarrow%5C;%20v+%5Csqrt%7B1+v%5E2%7D=Ax%5Ek"></p>
+<p>Multiplicando por <img src="https://latex.codecogs.com/png.latex?x">: <img src="https://latex.codecogs.com/png.latex?y+%5Csqrt%7Bx%5E2+y%5E2%7D=Ax%5E%7Bk+1%7D">. Con <img src="https://latex.codecogs.com/png.latex?x=w">, <img src="https://latex.codecogs.com/png.latex?y=0">: <img src="https://latex.codecogs.com/png.latex?A=w%5E%7B-k%7D">, y despejando <img src="https://latex.codecogs.com/png.latex?y">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?y(x)%20=%20%5Cfrac%7Bw%7D%7B2%7D%5Cleft%5B%5Cleft(%5Cfrac%7Bx%7D%7Bw%7D%5Cright)%5E%7Bk+1%7D-%5Cleft(%5Cfrac%7Bx%7D%7Bw%7D%5Cright)%5E%7B1-k%7D%5Cright%5D"></p>
+<p>Cuando <img src="https://latex.codecogs.com/png.latex?x%5Cto0%5E+">: si <img src="https://latex.codecogs.com/png.latex?k%3C1">, <img src="https://latex.codecogs.com/png.latex?y%5Cto0"> y el bote llega exactamente al punto de encuentro; si <img src="https://latex.codecogs.com/png.latex?k=1">, <img src="https://latex.codecogs.com/png.latex?y%5Cto-w/2">, llega a la orilla pero desviado medio ancho del estrecho; si <img src="https://latex.codecogs.com/png.latex?k%3E1">, <img src="https://latex.codecogs.com/png.latex?y%5Cto-%5Cinfty">, nunca cruza. El umbral está en <img src="https://latex.codecogs.com/png.latex?k=a/b=1">: basta con que el bote sea apenas más lento que la corriente para que el cruce fracase.</p>
+</div>
+</div>
+</section>
+<section id="la-persecución-directa" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="la-persecución-directa"><span class="header-section-number">2</span> La persecución directa</h2>
+<p>El cómplice, al ver que ha sido descubierto, decide huir en línea recta a lo largo de la costa (el eje <img src="https://latex.codecogs.com/png.latex?y">) con rapidez constante <img src="https://latex.codecogs.com/png.latex?a">. Un guardacostas, que parte del punto <img src="https://latex.codecogs.com/png.latex?(c,0)">, lo persigue con rapidez constante <img src="https://latex.codecogs.com/png.latex?b%3Ea">, apuntando en todo instante directamente hacia la posición actual del fugitivo.</p>
+<p>Con el mismo procedimiento de la sección anterior (eliminando el tiempo entre las dos componentes de la velocidad, y derivando una vez más respecto a <img src="https://latex.codecogs.com/png.latex?x">), puede mostrarse que la trayectoria <img src="https://latex.codecogs.com/png.latex?y(x)"> del guardacostas satisface</p>
+<p><img src="https://latex.codecogs.com/png.latex?x%5Cfrac%7Bd%5E2y%7D%7Bdx%5E2%7D%20=%20k%5Csqrt%7B1+%5Cleft(%5Cfrac%7Bdy%7D%7Bdx%7D%5Cright)%5E2%7D,%20%5Cquad%20k=%5Cfrac%7Ba%7D%7Bb%7D"></p>
+<p>con las condiciones iniciales <img src="https://latex.codecogs.com/png.latex?x=c">, <img src="https://latex.codecogs.com/png.latex?y=0">, <img src="https://latex.codecogs.com/png.latex?y'=0"> (el guardacostas arranca apuntando horizontalmente, pues el fugitivo está justo enfrente de él).</p>
+<ol type="1">
+<li><strong>Reducción de orden.</strong> Sea <img src="https://latex.codecogs.com/png.latex?p=dy/dx">. Reescriban la ecuación como una ecuación de primer orden, separable, en <img src="https://latex.codecogs.com/png.latex?p"> y <img src="https://latex.codecogs.com/png.latex?x">. Intégrenla y muestren que <img src="https://latex.codecogs.com/png.latex?p=%5Cfrac12%5Cleft%5B(x/c)%5Ek-(c/x)%5Ek%5Cright%5D">.</li>
+<li><strong>Intégrenla otra vez</strong>, usando <img src="https://latex.codecogs.com/png.latex?y(c)=0">, para hallar <img src="https://latex.codecogs.com/png.latex?y(x)"> de forma explícita.</li>
+<li><strong>El alcance.</strong> Con <img src="https://latex.codecogs.com/png.latex?k=1/2"> y <img src="https://latex.codecogs.com/png.latex?c=4"> millas náuticas, hallen el valor de <img src="https://latex.codecogs.com/png.latex?y"> al que llega la persecución cuando <img src="https://latex.codecogs.com/png.latex?x%5Cto0"> (el punto donde el guardacostas alcanza al fugitivo).</li>
+<li><strong>Interpretación.</strong> ¿Por qué la condición <img src="https://latex.codecogs.com/png.latex?k%3C1">, es decir <img src="https://latex.codecogs.com/png.latex?b%3Ea">, es indispensable para que el guardacostas alcance al fugitivo en algún punto finito?</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con <img src="https://latex.codecogs.com/png.latex?p=y'">, <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7Bdp%7D%7B%5Csqrt%7B1+p%5E2%7D%7D=k%5Cdfrac%7Bdx%7D%7Bx%7D">, e integrando,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7Basinh%7D(p)%20=%20k%5Cln%20x%20+%20C"></p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?p=0"> en <img src="https://latex.codecogs.com/png.latex?x=c">: <img src="https://latex.codecogs.com/png.latex?C=-k%5Cln%20c">, así que</p>
+<p><img src="https://latex.codecogs.com/png.latex?p%20=%20%5Csinh%5Cbig(k%5Cln(x/c)%5Cbig)%20=%20%5Cfrac12%5Cleft%5B%5Cleft(%5Cfrac%7Bx%7D%7Bc%7D%5Cright)%5Ek-%5Cleft(%5Cfrac%7Bc%7D%7Bx%7D%5Cright)%5Ek%5Cright%5D"></p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?k=1/2">, <img src="https://latex.codecogs.com/png.latex?c=4">: <img src="https://latex.codecogs.com/png.latex?p(x)=%5Cdfrac%7B%5Csqrt%20x%7D%7B4%7D-%5Cdfrac%7B1%7D%7B%5Csqrt%20x%7D">, e integrando de nuevo con <img src="https://latex.codecogs.com/png.latex?y(4)=0">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?y(x)%20=%20%5Cfrac16%20x%5E%7B3/2%7D%20-%202%5Csqrt%20x%20+%20%5Cfrac83"></p>
+<p>Cuando <img src="https://latex.codecogs.com/png.latex?x%5Cto0%5E+"> los dos primeros términos se anulan y <img src="https://latex.codecogs.com/png.latex?y%5Cto%208/3"> millas náuticas, el punto donde el guardacostas alcanza al fugitivo (coincide con la fórmula cerrada <img src="https://latex.codecogs.com/png.latex?y=%5Cdfrac%7Bck%7D%7B1-k%5E2%7D=%5Cdfrac%7B4%5Ccdot%5Cfrac12%7D%7B1-%5Cfrac14%7D=%5Cdfrac83">).</p>
+<p>La integral que da <img src="https://latex.codecogs.com/png.latex?y(x)"> converge en <img src="https://latex.codecogs.com/png.latex?x=0"> solo porque el exponente de <img src="https://latex.codecogs.com/png.latex?x%5E%7B1-k%7D"> es positivo, es decir <img src="https://latex.codecogs.com/png.latex?k%3C1">. Si el guardacostas no fuera más rápido que el fugitivo, <img src="https://latex.codecogs.com/png.latex?x"> se acercaría a <img src="https://latex.codecogs.com/png.latex?0"> pero <img src="https://latex.codecogs.com/png.latex?y"> crecería sin límite: la persecución nunca terminaría en un punto finito.</p>
+</div>
+</div>
+</section>
+<section id="el-circuito-de-carga" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="el-circuito-de-carga"><span class="header-section-number">3</span> El circuito de carga</h2>
+<p>En un circuito en serie con una resistencia <img src="https://latex.codecogs.com/png.latex?R">, un capacitor de capacitancia <img src="https://latex.codecogs.com/png.latex?C"> y una fuente de voltaje constante <img src="https://latex.codecogs.com/png.latex?E">, la ley de voltajes de Kirchhoff da la ecuación para el voltaje <img src="https://latex.codecogs.com/png.latex?v_C(t)"> en el capacitor:</p>
+<p><img src="https://latex.codecogs.com/png.latex?RC%5C,%5Cfrac%7Bdv_C%7D%7Bdt%7D%20+%20v_C%20=%20E,%20%5Cquad%20v_C(0)=0"></p>
+<ol type="1">
+<li><strong>Factor integrante.</strong> Escriban la ecuación en la forma estándar <img src="https://latex.codecogs.com/png.latex?(v_C)'+Pv_C=Q">, identifiquen el factor integrante, y resuelvan para mostrar que <img src="https://latex.codecogs.com/png.latex?v_C(t)=E%5Cleft(1-e%5E%7B-t/(RC)%7D%5Cright)">.</li>
+<li><strong>Los números.</strong> Con <img src="https://latex.codecogs.com/png.latex?R=4.7"> kΩ, <img src="https://latex.codecogs.com/png.latex?C=220"> µF y <img src="https://latex.codecogs.com/png.latex?E=9"> V, escriban la expresión explícita de <img src="https://latex.codecogs.com/png.latex?v_C(t)"> en voltios, con <img src="https://latex.codecogs.com/png.latex?t"> en segundos.</li>
+<li><strong>Interpretación.</strong> ¿Cuánto tiempo tarda el capacitor en alcanzar el 80% del voltaje de la fuente?</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En forma estándar, <img src="https://latex.codecogs.com/png.latex?v_C'+%5Cdfrac%7B1%7D%7BRC%7Dv_C=%5Cdfrac%7BE%7D%7BRC%7D">, con factor integrante <img src="https://latex.codecogs.com/png.latex?%5Cmu=e%5E%7Bt/(RC)%7D">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bd%7D%7Bdt%7D%5Cleft%5Bv_C%20e%5E%7Bt/(RC)%7D%5Cright%5D%20=%20%5Cfrac%7BE%7D%7BRC%7De%5E%7Bt/(RC)%7D%20%5C;%5CLongrightarrow%5C;%20v_C(t)%20=%20E%5Cleft(1-e%5E%7B-t/(RC)%7D%5Cright)"></p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?R=4700%5C%20%5COmega">, <img src="https://latex.codecogs.com/png.latex?C=220%5Ctimes10%5E%7B-6%7D"> F: <img src="https://latex.codecogs.com/png.latex?RC=1.034"> s, así que <img src="https://latex.codecogs.com/png.latex?v_C(t)=9%5Cleft(1-e%5E%7B-t/1.034%7D%5Cright)"> V.</p>
+<p>Para el 80%: <img src="https://latex.codecogs.com/png.latex?0.8(9)=9%5Cleft(1-e%5E%7B-t/1.034%7D%5Cright)%20%5CRightarrow%20e%5E%7B-t/1.034%7D=0.2%20%5CRightarrow%20t=1.034%5Cln5%20%5Capprox%20%5Ctextbf%7B1.66%20s%7D">.</p>
+</div>
+</div>
+</section>
+<section id="líneas-de-campo" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="líneas-de-campo"><span class="header-section-number">4</span> Líneas de campo</h2>
+<p>Dos alambres delgados, perpendiculares al plano <img src="https://latex.codecogs.com/png.latex?xy"> y cargados con densidades lineales de carga opuestas, <img src="https://latex.codecogs.com/png.latex?+%5Clambda"> y <img src="https://latex.codecogs.com/png.latex?-%5Clambda">, están separados una distancia <img src="https://latex.codecogs.com/png.latex?2a">. El potencial eléctrico en un punto del plano es <img src="https://latex.codecogs.com/png.latex?V=2k%5Clambda%5B%5Cln%20r_2-%5Cln%20r_1%5D">, con <img src="https://latex.codecogs.com/png.latex?r_1,r_2"> las distancias a cada alambre y <img src="https://latex.codecogs.com/png.latex?k=1/(4%5Cpi%5Cvarepsilon_0)%5Capprox8.99%5Ctimes10%5E9"> N·m²/C².</p>
+<p>Coloquen los alambres en <img src="https://latex.codecogs.com/png.latex?(a,0)"> y <img src="https://latex.codecogs.com/png.latex?(-a,0)"> y trabajen con las coordenadas adimensionales <img src="https://latex.codecogs.com/png.latex?%5Cxi=X/a">, <img src="https://latex.codecogs.com/png.latex?%5Ceta=Y/a">, de modo que <img src="https://latex.codecogs.com/png.latex?V=2k%5Clambda%5Ccdot%5Cvarphi(%5Cxi,%5Ceta)">, con</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvarphi(%5Cxi,%5Ceta)%20=%20%5Cfrac12%5Cln%5Cleft%5B(%5Cxi+1)%5E2+%5Ceta%5E2%5Cright%5D%20-%20%5Cfrac12%5Cln%5Cleft%5B(%5Cxi-1)%5E2+%5Ceta%5E2%5Cright%5D"></p>
+<p>Las curvas <img src="https://latex.codecogs.com/png.latex?%5Cvarphi=%5Ctext%7Bconst%7D"> son las líneas equipotenciales; las líneas de campo eléctrico son, en cada punto, perpendiculares a ellas.</p>
+<ol type="1">
+<li><strong>Planteo.</strong> Las líneas de campo satisfacen <img src="https://latex.codecogs.com/png.latex?Md%5Cxi+Nd%5Ceta=0">, con <img src="https://latex.codecogs.com/png.latex?M=%5Cpartial%5Cvarphi/%5Cpartial%5Ceta"> y <img src="https://latex.codecogs.com/png.latex?N=-%5Cpartial%5Cvarphi/%5Cpartial%5Cxi">. Calculen <img src="https://latex.codecogs.com/png.latex?M"> y <img src="https://latex.codecogs.com/png.latex?N"> explícitamente, y verifiquen que la ecuación es exacta.</li>
+<li><strong>Resuélvanla</strong>, integrando <img src="https://latex.codecogs.com/png.latex?M"> respecto a <img src="https://latex.codecogs.com/png.latex?%5Cxi"> y ajustando con <img src="https://latex.codecogs.com/png.latex?N">, para mostrar que las líneas de campo satisfacen <img src="https://latex.codecogs.com/png.latex?%5Carctan%5Cleft(%5Cfrac%7B%5Cxi+1%7D%7B%5Ceta%7D%5Cright)-%5Carctan%5Cleft(%5Cfrac%7B%5Cxi-1%7D%7B%5Ceta%7D%5Cright)=%5Ctext%7Bconst%7D">.</li>
+<li><strong>Interpretación geométrica.</strong> Usando la identidad de la tangente de una diferencia, muestren que esta condición equivale a que <img src="https://latex.codecogs.com/png.latex?(%5Cxi,%5Ceta)"> esté sobre una circunferencia que pasa por los dos alambres.</li>
+<li><strong>Los números.</strong> Con <img src="https://latex.codecogs.com/png.latex?%5Clambda=5"> nC/m y <img src="https://latex.codecogs.com/png.latex?a=1"> cm, hallen el potencial <img src="https://latex.codecogs.com/png.latex?V"> en el punto <img src="https://latex.codecogs.com/png.latex?X=0.5"> cm, <img src="https://latex.codecogs.com/png.latex?Y=0.5"> cm.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><img src="https://latex.codecogs.com/png.latex?M=%5Cvarphi_%5Ceta=%5Cfrac%7B-4%5Cxi%5Ceta%7D%7BD%7D,%20%5Cqquad%20N=-%5Cvarphi_%5Cxi=%5Cfrac%7B2%5Cxi%5E2-2%5Ceta%5E2-2%7D%7BD%7D,%20%5Cqquad%20D=%5Cleft%5B(%5Cxi+1)%5E2+%5Ceta%5E2%5Cright%5D%5Cleft%5B(%5Cxi-1)%5E2+%5Ceta%5E2%5Cright%5D"></p>
+<p><img src="https://latex.codecogs.com/png.latex?M_%5Ceta=N_%5Cxi"> se cumple porque <img src="https://latex.codecogs.com/png.latex?%5Cvarphi"> es armónica (<img src="https://latex.codecogs.com/png.latex?%5Cvarphi_%7B%5Cxi%5Cxi%7D+%5Cvarphi_%7B%5Ceta%5Ceta%7D=0">) fuera de los alambres, que es justamente la condición que hace de <img src="https://latex.codecogs.com/png.latex?%5Cvarphi"> un potencial electrostático válido. Integrando <img src="https://latex.codecogs.com/png.latex?M"> respecto a <img src="https://latex.codecogs.com/png.latex?%5Cxi"> y ajustando con <img src="https://latex.codecogs.com/png.latex?N"> (el término que falta resulta ser cero),</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cpsi(%5Cxi,%5Ceta)%20=%20%5Carctan%5Cleft(%5Cfrac%7B%5Cxi+1%7D%7B%5Ceta%7D%5Cright)%20-%20%5Carctan%5Cleft(%5Cfrac%7B%5Cxi-1%7D%7B%5Ceta%7D%5Cright)%20=%20%5Ctext%7Bconst%7D"></p>
+<p>Con la identidad <img src="https://latex.codecogs.com/png.latex?%5Ctan(A-B)=%5Cdfrac%7B%5Ctan%20A-%5Ctan%20B%7D%7B1+%5Ctan%20A%5Ctan%20B%7D">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ctan(%5Ctext%7Bconst%7D)%20=%20%5Cfrac%7B2%5Ceta%7D%7B%5Cxi%5E2+%5Ceta%5E2-1%7D"></p>
+<p>y llamando <img src="https://latex.codecogs.com/png.latex?D_0=%5Ccot(%5Ctext%7Bconst%7D)">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cxi%5E2+%5Ceta%5E2-2D_0%5Ceta-1=0%20%5C;%5CLongrightarrow%5C;%20%5Cxi%5E2+(%5Ceta-D_0)%5E2=1+D_0%5E2"></p>
+<p>circunferencias centradas en el eje <img src="https://latex.codecogs.com/png.latex?%5Ceta"> que, en <img src="https://latex.codecogs.com/png.latex?(%5Cxi,%5Ceta)=(%5Cpm1,0)">, dan <img src="https://latex.codecogs.com/png.latex?1+0-0-1=0">: pasan exactamente por los dos alambres, como debe ser, pues son las fuentes y sumideros del campo.</p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?%5Clambda=5%5Ctimes10%5E%7B-9%7D"> C/m, <img src="https://latex.codecogs.com/png.latex?a=1"> cm: <img src="https://latex.codecogs.com/png.latex?2k%5Clambda%5Capprox89.9"> V. En <img src="https://latex.codecogs.com/png.latex?%5Cxi=%5Ceta=0.5">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvarphi(0.5,0.5)%20=%20%5Cfrac12%5Cln(2.5)-%5Cfrac12%5Cln(0.5)%20=%20%5Cfrac12%5Cln5%20%5Capprox%200.805"></p>
+<p><img src="https://latex.codecogs.com/png.latex?V%20%5Capprox%2089.9%5Ctimes0.805%20%5Capprox%20%5Ctextbf%7B72.3%20V%7D"></p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/odes/taller-2/</guid>
+  <pubDate>Tue, 22 Sep 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Reducción de Orden</title>
   <dc:creator>Arturo Sanjuán</dc:creator>

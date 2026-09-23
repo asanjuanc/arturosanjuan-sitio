@@ -3,7 +3,7 @@ title: "Research"
 lang: en
 ---
 
-*[🇨🇴 español](index.es.qmd)*
+
 
 ## Research interests
 
