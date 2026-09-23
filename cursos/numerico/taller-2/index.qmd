@@ -13,7 +13,7 @@ format:
     code-fold: false
     smooth-scroll: true
     highlight-style: github
-order: 7
+order: 10
 ---
 
 El mismo equipo técnico que investigó por qué la corrección de rumbo se congelaba en cero durante el primer taller reporta ahora un caso distinto: el dron combina dos lecturas de posición resolviendo $A(\epsilon)\mathbf{x}=\mathbf{b}$ en cada ciclo, con
