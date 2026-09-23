@@ -19,6 +19,10 @@ In 2016 I received an honorable mention with the Yu Takeuchi medal, awarded by t
 
 I am a reviewer for the American Mathematical Society (AMS) and secretary of the Sociedad Colombiana de Matemáticas (SCM). I direct the Semillero en Análisis Matemático (SAMAT) at Universidad Distrital, an undergraduate research training group, through which we organized the I Encuentro Juvenil en Ecuaciones Diferenciales in April 2025.
 
+## A small piece of lineage
+
+I've directed undergraduate and master's students, but nothing yet at the doctoral level that the [Mathematics Genealogy Project](https://www.mathgenealogy.org/id.php?id=191294) would register — so for now my branch of the tree only grows upward. It runs back through Alfonso Castro and José Francisco Caicedo, and from there through Poisson, the Bernoullis, and eventually Leibniz — which is also, not coincidentally, the name of my main laptop. Fittingly, d'Alembert solved the continuous wave equation I still work on today by taking to the limit a discrete, finite-difference model that Johann Bernoulli had studied two decades earlier. [See the full tree →](/research/genealogy/)
+
 ## Contact
 
 Email: <aasanjuanc@udistrital.edu.co>

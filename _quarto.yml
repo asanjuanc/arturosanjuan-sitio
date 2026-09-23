@@ -32,6 +32,8 @@ website:
         text: cursos
       - href: trabajos/index.qmd
         text: trabajos
+      - href: research/genealogy/index.qmd
+        text: genealogy
       - href: about.qmd
         text: about
       - href: links.qmd

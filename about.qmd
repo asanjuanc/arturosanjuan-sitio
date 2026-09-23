@@ -18,6 +18,11 @@ En 2016 recibí una mención de honor con la medalla Yu Takeuchi, otorgada por l
 
 Soy revisor de la American Mathematical Society (AMS) y secretario de la Sociedad Colombiana de Matemáticas (SCM). Dirijo el Semillero en Análisis Matemático (SAMAT) de la Universidad Distrital, un espacio de formación en investigación para estudiantes de pregrado, con el que organizamos el I Encuentro Juvenil en Ecuaciones Diferenciales en abril de 2025.
 
+
+## Un pedacito de linaje
+
+He dirigido tesis de pregrado y maestría, pero todavía ninguna de doctorado, que es lo único que registra el [Mathematics Genealogy Project](https://www.mathgenealogy.org/id.php?id=191294); así que por ahora mi rama del árbol solo crece hacia arriba. Se remonta a Alfonso Castro y José Francisco Caicedo, y desde ahí a Poisson, los Bernoulli y, finalmente, a Leibniz, que no por casualidad es también el nombre de mi portátil principal. Como anécdota, d'Alembert llegó a solución de la ecuación de onda continua con la que sigo trabajando hoy llevando al límite un modelo discreto, en diferencias finitas, que Johann Bernoulli ya había estudiado dos décadas antes. [Ver el árbol completo →](/research/genealogy/)
+
 ## Contacto
 
 Correo: <aasanjuanc@udistrital.edu.co>

@@ -1028,6 +1028,13 @@
     "text": "Distinciones y servicio académico\nEn 2016 recibí una mención de honor con la medalla Yu Takeuchi, otorgada por la Academia Colombiana de Ciencias Exactas, Físicas y Naturales a los mejores trabajos en ciencias matemáticas.\nSoy revisor de la American Mathematical Society (AMS) y secretario de la Sociedad Colombiana de Matemáticas (SCM). Dirijo el Semillero en Análisis Matemático (SAMAT) de la Universidad Distrital, un espacio de formación en investigación para estudiantes de pregrado, con el que organizamos el I Encuentro Juvenil en Ecuaciones Diferenciales en abril de 2025."
   },
   {
+    "objectID": "about.html#un-pedacito-de-linaje",
+    "href": "about.html#un-pedacito-de-linaje",
+    "title": "Acerca de",
+    "section": "Un pedacito de linaje",
+    "text": "Un pedacito de linaje\nHe dirigido tesis de pregrado y maestría, pero todavía ninguna de doctorado, que es lo único que registra el Mathematics Genealogy Project; así que por ahora mi rama del árbol solo crece hacia arriba. Se remonta a Alfonso Castro y José Francisco Caicedo, y desde ahí a Poisson, los Bernoulli y, finalmente, a Leibniz, que no por casualidad es también el nombre de mi portátil principal. Como anécdota, d’Alembert llegó a solución de la ecuación de onda continua con la que sigo trabajando hoy llevando al límite un modelo discreto, en diferencias finitas, que Johann Bernoulli ya había estudiado dos décadas antes. Ver el árbol completo →"
+  },
+  {
     "objectID": "about.html#contacto",
     "href": "about.html#contacto",
     "title": "Acerca de",
@@ -1077,6 +1084,20 @@
     "text": "Elsewhere\n\nORCID\nGoogle Scholar\nMathSciNet\nScopus\nMathematics Genealogy Project\nCvLAC\nGitHub"
   },
   {
+    "objectID": "research/genealogy/index.html",
+    "href": "research/genealogy/index.html",
+    "title": "Mathematical genealogy",
+    "section": "",
+    "text": "Mathematicians keep an unusual kind of record: not who taught them a subject, but who supervised their doctoral thesis, and who supervised that person’s, and so on. The Mathematics Genealogy Project has been collecting these advisor-student links since 1997. My own entry is id 191294.\nMy dissertation, Membranas Vibrantes (Universidad Nacional de Colombia, 2015), was co-advised by Alfonso Castro and José Francisco Caicedo. Caicedo himself was a student of Castro, so the line briefly closes on itself before continuing upward.\nFrom there the tree splits into two branches that meet again at Siméon Denis Poisson: one through Alan Lazer, Robert Alonzo Moore, George Whaples, Mark Ingraham and E. H. Moore up to Hubert Anson Newton; the other through d’Alembert, Léonor Caron and Pierre Varignon up to Malebranche and, by attribution rather than formal supervision, Leibniz.\nIt’s a fitting ancestry for my own field. The wave equation I work on today has its roots in exactly this branch: in 1727, Johann Bernoulli modeled a vibrating string as a finite chain of discrete masses connected by springs, deriving a difference equation for each mass’s displacement. Two decades later, d’Alembert took that discrete model to its continuous limit, arriving at the wave equation itself and solving it in the same stroke — only for Daniel Bernoulli to propose a rival solution in trigonometric series, sparking a three-way, decades-long dispute with d’Alembert and Euler over which one was actually general. Lagrange revisited the problem in 1759 and came close to a resolution without quite reaching one; it would take Fourier, half a century later, to show both solutions were really the same thing, forcing mathematicians to rethink what a “function” was allowed to be in the first place."
+  },
+  {
+    "objectID": "research/genealogy/index.html#the-chain",
+    "href": "research/genealogy/index.html#the-chain",
+    "title": "Mathematical genealogy",
+    "section": "The chain",
+    "text": "The chain\n\n\n\n\n\n\n\n\nMathematician\nInstitution\nYear\n\n\n\n\nArturo Sanjuán\nUniversidad Nacional de Colombia\n2015\n\n\nJosé Francisco Caicedo\nUniversidad Nacional de Colombia\n1998\n\n\nAlfonso Castro\nUniversity of Cincinnati\n1977\n\n\nAlan C. Lazer\nCarnegie Mellon University\n1964\n\n\nRobert Alonzo Moore\nIndiana University\n1962\n\n\nGeorge W. Whaples\nUniversity of Wisconsin\n—\n\n\nMark Hoyt Ingraham\nUniversity of Chicago\n1924\n\n\nE. H. Moore\nYale University\n1885\n\n\nHubert Anson Newton\nYale University\n1850\n\n\nMichel Chasles\nÉcole Polytechnique\n1814\n\n\nSiméon Denis Poisson\nÉcole Polytechnique\n1800\n\n\nJoseph-Louis Lagrange / Pierre-Simon Laplace\n—\n—\n\n\n(Lagrange branch) Leonhard Euler\nUniversity of Basel\n1726\n\n\n(Lagrange branch) Johann Bernoulli\nUniversity of Basel\n1694\n\n\n(Lagrange branch) Jacob Bernoulli\nUniversity of Basel\n1684\n\n\n(Laplace branch) Jean le Rond d’Alembert\nCollège Mazarin\n1735\n\n\n(Laplace branch) Léonor Caron\nCollège Mazarin\n1710\n\n\n(Laplace branch) Pierre Varignon\nAcadémie royale des sciences\n1687\n\n\nNicolas Malebranche\n—\n—\n\n\nGottfried Wilhelm Leibniz\nLeipzig\n1666\n\n\n\nA couple of caveats worth stating plainly. Advisor-student links before roughly 1800 rarely mean a doctoral supervision in the modern sense; several of these are informal mentorships or attributions the project itself flags as uncertain (this is explicitly the case for Malebranche and Leibniz, and for Lagrange as advisor to Poisson). I’ve kept the chain as the Mathematics Genealogy Project records it, rather than editing it toward what a stricter modern reading might prefer.\nAs for my own branch I’ve directed undergraduate and master’s students, but nothing yet at the doctoral level that the Mathematics Genealogy Project would register, so for now the tree only grows upward from here."
+  },
+  {
     "objectID": "index.en.html",
     "href": "index.en.html",
     "title": "Arturo Sanjuán",
@@ -1103,6 +1124,13 @@
     "title": "About",
     "section": "Distinctions and academic service",
     "text": "Distinctions and academic service\nIn 2016 I received an honorable mention with the Yu Takeuchi medal, awarded by the Colombian Academy of Exact, Physical, and Natural Sciences for the best work in mathematical sciences.\nI am a reviewer for the American Mathematical Society (AMS) and secretary of the Sociedad Colombiana de Matemáticas (SCM). I direct the Semillero en Análisis Matemático (SAMAT) at Universidad Distrital, an undergraduate research training group, through which we organized the I Encuentro Juvenil en Ecuaciones Diferenciales in April 2025."
+  },
+  {
+    "objectID": "about.en.html#a-small-piece-of-lineage",
+    "href": "about.en.html#a-small-piece-of-lineage",
+    "title": "About",
+    "section": "A small piece of lineage",
+    "text": "A small piece of lineage\nI’ve directed undergraduate and master’s students, but nothing yet at the doctoral level that the Mathematics Genealogy Project would register — so for now my branch of the tree only grows upward. It runs back through Alfonso Castro and José Francisco Caicedo, and from there through Poisson, the Bernoullis, and eventually Leibniz — which is also, not coincidentally, the name of my main laptop. Fittingly, d’Alembert solved the continuous wave equation I still work on today by taking to the limit a discrete, finite-difference model that Johann Bernoulli had studied two decades earlier. See the full tree →"
   },
   {
     "objectID": "about.en.html#contact",
