@@ -13,7 +13,7 @@ format:
     code-fold: false
     smooth-scroll: true
     highlight-style: github
-order: 6
+order: 7
 ---
 
 En la nota de sistemas lineales prometimos volver sobre esto: triangularizar un sistema hace barata la sustitución, y ahora construimos esa triangularización. Seguimos la sección 2.4 del libro de Driscoll y Braun, con la misma notación de productos exteriores.

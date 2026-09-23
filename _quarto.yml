@@ -58,6 +58,7 @@ website:
         - cursos/odes/homoexactas/index.qmd
         - cursos/odes/fintegrante/index.qmd
         - cursos/odes/reduccionorden/index.qmd
+        - cursos/odes/taller-2/index.qmd
     - id: numerico
       title: "Análisis Numérico"
       style: docked
@@ -75,6 +76,7 @@ website:
         - cursos/numerico/normas/index.qmd
         - cursos/numerico/complejidad/index.qmd
         - cursos/numerico/lu/index.qmd
+        - cursos/numerico/taller-2/index.qmd
     - id: probabilidad
       title: "Probabilidad"
       style: docked
@@ -93,6 +95,7 @@ website:
         - cursos/probabilidad/vacontinuas/index.qmd
         - cursos/probabilidad/limitenormal/index.qmd
         - cursos/probabilidad/continuasespeciales/index.qmd
+        - cursos/probabilidad/taller-2/index.qmd
 
 format:
   html:

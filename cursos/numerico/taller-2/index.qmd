@@ -1,0 +1,410 @@
+---
+title: "Taller 2"
+subtitle: "Autopsia numérica: normas matriciales, condicionamiento y pivoteo"
+description: "Taller con solución sobre norma infinito, número de condición, factorización LU con y sin pivoteo parcial, y la distinción entre error hacia atrás y hacia adelante, con el caso A(ε)=[[ε,1],[1,1]] generalizado a un arreglo de n sensores."
+author: "Arturo Sanjuán"
+date: 2026-09-17
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 7
+---
+
+El mismo equipo técnico que investigó por qué la corrección de rumbo se congelaba en cero durante el primer taller reporta ahora un caso distinto: el dron combina dos lecturas de posición resolviendo $A(\epsilon)\mathbf{x}=\mathbf{b}$ en cada ciclo, con
+
+$$A(\epsilon) = \begin{bmatrix}\epsilon & 1\\ 1& 1\end{bmatrix}, \qquad \mathbf{b}=\begin{bmatrix}1+\epsilon\\2\end{bmatrix}, \qquad 0<\epsilon<1,$$
+
+sistema cuya solución exacta es $\mathbf{x}=(1,1)$ para cualquier valor de $\epsilon$ en ese rango. En algunos vuelos la corrección sale perfecta; en otros, inservible, y en el equipo todavía no saben si el problema está mal planteado o si el algoritmo que usan para resolverlo es el culpable. Como peritos numéricos, les corresponde investigar primero qué tan sensible es el sistema en sí mismo, y después revisar el algoritmo paso a paso hasta encontrar el punto exacto donde se pierde la precisión.
+
+## El expediente del sistema
+
+Calculen $\|A(\epsilon)\|_\infty$, encuentren $A(\epsilon)^{-1}$ y calculen $\|A(\epsilon)^{-1}\|_\infty$. Con los dos resultados escriban $\kappa_\infty(A(\epsilon))$ como función explícita de $\epsilon$, y calculen $\lim_{\epsilon\to0^+}\kappa_\infty(A(\epsilon))$. Ese límite es finito: ¿qué les dice sobre qué tan sensible es el sistema en sí, sin importar qué tan chico sea $\epsilon$?
+
+::: {.callout-tip title="Solución"}
+Por filas, $A(\epsilon)$ suma $\epsilon+1$ y $1+1=2$. Como $0<\epsilon<1$, se tiene $\epsilon+1<2$ siempre, así que
+
+$$\|A(\epsilon)\|_\infty = 2,$$
+
+un número que ni siquiera depende de $\epsilon$: nunca hay que tomar límite para esta primera norma.
+
+Con $\det A(\epsilon)=\epsilon-1=-(1-\epsilon)$,
+
+$$A(\epsilon)^{-1} = \frac{1}{\epsilon-1}\begin{bmatrix}1&-1\\-1&\epsilon\end{bmatrix} = \begin{bmatrix}\dfrac{-1}{1-\epsilon} & \dfrac{1}{1-\epsilon}\\[4pt] \dfrac{1}{1-\epsilon} & \dfrac{-\epsilon}{1-\epsilon}\end{bmatrix}.$$
+
+Sus filas suman $2/(1-\epsilon)$ y $(1+\epsilon)/(1-\epsilon)$; como $\epsilon<1$, $2>1+\epsilon$, así que la primera fila domina:
+
+$$\|A(\epsilon)^{-1}\|_\infty = \frac{2}{1-\epsilon}.$$
+
+Multiplicando,
+
+$$\kappa_\infty(A(\epsilon)) = 2\cdot\frac{2}{1-\epsilon} = \frac{4}{1-\epsilon}, \qquad \lim_{\epsilon\to0^+}\kappa_\infty(A(\epsilon)) = 4.$$
+
+El límite es finito (de hecho, $\kappa_\infty(A(\epsilon))$ nunca se aleja mucho de $4$ para $\epsilon$ chico): el *sistema* nunca está mal condicionado, sin importar qué tan pequeño se elija $\epsilon$. Cualquier fallo numérico que aparezca más adelante no puede explicarse por esta vía.
+:::
+
+## La eliminación sin pivotear
+
+Factoricen $A(\epsilon)=LU$ sin intercambiar filas (pivote $\epsilon$), encuentren $\kappa_\infty(L(\epsilon))$ y $\kappa_\infty(U(\epsilon))$, y describan en qué paso exacto vive el fenómeno de pérdida de precisión.
+
+::: {.callout-tip title="Solución"}
+El multiplicador es $\ell_{21}=1/\epsilon$, así que
+
+$$L(\epsilon) = \begin{bmatrix}1&0\\ 1/\epsilon & 1\end{bmatrix}, \qquad U(\epsilon) = \begin{bmatrix}\epsilon & 1\\ 0 & 1-1/\epsilon\end{bmatrix}.$$
+
+$L(\epsilon)$ tiene filas de suma $1$ y $1/\epsilon+1$, y su inversa $\begin{bmatrix}1&0\\-1/\epsilon&1\end{bmatrix}$ tiene exactamente las mismas sumas por fila, así que
+
+$$\kappa_\infty(L(\epsilon)) = \left(\frac1\epsilon+1\right)^2.$$
+
+Para $U(\epsilon)$, mientras $\epsilon\le\sqrt2-1$ (cierto para cualquier $\epsilon$ razonable de este taller) la fila que domina es la primera: $\|U(\epsilon)\|_\infty=1/\epsilon-1$. Con $U(\epsilon)^{-1}=\begin{bmatrix}1/\epsilon & -1/(\epsilon-1)\\0 & \epsilon/(\epsilon-1)\end{bmatrix}$, la suma de su primera fila es $1/\epsilon+1/(1-\epsilon)=1/[\epsilon(1-\epsilon)]$, que también domina. Multiplicando y cancelando el factor $(1-\epsilon)$,
+
+$$\kappa_\infty(U(\epsilon)) = \left(\frac{1-\epsilon}{\epsilon}\right)\cdot\frac{1}{\epsilon(1-\epsilon)} = \frac{1}{\epsilon^2} \qquad\text{exactamente.}$$
+
+Ambos números de condición se disparan cuando $\epsilon\to0^+$, mientras que $\kappa_\infty(A(\epsilon))\to4$. La pérdida de precisión no vive en el sistema: vive en la factorización. Concretamente, ocurre al formar $U_{22}=1-1/\epsilon$: en punto flotante esa resta es entre un $1$ y un número de tamaño $1/\epsilon$, así que el $1$ queda absorbido y su información se pierde relativa al tamaño de $1/\epsilon$. Esa pérdida, invisible mientras $U_{22}$ vive sola, se manifiesta al final: al despejar $x_1=(y_1-x_2)/\epsilon$, cualquier error absoluto acumulado en $x_2$ se divide entre el pivote diminuto $\epsilon$ y se amplifica por un factor $\sim1/\epsilon$, exactamente el mismo orden de magnitud que $\kappa_\infty(L)$ y $\kappa_\infty(U)$ acaban de anunciar.
+:::
+
+## La eliminación con pivoteo
+
+Factoricen $A(\epsilon)$ con pivoteo parcial y encuentren los nuevos $\kappa_\infty(L(\epsilon))$ y $\kappa_\infty(U(\epsilon))$. ¿Cómo interpretan estos nuevos valores?
+
+::: {.callout-tip title="Solución"}
+Como $|1|>|\epsilon|$, se intercambian las dos filas antes de eliminar. Con pivote $1$, el multiplicador es $\ell_{21}=\epsilon$:
+
+$$L(\epsilon) = \begin{bmatrix}1&0\\\epsilon&1\end{bmatrix}, \qquad U(\epsilon) = \begin{bmatrix}1&1\\0&1-\epsilon\end{bmatrix}.$$
+
+Las filas de $L$ suman $1$ y $1+\epsilon$ (e igual su inversa $\begin{bmatrix}1&0\\-\epsilon&1\end{bmatrix}$), así que $\kappa_\infty(L(\epsilon))=(1+\epsilon)^2$. Las de $U$ suman $2$ y $1-\epsilon$ (domina la primera), y $U^{-1}=\begin{bmatrix}1 & 1/(1-\epsilon)\\0&1/(1-\epsilon)\end{bmatrix}$ suma $1+1/(1-\epsilon)$ y $1/(1-\epsilon)$ (domina también la primera), así que
+
+$$\kappa_\infty(L(\epsilon)) = (1+\epsilon)^2 \;\xrightarrow{\epsilon\to0^+}\; 1, \qquad \kappa_\infty(U(\epsilon)) = \frac{2(2-\epsilon)}{1-\epsilon} \;\xrightarrow{\epsilon\to0^+}\; 4.$$
+
+Ambos se quedan acotados, del mismo orden que $\kappa_\infty(A(\epsilon))\to4$: la factorización pivoteada no le añade al sistema ninguna sensibilidad que $A$ no tuviera ya. Pivotear no cambia el condicionamiento real del problema (sigue siendo $\kappa_\infty(A)\to4$); lo que hace es impedir que el *algoritmo* fabrique, con una mala elección de pivote, una sensibilidad artificial que el problema original nunca tuvo.
+:::
+
+## La permutación y el método
+
+Encuentren la matriz de permutación $P$ tal que $PL$ sea triangular inferior, y comenten qué les dice del método la ecuación $PA=LU$.
+
+::: {.callout-tip title="Solución"}
+Si se registran los multiplicadores por fila *original* en vez de por la fila que ocupa cada una tras el intercambio, la fila 1 (la del pivote $\epsilon$, que termina eliminada) aporta el multiplicador $\epsilon$, y la fila 2 (la que sirvió de pivote) no elimina nada: en ese orden original la matriz de multiplicadores queda $\begin{bmatrix}\epsilon&1\\1&0\end{bmatrix}$, que no es triangular. Con
+
+$$P = \begin{bmatrix}0&1\\1&0\end{bmatrix}$$
+
+(la misma permutación del intercambio de filas de la sección anterior),
+
+$$PL = \begin{bmatrix}0&1\\1&0\end{bmatrix}\begin{bmatrix}\epsilon&1\\1&0\end{bmatrix} = \begin{bmatrix}1&0\\\epsilon&1\end{bmatrix},$$
+
+que sí es triangular inferior: es exactamente la $L$ pivoteada de la sección anterior. La misma $P$ que reordena las filas de $A$ es la que ordena correctamente los multiplicadores en $L$; no son dos permutaciones distintas, sino la misma escrita dos veces. Y en efecto, con esta $P$ y las $L,U$ pivoteadas,
+
+$$PA(\epsilon) = \begin{bmatrix}1&1\\\epsilon&1\end{bmatrix} = LU.$$
+
+La ecuación $PA=LU$ dice que pivotear parcialmente es lo mismo que reordenar de antemano las filas de $A$ (multiplicar por $P$) y factorizar directamente esa versión reordenada, sin más intercambios. Para resolver $A\mathbf{x}=\mathbf{b}$ hay que aplicar la misma reordenación al lado derecho antes de las dos sustituciones triangulares: $L\mathbf{z}=P\mathbf{b}$ y luego $U\mathbf{x}=\mathbf{z}$. Es exactamente lo que hace Julia internamente en `F = lu(A)`, con `F.p` guardando esa permutación.
+:::
+
+## En Julia
+
+En la práctica el dron no combina dos lecturas sino las de todo un arreglo de $n$ sensores, donde la primera sigue siendo la fuente del posible problema. La matriz conserva la misma pinta:
+
+$$A_n(\epsilon) = \begin{bmatrix}\epsilon&1&1&\cdots&1\\1&1&0&\cdots&0\\1&0&1&\cdots&0\\\vdots&\vdots&\vdots&\ddots&\vdots\\1&0&0&\cdots&1\end{bmatrix}, \qquad \mathbf{b}_n(\epsilon) = \begin{bmatrix}\epsilon+n-1\\2\\2\\\vdots\\2\end{bmatrix},$$
+
+de modo que, otra vez, la solución exacta es $\mathbf{x}=(1,1,\ldots,1)$. Para $n=2$ esto es exactamente lo que se acaba de trabajar a mano.
+
+::: {.callout-tip title="Solución"}
+**En vivo.** Muevan el control para $\epsilon$: la tabla se recalcula al instante, con una fila por cada $n$. Es la misma cuenta que hace `lu_ingenua` y `\` en Julia (mismo IEEE 754 de doble precisión), reescrita en JavaScript para que corra directo en esta página sin necesitar Pluto:
+
+```{=html}
+<div class="taller2-applet" style="border:1px solid #ccc;border-radius:8px;padding:1rem 1.25rem;margin:1.25rem 0;">
+  <label for="taller2-eps-slider" style="font-weight:bold;">
+    &epsilon; = <span id="taller2-eps-value" style="font-family:monospace;">1e-4</span>
+  </label>
+  <br>
+  <input type="range" id="taller2-eps-slider" min="-32" max="-1" step="1" value="-4"
+         style="width:100%;max-width:420px;margin-top:0.5rem;">
+  <table style="margin-top:1rem;border-collapse:collapse;width:100%;font-size:0.95em;">
+    <thead>
+      <tr style="border-bottom:2px solid #333;">
+        <th style="padding:4px 10px;text-align:right;">n</th>
+        <th style="padding:4px 10px;text-align:right;">residuo sin pivotear</th>
+        <th style="padding:4px 10px;text-align:right;">error sin pivotear</th>
+        <th style="padding:4px 10px;text-align:right;">residuo con pivoteo</th>
+        <th style="padding:4px 10px;text-align:right;">error con pivoteo</th>
+      </tr>
+    </thead>
+    <tbody id="taller2-tbody"></tbody>
+  </table>
+  <p style="font-size:0.85em;color:#666;margin-top:0.5rem;margin-bottom:0;">
+    En rojo, cuando el algoritmo sin pivotear se desvía más de 1e-2 o colapsa (<code>NaN</code>).
+  </p>
+</div>
+
+<script>
+(function () {
+  function arrowhead(n, eps) {
+    const A = Array.from({ length: n }, (_, i) => Array.from({ length: n }, (_, j) => (i === j ? 1 : 0)));
+    A[0][0] = eps;
+    for (let j = 1; j < n; j++) A[0][j] = 1.0;
+    for (let i = 1; i < n; i++) A[i][0] = 1.0;
+    return A;
+  }
+
+  function bvec(n, eps) {
+    const b = new Array(n).fill(2.0);
+    b[0] = eps + n - 1;
+    return b;
+  }
+
+  function matVec(A, x) {
+    return A.map(row => row.reduce((s, a, j) => s + a * x[j], 0));
+  }
+
+  function normInf(v) {
+    return Math.max(...v.map(Math.abs));
+  }
+
+  function naiveLU(A) {
+    const n = A.length;
+    const U = A.map(row => row.slice());
+    const L = Array.from({ length: n }, (_, i) => Array.from({ length: n }, (_, j) => (i === j ? 1 : 0)));
+    for (let k = 0; k < n - 1; k++) {
+      for (let i = k + 1; i < n; i++) {
+        const m = U[i][k] / U[k][k];
+        L[i][k] = m;
+        for (let j = k; j < n; j++) U[i][j] -= m * U[k][j];
+      }
+    }
+    return { L, U };
+  }
+
+  function solveLU(L, U, b) {
+    const n = b.length;
+    const y = new Array(n).fill(0);
+    for (let i = 0; i < n; i++) {
+      let s = 0;
+      for (let j = 0; j < i; j++) s += L[i][j] * y[j];
+      y[i] = b[i] - s;
+    }
+    const x = new Array(n).fill(0);
+    for (let i = n - 1; i >= 0; i--) {
+      let s = 0;
+      for (let j = i + 1; j < n; j++) s += U[i][j] * x[j];
+      x[i] = (y[i] - s) / U[i][i];
+    }
+    return x;
+  }
+
+  function solvePivoteado(A, b) {
+    const n = b.length;
+    const M = A.map(row => row.slice());
+    const rhs = b.slice();
+    for (let k = 0; k < n - 1; k++) {
+      let piv = k, max = Math.abs(M[k][k]);
+      for (let i = k + 1; i < n; i++) {
+        if (Math.abs(M[i][k]) > max) { max = Math.abs(M[i][k]); piv = i; }
+      }
+      if (piv !== k) {
+        [M[k], M[piv]] = [M[piv], M[k]];
+        [rhs[k], rhs[piv]] = [rhs[piv], rhs[k]];
+      }
+      for (let i = k + 1; i < n; i++) {
+        const m = M[i][k] / M[k][k];
+        for (let j = k; j < n; j++) M[i][j] -= m * M[k][j];
+        rhs[i] -= m * rhs[k];
+      }
+    }
+    const x = new Array(n).fill(0);
+    for (let i = n - 1; i >= 0; i--) {
+      let s = 0;
+      for (let j = i + 1; j < n; j++) s += M[i][j] * x[j];
+      x[i] = (rhs[i] - s) / M[i][i];
+    }
+    return x;
+  }
+
+  function fmt(x) {
+    if (Number.isNaN(x)) return 'NaN';
+    if (!isFinite(x)) return '&infin;';
+    return x.toExponential(2);
+  }
+
+  const slider = document.getElementById('taller2-eps-slider');
+  const epsLabel = document.getElementById('taller2-eps-value');
+  const tbody = document.getElementById('taller2-tbody');
+
+  function actualizar() {
+    const exp = parseInt(slider.value, 10);
+    const eps = Math.pow(10, exp);
+    epsLabel.textContent = eps.toExponential(0);
+
+    const ns = [2, 4, 8, 16, 32];
+    let filas = '';
+    for (const n of ns) {
+      const A = arrowhead(n, eps);
+      const b = bvec(n, eps);
+      const xExacto = new Array(n).fill(1.0);
+
+      let residuoSin, errorSin;
+      try {
+        const { L, U } = naiveLU(A);
+        const xSin = solveLU(L, U, b);
+        const AxSin = matVec(A, xSin);
+        residuoSin = normInf(b.map((bi, i) => bi - AxSin[i]));
+        errorSin = normInf(xSin.map((xi, i) => xi - xExacto[i]));
+      } catch (e) {
+        residuoSin = NaN; errorSin = NaN;
+      }
+
+      const xCon = solvePivoteado(A, b);
+      const AxCon = matVec(A, xCon);
+      const residuoCon = normInf(b.map((bi, i) => bi - AxCon[i]));
+      const errorCon = normInf(xCon.map((xi, i) => xi - xExacto[i]));
+
+      const malo = (v) => Number.isNaN(v) || !isFinite(v) || Math.abs(v) > 1e-2;
+      filas += `<tr>
+        <td style="padding:4px 10px;text-align:right;">${n}</td>
+        <td style="padding:4px 10px;text-align:right;${malo(residuoSin) ? 'color:#b00020;font-weight:bold;' : ''}">${fmt(residuoSin)}</td>
+        <td style="padding:4px 10px;text-align:right;${malo(errorSin) ? 'color:#b00020;font-weight:bold;' : ''}">${fmt(errorSin)}</td>
+        <td style="padding:4px 10px;text-align:right;">${fmt(residuoCon)}</td>
+        <td style="padding:4px 10px;text-align:right;">${fmt(errorCon)}</td>
+      </tr>`;
+    }
+    tbody.innerHTML = filas;
+  }
+
+  slider.addEventListener('input', actualizar);
+  actualizar();
+})();
+</script>
+```
+
+**En Julia, para pegar en Pluto.** El applet de arriba es la reescritura en JavaScript de estas mismas celdas (una celda de Pluto por bloque):
+
+```julia
+using LinearAlgebra, DataFrames, PlutoUI
+```
+
+```julia
+function A_matriz(n, ε)
+	A = Matrix{Float64}(I, n, n)
+	A[1, 1] = ε
+	A[1, 2:end] .= 1.0
+	A[2:end, 1] .= 1.0
+	return A
+end
+```
+
+```julia
+b_vector(n, ε) = (b = fill(2.0, n); b[1] = ε + n - 1; b)
+```
+
+```julia
+# sustitución hacia adelante (con L) y hacia atrás (con U), dado un L y un U ya factorizados
+function resolver_lu(L, U, b)
+	n = length(b)
+	y = zeros(n)
+	for i in 1:n
+		y[i] = b[i] - dot(L[i, 1:i-1], y[1:i-1])
+	end
+	x = zeros(n)
+	for i in n:-1:1
+		x[i] = (y[i] - dot(U[i, i+1:end], x[i+1:end])) / U[i, i]
+	end
+	return x
+end
+```
+
+```julia
+# lu_ingenua es la de la nota de factorización LU (sin pivotear); se asume ya cargada
+```
+
+```julia
+@bind ε_slider Slider([1e-4, 1e-8, 1e-12, 1e-16, 1e-32], default=1e-4, show_value=true)
+```
+
+```julia
+tabla_errores = let
+	ε = ε_slider
+	ns = [2, 4, 8, 16, 32]
+	tabla = DataFrame(n=Int[], residuo_sin_pivotear=Float64[], error_sin_pivotear=Float64[],
+		residuo_con_pivoteo=Float64[], error_con_pivoteo=Float64[])
+
+	for n in ns
+		A = A_matriz(n, ε)
+		b = b_vector(n, ε)
+		x_exacto = ones(n)
+
+		L, U = lu_ingenua(A)
+		x_ing = resolver_lu(L, U, b)      # sustitución hacia adelante y hacia atrás
+		res_ing = norm(b - A * x_ing, Inf)
+		err_ing = norm(x_ing - x_exacto, Inf)
+
+		x_piv = A \ b
+		res_piv = norm(b - A * x_piv, Inf)
+		err_piv = norm(x_piv - x_exacto, Inf)
+
+		push!(tabla, (n, res_ing, err_ing, res_piv, err_piv))
+	end
+	tabla
+end
+```
+
+Con `ε_slider` ligado (`@bind`), mover el control recalcula `tabla_errores` sola, con una fila por cada $n$: exactamente lo que hace el applet de arriba, pero corriendo Julia de verdad.
+
+**El código de $\kappa$, con y sin pivoteo (para pegar aparte):**
+
+```julia
+seguro(f, args...) = try
+	f(args...)
+catch
+	NaN
+end
+```
+
+```julia
+function condicion_LU(n, ε)
+	A = A_matriz(n, ε)
+
+	L_sin, U_sin = lu_ingenua(A)
+	F_con = lu(A; check=false)
+	L_con, U_con = F_con.L, F_con.U
+
+	return (
+		κA = cond(A, Inf),
+		normL_sin = opnorm(L_sin, Inf), κL_sin = seguro(cond, L_sin, Inf),
+		normU_sin = opnorm(U_sin, Inf), κU_sin = seguro(cond, U_sin, Inf),
+		normL_con = opnorm(L_con, Inf), κL_con = seguro(cond, L_con, Inf),
+		normU_con = opnorm(U_con, Inf), κU_con = seguro(cond, U_con, Inf),
+	)
+end
+```
+
+```julia
+tabla_condicion = let
+	ε = ε_slider
+	ns = [2, 4, 8, 16, 32]
+	DataFrame([merge((n=n,), condicion_LU(n, ε)) for n in ns])
+end
+```
+
+Como usa el mismo `ε_slider`, mover el control actualiza `tabla_errores` y `tabla_condicion` a la vez.
+
+**Lo que muestran ambas tablas, para cualquier $\epsilon$ y cualquier $n$ (verificado corriendo el barrido completo):**
+
+$$\kappa_\infty(A_n(\epsilon)) = 2n-3 \;(n\ge3), \qquad \kappa_\infty(L_{\text{sin}}(\epsilon)) = \left(\frac1\epsilon+1\right)^2, \qquad \kappa_\infty(U_{\text{sin}}(\epsilon)) = \frac{n-1}{\epsilon^2},$$
+
+es decir: $\kappa_\infty(A_n)$ no depende de $\epsilon$ en absoluto y crece apenas linealmente en $n$ ($4,5,13,29,61$ para $n=2,4,8,16,32$), mientras que $\kappa_\infty(L_{\text{sin}})$ no depende de $n$ y $\kappa_\infty(U_{\text{sin}})$ depende apenas linealmente de $n$, pero ambas se disparan como $1/\epsilon^2$. Con pivoteo, en cambio, $\kappa_\infty(L)$ y $\kappa_\infty(U)$ no dependen de $\epsilon$ en absoluto y solo crecen con $n$:
+
+| $n$ | $\kappa_\infty(L)$ con pivoteo | $\kappa_\infty(U)$ con pivoteo |
+|---|---|---|
+| 2 | $1{,}00$ | $4{,}00$ |
+| 4 | $3{,}50$ | $8{,}50$ |
+| 8 | $4{,}45$ | $25{,}15$ |
+| 16 | $5{,}25$ | $64{,}77$ |
+| 32 | $6{,}00$ | $155{,}85$ |
+
+Con `lu_ingenua`, en cambio, ya desde $n=4$ y $\epsilon\le10^{-16}$ el algoritmo directamente colapsa (`NaN`, división entre un pivote que redondeó a cero); arrastren el control del applet hasta el fondo para verlo en vivo. Con $n=2$ nunca llega a colapsar del todo en este rango, pero en $\epsilon=10^{-16}$ ya entrega un error de orden $1$: una falla total, no un simple redondeo. Con pivoteo, el error se queda en precisión de máquina ($\sim10^{-15}$–$10^{-16}$) para cualquier combinación de $n$ y $\epsilon$.
+
+**Veredicto forense.** *"Con la evidencia de $\kappa_\infty$, el sistema nunca es responsable: $\kappa_\infty(A_n(\epsilon))$ se queda entre $4$ y $61$ para todo el rango probado, sin depender de $\epsilon$. Sí, crecer $n$ empeora la falla del algoritmo sin pivotear: con $n=2$ el error nunca colapsa del todo (llega a ser de orden $1$ en el peor caso), pero desde $n=4$ la eliminación sin pivotear directamente se cae (`NaN`) ya en $\epsilon=10^{-16}$, un valor mucho menos extremo de lo que haría falta para romper el caso $n=2$. El intercambio de fila resuelve el problema para cualquier $n$ porque nunca toca a $A$: $\kappa_\infty(A_n)$ es exactamente el mismo con o sin pivotear. Lo único que cambia es que, al pivotear, $\kappa_\infty(L)$ y $\kappa_\infty(U)$ quedan acotados por el mismo orden de magnitud que $\kappa_\infty(A_n)$, en vez de dispararse como $1/\epsilon^2$; la factorización deja de fabricar una sensibilidad artificial que el sistema jamás tuvo."*
+:::

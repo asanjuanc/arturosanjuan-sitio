@@ -15,7 +15,189 @@
 <link>https://arturosanjuan.xyz/cursos/probabilidad/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Wed, 09 Sep 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 21 Sep 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Taller 2</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/probabilidad/taller-2/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Una aseguradora ofrece pólizas de responsabilidad civil para vehículos; cada póliza, de forma independiente, tiene un siniestro en el año con probabilidad <img src="https://latex.codecogs.com/png.latex?p=0%7B,%7D04">.</p>
+<section id="de-la-función-de-distribución-a-la-función-de-masa" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="de-la-función-de-distribución-a-la-función-de-masa"><span class="header-section-number">1</span> De la función de distribución a la función de masa</h2>
+<p>Como grupo piloto, consideren apenas <img src="https://latex.codecogs.com/png.latex?n=3"> pólizas independientes, cada una con probabilidad <img src="https://latex.codecogs.com/png.latex?p=0%7B,%7D04"> de tener un siniestro en el año. Sea <img src="https://latex.codecogs.com/png.latex?X"> el número de siniestros entre esas tres pólizas.</p>
+<ol type="1">
+<li>Construyan y grafiquen la función de masa de <img src="https://latex.codecogs.com/png.latex?X">. Comprueben que es una función de masa.</li>
+<li>Construyan y grafiquen la función de distribución <img src="https://latex.codecogs.com/png.latex?F_X"> completa.</li>
+<li>Enuncien las cuatro propiedades que hacen de esta <img src="https://latex.codecogs.com/png.latex?F_X"> una función de distribución.</li>
+<li>Recuperen <img src="https://latex.codecogs.com/png.latex?P(X=2)"> a partir del salto de <img src="https://latex.codecogs.com/png.latex?F_X"> en <img src="https://latex.codecogs.com/png.latex?x=2">, y comprueben que coincide con el valor que ya tenían de la función de masa.</li>
+<li>Calculen <img src="https://latex.codecogs.com/png.latex?P(1%5Cle%20X%5Cle2)"> usando <img src="https://latex.codecogs.com/png.latex?F_X">, no sumando masas directamente.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con <img src="https://latex.codecogs.com/png.latex?n=3">, <img src="https://latex.codecogs.com/png.latex?p=0%7B,%7D04"> (<img src="https://latex.codecogs.com/png.latex?q:=1-p=0%7B,%7D96">), <img src="https://latex.codecogs.com/png.latex?X%5Csim%20B(3,%5C,0%7B,%7D04)">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X=0)=q%5E3=0%7B,%7D884736,%5Cquad%20P(X=1)=3pq%5E2=0%7B,%7D110592,%5Cquad%20P(X=2)=3p%5E2q=0%7B,%7D004608,%5Cquad%20P(X=3)=p%5E3=0%7B,%7D000064"></p>
+<p><strong>1.</strong> Esa tabla es la función de masa. Es efectivamente una función de masa porque cada valor es no negativo y</p>
+<p><img src="https://latex.codecogs.com/png.latex?0%7B,%7D884736+0%7B,%7D110592+0%7B,%7D004608+0%7B,%7D000064=1"></p>
+<p>Graficada es un diagrama de barras sobre <img src="https://latex.codecogs.com/png.latex?x=0,1,2,3">, con la barra en <img src="https://latex.codecogs.com/png.latex?x=0"> mucho más alta que las demás: como <img src="https://latex.codecogs.com/png.latex?p"> es pequeño, la masa se concentra casi toda en “ningún siniestro”.</p>
+<p><strong>2.</strong> <img src="https://latex.codecogs.com/png.latex?F_X(x)=%5Cbegin%7Bcases%7D0%20&amp;%20x%3C0%5C%5C0%7B,%7D884736%20&amp;%200%5Cle%20x%3C1%5C%5C0%7B,%7D995328%20&amp;%201%5Cle%20x%3C2%5C%5C0%7B,%7D999936%20&amp;%202%5Cle%20x%3C3%5C%5C1%20&amp;%20x%5Cge3%5Cend%7Bcases%7D"></p>
+<p>Graficada es una función escalonada, constante por tramos, con saltos en <img src="https://latex.codecogs.com/png.latex?x=0,1,2,3"> de tamaño igual a la masa correspondiente; los saltos son cada vez más pequeños.</p>
+<p><strong>3.</strong> <img src="https://latex.codecogs.com/png.latex?F_X"> es creciente; es continua a derecha en todo punto; <img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bx%5Cto+%5Cinfty%7DF_X(x)=1">; <img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bx%5Cto-%5Cinfty%7DF_X(x)=0">.</p>
+<p><strong>4.</strong> <img src="https://latex.codecogs.com/png.latex?P(X=2)=F_X(2)-F_X(2%5E-)=0%7B,%7D999936-0%7B,%7D995328=0%7B,%7D004608">, que coincide con el valor de la función de masa.</p>
+<p><strong>5.</strong> Como <img src="https://latex.codecogs.com/png.latex?F_X"> es constante en <img src="https://latex.codecogs.com/png.latex?%5B0,1)">, <img src="https://latex.codecogs.com/png.latex?F_X(1%5E-)=F_X(0)=0%7B,%7D884736">, así que</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(1%5Cle%20X%5Cle2)=F_X(2)-F_X(1%5E-)=0%7B,%7D999936-0%7B,%7D884736=0%7B,%7D1152"></p>
+<p>(coincide con <img src="https://latex.codecogs.com/png.latex?P(X=1)+P(X=2)=0%7B,%7D110592+0%7B,%7D004608=0%7B,%7D1152">).</p>
+</div>
+</div>
+</section>
+<section id="bernoulli-y-binomial-el-portafolio-completo" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="bernoulli-y-binomial-el-portafolio-completo"><span class="header-section-number">2</span> Bernoulli y binomial: el portafolio completo</h2>
+<p>Ahora consideren las <img src="https://latex.codecogs.com/png.latex?n=25"> pólizas del portafolio completo, con el mismo <img src="https://latex.codecogs.com/png.latex?p=0%7B,%7D04">. Sea <img src="https://latex.codecogs.com/png.latex?X"> el número total de pólizas con siniestro.</p>
+<ol start="6" type="1">
+<li>Identifiquen la distribución de <img src="https://latex.codecogs.com/png.latex?X"> y calculen <img src="https://latex.codecogs.com/png.latex?P(X=0)">.</li>
+<li>Usando el teorema del binomio de Newton y la identidad <img src="https://latex.codecogs.com/png.latex?x%5Cbinom%20nx=n%5Cbinom%7Bn-1%7D%7Bx-1%7D">, demuestren que el promedio ponderado (esperanza) de una binomial de parámetros <img src="https://latex.codecogs.com/png.latex?n"> y <img src="https://latex.codecogs.com/png.latex?p"> es <img src="https://latex.codecogs.com/png.latex?np">, y encuentren el valor esperado en este caso.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>6.</strong> <img src="https://latex.codecogs.com/png.latex?X%5Csim%20B(25,%5C,0%7B,%7D04)">. <img src="https://latex.codecogs.com/png.latex?P(X=0)=0%7B,%7D96%5E%7B25%7D%5Capprox0%7B,%7D360397">.</p>
+<p><strong>7.</strong> El término <img src="https://latex.codecogs.com/png.latex?x=0"> se anula en la suma, así que</p>
+<p><img src="https://latex.codecogs.com/png.latex?E%5BX%5D=%5Csum_%7Bx=0%7D%5En%20x%5Cbinom%20nx%20p%5Exq%5E%7Bn-x%7D=%5Csum_%7Bx=1%7D%5En%20x%5Cbinom%20nx%20p%5Exq%5E%7Bn-x%7D"></p>
+<p>Con la identidad <img src="https://latex.codecogs.com/png.latex?x%5Cbinom%20nx=n%5Cbinom%7Bn-1%7D%7Bx-1%7D">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?E%5BX%5D=%5Csum_%7Bx=1%7D%5En%20n%5Cbinom%7Bn-1%7D%7Bx-1%7Dp%5Exq%5E%7Bn-x%7D=np%5Csum_%7Bx=1%7D%5En%5Cbinom%7Bn-1%7D%7Bx-1%7Dp%5E%7Bx-1%7Dq%5E%7Bn-x%7D"></p>
+<p>Con el cambio <img src="https://latex.codecogs.com/png.latex?y=x-1"> (cuando <img src="https://latex.codecogs.com/png.latex?x"> recorre <img src="https://latex.codecogs.com/png.latex?1,%5Cdots,n">, <img src="https://latex.codecogs.com/png.latex?y"> recorre <img src="https://latex.codecogs.com/png.latex?0,%5Cdots,n-1">):</p>
+<p><img src="https://latex.codecogs.com/png.latex?E%5BX%5D=np%5Csum_%7By=0%7D%5E%7Bn-1%7D%5Cbinom%7Bn-1%7D%7By%7Dp%5Eyq%5E%7B(n-1)-y%7D=np(p+q)%5E%7Bn-1%7D"></p>
+<p>por el teorema del binomio de Newton. Como <img src="https://latex.codecogs.com/png.latex?p+q=1">, queda <img src="https://latex.codecogs.com/png.latex?E%5BX%5D=np">. Con <img src="https://latex.codecogs.com/png.latex?n=25">, <img src="https://latex.codecogs.com/png.latex?p=0%7B,%7D04">: <img src="https://latex.codecogs.com/png.latex?E%5BX%5D=1">.</p>
+</div>
+</div>
+</section>
+<section id="la-aproximación-de-poisson" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="la-aproximación-de-poisson"><span class="header-section-number">3</span> La aproximación de Poisson</h2>
+<ol start="8" type="1">
+<li>Identifiquen <img src="https://latex.codecogs.com/png.latex?%5Clambda"> y aproximen <img src="https://latex.codecogs.com/png.latex?P(X=0)"> y <img src="https://latex.codecogs.com/png.latex?P(X%5Cle2)"> con una Poisson.</li>
+<li>Comparen con el valor exacto de <img src="https://latex.codecogs.com/png.latex?P(X=0)"> encontrado antes.</li>
+<li>En una frase: ¿por qué esta aproximación es razonable con <img src="https://latex.codecogs.com/png.latex?p=0%7B,%7D04">, y dejaría de serlo si <img src="https://latex.codecogs.com/png.latex?p"> fuera, por ejemplo, <img src="https://latex.codecogs.com/png.latex?0%7B,%7D5">, aunque <img src="https://latex.codecogs.com/png.latex?n"> y <img src="https://latex.codecogs.com/png.latex?%5Clambda=np"> no cambiaran?</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>8.</strong> <img src="https://latex.codecogs.com/png.latex?%5Clambda=np=25(0%7B,%7D04)=1">.</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X=0)%5Capprox%20e%5E%7B-1%7D%5Capprox0%7B,%7D367879%5Cqquad%20P(X%5Cle2)%5Capprox%20e%5E%7B-1%7D%5CBig(1+1+%5Ctfrac12%5CBig)=2%7B,%7D5%5C,e%5E%7B-1%7D%5Capprox0%7B,%7D919699"></p>
+<p><strong>9.</strong> El valor exacto (punto 6) es <img src="https://latex.codecogs.com/png.latex?0%7B,%7D360397">; el aproximado es <img src="https://latex.codecogs.com/png.latex?0%7B,%7D367879">. El error relativo es de apenas <img src="https://latex.codecogs.com/png.latex?2%7B,%7D1%5C%25">.</p>
+<p><strong>10.</strong> La demostración de que la binomial converge a la Poisson exige explícitamente que <img src="https://latex.codecogs.com/png.latex?p%5Cto0">, no solo que <img src="https://latex.codecogs.com/png.latex?np%5Cto%5Clambda">: el factor <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bn(n-1)%5Ccdots(n-x+1)%7D%7Bn%5Ex%7D%5Cto1"> y el factor <img src="https://latex.codecogs.com/png.latex?(1-p)%5E%7Bn-x%7D%5Cto%20e%5E%7B-%5Clambda%7D"> dependen de que <img src="https://latex.codecogs.com/png.latex?p"> sea pequeño. Si <img src="https://latex.codecogs.com/png.latex?p=0%7B,%7D5">, la binomial es simétrica y acampanada, nada parecida a la asimetría de una Poisson: la aproximación se degrada porque deja de cumplirse la hipótesis bajo la que se demostró el teorema, no porque cambie <img src="https://latex.codecogs.com/png.latex?%5Clambda">.</p>
+</div>
+</div>
+</section>
+<section id="hipergeométrica-auditar-un-archivo-cerrado" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="hipergeométrica-auditar-un-archivo-cerrado"><span class="header-section-number">4</span> Hipergeométrica: auditar un archivo cerrado</h2>
+<p>De un archivo cerrado de pólizas del año anterior, con <img src="https://latex.codecogs.com/png.latex?N=200"> pólizas en total, se sabe que <img src="https://latex.codecogs.com/png.latex?D=8"> tuvieron siniestro. Un auditor revisa, sin reemplazo, una muestra de <img src="https://latex.codecogs.com/png.latex?n=10"> pólizas de ese archivo. Sea <img src="https://latex.codecogs.com/png.latex?K"> el número de pólizas con siniestro en la muestra.</p>
+<ol start="11" type="1">
+<li>Calculen <img src="https://latex.codecogs.com/png.latex?P(K=1)"> y <img src="https://latex.codecogs.com/png.latex?P(K%5Cge1)">.</li>
+<li>Expliquen en una frase por qué <img src="https://latex.codecogs.com/png.latex?K"> no tiene distribución binomial, aunque la pregunta se parezca a lo que hemos venido realizando.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>11.</strong> Con <img src="https://latex.codecogs.com/png.latex?K%5Csim%20Hg(10,8,200)">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(K=1)=%5Cfrac%7B%5Cbinom81%5Cbinom%7B192%7D%7B9%7D%7D%7B%5Cbinom%7B200%7D%7B10%7D%7D%5Capprox0%7B,%7D287835"> <img src="https://latex.codecogs.com/png.latex?P(K%5Cge1)=1-P(K=0)=1-%5Cfrac%7B%5Cbinom%7B192%7D%7B10%7D%7D%7B%5Cbinom%7B200%7D%7B10%7D%7D%5Capprox1-0%7B,%7D658422=0%7B,%7D341578"></p>
+<p><strong>12.</strong> Porque las extracciones son sin reemplazo de una población finita ya fija: la probabilidad de que la segunda póliza extraída tenga siniestro depende de si la primera lo tuvo, así que los ensayos no son independientes ni mantienen probabilidad constante, como exige la binomial.</p>
+</div>
+</div>
+</section>
+<section id="geométrica-y-binomial-negativa-pólizas-nuevas" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="geométrica-y-binomial-negativa-pólizas-nuevas"><span class="header-section-number">5</span> Geométrica y binomial negativa: pólizas nuevas</h2>
+<p>Cambien de escenario: ya no es un archivo cerrado, sino un flujo de solicitudes de renovación nuevas e independientes, cada una con la misma probabilidad <img src="https://latex.codecogs.com/png.latex?p=0%7B,%7D04"> de terminar con un siniestro reportado. Un agente las revisa una por una, en orden.</p>
+<ol start="13" type="1">
+<li>Sea <img src="https://latex.codecogs.com/png.latex?X"> el número de la póliza en la que aparece el primer siniestro reportado. Calculen <img src="https://latex.codecogs.com/png.latex?P(X=25)"> y <img src="https://latex.codecogs.com/png.latex?P(X%3E25)">.</li>
+<li>Expliquen en una frase por qué el resultado obtenido en el punto 6 es igual al segundo resultado obtenido en el punto anterior.</li>
+<li>Sea <img src="https://latex.codecogs.com/png.latex?Y"> el número de la póliza en la que aparece el tercer siniestro reportado. Calculen <img src="https://latex.codecogs.com/png.latex?P(Y=50)">.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>13.</strong> <img src="https://latex.codecogs.com/png.latex?P(X=25)=q%5E%7B24%7Dp%5Capprox0%7B,%7D015017">. <img src="https://latex.codecogs.com/png.latex?P(X%3E25)=q%5E%7B25%7D%5Capprox0%7B,%7D360397">.</p>
+<p><strong>14.</strong> Ambos resultados describen literalmente el mismo evento: “ninguna de las primeras <img src="https://latex.codecogs.com/png.latex?25"> pólizas tuvo siniestro”. Visto como conteo (punto 6), es <img src="https://latex.codecogs.com/png.latex?P(X=0)"> para <img src="https://latex.codecogs.com/png.latex?X%5Csim%20B(25,%5C,0%7B,%7D04)">; visto como espera (punto 13), es <img src="https://latex.codecogs.com/png.latex?P(X%3E25)"> para <img src="https://latex.codecogs.com/png.latex?X"> geométrica. Es la misma probabilidad, <img src="https://latex.codecogs.com/png.latex?q%5E%7B25%7D">, calculada desde dos variables aleatorias distintas que codifican la misma información.</p>
+<p><strong>15.</strong> Con <img src="https://latex.codecogs.com/png.latex?Y"> la póliza del tercer siniestro (<img src="https://latex.codecogs.com/png.latex?r=3">):</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(Y=50)=%5Cbinom%7B49%7D%7B2%7Dp%5E3q%5E%7B47%7D%5Capprox0%7B,%7D011049"></p>
+</div>
+</div>
+</section>
+<section id="reconociendo-el-modelo-correcto" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="reconociendo-el-modelo-correcto"><span class="header-section-number">6</span> Reconociendo el modelo correcto</h2>
+<p>Para cada una de las situaciones siguientes, identifiquen cuál distribución discreta de las vistas en el taller (binomial, Poisson, hipergeométrica, geométrica o binomial negativa) es la correcta, den sus parámetros en términos del contexto, y justifiquen por qué las demás no aplican.</p>
+<ol start="16" type="1">
+<li>El área de suscripción revisa las primeras <img src="https://latex.codecogs.com/png.latex?30"> solicitudes de pólizas nuevas del mes, todas independientes con la misma probabilidad de siniestro, y cuenta cuántas de ellas terminarán con un siniestro en su primer año.</li>
+<li>Un supervisor extrae, sin reemplazo, una muestra de <img src="https://latex.codecogs.com/png.latex?15"> pólizas de un lote cerrado de <img src="https://latex.codecogs.com/png.latex?150"> pólizas del trimestre pasado, del cual ya se sabe que <img src="https://latex.codecogs.com/png.latex?12"> tuvieron siniestro, y cuenta cuántas de la muestra tuvieron siniestro.</li>
+<li>La central de reclamos registra cuántos siniestros nuevos entran al sistema en una hora dada, sabiendo que en promedio entran <img src="https://latex.codecogs.com/png.latex?3"> por hora y que las llegadas en intervalos disjuntos son independientes.</li>
+<li>Un agente revisa solicitudes de renovación una por una hasta encontrar la tercera con historial de siniestro.</li>
+<li>Repitan el numeral 17, pero ahora con un lote de <img src="https://latex.codecogs.com/png.latex?N=1500"> pólizas (misma proporción de siniestros, <img src="https://latex.codecogs.com/png.latex?8%5C%25">) y la misma muestra de tamaño <img src="https://latex.codecogs.com/png.latex?15">. Calculen <img src="https://latex.codecogs.com/png.latex?P(K=2)"> con el modelo exacto en ambos lotes (<img src="https://latex.codecogs.com/png.latex?150"> y <img src="https://latex.codecogs.com/png.latex?1500">) y con la aproximación binomial correspondiente, y comparen qué tan buena es la aproximación en cada caso. ¿Por qué funciona esta aproximación?</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>16.</strong> Binomial, <img src="https://latex.codecogs.com/png.latex?B(30,%5C,0%7B,%7D04)">: número fijo de ensayos independientes, cada uno con la misma probabilidad de éxito, y se cuenta el número de éxitos.</p>
+<p><strong>17.</strong> Hipergeométrica, <img src="https://latex.codecogs.com/png.latex?Hg(15,12,150)">: muestreo sin reemplazo de una población finita ya fija. No es binomial porque los ensayos no son independientes; no es Poisson porque hay un número fijo <img src="https://latex.codecogs.com/png.latex?n"> de extracciones, no una tasa de ocurrencia.</p>
+<p><strong>18.</strong> Poisson, <img src="https://latex.codecogs.com/png.latex?P(3)">: no hay un número fijo de “ensayos” que contar, solo una tasa de ocurrencia y la independencia de incrementos en intervalos disjuntos; ni la binomial ni la hipergeométrica tienen sentido sin ese número fijo <img src="https://latex.codecogs.com/png.latex?n">.</p>
+<p><strong>19.</strong> Binomial negativa, <img src="https://latex.codecogs.com/png.latex?r=3">, con el mismo <img src="https://latex.codecogs.com/png.latex?p=0%7B,%7D04"> del taller: número de ensayos hasta acumular exactamente <img src="https://latex.codecogs.com/png.latex?3"> éxitos. No es binomial (ahí el número de éxitos es aleatorio y el de ensayos fijo; aquí es al revés), ni geométrica (esa es el caso particular <img src="https://latex.codecogs.com/png.latex?r=1">).</p>
+<p><strong>20.</strong> Con <img src="https://latex.codecogs.com/png.latex?N=150">, <img src="https://latex.codecogs.com/png.latex?D=12">, <img src="https://latex.codecogs.com/png.latex?n=15">: <img src="https://latex.codecogs.com/png.latex?Hg(15,12,150)"> exacta <img src="https://latex.codecogs.com/png.latex?%5Capprox0%7B,%7D239822">. Con <img src="https://latex.codecogs.com/png.latex?N=1500">, <img src="https://latex.codecogs.com/png.latex?D=120"> (misma proporción <img src="https://latex.codecogs.com/png.latex?8%5C%25">), <img src="https://latex.codecogs.com/png.latex?n=15">: <img src="https://latex.codecogs.com/png.latex?Hg(15,120,1500)"> exacta <img src="https://latex.codecogs.com/png.latex?%5Capprox0%7B,%7D228483">. Aproximación binomial <img src="https://latex.codecogs.com/png.latex?B(15,%5C,0%7B,%7D08)"> en ambos casos: <img src="https://latex.codecogs.com/png.latex?%5Capprox0%7B,%7D227306">.</p>
+<p>Los errores relativos son <img src="https://latex.codecogs.com/png.latex?%5Capprox5%7B,%7D2%5C%25"> con <img src="https://latex.codecogs.com/png.latex?N=150"> y <img src="https://latex.codecogs.com/png.latex?%5Capprox0%7B,%7D5%5C%25"> con <img src="https://latex.codecogs.com/png.latex?N=1500">. Funciona porque, cuando <img src="https://latex.codecogs.com/png.latex?N"> es mucho mayor que <img src="https://latex.codecogs.com/png.latex?n"> (aquí la fracción de muestreo <img src="https://latex.codecogs.com/png.latex?n/N"> pasa de <img src="https://latex.codecogs.com/png.latex?10%5C%25"> a <img src="https://latex.codecogs.com/png.latex?1%5C%25">), extraer sin reemplazo apenas altera la composición de lo que queda por extraer: cada extracción es casi tan independiente de las anteriores como si fuera con reemplazo, que es exactamente la hipótesis de la binomial.</p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/probabilidad/taller-2/</guid>
+  <pubDate>Mon, 21 Sep 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Distribuciones continuas notables</title>
   <dc:creator>Arturo Sanjuán</dc:creator>

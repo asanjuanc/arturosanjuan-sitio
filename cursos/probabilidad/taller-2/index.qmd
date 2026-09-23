@@ -1,0 +1,155 @@
+---
+title: "Taller 2"
+subtitle: "Variables aleatorias discretas: función de masa, función de distribución y distribuciones notables"
+description: "Taller en equipos de hasta tres personas, con solución, sobre función de masa, función de distribución, y las distribuciones binomial, Poisson, hipergeométrica, geométrica y binomial negativa."
+author: "Arturo Sanjuán"
+date: 2026-09-21
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 10
+---
+
+Una aseguradora ofrece pólizas de responsabilidad civil para vehículos; cada póliza, de forma independiente, tiene un siniestro en el año con probabilidad $p=0{,}04$.
+
+## De la función de distribución a la función de masa
+
+Como grupo piloto, consideren apenas $n=3$ pólizas independientes, cada una con probabilidad $p=0{,}04$ de tener un siniestro en el año. Sea $X$ el número de siniestros entre esas tres pólizas.
+
+1. Construyan y grafiquen la función de masa de $X$. Comprueben que es una función de masa.
+2. Construyan y grafiquen la función de distribución $F_X$ completa.
+3. Enuncien las cuatro propiedades que hacen de esta $F_X$ una función de distribución.
+4. Recuperen $P(X=2)$ a partir del salto de $F_X$ en $x=2$, y comprueben que coincide con el valor que ya tenían de la función de masa.
+5. Calculen $P(1\le X\le2)$ usando $F_X$, no sumando masas directamente.
+
+::: {.callout-tip title="Solución"}
+Con $n=3$, $p=0{,}04$ ($q:=1-p=0{,}96$), $X\sim B(3,\,0{,}04)$:
+
+$$P(X=0)=q^3=0{,}884736,\quad P(X=1)=3pq^2=0{,}110592,\quad P(X=2)=3p^2q=0{,}004608,\quad P(X=3)=p^3=0{,}000064$$
+
+**1.** Esa tabla es la función de masa. Es efectivamente una función de masa porque cada valor es no negativo y
+
+$$0{,}884736+0{,}110592+0{,}004608+0{,}000064=1$$
+
+Graficada es un diagrama de barras sobre $x=0,1,2,3$, con la barra en $x=0$ mucho más alta que las demás: como $p$ es pequeño, la masa se concentra casi toda en "ningún siniestro".
+
+**2.**
+$$F_X(x)=\begin{cases}0 & x<0\\0{,}884736 & 0\le x<1\\0{,}995328 & 1\le x<2\\0{,}999936 & 2\le x<3\\1 & x\ge3\end{cases}$$
+
+Graficada es una función escalonada, constante por tramos, con saltos en $x=0,1,2,3$ de tamaño igual a la masa correspondiente; los saltos son cada vez más pequeños.
+
+**3.** $F_X$ es creciente; es continua a derecha en todo punto; $\lim_{x\to+\infty}F_X(x)=1$; $\lim_{x\to-\infty}F_X(x)=0$.
+
+**4.** $P(X=2)=F_X(2)-F_X(2^-)=0{,}999936-0{,}995328=0{,}004608$, que coincide con el valor de la función de masa.
+
+**5.** Como $F_X$ es constante en $[0,1)$, $F_X(1^-)=F_X(0)=0{,}884736$, así que
+
+$$P(1\le X\le2)=F_X(2)-F_X(1^-)=0{,}999936-0{,}884736=0{,}1152$$
+
+(coincide con $P(X=1)+P(X=2)=0{,}110592+0{,}004608=0{,}1152$).
+:::
+
+## Bernoulli y binomial: el portafolio completo
+
+Ahora consideren las $n=25$ pólizas del portafolio completo, con el mismo $p=0{,}04$. Sea $X$ el número total de pólizas con siniestro.
+
+6. Identifiquen la distribución de $X$ y calculen $P(X=0)$.
+7. Usando el teorema del binomio de Newton y la identidad $x\binom nx=n\binom{n-1}{x-1}$, demuestren que el promedio ponderado (esperanza) de una binomial de parámetros $n$ y $p$ es $np$, y encuentren el valor esperado en este caso.
+
+::: {.callout-tip title="Solución"}
+**6.** $X\sim B(25,\,0{,}04)$. $P(X=0)=0{,}96^{25}\approx0{,}360397$.
+
+**7.** El término $x=0$ se anula en la suma, así que
+
+$$E[X]=\sum_{x=0}^n x\binom nx p^xq^{n-x}=\sum_{x=1}^n x\binom nx p^xq^{n-x}$$
+
+Con la identidad $x\binom nx=n\binom{n-1}{x-1}$:
+
+$$E[X]=\sum_{x=1}^n n\binom{n-1}{x-1}p^xq^{n-x}=np\sum_{x=1}^n\binom{n-1}{x-1}p^{x-1}q^{n-x}$$
+
+Con el cambio $y=x-1$ (cuando $x$ recorre $1,\dots,n$, $y$ recorre $0,\dots,n-1$):
+
+$$E[X]=np\sum_{y=0}^{n-1}\binom{n-1}{y}p^yq^{(n-1)-y}=np(p+q)^{n-1}$$
+
+por el teorema del binomio de Newton. Como $p+q=1$, queda $E[X]=np$. Con $n=25$, $p=0{,}04$: $E[X]=1$.
+:::
+
+## La aproximación de Poisson
+
+8. Identifiquen $\lambda$ y aproximen $P(X=0)$ y $P(X\le2)$ con una Poisson.
+9. Comparen con el valor exacto de $P(X=0)$ encontrado antes.
+10. En una frase: ¿por qué esta aproximación es razonable con $p=0{,}04$, y dejaría de serlo si $p$ fuera, por ejemplo, $0{,}5$, aunque $n$ y $\lambda=np$ no cambiaran?
+
+::: {.callout-tip title="Solución"}
+**8.** $\lambda=np=25(0{,}04)=1$.
+
+$$P(X=0)\approx e^{-1}\approx0{,}367879\qquad P(X\le2)\approx e^{-1}\Big(1+1+\tfrac12\Big)=2{,}5\,e^{-1}\approx0{,}919699$$
+
+**9.** El valor exacto (punto 6) es $0{,}360397$; el aproximado es $0{,}367879$. El error relativo es de apenas $2{,}1\%$.
+
+**10.** La demostración de que la binomial converge a la Poisson exige explícitamente que $p\to0$, no solo que $np\to\lambda$: el factor $\frac{n(n-1)\cdots(n-x+1)}{n^x}\to1$ y el factor $(1-p)^{n-x}\to e^{-\lambda}$ dependen de que $p$ sea pequeño. Si $p=0{,}5$, la binomial es simétrica y acampanada, nada parecida a la asimetría de una Poisson: la aproximación se degrada porque deja de cumplirse la hipótesis bajo la que se demostró el teorema, no porque cambie $\lambda$.
+:::
+
+## Hipergeométrica: auditar un archivo cerrado
+
+De un archivo cerrado de pólizas del año anterior, con $N=200$ pólizas en total, se sabe que $D=8$ tuvieron siniestro. Un auditor revisa, sin reemplazo, una muestra de $n=10$ pólizas de ese archivo. Sea $K$ el número de pólizas con siniestro en la muestra.
+
+11. Calculen $P(K=1)$ y $P(K\ge1)$.
+12. Expliquen en una frase por qué $K$ no tiene distribución binomial, aunque la pregunta se parezca a lo que hemos venido realizando.
+
+::: {.callout-tip title="Solución"}
+**11.** Con $K\sim Hg(10,8,200)$:
+
+$$P(K=1)=\frac{\binom81\binom{192}{9}}{\binom{200}{10}}\approx0{,}287835$$
+$$P(K\ge1)=1-P(K=0)=1-\frac{\binom{192}{10}}{\binom{200}{10}}\approx1-0{,}658422=0{,}341578$$
+
+**12.** Porque las extracciones son sin reemplazo de una población finita ya fija: la probabilidad de que la segunda póliza extraída tenga siniestro depende de si la primera lo tuvo, así que los ensayos no son independientes ni mantienen probabilidad constante, como exige la binomial.
+:::
+
+## Geométrica y binomial negativa: pólizas nuevas
+
+Cambien de escenario: ya no es un archivo cerrado, sino un flujo de solicitudes de renovación nuevas e independientes, cada una con la misma probabilidad $p=0{,}04$ de terminar con un siniestro reportado. Un agente las revisa una por una, en orden.
+
+13. Sea $X$ el número de la póliza en la que aparece el primer siniestro reportado. Calculen $P(X=25)$ y $P(X>25)$.
+14. Expliquen en una frase por qué el resultado obtenido en el punto 6 es igual al segundo resultado obtenido en el punto anterior.
+15. Sea $Y$ el número de la póliza en la que aparece el tercer siniestro reportado. Calculen $P(Y=50)$.
+
+::: {.callout-tip title="Solución"}
+**13.** $P(X=25)=q^{24}p\approx0{,}015017$. $P(X>25)=q^{25}\approx0{,}360397$.
+
+**14.** Ambos resultados describen literalmente el mismo evento: "ninguna de las primeras $25$ pólizas tuvo siniestro". Visto como conteo (punto 6), es $P(X=0)$ para $X\sim B(25,\,0{,}04)$; visto como espera (punto 13), es $P(X>25)$ para $X$ geométrica. Es la misma probabilidad, $q^{25}$, calculada desde dos variables aleatorias distintas que codifican la misma información.
+
+**15.** Con $Y$ la póliza del tercer siniestro ($r=3$):
+
+$$P(Y=50)=\binom{49}{2}p^3q^{47}\approx0{,}011049$$
+:::
+
+## Reconociendo el modelo correcto
+
+Para cada una de las situaciones siguientes, identifiquen cuál distribución discreta de las vistas en el taller (binomial, Poisson, hipergeométrica, geométrica o binomial negativa) es la correcta, den sus parámetros en términos del contexto, y justifiquen por qué las demás no aplican.
+
+16. El área de suscripción revisa las primeras $30$ solicitudes de pólizas nuevas del mes, todas independientes con la misma probabilidad de siniestro, y cuenta cuántas de ellas terminarán con un siniestro en su primer año.
+17. Un supervisor extrae, sin reemplazo, una muestra de $15$ pólizas de un lote cerrado de $150$ pólizas del trimestre pasado, del cual ya se sabe que $12$ tuvieron siniestro, y cuenta cuántas de la muestra tuvieron siniestro.
+18. La central de reclamos registra cuántos siniestros nuevos entran al sistema en una hora dada, sabiendo que en promedio entran $3$ por hora y que las llegadas en intervalos disjuntos son independientes.
+19. Un agente revisa solicitudes de renovación una por una hasta encontrar la tercera con historial de siniestro.
+20. Repitan el numeral 17, pero ahora con un lote de $N=1500$ pólizas (misma proporción de siniestros, $8\%$) y la misma muestra de tamaño $15$. Calculen $P(K=2)$ con el modelo exacto en ambos lotes ($150$ y $1500$) y con la aproximación binomial correspondiente, y comparen qué tan buena es la aproximación en cada caso. ¿Por qué funciona esta aproximación?
+
+::: {.callout-tip title="Solución"}
+**16.** Binomial, $B(30,\,0{,}04)$: número fijo de ensayos independientes, cada uno con la misma probabilidad de éxito, y se cuenta el número de éxitos.
+
+**17.** Hipergeométrica, $Hg(15,12,150)$: muestreo sin reemplazo de una población finita ya fija. No es binomial porque los ensayos no son independientes; no es Poisson porque hay un número fijo $n$ de extracciones, no una tasa de ocurrencia.
+
+**18.** Poisson, $P(3)$: no hay un número fijo de "ensayos" que contar, solo una tasa de ocurrencia y la independencia de incrementos en intervalos disjuntos; ni la binomial ni la hipergeométrica tienen sentido sin ese número fijo $n$.
+
+**19.** Binomial negativa, $r=3$, con el mismo $p=0{,}04$ del taller: número de ensayos hasta acumular exactamente $3$ éxitos. No es binomial (ahí el número de éxitos es aleatorio y el de ensayos fijo; aquí es al revés), ni geométrica (esa es el caso particular $r=1$).
+
+**20.** Con $N=150$, $D=12$, $n=15$: $Hg(15,12,150)$ exacta $\approx0{,}239822$. Con $N=1500$, $D=120$ (misma proporción $8\%$), $n=15$: $Hg(15,120,1500)$ exacta $\approx0{,}228483$. Aproximación binomial $B(15,\,0{,}08)$ en ambos casos: $\approx0{,}227306$.
+
+Los errores relativos son $\approx5{,}2\%$ con $N=150$ y $\approx0{,}5\%$ con $N=1500$. Funciona porque, cuando $N$ es mucho mayor que $n$ (aquí la fracción de muestreo $n/N$ pasa de $10\%$ a $1\%$), extraer sin reemplazo apenas altera la composición de lo que queda por extraer: cada extracción es casi tan independiente de las anteriores como si fuera con reemplazo, que es exactamente la hipótesis de la binomial.
+:::

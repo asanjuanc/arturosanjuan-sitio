@@ -15,7 +15,885 @@
 <link>https://arturosanjuan.xyz/cursos/numerico/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Wed, 16 Sep 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 17 Sep 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Taller 2</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/numerico/taller-2/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>El mismo equipo técnico que investigó por qué la corrección de rumbo se congelaba en cero durante el primer taller reporta ahora un caso distinto: el dron combina dos lecturas de posición resolviendo <img src="https://latex.codecogs.com/png.latex?A(%5Cepsilon)%5Cmathbf%7Bx%7D=%5Cmathbf%7Bb%7D"> en cada ciclo, con</p>
+<p><img src="https://latex.codecogs.com/png.latex?A(%5Cepsilon)%20=%20%5Cbegin%7Bbmatrix%7D%5Cepsilon%20&amp;%201%5C%5C%201&amp;%201%5Cend%7Bbmatrix%7D,%20%5Cqquad%20%5Cmathbf%7Bb%7D=%5Cbegin%7Bbmatrix%7D1+%5Cepsilon%5C%5C2%5Cend%7Bbmatrix%7D,%20%5Cqquad%200%3C%5Cepsilon%3C1,"></p>
+<p>sistema cuya solución exacta es <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bx%7D=(1,1)"> para cualquier valor de <img src="https://latex.codecogs.com/png.latex?%5Cepsilon"> en ese rango. En algunos vuelos la corrección sale perfecta; en otros, inservible, y en el equipo todavía no saben si el problema está mal planteado o si el algoritmo que usan para resolverlo es el culpable. Como peritos numéricos, les corresponde investigar primero qué tan sensible es el sistema en sí mismo, y después revisar el algoritmo paso a paso hasta encontrar el punto exacto donde se pierde la precisión.</p>
+<section id="el-expediente-del-sistema" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="el-expediente-del-sistema"><span class="header-section-number">1</span> El expediente del sistema</h2>
+<p>Calculen <img src="https://latex.codecogs.com/png.latex?%5C%7CA(%5Cepsilon)%5C%7C_%5Cinfty">, encuentren <img src="https://latex.codecogs.com/png.latex?A(%5Cepsilon)%5E%7B-1%7D"> y calculen <img src="https://latex.codecogs.com/png.latex?%5C%7CA(%5Cepsilon)%5E%7B-1%7D%5C%7C_%5Cinfty">. Con los dos resultados escriban <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(A(%5Cepsilon))"> como función explícita de <img src="https://latex.codecogs.com/png.latex?%5Cepsilon">, y calculen <img src="https://latex.codecogs.com/png.latex?%5Clim_%7B%5Cepsilon%5Cto0%5E+%7D%5Ckappa_%5Cinfty(A(%5Cepsilon))">. Ese límite es finito: ¿qué les dice sobre qué tan sensible es el sistema en sí, sin importar qué tan chico sea <img src="https://latex.codecogs.com/png.latex?%5Cepsilon">?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Por filas, <img src="https://latex.codecogs.com/png.latex?A(%5Cepsilon)"> suma <img src="https://latex.codecogs.com/png.latex?%5Cepsilon+1"> y <img src="https://latex.codecogs.com/png.latex?1+1=2">. Como <img src="https://latex.codecogs.com/png.latex?0%3C%5Cepsilon%3C1">, se tiene <img src="https://latex.codecogs.com/png.latex?%5Cepsilon+1%3C2"> siempre, así que</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5C%7CA(%5Cepsilon)%5C%7C_%5Cinfty%20=%202,"></p>
+<p>un número que ni siquiera depende de <img src="https://latex.codecogs.com/png.latex?%5Cepsilon">: nunca hay que tomar límite para esta primera norma.</p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?%5Cdet%20A(%5Cepsilon)=%5Cepsilon-1=-(1-%5Cepsilon)">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?A(%5Cepsilon)%5E%7B-1%7D%20=%20%5Cfrac%7B1%7D%7B%5Cepsilon-1%7D%5Cbegin%7Bbmatrix%7D1&amp;-1%5C%5C-1&amp;%5Cepsilon%5Cend%7Bbmatrix%7D%20=%20%5Cbegin%7Bbmatrix%7D%5Cdfrac%7B-1%7D%7B1-%5Cepsilon%7D%20&amp;%20%5Cdfrac%7B1%7D%7B1-%5Cepsilon%7D%5C%5C%5B4pt%5D%20%5Cdfrac%7B1%7D%7B1-%5Cepsilon%7D%20&amp;%20%5Cdfrac%7B-%5Cepsilon%7D%7B1-%5Cepsilon%7D%5Cend%7Bbmatrix%7D."></p>
+<p>Sus filas suman <img src="https://latex.codecogs.com/png.latex?2/(1-%5Cepsilon)"> y <img src="https://latex.codecogs.com/png.latex?(1+%5Cepsilon)/(1-%5Cepsilon)">; como <img src="https://latex.codecogs.com/png.latex?%5Cepsilon%3C1">, <img src="https://latex.codecogs.com/png.latex?2%3E1+%5Cepsilon">, así que la primera fila domina:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5C%7CA(%5Cepsilon)%5E%7B-1%7D%5C%7C_%5Cinfty%20=%20%5Cfrac%7B2%7D%7B1-%5Cepsilon%7D."></p>
+<p>Multiplicando,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(A(%5Cepsilon))%20=%202%5Ccdot%5Cfrac%7B2%7D%7B1-%5Cepsilon%7D%20=%20%5Cfrac%7B4%7D%7B1-%5Cepsilon%7D,%20%5Cqquad%20%5Clim_%7B%5Cepsilon%5Cto0%5E+%7D%5Ckappa_%5Cinfty(A(%5Cepsilon))%20=%204."></p>
+<p>El límite es finito (de hecho, <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(A(%5Cepsilon))"> nunca se aleja mucho de <img src="https://latex.codecogs.com/png.latex?4"> para <img src="https://latex.codecogs.com/png.latex?%5Cepsilon"> chico): el <em>sistema</em> nunca está mal condicionado, sin importar qué tan pequeño se elija <img src="https://latex.codecogs.com/png.latex?%5Cepsilon">. Cualquier fallo numérico que aparezca más adelante no puede explicarse por esta vía.</p>
+</div>
+</div>
+</section>
+<section id="la-eliminación-sin-pivotear" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="la-eliminación-sin-pivotear"><span class="header-section-number">2</span> La eliminación sin pivotear</h2>
+<p>Factoricen <img src="https://latex.codecogs.com/png.latex?A(%5Cepsilon)=LU"> sin intercambiar filas (pivote <img src="https://latex.codecogs.com/png.latex?%5Cepsilon">), encuentren <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(L(%5Cepsilon))"> y <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(U(%5Cepsilon))">, y describan en qué paso exacto vive el fenómeno de pérdida de precisión.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El multiplicador es <img src="https://latex.codecogs.com/png.latex?%5Cell_%7B21%7D=1/%5Cepsilon">, así que</p>
+<p><img src="https://latex.codecogs.com/png.latex?L(%5Cepsilon)%20=%20%5Cbegin%7Bbmatrix%7D1&amp;0%5C%5C%201/%5Cepsilon%20&amp;%201%5Cend%7Bbmatrix%7D,%20%5Cqquad%20U(%5Cepsilon)%20=%20%5Cbegin%7Bbmatrix%7D%5Cepsilon%20&amp;%201%5C%5C%200%20&amp;%201-1/%5Cepsilon%5Cend%7Bbmatrix%7D."></p>
+<p><img src="https://latex.codecogs.com/png.latex?L(%5Cepsilon)"> tiene filas de suma <img src="https://latex.codecogs.com/png.latex?1"> y <img src="https://latex.codecogs.com/png.latex?1/%5Cepsilon+1">, y su inversa <img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D1&amp;0%5C%5C-1/%5Cepsilon&amp;1%5Cend%7Bbmatrix%7D"> tiene exactamente las mismas sumas por fila, así que</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(L(%5Cepsilon))%20=%20%5Cleft(%5Cfrac1%5Cepsilon+1%5Cright)%5E2."></p>
+<p>Para <img src="https://latex.codecogs.com/png.latex?U(%5Cepsilon)">, mientras <img src="https://latex.codecogs.com/png.latex?%5Cepsilon%5Cle%5Csqrt2-1"> (cierto para cualquier <img src="https://latex.codecogs.com/png.latex?%5Cepsilon"> razonable de este taller) la fila que domina es la primera: <img src="https://latex.codecogs.com/png.latex?%5C%7CU(%5Cepsilon)%5C%7C_%5Cinfty=1/%5Cepsilon-1">. Con <img src="https://latex.codecogs.com/png.latex?U(%5Cepsilon)%5E%7B-1%7D=%5Cbegin%7Bbmatrix%7D1/%5Cepsilon%20&amp;%20-1/(%5Cepsilon-1)%5C%5C0%20&amp;%20%5Cepsilon/(%5Cepsilon-1)%5Cend%7Bbmatrix%7D">, la suma de su primera fila es <img src="https://latex.codecogs.com/png.latex?1/%5Cepsilon+1/(1-%5Cepsilon)=1/%5B%5Cepsilon(1-%5Cepsilon)%5D">, que también domina. Multiplicando y cancelando el factor <img src="https://latex.codecogs.com/png.latex?(1-%5Cepsilon)">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(U(%5Cepsilon))%20=%20%5Cleft(%5Cfrac%7B1-%5Cepsilon%7D%7B%5Cepsilon%7D%5Cright)%5Ccdot%5Cfrac%7B1%7D%7B%5Cepsilon(1-%5Cepsilon)%7D%20=%20%5Cfrac%7B1%7D%7B%5Cepsilon%5E2%7D%20%5Cqquad%5Ctext%7Bexactamente.%7D"></p>
+<p>Ambos números de condición se disparan cuando <img src="https://latex.codecogs.com/png.latex?%5Cepsilon%5Cto0%5E+">, mientras que <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(A(%5Cepsilon))%5Cto4">. La pérdida de precisión no vive en el sistema: vive en la factorización. Concretamente, ocurre al formar <img src="https://latex.codecogs.com/png.latex?U_%7B22%7D=1-1/%5Cepsilon">: en punto flotante esa resta es entre un <img src="https://latex.codecogs.com/png.latex?1"> y un número de tamaño <img src="https://latex.codecogs.com/png.latex?1/%5Cepsilon">, así que el <img src="https://latex.codecogs.com/png.latex?1"> queda absorbido y su información se pierde relativa al tamaño de <img src="https://latex.codecogs.com/png.latex?1/%5Cepsilon">. Esa pérdida, invisible mientras <img src="https://latex.codecogs.com/png.latex?U_%7B22%7D"> vive sola, se manifiesta al final: al despejar <img src="https://latex.codecogs.com/png.latex?x_1=(y_1-x_2)/%5Cepsilon">, cualquier error absoluto acumulado en <img src="https://latex.codecogs.com/png.latex?x_2"> se divide entre el pivote diminuto <img src="https://latex.codecogs.com/png.latex?%5Cepsilon"> y se amplifica por un factor <img src="https://latex.codecogs.com/png.latex?%5Csim1/%5Cepsilon">, exactamente el mismo orden de magnitud que <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(L)"> y <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(U)"> acaban de anunciar.</p>
+</div>
+</div>
+</section>
+<section id="la-eliminación-con-pivoteo" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="la-eliminación-con-pivoteo"><span class="header-section-number">3</span> La eliminación con pivoteo</h2>
+<p>Factoricen <img src="https://latex.codecogs.com/png.latex?A(%5Cepsilon)"> con pivoteo parcial y encuentren los nuevos <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(L(%5Cepsilon))"> y <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(U(%5Cepsilon))">. ¿Cómo interpretan estos nuevos valores?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Como <img src="https://latex.codecogs.com/png.latex?%7C1%7C%3E%7C%5Cepsilon%7C">, se intercambian las dos filas antes de eliminar. Con pivote <img src="https://latex.codecogs.com/png.latex?1">, el multiplicador es <img src="https://latex.codecogs.com/png.latex?%5Cell_%7B21%7D=%5Cepsilon">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?L(%5Cepsilon)%20=%20%5Cbegin%7Bbmatrix%7D1&amp;0%5C%5C%5Cepsilon&amp;1%5Cend%7Bbmatrix%7D,%20%5Cqquad%20U(%5Cepsilon)%20=%20%5Cbegin%7Bbmatrix%7D1&amp;1%5C%5C0&amp;1-%5Cepsilon%5Cend%7Bbmatrix%7D."></p>
+<p>Las filas de <img src="https://latex.codecogs.com/png.latex?L"> suman <img src="https://latex.codecogs.com/png.latex?1"> y <img src="https://latex.codecogs.com/png.latex?1+%5Cepsilon"> (e igual su inversa <img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D1&amp;0%5C%5C-%5Cepsilon&amp;1%5Cend%7Bbmatrix%7D">), así que <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(L(%5Cepsilon))=(1+%5Cepsilon)%5E2">. Las de <img src="https://latex.codecogs.com/png.latex?U"> suman <img src="https://latex.codecogs.com/png.latex?2"> y <img src="https://latex.codecogs.com/png.latex?1-%5Cepsilon"> (domina la primera), y <img src="https://latex.codecogs.com/png.latex?U%5E%7B-1%7D=%5Cbegin%7Bbmatrix%7D1%20&amp;%201/(1-%5Cepsilon)%5C%5C0&amp;1/(1-%5Cepsilon)%5Cend%7Bbmatrix%7D"> suma <img src="https://latex.codecogs.com/png.latex?1+1/(1-%5Cepsilon)"> y <img src="https://latex.codecogs.com/png.latex?1/(1-%5Cepsilon)"> (domina también la primera), así que</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(L(%5Cepsilon))%20=%20(1+%5Cepsilon)%5E2%20%5C;%5Cxrightarrow%7B%5Cepsilon%5Cto0%5E+%7D%5C;%201,%20%5Cqquad%20%5Ckappa_%5Cinfty(U(%5Cepsilon))%20=%20%5Cfrac%7B2(2-%5Cepsilon)%7D%7B1-%5Cepsilon%7D%20%5C;%5Cxrightarrow%7B%5Cepsilon%5Cto0%5E+%7D%5C;%204."></p>
+<p>Ambos se quedan acotados, del mismo orden que <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(A(%5Cepsilon))%5Cto4">: la factorización pivoteada no le añade al sistema ninguna sensibilidad que <img src="https://latex.codecogs.com/png.latex?A"> no tuviera ya. Pivotear no cambia el condicionamiento real del problema (sigue siendo <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(A)%5Cto4">); lo que hace es impedir que el <em>algoritmo</em> fabrique, con una mala elección de pivote, una sensibilidad artificial que el problema original nunca tuvo.</p>
+</div>
+</div>
+</section>
+<section id="la-permutación-y-el-método" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="la-permutación-y-el-método"><span class="header-section-number">4</span> La permutación y el método</h2>
+<p>Encuentren la matriz de permutación <img src="https://latex.codecogs.com/png.latex?P"> tal que <img src="https://latex.codecogs.com/png.latex?PL"> sea triangular inferior, y comenten qué les dice del método la ecuación <img src="https://latex.codecogs.com/png.latex?PA=LU">.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si se registran los multiplicadores por fila <em>original</em> en vez de por la fila que ocupa cada una tras el intercambio, la fila 1 (la del pivote <img src="https://latex.codecogs.com/png.latex?%5Cepsilon">, que termina eliminada) aporta el multiplicador <img src="https://latex.codecogs.com/png.latex?%5Cepsilon">, y la fila 2 (la que sirvió de pivote) no elimina nada: en ese orden original la matriz de multiplicadores queda <img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%5Cepsilon&amp;1%5C%5C1&amp;0%5Cend%7Bbmatrix%7D">, que no es triangular. Con</p>
+<p><img src="https://latex.codecogs.com/png.latex?P%20=%20%5Cbegin%7Bbmatrix%7D0&amp;1%5C%5C1&amp;0%5Cend%7Bbmatrix%7D"></p>
+<p>(la misma permutación del intercambio de filas de la sección anterior),</p>
+<p><img src="https://latex.codecogs.com/png.latex?PL%20=%20%5Cbegin%7Bbmatrix%7D0&amp;1%5C%5C1&amp;0%5Cend%7Bbmatrix%7D%5Cbegin%7Bbmatrix%7D%5Cepsilon&amp;1%5C%5C1&amp;0%5Cend%7Bbmatrix%7D%20=%20%5Cbegin%7Bbmatrix%7D1&amp;0%5C%5C%5Cepsilon&amp;1%5Cend%7Bbmatrix%7D,"></p>
+<p>que sí es triangular inferior: es exactamente la <img src="https://latex.codecogs.com/png.latex?L"> pivoteada de la sección anterior. La misma <img src="https://latex.codecogs.com/png.latex?P"> que reordena las filas de <img src="https://latex.codecogs.com/png.latex?A"> es la que ordena correctamente los multiplicadores en <img src="https://latex.codecogs.com/png.latex?L">; no son dos permutaciones distintas, sino la misma escrita dos veces. Y en efecto, con esta <img src="https://latex.codecogs.com/png.latex?P"> y las <img src="https://latex.codecogs.com/png.latex?L,U"> pivoteadas,</p>
+<p><img src="https://latex.codecogs.com/png.latex?PA(%5Cepsilon)%20=%20%5Cbegin%7Bbmatrix%7D1&amp;1%5C%5C%5Cepsilon&amp;1%5Cend%7Bbmatrix%7D%20=%20LU."></p>
+<p>La ecuación <img src="https://latex.codecogs.com/png.latex?PA=LU"> dice que pivotear parcialmente es lo mismo que reordenar de antemano las filas de <img src="https://latex.codecogs.com/png.latex?A"> (multiplicar por <img src="https://latex.codecogs.com/png.latex?P">) y factorizar directamente esa versión reordenada, sin más intercambios. Para resolver <img src="https://latex.codecogs.com/png.latex?A%5Cmathbf%7Bx%7D=%5Cmathbf%7Bb%7D"> hay que aplicar la misma reordenación al lado derecho antes de las dos sustituciones triangulares: <img src="https://latex.codecogs.com/png.latex?L%5Cmathbf%7Bz%7D=P%5Cmathbf%7Bb%7D"> y luego <img src="https://latex.codecogs.com/png.latex?U%5Cmathbf%7Bx%7D=%5Cmathbf%7Bz%7D">. Es exactamente lo que hace Julia internamente en <code>F = lu(A)</code>, con <code>F.p</code> guardando esa permutación.</p>
+</div>
+</div>
+</section>
+<section id="en-julia" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="en-julia"><span class="header-section-number">5</span> En Julia</h2>
+<p>En la práctica el dron no combina dos lecturas sino las de todo un arreglo de <img src="https://latex.codecogs.com/png.latex?n"> sensores, donde la primera sigue siendo la fuente del posible problema. La matriz conserva la misma pinta:</p>
+<p><img src="https://latex.codecogs.com/png.latex?A_n(%5Cepsilon)%20=%20%5Cbegin%7Bbmatrix%7D%5Cepsilon&amp;1&amp;1&amp;%5Ccdots&amp;1%5C%5C1&amp;1&amp;0&amp;%5Ccdots&amp;0%5C%5C1&amp;0&amp;1&amp;%5Ccdots&amp;0%5C%5C%5Cvdots&amp;%5Cvdots&amp;%5Cvdots&amp;%5Cddots&amp;%5Cvdots%5C%5C1&amp;0&amp;0&amp;%5Ccdots&amp;1%5Cend%7Bbmatrix%7D,%20%5Cqquad%20%5Cmathbf%7Bb%7D_n(%5Cepsilon)%20=%20%5Cbegin%7Bbmatrix%7D%5Cepsilon+n-1%5C%5C2%5C%5C2%5C%5C%5Cvdots%5C%5C2%5Cend%7Bbmatrix%7D,"></p>
+<p>de modo que, otra vez, la solución exacta es <img src="https://latex.codecogs.com/png.latex?%5Cmathbf%7Bx%7D=(1,1,%5Cldots,1)">. Para <img src="https://latex.codecogs.com/png.latex?n=2"> esto es exactamente lo que se acaba de trabajar a mano.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>En vivo.</strong> Muevan el control para <img src="https://latex.codecogs.com/png.latex?%5Cepsilon">: la tabla se recalcula al instante, con una fila por cada <img src="https://latex.codecogs.com/png.latex?n">. Es la misma cuenta que hace <code>lu_ingenua</code> y <code>\</code> en Julia (mismo IEEE 754 de doble precisión), reescrita en JavaScript para que corra directo en esta página sin necesitar Pluto:</p>
+<div class="taller2-applet" style="border:1px solid #ccc;border-radius:8px;padding:1rem 1.25rem;margin:1.25rem 0;">
+  <label for="taller2-eps-slider" style="font-weight:bold;">
+    ε = <span id="taller2-eps-value" style="font-family:monospace;">1e-4</span>
+  </label>
+  <br>
+  <input type="range" id="taller2-eps-slider" min="-32" max="-1" step="1" value="-4" style="width:100%;max-width:420px;margin-top:0.5rem;">
+  
+<table class="caption-top" style="margin-top:1rem;border-collapse:collapse;width:100%;font-size:0.95em;">
+<thead>
+<tr class="header" style="border-bottom:2px solid #333;">
+<th data-quarto-table-cell-role="th" style="text-align: right; padding: 4px 10px;">n</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; padding: 4px 10px;">residuo sin pivotear</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; padding: 4px 10px;">error sin pivotear</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; padding: 4px 10px;">residuo con pivoteo</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; padding: 4px 10px;">error con pivoteo</th>
+</tr>
+</thead>
+<tbody id="taller2-tbody">
+</tbody>
+</table>
+
+  <p style="font-size:0.85em;color:#666;margin-top:0.5rem;margin-bottom:0;">
+    En rojo, cuando el algoritmo sin pivotear se desvía más de 1e-2 o colapsa (<code>NaN</code>).
+  </p>
+</div>
+
+<script>
+(function () {
+  function arrowhead(n, eps) {
+    const A = Array.from({ length: n }, (_, i) => Array.from({ length: n }, (_, j) => (i === j ? 1 : 0)));
+    A[0][0] = eps;
+    for (let j = 1; j < n; j++) A[0][j] = 1.0;
+    for (let i = 1; i < n; i++) A[i][0] = 1.0;
+    return A;
+  }
+
+  function bvec(n, eps) {
+    const b = new Array(n).fill(2.0);
+    b[0] = eps + n - 1;
+    return b;
+  }
+
+  function matVec(A, x) {
+    return A.map(row => row.reduce((s, a, j) => s + a * x[j], 0));
+  }
+
+  function normInf(v) {
+    return Math.max(...v.map(Math.abs));
+  }
+
+  function naiveLU(A) {
+    const n = A.length;
+    const U = A.map(row => row.slice());
+    const L = Array.from({ length: n }, (_, i) => Array.from({ length: n }, (_, j) => (i === j ? 1 : 0)));
+    for (let k = 0; k < n - 1; k++) {
+      for (let i = k + 1; i < n; i++) {
+        const m = U[i][k] / U[k][k];
+        L[i][k] = m;
+        for (let j = k; j < n; j++) U[i][j] -= m * U[k][j];
+      }
+    }
+    return { L, U };
+  }
+
+  function solveLU(L, U, b) {
+    const n = b.length;
+    const y = new Array(n).fill(0);
+    for (let i = 0; i < n; i++) {
+      let s = 0;
+      for (let j = 0; j < i; j++) s += L[i][j] * y[j];
+      y[i] = b[i] - s;
+    }
+    const x = new Array(n).fill(0);
+    for (let i = n - 1; i >= 0; i--) {
+      let s = 0;
+      for (let j = i + 1; j < n; j++) s += U[i][j] * x[j];
+      x[i] = (y[i] - s) / U[i][i];
+    }
+    return x;
+  }
+
+  function solvePivoteado(A, b) {
+    const n = b.length;
+    const M = A.map(row => row.slice());
+    const rhs = b.slice();
+    for (let k = 0; k < n - 1; k++) {
+      let piv = k, max = Math.abs(M[k][k]);
+      for (let i = k + 1; i < n; i++) {
+        if (Math.abs(M[i][k]) > max) { max = Math.abs(M[i][k]); piv = i; }
+      }
+      if (piv !== k) {
+        [M[k], M[piv]] = [M[piv], M[k]];
+        [rhs[k], rhs[piv]] = [rhs[piv], rhs[k]];
+      }
+      for (let i = k + 1; i < n; i++) {
+        const m = M[i][k] / M[k][k];
+        for (let j = k; j < n; j++) M[i][j] -= m * M[k][j];
+        rhs[i] -= m * rhs[k];
+      }
+    }
+    const x = new Array(n).fill(0);
+    for (let i = n - 1; i >= 0; i--) {
+      let s = 0;
+      for (let j = i + 1; j < n; j++) s += M[i][j] * x[j];
+      x[i] = (rhs[i] - s) / M[i][i];
+    }
+    return x;
+  }
+
+  function fmt(x) {
+    if (Number.isNaN(x)) return 'NaN';
+    if (!isFinite(x)) return '&infin;';
+    return x.toExponential(2);
+  }
+
+  const slider = document.getElementById('taller2-eps-slider');
+  const epsLabel = document.getElementById('taller2-eps-value');
+  const tbody = document.getElementById('taller2-tbody');
+
+  function actualizar() {
+    const exp = parseInt(slider.value, 10);
+    const eps = Math.pow(10, exp);
+    epsLabel.textContent = eps.toExponential(0);
+
+    const ns = [2, 4, 8, 16, 32];
+    let filas = '';
+    for (const n of ns) {
+      const A = arrowhead(n, eps);
+      const b = bvec(n, eps);
+      const xExacto = new Array(n).fill(1.0);
+
+      let residuoSin, errorSin;
+      try {
+        const { L, U } = naiveLU(A);
+        const xSin = solveLU(L, U, b);
+        const AxSin = matVec(A, xSin);
+        residuoSin = normInf(b.map((bi, i) => bi - AxSin[i]));
+        errorSin = normInf(xSin.map((xi, i) => xi - xExacto[i]));
+      } catch (e) {
+        residuoSin = NaN; errorSin = NaN;
+      }
+
+      const xCon = solvePivoteado(A, b);
+      const AxCon = matVec(A, xCon);
+      const residuoCon = normInf(b.map((bi, i) => bi - AxCon[i]));
+      const errorCon = normInf(xCon.map((xi, i) => xi - xExacto[i]));
+
+      const malo = (v) => Number.isNaN(v) || !isFinite(v) || Math.abs(v) > 1e-2;
+      filas += `<tr>
+        <td style="padding:4px 10px;text-align:right;">${n}</td>
+        <td style="padding:4px 10px;text-align:right;${malo(residuoSin) ? 'color:#b00020;font-weight:bold;' : ''}">${fmt(residuoSin)}</td>
+        <td style="padding:4px 10px;text-align:right;${malo(errorSin) ? 'color:#b00020;font-weight:bold;' : ''}">${fmt(errorSin)}</td>
+        <td style="padding:4px 10px;text-align:right;">${fmt(residuoCon)}</td>
+        <td style="padding:4px 10px;text-align:right;">${fmt(errorCon)}</td>
+      </tr>`;
+    }
+    tbody.innerHTML = filas;
+  }
+
+  slider.addEventListener('input', actualizar);
+  actualizar();
+})();
+</script>
+<p><strong>En Julia, para pegar en Pluto.</strong> El applet de arriba es la reescritura en JavaScript de estas mismas celdas (una celda de Pluto por bloque):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">using</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">LinearAlgebra</span>, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">DataFrames</span>, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">PlutoUI</span></span></code></pre></div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">A_matriz</span>(n, ε)</span>
+<span id="cb2-2">    A <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">Matrix</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">{Float64}</span>(I, n, n)</span>
+<span id="cb2-3">    A[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ε</span>
+<span id="cb2-4">    A[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span></span>
+<span id="cb2-5">    A[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span></span>
+<span id="cb2-6">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> A</span>
+<span id="cb2-7"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span></code></pre></div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">b_vector</span>(n, ε) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">fill</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.0</span>, n); b[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ε <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>; b)</span></code></pre></div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># sustitución hacia adelante (con L) y hacia atrás (con U), dado un L y un U ya factorizados</span></span>
+<span id="cb4-2"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">resolver_lu</span>(L, U, b)</span>
+<span id="cb4-3">    n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">length</span>(b)</span>
+<span id="cb4-4">    y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">zeros</span>(n)</span>
+<span id="cb4-5">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span>n</span>
+<span id="cb4-6">        y[i] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> b[i] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dot</span>(L[i, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span>i<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], y[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span>i<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>])</span>
+<span id="cb4-7">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span>
+<span id="cb4-8">    x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">zeros</span>(n)</span>
+<span id="cb4-9">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> n<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb4-10">        x[i] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (y[i] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dot</span>(U[i, i<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span>], x[i<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span>])) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> U[i, i]</span>
+<span id="cb4-11">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span>
+<span id="cb4-12">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> x</span>
+<span id="cb4-13"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span></code></pre></div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># lu_ingenua es la de la nota de factorización LU (sin pivotear); se asume ya cargada</span></span></code></pre></div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">@bind</span> ε_slider <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">Slider</span>([<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-8</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-12</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-16</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-32</span>], default<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-4</span>, show_value<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">true</span>)</span></code></pre></div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1">tabla_errores <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">let</span></span>
+<span id="cb7-2">    ε <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ε_slider</span>
+<span id="cb7-3">    ns <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">32</span>]</span>
+<span id="cb7-4">    tabla <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">DataFrame</span>(n<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">Int</span>[], residuo_sin_pivotear<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">Float64</span>[], error_sin_pivotear<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">Float64</span>[],</span>
+<span id="cb7-5">        residuo_con_pivoteo<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">Float64</span>[], error_con_pivoteo<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">Float64</span>[])</span>
+<span id="cb7-6"></span>
+<span id="cb7-7">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> n <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> ns</span>
+<span id="cb7-8">        A <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">A_matriz</span>(n, ε)</span>
+<span id="cb7-9">        b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">b_vector</span>(n, ε)</span>
+<span id="cb7-10">        x_exacto <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ones</span>(n)</span>
+<span id="cb7-11"></span>
+<span id="cb7-12">        L, U <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">lu_ingenua</span>(A)</span>
+<span id="cb7-13">        x_ing <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">resolver_lu</span>(L, U, b)      <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># sustitución hacia adelante y hacia atrás</span></span>
+<span id="cb7-14">        res_ing <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">norm</span>(b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> A <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x_ing, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Inf</span>)</span>
+<span id="cb7-15">        err_ing <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">norm</span>(x_ing <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> x_exacto, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Inf</span>)</span>
+<span id="cb7-16"></span>
+<span id="cb7-17">        x_piv <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> A <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\</span> b</span>
+<span id="cb7-18">        res_piv <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">norm</span>(b <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> A <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x_piv, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Inf</span>)</span>
+<span id="cb7-19">        err_piv <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">norm</span>(x_piv <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> x_exacto, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Inf</span>)</span>
+<span id="cb7-20"></span>
+<span id="cb7-21">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">push!</span>(tabla, (n, res_ing, err_ing, res_piv, err_piv))</span>
+<span id="cb7-22">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span>
+<span id="cb7-23">    tabla</span>
+<span id="cb7-24"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span></code></pre></div></div>
+<p>Con <code>ε_slider</code> ligado (<code>@bind</code>), mover el control recalcula <code>tabla_errores</code> sola, con una fila por cada <img src="https://latex.codecogs.com/png.latex?n">: exactamente lo que hace el applet de arriba, pero corriendo Julia de verdad.</p>
+<p><strong>El código de <img src="https://latex.codecogs.com/png.latex?%5Ckappa">, con y sin pivoteo (para pegar aparte):</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb8-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">seguro</span>(f, args<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">...</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">try</span></span>
+<span id="cb8-2">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">f</span>(args<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">...</span>)</span>
+<span id="cb8-3"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">catch</span></span>
+<span id="cb8-4">    <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NaN</span></span>
+<span id="cb8-5"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span></code></pre></div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb9-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">condicion_LU</span>(n, ε)</span>
+<span id="cb9-2">    A <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">A_matriz</span>(n, ε)</span>
+<span id="cb9-3"></span>
+<span id="cb9-4">    L_sin, U_sin <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">lu_ingenua</span>(A)</span>
+<span id="cb9-5">    F_con <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">lu</span>(A; check<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">false</span>)</span>
+<span id="cb9-6">    L_con, U_con <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> F_con.L, F_con.U</span>
+<span id="cb9-7"></span>
+<span id="cb9-8">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> (</span>
+<span id="cb9-9">        κA <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cond</span>(A, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Inf</span>),</span>
+<span id="cb9-10">        normL_sin <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">opnorm</span>(L_sin, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Inf</span>), κL_sin <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">seguro</span>(cond, L_sin, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Inf</span>),</span>
+<span id="cb9-11">        normU_sin <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">opnorm</span>(U_sin, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Inf</span>), κU_sin <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">seguro</span>(cond, U_sin, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Inf</span>),</span>
+<span id="cb9-12">        normL_con <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">opnorm</span>(L_con, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Inf</span>), κL_con <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">seguro</span>(cond, L_con, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Inf</span>),</span>
+<span id="cb9-13">        normU_con <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">opnorm</span>(U_con, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Inf</span>), κU_con <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">seguro</span>(cond, U_con, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Inf</span>),</span>
+<span id="cb9-14">    )</span>
+<span id="cb9-15"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span></code></pre></div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb10-1">tabla_condicion <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">let</span></span>
+<span id="cb10-2">    ε <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> ε_slider</span>
+<span id="cb10-3">    ns <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">32</span>]</span>
+<span id="cb10-4">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">DataFrame</span>([<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">merge</span>((n<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>n,), <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">condicion_LU</span>(n, ε)) for n <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> ns])</span>
+<span id="cb10-5"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span></code></pre></div></div>
+<p>Como usa el mismo <code>ε_slider</code>, mover el control actualiza <code>tabla_errores</code> y <code>tabla_condicion</code> a la vez.</p>
+<p><strong>Lo que muestran ambas tablas, para cualquier <img src="https://latex.codecogs.com/png.latex?%5Cepsilon"> y cualquier <img src="https://latex.codecogs.com/png.latex?n"> (verificado corriendo el barrido completo):</strong></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(A_n(%5Cepsilon))%20=%202n-3%20%5C;(n%5Cge3),%20%5Cqquad%20%5Ckappa_%5Cinfty(L_%7B%5Ctext%7Bsin%7D%7D(%5Cepsilon))%20=%20%5Cleft(%5Cfrac1%5Cepsilon+1%5Cright)%5E2,%20%5Cqquad%20%5Ckappa_%5Cinfty(U_%7B%5Ctext%7Bsin%7D%7D(%5Cepsilon))%20=%20%5Cfrac%7Bn-1%7D%7B%5Cepsilon%5E2%7D,"></p>
+<p>es decir: <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(A_n)"> no depende de <img src="https://latex.codecogs.com/png.latex?%5Cepsilon"> en absoluto y crece apenas linealmente en <img src="https://latex.codecogs.com/png.latex?n"> (<img src="https://latex.codecogs.com/png.latex?4,5,13,29,61"> para <img src="https://latex.codecogs.com/png.latex?n=2,4,8,16,32">), mientras que <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(L_%7B%5Ctext%7Bsin%7D%7D)"> no depende de <img src="https://latex.codecogs.com/png.latex?n"> y <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(U_%7B%5Ctext%7Bsin%7D%7D)"> depende apenas linealmente de <img src="https://latex.codecogs.com/png.latex?n">, pero ambas se disparan como <img src="https://latex.codecogs.com/png.latex?1/%5Cepsilon%5E2">. Con pivoteo, en cambio, <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(L)"> y <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(U)"> no dependen de <img src="https://latex.codecogs.com/png.latex?%5Cepsilon"> en absoluto y solo crecen con <img src="https://latex.codecogs.com/png.latex?n">:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><img src="https://latex.codecogs.com/png.latex?n"></th>
+<th><img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(L)"> con pivoteo</th>
+<th><img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(U)"> con pivoteo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td><img src="https://latex.codecogs.com/png.latex?1%7B,%7D00"></td>
+<td><img src="https://latex.codecogs.com/png.latex?4%7B,%7D00"></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td><img src="https://latex.codecogs.com/png.latex?3%7B,%7D50"></td>
+<td><img src="https://latex.codecogs.com/png.latex?8%7B,%7D50"></td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td><img src="https://latex.codecogs.com/png.latex?4%7B,%7D45"></td>
+<td><img src="https://latex.codecogs.com/png.latex?25%7B,%7D15"></td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td><img src="https://latex.codecogs.com/png.latex?5%7B,%7D25"></td>
+<td><img src="https://latex.codecogs.com/png.latex?64%7B,%7D77"></td>
+</tr>
+<tr class="odd">
+<td>32</td>
+<td><img src="https://latex.codecogs.com/png.latex?6%7B,%7D00"></td>
+<td><img src="https://latex.codecogs.com/png.latex?155%7B,%7D85"></td>
+</tr>
+</tbody>
+</table>
+<p>Con <code>lu_ingenua</code>, en cambio, ya desde <img src="https://latex.codecogs.com/png.latex?n=4"> y <img src="https://latex.codecogs.com/png.latex?%5Cepsilon%5Cle10%5E%7B-16%7D"> el algoritmo directamente colapsa (<code>NaN</code>, división entre un pivote que redondeó a cero); arrastren el control del applet hasta el fondo para verlo en vivo. Con <img src="https://latex.codecogs.com/png.latex?n=2"> nunca llega a colapsar del todo en este rango, pero en <img src="https://latex.codecogs.com/png.latex?%5Cepsilon=10%5E%7B-16%7D"> ya entrega un error de orden <img src="https://latex.codecogs.com/png.latex?1">: una falla total, no un simple redondeo. Con pivoteo, el error se queda en precisión de máquina (<img src="https://latex.codecogs.com/png.latex?%5Csim10%5E%7B-15%7D">–<img src="https://latex.codecogs.com/png.latex?10%5E%7B-16%7D">) para cualquier combinación de <img src="https://latex.codecogs.com/png.latex?n"> y <img src="https://latex.codecogs.com/png.latex?%5Cepsilon">.</p>
+<p><strong>Veredicto forense.</strong> <em>“Con la evidencia de <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty">, el sistema nunca es responsable: <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(A_n(%5Cepsilon))"> se queda entre <img src="https://latex.codecogs.com/png.latex?4"> y <img src="https://latex.codecogs.com/png.latex?61"> para todo el rango probado, sin depender de <img src="https://latex.codecogs.com/png.latex?%5Cepsilon">. Sí, crecer <img src="https://latex.codecogs.com/png.latex?n"> empeora la falla del algoritmo sin pivotear: con <img src="https://latex.codecogs.com/png.latex?n=2"> el error nunca colapsa del todo (llega a ser de orden <img src="https://latex.codecogs.com/png.latex?1"> en el peor caso), pero desde <img src="https://latex.codecogs.com/png.latex?n=4"> la eliminación sin pivotear directamente se cae (<code>NaN</code>) ya en <img src="https://latex.codecogs.com/png.latex?%5Cepsilon=10%5E%7B-16%7D">, un valor mucho menos extremo de lo que haría falta para romper el caso <img src="https://latex.codecogs.com/png.latex?n=2">. El intercambio de fila resuelve el problema para cualquier <img src="https://latex.codecogs.com/png.latex?n"> porque nunca toca a <img src="https://latex.codecogs.com/png.latex?A">: <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(A_n)"> es exactamente el mismo con o sin pivotear. Lo único que cambia es que, al pivotear, <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(L)"> y <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(U)"> quedan acotados por el mismo orden de magnitud que <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(A_n)">, en vez de dispararse como <img src="https://latex.codecogs.com/png.latex?1/%5Cepsilon%5E2">; la factorización deja de fabricar una sensibilidad artificial que el sistema jamás tuvo.”</em></p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/numerico/taller-2/</guid>
+  <pubDate>Thu, 17 Sep 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Normas matriciales y condicionamiento</title>
   <dc:creator>Arturo Sanjuán</dc:creator>
