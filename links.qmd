@@ -14,3 +14,4 @@ date: 2026-08-23
 - [Mathematics Genealogy Project](https://www.mathgenealogy.org/id.php?id=191294)
 - [CvLAC](https://scienti.minciencias.gov.co/cvlac/visualizador/generarCurriculoCv.do?cod_rh=0001066633)
 - [GitHub](https://github.com/asanjuanc)
+- [Math Overflow](https://mathoverflow.net/users/9144/arturo-sanju%C3%A1n)
