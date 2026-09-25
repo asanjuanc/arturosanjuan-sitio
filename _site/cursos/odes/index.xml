@@ -15,7 +15,117 @@
 <link>https://arturosanjuan.xyz/cursos/odes/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Tue, 22 Sep 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 25 Sep 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Parcial 1</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/odes/parcial-1/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Este parcial individual repasa tres técnicas vistas en el primer corte del curso: ecuaciones homogéneas, factor integrante, y la reducción de orden, esta última aplicada de nuevo al péndulo simple pero yendo más allá de la aproximación de ángulo pequeño.</p>
+<section id="ecuación-homogénea" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="ecuación-homogénea"><span class="header-section-number">1</span> Ecuación homogénea</h2>
+<p>Considere la ecuación</p>
+<p><img src="https://latex.codecogs.com/png.latex?2xy%5C,dx+(y%5E2-x%5E2)%5C,dy=0."></p>
+<ol type="1">
+<li>Verifique que la ecuación es homogénea e indique su grado. (2 pts)</li>
+<li>Resuélvala mediante la sustitución <img src="https://latex.codecogs.com/png.latex?y=zx">. (7 pts)</li>
+<li>Muestre que la familia de soluciones puede escribirse como <img src="https://latex.codecogs.com/png.latex?x%5E2+y%5E2=ky">. (4 pts)</li>
+<li>Identifique esta familia geométricamente: ¿qué figura describe, y en qué punto es tangente al eje <img src="https://latex.codecogs.com/png.latex?x">? (2 pts)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Aquí <img src="https://latex.codecogs.com/png.latex?M=2xy"> y <img src="https://latex.codecogs.com/png.latex?N=y%5E2-x%5E2">, ambas homogéneas de grado 2. Con <img src="https://latex.codecogs.com/png.latex?y=zx">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?z+x%5Cfrac%7Bdz%7D%7Bdx%7D%20=%20%5Cfrac%7B2z%7D%7B1-z%5E2%7D%20%5C;%5CLongrightarrow%5C;%20x%5Cfrac%7Bdz%7D%7Bdx%7D%20=%20%5Cfrac%7Bz(1+z%5E2)%7D%7B1-z%5E2%7D"></p>
+<p>Separando variables y usando fracciones parciales, <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7B1-z%5E2%7D%7Bz(1+z%5E2)%7D=%5Cdfrac1z-%5Cdfrac%7B2z%7D%7B1+z%5E2%7D">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cln%7Cz%7C-%5Cln(1+z%5E2)=%5Cln%7Cx%7C+C%20%5C;%5CLongrightarrow%5C;%20%5Cfrac%7Bz%7D%7B1+z%5E2%7D=Ax"></p>
+<p>Deshaciendo la sustitución (<img src="https://latex.codecogs.com/png.latex?z=y/x">) y simplificando,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bxy%7D%7Bx%5E2+y%5E2%7D=Ax%20%5C;%5CLongrightarrow%5C;%20%5Cfrac%7By%7D%7Bx%5E2+y%5E2%7D=A%20%5C;%5CLongrightarrow%5C;%20x%5E2+y%5E2=ky,%20%5Cqquad%20k=%5Cfrac1A"></p>
+<p>Completando el cuadrado, <img src="https://latex.codecogs.com/png.latex?x%5E2+%5Cleft(y-%5Cdfrac%20k2%5Cright)%5E2=%5Cleft(%5Cdfrac%20k2%5Cright)%5E2">: la familia es de circunferencias centradas en <img src="https://latex.codecogs.com/png.latex?(0,k/2)">, todas tangentes al eje <img src="https://latex.codecogs.com/png.latex?x"> en el origen (el punto más bajo de cada circunferencia).</p>
+</div>
+</div>
+</section>
+<section id="ecuación-con-factor-integrante" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="ecuación-con-factor-integrante"><span class="header-section-number">2</span> Ecuación con factor integrante</h2>
+<p>Considere ahora la ecuación</p>
+<p><img src="https://latex.codecogs.com/png.latex?(x+2y%5E3)%5C,dx+3xy%5E2%5C,dy=0."></p>
+<ol start="5" type="1">
+<li>Verifique que no es exacta. (2 pts)</li>
+<li>Encuentre un factor integrante <img src="https://latex.codecogs.com/png.latex?%5Cmu"> que dependa de una sola variable. (6 pts)</li>
+<li>Multiplique por <img src="https://latex.codecogs.com/png.latex?%5Cmu">, compruebe que la ecuación resultante es exacta, y resuélvala para obtener la solución implícita <img src="https://latex.codecogs.com/png.latex?f(x,y)=C">. (7 pts)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con <img src="https://latex.codecogs.com/png.latex?M=x+2y%5E3"> y <img src="https://latex.codecogs.com/png.latex?N=3xy%5E2">: <img src="https://latex.codecogs.com/png.latex?M_y=6y%5E2"> y <img src="https://latex.codecogs.com/png.latex?N_x=3y%5E2">, así que <img src="https://latex.codecogs.com/png.latex?M_y%5Cneq%20N_x"> y la ecuación no es exacta. Pero</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7BM_y-N_x%7D%7BN%7D=%5Cfrac%7B6y%5E2-3y%5E2%7D%7B3xy%5E2%7D=%5Cfrac1x"></p>
+<p>depende solo de <img src="https://latex.codecogs.com/png.latex?x">, así que <img src="https://latex.codecogs.com/png.latex?%5Cmu=e%5E%7B%5Cint%20dx/x%7D=x">. Multiplicando por <img src="https://latex.codecogs.com/png.latex?%5Cmu">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?(x%5E2+2xy%5E3)%5C,dx+3x%5E2y%5E2%5C,dy=0"></p>
+<p>que ya es exacta, pues <img src="https://latex.codecogs.com/png.latex?%5Cpartial_y(x%5E2+2xy%5E3)=6xy%5E2=%5Cpartial_x(3x%5E2y%5E2)">. Integrando <img src="https://latex.codecogs.com/png.latex?M"> respecto a <img src="https://latex.codecogs.com/png.latex?x">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?f=%5Cfrac%7Bx%5E3%7D3+x%5E2y%5E3+g(y),%20%5Cqquad%20f_y=3x%5E2y%5E2+g'(y)=3x%5E2y%5E2%20%5C;%5CLongrightarrow%5C;%20g'(y)=0"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cboxed%7Bx%5E3+3x%5E2y%5E3=C%7D"></p>
+</div>
+</div>
+</section>
+<section id="el-péndulo-más-allá-de-la-aproximación-lineal" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="el-péndulo-más-allá-de-la-aproximación-lineal"><span class="header-section-number">3</span> El péndulo más allá de la aproximación lineal</h2>
+<p>Con <img src="https://latex.codecogs.com/png.latex?a"> la longitud del péndulo y <img src="https://latex.codecogs.com/png.latex?%5Calpha"> el ángulo de amplitud desde el que se suelta en reposo, la aproximación de ángulo pequeño <img src="https://latex.codecogs.com/png.latex?%5Csin%5Ctheta%5Capprox%5Ctheta"> conduce, como vimos en la sección de Reducción de Orden, a la relación</p>
+<p><img src="https://latex.codecogs.com/png.latex?p%5E2=%5Comega%5E2(%5Calpha%5E2-%5Ctheta%5E2),%20%5Cqquad%20p=%5Ctheta',%20%5Cqquad%20%5Comega%5E2=g/a."></p>
+<p>Repitamos ahora el cálculo usando, en cambio, la aproximación de Taylor de tercer orden <img src="https://latex.codecogs.com/png.latex?%5Csin%5Ctheta%5Capprox%5Ctheta-%5Ctheta%5E3/6"> en la ecuación de movimiento <img src="https://latex.codecogs.com/png.latex?a%5Ctheta''=-g%5Csin%5Ctheta">.</p>
+<ol start="8" type="1">
+<li>Con la aproximación de arriba, la ecuación se convierte en <img src="https://latex.codecogs.com/png.latex?a%5Ctheta''=-g(%5Ctheta-%5Ctheta%5E3/6)">. Usando <img src="https://latex.codecogs.com/png.latex?p=%5Ctheta'"> como función de <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> y la regla de la cadena <img src="https://latex.codecogs.com/png.latex?%5Ctheta''=p%5C,dp/d%5Ctheta">, reescriba esta ecuación como una ecuación de primer orden en <img src="https://latex.codecogs.com/png.latex?p(%5Ctheta)">. (5 pts)</li>
+<li>Escriba la ecuación del punto anterior en la forma <img src="https://latex.codecogs.com/png.latex?dp/d%5Ctheta=f(%5Ctheta)p%5E%7B-1%7D">, identificando <img src="https://latex.codecogs.com/png.latex?f(%5Ctheta)">. Explique por qué es una ecuación de Bernoulli en <img src="https://latex.codecogs.com/png.latex?p(%5Ctheta)"> con <img src="https://latex.codecogs.com/png.latex?n=-1">, y use la sustitución <img src="https://latex.codecogs.com/png.latex?u=p%5E2"> para convertirla en una ecuación directamente integrable en <img src="https://latex.codecogs.com/png.latex?u(%5Ctheta)">. (5 pts)</li>
+<li>Integre para hallar <img src="https://latex.codecogs.com/png.latex?u(%5Ctheta)=p%5E2">, use la condición inicial (<img src="https://latex.codecogs.com/png.latex?p=0"> cuando <img src="https://latex.codecogs.com/png.latex?%5Ctheta=%5Calpha">) para hallar la constante, y muestre que el resultado se factoriza como <img src="https://latex.codecogs.com/png.latex?p%5E2=%5Comega%5E2(%5Calpha%5E2-%5Ctheta%5E2)%5Cleft%5B1-%5Cfrac%7B%5Calpha%5E2+%5Ctheta%5E2%7D%7B12%7D%5Cright%5D."> (5 pts)</li>
+<li>Compare esta expresión con la relación de la aproximación lineal. Para <img src="https://latex.codecogs.com/png.latex?%5Ctheta,%5Calpha"> físicamente razonables en un péndulo, ¿el término entre corchetes es mayor o menor que 1? ¿Cómo interpreta esto? (5 pts)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con <img src="https://latex.codecogs.com/png.latex?%5Ctheta''=p%5C,dp/d%5Ctheta">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?ap%5Cfrac%7Bdp%7D%7Bd%5Ctheta%7D=-g%5Cleft(%5Ctheta-%5Cfrac%7B%5Ctheta%5E3%7D6%5Cright)%20%5C;%5CLongrightarrow%5C;%20%5Cfrac%7Bdp%7D%7Bd%5Ctheta%7D=%5Cunderbrace%7B%5Cleft(-%5Comega%5E2%5Ctheta+%5Cfrac%7B%5Comega%5E2%7D6%5Ctheta%5E3%5Cright)%7D_%7Bf(%5Ctheta)%7Dp%5E%7B-1%7D"></p>
+<p>Esta es una ecuación de Bernoulli en <img src="https://latex.codecogs.com/png.latex?p(%5Ctheta)">, <img src="https://latex.codecogs.com/png.latex?dp/d%5Ctheta+P(%5Ctheta)p=Q(%5Ctheta)p%5En">, con <img src="https://latex.codecogs.com/png.latex?P=0">, <img src="https://latex.codecogs.com/png.latex?Q=f(%5Ctheta)"> y <img src="https://latex.codecogs.com/png.latex?n=-1">; la sustitución de Bernoulli es <img src="https://latex.codecogs.com/png.latex?u=p%5E%7B1-n%7D=p%5E2">. Derivando,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bdu%7D%7Bd%5Ctheta%7D=2p%5Cfrac%7Bdp%7D%7Bd%5Ctheta%7D=2f(%5Ctheta)=-2%5Comega%5E2%5Ctheta+%5Cfrac%7B%5Comega%5E2%7D3%5Ctheta%5E3"></p>
+<p>que ya es directamente integrable:</p>
+<p><img src="https://latex.codecogs.com/png.latex?u=p%5E2=-%5Comega%5E2%5Ctheta%5E2+%5Cfrac%7B%5Comega%5E2%7D%7B12%7D%5Ctheta%5E4+C"></p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?p=0"> en <img src="https://latex.codecogs.com/png.latex?%5Ctheta=%5Calpha">: <img src="https://latex.codecogs.com/png.latex?C=%5Comega%5E2%5Calpha%5E2-%5Cdfrac%7B%5Comega%5E2%7D%7B12%7D%5Calpha%5E4">, y como <img src="https://latex.codecogs.com/png.latex?%5Calpha%5E4-%5Ctheta%5E4=(%5Calpha%5E2-%5Ctheta%5E2)(%5Calpha%5E2+%5Ctheta%5E2)">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?p%5E2=%5Comega%5E2(%5Calpha%5E2-%5Ctheta%5E2)-%5Cfrac%7B%5Comega%5E2%7D%7B12%7D(%5Calpha%5E2-%5Ctheta%5E2)(%5Calpha%5E2+%5Ctheta%5E2)%20=%20%5Comega%5E2(%5Calpha%5E2-%5Ctheta%5E2)%5Cleft%5B1-%5Cfrac%7B%5Calpha%5E2+%5Ctheta%5E2%7D%7B12%7D%5Cright%5D"></p>
+<p>Para <img src="https://latex.codecogs.com/png.latex?%5Ctheta,%5Calpha"> razonables en un péndulo (digamos, hasta unos <img src="https://latex.codecogs.com/png.latex?90%C2%B0">), <img src="https://latex.codecogs.com/png.latex?%5Calpha%5E2+%5Ctheta%5E2"> queda bien por debajo de 12, así que el corchete es positivo y menor que 1. Esto significa que, en cada ángulo, la corrección cúbica predice una velocidad angular <em>menor</em> que la aproximación lineal, así que el péndulo tarda <em>más</em> tiempo en recorrer el mismo ángulo: el período debe ser mayor que <img src="https://latex.codecogs.com/png.latex?T_0=2%5Cpi%5Csqrt%7Ba/g%7D">. Es exactamente lo que muestra la tabla de <img src="https://latex.codecogs.com/png.latex?T_%7B%5Ctext%7Bexacto%7D%7D/T_0"> de la sección de Reducción de Orden, donde esa razón crece con la amplitud: esta corrección cúbica explica, de forma analítica y a primer orden, el error circular.</p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/odes/parcial-1/</guid>
+  <pubDate>Fri, 25 Sep 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Taller 2</title>
   <dc:creator>Arturo Sanjuán</dc:creator>

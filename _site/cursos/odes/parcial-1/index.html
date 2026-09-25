@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Arturo Sanjuán">
-<meta name="description" content="Cómo una familia de curvas define su propia ecuación diferencial, y cómo esa ecuación revela la familia ortogonal: dos ejemplos resueltos con applets interactivos y código Maxima.">
+<meta name="description" content="Primer parcial individual, con solución.">
 
-<title>Familias Ortogonales – Arturo Sanjuán</title>
+<title>Parcial 1 – Arturo Sanjuán</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -28,41 +28,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -73,8 +38,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
-<link href="../../../cursos/odes/modelacion/index.html" rel="next">
-<link href="../../../cursos/odes/introduccion/index.html" rel="prev">
+<link href="../../../cursos/odes/taller-2/index.html" rel="prev">
 <link href="../../../favicon.png" rel="icon" type="image/png">
 <script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -373,7 +337,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../cursos/odes/familiasortogonales/index.html">Familias Ortogonales</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../cursos/odes/parcial-1/index.html">Parcial 1</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -402,7 +366,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../cursos/odes/familiasortogonales/index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../../cursos/odes/familiasortogonales/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Familias Ortogonales</span></a>
   </div>
 </li>
@@ -456,7 +420,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../../cursos/odes/parcial-1/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../../cursos/odes/parcial-1/index.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Parcial 1</span></a>
   </div>
 </li>
@@ -466,9 +430,9 @@ window.Quarto = {
     <h2 id="toc-title">Contenido</h2>
    
   <ul>
-  <li><a href="#algo-de-geometría-con-ecuaciones-diferenciales" id="toc-algo-de-geometría-con-ecuaciones-diferenciales" class="nav-link active" data-scroll-target="#algo-de-geometría-con-ecuaciones-diferenciales"><span class="header-section-number">1</span> Algo de geometría con ecuaciones diferenciales</a></li>
-  <li><a href="#ejemplo-1-trayectorias-ortogonales-de-una-familia-de-parábolas-ejercicio-1-b" id="toc-ejemplo-1-trayectorias-ortogonales-de-una-familia-de-parábolas-ejercicio-1-b" class="nav-link" data-scroll-target="#ejemplo-1-trayectorias-ortogonales-de-una-familia-de-parábolas-ejercicio-1-b"><span class="header-section-number">2</span> Ejemplo 1 — Trayectorias ortogonales de una familia de parábolas (Ejercicio 1-b)</a></li>
-  <li><a href="#ejemplo-2-una-condición-geométrica-sobre-la-normal-ejercicio-6-b" id="toc-ejemplo-2-una-condición-geométrica-sobre-la-normal-ejercicio-6-b" class="nav-link" data-scroll-target="#ejemplo-2-una-condición-geométrica-sobre-la-normal-ejercicio-6-b"><span class="header-section-number">3</span> Ejemplo 2 — Una condición geométrica sobre la normal (Ejercicio 6-b)</a></li>
+  <li><a href="#ecuación-homogénea" id="toc-ecuación-homogénea" class="nav-link active" data-scroll-target="#ecuación-homogénea"><span class="header-section-number">1</span> Ecuación homogénea</a></li>
+  <li><a href="#ecuación-con-factor-integrante" id="toc-ecuación-con-factor-integrante" class="nav-link" data-scroll-target="#ecuación-con-factor-integrante"><span class="header-section-number">2</span> Ecuación con factor integrante</a></li>
+  <li><a href="#el-péndulo-más-allá-de-la-aproximación-lineal" id="toc-el-péndulo-más-allá-de-la-aproximación-lineal" class="nav-link" data-scroll-target="#el-péndulo-más-allá-de-la-aproximación-lineal"><span class="header-section-number">3</span> El péndulo más allá de la aproximación lineal</a></li>
   </ul>
 </nav>
 </nav>
@@ -482,13 +446,13 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Familias Ortogonales</h1>
-<p class="subtitle lead">Geometría de las ecuaciones diferenciales</p>
+<h1 class="title">Parcial 1</h1>
+<p class="subtitle lead">Una ecuación homogénea, una ecuación con factor integrante, y el péndulo más allá de la aproximación lineal</p>
 </div>
 
 <div>
   <div class="description">
-    Cómo una familia de curvas define su propia ecuación diferencial, y cómo esa ecuación revela la familia ortogonal: dos ejemplos resueltos con applets interactivos y código Maxima.
+    Primer parcial individual, con solución.
   </div>
 </div>
 
@@ -505,7 +469,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">21 de agosto de 2026</p>
+      <p class="date">25 de septiembre de 2026</p>
     </div>
   </div>
   
@@ -517,486 +481,96 @@ window.Quarto = {
 </header>
 
 
-<section id="algo-de-geometría-con-ecuaciones-diferenciales" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="algo-de-geometría-con-ecuaciones-diferenciales"><span class="header-section-number">1</span> Algo de geometría con ecuaciones diferenciales</h2>
-<p>Una familia paramétrica de curvas <span class="math inline">\(F(x,y,C)=0\)</span> (un parámetro <span class="math inline">\(C\)</span>) tiene, escondida, una ecuación diferencial: basta con derivar implícitamente y usar la ecuación original para <strong>eliminar el parámetro</strong>. Lo que queda es una ecuación <span class="math inline">\(y'=f(x,y)\)</span> que satisface <em>cada</em> curva de la familia — no importa cuál sea el valor de <span class="math inline">\(C\)</span>.</p>
-<p>Esto es interesante porque la pendiente <span class="math inline">\(y'=f(x,y)\)</span> en un punto <span class="math inline">\((x,y)\)</span> es un dato puramente geométrico. Y si conocemos la pendiente de una familia de curvas en cada punto del plano, también conocemos la pendiente de la familia <strong>perpendicular</strong> en cada punto: si una recta tiene pendiente <span class="math inline">\(m\)</span>, la perpendicular tiene pendiente <span class="math inline">\(-1/m\)</span>. Entonces:</p>
-<p><span class="math display">\[\text{familia original: } y' = f(x,y) \qquad\Longrightarrow\qquad \text{familia ortogonal: } y' = -\frac{1}{f(x,y)}\]</span></p>
-<p>Resolver esta segunda ecuación diferencial da la familia de curvas que cruza a la primera <strong>siempre en ángulo recto</strong>, en cualquier punto donde se toquen.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Applet — el ejemplo más simple: circunferencias y rectas radiales">
+<p>Este parcial individual repasa tres técnicas vistas en el primer corte del curso: ecuaciones homogéneas, factor integrante, y la reducción de orden, esta última aplicada de nuevo al péndulo simple pero yendo más allá de la aproximación de ángulo pequeño.</p>
+<section id="ecuación-homogénea" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="ecuación-homogénea"><span class="header-section-number">1</span> Ecuación homogénea</h2>
+<p>Considere la ecuación</p>
+<p><span class="math display">\[2xy\,dx+(y^2-x^2)\,dy=0.\]</span></p>
+<ol type="1">
+<li>Verifique que la ecuación es homogénea e indique su grado. (2 pts)</li>
+<li>Resuélvala mediante la sustitución <span class="math inline">\(y=zx\)</span>. (7 pts)</li>
+<li>Muestre que la familia de soluciones puede escribirse como <span class="math inline">\(x^2+y^2=ky\)</span>. (4 pts)</li>
+<li>Identifique esta familia geométricamente: ¿qué figura describe, y en qué punto es tangente al eje <span class="math inline">\(x\)</span>? (2 pts)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Applet — el ejemplo más simple: circunferencias y rectas radiales
+<span class="screen-reader-only">Tip</span>Solución
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div style="border:1px solid #ddd;border-radius:8px;padding:16px;max-width:560px;margin:1em auto;font-family:sans-serif;">
-  <canvas id="fo-generic-canvas" width="520" height="420" style="width:100%;height:auto;background:#fff;"></canvas>
-  <div style="display:flex;gap:16px;margin-top:8px;flex-wrap:wrap;">
-    <label>Radio r: <input type="range" id="fo-generic-r" min="1" max="5" step="0.1" value="2"></label>
-    <label>Ángulo θ: <input type="range" id="fo-generic-theta" min="0" max="360" step="1" value="40"></label>
-  </div>
-  <p style="font-size:0.9em;color:#555;margin-top:8px;">
-    Las circunferencias $x^2+y^2=r^2$ (gris) son ortogonales a las rectas $y=mx$ que pasan por el origen (azul claro): el radio y la tangente a la circunferencia siempre son perpendiculares. Mueve los controles y observa el ángulo recto (verde) donde se cruzan.
-  </p>
-</div>
-<script>
-(function(){
-  const canvas = document.getElementById('fo-generic-canvas');
-  const ctx = canvas.getContext('2d');
-  const rSlider = document.getElementById('fo-generic-r');
-  const thetaSlider = document.getElementById('fo-generic-theta');
-  const W = canvas.width, H = canvas.height, scale = 35;
-  function toPx(x,y){ return [W/2 + x*scale, H/2 - y*scale]; }
-
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    ctx.strokeStyle = '#ccc'; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(0,H/2); ctx.lineTo(W,H/2);
-    ctx.moveTo(W/2,0); ctx.lineTo(W/2,H); ctx.stroke();
-
-    ctx.strokeStyle = '#bbb';
-    for (let rr = 1; rr <= 5; rr++) {
-      ctx.beginPath(); ctx.arc(W/2, H/2, rr*scale, 0, 2*Math.PI); ctx.stroke();
-    }
-    ctx.strokeStyle = '#a8c8f0';
-    for (let deg = 0; deg < 360; deg += 30) {
-      const rad = deg*Math.PI/180;
-      const [x1,y1] = toPx(6*Math.cos(rad), 6*Math.sin(rad));
-      const [x2,y2] = toPx(-6*Math.cos(rad), -6*Math.sin(rad));
-      ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
-    }
-
-    const r = parseFloat(rSlider.value);
-    const theta = parseFloat(thetaSlider.value)*Math.PI/180;
-
-    ctx.strokeStyle = '#d62728'; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.arc(W/2, H/2, r*scale, 0, 2*Math.PI); ctx.stroke();
-
-    ctx.strokeStyle = '#1f77b4'; ctx.lineWidth = 2;
-    const [lx1,ly1] = toPx(6*Math.cos(theta), 6*Math.sin(theta));
-    const [lx2,ly2] = toPx(-6*Math.cos(theta), -6*Math.sin(theta));
-    ctx.beginPath(); ctx.moveTo(lx1,ly1); ctx.lineTo(lx2,ly2); ctx.stroke();
-
-    const px = r*Math.cos(theta), py = r*Math.sin(theta);
-    const [ppx,ppy] = toPx(px,py);
-    ctx.fillStyle = '#333';
-    ctx.beginPath(); ctx.arc(ppx,ppy,4,0,2*Math.PI); ctx.fill();
-
-    const s = 12;
-    const tx = -Math.sin(theta), ty = Math.cos(theta);
-    const lxn = Math.cos(theta), lyn = Math.sin(theta);
-    ctx.strokeStyle = '#2ca02c'; ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    ctx.moveTo(ppx, ppy);
-    ctx.lineTo(ppx + tx*s, ppy - ty*s);
-    ctx.lineTo(ppx + tx*s + lxn*s, ppy - ty*s - lyn*s);
-    ctx.lineTo(ppx + lxn*s, ppy - lyn*s);
-    ctx.closePath(); ctx.stroke();
-
-    ctx.fillStyle = '#000'; ctx.font = '13px sans-serif';
-    ctx.fillText('r = ' + r.toFixed(2) + ',  θ = ' + (theta*180/Math.PI).toFixed(0) + '°', 10, 18);
-  }
-  rSlider.addEventListener('input', draw);
-  thetaSlider.addEventListener('input', draw);
-  draw();
-})();
-</script>
+<p>Aquí <span class="math inline">\(M=2xy\)</span> y <span class="math inline">\(N=y^2-x^2\)</span>, ambas homogéneas de grado 2. Con <span class="math inline">\(y=zx\)</span>,</p>
+<p><span class="math display">\[z+x\frac{dz}{dx} = \frac{2z}{1-z^2} \;\Longrightarrow\; x\frac{dz}{dx} = \frac{z(1+z^2)}{1-z^2}\]</span></p>
+<p>Separando variables y usando fracciones parciales, <span class="math inline">\(\dfrac{1-z^2}{z(1+z^2)}=\dfrac1z-\dfrac{2z}{1+z^2}\)</span>:</p>
+<p><span class="math display">\[\ln|z|-\ln(1+z^2)=\ln|x|+C \;\Longrightarrow\; \frac{z}{1+z^2}=Ax\]</span></p>
+<p>Deshaciendo la sustitución (<span class="math inline">\(z=y/x\)</span>) y simplificando,</p>
+<p><span class="math display">\[\frac{xy}{x^2+y^2}=Ax \;\Longrightarrow\; \frac{y}{x^2+y^2}=A \;\Longrightarrow\; x^2+y^2=ky, \qquad k=\frac1A\]</span></p>
+<p>Completando el cuadrado, <span class="math inline">\(x^2+\left(y-\dfrac k2\right)^2=\left(\dfrac k2\right)^2\)</span>: la familia es de circunferencias centradas en <span class="math inline">\((0,k/2)\)</span>, todas tangentes al eje <span class="math inline">\(x\)</span> en el origen (el punto más bajo de cada circunferencia).</p>
 </div>
 </div>
 </section>
-<section id="ejemplo-1-trayectorias-ortogonales-de-una-familia-de-parábolas-ejercicio-1-b" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="ejemplo-1-trayectorias-ortogonales-de-una-familia-de-parábolas-ejercicio-1-b"><span class="header-section-number">2</span> Ejemplo 1 — Trayectorias ortogonales de una familia de parábolas (Ejercicio 1-b)</h2>
-<p>Esboce la familia <span class="math inline">\(y = Cx^2\)</span> y encuentre sus trayectorias ortogonales.</p>
-<p>Por geometría analítica, cada curva de la familia es una parábola con vértice en el origen: si <span class="math inline">\(C&gt;0\)</span> abre hacia arriba, si <span class="math inline">\(C&lt;0\)</span> abre hacia abajo, si <span class="math inline">\(C=0\)</span> es el eje <span class="math inline">\(x\)</span>, y entre más grande <span class="math inline">\(|C|\)</span> más rápido crece (más “cerrada” la parábola).</p>
-<p><strong>Paso 1 — encontrar la ecuación diferencial de la familia.</strong> Derivamos <span class="math inline">\(y=Cx^2\)</span> implícitamente:</p>
-<p><span class="math display">\[y' = 2Cx\]</span></p>
-<p>Esta ecuación todavía tiene el parámetro <span class="math inline">\(C\)</span>; lo eliminamos usando la familia original, <span class="math inline">\(C = y/x^2\)</span>:</p>
-<p><span class="math display">\[y' = 2x\cdot\frac{y}{x^2} = \frac{2y}{x}\]</span></p>
-<p><strong>Paso 2 — familia ortogonal.</strong> Cambiamos <span class="math inline">\(y'\)</span> por <span class="math inline">\(-1/y'\)</span>:</p>
-<p><span class="math display">\[y' = -\frac{x}{2y}\]</span></p>
-<p>Es de variables separables:</p>
-<p><span class="math display">\[2y\,dy = -x\,dx \quad\Longrightarrow\quad y^2 = -\frac{x^2}{2}+C \quad\Longrightarrow\quad x^2+2y^2 = k \qquad (k=2C\geq 0)\]</span></p>
-<p>Es una familia de <strong>elipses</strong> centradas en el origen, con semieje mayor <span class="math inline">\(\sqrt{k}\)</span> (en <span class="math inline">\(x\)</span>) y semieje menor <span class="math inline">\(\sqrt{k/2}\)</span> (en <span class="math inline">\(y\)</span>). Lo bonito: la excentricidad <strong>no depende de <span class="math inline">\(k\)</span></strong> — todas las elipses de la familia son semejantes:</p>
-<p><span class="math display">\[e = \sqrt{1-\frac{k/2}{k}} = \frac{1}{\sqrt2}\approx 0.707\]</span></p>
-<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<section id="ecuación-con-factor-integrante" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="ecuación-con-factor-integrante"><span class="header-section-number">2</span> Ecuación con factor integrante</h2>
+<p>Considere ahora la ecuación</p>
+<p><span class="math display">\[(x+2y^3)\,dx+3xy^2\,dy=0.\]</span></p>
+<ol start="5" type="1">
+<li>Verifique que no es exacta. (2 pts)</li>
+<li>Encuentre un factor integrante <span class="math inline">\(\mu\)</span> que dependa de una sola variable. (6 pts)</li>
+<li>Multiplique por <span class="math inline">\(\mu\)</span>, compruebe que la ecuación resultante es exacta, y resuélvala para obtener la solución implícita <span class="math inline">\(f(x,y)=C\)</span>. (7 pts)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+<span class="screen-reader-only">Tip</span>Solución
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">depends</span>(<span class="cn">y</span>, <span class="cn">x</span>);</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">/* Familia original y su derivada implícita */</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cn">fam</span>: <span class="cn">y</span> = <span class="cn">C</span>*<span class="cn">x</span>^<span class="dv">2</span>;</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="cn">dfam</span>: <span class="fu">diff</span>(<span class="cn">fam</span>, <span class="cn">x</span>);                    <span class="co">/* diff(y,x) = 2*C*x */</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">/* Eliminamos C usando la familia original */</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cn">Cval</span>: <span class="fu">solve</span>(<span class="cn">fam</span>, <span class="cn">C</span>)[<span class="dv">1</span>];</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="cn">ode_familia</span>: <span class="fu">ratsimp</span>(<span class="fu">subst</span>(<span class="cn">Cval</span>, <span class="cn">dfam</span>));   <span class="co">/* diff(y,x) = 2*y/x */</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">/* Ecuación de la familia ortogonal: y' -&gt; -1/y' */</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="cn">ode_ortho</span>: <span class="do">'</span><span class="cn">diff</span>(<span class="cn">y</span>,<span class="cn">x</span>) = -<span class="cn">x</span>/(<span class="dv">2</span>*<span class="cn">y</span>);</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">/* Resolvemos (variables separables) */</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="cn">sol</span>: <span class="fu">ode2</span>(<span class="cn">ode_ortho</span>, <span class="cn">y</span>, <span class="cn">x</span>);</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">/* Excentricidad de la familia de elipses x^2 + 2y^2 = k,</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">   escrita como x^2/k + y^2/(k/2) = 1 */</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="cn">a2</span>: <span class="cn">k</span>; <span class="cn">b2</span>: <span class="cn">k</span>/<span class="dv">2</span>;</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="cn">e</span>: <span class="fu">ratsimp</span>(<span class="fu">sqrt</span>(<span class="dv">1</span> - <span class="cn">b2</span>/<span class="cn">a2</span>));   <span class="co">/* -&gt; 1/sqrt(2), no depende de k */</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="Applet — parábolas y elipses ortogonales">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Applet — parábolas y elipses ortogonales
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div style="border:1px solid #ddd;border-radius:8px;padding:16px;max-width:560px;margin:1em auto;font-family:sans-serif;">
-  <canvas id="fo-ex1-canvas" width="520" height="420" style="width:100%;height:auto;background:#fff;"></canvas>
-  <div style="display:flex;gap:16px;margin-top:8px;flex-wrap:wrap;">
-    <label>C (parábola $y=Cx^2$): <input type="range" id="fo-ex1-C" min="-2" max="2" step="0.1" value="1"></label>
-    <label>k (elipse $x^2+2y^2=k$): <input type="range" id="fo-ex1-k" min="0.5" max="8" step="0.1" value="3"></label>
-  </div>
-  <p style="font-size:0.9em;color:#555;margin-top:8px;">
-    Parábolas de la familia (azul/gris) y elipses de la familia ortogonal (rojo/rosado). El marcador verde muestra el ángulo recto donde la parábola y la elipse seleccionadas se cruzan.
-  </p>
-</div>
-<script>
-(function(){
-  const canvas = document.getElementById('fo-ex1-canvas');
-  const ctx = canvas.getContext('2d');
-  const Cs = document.getElementById('fo-ex1-C');
-  const ks = document.getElementById('fo-ex1-k');
-  const W = canvas.width, H = canvas.height, s\!\(\*
-Graphics3DBox[
-{RGBColor[
-    0.9372549019607843, 0.596078431372549, 0.47843137254901963`], 
-    Opacity[0.8], 
-    GraphicsComplex3DBox[
-     NCache[{{0, 0, 
-        Rational[-1, 2] (
-          Rational[1, 2] (5 - 5^Rational[1, 2]))^Rational[1, 2]}, {0, 
-        0, Rational[
-         1, 2] (Rational[1, 2] (5 - 5^Rational[1, 2]))^Rational[
-          1, 2]}, {(
-         Rational[1, 8] + Rational[1, 8] 5^Rational[-1, 2])^Rational[
-         1, 2], (-1)/(1 + 5^Rational[1, 2]), 
-        Rational[-1, 2] (
-          Rational[1, 10] (5 - 5^Rational[1, 2]))^Rational[1, 2]}, {(
-         Rational[1, 8] + Rational[1, 8] 5^Rational[-1, 2])^Rational[
-         1, 2], (1 + 5^Rational[1, 2])^(-1), 
-        Rational[-1, 2] (
-          Rational[1, 10] (5 - 5^Rational[1, 2]))^Rational[1, 2]}, {-(
-          Rational[1, 8] + Rational[1, 8] 5^Rational[-1, 2])^Rational[
-          1, 2], (-1)/(1 + 5^Rational[1, 2]), 
-        Rational[
-         1, 2] (Rational[1, 10] (5 - 5^Rational[1, 2]))^Rational[
-          1, 2]}, {-(
-          Rational[1, 8] + Rational[1, 8] 5^Rational[-1, 2])^Rational[
-          1, 2], (1 + 5^Rational[1, 2])^(-1), 
-        Rational[
-         1, 2] (Rational[1, 10] (5 - 5^Rational[1, 2]))^Rational[
-          1, 2]}, {(Rational[1, 10] (5 - 5^Rational[1, 2]))^Rational[
-         1, 2], 0, 
-        Rational[
-         1, 2] (Rational[1, 10] (5 - 5^Rational[1, 2]))^Rational[
-          1, 2]}, {-(Rational[1, 10] (5 - 5^Rational[1, 2]))^Rational[
-          1, 2], 0, 
-        Rational[-1, 2] (
-          Rational[1, 10] (5 - 5^Rational[1, 2]))^Rational[
-          1, 2]}, {Rational[-1, 2] (1 - 2 5^Rational[-1, 2])^Rational[
-          1, 2], Rational[-1, 2], 
-        Rational[-1, 2] (
-          Rational[1, 10] (5 - 5^Rational[1, 2]))^Rational[
-          1, 2]}, {Rational[-1, 2] (1 - 2 5^Rational[-1, 2])^Rational[
-          1, 2], Rational[1, 2], 
-        Rational[-1, 2] (
-          Rational[1, 10] (5 - 5^Rational[1, 2]))^Rational[
-          1, 2]}, {Rational[
-         1, 2] (1 - 2 5^Rational[-1, 2])^Rational[1, 2], 
-        Rational[-1, 2], 
-        Rational[
-         1, 2] (Rational[1, 10] (5 - 5^Rational[1, 2]))^Rational[
-          1, 2]}, {Rational[
-         1, 2] (1 - 2 5^Rational[-1, 2])^Rational[1, 2], Rational[
-        1, 2], Rational[
-         1, 2] (Rational[1, 10] (5 - 5^Rational[1, 2]))^Rational[
-          1, 2]}}, {{0, 0, -0.5877852522924731}, {0, 0, 
-        0.5877852522924731}, {
-       0.42532540417601994`, -0.3090169943749474, \
--0.2628655560595668}, {0.42532540417601994`, 
-       0.3090169943749474, -0.2628655560595668}, \
-{-0.42532540417601994`, -0.3090169943749474, 
-       0.2628655560595668}, {-0.42532540417601994`, 
-       0.3090169943749474, 
-       0.2628655560595668}, {0.5257311121191336, 0, 
-        0.2628655560595668}, {-0.5257311121191336, 
-        0, -0.2628655560595668}, {-0.16245984811645317`, -0.5, \
--0.2628655560595668}, {-0.16245984811645317`, 
-       0.5, -0.2628655560595668}, {0.16245984811645317`, -0.5, 
-       0.2628655560595668}, {0.16245984811645317`, 0.5, 
-       0.2628655560595668}}], 
-     Polygon3DBox[{{1, 7, 5}, {6, 7, 1}, {1, 5, 12}, {11, 6, 1}, {12, 
-      11, 1}, {2, 8, 3}, {4, 8, 2}, {2, 3, 10}, {9, 4, 2}, {10, 9, 
-      2}, {12, 3, 8}, {8, 4, 11}, {8, 11, 12}, {10, 5, 7}, {7, 6, 
-      9}, {7, 9, 10}, {3, 5, 10}, {12, 5, 3}, {9, 6, 4}, {4, 6, 
-      11}}]]},
-Boxed->False,
-ImageSize->100,
-ImageSizeRaw->Automatic,
-ViewPoint->{-1.8529379144773177`, -2.298965737742867, \
--1.6526879989208019`},
-ViewVertical->{-0.9826148910405178, -0.16058983618144432`, 
-    0.09316050891149363}]\)cale = 35;
-  function toPx(x,y){ return [W/2 + x*scale, H/2 - y*scale]; }
-
-  function drawParabola(C, color, lw){
-    ctx.strokeStyle = color; ctx.lineWidth = lw;
-    ctx.beginPath();
-    let first = true;
-    for (let x = -6; x <= 6; x += 0.05) {
-      const y = C*x*x;
-      if (Math.abs(y) > 8) { first = true; continue; }
-      const [px,py] = toPx(x,y);
-      if (first) { ctx.moveTo(px,py); first = false; } else ctx.lineTo(px,py);
-    }
-    ctx.stroke();
-  }
-  function drawEllipse(k, color, lw){
-    ctx.strokeStyle = color; ctx.lineWidth = lw;
-    ctx.beginPath();
-    const a = Math.sqrt(k), b = Math.sqrt(k/2);
-    for (let t = 0; t <= 2*Math.PI+0.01; t += 0.02) {
-      const [px,py] = toPx(a*Math.cos(t), b*Math.sin(t));
-      if (t === 0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
-    }
-    ctx.stroke();
-  }
-
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    ctx.strokeStyle = '#ccc'; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(0,H/2); ctx.lineTo(W,H/2);
-    ctx.moveTo(W/2,0); ctx.lineTo(W/2,H); ctx.stroke();
-
-    [-2,-1,-0.5,0.5,1,2].forEach(c => drawParabola(c, '#ddd', 1));
-    [1,2,4,6,8].forEach(kk => drawEllipse(kk, '#f3c6c6', 1));
-
-    const C = parseFloat(Cs.value), k = parseFloat(ks.value);
-    drawParabola(C, '#1f77b4', 2.5);
-    drawEllipse(k, '#d62728', 2.5);
-
-    let bestX = null, bestErr = Infinity;
-    for (let x = 0.01; x <= Math.sqrt(k)+0.5; x += 0.01) {
-      const yP = C*x*x, rhs = k - x*x;
-      if (rhs < 0) continue;
-      const yE = Math.sqrt(rhs/2);
-      const err = Math.abs(yP-yE);
-      if (err < bestErr) { bestErr = err; bestX = x; }
-    }
-    if (bestX !== null && bestErr < 0.05) {
-      const x0 = bestX, y0 = C*x0*x0;
-      const [ppx,ppy] = toPx(x0,y0);
-      ctx.fillStyle = '#333';
-      ctx.beginPath(); ctx.arc(ppx,ppy,4,0,2*Math.PI); ctx.fill();
-
-      const mP = 2*C*x0;
-      const mE = y0 !== 0 ? -x0/(2*y0) : 1e9;
-      function unit(m){ const n = Math.sqrt(1+m*m); return [1/n, m/n]; }
-      const [ux1,uy1] = unit(mP), [ux2,uy2] = unit(mE);
-      const s = 12;
-      ctx.strokeStyle = '#2ca02c'; ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.moveTo(ppx,ppy);
-      ctx.lineTo(ppx+ux1*s, ppy-uy1*s);
-      ctx.lineTo(ppx+ux1*s+ux2*s, ppy-uy1*s-uy2*s);
-      ctx.lineTo(ppx+ux2*s, ppy-uy2*s);
-      ctx.closePath(); ctx.stroke();
-    }
-
-    ctx.fillStyle = '#000'; ctx.font = '13px sans-serif';
-    ctx.fillText('C = ' + C.toFixed(2) + ',  k = ' + k.toFixed(2), 10, 18);
-  }
-  Cs.addEventListener('input', draw);
-  ks.addEventListener('input', draw);
-  draw();
-})();
-</script>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Ejercicio">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Ejercicio
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Verifique con GeoGebra que la respuesta es correcta.</p>
+<p>Con <span class="math inline">\(M=x+2y^3\)</span> y <span class="math inline">\(N=3xy^2\)</span>: <span class="math inline">\(M_y=6y^2\)</span> y <span class="math inline">\(N_x=3y^2\)</span>, así que <span class="math inline">\(M_y\neq N_x\)</span> y la ecuación no es exacta. Pero</p>
+<p><span class="math display">\[\frac{M_y-N_x}{N}=\frac{6y^2-3y^2}{3xy^2}=\frac1x\]</span></p>
+<p>depende solo de <span class="math inline">\(x\)</span>, así que <span class="math inline">\(\mu=e^{\int dx/x}=x\)</span>. Multiplicando por <span class="math inline">\(\mu\)</span>,</p>
+<p><span class="math display">\[(x^2+2xy^3)\,dx+3x^2y^2\,dy=0\]</span></p>
+<p>que ya es exacta, pues <span class="math inline">\(\partial_y(x^2+2xy^3)=6xy^2=\partial_x(3x^2y^2)\)</span>. Integrando <span class="math inline">\(M\)</span> respecto a <span class="math inline">\(x\)</span>,</p>
+<p><span class="math display">\[f=\frac{x^3}3+x^2y^3+g(y), \qquad f_y=3x^2y^2+g'(y)=3x^2y^2 \;\Longrightarrow\; g'(y)=0\]</span></p>
+<p><span class="math display">\[\boxed{x^3+3x^2y^3=C}\]</span></p>
 </div>
 </div>
 </section>
-<section id="ejemplo-2-una-condición-geométrica-sobre-la-normal-ejercicio-6-b" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="ejemplo-2-una-condición-geométrica-sobre-la-normal-ejercicio-6-b"><span class="header-section-number">3</span> Ejemplo 2 — Una condición geométrica sobre la normal (Ejercicio 6-b)</h2>
-<p>Encuentre la familia de curvas tal que <strong>la proyección sobre el eje <span class="math inline">\(x\)</span> del segmento de la normal entre el punto <span class="math inline">\((x_0,y_0)\)</span> de la curva y el eje <span class="math inline">\(x\)</span> tiene longitud 1</strong>.</p>
-<p><strong>Planteamiento.</strong> Si la curva satisface <span class="math inline">\(y'=f(x,y)\)</span>, la recta normal en <span class="math inline">\((x_0,y_0)\)</span> tiene pendiente <span class="math inline">\(-1/f(x_0,y_0)\)</span> y ecuación</p>
-<p><span class="math display">\[y - y_0 = -\frac{1}{f(x_0,y_0)}(x-x_0)\]</span></p>
-<p>Esta recta corta al eje <span class="math inline">\(x\)</span> (donde <span class="math inline">\(y=0\)</span>) en el punto <span class="math inline">\(x_1\)</span> que se despeja de</p>
-<p><span class="math display">\[-y_0 = -\frac{1}{f(x_0,y_0)}(x_1-x_0) \quad\Longrightarrow\quad x_1-x_0 = y_0\,f(x_0,y_0)\]</span></p>
-<p>La proyección sobre el eje <span class="math inline">\(x\)</span> del segmento normal es justamente <span class="math inline">\(|x_1-x_0| = |y_0\,f(x_0,y_0)|\)</span>. Por hipótesis esto vale <span class="math inline">\(1\)</span>, y como <span class="math inline">\(f(x,y)=y'\)</span>:</p>
-<p><span class="math display">\[y\,y' = \pm 1\]</span></p>
-<p><strong>Resolviendo:</strong> separando variables, <span class="math inline">\(y\,dy = \pm dx\)</span>, así</p>
-<p><span class="math display">\[\frac{y^2}{2} = \pm x + C \quad\Longrightarrow\quad y^2 = \pm 2x + C\]</span></p>
-<p>Es una familia de parábolas que abren hacia la derecha o hacia la izquierda.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<section id="el-péndulo-más-allá-de-la-aproximación-lineal" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="el-péndulo-más-allá-de-la-aproximación-lineal"><span class="header-section-number">3</span> El péndulo más allá de la aproximación lineal</h2>
+<p>Con <span class="math inline">\(a\)</span> la longitud del péndulo y <span class="math inline">\(\alpha\)</span> el ángulo de amplitud desde el que se suelta en reposo, la aproximación de ángulo pequeño <span class="math inline">\(\sin\theta\approx\theta\)</span> conduce, como vimos en la sección de Reducción de Orden, a la relación</p>
+<p><span class="math display">\[p^2=\omega^2(\alpha^2-\theta^2), \qquad p=\theta', \qquad \omega^2=g/a.\]</span></p>
+<p>Repitamos ahora el cálculo usando, en cambio, la aproximación de Taylor de tercer orden <span class="math inline">\(\sin\theta\approx\theta-\theta^3/6\)</span> en la ecuación de movimiento <span class="math inline">\(a\theta''=-g\sin\theta\)</span>.</p>
+<ol start="8" type="1">
+<li>Con la aproximación de arriba, la ecuación se convierte en <span class="math inline">\(a\theta''=-g(\theta-\theta^3/6)\)</span>. Usando <span class="math inline">\(p=\theta'\)</span> como función de <span class="math inline">\(\theta\)</span> y la regla de la cadena <span class="math inline">\(\theta''=p\,dp/d\theta\)</span>, reescriba esta ecuación como una ecuación de primer orden en <span class="math inline">\(p(\theta)\)</span>. (5 pts)</li>
+<li>Escriba la ecuación del punto anterior en la forma <span class="math inline">\(dp/d\theta=f(\theta)p^{-1}\)</span>, identificando <span class="math inline">\(f(\theta)\)</span>. Explique por qué es una ecuación de Bernoulli en <span class="math inline">\(p(\theta)\)</span> con <span class="math inline">\(n=-1\)</span>, y use la sustitución <span class="math inline">\(u=p^2\)</span> para convertirla en una ecuación directamente integrable en <span class="math inline">\(u(\theta)\)</span>. (5 pts)</li>
+<li>Integre para hallar <span class="math inline">\(u(\theta)=p^2\)</span>, use la condición inicial (<span class="math inline">\(p=0\)</span> cuando <span class="math inline">\(\theta=\alpha\)</span>) para hallar la constante, y muestre que el resultado se factoriza como <span class="math display">\[p^2=\omega^2(\alpha^2-\theta^2)\left[1-\frac{\alpha^2+\theta^2}{12}\right].\]</span> (5 pts)</li>
+<li>Compare esta expresión con la relación de la aproximación lineal. Para <span class="math inline">\(\theta,\alpha\)</span> físicamente razonables en un péndulo, ¿el término entre corchetes es mayor o menor que 1? ¿Cómo interpreta esto? (5 pts)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+<span class="screen-reader-only">Tip</span>Solución
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">depends</span>(<span class="cn">y</span>, <span class="cn">x</span>);</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">/* La ecuación diferencial de la familia */</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cn">ode</span>: <span class="cn">y</span>*<span class="do">'</span><span class="cn">diff</span>(<span class="cn">y</span>,<span class="cn">x</span>) = <span class="dv">1</span>;</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="cn">sol</span>: <span class="fu">ode2</span>(<span class="cn">ode</span>, <span class="cn">y</span>, <span class="cn">x</span>);        <span class="co">/* y^2 = 2x + %c */</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">/* Verificación geométrica: para un punto (x0,y0) sobre y^2 = 2x,</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">   comprobamos que la normal corta al eje x exactamente en x0+1 */</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="cn">curva</span>: <span class="cn">y</span>^<span class="dv">2</span> = <span class="dv">2</span>*<span class="cn">x</span>;</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="cn">pend</span>: <span class="fu">rhs</span>(<span class="fu">solve</span>(<span class="fu">diff</span>(<span class="cn">curva</span>, <span class="cn">x</span>), <span class="fu">diff</span>(<span class="cn">y</span>,<span class="cn">x</span>))[<span class="dv">1</span>]);   <span class="co">/* pendiente y' = 1/y en general */</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="cn">pend0</span>: <span class="fu">subst</span>([<span class="cn">x</span>=<span class="cn">x0</span>, <span class="cn">y</span>=<span class="fu">sqrt</span>(<span class="dv">2</span>*<span class="cn">x0</span>)], <span class="cn">pend</span>);</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="cn">pend_normal</span>: <span class="dv">-1</span>/<span class="cn">pend0</span>;</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">/* Recta normal: 0 - y0 = pend_normal*(xx - x0), despejamos xx */</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="cn">y0</span>: <span class="fu">sqrt</span>(<span class="dv">2</span>*<span class="cn">x0</span>);</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="cn">xx</span>: <span class="fu">solve</span>(<span class="dv">0</span> - <span class="cn">y0</span> = <span class="cn">pend_normal</span>*(<span class="cn">xxvar</span> - <span class="cn">x0</span>), <span class="cn">xxvar</span>)[<span class="dv">1</span>];</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ratsimp</span>(<span class="fu">rhs</span>(<span class="cn">xx</span>) - <span class="cn">x0</span>);       <span class="co">/* debe dar exactamente 1 */</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="Applet — la condición geométrica en acción">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Applet — la condición geométrica en acción
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div style="border:1px solid #ddd;border-radius:8px;padding:16px;max-width:560px;margin:1em auto;font-family:sans-serif;">
-  <canvas id="fo-ex2-canvas" width="520" height="360" style="width:100%;height:auto;background:#fff;"></canvas>
-  <label>Posición del punto $x_0$: <input type="range" id="fo-ex2-x0" min="0.2" max="4" step="0.05" value="1.5" style="width:100%;"></label>
-  <p style="font-size:0.9em;color:#555;margin-top:8px;">
-    Curva $y^2=2x$ (azul), segmento normal en $(x_0,y_0)$ hasta el eje $x$ (rojo) y su proyección horizontal (verde). Mueve el control: la proyección mide siempre <strong>1</strong>, sin importar dónde esté el punto — así es como se construyó la ecuación diferencial.
-  </p>
-</div>
-<script>
-(function(){
-  const canvas = document.getElementById('fo-ex2-canvas');
-  const ctx = canvas.getContext('2d');
-  const x0s = document.getElementById('fo-ex2-x0');
-  const W = canvas.width, H = canvas.height, scale = 60;
-  const originX = 60, originY = H - 40;
-  function toPx(x,y){ return [originX + x*scale, originY - y*scale]; }
-
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    ctx.strokeStyle = '#ccc'; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(0,originY); ctx.lineTo(W,originY);
-    ctx.moveTo(originX,0); ctx.lineTo(originX,H); ctx.stroke();
-
-    ctx.strokeStyle = '#1f77b4'; ctx.lineWidth = 2;
-    ctx.beginPath();
-    let first = true;
-    for (let x = 0; x <= 6.5; x += 0.03) {
-      const y = Math.sqrt(2*x);
-      const [px,py] = toPx(x,y);
-      if (first) { ctx.moveTo(px,py); first = false; } else ctx.lineTo(px,py);
-    }
-    ctx.stroke();
-
-    const x0 = parseFloat(x0s.value);
-    const y0 = Math.sqrt(2*x0);
-    const x1 = x0 + 1;
-
-    const [P0x,P0y] = toPx(x0,y0);
-    const [P1x,P1y] = toPx(x1,0);
-    const [Ax,Ay] = toPx(x0,0);
-
-    ctx.strokeStyle = '#d62728'; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.moveTo(P0x,P0y); ctx.lineTo(P1x,P1y); ctx.stroke();
-
-    ctx.strokeStyle = '#2ca02c'; ctx.lineWidth = 4;
-    ctx.beginPath(); ctx.moveTo(Ax,Ay); ctx.lineTo(P1x,P1y); ctx.stroke();
-
-    ctx.strokeStyle = '#999'; ctx.setLineDash([4,3]); ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(P0x,P0y); ctx.lineTo(Ax,Ay); ctx.stroke();
-    ctx.setLineDash([]);
-
-    ctx.fillStyle = '#333';
-    [[P0x,P0y],[P1x,P1y],[Ax,Ay]].forEach(p => {
-      ctx.beginPath(); ctx.arc(p[0],p[1],3.5,0,2*Math.PI); ctx.fill();
-    });
-
-    ctx.font = '13px sans-serif'; ctx.fillStyle = '#000';
-    ctx.fillText('(x₀, y₀)', P0x+6, P0y-6);
-    ctx.fillText('(x₀,0)', Ax-10, Ay+16);
-    ctx.fillText('(x₀+1, 0)', P1x-10, P1y+16);
-    ctx.fillText('proyección = 1', (Ax+P1x)/2-30, Ay+32);
-  }
-  x0s.addEventListener('input', draw);
-  draw();
-})();
-</script>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Explicación de cómo verificar en Geogebra">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Explicación de cómo verificar en Geogebra
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div style="max-width:720px;margin:1.5em auto;">
-<p><video controls="" style="width:100%;border-radius:8px;"> <source src="https://www.dropbox.com/scl/fi/y76709lub6hnj358ctqt8/explicacion-geogebra.mp4?rlkey=5ikqqd192fjo41ooqj9vzs1q0&amp;raw=1" type="video/mp4"> Tu navegador no soporta el elemento de video. </video></p>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled" title="Tarea">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Tarea
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Página 17–18: 1-a, 1-d, 2, 5, 6-a,d,e,f.&nbsp;7, 8. Página 49–6. Verifique sus respuestas en Geogebra.</p>
+<p>Con <span class="math inline">\(\theta''=p\,dp/d\theta\)</span>,</p>
+<p><span class="math display">\[ap\frac{dp}{d\theta}=-g\left(\theta-\frac{\theta^3}6\right) \;\Longrightarrow\; \frac{dp}{d\theta}=\underbrace{\left(-\omega^2\theta+\frac{\omega^2}6\theta^3\right)}_{f(\theta)}p^{-1}\]</span></p>
+<p>Esta es una ecuación de Bernoulli en <span class="math inline">\(p(\theta)\)</span>, <span class="math inline">\(dp/d\theta+P(\theta)p=Q(\theta)p^n\)</span>, con <span class="math inline">\(P=0\)</span>, <span class="math inline">\(Q=f(\theta)\)</span> y <span class="math inline">\(n=-1\)</span>; la sustitución de Bernoulli es <span class="math inline">\(u=p^{1-n}=p^2\)</span>. Derivando,</p>
+<p><span class="math display">\[\frac{du}{d\theta}=2p\frac{dp}{d\theta}=2f(\theta)=-2\omega^2\theta+\frac{\omega^2}3\theta^3\]</span></p>
+<p>que ya es directamente integrable:</p>
+<p><span class="math display">\[u=p^2=-\omega^2\theta^2+\frac{\omega^2}{12}\theta^4+C\]</span></p>
+<p>Con <span class="math inline">\(p=0\)</span> en <span class="math inline">\(\theta=\alpha\)</span>: <span class="math inline">\(C=\omega^2\alpha^2-\dfrac{\omega^2}{12}\alpha^4\)</span>, y como <span class="math inline">\(\alpha^4-\theta^4=(\alpha^2-\theta^2)(\alpha^2+\theta^2)\)</span>,</p>
+<p><span class="math display">\[p^2=\omega^2(\alpha^2-\theta^2)-\frac{\omega^2}{12}(\alpha^2-\theta^2)(\alpha^2+\theta^2) = \omega^2(\alpha^2-\theta^2)\left[1-\frac{\alpha^2+\theta^2}{12}\right]\]</span></p>
+<p>Para <span class="math inline">\(\theta,\alpha\)</span> razonables en un péndulo (digamos, hasta unos <span class="math inline">\(90°\)</span>), <span class="math inline">\(\alpha^2+\theta^2\)</span> queda bien por debajo de 12, así que el corchete es positivo y menor que 1. Esto significa que, en cada ángulo, la corrección cúbica predice una velocidad angular <em>menor</em> que la aproximación lineal, así que el péndulo tarda <em>más</em> tiempo en recorrer el mismo ángulo: el período debe ser mayor que <span class="math inline">\(T_0=2\pi\sqrt{a/g}\)</span>. Es exactamente lo que muestra la tabla de <span class="math inline">\(T_{\text{exacto}}/T_0\)</span> de la sección de Reducción de Orden, donde esa razón crece con la amplitud: esta corrección cúbica explica, de forma analítica y a primer orden, el error circular.</p>
 </div>
 </div>
 
@@ -1451,14 +1025,11 @@ ViewVertical->{-0.9826148910405178, -0.16058983618144432`,
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../../cursos/odes/introduccion/index.html" class="pagination-link" aria-label="Introducción">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Introducción</span>
+      <a href="../../../cursos/odes/taller-2/index.html" class="pagination-link" aria-label="Taller 2">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Taller 2</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../../cursos/odes/modelacion/index.html" class="pagination-link" aria-label="Modelación con Ecuaciones Diferenciales">
-        <span class="nav-page-text">Modelación con Ecuaciones Diferenciales</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

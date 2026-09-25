@@ -1,0 +1,106 @@
+---
+title: "Parcial 1"
+subtitle: "Una ecuación homogénea, una ecuación con factor integrante, y el péndulo más allá de la aproximación lineal"
+description: "Primer parcial individual, con solución."
+author: "Arturo Sanjuán"
+date: 2026-09-25
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 10
+---
+
+Este parcial individual repasa tres técnicas vistas en el primer corte  del curso: ecuaciones homogéneas, factor integrante, y la reducción de orden, esta última aplicada de nuevo al péndulo simple pero yendo más allá de la aproximación de ángulo pequeño.
+
+## Ecuación homogénea
+
+Considere la ecuación
+
+$$2xy\,dx+(y^2-x^2)\,dy=0.$$
+
+1. Verifique que la ecuación es homogénea e indique su grado. (2 pts)
+2. Resuélvala mediante la sustitución $y=zx$. (7 pts)
+3. Muestre que la familia de soluciones puede escribirse como $x^2+y^2=ky$. (4 pts)
+4. Identifique esta familia geométricamente: ¿qué figura describe, y en qué punto es tangente al eje $x$? (2 pts)
+
+::: {.callout-tip title="Solución"}
+Aquí $M=2xy$ y $N=y^2-x^2$, ambas homogéneas de grado 2. Con $y=zx$,
+
+$$z+x\frac{dz}{dx} = \frac{2z}{1-z^2} \;\Longrightarrow\; x\frac{dz}{dx} = \frac{z(1+z^2)}{1-z^2}$$
+
+Separando variables y usando fracciones parciales, $\dfrac{1-z^2}{z(1+z^2)}=\dfrac1z-\dfrac{2z}{1+z^2}$:
+
+$$\ln|z|-\ln(1+z^2)=\ln|x|+C \;\Longrightarrow\; \frac{z}{1+z^2}=Ax$$
+
+Deshaciendo la sustitución ($z=y/x$) y simplificando,
+
+$$\frac{xy}{x^2+y^2}=Ax \;\Longrightarrow\; \frac{y}{x^2+y^2}=A \;\Longrightarrow\; x^2+y^2=ky, \qquad k=\frac1A$$
+
+Completando el cuadrado, $x^2+\left(y-\dfrac k2\right)^2=\left(\dfrac k2\right)^2$: la familia es de circunferencias centradas en $(0,k/2)$, todas tangentes al eje $x$ en el origen (el punto más bajo de cada circunferencia).
+:::
+
+## Ecuación con factor integrante
+
+Considere ahora la ecuación
+
+$$(x+2y^3)\,dx+3xy^2\,dy=0.$$
+
+5. Verifique que no es exacta. (2 pts)
+6. Encuentre un factor integrante $\mu$ que dependa de una sola variable. (6 pts)
+7. Multiplique por $\mu$, compruebe que la ecuación resultante es exacta, y resuélvala para obtener la solución implícita $f(x,y)=C$. (7 pts)
+
+::: {.callout-tip title="Solución"}
+Con $M=x+2y^3$ y $N=3xy^2$: $M_y=6y^2$ y $N_x=3y^2$, así que $M_y\neq N_x$ y la ecuación no es exacta. Pero
+
+$$\frac{M_y-N_x}{N}=\frac{6y^2-3y^2}{3xy^2}=\frac1x$$
+
+depende solo de $x$, así que $\mu=e^{\int dx/x}=x$. Multiplicando por $\mu$,
+
+$$(x^2+2xy^3)\,dx+3x^2y^2\,dy=0$$
+
+que ya es exacta, pues $\partial_y(x^2+2xy^3)=6xy^2=\partial_x(3x^2y^2)$. Integrando $M$ respecto a $x$,
+
+$$f=\frac{x^3}3+x^2y^3+g(y), \qquad f_y=3x^2y^2+g'(y)=3x^2y^2 \;\Longrightarrow\; g'(y)=0$$
+
+$$\boxed{x^3+3x^2y^3=C}$$
+:::
+
+## El péndulo más allá de la aproximación lineal
+
+Con $a$ la longitud del péndulo y $\alpha$ el ángulo de amplitud desde el que se suelta en reposo, la aproximación de ángulo pequeño $\sin\theta\approx\theta$ conduce, como vimos en la sección de Reducción de Orden, a la relación
+
+$$p^2=\omega^2(\alpha^2-\theta^2), \qquad p=\theta', \qquad \omega^2=g/a.$$
+
+Repitamos ahora el cálculo usando, en cambio, la aproximación de Taylor de tercer orden $\sin\theta\approx\theta-\theta^3/6$ en la ecuación de movimiento $a\theta''=-g\sin\theta$.
+
+8. Con la aproximación de arriba, la ecuación se convierte en $a\theta''=-g(\theta-\theta^3/6)$. Usando $p=\theta'$ como función de $\theta$ y la regla de la cadena $\theta''=p\,dp/d\theta$, reescriba esta ecuación como una ecuación de primer orden en $p(\theta)$. (5 pts)
+9. Escriba la ecuación del punto anterior en la forma $dp/d\theta=f(\theta)p^{-1}$, identificando $f(\theta)$. Explique por qué es una ecuación de Bernoulli en $p(\theta)$ con $n=-1$, y use la sustitución $u=p^2$ para convertirla en una ecuación directamente integrable en $u(\theta)$. (5 pts)
+10. Integre para hallar $u(\theta)=p^2$, use la condición inicial ($p=0$ cuando $\theta=\alpha$) para hallar la constante, y muestre que el resultado se factoriza como
+$$p^2=\omega^2(\alpha^2-\theta^2)\left[1-\frac{\alpha^2+\theta^2}{12}\right].$$ (5 pts)
+11. Compare esta expresión con la relación de la aproximación lineal. Para $\theta,\alpha$ físicamente razonables en un péndulo, ¿el término entre corchetes es mayor o menor que 1? ¿Cómo interpreta esto? (5 pts)
+
+::: {.callout-tip title="Solución"}
+Con $\theta''=p\,dp/d\theta$,
+
+$$ap\frac{dp}{d\theta}=-g\left(\theta-\frac{\theta^3}6\right) \;\Longrightarrow\; \frac{dp}{d\theta}=\underbrace{\left(-\omega^2\theta+\frac{\omega^2}6\theta^3\right)}_{f(\theta)}p^{-1}$$
+
+Esta es una ecuación de Bernoulli en $p(\theta)$, $dp/d\theta+P(\theta)p=Q(\theta)p^n$, con $P=0$, $Q=f(\theta)$ y $n=-1$; la sustitución de Bernoulli es $u=p^{1-n}=p^2$. Derivando,
+
+$$\frac{du}{d\theta}=2p\frac{dp}{d\theta}=2f(\theta)=-2\omega^2\theta+\frac{\omega^2}3\theta^3$$
+
+que ya es directamente integrable:
+
+$$u=p^2=-\omega^2\theta^2+\frac{\omega^2}{12}\theta^4+C$$
+
+Con $p=0$ en $\theta=\alpha$: $C=\omega^2\alpha^2-\dfrac{\omega^2}{12}\alpha^4$, y como $\alpha^4-\theta^4=(\alpha^2-\theta^2)(\alpha^2+\theta^2)$,
+
+$$p^2=\omega^2(\alpha^2-\theta^2)-\frac{\omega^2}{12}(\alpha^2-\theta^2)(\alpha^2+\theta^2) = \omega^2(\alpha^2-\theta^2)\left[1-\frac{\alpha^2+\theta^2}{12}\right]$$
+
+Para $\theta,\alpha$ razonables en un péndulo (digamos, hasta unos $90°$), $\alpha^2+\theta^2$ queda bien por debajo de 12, así que el corchete es positivo y menor que 1. Esto significa que, en cada ángulo, la corrección cúbica predice una velocidad angular *menor* que la aproximación lineal, así que el péndulo tarda *más* tiempo en recorrer el mismo ángulo: el período debe ser mayor que $T_0=2\pi\sqrt{a/g}$. Es exactamente lo que muestra la tabla de $T_{\text{exacto}}/T_0$ de la sección de Reducción de Orden, donde esa razón crece con la amplitud: esta corrección cúbica explica, de forma analítica y a primer orden, el error circular.
+:::
