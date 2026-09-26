@@ -1,0 +1,152 @@
+
+---
+title: "Parcial 1"
+subtitle: "Axiomas, función de distribución, probabilidad de Laplace, teorema de Bayes y distribuciones discretas notables"
+description: "Primer parcial individual, con solución."
+author: "Arturo Sanjuán"
+date: 2026-09-23
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 11
+---
+
+Este primer parcial individual repasa lo construido en el curso hasta las distribuciones discretas notables: los axiomas de probabilidad y la función de distribución, el conteo detrás del modelo de Laplace, la actualización de creencias con el teorema de Bayes, y el puente exacto entre la Poisson y la binomial.
+
+## Monotonía y la desigualdad de Boole
+
+1. Sean $A, B\in\mathfrak F$ con $A\subseteq B$. A partir de los axiomas de probabilidad, muestre que $P(A)\le P(B)$. (5 puntos)
+2. Demuestre la desigualdad de Boole para tres conjuntos: sean $A,B,C\in\mathfrak F$ cualesquiera, entonces
+$$P(A\cup B\cup C) \le P(A)+P(B)+P(C).$$ (10 puntos)
+
+::: {.callout-tip title="Solución"}
+**1.** Como $A\subseteq B$, $B=A\cup(B\setminus A)$ es una unión disyunta, así que por aditividad finita $P(B)=P(A)+P(B\setminus A)$. Por el axioma de no negatividad, $P(B\setminus A)\ge0$, de donde $P(B)\ge P(A)$.
+
+**2.** Para dos conjuntos cualesquiera $D,E\in\mathfrak F$, la fórmula de inclusión-exclusión da $P(D\cup E)=P(D)+P(E)-P(D\cap E)\le P(D)+P(E)$, pues $P(D\cap E)\ge0$. Aplicando esto dos veces:
+
+$$P(A\cup B\cup C) = P\big((A\cup B)\cup C\big) \le P(A\cup B)+P(C) \le \big[P(A)+P(B)\big]+P(C) = P(A)+P(B)+P(C). \qquad\blacksquare$$
+:::
+
+## Función de masa y función de distribución
+
+Sea $X$ una variable aleatoria discreta con función de masa dada por la tabla:
+
+| $x$ | $-1$ | $0$ | $2$ | $5$ |
+|---|---|---|---|---|
+| $P(X=x)$ | $0{,}1$ | $0{,}3$ | $0{,}4$ | $0{,}2$ |
+
+1. Verifique que es una función de masa válida. (3 puntos)
+2. Escriba y grafique $F_X(x)$ para todo $x\in\mathbb R$. (6 puntos)
+3. Usando únicamente $F_X$, calcule $P(-1<X\le5)$ y $P(X\ge2)$. (6 puntos)
+
+::: {.callout-tip title="Solución"}
+**1.** $0{,}1+0{,}3+0{,}4+0{,}2=1$ y los cuatro valores son no negativos: es una función de masa válida.
+
+**2.**
+$$
+F_X(x) =
+\begin{cases}
+0 & x<-1 \\
+0{,}1 & -1\le x<0 \\
+0{,}4 & 0\le x<2 \\
+0{,}8 & 2\le x<5 \\
+1 & x\ge5
+\end{cases}
+$$
+
+```{r}
+#| label: fig-Fx-parcial1
+#| fig-cap: "Función de distribución de X"
+x_vals <- c(-1, 0, 2, 5)
+p <- c(0.1, 0.3, 0.4, 0.2)
+Fx <- stepfun(x_vals, c(0, cumsum(p)))
+
+plot(Fx, xlim = c(-3, 7), ylim = c(0, 1),
+     xlab = "x", ylab = expression(F[X](x)),
+     main = "", do.points = TRUE, pch = 19, col = "steelblue",
+     verticals = TRUE)
+abline(h = c(0, 1), lty = 3, col = "gray60")
+```
+
+**3.** $P(-1<X\le5) = F_X(5)-F_X(-1) = 1-0{,}1 = 0{,}9$.
+
+$P(X\ge2) = 1-F_X(2^-) = 1-0{,}4 = 0{,}6$, donde $F_X(2^-)$ es el valor de $F_X$ justo antes del salto en $2$.
+:::
+
+## Probabilidad de Laplace y la distribución hipergeométrica
+
+De un grupo de 12 personas (7 mujeres, 5 hombres) se elige, al azar y sin reemplazo, un comité de 5.
+
+1. Calcule $P(X=3)$, con $X$ = número de mujeres en el comité. (5 puntos)
+2. Escriba la fórmula general de $P(X=k)$ e identifique la distribución. (8 puntos)
+3. Si la elección fuera con reemplazo, ¿qué distribución tendría $X$? Calcule $P(X=3)$ bajo ese esquema y compare con el punto 1. (7 puntos)
+4. Calcule $P(X\ge3)$ bajo el esquema original. (5 puntos)
+
+::: {.callout-tip title="Solución"}
+**1.** $$P(X=3) = \frac{\binom73\binom52}{\binom{12}5} = \frac{35\times10}{792} = \frac{175}{396}\approx0{,}4419$$
+
+**2.** $$P(X=k) = \frac{\binom7k\binom5{5-k}}{\binom{12}5}, \qquad k=0,1,\ldots,5$$
+
+$X$ tiene distribución **hipergeométrica** de parámetros $n=5$, $R=7$, $N=12$.
+
+**3.** Con reemplazo, cada extracción es independiente con probabilidad de éxito constante $p=7/12$, así que $X\sim B(5,7/12)$:
+
+$$P(X=3) = \binom53\Big(\frac7{12}\Big)^3\Big(\frac5{12}\Big)^2 = \frac{42875}{124416}\approx0{,}3446$$
+
+No coincide con el punto 1 ($0{,}4419$): sin reemplazo, cada mujer que sale reduce la proporción de mujeres restantes, lo que concentra la distribución más cerca de su media (la hipergeométrica tiene menor varianza que la binomial con el mismo $n,p$); con reemplazo esa corrección no existe.
+
+**4.**
+$$P(X\ge3) = \frac{175}{396}+\frac{175}{792}+\frac{7}{264} = \frac{350+175+21}{792} = \frac{546}{792} = \frac{91}{132}\approx0{,}6894$$
+:::
+
+## Probabilidad condicional y el teorema de Bayes
+
+Una prueba casera de embarazo tiene sensibilidad 98% y especificidad 95%. El 30% de quienes se la hacen está efectivamente embarazada.
+
+1. Calcule $P(\text{positivo})$. (5 puntos)
+2. Calcule $P(\text{embarazada}\mid\text{positivo})$. (8 puntos)
+3. Cinco mujeres no embarazadas se hacen la prueba, independientemente. Calcule $P(\text{al menos un falso positivo})$. (7 puntos)
+
+::: {.callout-tip title="Solución"}
+**1.** $$P(\text{positivo}) = P(\text{pos}\mid\text{emb})P(\text{emb})+P(\text{pos}\mid\text{no emb})P(\text{no emb}) = 0{,}98(0{,}3)+0{,}05(0{,}7) = 0{,}294+0{,}035 = 0{,}329$$
+
+**2.** $$P(\text{embarazada}\mid\text{positivo}) = \frac{0{,}294}{0{,}329} = \frac{42}{47}\approx0{,}8936$$
+
+**3.** Cada mujer no embarazada tiene $P(\text{falso positivo})=1-0{,}95=0{,}05$, independientes entre ellas:
+
+$$P(\text{al menos uno en 5}) = 1-(0{,}95)^5 = 1-0{,}7738 \approx 0{,}2262$$
+:::
+
+## Distribuciones discretas notables
+
+1. Para cada escenario, identifique la distribución y sus parámetros (sin calcular nada): (15 puntos: 3 cada uno)
+   - Un dado se lanza una vez; $X=1$ si sale par, $0$ si no.
+   - Se elige, con igual probabilidad, un entero entre 1 y 6.
+   - Se lanza un dado hasta que sale el primer 6; $X$ = número de lanzamientos.
+   - Se lanza hasta que sale el tercer 6; $X$ = número de lanzamientos.
+   - Errores tipográficos por página, con promedio 1,5 por página.
+2. Un centro de llamadas recibe $n=1000$ llamadas, cada una con probabilidad $p=0{,}002$ de fallar, de forma independiente. Usando el teorema de aproximación de Poisson a la binomial, estime $P(X\le3)$ y compare con el valor exacto. (10 puntos)
+
+::: {.callout-tip title="Solución"}
+**1.**
+
+- Bernoulli de parámetro $p=1/2$.
+- Uniforme discreta en $\{1,\ldots,6\}$.
+- Geométrica de parámetro $p=1/6$.
+- Binomial negativa de parámetros $r=3$, $p=1/6$.
+- Poisson de parámetro $\lambda=1{,}5$.
+
+**2.** Aquí $\lambda=np=1000(0{,}002)=2$.
+
+Aproximación Poisson: $$P(X\le3)\approx e^{-2}\Big(1+2+2+\frac43\Big) \approx 0{,}8571$$
+
+Valor exacto (binomial): $$P(X\le3) = \sum_{k=0}^3\binom{1000}{k}(0{,}002)^k(0{,}998)^{1000-k} \approx 0{,}8573$$
+
+La diferencia es de apenas $0{,}0002$: la aproximación es excelente, como se espera con $n$ grande y $p$ pequeño con $np$ moderado.
+:::

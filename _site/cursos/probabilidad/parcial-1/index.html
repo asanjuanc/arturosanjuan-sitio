@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Arturo Sanjuán">
+<meta name="description" content="Primer parcial individual, con solución.">
 
-<title>Probabilidad – Arturo Sanjuán</title>
+<title>Parcial 1 – Arturo Sanjuán</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -27,34 +28,66 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<link href="../../cursos/probabilidad/introduccion/index.html" rel="next">
-<link href="../../favicon.png" rel="icon" type="image/png">
-<script src="../../site_libs/quarto-listing/list.min.js"></script>
-<script src="../../site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-20e8419ce0e5e504df81ebb4f0516dd0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-690a39555877842da32c80663def9b9f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-20e8419ce0e5e504df81ebb4f0516dd0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-5a1953863e1f72ef3b996ef827f01ca7.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-06ef128ffaab2aaffa18b1038abc86f3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-979bd06565eab1ad32ed49e916b209dc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/bootstrap/bootstrap-06ef128ffaab2aaffa18b1038abc86f3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -82,35 +115,7 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Buscar"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-subtitle',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
+<style>html{ scroll-behavior: smooth; }</style>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
@@ -142,10 +147,10 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="../../styles.css">
-<link rel="alternate" type="application/rss+xml" title="Arturo Sanjuán" href="index.xml" data-external="1"></head>
+<link rel="stylesheet" href="../../../styles.css">
+</head>
 
-<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+<body class="docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -314,7 +319,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../../index.html">
+    <a class="navbar-brand" href="../../../index.html">
     <span class="navbar-title">Arturo Sanjuán</span>
     </a>
   </div>
@@ -325,33 +330,33 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../research/index.html"> 
+    <a class="nav-link" href="../../../research/index.html"> 
 <span class="menu-text">research</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../cursos/index.html"> 
+    <a class="nav-link" href="../../../cursos/index.html"> 
 <span class="menu-text">cursos</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../trabajos/index.html"> 
+    <a class="nav-link" href="../../../trabajos/index.html"> 
 <span class="menu-text">trabajos</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../research/genealogy/index.html"> 
+    <a class="nav-link" href="../../../research/genealogy/index.html"> 
 <span class="menu-text">genealogy</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html"> 
+    <a class="nav-link" href="../../../about.html"> 
 <span class="menu-text">about</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../links.html"> 
+    <a class="nav-link" href="../../../links.html"> 
 <span class="menu-text">contacto</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../files/cv_sanjuan.pdf"> 
+    <a class="nav-link" href="../../../files/cv_sanjuan.pdf"> 
 <span class="menu-text">CV</span></a>
   </li>  
 </ul>
@@ -361,99 +366,26 @@ window.Quarto = {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../cursos/probabilidad/index.html">Probabilidad</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-    </div>
-  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-        <div class="sidebar-tools-main">
-    <a href="../../cursos/probabilidad/index.xml" title="RSS — Probabilidad" class="quarto-navigation-tool px-1" aria-label="RSS — Probabilidad"><i class="bi bi-rss"></i></a>
-</div>
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../cursos/probabilidad/index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Probabilidad</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../cursos/probabilidad/introduccion/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introducción</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../cursos/probabilidad/calculoprobabilidades/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Cálculo de probabilidades</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../cursos/probabilidad/condicional/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Probabilidad condicional</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../cursos/probabilidad/taller-1/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Taller 1</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../cursos/probabilidad/vaintro/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Variables aleatorias</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../cursos/probabilidad/vadiscretas/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Variables aleatorias discretas</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../cursos/probabilidad/vacontinuas/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Variables aleatorias continuas y la distribución normal</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../cursos/probabilidad/limitenormal/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">La distribución normal como límite</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../cursos/probabilidad/continuasespeciales/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Distribuciones continuas notables</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../cursos/probabilidad/taller-2/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Taller 2</span></a>
-  </div>
-</li>
-    </ul>
-    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#monotonía-y-la-desigualdad-de-boole" id="toc-monotonía-y-la-desigualdad-de-boole" class="nav-link active" data-scroll-target="#monotonía-y-la-desigualdad-de-boole"><span class="header-section-number">1</span> Monotonía y la desigualdad de Boole</a></li>
+  <li><a href="#función-de-masa-y-función-de-distribución" id="toc-función-de-masa-y-función-de-distribución" class="nav-link" data-scroll-target="#función-de-masa-y-función-de-distribución"><span class="header-section-number">2</span> Función de masa y función de distribución</a></li>
+  <li><a href="#probabilidad-de-laplace-y-la-distribución-hipergeométrica" id="toc-probabilidad-de-laplace-y-la-distribución-hipergeométrica" class="nav-link" data-scroll-target="#probabilidad-de-laplace-y-la-distribución-hipergeométrica"><span class="header-section-number">3</span> Probabilidad de Laplace y la distribución hipergeométrica</a></li>
+  <li><a href="#probabilidad-condicional-y-el-teorema-de-bayes" id="toc-probabilidad-condicional-y-el-teorema-de-bayes" class="nav-link" data-scroll-target="#probabilidad-condicional-y-el-teorema-de-bayes"><span class="header-section-number">4</span> Probabilidad condicional y el teorema de Bayes</a></li>
+  <li><a href="#distribuciones-discretas-notables" id="toc-distribuciones-discretas-notables" class="nav-link" data-scroll-target="#distribuciones-discretas-notables"><span class="header-section-number">5</span> Distribuciones discretas notables</a></li>
+  </ul>
+</nav>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -461,10 +393,15 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Probabilidad</h1>
-<p class="subtitle lead">Notas de clase del curso de probabilidad siguiendo el libro de <a href="https://repositorio.unal.edu.co/items/132312a1-0f81-425e-a34f-e5ae9c51aa19">Blanco</a></p>
+<h1 class="title">Parcial 1</h1>
+<p class="subtitle lead">Axiomas, función de distribución, probabilidad de Laplace, teorema de Bayes y distribuciones discretas notables</p>
 </div>
 
+<div>
+  <div class="description">
+    Primer parcial individual, con solución.
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
@@ -479,7 +416,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">26 de agosto de 2026</p>
+      <p class="date">23 de septiembre de 2026</p>
     </div>
   </div>
   
@@ -491,157 +428,202 @@ window.Quarto = {
 </header>
 
 
-
-
-
-
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<div class="listing-actions-group">
-   <div class="input-group input-group-sm quarto-listing-sort">
-    <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
-    <select id="listing-listing-sort" class="form-select" aria-label="Ordenar por" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
-      <option value="" disabled="" selected="" hidden="">Ordenar por</option>
-      <option value="index" data-direction="asc">Por defecto</option>
-      <option value="listing-title-sort" data-direction="asc">
-        Título
-      </option>
-    </select>
-  </div>
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filtro">
-    </div>
+<p>Este primer parcial individual repasa lo construido en el curso hasta las distribuciones discretas notables: los axiomas de probabilidad y la función de distribución, el conteo detrás del modelo de Laplace, la actualización de creencias con el teorema de Bayes, y el puente exacto entre la Poisson y la binomial.</p>
+<section id="monotonía-y-la-desigualdad-de-boole" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="monotonía-y-la-desigualdad-de-boole"><span class="header-section-number">1</span> Monotonía y la desigualdad de Boole</h2>
+<ol type="1">
+<li>Sean <span class="math inline">\(A, B\in\mathfrak F\)</span> con <span class="math inline">\(A\subseteq B\)</span>. A partir de los axiomas de probabilidad, muestre que <span class="math inline">\(P(A)\le P(B)\)</span>. (5 puntos)</li>
+<li>Demuestre la desigualdad de Boole para tres conjuntos: sean <span class="math inline">\(A,B,C\in\mathfrak F\)</span> cualesquiera, entonces <span class="math display">\[P(A\cup B\cup C) \le P(A)+P(B)+P(C).\]</span> (10 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<table class="quarto-listing-table table">
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> Como <span class="math inline">\(A\subseteq B\)</span>, <span class="math inline">\(B=A\cup(B\setminus A)\)</span> es una unión disyunta, así que por aditividad finita <span class="math inline">\(P(B)=P(A)+P(B\setminus A)\)</span>. Por el axioma de no negatividad, <span class="math inline">\(P(B\setminus A)\ge0\)</span>, de donde <span class="math inline">\(P(B)\ge P(A)\)</span>.</p>
+<p><strong>2.</strong> Para dos conjuntos cualesquiera <span class="math inline">\(D,E\in\mathfrak F\)</span>, la fórmula de inclusión-exclusión da <span class="math inline">\(P(D\cup E)=P(D)+P(E)-P(D\cap E)\le P(D)+P(E)\)</span>, pues <span class="math inline">\(P(D\cap E)\ge0\)</span>. Aplicando esto dos veces:</p>
+<p><span class="math display">\[P(A\cup B\cup C) = P\big((A\cup B)\cup C\big) \le P(A\cup B)+P(C) \le \big[P(A)+P(B)\big]+P(C) = P(A)+P(B)+P(C). \qquad\blacksquare\]</span></p>
+</div>
+</div>
+</section>
+<section id="función-de-masa-y-función-de-distribución" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="función-de-masa-y-función-de-distribución"><span class="header-section-number">2</span> Función de masa y función de distribución</h2>
+<p>Sea <span class="math inline">\(X\)</span> una variable aleatoria discreta con función de masa dada por la tabla:</p>
+<table class="caption-top table">
 <thead>
-<tr>
-
-<th>
-<a class="sort" data-sort="listing-title-sort" onclick="if (this.classList.contains('sort-asc')) { this.classList.add('sort-desc'); this.classList.remove('sort-asc') } else { this.classList.add('sort-asc'); this.classList.remove('sort-desc')} return false;">Título</a>
-</th>
-
-<th>
-Subtítulo
-</th>
-
+<tr class="header">
+<th><span class="math inline">\(x\)</span></th>
+<th><span class="math inline">\(-1\)</span></th>
+<th><span class="math inline">\(0\)</span></th>
+<th><span class="math inline">\(2\)</span></th>
+<th><span class="math inline">\(5\)</span></th>
 </tr>
 </thead>
-<tbody class="list">
-
-<tr data-index="0" data-listing-date-sort="1786078800000" data-listing-file-modified-sort="1787465023221" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1036" data-listing-title-sort="Introducción" data-listing-filename-sort="index.qmd">
-<td>
-<a href="../../cursos/probabilidad/introduccion/index.html" class="title listing-title">Introducción</a>
-</td>
-<td>
-<span class="listing-subtitle">Apuntes de clase: espacios de probabilidad y σ-álgebras</span>
-</td>
-
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(P(X=x)\)</span></td>
+<td><span class="math inline">\(0{,}1\)</span></td>
+<td><span class="math inline">\(0{,}3\)</span></td>
+<td><span class="math inline">\(0{,}4\)</span></td>
+<td><span class="math inline">\(0{,}2\)</span></td>
 </tr>
-
-<tr data-index="1" data-listing-date-sort="1786856400000" data-listing-file-modified-sort="1787465061502" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1197" data-listing-title-sort="Cálculo de probabilidades" data-listing-filename-sort="index.qmd">
-<td>
-<a href="../../cursos/probabilidad/calculoprobabilidades/index.html" class="title listing-title">Cálculo de probabilidades</a>
-</td>
-<td>
-<span class="listing-subtitle">Técnicas de conteo y el modelo de Laplace</span>
-</td>
-
-</tr>
-
-<tr data-index="2" data-listing-date-sort="1787461200000" data-listing-file-modified-sort="1787464989078" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="820" data-listing-title-sort="Probabilidad condicional" data-listing-filename-sort="index.qmd">
-<td>
-<a href="../../cursos/probabilidad/condicional/index.html" class="title listing-title">Probabilidad condicional</a>
-</td>
-<td>
-<span class="listing-subtitle">Independencia, probabilidad total y teorema de Bayes</span>
-</td>
-
-</tr>
-
-<tr data-index="3" data-listing-date-sort="1787720400000" data-listing-file-modified-sort="1787868436173" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1226" data-listing-title-sort="Taller 1" data-listing-filename-sort="index.qmd">
-<td>
-<a href="../../cursos/probabilidad/taller-1/index.html" class="title listing-title">Taller 1</a>
-</td>
-<td>
-<span class="listing-subtitle">Control de calidad: σ-álgebras, probabilidad de Laplace, teorema de Bayes e independencia</span>
-</td>
-
-</tr>
-
-<tr data-index="4" data-listing-date-sort="1787979600000" data-listing-file-modified-sort="1788046467153" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1180" data-listing-title-sort="Variables aleatorias" data-listing-filename-sort="index.qmd">
-<td>
-<a href="../../cursos/probabilidad/vaintro/index.html" class="title listing-title">Variables aleatorias</a>
-</td>
-<td>
-<span class="listing-subtitle">σ-álgebra generada, distribución y función de distribución</span>
-</td>
-
-</tr>
-
-<tr data-index="5" data-listing-date-sort="1788584400000" data-listing-file-modified-sort="1788061797099" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2008" data-listing-title-sort="Variables aleatorias discretas" data-listing-filename-sort="index.qmd">
-<td>
-<a href="../../cursos/probabilidad/vadiscretas/index.html" class="title listing-title">Variables aleatorias discretas</a>
-</td>
-<td>
-<span class="listing-subtitle">Descomposición de Jordan y distribuciones discretas notables</span>
-</td>
-
-</tr>
-
-<tr data-index="6" data-listing-date-sort="1788584400000" data-listing-file-modified-sort="1788668155634" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2569" data-listing-title-sort="Variables aleatorias continuas y la distribución normal" data-listing-filename-sort="index.qmd">
-<td>
-<a href="../../cursos/probabilidad/vacontinuas/index.html" class="title listing-title">Variables aleatorias continuas y la distribución normal</a>
-</td>
-<td>
-<span class="listing-subtitle">Función de densidad, la función Gamma, la fórmula de Stirling, y la distribución normal</span>
-</td>
-
-</tr>
-
-<tr data-index="7" data-listing-date-sort="1788584400000" data-listing-file-modified-sort="1788720607971" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1436" data-listing-title-sort="La distribución normal como límite" data-listing-filename-sort="index.qmd">
-<td>
-<a href="../../cursos/probabilidad/limitenormal/index.html" class="title listing-title">La distribución normal como límite</a>
-</td>
-<td>
-<span class="listing-subtitle">El teorema de de Moivre y Laplace para la Poisson y para la binomial</span>
-</td>
-
-</tr>
-
-<tr data-index="8" data-listing-date-sort="1788930000000" data-listing-file-modified-sort="1788992094273" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3570" data-listing-title-sort="Distribuciones continuas notables" data-listing-filename-sort="index.qmd">
-<td>
-<a href="../../cursos/probabilidad/continuasespeciales/index.html" class="title listing-title">Distribuciones continuas notables</a>
-</td>
-<td>
-<span class="listing-subtitle">Exponencial, Gamma y Beta: cómo se llega a ellas, no solo cómo se ven</span>
-</td>
-
-</tr>
-
-<tr data-index="9" data-listing-date-sort="1789966800000" data-listing-file-modified-sort="1790129349307" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1266" data-listing-title-sort="Taller 2" data-listing-filename-sort="index.qmd">
-<td>
-<a href="../../cursos/probabilidad/taller-2/index.html" class="title listing-title">Taller 2</a>
-</td>
-<td>
-<span class="listing-subtitle">Variables aleatorias discretas: función de masa, función de distribución y distribuciones notables</span>
-</td>
-
-</tr>
-
-<tr data-index="10" data-listing-date-sort="1790139600000" data-listing-file-modified-sort="1790389475610" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="817" data-listing-title-sort="Parcial 1" data-listing-filename-sort="index.qmd">
-<td>
-<a href="../../cursos/probabilidad/parcial-1/index.html" class="title listing-title">Parcial 1</a>
-</td>
-<td>
-<span class="listing-subtitle">Axiomas, función de distribución, probabilidad de Laplace, teorema de Bayes y distribuciones discretas notables</span>
-</td>
-
-</tr>
-
 </tbody>
 </table>
-<div class="listing-no-matching d-none">No hay resultados</div>
-</div></main> <!-- /main -->
+<ol type="1">
+<li>Verifique que es una función de masa válida. (3 puntos)</li>
+<li>Escriba y grafique <span class="math inline">\(F_X(x)\)</span> para todo <span class="math inline">\(x\in\mathbb R\)</span>. (6 puntos)</li>
+<li>Usando únicamente <span class="math inline">\(F_X\)</span>, calcule <span class="math inline">\(P(-1&lt;X\le5)\)</span> y <span class="math inline">\(P(X\ge2)\)</span>. (6 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> <span class="math inline">\(0{,}1+0{,}3+0{,}4+0{,}2=1\)</span> y los cuatro valores son no negativos: es una función de masa válida.</p>
+<p><strong>2.</strong> <span class="math display">\[
+F_X(x) =
+\begin{cases}
+0 &amp; x&lt;-1 \\
+0{,}1 &amp; -1\le x&lt;0 \\
+0{,}4 &amp; 0\le x&lt;2 \\
+0{,}8 &amp; 2\le x&lt;5 \\
+1 &amp; x\ge5
+\end{cases}
+\]</span></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x_vals <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">5</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">0.2</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>Fx <span class="ot">&lt;-</span> <span class="fu">stepfun</span>(x_vals, <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">cumsum</span>(p)))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Fx, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">7</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="fu">expression</span>(F[X](x)),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">""</span>, <span class="at">do.points =</span> <span class="cn">TRUE</span>, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">"steelblue"</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">verticals =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"gray60"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-Fx-parcial1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-Fx-parcial1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-Fx-parcial1-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-Fx-parcial1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Función de distribución de X
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>3.</strong> <span class="math inline">\(P(-1&lt;X\le5) = F_X(5)-F_X(-1) = 1-0{,}1 = 0{,}9\)</span>.</p>
+<p><span class="math inline">\(P(X\ge2) = 1-F_X(2^-) = 1-0{,}4 = 0{,}6\)</span>, donde <span class="math inline">\(F_X(2^-)\)</span> es el valor de <span class="math inline">\(F_X\)</span> justo antes del salto en <span class="math inline">\(2\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="probabilidad-de-laplace-y-la-distribución-hipergeométrica" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="probabilidad-de-laplace-y-la-distribución-hipergeométrica"><span class="header-section-number">3</span> Probabilidad de Laplace y la distribución hipergeométrica</h2>
+<p>De un grupo de 12 personas (7 mujeres, 5 hombres) se elige, al azar y sin reemplazo, un comité de 5.</p>
+<ol type="1">
+<li>Calcule <span class="math inline">\(P(X=3)\)</span>, con <span class="math inline">\(X\)</span> = número de mujeres en el comité. (5 puntos)</li>
+<li>Escriba la fórmula general de <span class="math inline">\(P(X=k)\)</span> e identifique la distribución. (8 puntos)</li>
+<li>Si la elección fuera con reemplazo, ¿qué distribución tendría <span class="math inline">\(X\)</span>? Calcule <span class="math inline">\(P(X=3)\)</span> bajo ese esquema y compare con el punto 1. (7 puntos)</li>
+<li>Calcule <span class="math inline">\(P(X\ge3)\)</span> bajo el esquema original. (5 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> <span class="math display">\[P(X=3) = \frac{\binom73\binom52}{\binom{12}5} = \frac{35\times10}{792} = \frac{175}{396}\approx0{,}4419\]</span></p>
+<p><strong>2.</strong> <span class="math display">\[P(X=k) = \frac{\binom7k\binom5{5-k}}{\binom{12}5}, \qquad k=0,1,\ldots,5\]</span></p>
+<p><span class="math inline">\(X\)</span> tiene distribución <strong>hipergeométrica</strong> de parámetros <span class="math inline">\(n=5\)</span>, <span class="math inline">\(R=7\)</span>, <span class="math inline">\(N=12\)</span>.</p>
+<p><strong>3.</strong> Con reemplazo, cada extracción es independiente con probabilidad de éxito constante <span class="math inline">\(p=7/12\)</span>, así que <span class="math inline">\(X\sim B(5,7/12)\)</span>:</p>
+<p><span class="math display">\[P(X=3) = \binom53\Big(\frac7{12}\Big)^3\Big(\frac5{12}\Big)^2 = \frac{42875}{124416}\approx0{,}3446\]</span></p>
+<p>No coincide con el punto 1 (<span class="math inline">\(0{,}4419\)</span>): sin reemplazo, cada mujer que sale reduce la proporción de mujeres restantes, lo que concentra la distribución más cerca de su media (la hipergeométrica tiene menor varianza que la binomial con el mismo <span class="math inline">\(n,p\)</span>); con reemplazo esa corrección no existe.</p>
+<p><strong>4.</strong> <span class="math display">\[P(X\ge3) = \frac{175}{396}+\frac{175}{792}+\frac{7}{264} = \frac{350+175+21}{792} = \frac{546}{792} = \frac{91}{132}\approx0{,}6894\]</span></p>
+</div>
+</div>
+</section>
+<section id="probabilidad-condicional-y-el-teorema-de-bayes" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="probabilidad-condicional-y-el-teorema-de-bayes"><span class="header-section-number">4</span> Probabilidad condicional y el teorema de Bayes</h2>
+<p>Una prueba casera de embarazo tiene sensibilidad 98% y especificidad 95%. El 30% de quienes se la hacen está efectivamente embarazada.</p>
+<ol type="1">
+<li>Calcule <span class="math inline">\(P(\text{positivo})\)</span>. (5 puntos)</li>
+<li>Calcule <span class="math inline">\(P(\text{embarazada}\mid\text{positivo})\)</span>. (8 puntos)</li>
+<li>Cinco mujeres no embarazadas se hacen la prueba, independientemente. Calcule <span class="math inline">\(P(\text{al menos un falso positivo})\)</span>. (7 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> <span class="math display">\[P(\text{positivo}) = P(\text{pos}\mid\text{emb})P(\text{emb})+P(\text{pos}\mid\text{no emb})P(\text{no emb}) = 0{,}98(0{,}3)+0{,}05(0{,}7) = 0{,}294+0{,}035 = 0{,}329\]</span></p>
+<p><strong>2.</strong> <span class="math display">\[P(\text{embarazada}\mid\text{positivo}) = \frac{0{,}294}{0{,}329} = \frac{42}{47}\approx0{,}8936\]</span></p>
+<p><strong>3.</strong> Cada mujer no embarazada tiene <span class="math inline">\(P(\text{falso positivo})=1-0{,}95=0{,}05\)</span>, independientes entre ellas:</p>
+<p><span class="math display">\[P(\text{al menos uno en 5}) = 1-(0{,}95)^5 = 1-0{,}7738 \approx 0{,}2262\]</span></p>
+</div>
+</div>
+</section>
+<section id="distribuciones-discretas-notables" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="distribuciones-discretas-notables"><span class="header-section-number">5</span> Distribuciones discretas notables</h2>
+<ol type="1">
+<li>Para cada escenario, identifique la distribución y sus parámetros (sin calcular nada): (15 puntos: 3 cada uno)
+<ul>
+<li>Un dado se lanza una vez; <span class="math inline">\(X=1\)</span> si sale par, <span class="math inline">\(0\)</span> si no.</li>
+<li>Se elige, con igual probabilidad, un entero entre 1 y 6.</li>
+<li>Se lanza un dado hasta que sale el primer 6; <span class="math inline">\(X\)</span> = número de lanzamientos.</li>
+<li>Se lanza hasta que sale el tercer 6; <span class="math inline">\(X\)</span> = número de lanzamientos.</li>
+<li>Errores tipográficos por página, con promedio 1,5 por página.</li>
+</ul></li>
+<li>Un centro de llamadas recibe <span class="math inline">\(n=1000\)</span> llamadas, cada una con probabilidad <span class="math inline">\(p=0{,}002\)</span> de fallar, de forma independiente. Usando el teorema de aproximación de Poisson a la binomial, estime <span class="math inline">\(P(X\le3)\)</span> y compare con el valor exacto. (10 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong></p>
+<ul>
+<li>Bernoulli de parámetro <span class="math inline">\(p=1/2\)</span>.</li>
+<li>Uniforme discreta en <span class="math inline">\(\{1,\ldots,6\}\)</span>.</li>
+<li>Geométrica de parámetro <span class="math inline">\(p=1/6\)</span>.</li>
+<li>Binomial negativa de parámetros <span class="math inline">\(r=3\)</span>, <span class="math inline">\(p=1/6\)</span>.</li>
+<li>Poisson de parámetro <span class="math inline">\(\lambda=1{,}5\)</span>.</li>
+</ul>
+<p><strong>2.</strong> Aquí <span class="math inline">\(\lambda=np=1000(0{,}002)=2\)</span>.</p>
+<p>Aproximación Poisson: <span class="math display">\[P(X\le3)\approx e^{-2}\Big(1+2+2+\frac43\Big) \approx 0{,}8571\]</span></p>
+<p>Valor exacto (binomial): <span class="math display">\[P(X\le3) = \sum_{k=0}^3\binom{1000}{k}(0{,}002)^k(0{,}998)^{1000-k} \approx 0{,}8573\]</span></p>
+<p>La diferencia es de apenas <span class="math inline">\(0{,}0002\)</span>: la aproximación es excelente, como se espera con <span class="math inline">\(n\)</span> grande y <span class="math inline">\(p\)</span> pequeño con <span class="math inline">\(np\)</span> moderado.</p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
@@ -1055,18 +1037,42 @@ Subtítulo
     }
   });
   </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="../../cursos/probabilidad/introduccion/index.html" class="pagination-link" aria-label="Introducción">
-        <span class="nav-page-text">Introducción</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
+<input type="hidden" id="giscus-base-theme" value="preferred_color_scheme">
+<input type="hidden" id="giscus-alt-theme" value="preferred_color_scheme">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      if (authorPrefersDark) {
+          [baseTheme, altTheme] = [altTheme, baseTheme];
+      }
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "asanjuanc/arturosanjuan-sitio";
+    script.dataset.repoId = "R_kgDOTzuHrw";
+    script.dataset.category = "Comentarios";
+    script.dataset.categoryId = "DIC_kwDOTzuHr84DD_eD";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "es";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
 </div> <!-- /content -->
 
 
 
 
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

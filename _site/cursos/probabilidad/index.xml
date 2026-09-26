@@ -15,7 +15,309 @@
 <link>https://arturosanjuan.xyz/cursos/probabilidad/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Mon, 21 Sep 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 23 Sep 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Parcial 1</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/probabilidad/parcial-1/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Este primer parcial individual repasa lo construido en el curso hasta las distribuciones discretas notables: los axiomas de probabilidad y la función de distribución, el conteo detrás del modelo de Laplace, la actualización de creencias con el teorema de Bayes, y el puente exacto entre la Poisson y la binomial.</p>
+<section id="monotonía-y-la-desigualdad-de-boole" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="monotonía-y-la-desigualdad-de-boole"><span class="header-section-number">1</span> Monotonía y la desigualdad de Boole</h2>
+<ol type="1">
+<li>Sean <img src="https://latex.codecogs.com/png.latex?A,%20B%5Cin%5Cmathfrak%20F"> con <img src="https://latex.codecogs.com/png.latex?A%5Csubseteq%20B">. A partir de los axiomas de probabilidad, muestre que <img src="https://latex.codecogs.com/png.latex?P(A)%5Cle%20P(B)">. (5 puntos)</li>
+<li>Demuestre la desigualdad de Boole para tres conjuntos: sean <img src="https://latex.codecogs.com/png.latex?A,B,C%5Cin%5Cmathfrak%20F"> cualesquiera, entonces <img src="https://latex.codecogs.com/png.latex?P(A%5Ccup%20B%5Ccup%20C)%20%5Cle%20P(A)+P(B)+P(C)."> (10 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> Como <img src="https://latex.codecogs.com/png.latex?A%5Csubseteq%20B">, <img src="https://latex.codecogs.com/png.latex?B=A%5Ccup(B%5Csetminus%20A)"> es una unión disyunta, así que por aditividad finita <img src="https://latex.codecogs.com/png.latex?P(B)=P(A)+P(B%5Csetminus%20A)">. Por el axioma de no negatividad, <img src="https://latex.codecogs.com/png.latex?P(B%5Csetminus%20A)%5Cge0">, de donde <img src="https://latex.codecogs.com/png.latex?P(B)%5Cge%20P(A)">.</p>
+<p><strong>2.</strong> Para dos conjuntos cualesquiera <img src="https://latex.codecogs.com/png.latex?D,E%5Cin%5Cmathfrak%20F">, la fórmula de inclusión-exclusión da <img src="https://latex.codecogs.com/png.latex?P(D%5Ccup%20E)=P(D)+P(E)-P(D%5Ccap%20E)%5Cle%20P(D)+P(E)">, pues <img src="https://latex.codecogs.com/png.latex?P(D%5Ccap%20E)%5Cge0">. Aplicando esto dos veces:</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(A%5Ccup%20B%5Ccup%20C)%20=%20P%5Cbig((A%5Ccup%20B)%5Ccup%20C%5Cbig)%20%5Cle%20P(A%5Ccup%20B)+P(C)%20%5Cle%20%5Cbig%5BP(A)+P(B)%5Cbig%5D+P(C)%20=%20P(A)+P(B)+P(C).%20%5Cqquad%5Cblacksquare"></p>
+</div>
+</div>
+</section>
+<section id="función-de-masa-y-función-de-distribución" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="función-de-masa-y-función-de-distribución"><span class="header-section-number">2</span> Función de masa y función de distribución</h2>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?X"> una variable aleatoria discreta con función de masa dada por la tabla:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><img src="https://latex.codecogs.com/png.latex?x"></th>
+<th><img src="https://latex.codecogs.com/png.latex?-1"></th>
+<th><img src="https://latex.codecogs.com/png.latex?0"></th>
+<th><img src="https://latex.codecogs.com/png.latex?2"></th>
+<th><img src="https://latex.codecogs.com/png.latex?5"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?P(X=x)"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D1"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D3"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D4"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D2"></td>
+</tr>
+</tbody>
+</table>
+<ol type="1">
+<li>Verifique que es una función de masa válida. (3 puntos)</li>
+<li>Escriba y grafique <img src="https://latex.codecogs.com/png.latex?F_X(x)"> para todo <img src="https://latex.codecogs.com/png.latex?x%5Cin%5Cmathbb%20R">. (6 puntos)</li>
+<li>Usando únicamente <img src="https://latex.codecogs.com/png.latex?F_X">, calcule <img src="https://latex.codecogs.com/png.latex?P(-1%3CX%5Cle5)"> y <img src="https://latex.codecogs.com/png.latex?P(X%5Cge2)">. (6 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> <img src="https://latex.codecogs.com/png.latex?0%7B,%7D1+0%7B,%7D3+0%7B,%7D4+0%7B,%7D2=1"> y los cuatro valores son no negativos: es una función de masa válida.</p>
+<p><strong>2.</strong> <img src="https://latex.codecogs.com/png.latex?%0AF_X(x)%20=%0A%5Cbegin%7Bcases%7D%0A0%20&amp;%20x%3C-1%20%5C%5C%0A0%7B,%7D1%20&amp;%20-1%5Cle%20x%3C0%20%5C%5C%0A0%7B,%7D4%20&amp;%200%5Cle%20x%3C2%20%5C%5C%0A0%7B,%7D8%20&amp;%202%5Cle%20x%3C5%20%5C%5C%0A1%20&amp;%20x%5Cge5%0A%5Cend%7Bcases%7D%0A"></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">x_vals <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>)</span>
+<span id="cb1-2">p <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>)</span>
+<span id="cb1-3">Fx <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">stepfun</span>(x_vals, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cumsum</span>(p)))</span>
+<span id="cb1-4"></span>
+<span id="cb1-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot</span>(Fx, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xlim =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ylim =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>),</span>
+<span id="cb1-6">     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xlab =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"x"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ylab =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expression</span>(F[X](x)),</span>
+<span id="cb1-7">     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">main =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">do.points =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pch =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">19</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"steelblue"</span>,</span>
+<span id="cb1-8">     <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">verticals =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)</span>
+<span id="cb1-9"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">abline</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">h =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lty =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gray60"</span>)</span></code></pre></div></div>
+<div class="cell-output-display">
+<div id="fig-Fx-parcial1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-Fx-parcial1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/probabilidad/parcial-1/index_files/figure-html/fig-Fx-parcial1-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-Fx-parcial1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Función de distribución de X
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>3.</strong> <img src="https://latex.codecogs.com/png.latex?P(-1%3CX%5Cle5)%20=%20F_X(5)-F_X(-1)%20=%201-0%7B,%7D1%20=%200%7B,%7D9">.</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X%5Cge2)%20=%201-F_X(2%5E-)%20=%201-0%7B,%7D4%20=%200%7B,%7D6">, donde <img src="https://latex.codecogs.com/png.latex?F_X(2%5E-)"> es el valor de <img src="https://latex.codecogs.com/png.latex?F_X"> justo antes del salto en <img src="https://latex.codecogs.com/png.latex?2">.</p>
+</div>
+</div>
+</section>
+<section id="probabilidad-de-laplace-y-la-distribución-hipergeométrica" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="probabilidad-de-laplace-y-la-distribución-hipergeométrica"><span class="header-section-number">3</span> Probabilidad de Laplace y la distribución hipergeométrica</h2>
+<p>De un grupo de 12 personas (7 mujeres, 5 hombres) se elige, al azar y sin reemplazo, un comité de 5.</p>
+<ol type="1">
+<li>Calcule <img src="https://latex.codecogs.com/png.latex?P(X=3)">, con <img src="https://latex.codecogs.com/png.latex?X"> = número de mujeres en el comité. (5 puntos)</li>
+<li>Escriba la fórmula general de <img src="https://latex.codecogs.com/png.latex?P(X=k)"> e identifique la distribución. (8 puntos)</li>
+<li>Si la elección fuera con reemplazo, ¿qué distribución tendría <img src="https://latex.codecogs.com/png.latex?X">? Calcule <img src="https://latex.codecogs.com/png.latex?P(X=3)"> bajo ese esquema y compare con el punto 1. (7 puntos)</li>
+<li>Calcule <img src="https://latex.codecogs.com/png.latex?P(X%5Cge3)"> bajo el esquema original. (5 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> <img src="https://latex.codecogs.com/png.latex?P(X=3)%20=%20%5Cfrac%7B%5Cbinom73%5Cbinom52%7D%7B%5Cbinom%7B12%7D5%7D%20=%20%5Cfrac%7B35%5Ctimes10%7D%7B792%7D%20=%20%5Cfrac%7B175%7D%7B396%7D%5Capprox0%7B,%7D4419"></p>
+<p><strong>2.</strong> <img src="https://latex.codecogs.com/png.latex?P(X=k)%20=%20%5Cfrac%7B%5Cbinom7k%5Cbinom5%7B5-k%7D%7D%7B%5Cbinom%7B12%7D5%7D,%20%5Cqquad%20k=0,1,%5Cldots,5"></p>
+<p><img src="https://latex.codecogs.com/png.latex?X"> tiene distribución <strong>hipergeométrica</strong> de parámetros <img src="https://latex.codecogs.com/png.latex?n=5">, <img src="https://latex.codecogs.com/png.latex?R=7">, <img src="https://latex.codecogs.com/png.latex?N=12">.</p>
+<p><strong>3.</strong> Con reemplazo, cada extracción es independiente con probabilidad de éxito constante <img src="https://latex.codecogs.com/png.latex?p=7/12">, así que <img src="https://latex.codecogs.com/png.latex?X%5Csim%20B(5,7/12)">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X=3)%20=%20%5Cbinom53%5CBig(%5Cfrac7%7B12%7D%5CBig)%5E3%5CBig(%5Cfrac5%7B12%7D%5CBig)%5E2%20=%20%5Cfrac%7B42875%7D%7B124416%7D%5Capprox0%7B,%7D3446"></p>
+<p>No coincide con el punto 1 (<img src="https://latex.codecogs.com/png.latex?0%7B,%7D4419">): sin reemplazo, cada mujer que sale reduce la proporción de mujeres restantes, lo que concentra la distribución más cerca de su media (la hipergeométrica tiene menor varianza que la binomial con el mismo <img src="https://latex.codecogs.com/png.latex?n,p">); con reemplazo esa corrección no existe.</p>
+<p><strong>4.</strong> <img src="https://latex.codecogs.com/png.latex?P(X%5Cge3)%20=%20%5Cfrac%7B175%7D%7B396%7D+%5Cfrac%7B175%7D%7B792%7D+%5Cfrac%7B7%7D%7B264%7D%20=%20%5Cfrac%7B350+175+21%7D%7B792%7D%20=%20%5Cfrac%7B546%7D%7B792%7D%20=%20%5Cfrac%7B91%7D%7B132%7D%5Capprox0%7B,%7D6894"></p>
+</div>
+</div>
+</section>
+<section id="probabilidad-condicional-y-el-teorema-de-bayes" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="probabilidad-condicional-y-el-teorema-de-bayes"><span class="header-section-number">4</span> Probabilidad condicional y el teorema de Bayes</h2>
+<p>Una prueba casera de embarazo tiene sensibilidad 98% y especificidad 95%. El 30% de quienes se la hacen está efectivamente embarazada.</p>
+<ol type="1">
+<li>Calcule <img src="https://latex.codecogs.com/png.latex?P(%5Ctext%7Bpositivo%7D)">. (5 puntos)</li>
+<li>Calcule <img src="https://latex.codecogs.com/png.latex?P(%5Ctext%7Bembarazada%7D%5Cmid%5Ctext%7Bpositivo%7D)">. (8 puntos)</li>
+<li>Cinco mujeres no embarazadas se hacen la prueba, independientemente. Calcule <img src="https://latex.codecogs.com/png.latex?P(%5Ctext%7Bal%20menos%20un%20falso%20positivo%7D)">. (7 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> <img src="https://latex.codecogs.com/png.latex?P(%5Ctext%7Bpositivo%7D)%20=%20P(%5Ctext%7Bpos%7D%5Cmid%5Ctext%7Bemb%7D)P(%5Ctext%7Bemb%7D)+P(%5Ctext%7Bpos%7D%5Cmid%5Ctext%7Bno%20emb%7D)P(%5Ctext%7Bno%20emb%7D)%20=%200%7B,%7D98(0%7B,%7D3)+0%7B,%7D05(0%7B,%7D7)%20=%200%7B,%7D294+0%7B,%7D035%20=%200%7B,%7D329"></p>
+<p><strong>2.</strong> <img src="https://latex.codecogs.com/png.latex?P(%5Ctext%7Bembarazada%7D%5Cmid%5Ctext%7Bpositivo%7D)%20=%20%5Cfrac%7B0%7B,%7D294%7D%7B0%7B,%7D329%7D%20=%20%5Cfrac%7B42%7D%7B47%7D%5Capprox0%7B,%7D8936"></p>
+<p><strong>3.</strong> Cada mujer no embarazada tiene <img src="https://latex.codecogs.com/png.latex?P(%5Ctext%7Bfalso%20positivo%7D)=1-0%7B,%7D95=0%7B,%7D05">, independientes entre ellas:</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(%5Ctext%7Bal%20menos%20uno%20en%205%7D)%20=%201-(0%7B,%7D95)%5E5%20=%201-0%7B,%7D7738%20%5Capprox%200%7B,%7D2262"></p>
+</div>
+</div>
+</section>
+<section id="distribuciones-discretas-notables" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="distribuciones-discretas-notables"><span class="header-section-number">5</span> Distribuciones discretas notables</h2>
+<ol type="1">
+<li>Para cada escenario, identifique la distribución y sus parámetros (sin calcular nada): (15 puntos: 3 cada uno)
+<ul>
+<li>Un dado se lanza una vez; <img src="https://latex.codecogs.com/png.latex?X=1"> si sale par, <img src="https://latex.codecogs.com/png.latex?0"> si no.</li>
+<li>Se elige, con igual probabilidad, un entero entre 1 y 6.</li>
+<li>Se lanza un dado hasta que sale el primer 6; <img src="https://latex.codecogs.com/png.latex?X"> = número de lanzamientos.</li>
+<li>Se lanza hasta que sale el tercer 6; <img src="https://latex.codecogs.com/png.latex?X"> = número de lanzamientos.</li>
+<li>Errores tipográficos por página, con promedio 1,5 por página.</li>
+</ul></li>
+<li>Un centro de llamadas recibe <img src="https://latex.codecogs.com/png.latex?n=1000"> llamadas, cada una con probabilidad <img src="https://latex.codecogs.com/png.latex?p=0%7B,%7D002"> de fallar, de forma independiente. Usando el teorema de aproximación de Poisson a la binomial, estime <img src="https://latex.codecogs.com/png.latex?P(X%5Cle3)"> y compare con el valor exacto. (10 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong></p>
+<ul>
+<li>Bernoulli de parámetro <img src="https://latex.codecogs.com/png.latex?p=1/2">.</li>
+<li>Uniforme discreta en <img src="https://latex.codecogs.com/png.latex?%5C%7B1,%5Cldots,6%5C%7D">.</li>
+<li>Geométrica de parámetro <img src="https://latex.codecogs.com/png.latex?p=1/6">.</li>
+<li>Binomial negativa de parámetros <img src="https://latex.codecogs.com/png.latex?r=3">, <img src="https://latex.codecogs.com/png.latex?p=1/6">.</li>
+<li>Poisson de parámetro <img src="https://latex.codecogs.com/png.latex?%5Clambda=1%7B,%7D5">.</li>
+</ul>
+<p><strong>2.</strong> Aquí <img src="https://latex.codecogs.com/png.latex?%5Clambda=np=1000(0%7B,%7D002)=2">.</p>
+<p>Aproximación Poisson: <img src="https://latex.codecogs.com/png.latex?P(X%5Cle3)%5Capprox%20e%5E%7B-2%7D%5CBig(1+2+2+%5Cfrac43%5CBig)%20%5Capprox%200%7B,%7D8571"></p>
+<p>Valor exacto (binomial): <img src="https://latex.codecogs.com/png.latex?P(X%5Cle3)%20=%20%5Csum_%7Bk=0%7D%5E3%5Cbinom%7B1000%7D%7Bk%7D(0%7B,%7D002)%5Ek(0%7B,%7D998)%5E%7B1000-k%7D%20%5Capprox%200%7B,%7D8573"></p>
+<p>La diferencia es de apenas <img src="https://latex.codecogs.com/png.latex?0%7B,%7D0002">: la aproximación es excelente, como se espera con <img src="https://latex.codecogs.com/png.latex?n"> grande y <img src="https://latex.codecogs.com/png.latex?p"> pequeño con <img src="https://latex.codecogs.com/png.latex?np"> moderado.</p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/probabilidad/parcial-1/</guid>
+  <pubDate>Wed, 23 Sep 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Taller 2</title>
   <dc:creator>Arturo Sanjuán</dc:creator>
