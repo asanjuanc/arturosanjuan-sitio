@@ -15,7 +15,305 @@
 <link>https://arturosanjuan.xyz/cursos/numerico/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Thu, 17 Sep 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 26 Sep 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Parcial 1</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/numerico/parcial-1/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Este parcial repasa lo visto en el curso hasta el primero corte: cancelación catastrófica y número de condición de un problema escalar, el diagnóstico forense entre problema y algoritmo aplicado a un caso nuevo, y el análisis de error en un sistema triangular mediante residuo, error real y número de condición matricial.</p>
+<section id="condicionamiento" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="condicionamiento"><span class="header-section-number">1</span> Condicionamiento</h2>
+<p>Considere la función</p>
+<p><img src="https://latex.codecogs.com/png.latex?f(x)%20=%201-%5Ccos(x)."></p>
+<ol type="1">
+<li>Explique por qué evaluar <img src="https://latex.codecogs.com/png.latex?1-%5Ccos(x)"> directamente en punto flotante pierde cifras significativas cuando <img src="https://latex.codecogs.com/png.latex?x"> está cerca de cero. (3 puntos)</li>
+<li>Calcule el número de condición <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(x)%20=%20%5Cleft%7C%5Cdfrac%7Bxf'(x)%7D%7Bf(x)%7D%5Cright%7C"> y muestre que <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(0)=2">. (Sugerencia: use la identidad <img src="https://latex.codecogs.com/png.latex?1-%5Ccos(x)=2%5Csin%5E2(x/2)">.) (5 puntos)</li>
+<li>Con ese resultado, reescriba el cálculo de forma estable usando la identidad de arriba, y explique por qué esta forma no resta cantidades casi iguales. (4 puntos)</li>
+<li>En un par de líneas: ¿el fallo que describió en el numeral 1 es del problema o del algoritmo? Justifique con el número que calculó en el numeral 2. (3 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> Cuando <img src="https://latex.codecogs.com/png.latex?x"> está cerca de cero, <img src="https://latex.codecogs.com/png.latex?%5Ccos(x)"> está cerca de <img src="https://latex.codecogs.com/png.latex?1">, así que restarlo de <img src="https://latex.codecogs.com/png.latex?1"> es una resta de dos cantidades casi iguales. El valor verdadero de <img src="https://latex.codecogs.com/png.latex?1-%5Ccos(x)"> es del orden de <img src="https://latex.codecogs.com/png.latex?x%5E2/2">, mientras que <img src="https://latex.codecogs.com/png.latex?%5Ccos(x)"> se calcula con un error absoluto del orden del épsilon de máquina. Cuando <img src="https://latex.codecogs.com/png.latex?x"> es lo bastante pequeño, ese error deja de ser despreciable frente al resultado verdadero, y el resultado calculado queda dominado por ruido de redondeo en vez de por la señal real.</p>
+<p><strong>2.</strong> Con <img src="https://latex.codecogs.com/png.latex?f'(x)=%5Csin(x)">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(x)%20=%20%5Cleft%7C%5Cfrac%7Bxf'(x)%7D%7Bf(x)%7D%5Cright%7C%20=%20%5Cleft%7C%5Cfrac%7Bx%5Csin(x)%7D%7B1-%5Ccos(x)%7D%5Cright%7C."></p>
+<p>Usando <img src="https://latex.codecogs.com/png.latex?1-%5Ccos(x)=2%5Csin%5E2(x/2)"> y <img src="https://latex.codecogs.com/png.latex?%5Csin(x)=2%5Csin(x/2)%5Ccos(x/2)">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(x)%20=%20%5Cleft%7C%5Cfrac%7Bx%5Ccdot2%5Csin(x/2)%5Ccos(x/2)%7D%7B2%5Csin%5E2(x/2)%7D%5Cright%7C%20=%20%5Cleft%7C%5Cfrac%7Bx%5Ccos(x/2)%7D%7B%5Csin(x/2)%7D%5Cright%7C%20=%20%7Cx%5Ccot(x/2)%7C."></p>
+<p>Cuando <img src="https://latex.codecogs.com/png.latex?x%5Cto0">, <img src="https://latex.codecogs.com/png.latex?%5Ccot(x/2)%5Capprox%202/x">, así que</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bx%5Cto0%7D%5Ckappa_f(x)%20=%20%5Clim_%7Bx%5Cto0%7D%5Cleft%7Cx%5Ccdot%5Cfrac2x%5Cright%7C%20=%202."></p>
+<p>Por lo tanto <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(0)=2">.</p>
+<p><strong>3.</strong> En vez de calcular <img src="https://latex.codecogs.com/png.latex?%5Ccos(x)"> y restarlo de <img src="https://latex.codecogs.com/png.latex?1">, se calcula directamente <img src="https://latex.codecogs.com/png.latex?f(x)=2%5Csin%5E2(x/2)">. Esta forma no resta cantidades casi iguales: eleva al cuadrado un número pequeño (<img src="https://latex.codecogs.com/png.latex?%5Csin(x/2)">, calculado con precisión relativa completa para <img src="https://latex.codecogs.com/png.latex?x"> pequeño) sin ninguna resta de por medio.</p>
+<p><strong>4.</strong> El fallo es del algoritmo, no del problema. <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(0)=2"> es pequeño y finito, así que el problema está bien condicionado: un pequeño error relativo en <img src="https://latex.codecogs.com/png.latex?x"> produce un error relativo comparable en <img src="https://latex.codecogs.com/png.latex?f(x)">. El algoritmo ingenuo introduce una cancelación catastrófica que el condicionamiento del problema no predice ni explica; es inestable aunque el problema mismo sea benigno.</p>
+</div>
+</div>
+</section>
+<section id="autopsia-forense" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="autopsia-forense"><span class="header-section-number">2</span> Autopsia forense</h2>
+<p>Un estudiante escribe la siguiente función en Julia para calcular la varianza de un conjunto de datos.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">varianza_ingenua</span>(x)</span>
+<span id="cb1-2">    n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">length</span>(x)</span>
+<span id="cb1-3">    s1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sum</span>(x)</span>
+<span id="cb1-4">    s2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sum</span>(x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.^</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb1-5">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> (s2<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>n) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> (s1<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>n)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">^</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb1-6"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span>
+<span id="cb1-7"></span>
+<span id="cb1-8">datos <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10_000_000.1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10_000_000.2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10_000_000.3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10_000_000.2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10_000_000.1</span>]</span>
+<span id="cb1-9"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">println</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">varianza_ingenua</span>(datos))</span></code></pre></div></div>
+<p>Al ejecutarla, <code>println</code> imprime <code>0.0</code>, aunque los datos claramente varían.</p>
+<ol type="1">
+<li>Sin ejecutar el código, explique en qué línea ocurre la pérdida de precisión y por qué. (4 puntos)</li>
+<li>¿Por qué el problema de calcular la varianza de estos datos está bien planteado, aunque el algoritmo de arriba falle sobre ellos? (3 puntos)</li>
+<li>Proponga, sin ejecutarla, una versión corregida que evite restar cantidades casi iguales. (5 puntos)</li>
+<li>Verifique a mano que su versión da aproximadamente <img src="https://latex.codecogs.com/png.latex?0%7B,%7D0056"> para estos datos. (3 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> La pérdida de precisión ocurre en la línea <code>return (s2/n) - (s1/n)^2</code>. Para los datos dados, <code>s2/n</code> y <code>(s1/n)^2</code> son ambos números del orden de <img src="https://latex.codecogs.com/png.latex?10%5E%7B14%7D">, mientras que su diferencia real, la varianza, es del orden de <img src="https://latex.codecogs.com/png.latex?10%5E%7B-3%7D">. Restar dos números de esa magnitud para obtener un resultado tan pequeño exige cancelar alrededor de diecisiete cifras, más de las que ofrece <code>Float64</code> (unas dieciséis), así que el resultado queda dominado por el error de redondeo de la resta.</p>
+<p><strong>2.</strong> El problema está bien planteado porque la varianza depende continuamente y de forma acotada de los datos: es un promedio de desviaciones al cuadrado, cantidades pequeñas si los datos están poco dispersos. El problema en sí no exige nunca restar números grandes. Lo que falla es el algoritmo particular escogido, que calcula dos sumas grandes por separado y las resta al final, introduciendo una cancelación que el problema no requiere.</p>
+<p><strong>3.</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">varianza_estable</span>(x)</span>
+<span id="cb2-2">    n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">length</span>(x)</span>
+<span id="cb2-3">    m <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sum</span>(x) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> n</span>
+<span id="cb2-4">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sum</span>((x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.-</span> m)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.^</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> n</span>
+<span id="cb2-5"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span></code></pre></div></div>
+<p>Al restar la media a cada dato primero, las cantidades que se elevan al cuadrado ya son pequeñas y no involucran cancelación entre números grandes.</p>
+<p><strong>4.</strong> Con los datos <img src="https://latex.codecogs.com/png.latex?10000000%7B,%7D1,%5C%2010000000%7B,%7D2,%5C%2010000000%7B,%7D3,%5C%2010000000%7B,%7D2,%5C%2010000000%7B,%7D1">, la media es</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbar%20x%20=%20%5Cfrac%7B50000000%7B,%7D9%7D%7B5%7D%20=%2010000000%7B,%7D18."></p>
+<p>Las desviaciones son <img src="https://latex.codecogs.com/png.latex?-0%7B,%7D08,%5C%200%7B,%7D02,%5C%200%7B,%7D12,%5C%200%7B,%7D02,%5C%20-0%7B,%7D08">, y sus cuadrados <img src="https://latex.codecogs.com/png.latex?0%7B,%7D0064,%5C%200%7B,%7D0004,%5C%200%7B,%7D0144,%5C%200%7B,%7D0004,%5C%200%7B,%7D0064">, cuya suma es <img src="https://latex.codecogs.com/png.latex?0%7B,%7D028">. Dividiendo por <img src="https://latex.codecogs.com/png.latex?5">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ctext%7Bvarianza%7D%20=%20%5Cfrac%7B0%7B,%7D028%7D%7B5%7D%20=%200%7B,%7D0056."></p>
+</div>
+</div>
+</section>
+<section id="sistemas-lineales" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="sistemas-lineales"><span class="header-section-number">3</span> Sistemas lineales</h2>
+<p>Considere el sistema triangular inferior</p>
+<p><img src="https://latex.codecogs.com/png.latex?Lx=b,%20%5Cqquad%20L=%5Cbegin%7Bpmatrix%7D2&amp;0&amp;0%5C%5C1&amp;-3&amp;0%5C%5C4&amp;2&amp;5%5Cend%7Bpmatrix%7D,%20%5Cqquad%20b=%5Cbegin%7Bpmatrix%7D6%5C%5C-3%5C%5C11%5Cend%7Bpmatrix%7D."></p>
+<ol type="1">
+<li>Resuelva el sistema mediante sustitución hacia adelante. Luego, para una matriz triangular inferior de tamaño <img src="https://latex.codecogs.com/png.latex?n%5Ctimes%20n"> en general, cuente cuántas operaciones de punto flotante requiere el algoritmo y exprese el resultado en notación <img src="https://latex.codecogs.com/png.latex?O"> grande. Explique por qué es <img src="https://latex.codecogs.com/png.latex?O(n%5E2)"> y no <img src="https://latex.codecogs.com/png.latex?O(n%5E3)"> como la eliminación gaussiana completa. A continuación está el código de la sustitución para que pueda realizar el conteo más fácilmente. (6 puntos)</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sustitucion_adelante</span>(L, b)</span>
+<span id="cb3-2">    n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">length</span>(b)</span>
+<span id="cb3-3">    x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">zeros</span>(n)</span>
+<span id="cb3-4">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> i <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span>n</span>
+<span id="cb3-5">        suma <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span></span>
+<span id="cb3-6">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> j <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span>i<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb3-7">            suma <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+=</span> L[i, j] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x[j]</span>
+<span id="cb3-8">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span>
+<span id="cb3-9">        x[i] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (b[i] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> suma) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> L[i, i]</span>
+<span id="cb3-10">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span>
+<span id="cb3-11">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> x</span>
+<span id="cb3-12"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span></code></pre></div></div>
+<ol start="2" type="1">
+<li>Suponga que, por errores de redondeo, un estudiante obtiene la aproximación <img src="https://latex.codecogs.com/png.latex?%5Chat%20x%20=%20(3%7B,%7D1,%5C%201%7B,%7D9,%5C%20-1%7B,%7D05)">. Calcule el residuo <img src="https://latex.codecogs.com/png.latex?r%20=%20b%20-%20L%5Chat%20x"> y el error real <img src="https://latex.codecogs.com/png.latex?e%20=%20%5Chat%20x%20-%20x">, ambos en norma infinito. (5 puntos)</li>
+<li>Se le da que <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(L)=8%7B,%7D8">. Verifique que se cumple la desigualdad</li>
+</ol>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%5C%7Ce%5C%7C_%5Cinfty%7D%7B%5C%7Cx%5C%7C_%5Cinfty%7D%20%5Cle%20%5Ckappa_%5Cinfty(L)%5Cfrac%7B%5C%7Cr%5C%7C_%5Cinfty%7D%7B%5C%7Cb%5C%7C_%5Cinfty%7D"></p>
+<p>con los valores del numeral anterior. (4 puntos)</p>
+<ol start="4" type="1">
+<li>¿El error que obtuvo el estudiante es evidencia de que el sistema está mal condicionado? Justifique comparando el error relativo real con la cota, y explique qué nos dice (y qué no nos dice) un residuo pequeño sobre la calidad de una solución. (5 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> Sustitución hacia adelante:</p>
+<p><img src="https://latex.codecogs.com/png.latex?x_1%20=%20%5Cfrac62%20=%203,%20%5Cqquad%20x_2%20=%20%5Cfrac%7B-3-1%5Ccdot3%7D%7B-3%7D%20=%202,%20%5Cqquad%20x_3%20=%20%5Cfrac%7B11-4%5Ccdot3-2%5Ccdot2%7D%7B5%7D%20=%20-1."></p>
+<p>Así, <img src="https://latex.codecogs.com/png.latex?x=(3,2,-1)">.</p>
+<p>Conteo de operaciones: en la fila <img src="https://latex.codecogs.com/png.latex?i">, el ciclo interior hace <img src="https://latex.codecogs.com/png.latex?i-1"> multiplicaciones y <img src="https://latex.codecogs.com/png.latex?i-1"> sumas, y luego hay una resta y una división. Sumando sobre todas las filas,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ctext%7BTotal%7D%20=%20%5Csum_%7Bi=1%7D%5En%5Cbig(2(i-1)+2%5Cbig)%20=%202%5Cfrac%7Bn(n-1)%7D2+2n%20=%20n(n-1)+2n%20=%20n%5E2+n,"></p>
+<p>que es <img src="https://latex.codecogs.com/png.latex?O(n%5E2)">. La eliminación gaussiana completa es <img src="https://latex.codecogs.com/png.latex?O(n%5E3)"> porque, además de despejar cada incógnita, en cada uno de los <img src="https://latex.codecogs.com/png.latex?n"> pasos de eliminación hay que actualizar toda la submatriz restante (un costo <img src="https://latex.codecogs.com/png.latex?O(n%5E2)"> por paso, multiplicado por <img src="https://latex.codecogs.com/png.latex?n"> pasos). La sustitución hacia adelante parte de una matriz que ya es triangular, así que solo necesita leer cada entrada una vez, sin actualizar nada más.</p>
+<p><strong>2.</strong> Con <img src="https://latex.codecogs.com/png.latex?%5Chat%20x=(3%7B,%7D1,%5C%201%7B,%7D9,%5C%20-1%7B,%7D05)">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?L%5Chat%20x%20=%20(2%5Ccdot3%7B,%7D1,%5C%20%5C%201%5Ccdot3%7B,%7D1-3%5Ccdot1%7B,%7D9,%5C%20%5C%204%5Ccdot3%7B,%7D1+2%5Ccdot1%7B,%7D9-5%5Ccdot1%7B,%7D05)%20=%20(6%7B,%7D2,%5C%20-2%7B,%7D6,%5C%2010%7B,%7D95)."></p>
+<p>Residuo: <img src="https://latex.codecogs.com/png.latex?r=b-L%5Chat%20x%20=%20(-0%7B,%7D2,%5C%20-0%7B,%7D4,%5C%200%7B,%7D05)">, con <img src="https://latex.codecogs.com/png.latex?%5C%7Cr%5C%7C_%5Cinfty=0%7B,%7D4">.</p>
+<p>Error real: <img src="https://latex.codecogs.com/png.latex?e=%5Chat%20x-x%20=%20(0%7B,%7D1,%5C%20-0%7B,%7D1,%5C%20-0%7B,%7D05)">, con <img src="https://latex.codecogs.com/png.latex?%5C%7Ce%5C%7C_%5Cinfty=0%7B,%7D1">.</p>
+<p><strong>3.</strong></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%5C%7Ce%5C%7C_%5Cinfty%7D%7B%5C%7Cx%5C%7C_%5Cinfty%7D%20=%20%5Cfrac%7B0%7B,%7D1%7D3%20%5Capprox%200%7B,%7D0333,%20%5Cqquad%20%5Cfrac%7B%5C%7Cr%5C%7C_%5Cinfty%7D%7B%5C%7Cb%5C%7C_%5Cinfty%7D%20=%20%5Cfrac%7B0%7B,%7D4%7D%7B11%7D%5Capprox0%7B,%7D0364."></p>
+<p>La cota da <img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(L)%5Ccdot0%7B,%7D0364%20=%208%7B,%7D8%5Ctimes0%7B,%7D0364%5Capprox0%7B,%7D32">. Como <img src="https://latex.codecogs.com/png.latex?0%7B,%7D0333%5Cle0%7B,%7D32">, la desigualdad se cumple, con bastante margen.</p>
+<p><strong>4.</strong> No, el error observado no es evidencia de mal condicionamiento. El error relativo real (<img src="https://latex.codecogs.com/png.latex?%5Capprox0%7B,%7D033">) es mucho menor que la cota que permite el número de condición (<img src="https://latex.codecogs.com/png.latex?%5Capprox0%7B,%7D32">); cumplir la desigualdad con tanto margen es consistente con un sistema razonablemente bien condicionado (<img src="https://latex.codecogs.com/png.latex?%5Ckappa_%5Cinfty(L)=8%7B,%7D8"> no es un número grande). El error que cometió el estudiante es simplemente el resultado de un redondeo ordinario al resolver el sistema. Esto también muestra qué no garantiza un residuo pequeño: por sí solo, un residuo relativo pequeño no implica un error relativo pequeño, solo lo acota en función de <img src="https://latex.codecogs.com/png.latex?%5Ckappa(L)">. Si el número de condición fuera grande, el mismo residuo pequeño sería compatible con un error mucho mayor.</p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/numerico/parcial-1/</guid>
+  <pubDate>Sat, 26 Sep 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Taller 2</title>
   <dc:creator>Arturo Sanjuán</dc:creator>

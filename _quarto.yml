@@ -99,6 +99,7 @@ website:
         - cursos/probabilidad/limitenormal/index.qmd
         - cursos/probabilidad/continuasespeciales/index.qmd
         - cursos/probabilidad/taller-2/index.qmd
+        - cursos/probabilidad/parcial-1/index.qmd
 
 format:
   html:

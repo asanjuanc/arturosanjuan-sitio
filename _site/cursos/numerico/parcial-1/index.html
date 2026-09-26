@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Arturo Sanjuán">
-<meta name="description" content="Taller en equipos de hasta tres personas, con solución, sobre espacios muestrales, σ-álgebras, probabilidad de Laplace, teorema de la probabilidad total, teorema de Bayes e independencia de eventos.">
+<meta name="description" content="Primer parcial individual, con solución.">
 
-<title>Taller 1 – Arturo Sanjuán</title>
+<title>Parcial 1 – Arturo Sanjuán</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -28,6 +28,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -38,8 +73,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../../">
-<link href="../../../cursos/probabilidad/vaintro/index.html" rel="next">
-<link href="../../../cursos/probabilidad/condicional/index.html" rel="prev">
 <link href="../../../favicon.png" rel="icon" type="image/png">
 <script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -117,7 +150,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../../../styles.css">
 </head>
 
-<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+<body class="docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -333,109 +366,18 @@ window.Quarto = {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../cursos/probabilidad/taller-1/index.html">Taller 1</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-    </div>
-  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-        <div class="sidebar-tools-main">
-    <a href="../../../cursos/probabilidad/index.xml" title="RSS — Probabilidad" class="quarto-navigation-tool px-1" aria-label="RSS — Probabilidad"><i class="bi bi-rss"></i></a>
-</div>
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../cursos/probabilidad/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Probabilidad</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../cursos/probabilidad/introduccion/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introducción</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../cursos/probabilidad/calculoprobabilidades/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Cálculo de probabilidades</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../cursos/probabilidad/condicional/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Probabilidad condicional</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../cursos/probabilidad/taller-1/index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Taller 1</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../cursos/probabilidad/vaintro/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Variables aleatorias</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../cursos/probabilidad/vadiscretas/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Variables aleatorias discretas</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../cursos/probabilidad/vacontinuas/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Variables aleatorias continuas y la distribución normal</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../cursos/probabilidad/limitenormal/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">La distribución normal como límite</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../cursos/probabilidad/continuasespeciales/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Distribuciones continuas notables</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../cursos/probabilidad/taller-2/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Taller 2</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../cursos/probabilidad/parcial-1/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Parcial 1</span></a>
-  </div>
-</li>
-    </ul>
-    </div>
     <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Contenido</h2>
    
   <ul>
-  <li><a href="#espacio-muestral-y-una-σ-álgebra-más-pequeña" id="toc-espacio-muestral-y-una-σ-álgebra-más-pequeña" class="nav-link active" data-scroll-target="#espacio-muestral-y-una-σ-álgebra-más-pequeña"><span class="header-section-number">1</span> Espacio muestral y una σ-álgebra más pequeña</a></li>
-  <li><a href="#un-lote-ya-fabricado-modelo-de-laplace" id="toc-un-lote-ya-fabricado-modelo-de-laplace" class="nav-link" data-scroll-target="#un-lote-ya-fabricado-modelo-de-laplace"><span class="header-section-number">2</span> Un lote ya fabricado (modelo de Laplace)</a></li>
-  <li><a href="#el-proceso-de-fabricación-probabilidad-total-y-bayes" id="toc-el-proceso-de-fabricación-probabilidad-total-y-bayes" class="nav-link" data-scroll-target="#el-proceso-de-fabricación-probabilidad-total-y-bayes"><span class="header-section-number">3</span> El proceso de fabricación (probabilidad total y Bayes)</a></li>
-  <li><a href="#cuándo-son-independientes" id="toc-cuándo-son-independientes" class="nav-link" data-scroll-target="#cuándo-son-independientes"><span class="header-section-number">4</span> ¿Cuándo son independientes?</a></li>
-  <li><a href="#verdadero-o-falso-justificando" id="toc-verdadero-o-falso-justificando" class="nav-link" data-scroll-target="#verdadero-o-falso-justificando"><span class="header-section-number">5</span> Verdadero o falso, justificando</a></li>
+  <li><a href="#condicionamiento" id="toc-condicionamiento" class="nav-link active" data-scroll-target="#condicionamiento"><span class="header-section-number">1</span> Condicionamiento</a></li>
+  <li><a href="#autopsia-forense" id="toc-autopsia-forense" class="nav-link" data-scroll-target="#autopsia-forense"><span class="header-section-number">2</span> Autopsia forense</a></li>
+  <li><a href="#sistemas-lineales" id="toc-sistemas-lineales" class="nav-link" data-scroll-target="#sistemas-lineales"><span class="header-section-number">3</span> Sistemas lineales</a></li>
   </ul>
 </nav>
 </nav>
@@ -449,13 +391,13 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Taller 1</h1>
-<p class="subtitle lead">Control de calidad: σ-álgebras, probabilidad de Laplace, teorema de Bayes e independencia</p>
+<h1 class="title">Parcial 1</h1>
+<p class="subtitle lead">Cancelación catastrófica y condicionamiento, autopsia forense de un algoritmo, y sistemas lineales triangulares</p>
 </div>
 
 <div>
   <div class="description">
-    Taller en equipos de hasta tres personas, con solución, sobre espacios muestrales, σ-álgebras, probabilidad de Laplace, teorema de la probabilidad total, teorema de Bayes e independencia de eventos.
+    Primer parcial individual, con solución.
   </div>
 </div>
 
@@ -472,7 +414,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">26 de agosto de 2026</p>
+      <p class="date">26 de septiembre de 2026</p>
     </div>
   </div>
   
@@ -484,15 +426,16 @@ window.Quarto = {
 </header>
 
 
-<p>Una fábrica de bombillos produce en dos líneas distintas, con tasas de falla distintas. En este taller van a recorrer el mismo objeto (un bombillo defectuoso o no) bajo tres modelos probabilísticos diferentes: un espacio muestral discreto con su σ-álgebra, un lote ya fabricado y fijo (Laplace clásico), y un proceso de fabricación en dos etapas (probabilidad total, Bayes e independencia). El hilo que conecta los tres es la pregunta: ¿qué estructura matemática le corresponde a cada situación aleatoria, y por qué no es la misma en los tres casos?</p>
-<section id="espacio-muestral-y-una-σ-álgebra-más-pequeña" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="espacio-muestral-y-una-σ-álgebra-más-pequeña"><span class="header-section-number">1</span> Espacio muestral y una σ-álgebra más pequeña</h2>
-<p>Se extraen 3 bombillos de la producción (ya mezclada) y se clasifica cada uno como defectuoso “D” o no defectuoso “N”. Sea <span class="math inline">\(\Omega = \{D,N\}^3\)</span> y, para <span class="math inline">\(i=1,2,3\)</span>,</p>
-<p><span class="math display">\[A_i := \text{el } i\text{-ésimo bombillo extraído es defectuoso}\]</span></p>
+<p>Este parcial repasa lo visto en el curso hasta el primero corte: cancelación catastrófica y número de condición de un problema escalar, el diagnóstico forense entre problema y algoritmo aplicado a un caso nuevo, y el análisis de error en un sistema triangular mediante residuo, error real y número de condición matricial.</p>
+<section id="condicionamiento" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="condicionamiento"><span class="header-section-number">1</span> Condicionamiento</h2>
+<p>Considere la función</p>
+<p><span class="math display">\[f(x) = 1-\cos(x).\]</span></p>
 <ol type="1">
-<li>Describan por extensión los eventos <span class="math inline">\(A_1\)</span>, <span class="math inline">\(A_1\cup A_3\)</span> y <span class="math inline">\(A_1\cap A_2^c\cap A_3\)</span>.</li>
-<li>Sea <span class="math inline">\(T:\Omega\to\{0,1,2,3\}\)</span> la función que cuenta el número total de bombillos defectuosos entre los tres extraídos. Usando el resultado ya demostrado en clase sobre la preimagen de una σ-álgebra (si <span class="math inline">\(\mathfrak F'\)</span> es una σ-álgebra sobre <span class="math inline">\(\Omega'\)</span> y <span class="math inline">\(f:\Omega\to\Omega'\)</span>, entonces <span class="math inline">\(f^{-1}(\mathfrak F')\)</span> es una σ-álgebra sobre <span class="math inline">\(\Omega\)</span>), identifiquen explícitamente <span class="math display">\[\mathfrak T := T^{-1}\big(\mathcal P(\{0,1,2,3\})\big) \subset \mathcal P(\Omega)\]</span> Listen los átomos de <span class="math inline">\(\mathfrak T\)</span> (los subconjuntos no vacíos más pequeños de <span class="math inline">\(\Omega\)</span> que pertenecen a <span class="math inline">\(\mathfrak T\)</span>).</li>
-<li>Muestren que <span class="math inline">\(\mathfrak T\)</span> es estrictamente más pequeña que <span class="math inline">\(\mathcal P(\Omega)\)</span>: exhiban un evento de <span class="math inline">\(\mathcal P(\Omega)\)</span> que no pertenezca a <span class="math inline">\(\mathfrak T\)</span>, y expliquen en una frase por qué la información de <span class="math inline">\(T\)</span> (cuántos, no cuáles) no alcanza para reconstruirlo.</li>
+<li>Explique por qué evaluar <span class="math inline">\(1-\cos(x)\)</span> directamente en punto flotante pierde cifras significativas cuando <span class="math inline">\(x\)</span> está cerca de cero. (3 puntos)</li>
+<li>Calcule el número de condición <span class="math inline">\(\kappa_f(x) = \left|\dfrac{xf'(x)}{f(x)}\right|\)</span> y muestre que <span class="math inline">\(\kappa_f(0)=2\)</span>. (Sugerencia: use la identidad <span class="math inline">\(1-\cos(x)=2\sin^2(x/2)\)</span>.) (5 puntos)</li>
+<li>Con ese resultado, reescriba el cálculo de forma estable usando la identidad de arriba, y explique por qué esta forma no resta cantidades casi iguales. (4 puntos)</li>
+<li>En un par de líneas: ¿el fallo que describió en el numeral 1 es del problema o del algoritmo? Justifique con el número que calculó en el numeral 2. (3 puntos)</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled" title="Solución">
 <div class="callout-header d-flex align-content-center">
@@ -504,23 +447,37 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><span class="math display">\[\Omega = \{DDD, DDN, DND, DNN, NDD, NDN, NND, NNN\}\]</span></p>
-<p><strong>1.</strong> <span class="math display">\[A_1 = \{DDD, DDN, DND, DNN\}\]</span> <span class="math display">\[A_1\cup A_3 = \{DDD, DDN, DND, DNN, NDD, NND\}\]</span></p>
-<p>Para <span class="math inline">\(A_1\cap A_2^c\cap A_3\)</span> se exige posición 1 = D, posición 2 = N y posición 3 = D simultáneamente, lo que fija el resultado por completo:</p>
-<p><span class="math display">\[A_1\cap A_2^c\cap A_3 = \{DND\}\]</span></p>
-<p><strong>2.</strong> Sea <span class="math inline">\(T(\omega)\)</span> el número de defectuosos. Sus niveles particionan <span class="math inline">\(\Omega\)</span>:</p>
-<p><span class="math display">\[L_0=\{NNN\}, \quad L_1=\{DNN,NDN,NND\}, \quad L_2=\{DDN,DND,NDD\}, \quad L_3=\{DDD\}\]</span></p>
-<p>Como <span class="math inline">\(T^{-1}(\{k\})=L_k\)</span> y todo subconjunto de <span class="math inline">\(\{0,1,2,3\}\)</span> es unión de singletons, <span class="math inline">\(\mathfrak T\)</span> es exactamente el conjunto de todas las uniones de <span class="math inline">\(L_0,L_1,L_2,L_3\)</span>: <span class="math inline">\(|\mathfrak T|=2^4=16\)</span>. Los átomos de <span class="math inline">\(\mathfrak T\)</span> son <span class="math inline">\(L_0, L_1, L_2, L_3\)</span>.</p>
-<p><strong>3.</strong> Tomemos <span class="math inline">\(A_1=\{DDD,DDN,DND,DNN\}\)</span>. Nótese que <span class="math inline">\(A_1\cap L_2=\{DDN,DND\}\)</span> es un subconjunto propio y no vacío de <span class="math inline">\(L_2=\{DDN,DND,NDD\}\)</span>. Como todo elemento de <span class="math inline">\(\mathfrak T\)</span> es unión completa de átomos, ningún elemento de <span class="math inline">\(\mathfrak T\)</span> puede cortar a la mitad un átomo, así que <span class="math inline">\(A_1\notin\mathfrak T\)</span>. Interpretación: <span class="math inline">\(T\)</span> solo informa cuántos defectuosos hubo, no cuáles posiciones, por eso no puede reconstruir un evento que depende de la posición específica.</p>
+<p><strong>1.</strong> Cuando <span class="math inline">\(x\)</span> está cerca de cero, <span class="math inline">\(\cos(x)\)</span> está cerca de <span class="math inline">\(1\)</span>, así que restarlo de <span class="math inline">\(1\)</span> es una resta de dos cantidades casi iguales. El valor verdadero de <span class="math inline">\(1-\cos(x)\)</span> es del orden de <span class="math inline">\(x^2/2\)</span>, mientras que <span class="math inline">\(\cos(x)\)</span> se calcula con un error absoluto del orden del épsilon de máquina. Cuando <span class="math inline">\(x\)</span> es lo bastante pequeño, ese error deja de ser despreciable frente al resultado verdadero, y el resultado calculado queda dominado por ruido de redondeo en vez de por la señal real.</p>
+<p><strong>2.</strong> Con <span class="math inline">\(f'(x)=\sin(x)\)</span>,</p>
+<p><span class="math display">\[\kappa_f(x) = \left|\frac{xf'(x)}{f(x)}\right| = \left|\frac{x\sin(x)}{1-\cos(x)}\right|.\]</span></p>
+<p>Usando <span class="math inline">\(1-\cos(x)=2\sin^2(x/2)\)</span> y <span class="math inline">\(\sin(x)=2\sin(x/2)\cos(x/2)\)</span>,</p>
+<p><span class="math display">\[\kappa_f(x) = \left|\frac{x\cdot2\sin(x/2)\cos(x/2)}{2\sin^2(x/2)}\right| = \left|\frac{x\cos(x/2)}{\sin(x/2)}\right| = |x\cot(x/2)|.\]</span></p>
+<p>Cuando <span class="math inline">\(x\to0\)</span>, <span class="math inline">\(\cot(x/2)\approx 2/x\)</span>, así que</p>
+<p><span class="math display">\[\lim_{x\to0}\kappa_f(x) = \lim_{x\to0}\left|x\cdot\frac2x\right| = 2.\]</span></p>
+<p>Por lo tanto <span class="math inline">\(\kappa_f(0)=2\)</span>.</p>
+<p><strong>3.</strong> En vez de calcular <span class="math inline">\(\cos(x)\)</span> y restarlo de <span class="math inline">\(1\)</span>, se calcula directamente <span class="math inline">\(f(x)=2\sin^2(x/2)\)</span>. Esta forma no resta cantidades casi iguales: eleva al cuadrado un número pequeño (<span class="math inline">\(\sin(x/2)\)</span>, calculado con precisión relativa completa para <span class="math inline">\(x\)</span> pequeño) sin ninguna resta de por medio.</p>
+<p><strong>4.</strong> El fallo es del algoritmo, no del problema. <span class="math inline">\(\kappa_f(0)=2\)</span> es pequeño y finito, así que el problema está bien condicionado: un pequeño error relativo en <span class="math inline">\(x\)</span> produce un error relativo comparable en <span class="math inline">\(f(x)\)</span>. El algoritmo ingenuo introduce una cancelación catastrófica que el condicionamiento del problema no predice ni explica; es inestable aunque el problema mismo sea benigno.</p>
 </div>
 </div>
 </section>
-<section id="un-lote-ya-fabricado-modelo-de-laplace" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="un-lote-ya-fabricado-modelo-de-laplace"><span class="header-section-number">2</span> Un lote ya fabricado (modelo de Laplace)</h2>
-<p>Ahora cambien de modelo: un lote ya fabricado y en bodega tiene <span class="math inline">\(N=60\)</span> bombillos, de los cuales <span class="math inline">\(D=9\)</span> son defectuosos. Esta vez el defecto ya está fijo en cada bombillo del lote; no hay ningún mecanismo aleatorio en curso, solo incertidumbre sobre cuáles bombillos tocan en la muestra. Un inspector extrae, sin reemplazo, una muestra de <span class="math inline">\(n=6\)</span> bombillos.</p>
+<section id="autopsia-forense" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="autopsia-forense"><span class="header-section-number">2</span> Autopsia forense</h2>
+<p>Un estudiante escribe la siguiente función en Julia para calcular la varianza de un conjunto de datos.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">varianza_ingenua</span>(x)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="fu">length</span>(x)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    s1 <span class="op">=</span> <span class="fu">sum</span>(x)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    s2 <span class="op">=</span> <span class="fu">sum</span>(x<span class="op">.^</span><span class="fl">2</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (s2<span class="op">/</span>n) <span class="op">-</span> (s1<span class="op">/</span>n)<span class="op">^</span><span class="fl">2</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>datos <span class="op">=</span> [<span class="fl">10_000_000.1</span>, <span class="fl">10_000_000.2</span>, <span class="fl">10_000_000.3</span>, <span class="fl">10_000_000.2</span>, <span class="fl">10_000_000.1</span>]</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span>(<span class="fu">varianza_ingenua</span>(datos))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Al ejecutarla, <code>println</code> imprime <code>0.0</code>, aunque los datos claramente varían.</p>
 <ol type="1">
-<li>Calculen la probabilidad de que la muestra contenga exactamente 2 defectuosos.</li>
-<li>Calculen la probabilidad de que la muestra no contenga ningún defectuoso, y usen esto para obtener la probabilidad de que contenga al menos uno.</li>
+<li>Sin ejecutar el código, explique en qué línea ocurre la pérdida de precisión y por qué. (4 puntos)</li>
+<li>¿Por qué el problema de calcular la varianza de estos datos está bien planteado, aunque el algoritmo de arriba falle sobre ellos? (3 puntos)</li>
+<li>Proponga, sin ejecutarla, una versión corregida que evite restar cantidades casi iguales. (5 puntos)</li>
+<li>Verifique a mano que su versión da aproximadamente <span class="math inline">\(0{,}0056\)</span> para estos datos. (3 puntos)</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled" title="Solución">
 <div class="callout-header d-flex align-content-center">
@@ -532,18 +489,49 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>1.</strong> <span class="math display">\[P(\text{exactamente 2}) = \frac{\binom{9}{2}\binom{51}{4}}{\binom{60}{6}} = \frac{36\times 249{.}900}{50{.}063{.}860} \approx 0{,}1797\]</span></p>
-<p><strong>2.</strong> <span class="math display">\[P(\text{ninguno defectuoso}) = \frac{\binom{51}{6}}{\binom{60}{6}} = \frac{18{.}009{.}460}{50{.}063{.}860} \approx 0{,}3597\]</span> <span class="math display">\[P(\text{al menos uno}) = 1-0{,}3597 = 0{,}6403\]</span></p>
+<p><strong>1.</strong> La pérdida de precisión ocurre en la línea <code>return (s2/n) - (s1/n)^2</code>. Para los datos dados, <code>s2/n</code> y <code>(s1/n)^2</code> son ambos números del orden de <span class="math inline">\(10^{14}\)</span>, mientras que su diferencia real, la varianza, es del orden de <span class="math inline">\(10^{-3}\)</span>. Restar dos números de esa magnitud para obtener un resultado tan pequeño exige cancelar alrededor de diecisiete cifras, más de las que ofrece <code>Float64</code> (unas dieciséis), así que el resultado queda dominado por el error de redondeo de la resta.</p>
+<p><strong>2.</strong> El problema está bien planteado porque la varianza depende continuamente y de forma acotada de los datos: es un promedio de desviaciones al cuadrado, cantidades pequeñas si los datos están poco dispersos. El problema en sí no exige nunca restar números grandes. Lo que falla es el algoritmo particular escogido, que calcula dos sumas grandes por separado y las resta al final, introduciendo una cancelación que el problema no requiere.</p>
+<p><strong>3.</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">varianza_estable</span>(x)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="fu">length</span>(x)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> <span class="fu">sum</span>(x) <span class="op">/</span> n</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">sum</span>((x <span class="op">.-</span> m)<span class="op">.^</span><span class="fl">2</span>) <span class="op">/</span> n</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Al restar la media a cada dato primero, las cantidades que se elevan al cuadrado ya son pequeñas y no involucran cancelación entre números grandes.</p>
+<p><strong>4.</strong> Con los datos <span class="math inline">\(10000000{,}1,\ 10000000{,}2,\ 10000000{,}3,\ 10000000{,}2,\ 10000000{,}1\)</span>, la media es</p>
+<p><span class="math display">\[\bar x = \frac{50000000{,}9}{5} = 10000000{,}18.\]</span></p>
+<p>Las desviaciones son <span class="math inline">\(-0{,}08,\ 0{,}02,\ 0{,}12,\ 0{,}02,\ -0{,}08\)</span>, y sus cuadrados <span class="math inline">\(0{,}0064,\ 0{,}0004,\ 0{,}0144,\ 0{,}0004,\ 0{,}0064\)</span>, cuya suma es <span class="math inline">\(0{,}028\)</span>. Dividiendo por <span class="math inline">\(5\)</span>:</p>
+<p><span class="math display">\[\text{varianza} = \frac{0{,}028}{5} = 0{,}0056.\]</span></p>
 </div>
 </div>
 </section>
-<section id="el-proceso-de-fabricación-probabilidad-total-y-bayes" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="el-proceso-de-fabricación-probabilidad-total-y-bayes"><span class="header-section-number">3</span> El proceso de fabricación (probabilidad total y Bayes)</h2>
-<p>Modelen ahora el proceso mismo de fabricación, bombillo por bombillo: cada bombillo se produce en la línea 1 con probabilidad <span class="math inline">\(\alpha=0{,}7\)</span> o en la línea 2 con probabilidad <span class="math inline">\(1-\alpha=0{,}3\)</span>. Dado que se produjo en la línea 1, la probabilidad de que sea defectuoso es <span class="math inline">\(p_1=0{,}02\)</span>; dado que se produjo en la línea 2, es <span class="math inline">\(p_2=0{,}09\)</span>. Sea <span class="math inline">\(D\)</span> el evento “el bombillo es defectuoso” y <span class="math inline">\(M_1\)</span>, <span class="math inline">\(M_2\)</span> los eventos “se produjo en la línea 1 (2)”.</p>
+<section id="sistemas-lineales" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="sistemas-lineales"><span class="header-section-number">3</span> Sistemas lineales</h2>
+<p>Considere el sistema triangular inferior</p>
+<p><span class="math display">\[Lx=b, \qquad L=\begin{pmatrix}2&amp;0&amp;0\\1&amp;-3&amp;0\\4&amp;2&amp;5\end{pmatrix}, \qquad b=\begin{pmatrix}6\\-3\\11\end{pmatrix}.\]</span></p>
 <ol type="1">
-<li>Calculen <span class="math inline">\(P(D)\)</span> usando el teorema de la probabilidad total.</li>
-<li>Un bombillo elegido al azar de la producción resulta defectuoso. Calculen <span class="math inline">\(P(M_2\mid D)\)</span> usando el teorema de Bayes.</li>
-<li>Calculen <span class="math inline">\(P(M_1\mid D^c)\)</span> (dado que el bombillo no es defectuoso, la probabilidad de que venga de la línea 1). Comparen este número con <span class="math inline">\(P(M_1)=0{,}7\)</span> y comenten, en una frase, qué les dice la diferencia.</li>
+<li>Resuelva el sistema mediante sustitución hacia adelante. Luego, para una matriz triangular inferior de tamaño <span class="math inline">\(n\times n\)</span> en general, cuente cuántas operaciones de punto flotante requiere el algoritmo y exprese el resultado en notación <span class="math inline">\(O\)</span> grande. Explique por qué es <span class="math inline">\(O(n^2)\)</span> y no <span class="math inline">\(O(n^3)\)</span> como la eliminación gaussiana completa. A continuación está el código de la sustitución para que pueda realizar el conteo más fácilmente. (6 puntos)</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">sustitucion_adelante</span>(L, b)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="fu">length</span>(b)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="fu">zeros</span>(n)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>n</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        suma <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>i<span class="op">-</span><span class="fl">1</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>            suma <span class="op">+=</span> L[i, j] <span class="op">*</span> x[j]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        x[i] <span class="op">=</span> (b[i] <span class="op">-</span> suma) <span class="op">/</span> L[i, i]</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<ol start="2" type="1">
+<li>Suponga que, por errores de redondeo, un estudiante obtiene la aproximación <span class="math inline">\(\hat x = (3{,}1,\ 1{,}9,\ -1{,}05)\)</span>. Calcule el residuo <span class="math inline">\(r = b - L\hat x\)</span> y el error real <span class="math inline">\(e = \hat x - x\)</span>, ambos en norma infinito. (5 puntos)</li>
+<li>Se le da que <span class="math inline">\(\kappa_\infty(L)=8{,}8\)</span>. Verifique que se cumple la desigualdad</li>
+</ol>
+<p><span class="math display">\[\frac{\|e\|_\infty}{\|x\|_\infty} \le \kappa_\infty(L)\frac{\|r\|_\infty}{\|b\|_\infty}\]</span></p>
+<p>con los valores del numeral anterior. (4 puntos)</p>
+<ol start="4" type="1">
+<li>¿El error que obtuvo el estudiante es evidencia de que el sistema está mal condicionado? Justifique comparando el error relativo real con la cota, y explique qué nos dice (y qué no nos dice) un residuo pequeño sobre la calidad de una solución. (5 puntos)</li>
 </ol>
 <div class="callout callout-style-default callout-tip callout-titled" title="Solución">
 <div class="callout-header d-flex align-content-center">
@@ -555,68 +543,20 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>1.</strong> <span class="math display">\[P(D) = P(D\mid M_1)P(M_1)+P(D\mid M_2)P(M_2) = (0{,}02)(0{,}7)+(0{,}09)(0{,}3) = 0{,}014+0{,}027 = 0{,}041\]</span></p>
-<p><strong>2.</strong> <span class="math display">\[P(M_2\mid D) = \frac{P(D\mid M_2)P(M_2)}{P(D)} = \frac{0{,}027}{0{,}041} = \frac{27}{41} \approx 0{,}6585\]</span></p>
-<p><strong>3.</strong> Con <span class="math inline">\(P(D^c)=0{,}959\)</span> y <span class="math inline">\(P(D^c\mid M_1)=1-p_1=0{,}98\)</span>: <span class="math display">\[P(M_1\mid D^c) = \frac{P(D^c\mid M_1)P(M_1)}{P(D^c)} = \frac{(0{,}98)(0{,}7)}{0{,}959} = \frac{0{,}686}{0{,}959} \approx 0{,}7153\]</span></p>
-<p>Comparado con <span class="math inline">\(P(M_1)=0{,}7\)</span>, sube levemente a <span class="math inline">\(0{,}7153\)</span>: como la línea 1 falla menos, que un bombillo no sea defectuoso es evidencia débil a favor de que venga de la línea más confiable.</p>
-</div>
-</div>
-</section>
-<section id="cuándo-son-independientes" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="cuándo-son-independientes"><span class="header-section-number">4</span> ¿Cuándo son independientes?</h2>
-<ol type="1">
-<li>Verifiquen, con los datos de la sección anterior, si <span class="math inline">\(D\)</span> y <span class="math inline">\(M_1\)</span> son eventos independientes.</li>
-<li>Ahora generalicen. Con <span class="math inline">\(\alpha\)</span> fijo, <span class="math inline">\(0&lt;\alpha&lt;1\)</span>, y tasas de falla <span class="math inline">\(p_1,p_2\)</span> arbitrarias (no necesariamente <span class="math inline">\(0{,}02\)</span> y <span class="math inline">\(0{,}09\)</span>), determinen para qué relación entre <span class="math inline">\(p_1\)</span> y <span class="math inline">\(p_2\)</span> los eventos <span class="math inline">\(D\)</span> y <span class="math inline">\(M_1\)</span> resultan independientes. Demuestren su respuesta algebraicamente a partir de la definición de independencia (no verifiquen un caso: derive la condición general).</li>
-<li>En una frase: ¿por qué el resultado del numeral anterior no depende de <span class="math inline">\(\alpha\)</span>? ¿Qué les dice esto sobre qué es lo que realmente vuelve informativo saber de qué línea vino un bombillo?</li>
-</ol>
-<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Solución
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>1.</strong> <span class="math inline">\(P(D\cap M_1) = P(D\mid M_1)P(M_1) = (0{,}02)(0{,}7) = 0{,}014\)</span>, mientras que <span class="math inline">\(P(D)P(M_1) = (0{,}041)(0{,}7) = 0{,}0287\)</span>. Como <span class="math inline">\(0{,}014\ne 0{,}0287\)</span>, <span class="math inline">\(D\)</span> y <span class="math inline">\(M_1\)</span> no son independientes; la desigualdad va en el sentido esperado, saber que un bombillo viene de la línea 1 baja su probabilidad de falla por debajo del promedio.</p>
-<p><strong>2.</strong> Con <span class="math inline">\(\alpha\)</span> fijo, <span class="math inline">\(0&lt;\alpha&lt;1\)</span>, y <span class="math inline">\(p_1,p_2\)</span> arbitrarias:</p>
-<p><span class="math display">\[P(D\cap M_1)=\alpha p_1, \qquad P(D)=\alpha p_1+(1-\alpha)p_2, \qquad P(M_1)=\alpha\]</span></p>
-<p>La independencia exige <span class="math inline">\(P(D\cap M_1)=P(D)P(M_1)\)</span>:</p>
-<p><span class="math display">\[\alpha p_1 = \alpha\big[\alpha p_1+(1-\alpha)p_2\big]\]</span></p>
-<p>Dividiendo por <span class="math inline">\(\alpha\ne 0\)</span>:</p>
-<p><span class="math display">\[p_1 = \alpha p_1+(1-\alpha)p_2 \implies p_1(1-\alpha) = (1-\alpha)p_2\]</span></p>
-<p>Como <span class="math inline">\(\alpha&lt;1\)</span>, dividimos por <span class="math inline">\((1-\alpha)\ne 0\)</span>:</p>
-<p><span class="math display">\[p_1=p_2\]</span></p>
-<p><strong>3.</strong> El resultado no depende de <span class="math inline">\(\alpha\)</span> porque <span class="math inline">\(\alpha\)</span> solo controla cuántos bombillos vienen de cada línea, no qué tan distinto falla cada línea. La independencia pregunta si el origen aporta información sobre la falla, y esa información solo existe si <span class="math inline">\(p_1\ne p_2\)</span>. La proporción de producción de cada línea es irrelevante para esa pregunta: lo único que delata el origen es la diferencia entre las tasas de falla.</p>
-</div>
-</div>
-</section>
-<section id="verdadero-o-falso-justificando" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="verdadero-o-falso-justificando"><span class="header-section-number">5</span> Verdadero o falso, justificando</h2>
-<p>Para cada afirmación, indiquen si es verdadera o falsa y justifiquen. No se aceptan respuestas sin justificación.</p>
-<ol type="1">
-<li>Si <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> son eventos mutuamente excluyentes y ambos tienen probabilidad positiva, entonces <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> son independientes.</li>
-<li>Si <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> son eventos independientes, entonces <span class="math inline">\(A^c\)</span> y <span class="math inline">\(B\)</span> también lo son.</li>
-<li>Si <span class="math inline">\(\Omega\)</span> es finito y <span class="math inline">\(T:\Omega\to\Omega'\)</span> no es inyectiva, entonces <span class="math inline">\(T^{-1}(\mathcal P(\Omega'))\)</span> es igual a <span class="math inline">\(\mathcal P(\Omega)\)</span>.</li>
-<li>Si <span class="math inline">\((A_n)_{n\in\mathbb N}\)</span> es una sucesión decreciente de eventos con <span class="math inline">\(A_n\downarrow\varnothing\)</span> (es decir, <span class="math inline">\(\bigcap_n A_n=\varnothing\)</span>), entonces <span class="math inline">\(P(A_n)\to 0\)</span>.</li>
-</ol>
-<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Solución
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>1. Falso.</strong> Si <span class="math inline">\(A\cap B=\varnothing\)</span>, entonces <span class="math inline">\(P(A\cap B)=0\)</span>. Si además fueran independientes, <span class="math inline">\(P(A)P(B)=0\)</span>, forzando <span class="math inline">\(P(A)=0\)</span> o <span class="math inline">\(P(B)=0\)</span>, lo que contradice que ambas sean positivas. Mutuamente excluyentes con probabilidad positiva implica necesariamente dependientes.</p>
-<p><strong>2. Verdadero.</strong> Escribiendo <span class="math inline">\(B\)</span> como unión disyunta: <span class="math display">\[B = (A\cap B)\cup(A^c\cap B) \implies P(B)=P(A\cap B)+P(A^c\cap B)\]</span> <span class="math display">\[P(A^c\cap B) = P(B)-P(A\cap B) = P(B)-P(A)P(B) = P(B)\big(1-P(A)\big) = P(A^c)P(B)\]</span></p>
-<p><strong>3. Falso.</strong> El ejercicio de la primera sección es el contraejemplo: <span class="math inline">\(T\)</span> no es inyectiva (<span class="math inline">\(T(DDN)=T(DND)=T(NDD)=2\)</span>) y sin embargo <span class="math inline">\(|\mathfrak T|=16 \ne 256=|\mathcal P(\Omega)|\)</span>.</p>
-<p><strong>4. Verdadero.</strong> Sea <span class="math inline">\(B_n:=A_n^c\)</span>. Como <span class="math inline">\(A_n\)</span> es decreciente, <span class="math inline">\(B_n\)</span> es creciente. Por De Morgan, <span class="math display">\[\bigcup_n B_n = \Big(\bigcap_n A_n\Big)^c = \varnothing^c = \Omega\]</span></p>
-<p>Por el teorema de continuidad para sucesiones crecientes: <span class="math display">\[P(\Omega) = P\Big(\lim_n B_n\Big) = \lim_n P(B_n) \implies \lim_n P(B_n)=1\]</span></p>
-<p>Como <span class="math inline">\(P(B_n)=1-P(A_n)\)</span>, se sigue <span class="math inline">\(\lim_n\big(1-P(A_n)\big)=1\)</span>, es decir <span class="math inline">\(\lim_n P(A_n)=0\)</span>.</p>
+<p><strong>1.</strong> Sustitución hacia adelante:</p>
+<p><span class="math display">\[x_1 = \frac62 = 3, \qquad x_2 = \frac{-3-1\cdot3}{-3} = 2, \qquad x_3 = \frac{11-4\cdot3-2\cdot2}{5} = -1.\]</span></p>
+<p>Así, <span class="math inline">\(x=(3,2,-1)\)</span>.</p>
+<p>Conteo de operaciones: en la fila <span class="math inline">\(i\)</span>, el ciclo interior hace <span class="math inline">\(i-1\)</span> multiplicaciones y <span class="math inline">\(i-1\)</span> sumas, y luego hay una resta y una división. Sumando sobre todas las filas,</p>
+<p><span class="math display">\[\text{Total} = \sum_{i=1}^n\big(2(i-1)+2\big) = 2\frac{n(n-1)}2+2n = n(n-1)+2n = n^2+n,\]</span></p>
+<p>que es <span class="math inline">\(O(n^2)\)</span>. La eliminación gaussiana completa es <span class="math inline">\(O(n^3)\)</span> porque, además de despejar cada incógnita, en cada uno de los <span class="math inline">\(n\)</span> pasos de eliminación hay que actualizar toda la submatriz restante (un costo <span class="math inline">\(O(n^2)\)</span> por paso, multiplicado por <span class="math inline">\(n\)</span> pasos). La sustitución hacia adelante parte de una matriz que ya es triangular, así que solo necesita leer cada entrada una vez, sin actualizar nada más.</p>
+<p><strong>2.</strong> Con <span class="math inline">\(\hat x=(3{,}1,\ 1{,}9,\ -1{,}05)\)</span>,</p>
+<p><span class="math display">\[L\hat x = (2\cdot3{,}1,\ \ 1\cdot3{,}1-3\cdot1{,}9,\ \ 4\cdot3{,}1+2\cdot1{,}9-5\cdot1{,}05) = (6{,}2,\ -2{,}6,\ 10{,}95).\]</span></p>
+<p>Residuo: <span class="math inline">\(r=b-L\hat x = (-0{,}2,\ -0{,}4,\ 0{,}05)\)</span>, con <span class="math inline">\(\|r\|_\infty=0{,}4\)</span>.</p>
+<p>Error real: <span class="math inline">\(e=\hat x-x = (0{,}1,\ -0{,}1,\ -0{,}05)\)</span>, con <span class="math inline">\(\|e\|_\infty=0{,}1\)</span>.</p>
+<p><strong>3.</strong></p>
+<p><span class="math display">\[\frac{\|e\|_\infty}{\|x\|_\infty} = \frac{0{,}1}3 \approx 0{,}0333, \qquad \frac{\|r\|_\infty}{\|b\|_\infty} = \frac{0{,}4}{11}\approx0{,}0364.\]</span></p>
+<p>La cota da <span class="math inline">\(\kappa_\infty(L)\cdot0{,}0364 = 8{,}8\times0{,}0364\approx0{,}32\)</span>. Como <span class="math inline">\(0{,}0333\le0{,}32\)</span>, la desigualdad se cumple, con bastante margen.</p>
+<p><strong>4.</strong> No, el error observado no es evidencia de mal condicionamiento. El error relativo real (<span class="math inline">\(\approx0{,}033\)</span>) es mucho menor que la cota que permite el número de condición (<span class="math inline">\(\approx0{,}32\)</span>); cumplir la desigualdad con tanto margen es consistente con un sistema razonablemente bien condicionado (<span class="math inline">\(\kappa_\infty(L)=8{,}8\)</span> no es un número grande). El error que cometió el estudiante es simplemente el resultado de un redondeo ordinario al resolver el sistema. Esto también muestra qué no garantiza un residuo pequeño: por sí solo, un residuo relativo pequeño no implica un error relativo pequeño, solo lo acota en función de <span class="math inline">\(\kappa(L)\)</span>. Si el número de condición fuera grande, el mismo residuo pequeño sería compatible con un error mucho mayor.</p>
 </div>
 </div>
 
@@ -1069,18 +1009,6 @@ window.Quarto = {
   }
   loadGiscus();
 </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-      <a href="../../../cursos/probabilidad/condicional/index.html" class="pagination-link" aria-label="Probabilidad condicional">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Probabilidad condicional</span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="../../../cursos/probabilidad/vaintro/index.html" class="pagination-link" aria-label="Variables aleatorias">
-        <span class="nav-page-text">Variables aleatorias</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
 </div> <!-- /content -->
 
 

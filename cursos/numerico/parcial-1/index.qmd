@@ -1,0 +1,163 @@
+---
+title: "Parcial 1"
+subtitle: "Cancelación catastrófica y condicionamiento, autopsia forense de un algoritmo, y sistemas lineales triangulares"
+description: "Primer parcial individual, con solución."
+author: "Arturo Sanjuán"
+date: 2026-09-26
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 11
+---
+
+Este parcial repasa lo visto en el curso hasta el primero corte: cancelación catastrófica y número de condición de un problema escalar, el diagnóstico forense entre problema y algoritmo aplicado a un caso nuevo, y el análisis de error en un sistema triangular mediante residuo, error real y número de condición matricial.
+
+## Condicionamiento
+
+Considere la función
+
+$$f(x) = 1-\cos(x).$$
+
+1. Explique por qué evaluar $1-\cos(x)$ directamente en punto flotante pierde cifras significativas cuando $x$ está cerca de cero. (3 puntos)
+2. Calcule el número de condición $\kappa_f(x) = \left|\dfrac{xf'(x)}{f(x)}\right|$ y muestre que $\kappa_f(0)=2$. (Sugerencia: use la identidad $1-\cos(x)=2\sin^2(x/2)$.) (5 puntos)
+3. Con ese resultado, reescriba el cálculo de forma estable usando la identidad de arriba, y explique por qué esta forma no resta cantidades casi iguales. (4 puntos)
+4. En un par de líneas: ¿el fallo que describió en el numeral 1 es del problema o del algoritmo? Justifique con el número que calculó en el numeral 2. (3 puntos)
+
+::: {.callout-tip title="Solución"}
+**1.** Cuando $x$ está cerca de cero, $\cos(x)$ está cerca de $1$, así que restarlo de $1$ es una resta de dos cantidades casi iguales. El valor verdadero de $1-\cos(x)$ es del orden de $x^2/2$, mientras que $\cos(x)$ se calcula con un error absoluto del orden del épsilon de máquina. Cuando $x$ es lo bastante pequeño, ese error deja de ser despreciable frente al resultado verdadero, y el resultado calculado queda dominado por ruido de redondeo en vez de por la señal real.
+
+**2.** Con $f'(x)=\sin(x)$,
+
+$$\kappa_f(x) = \left|\frac{xf'(x)}{f(x)}\right| = \left|\frac{x\sin(x)}{1-\cos(x)}\right|.$$
+
+Usando $1-\cos(x)=2\sin^2(x/2)$ y $\sin(x)=2\sin(x/2)\cos(x/2)$,
+
+$$\kappa_f(x) = \left|\frac{x\cdot2\sin(x/2)\cos(x/2)}{2\sin^2(x/2)}\right| = \left|\frac{x\cos(x/2)}{\sin(x/2)}\right| = |x\cot(x/2)|.$$
+
+Cuando $x\to0$, $\cot(x/2)\approx 2/x$, así que
+
+$$\lim_{x\to0}\kappa_f(x) = \lim_{x\to0}\left|x\cdot\frac2x\right| = 2.$$
+
+Por lo tanto $\kappa_f(0)=2$.
+
+**3.** En vez de calcular $\cos(x)$ y restarlo de $1$, se calcula directamente $f(x)=2\sin^2(x/2)$. Esta forma no resta cantidades casi iguales: eleva al cuadrado un número pequeño ($\sin(x/2)$, calculado con precisión relativa completa para $x$ pequeño) sin ninguna resta de por medio.
+
+**4.** El fallo es del algoritmo, no del problema. $\kappa_f(0)=2$ es pequeño y finito, así que el problema está bien condicionado: un pequeño error relativo en $x$ produce un error relativo comparable en $f(x)$. El algoritmo ingenuo introduce una cancelación catastrófica que el condicionamiento del problema no predice ni explica; es inestable aunque el problema mismo sea benigno.
+:::
+
+## Autopsia forense
+
+Un estudiante escribe la siguiente función en Julia para calcular la varianza de un conjunto de datos.
+
+```julia
+function varianza_ingenua(x)
+    n = length(x)
+    s1 = sum(x)
+    s2 = sum(x.^2)
+    return (s2/n) - (s1/n)^2
+end
+
+datos = [10_000_000.1, 10_000_000.2, 10_000_000.3, 10_000_000.2, 10_000_000.1]
+println(varianza_ingenua(datos))
+```
+
+Al ejecutarla, `println` imprime `0.0`, aunque los datos claramente varían.
+
+1. Sin ejecutar el código, explique en qué línea ocurre la pérdida de precisión y por qué. (4 puntos)
+2. ¿Por qué el problema de calcular la varianza de estos datos está bien planteado, aunque el algoritmo de arriba falle sobre ellos? (3 puntos)
+3. Proponga, sin ejecutarla, una versión corregida que evite restar cantidades casi iguales. (5 puntos)
+4. Verifique a mano que su versión da aproximadamente $0{,}0056$ para estos datos. (3 puntos)
+
+::: {.callout-tip title="Solución"}
+**1.** La pérdida de precisión ocurre en la línea `return (s2/n) - (s1/n)^2`. Para los datos dados, `s2/n` y `(s1/n)^2` son ambos números del orden de $10^{14}$, mientras que su diferencia real, la varianza, es del orden de $10^{-3}$. Restar dos números de esa magnitud para obtener un resultado tan pequeño exige cancelar alrededor de diecisiete cifras, más de las que ofrece `Float64` (unas dieciséis), así que el resultado queda dominado por el error de redondeo de la resta.
+
+**2.** El problema está bien planteado porque la varianza depende continuamente y de forma acotada de los datos: es un promedio de desviaciones al cuadrado, cantidades pequeñas si los datos están poco dispersos. El problema en sí no exige nunca restar números grandes. Lo que falla es el algoritmo particular escogido, que calcula dos sumas grandes por separado y las resta al final, introduciendo una cancelación que el problema no requiere.
+
+**3.**
+
+```julia
+function varianza_estable(x)
+    n = length(x)
+    m = sum(x) / n
+    return sum((x .- m).^2) / n
+end
+```
+
+Al restar la media a cada dato primero, las cantidades que se elevan al cuadrado ya son pequeñas y no involucran cancelación entre números grandes.
+
+**4.** Con los datos $10000000{,}1,\ 10000000{,}2,\ 10000000{,}3,\ 10000000{,}2,\ 10000000{,}1$, la media es
+
+$$\bar x = \frac{50000000{,}9}{5} = 10000000{,}18.$$
+
+Las desviaciones son $-0{,}08,\ 0{,}02,\ 0{,}12,\ 0{,}02,\ -0{,}08$, y sus cuadrados $0{,}0064,\ 0{,}0004,\ 0{,}0144,\ 0{,}0004,\ 0{,}0064$, cuya suma es $0{,}028$. Dividiendo por $5$:
+
+$$\text{varianza} = \frac{0{,}028}{5} = 0{,}0056.$$
+:::
+
+## Sistemas lineales
+
+Considere el sistema triangular inferior
+
+$$Lx=b, \qquad L=\begin{pmatrix}2&0&0\\1&-3&0\\4&2&5\end{pmatrix}, \qquad b=\begin{pmatrix}6\\-3\\11\end{pmatrix}.$$
+
+1. Resuelva el sistema mediante sustitución hacia adelante. Luego, para una matriz triangular inferior de tamaño $n\times n$ en general, cuente cuántas operaciones de punto flotante requiere el algoritmo y exprese el resultado en notación $O$ grande. Explique por qué es $O(n^2)$ y no $O(n^3)$ como la eliminación gaussiana completa. A continuación está el código de la sustitución para que pueda realizar el conteo más fácilmente. (6 puntos)
+
+```julia
+function sustitucion_adelante(L, b)
+    n = length(b)
+    x = zeros(n)
+    for i in 1:n
+        suma = 0.0
+        for j in 1:i-1
+            suma += L[i, j] * x[j]
+        end
+        x[i] = (b[i] - suma) / L[i, i]
+    end
+    return x
+end
+```
+
+2. Suponga que, por errores de redondeo, un estudiante obtiene la aproximación $\hat x = (3{,}1,\ 1{,}9,\ -1{,}05)$. Calcule el residuo $r = b - L\hat x$ y el error real $e = \hat x - x$, ambos en norma infinito. (5 puntos)
+3. Se le da que $\kappa_\infty(L)=8{,}8$. Verifique que se cumple la desigualdad
+
+$$\frac{\|e\|_\infty}{\|x\|_\infty} \le \kappa_\infty(L)\frac{\|r\|_\infty}{\|b\|_\infty}$$
+
+con los valores del numeral anterior. (4 puntos)
+
+4. ¿El error que obtuvo el estudiante es evidencia de que el sistema está mal condicionado? Justifique comparando el error relativo real con la cota, y explique qué nos dice (y qué no nos dice) un residuo pequeño sobre la calidad de una solución. (5 puntos)
+
+::: {.callout-tip title="Solución"}
+**1.** Sustitución hacia adelante:
+
+$$x_1 = \frac62 = 3, \qquad x_2 = \frac{-3-1\cdot3}{-3} = 2, \qquad x_3 = \frac{11-4\cdot3-2\cdot2}{5} = -1.$$
+
+Así, $x=(3,2,-1)$.
+
+Conteo de operaciones: en la fila $i$, el ciclo interior hace $i-1$ multiplicaciones y $i-1$ sumas, y luego hay una resta y una división. Sumando sobre todas las filas,
+
+$$\text{Total} = \sum_{i=1}^n\big(2(i-1)+2\big) = 2\frac{n(n-1)}2+2n = n(n-1)+2n = n^2+n,$$
+
+que es $O(n^2)$. La eliminación gaussiana completa es $O(n^3)$ porque, además de despejar cada incógnita, en cada uno de los $n$ pasos de eliminación hay que actualizar toda la submatriz restante (un costo $O(n^2)$ por paso, multiplicado por $n$ pasos). La sustitución hacia adelante parte de una matriz que ya es triangular, así que solo necesita leer cada entrada una vez, sin actualizar nada más.
+
+**2.** Con $\hat x=(3{,}1,\ 1{,}9,\ -1{,}05)$,
+
+$$L\hat x = (2\cdot3{,}1,\ \ 1\cdot3{,}1-3\cdot1{,}9,\ \ 4\cdot3{,}1+2\cdot1{,}9-5\cdot1{,}05) = (6{,}2,\ -2{,}6,\ 10{,}95).$$
+
+Residuo: $r=b-L\hat x = (-0{,}2,\ -0{,}4,\ 0{,}05)$, con $\|r\|_\infty=0{,}4$.
+
+Error real: $e=\hat x-x = (0{,}1,\ -0{,}1,\ -0{,}05)$, con $\|e\|_\infty=0{,}1$.
+
+**3.**
+
+$$\frac{\|e\|_\infty}{\|x\|_\infty} = \frac{0{,}1}3 \approx 0{,}0333, \qquad \frac{\|r\|_\infty}{\|b\|_\infty} = \frac{0{,}4}{11}\approx0{,}0364.$$
+
+La cota da $\kappa_\infty(L)\cdot0{,}0364 = 8{,}8\times0{,}0364\approx0{,}32$. Como $0{,}0333\le0{,}32$, la desigualdad se cumple, con bastante margen.
+
+**4.** No, el error observado no es evidencia de mal condicionamiento. El error relativo real ($\approx0{,}033$) es mucho menor que la cota que permite el número de condición ($\approx0{,}32$); cumplir la desigualdad con tanto margen es consistente con un sistema razonablemente bien condicionado ($\kappa_\infty(L)=8{,}8$ no es un número grande). El error que cometió el estudiante es simplemente el resultado de un redondeo ordinario al resolver el sistema. Esto también muestra qué no garantiza un residuo pequeño: por sí solo, un residuo relativo pequeño no implica un error relativo pequeño, solo lo acota en función de $\kappa(L)$. Si el número de condición fuera grande, el mismo residuo pequeño sería compatible con un error mucho mayor.
+:::
