@@ -80,6 +80,7 @@ website:
         - cursos/numerico/complejidad/index.qmd
         - cursos/numerico/lu/index.qmd
         - cursos/numerico/taller-2/index.qmd
+        - cursos/numerico/raices/index.qmd
     - id: probabilidad
       title: "Probabilidad"
       style: docked

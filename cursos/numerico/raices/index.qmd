@@ -1,0 +1,230 @@
+---
+title: "Raíces y puntos fijos"
+subtitle: "Condicionamiento del problema de la raíz y el análisis de la serie de errores."
+author: "Arturo Sanjuán"
+date: 2026-09-26
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 9
+---
+
+El problema de la raíz: dada una función $f$, posiblemente muy no lineal, buscamos $r$ tal que $f(r)=0$. Seguimos la sección 4.1 y 4.2 del libro de Driscoll y Braun.
+
+## Condicionamiento del problema de la raíz
+
+### Repaso: la cuadrática
+
+Empecemos con lo que ya vimos en la nota de condicionamiento. Para $ax^2+bx+c=0$ los datos son los coeficientes $a,b,c$ y el resultado son las dos raíces. Fijando $b,c$ y dejando que solo $a$ cambie (por ejemplo por redondeo), obtuvimos
+
+$$\kappa_f(a) = \left|\frac{r_1}{r_1-r_2}\right|,$$
+
+mal condicionado exactamente cuando las raíces están mucho más cerca entre sí que del origen.
+
+::: {.callout-note title="Tarea"}
+Repita ese mismo cálculo pero perturbando $b$ en vez de $a$, y luego perturbando $c$ en vez de $a$ (con los otros dos coeficientes fijos en cada caso), y encuentre $\kappa_f(b)$ y $\kappa_f(c)$.
+:::
+
+Recuerde también que un problema mal condicionado no impide un buen error hacia atrás: en la sección 1.4 del FNC hay ejemplos donde el error hacia adelante es grande por el condicionamiento (raíces cercanas), pero la respuesta calculada sigue siendo la solución exacta de un problema cercano ($\tilde a x^2+bx+c=0$ con $\tilde a$ próximo a $a$). Y a la inversa: aunque el problema esté bien condicionado, el algoritmo elegido para resolverlo puede seguir siendo inestable. Esto es justamente lo que pasa al calcular $r_1,r_2$ de $(x-10^6)(x-10^{-6})$ con la fórmula clásica: la raíz grande $10^6$ sale estable, pero la raíz chica se pierde por cancelación, y hay que recuperarla con la identidad de Vieta $r_1r_2=c/a$, es decir $r_2=c/(ar_1)$, calculada a partir de la raíz buena.
+
+::: {.callout-note title="Tarea"}
+En el libro FNC estas dos situaciones (condicionamiento del problema vs. estabilidad del algoritmo) están ejemplificadas en detalle en la sección 1.4. A modo de repaso, ejemplifíquelas por su cuenta en Julia.
+:::
+
+### El condicionamiento general: perturbando la función, no sus parámetros
+
+La cuadrática es un caso particular porque conocemos sus parámetros $a,b,c$ y podemos perturbarlos uno por uno. Para una función arbitraria $f$ no tenemos esa estructura: el error puede venir simplemente de evaluar mal $f$, sin que haya ningún parámetro identificable de por medio. Por ejemplo, en una región donde $f(x)=x^2-x$ está cerca de cero, cualquier error minúsculo en la evaluación de $f$ puede desplazar bastante la raíz calculada. El número de condición que necesitamos ahora depende de una función completa, no de un número ni de una matriz.
+
+Como antes, perturbamos y comparamos. Sea $\tilde f(x)=f(x)+\varepsilon$ la función perturbada, y sea $\tilde r$ la raíz de $\tilde f$, es decir $\tilde f(\tilde r)=0$. Escribiendo $\tilde r = r+\delta$, el cambio relativo que nos interesa es
+
+$$\frac{|\tilde r - r|}{|\varepsilon|} = \frac{|\delta|}{|\varepsilon|}.$$
+
+(Aquí no dividimos por $|f(r)|$ como en la definición general de $\kappa_f$: como $f(r)=0$ esa división sería por cero, así que medimos el error de $r$ de forma absoluta en vez de relativa.) Por otro lado,
+
+$$\varepsilon = \tilde f(\tilde r) - f(r) = \big[f(\tilde r)+\varepsilon\big] - f(r) - \varepsilon + \varepsilon= f(r+\delta)-f(r),$$
+
+y para $\delta$ pequeño, linealizando $f$ alrededor de $r$ (la derivada de Fréchet),
+
+$$\varepsilon = f(r+\delta)-f(r) \approx f'(r)\,\delta.$$
+
+Entonces $|\delta|/|\varepsilon| \approx 1/|f'(r)|$, y en el límite $\varepsilon\to0$ esta aproximación se vuelve exacta, exactamente como en la definición general de $\kappa_f$ de la nota anterior. Esto da la definición:
+
+::: {.callout-important title="Definición — número de condición de una raíz"}
+$$\kappa_r = \kappa_r(f) = |f'(r)|^{-1}$$
+:::
+
+El problema está mal condicionado en $r$ cuando $f$ es casi plana ahí ($f'(r)\approx0$): un error diminuto en la evaluación de $f$ puede corresponder a un desplazamiento grande de la raíz.
+
+## Raíces múltiples
+
+En la práctica no conocemos $r$ exactamente, así que en vez de $f(r)$ lo que podemos calcular es el residuo $f(\tilde r)$ de una raíz aproximada. Puede pasar que ese residuo sea pequeño sin que $\tilde r$ esté cerca de $r$: eso es justamente lo que anuncia $\kappa_r=+\infty$, y ocurre cuando $f'(r)=0$.
+
+::: {.callout-important title="Definición — raíz de multiplicidad $m$"}
+$r$ es una raíz de $f$ de multiplicidad (orden) $m$ si
+
+$$f^{(k)}(r)=0 \quad \text{para } k=0,1,\ldots,m-1, \qquad f^{(m)}(r)\ne0,$$
+
+o, de forma equivalente, si existe una función $q$ con $q(r)\ne0$ tal que $f(x)=(x-r)^mq(x)$.
+:::
+
+Cuando $m>1$ no solo $f(r)=0$ sino también $f'(r)=0$, así que $\kappa_r(f)=+\infty$: intuitivamente, la gráfica de $f$ se aplana cerca de la raíz, y ese aplanamiento es justo lo que vuelve al problema arbitrariamente sensible.
+
+### Ejemplo: la raíz triple de $\operatorname{sen}(x)-x$ en $0$
+
+Veamos que $0$ es una raíz de orden $3$ de $f(x)=\operatorname{sen}(x)-x$, de dos maneras.
+
+**Por derivadas sucesivas.** Con $f(x)=\operatorname{sen}(x)-x$,
+
+$$f(0)=0,\qquad f'(x)=\cos(x)-1 \Rightarrow f'(0)=0,\qquad f''(x)=-\operatorname{sen}(x) \Rightarrow f''(0)=0,\qquad f'''(x)=-\cos(x) \Rightarrow f'''(0)=-1\ne0.$$
+
+Como las primeras tres derivadas se anulan en $0$ y la cuarta (en el sentido de la definición, la de orden $m=3$) no, $0$ es una raíz de orden exactamente $3$.
+
+**Por la serie de Taylor.** Usando $\operatorname{sen}(x)=x-\dfrac{x^3}{3!}+\dfrac{x^5}{5!}-\dfrac{x^7}{7!}+\cdots$,
+
+$$f(x) = \operatorname{sen}(x)-x = -\frac{x^3}{3!}+\frac{x^5}{5!}-\frac{x^7}{7!}+\cdots = x^3\underbrace{\left(-\frac{1}{3!}+\frac{x^2}{5!}-\frac{x^4}{7!}+\cdots\right)}_{q(x)}.$$
+
+Con $q(0)=-1/6\ne0$ (que coincide con $f'''(0)/3!=-1/6$, como debe ser), obtenemos exactamente la factorización $f(x)=x^3q(x)$ que pide la definición.
+
+### Ejemplo: la raíz doble de la cuadrática
+
+Retomemos $f(x)=ax^2+bx+c$ con este mismo enfoque. Como $f'(x)=2ax+b$, el único candidato a raíz múltiple es donde $f'$ se anula, $x=-b/(2a)$, y ese punto es efectivamente raíz de $f$ exactamente cuando $b^2-4ac=0$ (discriminante nulo). En ese caso $r=-b/2a$ es una raíz doble y $\kappa_r(f)=+\infty$: consistente con lo que ya sabíamos, porque $b^2-4ac=0$ es precisamente el caso $r_1=r_2$ donde $\kappa_f(a)$ también se disparaba.
+
+Cuando en cambio $b^2-4ac>0$ la raíz es simple, y con $r_{1,2}=\dfrac{-b\pm\sqrt{b^2-4ac}}{2a}$,
+
+$$f'(r_1)=\sqrt{b^2-4ac}, \qquad f'(r_2)=-\sqrt{b^2-4ac} \qquad\Longrightarrow\qquad \kappa_r(f) = \frac{1}{\sqrt{b^2-4ac}}$$
+
+en ambas raíces por igual. Usando $r_1-r_2=\sqrt{b^2-4ac}/a$, esto se puede reescribir sin el discriminante:
+
+$$\boxed{\kappa_r(f) = \frac{1}{|a|\,|r_1-r_2|}}$$
+
+que explota tanto si las raíces se acercan ($r_1\to r_2$, la misma condición que ya vimos) como si el coeficiente principal $a\to0$ (el problema deja de ser genuinamente cuadrático). De hecho esta expresión y $\kappa_f(a)=|r_1/(r_1-r_2)|$ de la sección anterior están relacionadas exactamente por
+
+$$\kappa_f(a) = |a\,r_1|\cdot\kappa_r(f),$$
+
+así que no son la misma cantidad (una perturba el coeficiente $a$ relativamente, la otra perturba $f$ de forma absoluta), pero capturan el mismo fenómeno geométrico: la cercanía de las dos raíces.
+
+## De raíces a puntos fijos
+
+Hay otra manera de plantear el mismo problema, útil tanto en teoría como en la práctica: dada $f$, defina $g(x)=x-f(x)$. Entonces
+
+$$f(p)=0 \quad\Longleftrightarrow\quad g(p)=p.$$
+
+A un punto $p$ con $g(p)=p$ se le llama punto fijo de $g$, y la construcción anterior no es la única forma de convertir una raíz en un punto fijo: cualquier $g(x)=x-f(x)/c$ con $c\ne0$ constante, o incluso $g$ dependiente de $x$, sirve igual. Esta libertad para elegir $g$ es precisamente lo que hace útil el punto de vista de punto fijo: el algoritmo iterativo más simple para encontrar $p$ es
+
+$$x_{k+1}=g(x_k), \qquad k=0,1,2,\ldots$$
+
+y la pregunta de cuándo esta sucesión converge (y a qué $g$ conviene elegir) es el tema del resto de esta nota. Newton, la secante y los métodos implícitos que veremos más adelante en el curso son, en el fondo, formas particulares de elegir $g$.
+
+## El principio de la contracción
+
+### Lipschitz y contracciones
+
+::: {.callout-note title="Definición: condición de Lipschitz"}
+$g:X\to\mathbb{R}^n$, con $X\subseteq\mathbb{R}^n$, es Lipschitz en $X$ si existe una constante $L\ge0$ tal que
+
+$$|g(x)-g(y)| \le L\,|x-y| \qquad \text{para todo } x,y\in X.$$
+:::
+
+::: {.callout-note title="Definición: contracción"}
+$g$ es una contracción en $X$ si es Lipschitz en $X$ con constante $L=\lambda<1$.
+:::
+
+### El teorema del punto fijo
+
+::: {.callout-important title="Teorema (punto fijo de Banach, caso real / $\mathbb{R}^n$)"}
+Sea $X\subseteq\mathbb{R}^n$ cerrado y no vacío (en $\mathbb{R}^n$, cerrado equivale a completo), y sea $g:X\to X$ una contracción con constante $\lambda\in(0,1)$. Entonces:
+
+1. $g$ tiene un único punto fijo $p\in X$.
+2. Para *cualquier* semilla $x_0\in X$, la sucesión $x_{k+1}=g(x_k)$ converge a $p$.
+3. El error decrece geométricamente: $|x_k-p|\le \lambda^k|x_0-p|$.
+:::
+
+No lo demostramos aquí (la demostración estándar muestra que $(x_k)$ es una sucesión de Cauchy usando la desigualdad triangular y la serie geométrica $\sum\lambda^k$), pero vale la pena entender por qué cada hipótesis es indispensable, con un contraejemplo en $\mathbb{R}$ para cada una.
+
+**Si $X$ no es cerrado (no completo).** Tome $X=(0,1]$ y $g(x)=x/2$. Es una contracción genuina ($\lambda=1/2$) y sí manda $X$ en $X$ ($g((0,1])=(0,1/2]\subset(0,1]$). Pero el único candidato a punto fijo de la fórmula, $x=0$, no pertenece a $X$: la sucesión $x_k=x_0/2^k$ converge a $0$, que simplemente no está en el dominio.
+
+**Si $g$ no manda $X$ en sí mismo.** Tome $X=[0,1]$ y $g(x)=x/2+1$. También es una contracción ($\lambda=1/2$), pero $g(1)=1{,}5\notin[0,1]$: $g$ no es una función de $X$ en $X$. El punto fijo de la fórmula, $x=2$, cae fuera de $X$, y las iteraciones que empiecen cerca de $1$ salen de $X$ de inmediato.
+
+**Si $g$ no es realmente una contracción.** Que $|g'(x)|<1$ en todo punto de $X$ no basta si el supremo de $|g'|$ en $X$ es $1$ y nunca se alcanza: entonces no existe un solo $\lambda<1$ que funcione para todo el dominio a la vez. Por ejemplo, con $X=[0,\infty)$ y $g(x)=\sqrt{x^2+1}$: $g$ manda $X$ en $X$ (de hecho en $[1,\infty)$), y $g'(x)=x/\sqrt{x^2+1}$ satisface $|g'(x)|<1$ para todo $x$ finito, pero $\sup_{x\ge0}|g'(x)|=1$ (alcanzado solo en el límite $x\to\infty$). Y en efecto no hay ningún punto fijo: $x=\sqrt{x^2+1}$ llevaría a $0=1$.
+
+Un ejemplo más de esta misma falla, y que usaremos otra vez más abajo: con $g(x)=4x-4x^2$ y $X=(3/8,5/8)$, se cumple $|g'(x)|=|4-8x|<1$ en todo $X$. Pero $g(3/8)=g(5/8)=15/16$, muy por fuera de $X$: $g$ tampoco manda aquí $X$ en $X$, así que el teorema simplemente no aplica, sin importar que la condición sobre la derivada se vea prometedora.
+
+## Convergencia y divergencia local: el análisis de la serie de errores
+
+El teorema anterior es una herramienta *global*: exige una cota uniforme sobre todo un conjunto $X$. Casi nunca conocemos esa cota de antemano; lo que sí podemos hacer es preguntar qué pasa *cerca* de un punto fijo ya conocido $p$, usando solo el valor de $g'(p)$.
+
+Sea $\varepsilon_k=x_k-p$ el error en el paso $k$. Expandiendo $g$ en Taylor alrededor de $p$,
+
+$$\varepsilon_{k+1}+p = x_{k+1} = g(x_k) = g(p+\varepsilon_k) = g(p)+g'(p)\varepsilon_k+O(\varepsilon_k^2) = p+g'(p)\varepsilon_k+O(\varepsilon_k^2),$$
+
+de donde
+
+$$\boxed{\varepsilon_{k+1} \approx g'(p)\,\varepsilon_k}$$
+
+para $\varepsilon_k$ suficientemente pequeño. De esta única relación salen las dos conclusiones centrales:
+
+**Si $|g'(p)|<1$ ($p$ atractor).** Existe una vecindad de $p$ donde el error se multiplica, en cada paso, por un factor de tamaño menor que $1$: cualquier semilla que caiga en esa vecindad converge a $p$, con velocidad lineal (geométrica) de razón aproximada $|g'(p)|$. Esta es la versión local, más fácil de verificar en la práctica, de lo que el teorema de contracción garantiza de forma global y uniforme.
+
+**Si $|g'(p)|>1$ ($p$ repulsor).** Por continuidad de $g'$, hay una vecindad de $p$ donde $|g'(x)|\ge\lambda'>1$; mientras el iterado se quede en esa vecindad, cada paso lo aleja de $p$ por un factor mayor que $1$. Pero esto es *estrictamente local*: solo dice que el iterado se aleja de $p$ mientras siga cerca; en cuanto sale de esa vecindad la cota deja de aplicar, y nada impide que termine capturado por otro punto fijo, por un ciclo, o que efectivamente escape a infinito. Cuál de esas tres cosas ocurre depende por completo de la función, no de este argumento local; la sección de discusión de abajo muestra un ejemplo de cada una.
+
+**Si $|g'(p)|=1$.** El término $g'(p)\varepsilon_k$ no domina y el análisis de primer orden no decide nada: hacen falta los términos de orden superior (típicamente $g''(p)$). No lo desarrollamos aquí.
+
+Un corolario útil: si además $g'(p)=0$, el error decae más rápido que geométricamente (cuadráticamente, si $g''(p)\ne0$), porque el primer término no nulo de la expansión es de orden $\varepsilon_k^2$. Ese es exactamente el mecanismo detrás de la convergencia cuadrática de Newton, que veremos pronto.
+
+### Aplicación: ejercicio 4.2.7 del FNC
+
+Considere la familia de iteraciones
+
+$$x_{k+1} = x_k - \frac{f(x_k)}{c}, \qquad c\ne0 \text{ constante},$$
+
+es decir $g(x)=x-f(x)/c$, cuyos puntos fijos son exactamente las raíces de $f$. Suponiendo $f'(p)>0$ en la raíz $p$ que buscamos, ¿qué condición sobre $c$ garantiza convergencia local?
+
+Como $g'(x)=1-f'(x)/c$, queremos $|g'(x)|<1$, es decir
+
+$$-1 < 1-\frac{f'(x)}{c} < 1 \quad\Longleftrightarrow\quad 0 < \frac{f'(x)}{c} < 2 \quad\Longleftrightarrow\quad c > \frac{f'(x)}{2}$$
+
+(usando que $c$ y $f'(x)$ tienen el mismo signo). Si $f'$ está acotada en un compacto $K$ que contenga a $p$, basta con tomar
+
+$$c > \frac{1}{2}\max_{x\in K} f'(x)$$
+
+para garantizar $|g'(x)|<1$ en todo $K$, y por tanto convergencia local desde cualquier semilla suficientemente cercana a $p$. Con $f(x)=x^2-2$ (raíz $p=\sqrt2\approx1{,}414$, $f'(p)=2\sqrt2\approx2{,}828$), el umbral exacto es $c>\sqrt2\approx1{,}414$: numéricamente, $c=1{,}2$ y $c=1{,}35$ (por debajo del umbral) no convergen, mientras que cualquier $c>\sqrt2$ sí lo hace, aunque arbitrariamente lento si $c$ está apenas por encima del umbral ($c=1{,}42$ tarda cerca de $2000$ iteraciones; $c=2$ tarda menos de $10$).
+
+## Discusión: qué le pasa a los puntos, según el análisis de la serie
+
+Veamos el criterio $\varepsilon_{k+1}\approx g'(p)\varepsilon_k$ en acción sobre tres funciones concretas, elegidas para mostrar las cuatro combinaciones posibles (atractor/repulsor, monótono/oscilante) sin entrar en el terreno del caos, que dejamos completamente de lado aquí (más allá del contraejemplo de $4x-4x^2$ de la sección anterior, que es un mapa muy distinto y bastante más rico de lo que este análisis local alcanza a describir).
+
+### Una parábola con convergencia y divergencia monótonas: $g(x)=\dfrac{x(1-x)}{2}$
+
+Sus puntos fijos son $p=0$ y $p=-1$, y $g'(x)=\dfrac{1-2x}{2}$, así que
+
+$$g'(0)=\tfrac12 \ (\text{atractor, monótono, pues } g'(0)>0), \qquad g'(-1)=\tfrac32 \ (\text{repulsor, monótono}).$$
+
+Numéricamente: desde $x_0=0{,}9$ la sucesión decrece monótonamente hacia $0$ ($0{,}9,\ 0{,}045,\ 0{,}0215,\ 0{,}0105,\ldots$); desde $x_0=-0{,}9$ crece monótonamente hacia $0$ también ($-0{,}9,\ -0{,}855,\ -0{,}793,\ldots \to 0$), mostrando que la cuenca de atracción de $0$ es bastante más grande que una vecindad diminuta. En cambio desde $x_0=-1{,}1$, apenas más allá del repulsor $-1$, la sucesión se aleja monótonamente y sin vuelta atrás: $-1{,}1,\ -1{,}155,\ -1{,}245,\ -1{,}397,\ -1{,}674,\ -2{,}237,\ldots\to-\infty$. Aquí la repulsión local sí se traduce en divergencia global, simplemente porque no hay ningún otro punto fijo ni ciclo que la intercepte en esa dirección.
+
+### Una parábola con convergencia y divergencia oscilantes: $g(x)=1-\dfrac{x^2}{2}$
+
+Sus puntos fijos son $p=\sqrt3-1\approx0{,}732$ y $p=-1-\sqrt3\approx-2{,}732$ (resolviendo $p=1-p^2/2$), y $g'(x)=-x$, así que
+
+$$g'(\sqrt3-1) = -(\sqrt3-1)\approx-0{,}732 \ (\text{atractor, oscilante}), \qquad g'(-1-\sqrt3)=1+\sqrt3\approx2{,}732 \ (\text{repulsor, oscilante}).$$
+
+El signo negativo de $g'(p)$ es lo que produce la oscilación: cada iterado queda del lado opuesto de $p$ respecto al anterior, en vez de acercarse por el mismo lado. Desde $x_0=0{,}5$ la sucesión salta de un lado a otro de $p\approx0{,}732$ mientras converge en espiral ($0{,}5,\ 0{,}875,\ 0{,}617,\ 0{,}810,\ 0{,}672,\ldots\to0{,}732$), y la razón $\varepsilon_{k+1}/\varepsilon_k$ se acerca cada vez más a $-0{,}732=g'(p)$, alternando de signo en cada paso, tal como predice el análisis de la serie.
+
+### Una función que converge globalmente: $g(x)=\cos(x)$
+
+A diferencia de las dos anteriores, $\cos$ manda toda la recta real dentro de $[-1,1]$ desde el primer paso, y en $[-1,1]$ es una contracción genuina (aunque $|\cos'(x)|=|\operatorname{sen}(x)|$ no es uniformemente menor que $1$ en todo $\mathbb{R}$, si lo es en $[-1,1]$, con $\lambda=\operatorname{sen}(1)\approx0{,}841<1$). Por eso, a diferencia de los dos ejemplos anteriores, aquí *cualquier* semilla converge, sin importar qué tan lejos empiece: desde $x_0=0$, $5$, $-3$, $100$ o $-50$ la sucesión llega, en menos de $60$ pasos, al mismo punto $p\approx0{,}739085$, la raíz de $x=\cos(x)$ (conocida como número de Dottie). Con $g'(p)=-\operatorname{sen}(p)\approx-0{,}674$, la convergencia es oscilante como en el ejemplo anterior, pero esta vez garantizada globalmente por el teorema de contracción, no solo localmente por la serie.
+
+### Simulación interactiva
+
+<iframe src="notebooks/punto-fijo-simulacion.html" width="100%" height="900px" style="border:none;"></iframe>
+
+Elija una función, mueva la semilla $x_0$ y avance el paso $k$ para ver el diagrama de telaraña construirse iteración por iteración. La tabla de abajo del diagrama muestra $\varepsilon_k$ y la razón $\varepsilon_{k+1}/\varepsilon_k$ respecto al punto fijo más cercano a la semilla: compárela contra el valor de $g'(p)$ que aparece junto a cada punto fijo, es la comprobación en vivo de $\varepsilon_{k+1}\approx g'(p)\varepsilon_k$. La cuarta opción del menú, el mapa logístico $4x(1-x)$, se incluye solo para explorar: fuera del rango angosto donde converge a $0$, casi cualquier otra semilla produce un comportamiento que ninguno de los criterios de esta nota alcanza a explicar, tema que queda para más adelante.
+
+## Tarea
+
+Resuelva los ejercicios de la sección 4.2 ("Exercises") de *Fundamentals of Numerical Computation*, disponibles en <https://fncbook.com/julia/fixed-point/#exercises>.

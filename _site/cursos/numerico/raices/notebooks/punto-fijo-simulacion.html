@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Simulación — iteración de punto fijo y diagramas de telaraña</title>
+<style>
+  :root{
+    --ink:#1e2327; --muted:#5a6570; --line:#dde3e8; --bg:#fbfcfd;
+    --accent:#2563a8; --accent2:#c1440e; --good:#1a7f5a; --bad:#c1440e;
+    --panel:#ffffff;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; padding:18px 20px 26px; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:14.5px; line-height:1.45;
+  }
+  h2{font-size:16px; margin:0 0 4px;}
+  .sub{color:var(--muted); margin:0 0 16px; font-size:13px;}
+  .layout{display:flex; gap:22px; flex-wrap:wrap; align-items:flex-start;}
+  .panel{
+    background:var(--panel); border:1px solid var(--line); border-radius:10px;
+    padding:16px 18px; flex:1 1 300px;
+  }
+  .panel h3{margin:0 0 12px; font-size:13.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.03em;}
+  .ctrl{margin-bottom:14px;}
+  .ctrl label{display:flex; justify-content:space-between; font-size:13px; margin-bottom:4px;}
+  .ctrl label span.val{font-variant-numeric:tabular-nums; color:var(--accent); font-weight:600;}
+  .ctrl input[type=range]{width:100%; accent-color:var(--accent);}
+  .ctrl select{
+    width:100%; padding:6px 8px; border-radius:6px; border:1px solid var(--line);
+    font-size:13.5px; background:#fff; color:var(--ink);
+  }
+  table{width:100%; border-collapse:collapse; font-size:13px;}
+  th,td{padding:5px 8px; text-align:right; border-bottom:1px solid var(--line);}
+  th:first-child,td:first-child{text-align:left;}
+  th{color:var(--muted); font-weight:600; font-size:11.5px; text-transform:uppercase;}
+  td.num{font-variant-numeric:tabular-nums;}
+  .badge{
+    display:inline-block; padding:1px 8px; border-radius:20px; font-size:11.5px;
+    font-weight:600;
+  }
+  .badge.good{background:#e4f4ec; color:var(--good);}
+  .badge.bad{background:#fbe9e2; color:var(--bad);}
+  .badge.warn{background:#fdf3da; color:#9a7300;}
+  .fp-row{
+    display:flex; align-items:baseline; gap:8px; margin:6px 0;
+    padding:8px 10px; border-radius:8px; background:#f2f5f7; border:1px solid var(--line);
+    font-size:13px;
+  }
+  .fp-row .dot{width:10px;height:10px;border-radius:50%;display:inline-block;flex-shrink:0;}
+  canvas{width:100%; height:340px; display:block; margin-top:6px; background:#fff; border-radius:6px;}
+  .footnote{font-size:12px; color:var(--muted); margin-top:10px;}
+  .status{font-size:13px; margin:8px 0; padding:8px 10px; border-radius:8px; background:#f2f5f7;}
+</style>
+</head>
+<body>
+
+<h2>Iteración de punto fijo: <i>x<sub>k+1</sub> = g(x<sub>k</sub>)</i></h2>
+<p class="sub">Diagrama de telaraña (cobweb): la curva es <i>y=g(x)</i>, la diagonal es <i>y=x</i>, y la trayectoria en amarillo va de la semilla hacia donde termine cayendo la sucesión. Cambie de función y de semilla para ver atracción monótona, atracción oscilante, repulsión, y un caso globalmente convergente.</p>
+
+<div class="layout">
+
+  <div class="panel" style="flex:1 1 260px;">
+    <h3>Controles</h3>
+
+    <div class="ctrl">
+      <label>Función g(x)</label>
+      <select id="fn-select">
+        <option value="parabolaA">g(x) = x(1&minus;x)/2</option>
+        <option value="parabolaB">g(x) = 1 &minus; x&sup2;/2</option>
+        <option value="coseno" selected>g(x) = cos(x)</option>
+        <option value="ejercicio427">g(x) = x &minus; (x&sup2;&minus;2)/c &mdash; ejercicio 4.2.7</option>
+      </select>
+    </div>
+
+    <div class="ctrl" id="ctrl-c" style="display:none;">
+      <label>Parámetro c <span class="val" id="val-c">2.00</span></label>
+      <input type="range" id="c-param" min="0.8" max="4" step="0.01" value="2">
+      <div class="footnote" style="margin-top:2px;">El umbral derivado en el texto es c &gt; f'(p)/2 = &radic;2 &asymp; 1,414. Baje c por debajo de ese valor y vea que ambos puntos fijos se vuelven repulsores.</div>
+    </div>
+
+    <div class="ctrl">
+      <label>Semilla x&#8320; <span class="val" id="val-x0">2.00</span></label>
+      <input type="range" id="x0" min="-1.5" max="3" step="0.01" value="2">
+    </div>
+
+    <div class="ctrl">
+      <label>Paso k <span class="val" id="val-step">15</span></label>
+      <input type="range" id="step" min="0" max="60" step="1" value="15">
+    </div>
+
+    <div id="fp-list"></div>
+
+    <div class="status" id="status-box">&mdash;</div>
+  </div>
+
+  <div class="panel" style="flex:1.4 1 380px;">
+    <h3>Diagrama de telaraña</h3>
+    <canvas id="chart"></canvas>
+    <div class="footnote">Punto verde = atractor (&#124;g'(p)&#124;&lt;1); punto rojo = repulsor (&#124;g'(p)&#124;&gt;1). La trayectoria escapa de la ventana si diverge.</div>
+  </div>
+
+  <div class="panel" style="flex:1 1 100%;">
+    <h3>Sucesión de errores &epsilon;<sub>k</sub> = x<sub>k</sub> &minus; p, respecto al punto fijo más cercano a la semilla</h3>
+    <table>
+      <thead><tr><th>k</th><th>x<sub>k</sub></th><th>&epsilon;<sub>k</sub></th><th>&epsilon;<sub>k+1</sub>/&epsilon;<sub>k</sub></th></tr></thead>
+      <tbody id="tbody-eps"></tbody>
+    </table>
+    <div class="footnote">Compare la última columna contra g'(p) del punto fijo más cercano: el análisis de la serie predice que esa razón se acerca a g'(p) cuando la iteración converge.</div>
+  </div>
+
+</div>
+
+<script>
+const FUNCTIONS = {
+  parabolaA: {
+    label: "g(x) = x(1−x)/2",
+    g: x => x*(1-x)/2,
+    domain: [-1.6, 1.6],
+    fixedPoints: [0, -1],
+    x0Range: [-1.45, 1.45],
+    defaultX0: 0.9,
+  },
+  parabolaB: {
+    label: "g(x) = 1 − x²/2",
+    g: x => 1 - x*x/2,
+    domain: [-3.3, 1.7],
+    fixedPoints: [Math.sqrt(3)-1, -1-Math.sqrt(3)],
+    x0Range: [-3.1, 1.5],
+    defaultX0: 0.5,
+  },
+  coseno: {
+    label: "g(x) = cos(x)",
+    g: Math.cos,
+    domain: [-1.6, 3.2],
+    fixedPoints: [0.7390851332151607],
+    x0Range: [-1.5, 3],
+    defaultX0: 2.0,
+  },
+  ejercicio427: {
+    label: "g(x) = x − (x²−2)/c",
+    gParam: (x,c) => x - (x*x-2)/c,
+    param: {min:0.8, max:4, step:0.01, default:2},
+    domain: [-3.2, 3.6],
+    fixedPoints: [Math.sqrt(2), -Math.sqrt(2)],
+    x0Range: [-3, 3.4],
+    defaultX0: 1.0,
+  },
+};
+
+const els = {
+  fnSelect: document.getElementById('fn-select'),
+  x0: document.getElementById('x0'),
+  step: document.getElementById('step'),
+  ctrlC: document.getElementById('ctrl-c'),
+  cParam: document.getElementById('c-param'),
+  valC: document.getElementById('val-c'),
+  valX0: document.getElementById('val-x0'),
+  valStep: document.getElementById('val-step'),
+  fpList: document.getElementById('fp-list'),
+  statusBox: document.getElementById('status-box'),
+  chart: document.getElementById('chart'),
+  tbodyEps: document.getElementById('tbody-eps'),
+};
+
+function numDeriv(g, x, h=1e-5){
+  return (g(x+h)-g(x-h))/(2*h);
+}
+
+// Devuelve la g(x) efectiva de la función seleccionada, ligando el
+// parámetro c (leído del control) cuando la función lo requiere.
+function effectiveG(cfg){
+  if (cfg.param){
+    const c = parseFloat(els.cParam.value);
+    return x => cfg.gParam(x, c);
+  }
+  return cfg.g;
+}
+
+function fmt(x, digits=4){
+  if (!isFinite(x)) return x>0 ? '∞' : '-∞';
+  if (Number.isNaN(x)) return 'NaN';
+  return x.toLocaleString('en-US', {minimumFractionDigits:digits, maximumFractionDigits:digits});
+}
+
+function stabilityBadge(gp){
+  const a = Math.abs(gp);
+  if (a < 0.999) return {cls:'good', txt:'atractor', dot:'#1a7f5a'};
+  if (a > 1.001) return {cls:'bad', txt:'repulsor', dot:'#c1440e'};
+  return {cls:'warn', txt:'frontera (|g\'(p)|≈1)', dot:'#9a7300'};
+}
+
+function setFunction(key){
+  const cfg = FUNCTIONS[key];
+  els.x0.min = cfg.x0Range[0];
+  els.x0.max = cfg.x0Range[1];
+  els.x0.step = 0.01;
+  els.x0.value = cfg.defaultX0;
+  if (cfg.param){
+    els.ctrlC.style.display = '';
+    els.cParam.min = cfg.param.min;
+    els.cParam.max = cfg.param.max;
+    els.cParam.step = cfg.param.step;
+    els.cParam.value = cfg.param.default;
+  } else {
+    els.ctrlC.style.display = 'none';
+  }
+  update();
+}
+
+function renderFixedPoints(cfg){
+  const g = effectiveG(cfg);
+  let html = '<h3>Puntos fijos</h3>';
+  for (const p of cfg.fixedPoints){
+    const gp = numDeriv(g, p);
+    const b = stabilityBadge(gp);
+    html += `<div class="fp-row"><span class="dot" style="background:${b.dot};"></span>
+      p = ${fmt(p,4)} &nbsp; g'(p) = ${fmt(gp,4)}
+      <span class="badge ${b.cls}" style="margin-left:auto;">${b.txt}</span></div>`;
+  }
+  els.fpList.innerHTML = html;
+}
+
+function nearestFixedPoint(cfg, x0){
+  let best = cfg.fixedPoints[0], bestD = Infinity;
+  for (const p of cfg.fixedPoints){
+    const d = Math.abs(x0-p);
+    if (d < bestD){ bestD = d; best = p; }
+  }
+  return best;
+}
+
+function buildCobweb(cfg, x0, nSteps){
+  const g = effectiveG(cfg);
+  const [ymin_view, ymax_view] = [cfg.domain[0]-Math.abs(cfg.domain[1]-cfg.domain[0])*0.6, cfg.domain[1]+Math.abs(cfg.domain[1]-cfg.domain[0])*0.6];
+  const pts = [[x0, 0]];
+  const xs = [x0];
+  let x = x0;
+  let escaped = false;
+  for (let k=0;k<nSteps;k++){
+    const y = g(x);
+    pts.push([x,y]);
+    pts.push([y,y]);
+    xs.push(y);
+    x = y;
+    if (!isFinite(y) || y < ymin_view || y > ymax_view){ escaped = true; break; }
+  }
+  return {pts, xs, escaped};
+}
+
+function drawChart(cfg, x0, nSteps){
+  const canvas = els.chart;
+  const dpr = window.devicePixelRatio || 1;
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  canvas.width = w*dpr; canvas.height = h*dpr;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0,0,w,h);
+
+  const g = effectiveG(cfg);
+  const [xmin, xmax] = cfg.domain;
+  const margin = {left:36, right:14, top:10, bottom:26};
+  const plotW = w - margin.left - margin.right;
+  const plotH = h - margin.top - margin.bottom;
+
+  const xOf = xv => margin.left + plotW * (xv-xmin)/(xmax-xmin);
+  const yOf = yv => margin.top + plotH * (1 - (yv-xmin)/(xmax-xmin));
+
+  // ejes
+  ctx.strokeStyle = '#dde3e8'; ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(margin.left, margin.top); ctx.lineTo(margin.left, h-margin.bottom); ctx.lineTo(w-margin.right, h-margin.bottom);
+  ctx.stroke();
+
+  // diagonal y = x
+  ctx.strokeStyle = '#9fb3c8'; ctx.lineWidth = 1.3;
+  ctx.setLineDash([4,3]);
+  ctx.beginPath();
+  ctx.moveTo(xOf(xmin), yOf(xmin));
+  ctx.lineTo(xOf(xmax), yOf(xmax));
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // curva g
+  ctx.strokeStyle = '#2563a8'; ctx.lineWidth = 2;
+  ctx.beginPath();
+  const N = 300;
+  for (let i=0;i<=N;i++){
+    const xv = xmin + (xmax-xmin)*i/N;
+    const yv = g(xv);
+    const px = xOf(xv), py = yOf(yv);
+    if (i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+  }
+  ctx.stroke();
+
+  // cobweb
+  const {pts, escaped} = buildCobweb(cfg, x0, nSteps);
+  ctx.strokeStyle = '#e0a800'; ctx.lineWidth = 1.6;
+  ctx.beginPath();
+  for (let i=0;i<pts.length;i++){
+    const [xv,yv] = pts[i];
+    const px = xOf(xv), py = yOf(yv);
+    if (i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+  }
+  ctx.stroke();
+
+  // punto de partida
+  ctx.fillStyle = '#e0a800';
+  ctx.beginPath();
+  ctx.arc(xOf(x0), yOf(0), 3.5, 0, 2*Math.PI);
+  ctx.fill();
+
+  // puntos fijos
+  for (const p of cfg.fixedPoints){
+    const gp = numDeriv(g, p);
+    const b = stabilityBadge(gp);
+    ctx.fillStyle = b.dot;
+    ctx.beginPath();
+    ctx.arc(xOf(p), yOf(p), 4.5, 0, 2*Math.PI);
+    ctx.fill();
+  }
+
+  return escaped;
+}
+
+function update(){
+  const key = els.fnSelect.value;
+  const cfg = FUNCTIONS[key];
+  const x0 = parseFloat(els.x0.value);
+  const nSteps = parseInt(els.step.value, 10);
+
+  els.valX0.textContent = fmt(x0, 3);
+  els.valStep.textContent = nSteps;
+  if (cfg.param) els.valC.textContent = fmt(parseFloat(els.cParam.value), 2);
+  renderFixedPoints(cfg);
+
+  const g = effectiveG(cfg);
+  const escaped = drawChart(cfg, x0, nSteps);
+
+  const {xs} = buildCobweb(cfg, x0, nSteps);
+  const p = nearestFixedPoint(cfg, x0);
+  const gp = numDeriv(g, p);
+
+  // tabla de epsilon (últimas 10 filas hasta el paso actual)
+  let rows = '';
+  const start = Math.max(0, xs.length-11);
+  for (let k=start; k<xs.length-1; k++){
+    const eps_k = xs[k]-p, eps_k1 = xs[k+1]-p;
+    const ratio = Math.abs(eps_k) > 1e-14 ? eps_k1/eps_k : NaN;
+    rows += `<tr><td>${k}</td><td class="num">${fmt(xs[k],5)}</td><td class="num">${fmt(eps_k,5)}</td><td class="num">${isNaN(ratio)?'&mdash;':fmt(ratio,4)}</td></tr>`;
+  }
+  els.tbodyEps.innerHTML = rows;
+
+  const last = xs[xs.length-1];
+  let statusHtml;
+  if (escaped){
+    statusHtml = `<b>La trayectoria escapó de la ventana</b> (diverge). Último valor visible: x &asymp; ${fmt(last,3)}.`;
+  } else if (Math.abs(last-p) < 1e-3){
+    statusHtml = `Converge a p = ${fmt(p,5)} (g'(p) = ${fmt(gp,4)}, ${Math.abs(gp)<1?'atractor':'frontera'}).`;
+  } else {
+    statusHtml = `x<sub>${nSteps}</sub> &asymp; ${fmt(last,5)}. Punto fijo más cercano a la semilla: p = ${fmt(p,5)} (g'(p) = ${fmt(gp,4)}).`;
+  }
+  els.statusBox.innerHTML = statusHtml;
+}
+
+els.fnSelect.addEventListener('change', () => setFunction(els.fnSelect.value));
+els.x0.addEventListener('input', update);
+els.step.addEventListener('input', update);
+els.cParam.addEventListener('input', update);
+window.addEventListener('resize', update);
+
+setFunction('coseno');
+</script>
+
+</body>
+</html>

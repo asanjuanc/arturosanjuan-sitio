@@ -17,6 +17,247 @@
 <generator>quarto-1.10.18</generator>
 <lastBuildDate>Sat, 26 Sep 2026 05:00:00 GMT</lastBuildDate>
 <item>
+  <title>Raíces y puntos fijos</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/numerico/raices/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>El problema de la raíz: dada una función <img src="https://latex.codecogs.com/png.latex?f">, posiblemente muy no lineal, buscamos <img src="https://latex.codecogs.com/png.latex?r"> tal que <img src="https://latex.codecogs.com/png.latex?f(r)=0">. Seguimos la sección 4.1 y 4.2 del libro de Driscoll y Braun.</p>
+<section id="condicionamiento-del-problema-de-la-raíz" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="condicionamiento-del-problema-de-la-raíz"><span class="header-section-number">1</span> Condicionamiento del problema de la raíz</h2>
+<section id="repaso-la-cuadrática" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="repaso-la-cuadrática"><span class="header-section-number">1.1</span> Repaso: la cuadrática</h3>
+<p>Empecemos con lo que ya vimos en la nota de condicionamiento. Para <img src="https://latex.codecogs.com/png.latex?ax%5E2+bx+c=0"> los datos son los coeficientes <img src="https://latex.codecogs.com/png.latex?a,b,c"> y el resultado son las dos raíces. Fijando <img src="https://latex.codecogs.com/png.latex?b,c"> y dejando que solo <img src="https://latex.codecogs.com/png.latex?a"> cambie (por ejemplo por redondeo), obtuvimos</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(a)%20=%20%5Cleft%7C%5Cfrac%7Br_1%7D%7Br_1-r_2%7D%5Cright%7C,"></p>
+<p>mal condicionado exactamente cuando las raíces están mucho más cerca entre sí que del origen.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Repita ese mismo cálculo pero perturbando <img src="https://latex.codecogs.com/png.latex?b"> en vez de <img src="https://latex.codecogs.com/png.latex?a">, y luego perturbando <img src="https://latex.codecogs.com/png.latex?c"> en vez de <img src="https://latex.codecogs.com/png.latex?a"> (con los otros dos coeficientes fijos en cada caso), y encuentre <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(b)"> y <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(c)">.</p>
+</div>
+</div>
+<p>Recuerde también que un problema mal condicionado no impide un buen error hacia atrás: en la sección 1.4 del FNC hay ejemplos donde el error hacia adelante es grande por el condicionamiento (raíces cercanas), pero la respuesta calculada sigue siendo la solución exacta de un problema cercano (<img src="https://latex.codecogs.com/png.latex?%5Ctilde%20a%20x%5E2+bx+c=0"> con <img src="https://latex.codecogs.com/png.latex?%5Ctilde%20a"> próximo a <img src="https://latex.codecogs.com/png.latex?a">). Y a la inversa: aunque el problema esté bien condicionado, el algoritmo elegido para resolverlo puede seguir siendo inestable. Esto es justamente lo que pasa al calcular <img src="https://latex.codecogs.com/png.latex?r_1,r_2"> de <img src="https://latex.codecogs.com/png.latex?(x-10%5E6)(x-10%5E%7B-6%7D)"> con la fórmula clásica: la raíz grande <img src="https://latex.codecogs.com/png.latex?10%5E6"> sale estable, pero la raíz chica se pierde por cancelación, y hay que recuperarla con la identidad de Vieta <img src="https://latex.codecogs.com/png.latex?r_1r_2=c/a">, es decir <img src="https://latex.codecogs.com/png.latex?r_2=c/(ar_1)">, calculada a partir de la raíz buena.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En el libro FNC estas dos situaciones (condicionamiento del problema vs.&nbsp;estabilidad del algoritmo) están ejemplificadas en detalle en la sección 1.4. A modo de repaso, ejemplifíquelas por su cuenta en Julia.</p>
+</div>
+</div>
+</section>
+<section id="el-condicionamiento-general-perturbando-la-función-no-sus-parámetros" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="el-condicionamiento-general-perturbando-la-función-no-sus-parámetros"><span class="header-section-number">1.2</span> El condicionamiento general: perturbando la función, no sus parámetros</h3>
+<p>La cuadrática es un caso particular porque conocemos sus parámetros <img src="https://latex.codecogs.com/png.latex?a,b,c"> y podemos perturbarlos uno por uno. Para una función arbitraria <img src="https://latex.codecogs.com/png.latex?f"> no tenemos esa estructura: el error puede venir simplemente de evaluar mal <img src="https://latex.codecogs.com/png.latex?f">, sin que haya ningún parámetro identificable de por medio. Por ejemplo, en una región donde <img src="https://latex.codecogs.com/png.latex?f(x)=x%5E2-x"> está cerca de cero, cualquier error minúsculo en la evaluación de <img src="https://latex.codecogs.com/png.latex?f"> puede desplazar bastante la raíz calculada. El número de condición que necesitamos ahora depende de una función completa, no de un número ni de una matriz.</p>
+<p>Como antes, perturbamos y comparamos. Sea <img src="https://latex.codecogs.com/png.latex?%5Ctilde%20f(x)=f(x)+%5Cvarepsilon"> la función perturbada, y sea <img src="https://latex.codecogs.com/png.latex?%5Ctilde%20r"> la raíz de <img src="https://latex.codecogs.com/png.latex?%5Ctilde%20f">, es decir <img src="https://latex.codecogs.com/png.latex?%5Ctilde%20f(%5Ctilde%20r)=0">. Escribiendo <img src="https://latex.codecogs.com/png.latex?%5Ctilde%20r%20=%20r+%5Cdelta">, el cambio relativo que nos interesa es</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%7C%5Ctilde%20r%20-%20r%7C%7D%7B%7C%5Cvarepsilon%7C%7D%20=%20%5Cfrac%7B%7C%5Cdelta%7C%7D%7B%7C%5Cvarepsilon%7C%7D."></p>
+<p>(Aquí no dividimos por <img src="https://latex.codecogs.com/png.latex?%7Cf(r)%7C"> como en la definición general de <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f">: como <img src="https://latex.codecogs.com/png.latex?f(r)=0"> esa división sería por cero, así que medimos el error de <img src="https://latex.codecogs.com/png.latex?r"> de forma absoluta en vez de relativa.) Por otro lado,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon%20=%20%5Ctilde%20f(%5Ctilde%20r)%20-%20f(r)%20=%20%5Cbig%5Bf(%5Ctilde%20r)+%5Cvarepsilon%5Cbig%5D%20-%20f(r)%20-%20%5Cvarepsilon%20+%20%5Cvarepsilon=%20f(r+%5Cdelta)-f(r),"></p>
+<p>y para <img src="https://latex.codecogs.com/png.latex?%5Cdelta"> pequeño, linealizando <img src="https://latex.codecogs.com/png.latex?f"> alrededor de <img src="https://latex.codecogs.com/png.latex?r"> (la derivada de Fréchet),</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon%20=%20f(r+%5Cdelta)-f(r)%20%5Capprox%20f'(r)%5C,%5Cdelta."></p>
+<p>Entonces <img src="https://latex.codecogs.com/png.latex?%7C%5Cdelta%7C/%7C%5Cvarepsilon%7C%20%5Capprox%201/%7Cf'(r)%7C">, y en el límite <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon%5Cto0"> esta aproximación se vuelve exacta, exactamente como en la definición general de <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f"> de la nota anterior. Esto da la definición:</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Definición — número de condición de una raíz">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Definición — número de condición de una raíz
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><img src="https://latex.codecogs.com/png.latex?%5Ckappa_r%20=%20%5Ckappa_r(f)%20=%20%7Cf'(r)%7C%5E%7B-1%7D"></p>
+</div>
+</div>
+<p>El problema está mal condicionado en <img src="https://latex.codecogs.com/png.latex?r"> cuando <img src="https://latex.codecogs.com/png.latex?f"> es casi plana ahí (<img src="https://latex.codecogs.com/png.latex?f'(r)%5Capprox0">): un error diminuto en la evaluación de <img src="https://latex.codecogs.com/png.latex?f"> puede corresponder a un desplazamiento grande de la raíz.</p>
+</section>
+</section>
+<section id="raíces-múltiples" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="raíces-múltiples"><span class="header-section-number">2</span> Raíces múltiples</h2>
+<p>En la práctica no conocemos <img src="https://latex.codecogs.com/png.latex?r"> exactamente, así que en vez de <img src="https://latex.codecogs.com/png.latex?f(r)"> lo que podemos calcular es el residuo <img src="https://latex.codecogs.com/png.latex?f(%5Ctilde%20r)"> de una raíz aproximada. Puede pasar que ese residuo sea pequeño sin que <img src="https://latex.codecogs.com/png.latex?%5Ctilde%20r"> esté cerca de <img src="https://latex.codecogs.com/png.latex?r">: eso es justamente lo que anuncia <img src="https://latex.codecogs.com/png.latex?%5Ckappa_r=+%5Cinfty">, y ocurre cuando <img src="https://latex.codecogs.com/png.latex?f'(r)=0">.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Definición — raíz de multiplicidad $m$">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Definición — raíz de multiplicidad <img src="https://latex.codecogs.com/png.latex?m">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><img src="https://latex.codecogs.com/png.latex?r"> es una raíz de <img src="https://latex.codecogs.com/png.latex?f"> de multiplicidad (orden) <img src="https://latex.codecogs.com/png.latex?m"> si</p>
+<p><img src="https://latex.codecogs.com/png.latex?f%5E%7B(k)%7D(r)=0%20%5Cquad%20%5Ctext%7Bpara%20%7D%20k=0,1,%5Cldots,m-1,%20%5Cqquad%20f%5E%7B(m)%7D(r)%5Cne0,"></p>
+<p>o, de forma equivalente, si existe una función <img src="https://latex.codecogs.com/png.latex?q"> con <img src="https://latex.codecogs.com/png.latex?q(r)%5Cne0"> tal que <img src="https://latex.codecogs.com/png.latex?f(x)=(x-r)%5Emq(x)">.</p>
+</div>
+</div>
+<p>Cuando <img src="https://latex.codecogs.com/png.latex?m%3E1"> no solo <img src="https://latex.codecogs.com/png.latex?f(r)=0"> sino también <img src="https://latex.codecogs.com/png.latex?f'(r)=0">, así que <img src="https://latex.codecogs.com/png.latex?%5Ckappa_r(f)=+%5Cinfty">: intuitivamente, la gráfica de <img src="https://latex.codecogs.com/png.latex?f"> se aplana cerca de la raíz, y ese aplanamiento es justo lo que vuelve al problema arbitrariamente sensible.</p>
+<section id="ejemplo-la-raíz-triple-de-operatornamesenx-x-en-0" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="ejemplo-la-raíz-triple-de-operatornamesenx-x-en-0"><span class="header-section-number">2.1</span> Ejemplo: la raíz triple de <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7Bsen%7D(x)-x"> en <img src="https://latex.codecogs.com/png.latex?0"></h3>
+<p>Veamos que <img src="https://latex.codecogs.com/png.latex?0"> es una raíz de orden <img src="https://latex.codecogs.com/png.latex?3"> de <img src="https://latex.codecogs.com/png.latex?f(x)=%5Coperatorname%7Bsen%7D(x)-x">, de dos maneras.</p>
+<p><strong>Por derivadas sucesivas.</strong> Con <img src="https://latex.codecogs.com/png.latex?f(x)=%5Coperatorname%7Bsen%7D(x)-x">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?f(0)=0,%5Cqquad%20f'(x)=%5Ccos(x)-1%20%5CRightarrow%20f'(0)=0,%5Cqquad%20f''(x)=-%5Coperatorname%7Bsen%7D(x)%20%5CRightarrow%20f''(0)=0,%5Cqquad%20f'''(x)=-%5Ccos(x)%20%5CRightarrow%20f'''(0)=-1%5Cne0."></p>
+<p>Como las primeras tres derivadas se anulan en <img src="https://latex.codecogs.com/png.latex?0"> y la cuarta (en el sentido de la definición, la de orden <img src="https://latex.codecogs.com/png.latex?m=3">) no, <img src="https://latex.codecogs.com/png.latex?0"> es una raíz de orden exactamente <img src="https://latex.codecogs.com/png.latex?3">.</p>
+<p><strong>Por la serie de Taylor.</strong> Usando <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7Bsen%7D(x)=x-%5Cdfrac%7Bx%5E3%7D%7B3!%7D+%5Cdfrac%7Bx%5E5%7D%7B5!%7D-%5Cdfrac%7Bx%5E7%7D%7B7!%7D+%5Ccdots">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?f(x)%20=%20%5Coperatorname%7Bsen%7D(x)-x%20=%20-%5Cfrac%7Bx%5E3%7D%7B3!%7D+%5Cfrac%7Bx%5E5%7D%7B5!%7D-%5Cfrac%7Bx%5E7%7D%7B7!%7D+%5Ccdots%20=%20x%5E3%5Cunderbrace%7B%5Cleft(-%5Cfrac%7B1%7D%7B3!%7D+%5Cfrac%7Bx%5E2%7D%7B5!%7D-%5Cfrac%7Bx%5E4%7D%7B7!%7D+%5Ccdots%5Cright)%7D_%7Bq(x)%7D."></p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?q(0)=-1/6%5Cne0"> (que coincide con <img src="https://latex.codecogs.com/png.latex?f'''(0)/3!=-1/6">, como debe ser), obtenemos exactamente la factorización <img src="https://latex.codecogs.com/png.latex?f(x)=x%5E3q(x)"> que pide la definición.</p>
+</section>
+<section id="ejemplo-la-raíz-doble-de-la-cuadrática" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="ejemplo-la-raíz-doble-de-la-cuadrática"><span class="header-section-number">2.2</span> Ejemplo: la raíz doble de la cuadrática</h3>
+<p>Retomemos <img src="https://latex.codecogs.com/png.latex?f(x)=ax%5E2+bx+c"> con este mismo enfoque. Como <img src="https://latex.codecogs.com/png.latex?f'(x)=2ax+b">, el único candidato a raíz múltiple es donde <img src="https://latex.codecogs.com/png.latex?f'"> se anula, <img src="https://latex.codecogs.com/png.latex?x=-b/(2a)">, y ese punto es efectivamente raíz de <img src="https://latex.codecogs.com/png.latex?f"> exactamente cuando <img src="https://latex.codecogs.com/png.latex?b%5E2-4ac=0"> (discriminante nulo). En ese caso <img src="https://latex.codecogs.com/png.latex?r=-b/2a"> es una raíz doble y <img src="https://latex.codecogs.com/png.latex?%5Ckappa_r(f)=+%5Cinfty">: consistente con lo que ya sabíamos, porque <img src="https://latex.codecogs.com/png.latex?b%5E2-4ac=0"> es precisamente el caso <img src="https://latex.codecogs.com/png.latex?r_1=r_2"> donde <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(a)"> también se disparaba.</p>
+<p>Cuando en cambio <img src="https://latex.codecogs.com/png.latex?b%5E2-4ac%3E0"> la raíz es simple, y con <img src="https://latex.codecogs.com/png.latex?r_%7B1,2%7D=%5Cdfrac%7B-b%5Cpm%5Csqrt%7Bb%5E2-4ac%7D%7D%7B2a%7D">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?f'(r_1)=%5Csqrt%7Bb%5E2-4ac%7D,%20%5Cqquad%20f'(r_2)=-%5Csqrt%7Bb%5E2-4ac%7D%20%5Cqquad%5CLongrightarrow%5Cqquad%20%5Ckappa_r(f)%20=%20%5Cfrac%7B1%7D%7B%5Csqrt%7Bb%5E2-4ac%7D%7D"></p>
+<p>en ambas raíces por igual. Usando <img src="https://latex.codecogs.com/png.latex?r_1-r_2=%5Csqrt%7Bb%5E2-4ac%7D/a">, esto se puede reescribir sin el discriminante:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cboxed%7B%5Ckappa_r(f)%20=%20%5Cfrac%7B1%7D%7B%7Ca%7C%5C,%7Cr_1-r_2%7C%7D%7D"></p>
+<p>que explota tanto si las raíces se acercan (<img src="https://latex.codecogs.com/png.latex?r_1%5Cto%20r_2">, la misma condición que ya vimos) como si el coeficiente principal <img src="https://latex.codecogs.com/png.latex?a%5Cto0"> (el problema deja de ser genuinamente cuadrático). De hecho esta expresión y <img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(a)=%7Cr_1/(r_1-r_2)%7C"> de la sección anterior están relacionadas exactamente por</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ckappa_f(a)%20=%20%7Ca%5C,r_1%7C%5Ccdot%5Ckappa_r(f),"></p>
+<p>así que no son la misma cantidad (una perturba el coeficiente <img src="https://latex.codecogs.com/png.latex?a"> relativamente, la otra perturba <img src="https://latex.codecogs.com/png.latex?f"> de forma absoluta), pero capturan el mismo fenómeno geométrico: la cercanía de las dos raíces.</p>
+</section>
+</section>
+<section id="de-raíces-a-puntos-fijos" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="de-raíces-a-puntos-fijos"><span class="header-section-number">3</span> De raíces a puntos fijos</h2>
+<p>Hay otra manera de plantear el mismo problema, útil tanto en teoría como en la práctica: dada <img src="https://latex.codecogs.com/png.latex?f">, defina <img src="https://latex.codecogs.com/png.latex?g(x)=x-f(x)">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?f(p)=0%20%5Cquad%5CLongleftrightarrow%5Cquad%20g(p)=p."></p>
+<p>A un punto <img src="https://latex.codecogs.com/png.latex?p"> con <img src="https://latex.codecogs.com/png.latex?g(p)=p"> se le llama punto fijo de <img src="https://latex.codecogs.com/png.latex?g">, y la construcción anterior no es la única forma de convertir una raíz en un punto fijo: cualquier <img src="https://latex.codecogs.com/png.latex?g(x)=x-f(x)/c"> con <img src="https://latex.codecogs.com/png.latex?c%5Cne0"> constante, o incluso <img src="https://latex.codecogs.com/png.latex?g"> dependiente de <img src="https://latex.codecogs.com/png.latex?x">, sirve igual. Esta libertad para elegir <img src="https://latex.codecogs.com/png.latex?g"> es precisamente lo que hace útil el punto de vista de punto fijo: el algoritmo iterativo más simple para encontrar <img src="https://latex.codecogs.com/png.latex?p"> es</p>
+<p><img src="https://latex.codecogs.com/png.latex?x_%7Bk+1%7D=g(x_k),%20%5Cqquad%20k=0,1,2,%5Cldots"></p>
+<p>y la pregunta de cuándo esta sucesión converge (y a qué <img src="https://latex.codecogs.com/png.latex?g"> conviene elegir) es el tema del resto de esta nota. Newton, la secante y los métodos implícitos que veremos más adelante en el curso son, en el fondo, formas particulares de elegir <img src="https://latex.codecogs.com/png.latex?g">.</p>
+</section>
+<section id="el-principio-de-la-contracción" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="el-principio-de-la-contracción"><span class="header-section-number">4</span> El principio de la contracción</h2>
+<section id="lipschitz-y-contracciones" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="lipschitz-y-contracciones"><span class="header-section-number">4.1</span> Lipschitz y contracciones</h3>
+<div class="callout callout-style-default callout-note callout-titled" title="Definición: condición de Lipschitz">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Definición: condición de Lipschitz
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><img src="https://latex.codecogs.com/png.latex?g:X%5Cto%5Cmathbb%7BR%7D%5En">, con <img src="https://latex.codecogs.com/png.latex?X%5Csubseteq%5Cmathbb%7BR%7D%5En">, es Lipschitz en <img src="https://latex.codecogs.com/png.latex?X"> si existe una constante <img src="https://latex.codecogs.com/png.latex?L%5Cge0"> tal que</p>
+<p><img src="https://latex.codecogs.com/png.latex?%7Cg(x)-g(y)%7C%20%5Cle%20L%5C,%7Cx-y%7C%20%5Cqquad%20%5Ctext%7Bpara%20todo%20%7D%20x,y%5Cin%20X."></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Definición: contracción">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Definición: contracción
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><img src="https://latex.codecogs.com/png.latex?g"> es una contracción en <img src="https://latex.codecogs.com/png.latex?X"> si es Lipschitz en <img src="https://latex.codecogs.com/png.latex?X"> con constante <img src="https://latex.codecogs.com/png.latex?L=%5Clambda%3C1">.</p>
+</div>
+</div>
+</section>
+<section id="el-teorema-del-punto-fijo" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="el-teorema-del-punto-fijo"><span class="header-section-number">4.2</span> El teorema del punto fijo</h3>
+<div class="callout callout-style-default callout-important callout-titled" title="Teorema (punto fijo de Banach, caso real / $\mathbb{R}^n$)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Teorema (punto fijo de Banach, caso real / <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En">)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sea <img src="https://latex.codecogs.com/png.latex?X%5Csubseteq%5Cmathbb%7BR%7D%5En"> cerrado y no vacío (en <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D%5En">, cerrado equivale a completo), y sea <img src="https://latex.codecogs.com/png.latex?g:X%5Cto%20X"> una contracción con constante <img src="https://latex.codecogs.com/png.latex?%5Clambda%5Cin(0,1)">. Entonces:</p>
+<ol type="1">
+<li><img src="https://latex.codecogs.com/png.latex?g"> tiene un único punto fijo <img src="https://latex.codecogs.com/png.latex?p%5Cin%20X">.</li>
+<li>Para <em>cualquier</em> semilla <img src="https://latex.codecogs.com/png.latex?x_0%5Cin%20X">, la sucesión <img src="https://latex.codecogs.com/png.latex?x_%7Bk+1%7D=g(x_k)"> converge a <img src="https://latex.codecogs.com/png.latex?p">.</li>
+<li>El error decrece geométricamente: <img src="https://latex.codecogs.com/png.latex?%7Cx_k-p%7C%5Cle%20%5Clambda%5Ek%7Cx_0-p%7C">.</li>
+</ol>
+</div>
+</div>
+<p>No lo demostramos aquí (la demostración estándar muestra que <img src="https://latex.codecogs.com/png.latex?(x_k)"> es una sucesión de Cauchy usando la desigualdad triangular y la serie geométrica <img src="https://latex.codecogs.com/png.latex?%5Csum%5Clambda%5Ek">), pero vale la pena entender por qué cada hipótesis es indispensable, con un contraejemplo en <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D"> para cada una.</p>
+<p><strong>Si <img src="https://latex.codecogs.com/png.latex?X"> no es cerrado (no completo).</strong> Tome <img src="https://latex.codecogs.com/png.latex?X=(0,1%5D"> y <img src="https://latex.codecogs.com/png.latex?g(x)=x/2">. Es una contracción genuina (<img src="https://latex.codecogs.com/png.latex?%5Clambda=1/2">) y sí manda <img src="https://latex.codecogs.com/png.latex?X"> en <img src="https://latex.codecogs.com/png.latex?X"> (<img src="https://latex.codecogs.com/png.latex?g((0,1%5D)=(0,1/2%5D%5Csubset(0,1%5D">). Pero el único candidato a punto fijo de la fórmula, <img src="https://latex.codecogs.com/png.latex?x=0">, no pertenece a <img src="https://latex.codecogs.com/png.latex?X">: la sucesión <img src="https://latex.codecogs.com/png.latex?x_k=x_0/2%5Ek"> converge a <img src="https://latex.codecogs.com/png.latex?0">, que simplemente no está en el dominio.</p>
+<p><strong>Si <img src="https://latex.codecogs.com/png.latex?g"> no manda <img src="https://latex.codecogs.com/png.latex?X"> en sí mismo.</strong> Tome <img src="https://latex.codecogs.com/png.latex?X=%5B0,1%5D"> y <img src="https://latex.codecogs.com/png.latex?g(x)=x/2+1">. También es una contracción (<img src="https://latex.codecogs.com/png.latex?%5Clambda=1/2">), pero <img src="https://latex.codecogs.com/png.latex?g(1)=1%7B,%7D5%5Cnotin%5B0,1%5D">: <img src="https://latex.codecogs.com/png.latex?g"> no es una función de <img src="https://latex.codecogs.com/png.latex?X"> en <img src="https://latex.codecogs.com/png.latex?X">. El punto fijo de la fórmula, <img src="https://latex.codecogs.com/png.latex?x=2">, cae fuera de <img src="https://latex.codecogs.com/png.latex?X">, y las iteraciones que empiecen cerca de <img src="https://latex.codecogs.com/png.latex?1"> salen de <img src="https://latex.codecogs.com/png.latex?X"> de inmediato.</p>
+<p><strong>Si <img src="https://latex.codecogs.com/png.latex?g"> no es realmente una contracción.</strong> Que <img src="https://latex.codecogs.com/png.latex?%7Cg'(x)%7C%3C1"> en todo punto de <img src="https://latex.codecogs.com/png.latex?X"> no basta si el supremo de <img src="https://latex.codecogs.com/png.latex?%7Cg'%7C"> en <img src="https://latex.codecogs.com/png.latex?X"> es <img src="https://latex.codecogs.com/png.latex?1"> y nunca se alcanza: entonces no existe un solo <img src="https://latex.codecogs.com/png.latex?%5Clambda%3C1"> que funcione para todo el dominio a la vez. Por ejemplo, con <img src="https://latex.codecogs.com/png.latex?X=%5B0,%5Cinfty)"> y <img src="https://latex.codecogs.com/png.latex?g(x)=%5Csqrt%7Bx%5E2+1%7D">: <img src="https://latex.codecogs.com/png.latex?g"> manda <img src="https://latex.codecogs.com/png.latex?X"> en <img src="https://latex.codecogs.com/png.latex?X"> (de hecho en <img src="https://latex.codecogs.com/png.latex?%5B1,%5Cinfty)">), y <img src="https://latex.codecogs.com/png.latex?g'(x)=x/%5Csqrt%7Bx%5E2+1%7D"> satisface <img src="https://latex.codecogs.com/png.latex?%7Cg'(x)%7C%3C1"> para todo <img src="https://latex.codecogs.com/png.latex?x"> finito, pero <img src="https://latex.codecogs.com/png.latex?%5Csup_%7Bx%5Cge0%7D%7Cg'(x)%7C=1"> (alcanzado solo en el límite <img src="https://latex.codecogs.com/png.latex?x%5Cto%5Cinfty">). Y en efecto no hay ningún punto fijo: <img src="https://latex.codecogs.com/png.latex?x=%5Csqrt%7Bx%5E2+1%7D"> llevaría a <img src="https://latex.codecogs.com/png.latex?0=1">.</p>
+<p>Un ejemplo más de esta misma falla, y que usaremos otra vez más abajo: con <img src="https://latex.codecogs.com/png.latex?g(x)=4x-4x%5E2"> y <img src="https://latex.codecogs.com/png.latex?X=(3/8,5/8)">, se cumple <img src="https://latex.codecogs.com/png.latex?%7Cg'(x)%7C=%7C4-8x%7C%3C1"> en todo <img src="https://latex.codecogs.com/png.latex?X">. Pero <img src="https://latex.codecogs.com/png.latex?g(3/8)=g(5/8)=15/16">, muy por fuera de <img src="https://latex.codecogs.com/png.latex?X">: <img src="https://latex.codecogs.com/png.latex?g"> tampoco manda aquí <img src="https://latex.codecogs.com/png.latex?X"> en <img src="https://latex.codecogs.com/png.latex?X">, así que el teorema simplemente no aplica, sin importar que la condición sobre la derivada se vea prometedora.</p>
+</section>
+</section>
+<section id="convergencia-y-divergencia-local-el-análisis-de-la-serie-de-errores" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="convergencia-y-divergencia-local-el-análisis-de-la-serie-de-errores"><span class="header-section-number">5</span> Convergencia y divergencia local: el análisis de la serie de errores</h2>
+<p>El teorema anterior es una herramienta <em>global</em>: exige una cota uniforme sobre todo un conjunto <img src="https://latex.codecogs.com/png.latex?X">. Casi nunca conocemos esa cota de antemano; lo que sí podemos hacer es preguntar qué pasa <em>cerca</em> de un punto fijo ya conocido <img src="https://latex.codecogs.com/png.latex?p">, usando solo el valor de <img src="https://latex.codecogs.com/png.latex?g'(p)">.</p>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_k=x_k-p"> el error en el paso <img src="https://latex.codecogs.com/png.latex?k">. Expandiendo <img src="https://latex.codecogs.com/png.latex?g"> en Taylor alrededor de <img src="https://latex.codecogs.com/png.latex?p">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_%7Bk+1%7D+p%20=%20x_%7Bk+1%7D%20=%20g(x_k)%20=%20g(p+%5Cvarepsilon_k)%20=%20g(p)+g'(p)%5Cvarepsilon_k+O(%5Cvarepsilon_k%5E2)%20=%20p+g'(p)%5Cvarepsilon_k+O(%5Cvarepsilon_k%5E2),"></p>
+<p>de donde</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cboxed%7B%5Cvarepsilon_%7Bk+1%7D%20%5Capprox%20g'(p)%5C,%5Cvarepsilon_k%7D"></p>
+<p>para <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_k"> suficientemente pequeño. De esta única relación salen las dos conclusiones centrales:</p>
+<p><strong>Si <img src="https://latex.codecogs.com/png.latex?%7Cg'(p)%7C%3C1"> (<img src="https://latex.codecogs.com/png.latex?p"> atractor).</strong> Existe una vecindad de <img src="https://latex.codecogs.com/png.latex?p"> donde el error se multiplica, en cada paso, por un factor de tamaño menor que <img src="https://latex.codecogs.com/png.latex?1">: cualquier semilla que caiga en esa vecindad converge a <img src="https://latex.codecogs.com/png.latex?p">, con velocidad lineal (geométrica) de razón aproximada <img src="https://latex.codecogs.com/png.latex?%7Cg'(p)%7C">. Esta es la versión local, más fácil de verificar en la práctica, de lo que el teorema de contracción garantiza de forma global y uniforme.</p>
+<p><strong>Si <img src="https://latex.codecogs.com/png.latex?%7Cg'(p)%7C%3E1"> (<img src="https://latex.codecogs.com/png.latex?p"> repulsor).</strong> Por continuidad de <img src="https://latex.codecogs.com/png.latex?g'">, hay una vecindad de <img src="https://latex.codecogs.com/png.latex?p"> donde <img src="https://latex.codecogs.com/png.latex?%7Cg'(x)%7C%5Cge%5Clambda'%3E1">; mientras el iterado se quede en esa vecindad, cada paso lo aleja de <img src="https://latex.codecogs.com/png.latex?p"> por un factor mayor que <img src="https://latex.codecogs.com/png.latex?1">. Pero esto es <em>estrictamente local</em>: solo dice que el iterado se aleja de <img src="https://latex.codecogs.com/png.latex?p"> mientras siga cerca; en cuanto sale de esa vecindad la cota deja de aplicar, y nada impide que termine capturado por otro punto fijo, por un ciclo, o que efectivamente escape a infinito. Cuál de esas tres cosas ocurre depende por completo de la función, no de este argumento local; la sección de discusión de abajo muestra un ejemplo de cada una.</p>
+<p><strong>Si <img src="https://latex.codecogs.com/png.latex?%7Cg'(p)%7C=1">.</strong> El término <img src="https://latex.codecogs.com/png.latex?g'(p)%5Cvarepsilon_k"> no domina y el análisis de primer orden no decide nada: hacen falta los términos de orden superior (típicamente <img src="https://latex.codecogs.com/png.latex?g''(p)">). No lo desarrollamos aquí.</p>
+<p>Un corolario útil: si además <img src="https://latex.codecogs.com/png.latex?g'(p)=0">, el error decae más rápido que geométricamente (cuadráticamente, si <img src="https://latex.codecogs.com/png.latex?g''(p)%5Cne0">), porque el primer término no nulo de la expansión es de orden <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_k%5E2">. Ese es exactamente el mecanismo detrás de la convergencia cuadrática de Newton, que veremos pronto.</p>
+<section id="aplicación-ejercicio-4.2.7-del-fnc" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="aplicación-ejercicio-4.2.7-del-fnc"><span class="header-section-number">5.1</span> Aplicación: ejercicio 4.2.7 del FNC</h3>
+<p>Considere la familia de iteraciones</p>
+<p><img src="https://latex.codecogs.com/png.latex?x_%7Bk+1%7D%20=%20x_k%20-%20%5Cfrac%7Bf(x_k)%7D%7Bc%7D,%20%5Cqquad%20c%5Cne0%20%5Ctext%7B%20constante%7D,"></p>
+<p>es decir <img src="https://latex.codecogs.com/png.latex?g(x)=x-f(x)/c">, cuyos puntos fijos son exactamente las raíces de <img src="https://latex.codecogs.com/png.latex?f">. Suponiendo <img src="https://latex.codecogs.com/png.latex?f'(p)%3E0"> en la raíz <img src="https://latex.codecogs.com/png.latex?p"> que buscamos, ¿qué condición sobre <img src="https://latex.codecogs.com/png.latex?c"> garantiza convergencia local?</p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?g'(x)=1-f'(x)/c">, queremos <img src="https://latex.codecogs.com/png.latex?%7Cg'(x)%7C%3C1">, es decir</p>
+<p><img src="https://latex.codecogs.com/png.latex?-1%20%3C%201-%5Cfrac%7Bf'(x)%7D%7Bc%7D%20%3C%201%20%5Cquad%5CLongleftrightarrow%5Cquad%200%20%3C%20%5Cfrac%7Bf'(x)%7D%7Bc%7D%20%3C%202%20%5Cquad%5CLongleftrightarrow%5Cquad%20c%20%3E%20%5Cfrac%7Bf'(x)%7D%7B2%7D"></p>
+<p>(usando que <img src="https://latex.codecogs.com/png.latex?c"> y <img src="https://latex.codecogs.com/png.latex?f'(x)"> tienen el mismo signo). Si <img src="https://latex.codecogs.com/png.latex?f'"> está acotada en un compacto <img src="https://latex.codecogs.com/png.latex?K"> que contenga a <img src="https://latex.codecogs.com/png.latex?p">, basta con tomar</p>
+<p><img src="https://latex.codecogs.com/png.latex?c%20%3E%20%5Cfrac%7B1%7D%7B2%7D%5Cmax_%7Bx%5Cin%20K%7D%20f'(x)"></p>
+<p>para garantizar <img src="https://latex.codecogs.com/png.latex?%7Cg'(x)%7C%3C1"> en todo <img src="https://latex.codecogs.com/png.latex?K">, y por tanto convergencia local desde cualquier semilla suficientemente cercana a <img src="https://latex.codecogs.com/png.latex?p">. Con <img src="https://latex.codecogs.com/png.latex?f(x)=x%5E2-2"> (raíz <img src="https://latex.codecogs.com/png.latex?p=%5Csqrt2%5Capprox1%7B,%7D414">, <img src="https://latex.codecogs.com/png.latex?f'(p)=2%5Csqrt2%5Capprox2%7B,%7D828">), el umbral exacto es <img src="https://latex.codecogs.com/png.latex?c%3E%5Csqrt2%5Capprox1%7B,%7D414">: numéricamente, <img src="https://latex.codecogs.com/png.latex?c=1%7B,%7D2"> y <img src="https://latex.codecogs.com/png.latex?c=1%7B,%7D35"> (por debajo del umbral) no convergen, mientras que cualquier <img src="https://latex.codecogs.com/png.latex?c%3E%5Csqrt2"> sí lo hace, aunque arbitrariamente lento si <img src="https://latex.codecogs.com/png.latex?c"> está apenas por encima del umbral (<img src="https://latex.codecogs.com/png.latex?c=1%7B,%7D42"> tarda cerca de <img src="https://latex.codecogs.com/png.latex?2000"> iteraciones; <img src="https://latex.codecogs.com/png.latex?c=2"> tarda menos de <img src="https://latex.codecogs.com/png.latex?10">).</p>
+</section>
+</section>
+<section id="discusión-qué-le-pasa-a-los-puntos-según-el-análisis-de-la-serie" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="discusión-qué-le-pasa-a-los-puntos-según-el-análisis-de-la-serie"><span class="header-section-number">6</span> Discusión: qué le pasa a los puntos, según el análisis de la serie</h2>
+<p>Veamos el criterio <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_%7Bk+1%7D%5Capprox%20g'(p)%5Cvarepsilon_k"> en acción sobre tres funciones concretas, elegidas para mostrar las cuatro combinaciones posibles (atractor/repulsor, monótono/oscilante) sin entrar en el terreno del caos, que dejamos completamente de lado aquí (más allá del contraejemplo de <img src="https://latex.codecogs.com/png.latex?4x-4x%5E2"> de la sección anterior, que es un mapa muy distinto y bastante más rico de lo que este análisis local alcanza a describir).</p>
+<section id="una-parábola-con-convergencia-y-divergencia-monótonas-gxdfracx1-x2" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="una-parábola-con-convergencia-y-divergencia-monótonas-gxdfracx1-x2"><span class="header-section-number">6.1</span> Una parábola con convergencia y divergencia monótonas: <img src="https://latex.codecogs.com/png.latex?g(x)=%5Cdfrac%7Bx(1-x)%7D%7B2%7D"></h3>
+<p>Sus puntos fijos son <img src="https://latex.codecogs.com/png.latex?p=0"> y <img src="https://latex.codecogs.com/png.latex?p=-1">, y <img src="https://latex.codecogs.com/png.latex?g'(x)=%5Cdfrac%7B1-2x%7D%7B2%7D">, así que</p>
+<p><img src="https://latex.codecogs.com/png.latex?g'(0)=%5Ctfrac12%20%5C%20(%5Ctext%7Batractor,%20mon%C3%B3tono,%20pues%20%7D%20g'(0)%3E0),%20%5Cqquad%20g'(-1)=%5Ctfrac32%20%5C%20(%5Ctext%7Brepulsor,%20mon%C3%B3tono%7D)."></p>
+<p>Numéricamente: desde <img src="https://latex.codecogs.com/png.latex?x_0=0%7B,%7D9"> la sucesión decrece monótonamente hacia <img src="https://latex.codecogs.com/png.latex?0"> (<img src="https://latex.codecogs.com/png.latex?0%7B,%7D9,%5C%200%7B,%7D045,%5C%200%7B,%7D0215,%5C%200%7B,%7D0105,%5Cldots">); desde <img src="https://latex.codecogs.com/png.latex?x_0=-0%7B,%7D9"> crece monótonamente hacia <img src="https://latex.codecogs.com/png.latex?0"> también (<img src="https://latex.codecogs.com/png.latex?-0%7B,%7D9,%5C%20-0%7B,%7D855,%5C%20-0%7B,%7D793,%5Cldots%20%5Cto%200">), mostrando que la cuenca de atracción de <img src="https://latex.codecogs.com/png.latex?0"> es bastante más grande que una vecindad diminuta. En cambio desde <img src="https://latex.codecogs.com/png.latex?x_0=-1%7B,%7D1">, apenas más allá del repulsor <img src="https://latex.codecogs.com/png.latex?-1">, la sucesión se aleja monótonamente y sin vuelta atrás: <img src="https://latex.codecogs.com/png.latex?-1%7B,%7D1,%5C%20-1%7B,%7D155,%5C%20-1%7B,%7D245,%5C%20-1%7B,%7D397,%5C%20-1%7B,%7D674,%5C%20-2%7B,%7D237,%5Cldots%5Cto-%5Cinfty">. Aquí la repulsión local sí se traduce en divergencia global, simplemente porque no hay ningún otro punto fijo ni ciclo que la intercepte en esa dirección.</p>
+</section>
+<section id="una-parábola-con-convergencia-y-divergencia-oscilantes-gx1-dfracx22" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="una-parábola-con-convergencia-y-divergencia-oscilantes-gx1-dfracx22"><span class="header-section-number">6.2</span> Una parábola con convergencia y divergencia oscilantes: <img src="https://latex.codecogs.com/png.latex?g(x)=1-%5Cdfrac%7Bx%5E2%7D%7B2%7D"></h3>
+<p>Sus puntos fijos son <img src="https://latex.codecogs.com/png.latex?p=%5Csqrt3-1%5Capprox0%7B,%7D732"> y <img src="https://latex.codecogs.com/png.latex?p=-1-%5Csqrt3%5Capprox-2%7B,%7D732"> (resolviendo <img src="https://latex.codecogs.com/png.latex?p=1-p%5E2/2">), y <img src="https://latex.codecogs.com/png.latex?g'(x)=-x">, así que</p>
+<p><img src="https://latex.codecogs.com/png.latex?g'(%5Csqrt3-1)%20=%20-(%5Csqrt3-1)%5Capprox-0%7B,%7D732%20%5C%20(%5Ctext%7Batractor,%20oscilante%7D),%20%5Cqquad%20g'(-1-%5Csqrt3)=1+%5Csqrt3%5Capprox2%7B,%7D732%20%5C%20(%5Ctext%7Brepulsor,%20oscilante%7D)."></p>
+<p>El signo negativo de <img src="https://latex.codecogs.com/png.latex?g'(p)"> es lo que produce la oscilación: cada iterado queda del lado opuesto de <img src="https://latex.codecogs.com/png.latex?p"> respecto al anterior, en vez de acercarse por el mismo lado. Desde <img src="https://latex.codecogs.com/png.latex?x_0=0%7B,%7D5"> la sucesión salta de un lado a otro de <img src="https://latex.codecogs.com/png.latex?p%5Capprox0%7B,%7D732"> mientras converge en espiral (<img src="https://latex.codecogs.com/png.latex?0%7B,%7D5,%5C%200%7B,%7D875,%5C%200%7B,%7D617,%5C%200%7B,%7D810,%5C%200%7B,%7D672,%5Cldots%5Cto0%7B,%7D732">), y la razón <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_%7Bk+1%7D/%5Cvarepsilon_k"> se acerca cada vez más a <img src="https://latex.codecogs.com/png.latex?-0%7B,%7D732=g'(p)">, alternando de signo en cada paso, tal como predice el análisis de la serie.</p>
+</section>
+<section id="una-función-que-converge-globalmente-gxcosx" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="una-función-que-converge-globalmente-gxcosx"><span class="header-section-number">6.3</span> Una función que converge globalmente: <img src="https://latex.codecogs.com/png.latex?g(x)=%5Ccos(x)"></h3>
+<p>A diferencia de las dos anteriores, <img src="https://latex.codecogs.com/png.latex?%5Ccos"> manda toda la recta real dentro de <img src="https://latex.codecogs.com/png.latex?%5B-1,1%5D"> desde el primer paso, y en <img src="https://latex.codecogs.com/png.latex?%5B-1,1%5D"> es una contracción genuina (aunque <img src="https://latex.codecogs.com/png.latex?%7C%5Ccos'(x)%7C=%7C%5Coperatorname%7Bsen%7D(x)%7C"> no es uniformemente menor que <img src="https://latex.codecogs.com/png.latex?1"> en todo <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%7BR%7D">, si lo es en <img src="https://latex.codecogs.com/png.latex?%5B-1,1%5D">, con <img src="https://latex.codecogs.com/png.latex?%5Clambda=%5Coperatorname%7Bsen%7D(1)%5Capprox0%7B,%7D841%3C1">). Por eso, a diferencia de los dos ejemplos anteriores, aquí <em>cualquier</em> semilla converge, sin importar qué tan lejos empiece: desde <img src="https://latex.codecogs.com/png.latex?x_0=0">, <img src="https://latex.codecogs.com/png.latex?5">, <img src="https://latex.codecogs.com/png.latex?-3">, <img src="https://latex.codecogs.com/png.latex?100"> o <img src="https://latex.codecogs.com/png.latex?-50"> la sucesión llega, en menos de <img src="https://latex.codecogs.com/png.latex?60"> pasos, al mismo punto <img src="https://latex.codecogs.com/png.latex?p%5Capprox0%7B,%7D739085">, la raíz de <img src="https://latex.codecogs.com/png.latex?x=%5Ccos(x)"> (conocida como número de Dottie). Con <img src="https://latex.codecogs.com/png.latex?g'(p)=-%5Coperatorname%7Bsen%7D(p)%5Capprox-0%7B,%7D674">, la convergencia es oscilante como en el ejemplo anterior, pero esta vez garantizada globalmente por el teorema de contracción, no solo localmente por la serie.</p>
+</section>
+<section id="simulación-interactiva" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="simulación-interactiva"><span class="header-section-number">6.4</span> Simulación interactiva</h3>
+<iframe src="notebooks/punto-fijo-simulacion.html" width="100%" height="900px" style="border:none;">
+</iframe>
+<p>Elija una función, mueva la semilla <img src="https://latex.codecogs.com/png.latex?x_0"> y avance el paso <img src="https://latex.codecogs.com/png.latex?k"> para ver el diagrama de telaraña construirse iteración por iteración. La tabla de abajo del diagrama muestra <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_k"> y la razón <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_%7Bk+1%7D/%5Cvarepsilon_k"> respecto al punto fijo más cercano a la semilla: compárela contra el valor de <img src="https://latex.codecogs.com/png.latex?g'(p)"> que aparece junto a cada punto fijo, es la comprobación en vivo de <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_%7Bk+1%7D%5Capprox%20g'(p)%5Cvarepsilon_k">. La cuarta opción del menú, el mapa logístico <img src="https://latex.codecogs.com/png.latex?4x(1-x)">, se incluye solo para explorar: fuera del rango angosto donde converge a <img src="https://latex.codecogs.com/png.latex?0">, casi cualquier otra semilla produce un comportamiento que ninguno de los criterios de esta nota alcanza a explicar, tema que queda para más adelante.</p>
+</section>
+</section>
+<section id="tarea" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="tarea"><span class="header-section-number">7</span> Tarea</h2>
+<p>Resuelva los ejercicios de la sección 4.2 (“Exercises”) de <em>Fundamentals of Numerical Computation</em>, disponibles en <a href="https://fncbook.com/julia/fixed-point/#exercises" class="uri">https://fncbook.com/julia/fixed-point/#exercises</a>.</p>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/numerico/raices/</guid>
+  <pubDate>Sat, 26 Sep 2026 05:00:00 GMT</pubDate>
+</item>
+<item>
   <title>Parcial 1</title>
   <dc:creator>Arturo Sanjuán</dc:creator>
   <link>https://arturosanjuan.xyz/cursos/numerico/parcial-1/</link>

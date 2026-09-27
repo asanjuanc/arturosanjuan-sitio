@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Arturo Sanjuán">
+
+<title>Raíces y puntos fijos – Arturo Sanjuán</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../cursos/numerico/taller-2/index.html" rel="prev">
+<link href="../../../favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-5a1953863e1f72ef3b996ef827f01ca7.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-06ef128ffaab2aaffa18b1038abc86f3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-979bd06565eab1ad32ed49e916b209dc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/bootstrap/bootstrap-06ef128ffaab2aaffa18b1038abc86f3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Arturo Sanjuán</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../research/index.html"> 
+<span class="menu-text">research</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../cursos/index.html"> 
+<span class="menu-text">cursos</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../trabajos/index.html"> 
+<span class="menu-text">trabajos</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../research/genealogy/index.html"> 
+<span class="menu-text">genealogy</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../links.html"> 
+<span class="menu-text">contacto</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../files/cv_sanjuan.pdf"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo oscuro"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../cursos/numerico/raices/index.html">Raíces y puntos fijos</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="sidebar-tools-main">
+    <a href="../../../cursos/numerico/index.xml" title="RSS — Análisis Numérico" class="quarto-navigation-tool px-1" aria-label="RSS — Análisis Numérico"><i class="bi bi-rss"></i></a>
+</div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/numerico/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis Numérico</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/numerico/introduccion/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/numerico/condicionamiento/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Condicionamiento</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/numerico/estabilidad/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estabilidad</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/numerico/taller-1/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Taller 1</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/numerico/matrices/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sistemas lineales e interpolación</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/numerico/normas/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Normas matriciales y condicionamiento</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/numerico/complejidad/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Complejidad</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/numerico/lu/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Factorización LU</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/numerico/taller-2/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Taller 2</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/numerico/raices/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Raíces y puntos fijos</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#condicionamiento-del-problema-de-la-raíz" id="toc-condicionamiento-del-problema-de-la-raíz" class="nav-link active" data-scroll-target="#condicionamiento-del-problema-de-la-raíz"><span class="header-section-number">1</span> Condicionamiento del problema de la raíz</a>
+  <ul class="collapse">
+  <li><a href="#repaso-la-cuadrática" id="toc-repaso-la-cuadrática" class="nav-link" data-scroll-target="#repaso-la-cuadrática"><span class="header-section-number">1.1</span> Repaso: la cuadrática</a></li>
+  <li><a href="#el-condicionamiento-general-perturbando-la-función-no-sus-parámetros" id="toc-el-condicionamiento-general-perturbando-la-función-no-sus-parámetros" class="nav-link" data-scroll-target="#el-condicionamiento-general-perturbando-la-función-no-sus-parámetros"><span class="header-section-number">1.2</span> El condicionamiento general: perturbando la función, no sus parámetros</a></li>
+  </ul></li>
+  <li><a href="#raíces-múltiples" id="toc-raíces-múltiples" class="nav-link" data-scroll-target="#raíces-múltiples"><span class="header-section-number">2</span> Raíces múltiples</a>
+  <ul class="collapse">
+  <li><a href="#ejemplo-la-raíz-triple-de-operatornamesenx-x-en-0" id="toc-ejemplo-la-raíz-triple-de-operatornamesenx-x-en-0" class="nav-link" data-scroll-target="#ejemplo-la-raíz-triple-de-operatornamesenx-x-en-0"><span class="header-section-number">2.1</span> Ejemplo: la raíz triple de <span class="math inline">\(\operatorname{sen}(x)-x\)</span> en <span class="math inline">\(0\)</span></a></li>
+  <li><a href="#ejemplo-la-raíz-doble-de-la-cuadrática" id="toc-ejemplo-la-raíz-doble-de-la-cuadrática" class="nav-link" data-scroll-target="#ejemplo-la-raíz-doble-de-la-cuadrática"><span class="header-section-number">2.2</span> Ejemplo: la raíz doble de la cuadrática</a></li>
+  </ul></li>
+  <li><a href="#de-raíces-a-puntos-fijos" id="toc-de-raíces-a-puntos-fijos" class="nav-link" data-scroll-target="#de-raíces-a-puntos-fijos"><span class="header-section-number">3</span> De raíces a puntos fijos</a></li>
+  <li><a href="#el-principio-de-la-contracción" id="toc-el-principio-de-la-contracción" class="nav-link" data-scroll-target="#el-principio-de-la-contracción"><span class="header-section-number">4</span> El principio de la contracción</a>
+  <ul class="collapse">
+  <li><a href="#lipschitz-y-contracciones" id="toc-lipschitz-y-contracciones" class="nav-link" data-scroll-target="#lipschitz-y-contracciones"><span class="header-section-number">4.1</span> Lipschitz y contracciones</a></li>
+  <li><a href="#el-teorema-del-punto-fijo" id="toc-el-teorema-del-punto-fijo" class="nav-link" data-scroll-target="#el-teorema-del-punto-fijo"><span class="header-section-number">4.2</span> El teorema del punto fijo</a></li>
+  </ul></li>
+  <li><a href="#convergencia-y-divergencia-local-el-análisis-de-la-serie-de-errores" id="toc-convergencia-y-divergencia-local-el-análisis-de-la-serie-de-errores" class="nav-link" data-scroll-target="#convergencia-y-divergencia-local-el-análisis-de-la-serie-de-errores"><span class="header-section-number">5</span> Convergencia y divergencia local: el análisis de la serie de errores</a>
+  <ul class="collapse">
+  <li><a href="#aplicación-ejercicio-4.2.7-del-fnc" id="toc-aplicación-ejercicio-4.2.7-del-fnc" class="nav-link" data-scroll-target="#aplicación-ejercicio-4.2.7-del-fnc"><span class="header-section-number">5.1</span> Aplicación: ejercicio 4.2.7 del FNC</a></li>
+  </ul></li>
+  <li><a href="#discusión-qué-le-pasa-a-los-puntos-según-el-análisis-de-la-serie" id="toc-discusión-qué-le-pasa-a-los-puntos-según-el-análisis-de-la-serie" class="nav-link" data-scroll-target="#discusión-qué-le-pasa-a-los-puntos-según-el-análisis-de-la-serie"><span class="header-section-number">6</span> Discusión: qué le pasa a los puntos, según el análisis de la serie</a>
+  <ul class="collapse">
+  <li><a href="#una-parábola-con-convergencia-y-divergencia-monótonas-gxdfracx1-x2" id="toc-una-parábola-con-convergencia-y-divergencia-monótonas-gxdfracx1-x2" class="nav-link" data-scroll-target="#una-parábola-con-convergencia-y-divergencia-monótonas-gxdfracx1-x2"><span class="header-section-number">6.1</span> Una parábola con convergencia y divergencia monótonas: <span class="math inline">\(g(x)=\dfrac{x(1-x)}{2}\)</span></a></li>
+  <li><a href="#una-parábola-con-convergencia-y-divergencia-oscilantes-gx1-dfracx22" id="toc-una-parábola-con-convergencia-y-divergencia-oscilantes-gx1-dfracx22" class="nav-link" data-scroll-target="#una-parábola-con-convergencia-y-divergencia-oscilantes-gx1-dfracx22"><span class="header-section-number">6.2</span> Una parábola con convergencia y divergencia oscilantes: <span class="math inline">\(g(x)=1-\dfrac{x^2}{2}\)</span></a></li>
+  <li><a href="#una-función-que-converge-globalmente-gxcosx" id="toc-una-función-que-converge-globalmente-gxcosx" class="nav-link" data-scroll-target="#una-función-que-converge-globalmente-gxcosx"><span class="header-section-number">6.3</span> Una función que converge globalmente: <span class="math inline">\(g(x)=\cos(x)\)</span></a></li>
+  <li><a href="#simulación-interactiva" id="toc-simulación-interactiva" class="nav-link" data-scroll-target="#simulación-interactiva"><span class="header-section-number">6.4</span> Simulación interactiva</a></li>
+  </ul></li>
+  <li><a href="#tarea" id="toc-tarea" class="nav-link" data-scroll-target="#tarea"><span class="header-section-number">7</span> Tarea</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Raíces y puntos fijos</h1>
+<p class="subtitle lead">Condicionamiento del problema de la raíz y el análisis de la serie de errores.</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor</div>
+    <div class="quarto-title-meta-contents">
+             <p>Arturo Sanjuán </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">26 de septiembre de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>El problema de la raíz: dada una función <span class="math inline">\(f\)</span>, posiblemente muy no lineal, buscamos <span class="math inline">\(r\)</span> tal que <span class="math inline">\(f(r)=0\)</span>. Seguimos la sección 4.1 y 4.2 del libro de Driscoll y Braun.</p>
+<section id="condicionamiento-del-problema-de-la-raíz" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="condicionamiento-del-problema-de-la-raíz"><span class="header-section-number">1</span> Condicionamiento del problema de la raíz</h2>
+<section id="repaso-la-cuadrática" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="repaso-la-cuadrática"><span class="header-section-number">1.1</span> Repaso: la cuadrática</h3>
+<p>Empecemos con lo que ya vimos en la nota de condicionamiento. Para <span class="math inline">\(ax^2+bx+c=0\)</span> los datos son los coeficientes <span class="math inline">\(a,b,c\)</span> y el resultado son las dos raíces. Fijando <span class="math inline">\(b,c\)</span> y dejando que solo <span class="math inline">\(a\)</span> cambie (por ejemplo por redondeo), obtuvimos</p>
+<p><span class="math display">\[\kappa_f(a) = \left|\frac{r_1}{r_1-r_2}\right|,\]</span></p>
+<p>mal condicionado exactamente cuando las raíces están mucho más cerca entre sí que del origen.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Repita ese mismo cálculo pero perturbando <span class="math inline">\(b\)</span> en vez de <span class="math inline">\(a\)</span>, y luego perturbando <span class="math inline">\(c\)</span> en vez de <span class="math inline">\(a\)</span> (con los otros dos coeficientes fijos en cada caso), y encuentre <span class="math inline">\(\kappa_f(b)\)</span> y <span class="math inline">\(\kappa_f(c)\)</span>.</p>
+</div>
+</div>
+<p>Recuerde también que un problema mal condicionado no impide un buen error hacia atrás: en la sección 1.4 del FNC hay ejemplos donde el error hacia adelante es grande por el condicionamiento (raíces cercanas), pero la respuesta calculada sigue siendo la solución exacta de un problema cercano (<span class="math inline">\(\tilde a x^2+bx+c=0\)</span> con <span class="math inline">\(\tilde a\)</span> próximo a <span class="math inline">\(a\)</span>). Y a la inversa: aunque el problema esté bien condicionado, el algoritmo elegido para resolverlo puede seguir siendo inestable. Esto es justamente lo que pasa al calcular <span class="math inline">\(r_1,r_2\)</span> de <span class="math inline">\((x-10^6)(x-10^{-6})\)</span> con la fórmula clásica: la raíz grande <span class="math inline">\(10^6\)</span> sale estable, pero la raíz chica se pierde por cancelación, y hay que recuperarla con la identidad de Vieta <span class="math inline">\(r_1r_2=c/a\)</span>, es decir <span class="math inline">\(r_2=c/(ar_1)\)</span>, calculada a partir de la raíz buena.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En el libro FNC estas dos situaciones (condicionamiento del problema vs.&nbsp;estabilidad del algoritmo) están ejemplificadas en detalle en la sección 1.4. A modo de repaso, ejemplifíquelas por su cuenta en Julia.</p>
+</div>
+</div>
+</section>
+<section id="el-condicionamiento-general-perturbando-la-función-no-sus-parámetros" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="el-condicionamiento-general-perturbando-la-función-no-sus-parámetros"><span class="header-section-number">1.2</span> El condicionamiento general: perturbando la función, no sus parámetros</h3>
+<p>La cuadrática es un caso particular porque conocemos sus parámetros <span class="math inline">\(a,b,c\)</span> y podemos perturbarlos uno por uno. Para una función arbitraria <span class="math inline">\(f\)</span> no tenemos esa estructura: el error puede venir simplemente de evaluar mal <span class="math inline">\(f\)</span>, sin que haya ningún parámetro identificable de por medio. Por ejemplo, en una región donde <span class="math inline">\(f(x)=x^2-x\)</span> está cerca de cero, cualquier error minúsculo en la evaluación de <span class="math inline">\(f\)</span> puede desplazar bastante la raíz calculada. El número de condición que necesitamos ahora depende de una función completa, no de un número ni de una matriz.</p>
+<p>Como antes, perturbamos y comparamos. Sea <span class="math inline">\(\tilde f(x)=f(x)+\varepsilon\)</span> la función perturbada, y sea <span class="math inline">\(\tilde r\)</span> la raíz de <span class="math inline">\(\tilde f\)</span>, es decir <span class="math inline">\(\tilde f(\tilde r)=0\)</span>. Escribiendo <span class="math inline">\(\tilde r = r+\delta\)</span>, el cambio relativo que nos interesa es</p>
+<p><span class="math display">\[\frac{|\tilde r - r|}{|\varepsilon|} = \frac{|\delta|}{|\varepsilon|}.\]</span></p>
+<p>(Aquí no dividimos por <span class="math inline">\(|f(r)|\)</span> como en la definición general de <span class="math inline">\(\kappa_f\)</span>: como <span class="math inline">\(f(r)=0\)</span> esa división sería por cero, así que medimos el error de <span class="math inline">\(r\)</span> de forma absoluta en vez de relativa.) Por otro lado,</p>
+<p><span class="math display">\[\varepsilon = \tilde f(\tilde r) - f(r) = \big[f(\tilde r)+\varepsilon\big] - f(r) - \varepsilon + \varepsilon= f(r+\delta)-f(r),\]</span></p>
+<p>y para <span class="math inline">\(\delta\)</span> pequeño, linealizando <span class="math inline">\(f\)</span> alrededor de <span class="math inline">\(r\)</span> (la derivada de Fréchet),</p>
+<p><span class="math display">\[\varepsilon = f(r+\delta)-f(r) \approx f'(r)\,\delta.\]</span></p>
+<p>Entonces <span class="math inline">\(|\delta|/|\varepsilon| \approx 1/|f'(r)|\)</span>, y en el límite <span class="math inline">\(\varepsilon\to0\)</span> esta aproximación se vuelve exacta, exactamente como en la definición general de <span class="math inline">\(\kappa_f\)</span> de la nota anterior. Esto da la definición:</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Definición — número de condición de una raíz">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Definición — número de condición de una raíz
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[\kappa_r = \kappa_r(f) = |f'(r)|^{-1}\]</span></p>
+</div>
+</div>
+<p>El problema está mal condicionado en <span class="math inline">\(r\)</span> cuando <span class="math inline">\(f\)</span> es casi plana ahí (<span class="math inline">\(f'(r)\approx0\)</span>): un error diminuto en la evaluación de <span class="math inline">\(f\)</span> puede corresponder a un desplazamiento grande de la raíz.</p>
+</section>
+</section>
+<section id="raíces-múltiples" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="raíces-múltiples"><span class="header-section-number">2</span> Raíces múltiples</h2>
+<p>En la práctica no conocemos <span class="math inline">\(r\)</span> exactamente, así que en vez de <span class="math inline">\(f(r)\)</span> lo que podemos calcular es el residuo <span class="math inline">\(f(\tilde r)\)</span> de una raíz aproximada. Puede pasar que ese residuo sea pequeño sin que <span class="math inline">\(\tilde r\)</span> esté cerca de <span class="math inline">\(r\)</span>: eso es justamente lo que anuncia <span class="math inline">\(\kappa_r=+\infty\)</span>, y ocurre cuando <span class="math inline">\(f'(r)=0\)</span>.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Definición — raíz de multiplicidad $m$">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Definición — raíz de multiplicidad <span class="math inline">\(m\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(r\)</span> es una raíz de <span class="math inline">\(f\)</span> de multiplicidad (orden) <span class="math inline">\(m\)</span> si</p>
+<p><span class="math display">\[f^{(k)}(r)=0 \quad \text{para } k=0,1,\ldots,m-1, \qquad f^{(m)}(r)\ne0,\]</span></p>
+<p>o, de forma equivalente, si existe una función <span class="math inline">\(q\)</span> con <span class="math inline">\(q(r)\ne0\)</span> tal que <span class="math inline">\(f(x)=(x-r)^mq(x)\)</span>.</p>
+</div>
+</div>
+<p>Cuando <span class="math inline">\(m&gt;1\)</span> no solo <span class="math inline">\(f(r)=0\)</span> sino también <span class="math inline">\(f'(r)=0\)</span>, así que <span class="math inline">\(\kappa_r(f)=+\infty\)</span>: intuitivamente, la gráfica de <span class="math inline">\(f\)</span> se aplana cerca de la raíz, y ese aplanamiento es justo lo que vuelve al problema arbitrariamente sensible.</p>
+<section id="ejemplo-la-raíz-triple-de-operatornamesenx-x-en-0" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="ejemplo-la-raíz-triple-de-operatornamesenx-x-en-0"><span class="header-section-number">2.1</span> Ejemplo: la raíz triple de <span class="math inline">\(\operatorname{sen}(x)-x\)</span> en <span class="math inline">\(0\)</span></h3>
+<p>Veamos que <span class="math inline">\(0\)</span> es una raíz de orden <span class="math inline">\(3\)</span> de <span class="math inline">\(f(x)=\operatorname{sen}(x)-x\)</span>, de dos maneras.</p>
+<p><strong>Por derivadas sucesivas.</strong> Con <span class="math inline">\(f(x)=\operatorname{sen}(x)-x\)</span>,</p>
+<p><span class="math display">\[f(0)=0,\qquad f'(x)=\cos(x)-1 \Rightarrow f'(0)=0,\qquad f''(x)=-\operatorname{sen}(x) \Rightarrow f''(0)=0,\qquad f'''(x)=-\cos(x) \Rightarrow f'''(0)=-1\ne0.\]</span></p>
+<p>Como las primeras tres derivadas se anulan en <span class="math inline">\(0\)</span> y la cuarta (en el sentido de la definición, la de orden <span class="math inline">\(m=3\)</span>) no, <span class="math inline">\(0\)</span> es una raíz de orden exactamente <span class="math inline">\(3\)</span>.</p>
+<p><strong>Por la serie de Taylor.</strong> Usando <span class="math inline">\(\operatorname{sen}(x)=x-\dfrac{x^3}{3!}+\dfrac{x^5}{5!}-\dfrac{x^7}{7!}+\cdots\)</span>,</p>
+<p><span class="math display">\[f(x) = \operatorname{sen}(x)-x = -\frac{x^3}{3!}+\frac{x^5}{5!}-\frac{x^7}{7!}+\cdots = x^3\underbrace{\left(-\frac{1}{3!}+\frac{x^2}{5!}-\frac{x^4}{7!}+\cdots\right)}_{q(x)}.\]</span></p>
+<p>Con <span class="math inline">\(q(0)=-1/6\ne0\)</span> (que coincide con <span class="math inline">\(f'''(0)/3!=-1/6\)</span>, como debe ser), obtenemos exactamente la factorización <span class="math inline">\(f(x)=x^3q(x)\)</span> que pide la definición.</p>
+</section>
+<section id="ejemplo-la-raíz-doble-de-la-cuadrática" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="ejemplo-la-raíz-doble-de-la-cuadrática"><span class="header-section-number">2.2</span> Ejemplo: la raíz doble de la cuadrática</h3>
+<p>Retomemos <span class="math inline">\(f(x)=ax^2+bx+c\)</span> con este mismo enfoque. Como <span class="math inline">\(f'(x)=2ax+b\)</span>, el único candidato a raíz múltiple es donde <span class="math inline">\(f'\)</span> se anula, <span class="math inline">\(x=-b/(2a)\)</span>, y ese punto es efectivamente raíz de <span class="math inline">\(f\)</span> exactamente cuando <span class="math inline">\(b^2-4ac=0\)</span> (discriminante nulo). En ese caso <span class="math inline">\(r=-b/2a\)</span> es una raíz doble y <span class="math inline">\(\kappa_r(f)=+\infty\)</span>: consistente con lo que ya sabíamos, porque <span class="math inline">\(b^2-4ac=0\)</span> es precisamente el caso <span class="math inline">\(r_1=r_2\)</span> donde <span class="math inline">\(\kappa_f(a)\)</span> también se disparaba.</p>
+<p>Cuando en cambio <span class="math inline">\(b^2-4ac&gt;0\)</span> la raíz es simple, y con <span class="math inline">\(r_{1,2}=\dfrac{-b\pm\sqrt{b^2-4ac}}{2a}\)</span>,</p>
+<p><span class="math display">\[f'(r_1)=\sqrt{b^2-4ac}, \qquad f'(r_2)=-\sqrt{b^2-4ac} \qquad\Longrightarrow\qquad \kappa_r(f) = \frac{1}{\sqrt{b^2-4ac}}\]</span></p>
+<p>en ambas raíces por igual. Usando <span class="math inline">\(r_1-r_2=\sqrt{b^2-4ac}/a\)</span>, esto se puede reescribir sin el discriminante:</p>
+<p><span class="math display">\[\boxed{\kappa_r(f) = \frac{1}{|a|\,|r_1-r_2|}}\]</span></p>
+<p>que explota tanto si las raíces se acercan (<span class="math inline">\(r_1\to r_2\)</span>, la misma condición que ya vimos) como si el coeficiente principal <span class="math inline">\(a\to0\)</span> (el problema deja de ser genuinamente cuadrático). De hecho esta expresión y <span class="math inline">\(\kappa_f(a)=|r_1/(r_1-r_2)|\)</span> de la sección anterior están relacionadas exactamente por</p>
+<p><span class="math display">\[\kappa_f(a) = |a\,r_1|\cdot\kappa_r(f),\]</span></p>
+<p>así que no son la misma cantidad (una perturba el coeficiente <span class="math inline">\(a\)</span> relativamente, la otra perturba <span class="math inline">\(f\)</span> de forma absoluta), pero capturan el mismo fenómeno geométrico: la cercanía de las dos raíces.</p>
+</section>
+</section>
+<section id="de-raíces-a-puntos-fijos" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="de-raíces-a-puntos-fijos"><span class="header-section-number">3</span> De raíces a puntos fijos</h2>
+<p>Hay otra manera de plantear el mismo problema, útil tanto en teoría como en la práctica: dada <span class="math inline">\(f\)</span>, defina <span class="math inline">\(g(x)=x-f(x)\)</span>. Entonces</p>
+<p><span class="math display">\[f(p)=0 \quad\Longleftrightarrow\quad g(p)=p.\]</span></p>
+<p>A un punto <span class="math inline">\(p\)</span> con <span class="math inline">\(g(p)=p\)</span> se le llama punto fijo de <span class="math inline">\(g\)</span>, y la construcción anterior no es la única forma de convertir una raíz en un punto fijo: cualquier <span class="math inline">\(g(x)=x-f(x)/c\)</span> con <span class="math inline">\(c\ne0\)</span> constante, o incluso <span class="math inline">\(g\)</span> dependiente de <span class="math inline">\(x\)</span>, sirve igual. Esta libertad para elegir <span class="math inline">\(g\)</span> es precisamente lo que hace útil el punto de vista de punto fijo: el algoritmo iterativo más simple para encontrar <span class="math inline">\(p\)</span> es</p>
+<p><span class="math display">\[x_{k+1}=g(x_k), \qquad k=0,1,2,\ldots\]</span></p>
+<p>y la pregunta de cuándo esta sucesión converge (y a qué <span class="math inline">\(g\)</span> conviene elegir) es el tema del resto de esta nota. Newton, la secante y los métodos implícitos que veremos más adelante en el curso son, en el fondo, formas particulares de elegir <span class="math inline">\(g\)</span>.</p>
+</section>
+<section id="el-principio-de-la-contracción" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="el-principio-de-la-contracción"><span class="header-section-number">4</span> El principio de la contracción</h2>
+<section id="lipschitz-y-contracciones" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="lipschitz-y-contracciones"><span class="header-section-number">4.1</span> Lipschitz y contracciones</h3>
+<div class="callout callout-style-default callout-note callout-titled" title="Definición: condición de Lipschitz">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Definición: condición de Lipschitz
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(g:X\to\mathbb{R}^n\)</span>, con <span class="math inline">\(X\subseteq\mathbb{R}^n\)</span>, es Lipschitz en <span class="math inline">\(X\)</span> si existe una constante <span class="math inline">\(L\ge0\)</span> tal que</p>
+<p><span class="math display">\[|g(x)-g(y)| \le L\,|x-y| \qquad \text{para todo } x,y\in X.\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Definición: contracción">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Definición: contracción
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(g\)</span> es una contracción en <span class="math inline">\(X\)</span> si es Lipschitz en <span class="math inline">\(X\)</span> con constante <span class="math inline">\(L=\lambda&lt;1\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="el-teorema-del-punto-fijo" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="el-teorema-del-punto-fijo"><span class="header-section-number">4.2</span> El teorema del punto fijo</h3>
+<div class="callout callout-style-default callout-important callout-titled" title="Teorema (punto fijo de Banach, caso real / $\mathbb{R}^n$)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Teorema (punto fijo de Banach, caso real / <span class="math inline">\(\mathbb{R}^n\)</span>)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sea <span class="math inline">\(X\subseteq\mathbb{R}^n\)</span> cerrado y no vacío (en <span class="math inline">\(\mathbb{R}^n\)</span>, cerrado equivale a completo), y sea <span class="math inline">\(g:X\to X\)</span> una contracción con constante <span class="math inline">\(\lambda\in(0,1)\)</span>. Entonces:</p>
+<ol type="1">
+<li><span class="math inline">\(g\)</span> tiene un único punto fijo <span class="math inline">\(p\in X\)</span>.</li>
+<li>Para <em>cualquier</em> semilla <span class="math inline">\(x_0\in X\)</span>, la sucesión <span class="math inline">\(x_{k+1}=g(x_k)\)</span> converge a <span class="math inline">\(p\)</span>.</li>
+<li>El error decrece geométricamente: <span class="math inline">\(|x_k-p|\le \lambda^k|x_0-p|\)</span>.</li>
+</ol>
+</div>
+</div>
+<p>No lo demostramos aquí (la demostración estándar muestra que <span class="math inline">\((x_k)\)</span> es una sucesión de Cauchy usando la desigualdad triangular y la serie geométrica <span class="math inline">\(\sum\lambda^k\)</span>), pero vale la pena entender por qué cada hipótesis es indispensable, con un contraejemplo en <span class="math inline">\(\mathbb{R}\)</span> para cada una.</p>
+<p><strong>Si <span class="math inline">\(X\)</span> no es cerrado (no completo).</strong> Tome <span class="math inline">\(X=(0,1]\)</span> y <span class="math inline">\(g(x)=x/2\)</span>. Es una contracción genuina (<span class="math inline">\(\lambda=1/2\)</span>) y sí manda <span class="math inline">\(X\)</span> en <span class="math inline">\(X\)</span> (<span class="math inline">\(g((0,1])=(0,1/2]\subset(0,1]\)</span>). Pero el único candidato a punto fijo de la fórmula, <span class="math inline">\(x=0\)</span>, no pertenece a <span class="math inline">\(X\)</span>: la sucesión <span class="math inline">\(x_k=x_0/2^k\)</span> converge a <span class="math inline">\(0\)</span>, que simplemente no está en el dominio.</p>
+<p><strong>Si <span class="math inline">\(g\)</span> no manda <span class="math inline">\(X\)</span> en sí mismo.</strong> Tome <span class="math inline">\(X=[0,1]\)</span> y <span class="math inline">\(g(x)=x/2+1\)</span>. También es una contracción (<span class="math inline">\(\lambda=1/2\)</span>), pero <span class="math inline">\(g(1)=1{,}5\notin[0,1]\)</span>: <span class="math inline">\(g\)</span> no es una función de <span class="math inline">\(X\)</span> en <span class="math inline">\(X\)</span>. El punto fijo de la fórmula, <span class="math inline">\(x=2\)</span>, cae fuera de <span class="math inline">\(X\)</span>, y las iteraciones que empiecen cerca de <span class="math inline">\(1\)</span> salen de <span class="math inline">\(X\)</span> de inmediato.</p>
+<p><strong>Si <span class="math inline">\(g\)</span> no es realmente una contracción.</strong> Que <span class="math inline">\(|g'(x)|&lt;1\)</span> en todo punto de <span class="math inline">\(X\)</span> no basta si el supremo de <span class="math inline">\(|g'|\)</span> en <span class="math inline">\(X\)</span> es <span class="math inline">\(1\)</span> y nunca se alcanza: entonces no existe un solo <span class="math inline">\(\lambda&lt;1\)</span> que funcione para todo el dominio a la vez. Por ejemplo, con <span class="math inline">\(X=[0,\infty)\)</span> y <span class="math inline">\(g(x)=\sqrt{x^2+1}\)</span>: <span class="math inline">\(g\)</span> manda <span class="math inline">\(X\)</span> en <span class="math inline">\(X\)</span> (de hecho en <span class="math inline">\([1,\infty)\)</span>), y <span class="math inline">\(g'(x)=x/\sqrt{x^2+1}\)</span> satisface <span class="math inline">\(|g'(x)|&lt;1\)</span> para todo <span class="math inline">\(x\)</span> finito, pero <span class="math inline">\(\sup_{x\ge0}|g'(x)|=1\)</span> (alcanzado solo en el límite <span class="math inline">\(x\to\infty\)</span>). Y en efecto no hay ningún punto fijo: <span class="math inline">\(x=\sqrt{x^2+1}\)</span> llevaría a <span class="math inline">\(0=1\)</span>.</p>
+<p>Un ejemplo más de esta misma falla, y que usaremos otra vez más abajo: con <span class="math inline">\(g(x)=4x-4x^2\)</span> y <span class="math inline">\(X=(3/8,5/8)\)</span>, se cumple <span class="math inline">\(|g'(x)|=|4-8x|&lt;1\)</span> en todo <span class="math inline">\(X\)</span>. Pero <span class="math inline">\(g(3/8)=g(5/8)=15/16\)</span>, muy por fuera de <span class="math inline">\(X\)</span>: <span class="math inline">\(g\)</span> tampoco manda aquí <span class="math inline">\(X\)</span> en <span class="math inline">\(X\)</span>, así que el teorema simplemente no aplica, sin importar que la condición sobre la derivada se vea prometedora.</p>
+</section>
+</section>
+<section id="convergencia-y-divergencia-local-el-análisis-de-la-serie-de-errores" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="convergencia-y-divergencia-local-el-análisis-de-la-serie-de-errores"><span class="header-section-number">5</span> Convergencia y divergencia local: el análisis de la serie de errores</h2>
+<p>El teorema anterior es una herramienta <em>global</em>: exige una cota uniforme sobre todo un conjunto <span class="math inline">\(X\)</span>. Casi nunca conocemos esa cota de antemano; lo que sí podemos hacer es preguntar qué pasa <em>cerca</em> de un punto fijo ya conocido <span class="math inline">\(p\)</span>, usando solo el valor de <span class="math inline">\(g'(p)\)</span>.</p>
+<p>Sea <span class="math inline">\(\varepsilon_k=x_k-p\)</span> el error en el paso <span class="math inline">\(k\)</span>. Expandiendo <span class="math inline">\(g\)</span> en Taylor alrededor de <span class="math inline">\(p\)</span>,</p>
+<p><span class="math display">\[\varepsilon_{k+1}+p = x_{k+1} = g(x_k) = g(p+\varepsilon_k) = g(p)+g'(p)\varepsilon_k+O(\varepsilon_k^2) = p+g'(p)\varepsilon_k+O(\varepsilon_k^2),\]</span></p>
+<p>de donde</p>
+<p><span class="math display">\[\boxed{\varepsilon_{k+1} \approx g'(p)\,\varepsilon_k}\]</span></p>
+<p>para <span class="math inline">\(\varepsilon_k\)</span> suficientemente pequeño. De esta única relación salen las dos conclusiones centrales:</p>
+<p><strong>Si <span class="math inline">\(|g'(p)|&lt;1\)</span> (<span class="math inline">\(p\)</span> atractor).</strong> Existe una vecindad de <span class="math inline">\(p\)</span> donde el error se multiplica, en cada paso, por un factor de tamaño menor que <span class="math inline">\(1\)</span>: cualquier semilla que caiga en esa vecindad converge a <span class="math inline">\(p\)</span>, con velocidad lineal (geométrica) de razón aproximada <span class="math inline">\(|g'(p)|\)</span>. Esta es la versión local, más fácil de verificar en la práctica, de lo que el teorema de contracción garantiza de forma global y uniforme.</p>
+<p><strong>Si <span class="math inline">\(|g'(p)|&gt;1\)</span> (<span class="math inline">\(p\)</span> repulsor).</strong> Por continuidad de <span class="math inline">\(g'\)</span>, hay una vecindad de <span class="math inline">\(p\)</span> donde <span class="math inline">\(|g'(x)|\ge\lambda'&gt;1\)</span>; mientras el iterado se quede en esa vecindad, cada paso lo aleja de <span class="math inline">\(p\)</span> por un factor mayor que <span class="math inline">\(1\)</span>. Pero esto es <em>estrictamente local</em>: solo dice que el iterado se aleja de <span class="math inline">\(p\)</span> mientras siga cerca; en cuanto sale de esa vecindad la cota deja de aplicar, y nada impide que termine capturado por otro punto fijo, por un ciclo, o que efectivamente escape a infinito. Cuál de esas tres cosas ocurre depende por completo de la función, no de este argumento local; la sección de discusión de abajo muestra un ejemplo de cada una.</p>
+<p><strong>Si <span class="math inline">\(|g'(p)|=1\)</span>.</strong> El término <span class="math inline">\(g'(p)\varepsilon_k\)</span> no domina y el análisis de primer orden no decide nada: hacen falta los términos de orden superior (típicamente <span class="math inline">\(g''(p)\)</span>). No lo desarrollamos aquí.</p>
+<p>Un corolario útil: si además <span class="math inline">\(g'(p)=0\)</span>, el error decae más rápido que geométricamente (cuadráticamente, si <span class="math inline">\(g''(p)\ne0\)</span>), porque el primer término no nulo de la expansión es de orden <span class="math inline">\(\varepsilon_k^2\)</span>. Ese es exactamente el mecanismo detrás de la convergencia cuadrática de Newton, que veremos pronto.</p>
+<section id="aplicación-ejercicio-4.2.7-del-fnc" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="aplicación-ejercicio-4.2.7-del-fnc"><span class="header-section-number">5.1</span> Aplicación: ejercicio 4.2.7 del FNC</h3>
+<p>Considere la familia de iteraciones</p>
+<p><span class="math display">\[x_{k+1} = x_k - \frac{f(x_k)}{c}, \qquad c\ne0 \text{ constante},\]</span></p>
+<p>es decir <span class="math inline">\(g(x)=x-f(x)/c\)</span>, cuyos puntos fijos son exactamente las raíces de <span class="math inline">\(f\)</span>. Suponiendo <span class="math inline">\(f'(p)&gt;0\)</span> en la raíz <span class="math inline">\(p\)</span> que buscamos, ¿qué condición sobre <span class="math inline">\(c\)</span> garantiza convergencia local?</p>
+<p>Como <span class="math inline">\(g'(x)=1-f'(x)/c\)</span>, queremos <span class="math inline">\(|g'(x)|&lt;1\)</span>, es decir</p>
+<p><span class="math display">\[-1 &lt; 1-\frac{f'(x)}{c} &lt; 1 \quad\Longleftrightarrow\quad 0 &lt; \frac{f'(x)}{c} &lt; 2 \quad\Longleftrightarrow\quad c &gt; \frac{f'(x)}{2}\]</span></p>
+<p>(usando que <span class="math inline">\(c\)</span> y <span class="math inline">\(f'(x)\)</span> tienen el mismo signo). Si <span class="math inline">\(f'\)</span> está acotada en un compacto <span class="math inline">\(K\)</span> que contenga a <span class="math inline">\(p\)</span>, basta con tomar</p>
+<p><span class="math display">\[c &gt; \frac{1}{2}\max_{x\in K} f'(x)\]</span></p>
+<p>para garantizar <span class="math inline">\(|g'(x)|&lt;1\)</span> en todo <span class="math inline">\(K\)</span>, y por tanto convergencia local desde cualquier semilla suficientemente cercana a <span class="math inline">\(p\)</span>. Con <span class="math inline">\(f(x)=x^2-2\)</span> (raíz <span class="math inline">\(p=\sqrt2\approx1{,}414\)</span>, <span class="math inline">\(f'(p)=2\sqrt2\approx2{,}828\)</span>), el umbral exacto es <span class="math inline">\(c&gt;\sqrt2\approx1{,}414\)</span>: numéricamente, <span class="math inline">\(c=1{,}2\)</span> y <span class="math inline">\(c=1{,}35\)</span> (por debajo del umbral) no convergen, mientras que cualquier <span class="math inline">\(c&gt;\sqrt2\)</span> sí lo hace, aunque arbitrariamente lento si <span class="math inline">\(c\)</span> está apenas por encima del umbral (<span class="math inline">\(c=1{,}42\)</span> tarda cerca de <span class="math inline">\(2000\)</span> iteraciones; <span class="math inline">\(c=2\)</span> tarda menos de <span class="math inline">\(10\)</span>).</p>
+</section>
+</section>
+<section id="discusión-qué-le-pasa-a-los-puntos-según-el-análisis-de-la-serie" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="discusión-qué-le-pasa-a-los-puntos-según-el-análisis-de-la-serie"><span class="header-section-number">6</span> Discusión: qué le pasa a los puntos, según el análisis de la serie</h2>
+<p>Veamos el criterio <span class="math inline">\(\varepsilon_{k+1}\approx g'(p)\varepsilon_k\)</span> en acción sobre tres funciones concretas, elegidas para mostrar las cuatro combinaciones posibles (atractor/repulsor, monótono/oscilante) sin entrar en el terreno del caos, que dejamos completamente de lado aquí (más allá del contraejemplo de <span class="math inline">\(4x-4x^2\)</span> de la sección anterior, que es un mapa muy distinto y bastante más rico de lo que este análisis local alcanza a describir).</p>
+<section id="una-parábola-con-convergencia-y-divergencia-monótonas-gxdfracx1-x2" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="una-parábola-con-convergencia-y-divergencia-monótonas-gxdfracx1-x2"><span class="header-section-number">6.1</span> Una parábola con convergencia y divergencia monótonas: <span class="math inline">\(g(x)=\dfrac{x(1-x)}{2}\)</span></h3>
+<p>Sus puntos fijos son <span class="math inline">\(p=0\)</span> y <span class="math inline">\(p=-1\)</span>, y <span class="math inline">\(g'(x)=\dfrac{1-2x}{2}\)</span>, así que</p>
+<p><span class="math display">\[g'(0)=\tfrac12 \ (\text{atractor, monótono, pues } g'(0)&gt;0), \qquad g'(-1)=\tfrac32 \ (\text{repulsor, monótono}).\]</span></p>
+<p>Numéricamente: desde <span class="math inline">\(x_0=0{,}9\)</span> la sucesión decrece monótonamente hacia <span class="math inline">\(0\)</span> (<span class="math inline">\(0{,}9,\ 0{,}045,\ 0{,}0215,\ 0{,}0105,\ldots\)</span>); desde <span class="math inline">\(x_0=-0{,}9\)</span> crece monótonamente hacia <span class="math inline">\(0\)</span> también (<span class="math inline">\(-0{,}9,\ -0{,}855,\ -0{,}793,\ldots \to 0\)</span>), mostrando que la cuenca de atracción de <span class="math inline">\(0\)</span> es bastante más grande que una vecindad diminuta. En cambio desde <span class="math inline">\(x_0=-1{,}1\)</span>, apenas más allá del repulsor <span class="math inline">\(-1\)</span>, la sucesión se aleja monótonamente y sin vuelta atrás: <span class="math inline">\(-1{,}1,\ -1{,}155,\ -1{,}245,\ -1{,}397,\ -1{,}674,\ -2{,}237,\ldots\to-\infty\)</span>. Aquí la repulsión local sí se traduce en divergencia global, simplemente porque no hay ningún otro punto fijo ni ciclo que la intercepte en esa dirección.</p>
+</section>
+<section id="una-parábola-con-convergencia-y-divergencia-oscilantes-gx1-dfracx22" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="una-parábola-con-convergencia-y-divergencia-oscilantes-gx1-dfracx22"><span class="header-section-number">6.2</span> Una parábola con convergencia y divergencia oscilantes: <span class="math inline">\(g(x)=1-\dfrac{x^2}{2}\)</span></h3>
+<p>Sus puntos fijos son <span class="math inline">\(p=\sqrt3-1\approx0{,}732\)</span> y <span class="math inline">\(p=-1-\sqrt3\approx-2{,}732\)</span> (resolviendo <span class="math inline">\(p=1-p^2/2\)</span>), y <span class="math inline">\(g'(x)=-x\)</span>, así que</p>
+<p><span class="math display">\[g'(\sqrt3-1) = -(\sqrt3-1)\approx-0{,}732 \ (\text{atractor, oscilante}), \qquad g'(-1-\sqrt3)=1+\sqrt3\approx2{,}732 \ (\text{repulsor, oscilante}).\]</span></p>
+<p>El signo negativo de <span class="math inline">\(g'(p)\)</span> es lo que produce la oscilación: cada iterado queda del lado opuesto de <span class="math inline">\(p\)</span> respecto al anterior, en vez de acercarse por el mismo lado. Desde <span class="math inline">\(x_0=0{,}5\)</span> la sucesión salta de un lado a otro de <span class="math inline">\(p\approx0{,}732\)</span> mientras converge en espiral (<span class="math inline">\(0{,}5,\ 0{,}875,\ 0{,}617,\ 0{,}810,\ 0{,}672,\ldots\to0{,}732\)</span>), y la razón <span class="math inline">\(\varepsilon_{k+1}/\varepsilon_k\)</span> se acerca cada vez más a <span class="math inline">\(-0{,}732=g'(p)\)</span>, alternando de signo en cada paso, tal como predice el análisis de la serie.</p>
+</section>
+<section id="una-función-que-converge-globalmente-gxcosx" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="una-función-que-converge-globalmente-gxcosx"><span class="header-section-number">6.3</span> Una función que converge globalmente: <span class="math inline">\(g(x)=\cos(x)\)</span></h3>
+<p>A diferencia de las dos anteriores, <span class="math inline">\(\cos\)</span> manda toda la recta real dentro de <span class="math inline">\([-1,1]\)</span> desde el primer paso, y en <span class="math inline">\([-1,1]\)</span> es una contracción genuina (aunque <span class="math inline">\(|\cos'(x)|=|\operatorname{sen}(x)|\)</span> no es uniformemente menor que <span class="math inline">\(1\)</span> en todo <span class="math inline">\(\mathbb{R}\)</span>, si lo es en <span class="math inline">\([-1,1]\)</span>, con <span class="math inline">\(\lambda=\operatorname{sen}(1)\approx0{,}841&lt;1\)</span>). Por eso, a diferencia de los dos ejemplos anteriores, aquí <em>cualquier</em> semilla converge, sin importar qué tan lejos empiece: desde <span class="math inline">\(x_0=0\)</span>, <span class="math inline">\(5\)</span>, <span class="math inline">\(-3\)</span>, <span class="math inline">\(100\)</span> o <span class="math inline">\(-50\)</span> la sucesión llega, en menos de <span class="math inline">\(60\)</span> pasos, al mismo punto <span class="math inline">\(p\approx0{,}739085\)</span>, la raíz de <span class="math inline">\(x=\cos(x)\)</span> (conocida como número de Dottie). Con <span class="math inline">\(g'(p)=-\operatorname{sen}(p)\approx-0{,}674\)</span>, la convergencia es oscilante como en el ejemplo anterior, pero esta vez garantizada globalmente por el teorema de contracción, no solo localmente por la serie.</p>
+</section>
+<section id="simulación-interactiva" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="simulación-interactiva"><span class="header-section-number">6.4</span> Simulación interactiva</h3>
+<iframe src="notebooks/punto-fijo-simulacion.html" width="100%" height="900px" style="border:none;">
+</iframe>
+<p>Elija una función, mueva la semilla <span class="math inline">\(x_0\)</span> y avance el paso <span class="math inline">\(k\)</span> para ver el diagrama de telaraña construirse iteración por iteración. La tabla de abajo del diagrama muestra <span class="math inline">\(\varepsilon_k\)</span> y la razón <span class="math inline">\(\varepsilon_{k+1}/\varepsilon_k\)</span> respecto al punto fijo más cercano a la semilla: compárela contra el valor de <span class="math inline">\(g'(p)\)</span> que aparece junto a cada punto fijo, es la comprobación en vivo de <span class="math inline">\(\varepsilon_{k+1}\approx g'(p)\varepsilon_k\)</span>. La cuarta opción del menú, el mapa logístico <span class="math inline">\(4x(1-x)\)</span>, se incluye solo para explorar: fuera del rango angosto donde converge a <span class="math inline">\(0\)</span>, casi cualquier otra semilla produce un comportamiento que ninguno de los criterios de esta nota alcanza a explicar, tema que queda para más adelante.</p>
+</section>
+</section>
+<section id="tarea" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="tarea"><span class="header-section-number">7</span> Tarea</h2>
+<p>Resuelva los ejercicios de la sección 4.2 (“Exercises”) de <em>Fundamentals of Numerical Computation</em>, disponibles en <a href="https://fncbook.com/julia/fixed-point/#exercises" class="uri">https://fncbook.com/julia/fixed-point/#exercises</a>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/arturosanjuan\.xyz");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="preferred_color_scheme">
+<input type="hidden" id="giscus-alt-theme" value="preferred_color_scheme">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      if (authorPrefersDark) {
+          [baseTheme, altTheme] = [altTheme, baseTheme];
+      }
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "asanjuanc/arturosanjuan-sitio";
+    script.dataset.repoId = "R_kgDOTzuHrw";
+    script.dataset.category = "Comentarios";
+    script.dataset.categoryId = "DIC_kwDOTzuHr84DD_eD";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "es";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../../cursos/numerico/taller-2/index.html" class="pagination-link" aria-label="Taller 2">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Taller 2</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
