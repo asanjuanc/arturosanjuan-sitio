@@ -1,7 +1,7 @@
 ---
 title: "La distribución normal como límite"
-subtitle: "El teorema de de Moivre y Laplace para la Poisson y para la binomial"
-description: "Demostración de que la suma de Poisson independientes es Poisson, la deducción de la aproximación normal a la Poisson mediante el método de Laplace aplicado directamente a la función de masa; la suma de Bernoulli es binomial, la media y varianza de la binomial, y su aproximación normal (teorema de de Moivre y Laplace)."
+subtitle: "El teorema de de Moivre y Laplace para la binomial y para la Poisson"
+description: ""
 author: "Arturo Sanjuán"
 date: 2026-09-05
 format:
@@ -16,7 +16,152 @@ format:
 order: 8
 ---
 
-En la sección anterior definimos la distribución normal y vimos, con la fórmula de Stirling, el método de Laplace: aproximar una función suave y muy picuda por una parábola alrededor de su máximo, y exponenciar para obtener una forma de campana. En esta sección aplicamos exactamente esa misma técnica dos veces más, directamente sobre la función de masa de la Poisson y de la binomial, para mostrar que ambas se aproximan a la normal cuando su parámetro (o su tamaño de muestra) crece. Este es el resultado que hoy se conoce como el **teorema de de Moivre y Laplace**, y es un caso particular de un fenómeno mucho más general, el teorema central del límite: casi cualquier suma de aportes independientes termina viéndose gaussiana, sin importar la forma de cada aporte individual.
+En la sección anterior definimos la distribución normal y vimos, con la fórmula de Stirling, el método de Laplace: aproximar una función suave y muy picuda por una parábola alrededor de su máximo, y exponenciar para obtener una forma de campana. En esta sección aplicamos exactamente esa misma técnica dos veces más, directamente sobre la función de masa de la binomial y de la Poisson, para mostrar que ambas se aproximan a la normal cuando su tamaño de muestra (o su parámetro) crece. Este es el resultado que hoy se conoce como el **teorema de de Moivre y Laplace**, y es un caso particular de un fenómeno mucho más general, el teorema central del límite: casi cualquier suma de aportes independientes termina viéndose gaussiana, sin importar la forma de cada aporte individual.
+
+## La normal como límite de una binomial
+
+### Media y varianza de la binomial
+
+Repetimos el ejercicio de suma de variables aleatorias, ahora con este caso: si $I_i\sim\text{Bernoulli}(p)$ son independientes, entonces $X=\sum_{i=1}^n I_i \sim \text{Binomial}(n,p)$, con
+
+$$P(X=k) = \binom nk p^k q^{n-k} \qquad q:=1-p$$
+
+**La media es**
+
+$$\sum_{k=0}^n k\binom nk p^kq^{n-k} = \sum_{k=1}^n n\binom{n-1}{k-1}p^kq^{n-k} = np\sum_{k=1}^n\binom{n-1}{k-1}p^{k-1}q^{(n-1)-(k-1)} = np(p+q)^{n-1} = np$$
+
+usando la identidad $k\binom nk=n\binom{n-1}{k-1}$ y reindexando $j=k-1$.
+
+**La varianza.** Escribimos $k^2=k(k-1)+k$ y obtenemos, con la identidad análoga $k(k-1)\binom nk = n(n-1)\binom{n-2}{k-2}$,
+
+$$\sum_{k=0}^n k(k-1)\binom nk p^kq^{n-k} = n(n-1)p^2\sum_{k=2}^n\binom{n-2}{k-2}p^{k-2}q^{(n-2)-(k-2)} = n(n-1)p^2$$
+
+Así, $E(k^2)=n(n-1)p^2+np$, y con $\mu=np$,
+
+$$\sigma^2 = n(n-1)p^2+np-(np)^2 = np(1-p) = npq$$
+
+::: {.callout-note title="Camino alterno, más corto"}
+Como $X=\sum I_i$ con $I_i$ independientes, y cada $I_i$ tiene media $p$ y varianza $p(1-p)=pq$ (pues $I_i^2=I_i$, así que su varianza es $p-p^2$), la media y la varianza de una suma de variables independientes son la suma de las medias y de las varianzas respectivamente: $\mu=np$, $\sigma^2=npq$, sin sumar ninguna serie.
+:::
+
+### Estandarización y el método de Laplace
+
+Consideremos $Z=\dfrac{k-np}{\sqrt{npq}}$, que mide cuántas desviaciones estándar nos hemos alejado de la media. Si $X_n\sim\text{Binomial}(n,p)$, $p\in(0,1)$ fijo, entonces para $z\in\mathbb R$ fijo, para toda sucesión de enteros $k(n)$ tales que $\dfrac{k-np}{\sqrt{npq}}\to z$ cuando $n\to\infty$, veremos que $P(X_n=k)\to\varphi(z)/\sqrt{npq}$.
+
+Nuevamente por el método de Laplace:
+
+$$\log P(X=k) = \log n!-\log k!-\log(n-k)!+k\log p+(n-k)\log q$$
+
+Con Stirling ($\log m!\approx m\log m-m+\tfrac12\log(2\pi m)$) en los tres factoriales,
+
+$$\log P(X=k) = \underbrace{n\log n-k\log k-(n-k)\log(n-k)+k\log p+(n-k)\log q}_{\displaystyle\psi(k)} + \tfrac12\log(2\pi n)-\tfrac12\log(2\pi k)-\tfrac12\log(2\pi(n-k))$$
+
+$$\psi'(k) = -\log k-1+\log(n-k)+1+\log p-\log q = \log\left(\frac{(n-k)p}{kq}\right)$$
+
+$$\psi'(k)=0 \iff (n-k)p=kq \iff np-kp=k-kp \iff k=np$$
+
+que es lo que esperábamos: el máximo está en la media. Ahí,
+
+$$\psi''(np) = -\frac1{np}-\frac1{nq} = -\frac1{npq}$$
+
+Con $u=\sqrt{npq}\,z$, Taylor de orden $2$ da $\psi(np+u)\approx-\dfrac{u^2}{2npq}=-\dfrac{z^2}2$. La parte polinomial, evaluada en $k=np$, $n-k=nq$, se simplifica a $-\tfrac12\log(2\pi\,npq)$ (el mismo tipo de cancelación que en la Poisson, más adelante). Entonces
+
+$$P(X=np+z\sqrt{npq}) \approx \frac1{\sqrt{2\pi\,npq}}e^{-z^2/2}$$
+
+::: {.callout-tip title="Teorema (de Moivre y Laplace para la binomial)"}
+Si $X_n\sim\text{Binomial}(n,p)$, $p\in(0,1)$ fijo, entonces para cada $z\in\mathbb R$ fijo, y toda sucesión de enteros $k(n)$ con $\dfrac{k-np}{\sqrt{npq}}\to z$ cuando $n\to\infty$,
+
+$$\sqrt{npq}\,P(X_n=k) \longrightarrow \frac1{\sqrt{2\pi}}e^{-z^2/2}$$
+
+Equivalentemente, si $Z_n:=\dfrac{X_n-np}{\sqrt{npq}}$, entonces $Z_n\to N(0,1)$.
+:::
+
+::: {.callout-important title="Dos límites distintos, no confundir"}
+Este es un límite diferente del que vimos en la sección de [variables aleatorias discretas](../vadiscretas/index.qmd), donde $n\to\infty$ y $p\to0$ manteniendo $np\to\lambda$ fijo (el régimen de sucesos raros, que da la aproximación de Poisson). Aquí, en cambio, $p$ se mantiene fijo y es $n$ el que crece sin control: es el mismo régimen de "muchos aportes independientes" que veremos para la Poisson, solo que ahora los aportes son Bernoulli en vez de Poisson unitarias.
+:::
+
+## Ejemplo: cien lanzamientos de una moneda justa
+
+::: {.callout-tip title="Ejemplo"}
+Si lanzamos una moneda justa $100$ veces, $\mu=np=50$ y $\sigma=\sqrt{npq}=5$. ¿Cuál es la probabilidad de obtener entre $45$ y $55$ caras?
+
+**Cálculo exacto.**
+
+$$P(45\le X\le55) = F_X(55)-F_X(44)$$
+
+En R: `pbinom(55, 100, 0.5) - pbinom(44, 100, 0.5)`.
+
+**Usando la aproximación normal, sin corrección de continuidad** (un error apreciable):
+
+$$P\left(\frac{45-50}5\le Z\le\frac{55-50}5\right) = P(-1\le Z\le1) \approx 0{,}68$$
+
+**Extendiendo medio paso a cada lado** (corrección de continuidad: cada entero $k$ representa, en realidad, la franja $[k-\tfrac12,k+\tfrac12]$, así que el rango de enteros del $45$ al $55$ corresponde al intervalo continuo $[44{,}5,\,55{,}5]$):
+
+$$P\left(\frac{44{,}5-50}5\le Z\le\frac{55{,}5-50}5\right) \approx 0{,}72$$
+
+mucho más cerca del valor exacto.
+:::
+
+```{r}
+#| label: moneda-100-lanzamientos
+exacto <- pbinom(55, 100, 0.5) - pbinom(44, 100, 0.5)
+sin_cc <- pnorm(1) - pnorm(-1)
+con_cc <- pnorm(1.1) - pnorm(-1.1)
+cat("Exacto (binomial)               :", round(exacto, 4), "\n")
+cat("Aprox. normal, sin correccion   :", round(sin_cc, 4), "\n")
+cat("Aprox. normal, con correccion   :", round(con_cc, 4), "\n")
+```
+
+### ¿Por qué es correcta la corrección de continuidad?
+
+La justificación habitual ("$k$ es un entero, así que ocupa un ancho $1$") es cierta, pero no explica por qué esa elección particular, $[k-\tfrac12,k+\tfrac12]$ y no otra, es la correcta. Vamos a deducirla usando solo lo que ya probamos arriba: el teorema de de Moivre y Laplace nos dio $P(X=k)\approx f(k)$, con $f$ la densidad normal de la misma media y varianza que $X$. Todo lo que sigue es consecuencia de esa sola aproximación, no una hipótesis adicional.
+
+Queremos $P(a\le X\le b)=\displaystyle\sum_{k=a}^b P(X=k)\approx\sum_{k=a}^bf(k)$. La pregunta correcta no es cuánto hay que ensanchar cada entero, sino qué integral es, exactamente, la suma $\sum_{k=a}^bf(k)$.
+
+::: {.callout-tip title="Proposición (regla del punto medio)"}
+Para $f$ suficientemente suave,
+
+$$\int_{k-1/2}^{k+1/2}f(x)\,dx = f(k)+\frac{f''(k)}{24}+O\!\left(f^{(4)}(k)\right)$$
+:::
+
+**Demostración.** Con $h=x-k$, Taylor da
+
+$$f(x) = f(k)+f'(k)h+\frac{f''(k)}2h^2+\frac{f'''(k)}6h^3+\frac{f^{(4)}(k)}{24}h^4+\cdots$$
+
+Al integrar en $h\in[-\tfrac12,\tfrac12]$, todos los términos de potencia impar se anulan por simetría, y
+
+$$\int_{-1/2}^{1/2}h^2\,dh=\frac1{12}, \qquad \int_{-1/2}^{1/2}h^4\,dh=\frac1{80}$$
+
+de donde el término en $f''(k)$ queda $\tfrac12f''(k)\cdot\tfrac1{12}=f''(k)/24$, y el siguiente término no nulo es de orden $f^{(4)}(k)$. $\blacksquare$
+
+Ahora observe que los intervalos $[a-\tfrac12,a+\tfrac12],\,[a+\tfrac12,a+\tfrac32],\,\ldots,\,[b-\tfrac12,b+\tfrac12]$ tienen exactamente a $a,a+1,\ldots,b$ como puntos medios, y empalman sin huecos ni traslapes cubriendo $[a-\tfrac12,\,b+\tfrac12]$. Sumando la proposición anterior sobre esos $b-a+1$ intervalos,
+
+$$\sum_{k=a}^bf(k) = \int_{a-1/2}^{b+1/2}f(x)\,dx \;-\;\sum_{k=a}^b\frac{f''(k)}{24}+\cdots$$
+
+Es decir, $\sum_{k=a}^bf(k)$ no es una aproximación que elegimos libremente a $\int_a^bf$ ni a $\int_{a-1/2}^{b+1/2}f$: es exactamente la suma de Riemann del punto medio, con paso $1$, de esta segunda integral, con un error de cuadratura ya identificado. El intervalo $[a-\tfrac12,b+\tfrac12]$ no se postula, se deduce de qué suma de Riemann es la que ya tenemos delante.
+
+::: {.callout-important title="Por qué omitir la corrección es peor, no solo menos preciso"}
+Para la densidad normal con desviación $\sigma$, $f''(x)\sim f(x)/\sigma^2$ cerca de la media, así que el error que queda **con** la corrección es de orden $1/\sigma^2$. En cambio, usar $\int_a^bf$ en vez de $\int_{a-1/2}^{b+1/2}f$ introduce un error del orden de $f(a)+f(b)\sim1/\sigma$, es decir del mismo orden que el error que ya arrastra la propia aproximación normal ($\sigma\sim\sqrt n$). Omitir la corrección no es una simplificación inocua: es usar los límites equivocados de la misma cuadratura, tirando una cifra completa de precisión.
+:::
+
+Con el ejemplo de las cien monedas ($\sigma=5$, $a=45$, $b=55$):
+
+```{r}
+#| label: correccion-continuidad-orden
+exacto <- pbinom(55, 100, 0.5) - pbinom(44, 100, 0.5)
+sin_cc <- pnorm(1)   - pnorm(-1)
+con_cc <- pnorm(1.1) - pnorm(-1.1)
+sigma  <- 5
+cat("error sin correccion :", round(abs(exacto - sin_cc), 4), "  (orden 1/sigma   =", round(1/sigma, 4), ")\n")
+cat("error con correccion :", round(abs(exacto - con_cc), 4), "  (orden 1/sigma^2 =", round(1/sigma^2, 4), ")\n")
+cat("razon de los errores :", round(abs(exacto - sin_cc) / abs(exacto - con_cc), 1), "\n")
+```
+
+El error baja en un factor de varios cientos, consistente con pasar de orden $1/\sigma$ a orden $1/\sigma^2$.
+
+::: {.callout-note title="Y para la Poisson"}
+El argumento no usa nada específico de la binomial: solo que $P(X=k)\approx f(k)$ para $f$ normal, que es justamente lo que da el teorema de de Moivre y Laplace para la Poisson, más adelante. La misma corrección $\pm\tfrac12$, por la misma razón de cuadratura, es la que se usa abajo en el ejemplo del manuscrito.
+:::
 
 ## La normal como límite de una Poisson
 
@@ -124,105 +269,11 @@ $$P_{200}(X\le200) \approx \frac1{\sqrt{2\pi}}\int_{-\infty}^0 e^{-z^2/2}\,dz = 
 
 muy cerca del valor exacto, $0{,}5188$, calculado arriba.
 
-Esta aproximación mejora si se aplica la corrección de continuidad discutida más adelante para la binomial: como el entero $k=200$ representa en realidad la franja $[199{,}5,\,200{,}5]$, el evento $\{X\le200\}$ corresponde al intervalo continuo $(-\infty,\,200{,}5]$, no a $(-\infty,\,200]$. Con esa corrección,
+Esta aproximación mejora si se aplica la corrección de continuidad vista antes, en el ejemplo de las cien monedas: como el entero $k=200$ representa en realidad la franja $[199{,}5,\,200{,}5]$, el evento $\{X\le200\}$ corresponde al intervalo continuo $(-\infty,\,200{,}5]$, no a $(-\infty,\,200]$. Con esa corrección,
 
 $$P_{200}(X\le200) \approx \frac1{\sqrt{2\pi}}\int_{-\infty}^{(200{,}5-200)/\sqrt{200}} e^{-z^2/2}\,dz \approx 0{,}5141$$
 
 más cerca todavía del valor exacto $0{,}5188$ que el $0,5$ obtenido sin la corrección.
-
-## La normal como límite de una binomial
-
-### Media y varianza de la binomial
-
-Repetimos el ejercicio de suma de variables aleatorias, ahora con este caso: si $I_i\sim\text{Bernoulli}(p)$ son independientes, entonces $X=\sum_{i=1}^n I_i \sim \text{Binomial}(n,p)$, con
-
-$$P(X=k) = \binom nk p^k q^{n-k} \qquad q:=1-p$$
-
-**La media es**
-
-$$\sum_{k=0}^n k\binom nk p^kq^{n-k} = \sum_{k=1}^n n\binom{n-1}{k-1}p^kq^{n-k} = np\sum_{k=1}^n\binom{n-1}{k-1}p^{k-1}q^{(n-1)-(k-1)} = np(p+q)^{n-1} = np$$
-
-usando la identidad $k\binom nk=n\binom{n-1}{k-1}$ y reindexando $j=k-1$.
-
-**La varianza.** Escribimos $k^2=k(k-1)+k$ y obtenemos, con la identidad análoga $k(k-1)\binom nk = n(n-1)\binom{n-2}{k-2}$,
-
-$$\sum_{k=0}^n k(k-1)\binom nk p^kq^{n-k} = n(n-1)p^2\sum_{k=2}^n\binom{n-2}{k-2}p^{k-2}q^{(n-2)-(k-2)} = n(n-1)p^2$$
-
-Así, $E(k^2)=n(n-1)p^2+np$, y con $\mu=np$,
-
-$$\sigma^2 = n(n-1)p^2+np-(np)^2 = np(1-p) = npq$$
-
-::: {.callout-note title="Camino alterno, más corto"}
-Como $X=\sum I_i$ con $I_i$ independientes, y cada $I_i$ tiene media $p$ y varianza $p(1-p)=pq$ (pues $I_i^2=I_i$, así que su varianza es $p-p^2$), la media y la varianza de una suma de variables independientes son la suma de las medias y de las varianzas respectivamente: $\mu=np$, $\sigma^2=npq$, sin sumar ninguna serie.
-:::
-
-### Estandarización y el método de Laplace
-
-Consideremos $Z=\dfrac{k-np}{\sqrt{npq}}$, que mide cuántas desviaciones estándar nos hemos alejado de la media. Si $X_n\sim\text{Binomial}(n,p)$, $p\in(0,1)$ fijo, entonces para $z\in\mathbb R$ fijo, para toda sucesión de enteros $k(n)$ tales que $\dfrac{k-np}{\sqrt{npq}}\to z$ cuando $n\to\infty$, veremos que $P(X_n=k)\to\varphi(z)/\sqrt{npq}$.
-
-Nuevamente por el método de Laplace:
-
-$$\log P(X=k) = \log n!-\log k!-\log(n-k)!+k\log p+(n-k)\log q$$
-
-Con Stirling ($\log m!\approx m\log m-m+\tfrac12\log(2\pi m)$) en los tres factoriales,
-
-$$\log P(X=k) = \underbrace{n\log n-k\log k-(n-k)\log(n-k)+k\log p+(n-k)\log q}_{\displaystyle\psi(k)} + \tfrac12\log(2\pi n)-\tfrac12\log(2\pi k)-\tfrac12\log(2\pi(n-k))$$
-
-$$\psi'(k) = -\log k-1+\log(n-k)+1+\log p-\log q = \log\left(\frac{(n-k)p}{kq}\right)$$
-
-$$\psi'(k)=0 \iff (n-k)p=kq \iff np-kp=k-kp \iff k=np$$
-
-que es lo que esperábamos: el máximo está en la media. Ahí,
-
-$$\psi''(np) = -\frac1{np}-\frac1{nq} = -\frac1{npq}$$
-
-Con $u=\sqrt{npq}\,z$, Taylor de orden $2$ da $\psi(np+u)\approx-\dfrac{u^2}{2npq}=-\dfrac{z^2}2$. La parte polinomial, evaluada en $k=np$, $n-k=nq$, se simplifica a $-\tfrac12\log(2\pi\,npq)$ (el mismo tipo de cancelación que en la Poisson). Entonces
-
-$$P(X=np+z\sqrt{npq}) \approx \frac1{\sqrt{2\pi\,npq}}e^{-z^2/2}$$
-
-::: {.callout-tip title="Teorema (de Moivre y Laplace para la binomial)"}
-Si $X_n\sim\text{Binomial}(n,p)$, $p\in(0,1)$ fijo, entonces para cada $z\in\mathbb R$ fijo, y toda sucesión de enteros $k(n)$ con $\dfrac{k-np}{\sqrt{npq}}\to z$ cuando $n\to\infty$,
-
-$$\sqrt{npq}\,P(X_n=k) \longrightarrow \frac1{\sqrt{2\pi}}e^{-z^2/2}$$
-
-Equivalentemente, si $Z_n:=\dfrac{X_n-np}{\sqrt{npq}}$, entonces $Z_n\to N(0,1)$.
-:::
-
-::: {.callout-important title="Dos límites distintos, no confundir"}
-Este es un límite diferente del que vimos en la sección de [variables aleatorias discretas](../vadiscretas/index.qmd), donde $n\to\infty$ y $p\to0$ manteniendo $np\to\lambda$ fijo (el régimen de sucesos raros, que da la aproximación de Poisson). Aquí, en cambio, $p$ se mantiene fijo y es $n$ el que crece sin control: es el mismo régimen de "muchos aportes independientes" que en la Poisson, solo que ahora los aportes son Bernoulli en vez de Poisson unitarias.
-:::
-
-## Ejemplo: cien lanzamientos de una moneda justa
-
-::: {.callout-tip title="Ejemplo"}
-Si lanzamos una moneda justa $100$ veces, $\mu=np=50$ y $\sigma=\sqrt{npq}=5$. ¿Cuál es la probabilidad de obtener entre $45$ y $55$ caras?
-
-**Cálculo exacto.**
-
-$$P(45\le X\le55) = F_X(55)-F_X(44)$$
-
-En R: `pbinom(55, 100, 0.5) - pbinom(44, 100, 0.5)`.
-
-**Usando la aproximación normal, sin corrección de continuidad** (un error apreciable):
-
-$$P\left(\frac{45-50}5\le Z\le\frac{55-50}5\right) = P(-1\le Z\le1) \approx 0{,}68$$
-
-**Extendiendo medio paso a cada lado** (corrección de continuidad: cada entero $k$ representa, en realidad, la franja $[k-\tfrac12,k+\tfrac12]$, así que el rango de enteros del $45$ al $55$ corresponde al intervalo continuo $[44{,}5,\,55{,}5]$):
-
-$$P\left(\frac{44{,}5-50}5\le Z\le\frac{55{,}5-50}5\right) \approx 0{,}72$$
-
-mucho más cerca del valor exacto.
-:::
-
-```{r}
-#| label: moneda-100-lanzamientos
-exacto <- pbinom(55, 100, 0.5) - pbinom(44, 100, 0.5)
-sin_cc <- pnorm(1) - pnorm(-1)
-con_cc <- pnorm(1.1) - pnorm(-1.1)
-cat("Exacto (binomial)               :", round(exacto, 4), "\n")
-cat("Aprox. normal, sin correccion   :", round(sin_cc, 4), "\n")
-cat("Aprox. normal, con correccion   :", round(con_cc, 4), "\n")
-```
 
 ## Panel interactivo: de la binomial y la Poisson a la normal
 

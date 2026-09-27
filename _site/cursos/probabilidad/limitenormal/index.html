@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Arturo Sanjuán">
-<meta name="description" content="Demostración de que la suma de Poisson independientes es Poisson, la deducción de la aproximación normal a la Poisson mediante el método de Laplace aplicado directamente a la función de masa; la suma de Bernoulli es binomial, la media y varianza de la binomial, y su aproximación normal (teorema de de Moivre y Laplace).">
 
 <title>La distribución normal como límite – Arturo Sanjuán</title>
 <style>
@@ -466,18 +465,21 @@ window.Quarto = {
     <h2 id="toc-title">Contenido</h2>
    
   <ul>
-  <li><a href="#la-normal-como-límite-de-una-poisson" id="toc-la-normal-como-límite-de-una-poisson" class="nav-link active" data-scroll-target="#la-normal-como-límite-de-una-poisson"><span class="header-section-number">1</span> La normal como límite de una Poisson</a>
+  <li><a href="#la-normal-como-límite-de-una-binomial" id="toc-la-normal-como-límite-de-una-binomial" class="nav-link active" data-scroll-target="#la-normal-como-límite-de-una-binomial"><span class="header-section-number">1</span> La normal como límite de una binomial</a>
   <ul class="collapse">
-  <li><a href="#preámbulo-la-suma-de-poisson-independientes-es-poisson" id="toc-preámbulo-la-suma-de-poisson-independientes-es-poisson" class="nav-link" data-scroll-target="#preámbulo-la-suma-de-poisson-independientes-es-poisson"><span class="header-section-number">1.1</span> Preámbulo: la suma de Poisson independientes es Poisson</a></li>
-  <li><a href="#qué-pasa-cuando-el-parámetro-crece" id="toc-qué-pasa-cuando-el-parámetro-crece" class="nav-link" data-scroll-target="#qué-pasa-cuando-el-parámetro-crece"><span class="header-section-number">1.2</span> Qué pasa cuando el parámetro crece</a></li>
-  <li><a href="#deducción-vía-el-método-de-laplace" id="toc-deducción-vía-el-método-de-laplace" class="nav-link" data-scroll-target="#deducción-vía-el-método-de-laplace"><span class="header-section-number">1.3</span> Deducción vía el método de Laplace</a></li>
+  <li><a href="#media-y-varianza-de-la-binomial" id="toc-media-y-varianza-de-la-binomial" class="nav-link" data-scroll-target="#media-y-varianza-de-la-binomial"><span class="header-section-number">1.1</span> Media y varianza de la binomial</a></li>
+  <li><a href="#estandarización-y-el-método-de-laplace" id="toc-estandarización-y-el-método-de-laplace" class="nav-link" data-scroll-target="#estandarización-y-el-método-de-laplace"><span class="header-section-number">1.2</span> Estandarización y el método de Laplace</a></li>
   </ul></li>
-  <li><a href="#la-normal-como-límite-de-una-binomial" id="toc-la-normal-como-límite-de-una-binomial" class="nav-link" data-scroll-target="#la-normal-como-límite-de-una-binomial"><span class="header-section-number">2</span> La normal como límite de una binomial</a>
+  <li><a href="#ejemplo-cien-lanzamientos-de-una-moneda-justa" id="toc-ejemplo-cien-lanzamientos-de-una-moneda-justa" class="nav-link" data-scroll-target="#ejemplo-cien-lanzamientos-de-una-moneda-justa"><span class="header-section-number">2</span> Ejemplo: cien lanzamientos de una moneda justa</a>
   <ul class="collapse">
-  <li><a href="#media-y-varianza-de-la-binomial" id="toc-media-y-varianza-de-la-binomial" class="nav-link" data-scroll-target="#media-y-varianza-de-la-binomial"><span class="header-section-number">2.1</span> Media y varianza de la binomial</a></li>
-  <li><a href="#estandarización-y-el-método-de-laplace" id="toc-estandarización-y-el-método-de-laplace" class="nav-link" data-scroll-target="#estandarización-y-el-método-de-laplace"><span class="header-section-number">2.2</span> Estandarización y el método de Laplace</a></li>
+  <li><a href="#por-qué-es-correcta-la-corrección-de-continuidad" id="toc-por-qué-es-correcta-la-corrección-de-continuidad" class="nav-link" data-scroll-target="#por-qué-es-correcta-la-corrección-de-continuidad"><span class="header-section-number">2.1</span> ¿Por qué es correcta la corrección de continuidad?</a></li>
   </ul></li>
-  <li><a href="#ejemplo-cien-lanzamientos-de-una-moneda-justa" id="toc-ejemplo-cien-lanzamientos-de-una-moneda-justa" class="nav-link" data-scroll-target="#ejemplo-cien-lanzamientos-de-una-moneda-justa"><span class="header-section-number">3</span> Ejemplo: cien lanzamientos de una moneda justa</a></li>
+  <li><a href="#la-normal-como-límite-de-una-poisson" id="toc-la-normal-como-límite-de-una-poisson" class="nav-link" data-scroll-target="#la-normal-como-límite-de-una-poisson"><span class="header-section-number">3</span> La normal como límite de una Poisson</a>
+  <ul class="collapse">
+  <li><a href="#preámbulo-la-suma-de-poisson-independientes-es-poisson" id="toc-preámbulo-la-suma-de-poisson-independientes-es-poisson" class="nav-link" data-scroll-target="#preámbulo-la-suma-de-poisson-independientes-es-poisson"><span class="header-section-number">3.1</span> Preámbulo: la suma de Poisson independientes es Poisson</a></li>
+  <li><a href="#qué-pasa-cuando-el-parámetro-crece" id="toc-qué-pasa-cuando-el-parámetro-crece" class="nav-link" data-scroll-target="#qué-pasa-cuando-el-parámetro-crece"><span class="header-section-number">3.2</span> Qué pasa cuando el parámetro crece</a></li>
+  <li><a href="#deducción-vía-el-método-de-laplace" id="toc-deducción-vía-el-método-de-laplace" class="nav-link" data-scroll-target="#deducción-vía-el-método-de-laplace"><span class="header-section-number">3.3</span> Deducción vía el método de Laplace</a></li>
+  </ul></li>
   <li><a href="#panel-interactivo-de-la-binomial-y-la-poisson-a-la-normal" id="toc-panel-interactivo-de-la-binomial-y-la-poisson-a-la-normal" class="nav-link" data-scroll-target="#panel-interactivo-de-la-binomial-y-la-poisson-a-la-normal"><span class="header-section-number">4</span> Panel interactivo: de la binomial y la Poisson a la normal</a></li>
   </ul>
 </nav>
@@ -493,14 +495,9 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">La distribución normal como límite</h1>
-<p class="subtitle lead">El teorema de de Moivre y Laplace para la Poisson y para la binomial</p>
+<p class="subtitle lead">El teorema de de Moivre y Laplace para la binomial y para la Poisson</p>
 </div>
 
-<div>
-  <div class="description">
-    Demostración de que la suma de Poisson independientes es Poisson, la deducción de la aproximación normal a la Poisson mediante el método de Laplace aplicado directamente a la función de masa; la suma de Bernoulli es binomial, la media y varianza de la binomial, y su aproximación normal (teorema de de Moivre y Laplace).
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
@@ -527,11 +524,195 @@ window.Quarto = {
 </header>
 
 
-<p>En la sección anterior definimos la distribución normal y vimos, con la fórmula de Stirling, el método de Laplace: aproximar una función suave y muy picuda por una parábola alrededor de su máximo, y exponenciar para obtener una forma de campana. En esta sección aplicamos exactamente esa misma técnica dos veces más, directamente sobre la función de masa de la Poisson y de la binomial, para mostrar que ambas se aproximan a la normal cuando su parámetro (o su tamaño de muestra) crece. Este es el resultado que hoy se conoce como el <strong>teorema de de Moivre y Laplace</strong>, y es un caso particular de un fenómeno mucho más general, el teorema central del límite: casi cualquier suma de aportes independientes termina viéndose gaussiana, sin importar la forma de cada aporte individual.</p>
-<section id="la-normal-como-límite-de-una-poisson" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="la-normal-como-límite-de-una-poisson"><span class="header-section-number">1</span> La normal como límite de una Poisson</h2>
-<section id="preámbulo-la-suma-de-poisson-independientes-es-poisson" class="level3" data-number="1.1">
-<h3 data-number="1.1" class="anchored" data-anchor-id="preámbulo-la-suma-de-poisson-independientes-es-poisson"><span class="header-section-number">1.1</span> Preámbulo: la suma de Poisson independientes es Poisson</h3>
+<p>En la sección anterior definimos la distribución normal y vimos, con la fórmula de Stirling, el método de Laplace: aproximar una función suave y muy picuda por una parábola alrededor de su máximo, y exponenciar para obtener una forma de campana. En esta sección aplicamos exactamente esa misma técnica dos veces más, directamente sobre la función de masa de la binomial y de la Poisson, para mostrar que ambas se aproximan a la normal cuando su tamaño de muestra (o su parámetro) crece. Este es el resultado que hoy se conoce como el <strong>teorema de de Moivre y Laplace</strong>, y es un caso particular de un fenómeno mucho más general, el teorema central del límite: casi cualquier suma de aportes independientes termina viéndose gaussiana, sin importar la forma de cada aporte individual.</p>
+<section id="la-normal-como-límite-de-una-binomial" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="la-normal-como-límite-de-una-binomial"><span class="header-section-number">1</span> La normal como límite de una binomial</h2>
+<section id="media-y-varianza-de-la-binomial" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="media-y-varianza-de-la-binomial"><span class="header-section-number">1.1</span> Media y varianza de la binomial</h3>
+<p>Repetimos el ejercicio de suma de variables aleatorias, ahora con este caso: si <span class="math inline">\(I_i\sim\text{Bernoulli}(p)\)</span> son independientes, entonces <span class="math inline">\(X=\sum_{i=1}^n I_i \sim \text{Binomial}(n,p)\)</span>, con</p>
+<p><span class="math display">\[P(X=k) = \binom nk p^k q^{n-k} \qquad q:=1-p\]</span></p>
+<p><strong>La media es</strong></p>
+<p><span class="math display">\[\sum_{k=0}^n k\binom nk p^kq^{n-k} = \sum_{k=1}^n n\binom{n-1}{k-1}p^kq^{n-k} = np\sum_{k=1}^n\binom{n-1}{k-1}p^{k-1}q^{(n-1)-(k-1)} = np(p+q)^{n-1} = np\]</span></p>
+<p>usando la identidad <span class="math inline">\(k\binom nk=n\binom{n-1}{k-1}\)</span> y reindexando <span class="math inline">\(j=k-1\)</span>.</p>
+<p><strong>La varianza.</strong> Escribimos <span class="math inline">\(k^2=k(k-1)+k\)</span> y obtenemos, con la identidad análoga <span class="math inline">\(k(k-1)\binom nk = n(n-1)\binom{n-2}{k-2}\)</span>,</p>
+<p><span class="math display">\[\sum_{k=0}^n k(k-1)\binom nk p^kq^{n-k} = n(n-1)p^2\sum_{k=2}^n\binom{n-2}{k-2}p^{k-2}q^{(n-2)-(k-2)} = n(n-1)p^2\]</span></p>
+<p>Así, <span class="math inline">\(E(k^2)=n(n-1)p^2+np\)</span>, y con <span class="math inline">\(\mu=np\)</span>,</p>
+<p><span class="math display">\[\sigma^2 = n(n-1)p^2+np-(np)^2 = np(1-p) = npq\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Camino alterno, más corto">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Camino alterno, más corto
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Como <span class="math inline">\(X=\sum I_i\)</span> con <span class="math inline">\(I_i\)</span> independientes, y cada <span class="math inline">\(I_i\)</span> tiene media <span class="math inline">\(p\)</span> y varianza <span class="math inline">\(p(1-p)=pq\)</span> (pues <span class="math inline">\(I_i^2=I_i\)</span>, así que su varianza es <span class="math inline">\(p-p^2\)</span>), la media y la varianza de una suma de variables independientes son la suma de las medias y de las varianzas respectivamente: <span class="math inline">\(\mu=np\)</span>, <span class="math inline">\(\sigma^2=npq\)</span>, sin sumar ninguna serie.</p>
+</div>
+</div>
+</section>
+<section id="estandarización-y-el-método-de-laplace" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="estandarización-y-el-método-de-laplace"><span class="header-section-number">1.2</span> Estandarización y el método de Laplace</h3>
+<p>Consideremos <span class="math inline">\(Z=\dfrac{k-np}{\sqrt{npq}}\)</span>, que mide cuántas desviaciones estándar nos hemos alejado de la media. Si <span class="math inline">\(X_n\sim\text{Binomial}(n,p)\)</span>, <span class="math inline">\(p\in(0,1)\)</span> fijo, entonces para <span class="math inline">\(z\in\mathbb R\)</span> fijo, para toda sucesión de enteros <span class="math inline">\(k(n)\)</span> tales que <span class="math inline">\(\dfrac{k-np}{\sqrt{npq}}\to z\)</span> cuando <span class="math inline">\(n\to\infty\)</span>, veremos que <span class="math inline">\(P(X_n=k)\to\varphi(z)/\sqrt{npq}\)</span>.</p>
+<p>Nuevamente por el método de Laplace:</p>
+<p><span class="math display">\[\log P(X=k) = \log n!-\log k!-\log(n-k)!+k\log p+(n-k)\log q\]</span></p>
+<p>Con Stirling (<span class="math inline">\(\log m!\approx m\log m-m+\tfrac12\log(2\pi m)\)</span>) en los tres factoriales,</p>
+<p><span class="math display">\[\log P(X=k) = \underbrace{n\log n-k\log k-(n-k)\log(n-k)+k\log p+(n-k)\log q}_{\displaystyle\psi(k)} + \tfrac12\log(2\pi n)-\tfrac12\log(2\pi k)-\tfrac12\log(2\pi(n-k))\]</span></p>
+<p><span class="math display">\[\psi'(k) = -\log k-1+\log(n-k)+1+\log p-\log q = \log\left(\frac{(n-k)p}{kq}\right)\]</span></p>
+<p><span class="math display">\[\psi'(k)=0 \iff (n-k)p=kq \iff np-kp=k-kp \iff k=np\]</span></p>
+<p>que es lo que esperábamos: el máximo está en la media. Ahí,</p>
+<p><span class="math display">\[\psi''(np) = -\frac1{np}-\frac1{nq} = -\frac1{npq}\]</span></p>
+<p>Con <span class="math inline">\(u=\sqrt{npq}\,z\)</span>, Taylor de orden <span class="math inline">\(2\)</span> da <span class="math inline">\(\psi(np+u)\approx-\dfrac{u^2}{2npq}=-\dfrac{z^2}2\)</span>. La parte polinomial, evaluada en <span class="math inline">\(k=np\)</span>, <span class="math inline">\(n-k=nq\)</span>, se simplifica a <span class="math inline">\(-\tfrac12\log(2\pi\,npq)\)</span> (el mismo tipo de cancelación que en la Poisson, más adelante). Entonces</p>
+<p><span class="math display">\[P(X=np+z\sqrt{npq}) \approx \frac1{\sqrt{2\pi\,npq}}e^{-z^2/2}\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema (de Moivre y Laplace para la binomial)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Teorema (de Moivre y Laplace para la binomial)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si <span class="math inline">\(X_n\sim\text{Binomial}(n,p)\)</span>, <span class="math inline">\(p\in(0,1)\)</span> fijo, entonces para cada <span class="math inline">\(z\in\mathbb R\)</span> fijo, y toda sucesión de enteros <span class="math inline">\(k(n)\)</span> con <span class="math inline">\(\dfrac{k-np}{\sqrt{npq}}\to z\)</span> cuando <span class="math inline">\(n\to\infty\)</span>,</p>
+<p><span class="math display">\[\sqrt{npq}\,P(X_n=k) \longrightarrow \frac1{\sqrt{2\pi}}e^{-z^2/2}\]</span></p>
+<p>Equivalentemente, si <span class="math inline">\(Z_n:=\dfrac{X_n-np}{\sqrt{npq}}\)</span>, entonces <span class="math inline">\(Z_n\to N(0,1)\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Dos límites distintos, no confundir">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Dos límites distintos, no confundir
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Este es un límite diferente del que vimos en la sección de <a href="../../../cursos/probabilidad/vadiscretas/index.html">variables aleatorias discretas</a>, donde <span class="math inline">\(n\to\infty\)</span> y <span class="math inline">\(p\to0\)</span> manteniendo <span class="math inline">\(np\to\lambda\)</span> fijo (el régimen de sucesos raros, que da la aproximación de Poisson). Aquí, en cambio, <span class="math inline">\(p\)</span> se mantiene fijo y es <span class="math inline">\(n\)</span> el que crece sin control: es el mismo régimen de “muchos aportes independientes” que veremos para la Poisson, solo que ahora los aportes son Bernoulli en vez de Poisson unitarias.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="ejemplo-cien-lanzamientos-de-una-moneda-justa" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="ejemplo-cien-lanzamientos-de-una-moneda-justa"><span class="header-section-number">2</span> Ejemplo: cien lanzamientos de una moneda justa</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si lanzamos una moneda justa <span class="math inline">\(100\)</span> veces, <span class="math inline">\(\mu=np=50\)</span> y <span class="math inline">\(\sigma=\sqrt{npq}=5\)</span>. ¿Cuál es la probabilidad de obtener entre <span class="math inline">\(45\)</span> y <span class="math inline">\(55\)</span> caras?</p>
+<p><strong>Cálculo exacto.</strong></p>
+<p><span class="math display">\[P(45\le X\le55) = F_X(55)-F_X(44)\]</span></p>
+<p>En R: <code>pbinom(55, 100, 0.5) - pbinom(44, 100, 0.5)</code>.</p>
+<p><strong>Usando la aproximación normal, sin corrección de continuidad</strong> (un error apreciable):</p>
+<p><span class="math display">\[P\left(\frac{45-50}5\le Z\le\frac{55-50}5\right) = P(-1\le Z\le1) \approx 0{,}68\]</span></p>
+<p><strong>Extendiendo medio paso a cada lado</strong> (corrección de continuidad: cada entero <span class="math inline">\(k\)</span> representa, en realidad, la franja <span class="math inline">\([k-\tfrac12,k+\tfrac12]\)</span>, así que el rango de enteros del <span class="math inline">\(45\)</span> al <span class="math inline">\(55\)</span> corresponde al intervalo continuo <span class="math inline">\([44{,}5,\,55{,}5]\)</span>):</p>
+<p><span class="math display">\[P\left(\frac{44{,}5-50}5\le Z\le\frac{55{,}5-50}5\right) \approx 0{,}72\]</span></p>
+<p>mucho más cerca del valor exacto.</p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>exacto <span class="ot">&lt;-</span> <span class="fu">pbinom</span>(<span class="dv">55</span>, <span class="dv">100</span>, <span class="fl">0.5</span>) <span class="sc">-</span> <span class="fu">pbinom</span>(<span class="dv">44</span>, <span class="dv">100</span>, <span class="fl">0.5</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sin_cc <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(<span class="dv">1</span>) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>con_cc <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(<span class="fl">1.1</span>) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="fl">1.1</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Exacto (binomial)               :"</span>, <span class="fu">round</span>(exacto, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Exacto (binomial)               : 0.7287 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Aprox. normal, sin correccion   :"</span>, <span class="fu">round</span>(sin_cc, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Aprox. normal, sin correccion   : 0.6827 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Aprox. normal, con correccion   :"</span>, <span class="fu">round</span>(con_cc, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Aprox. normal, con correccion   : 0.7287 </code></pre>
+</div>
+</div>
+<section id="por-qué-es-correcta-la-corrección-de-continuidad" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="por-qué-es-correcta-la-corrección-de-continuidad"><span class="header-section-number">2.1</span> ¿Por qué es correcta la corrección de continuidad?</h3>
+<p>La justificación habitual (“<span class="math inline">\(k\)</span> es un entero, así que ocupa un ancho <span class="math inline">\(1\)</span>”) es cierta, pero no explica por qué esa elección particular, <span class="math inline">\([k-\tfrac12,k+\tfrac12]\)</span> y no otra, es la correcta. Vamos a deducirla usando solo lo que ya probamos arriba: el teorema de de Moivre y Laplace nos dio <span class="math inline">\(P(X=k)\approx f(k)\)</span>, con <span class="math inline">\(f\)</span> la densidad normal de la misma media y varianza que <span class="math inline">\(X\)</span>. Todo lo que sigue es consecuencia de esa sola aproximación, no una hipótesis adicional.</p>
+<p>Queremos <span class="math inline">\(P(a\le X\le b)=\displaystyle\sum_{k=a}^b P(X=k)\approx\sum_{k=a}^bf(k)\)</span>. La pregunta correcta no es cuánto hay que ensanchar cada entero, sino qué integral es, exactamente, la suma <span class="math inline">\(\sum_{k=a}^bf(k)\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Proposición (regla del punto medio)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Proposición (regla del punto medio)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para <span class="math inline">\(f\)</span> suficientemente suave,</p>
+<p><span class="math display">\[\int_{k-1/2}^{k+1/2}f(x)\,dx = f(k)+\frac{f''(k)}{24}+O\!\left(f^{(4)}(k)\right)\]</span></p>
+</div>
+</div>
+<p><strong>Demostración.</strong> Con <span class="math inline">\(h=x-k\)</span>, Taylor da</p>
+<p><span class="math display">\[f(x) = f(k)+f'(k)h+\frac{f''(k)}2h^2+\frac{f'''(k)}6h^3+\frac{f^{(4)}(k)}{24}h^4+\cdots\]</span></p>
+<p>Al integrar en <span class="math inline">\(h\in[-\tfrac12,\tfrac12]\)</span>, todos los términos de potencia impar se anulan por simetría, y</p>
+<p><span class="math display">\[\int_{-1/2}^{1/2}h^2\,dh=\frac1{12}, \qquad \int_{-1/2}^{1/2}h^4\,dh=\frac1{80}\]</span></p>
+<p>de donde el término en <span class="math inline">\(f''(k)\)</span> queda <span class="math inline">\(\tfrac12f''(k)\cdot\tfrac1{12}=f''(k)/24\)</span>, y el siguiente término no nulo es de orden <span class="math inline">\(f^{(4)}(k)\)</span>. <span class="math inline">\(\blacksquare\)</span></p>
+<p>Ahora observe que los intervalos <span class="math inline">\([a-\tfrac12,a+\tfrac12],\,[a+\tfrac12,a+\tfrac32],\,\ldots,\,[b-\tfrac12,b+\tfrac12]\)</span> tienen exactamente a <span class="math inline">\(a,a+1,\ldots,b\)</span> como puntos medios, y empalman sin huecos ni traslapes cubriendo <span class="math inline">\([a-\tfrac12,\,b+\tfrac12]\)</span>. Sumando la proposición anterior sobre esos <span class="math inline">\(b-a+1\)</span> intervalos,</p>
+<p><span class="math display">\[\sum_{k=a}^bf(k) = \int_{a-1/2}^{b+1/2}f(x)\,dx \;-\;\sum_{k=a}^b\frac{f''(k)}{24}+\cdots\]</span></p>
+<p>Es decir, <span class="math inline">\(\sum_{k=a}^bf(k)\)</span> no es una aproximación que elegimos libremente a <span class="math inline">\(\int_a^bf\)</span> ni a <span class="math inline">\(\int_{a-1/2}^{b+1/2}f\)</span>: es exactamente la suma de Riemann del punto medio, con paso <span class="math inline">\(1\)</span>, de esta segunda integral, con un error de cuadratura ya identificado. El intervalo <span class="math inline">\([a-\tfrac12,b+\tfrac12]\)</span> no se postula, se deduce de qué suma de Riemann es la que ya tenemos delante.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Por qué omitir la corrección es peor, no solo menos preciso">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Por qué omitir la corrección es peor, no solo menos preciso
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para la densidad normal con desviación <span class="math inline">\(\sigma\)</span>, <span class="math inline">\(f''(x)\sim f(x)/\sigma^2\)</span> cerca de la media, así que el error que queda <strong>con</strong> la corrección es de orden <span class="math inline">\(1/\sigma^2\)</span>. En cambio, usar <span class="math inline">\(\int_a^bf\)</span> en vez de <span class="math inline">\(\int_{a-1/2}^{b+1/2}f\)</span> introduce un error del orden de <span class="math inline">\(f(a)+f(b)\sim1/\sigma\)</span>, es decir del mismo orden que el error que ya arrastra la propia aproximación normal (<span class="math inline">\(\sigma\sim\sqrt n\)</span>). Omitir la corrección no es una simplificación inocua: es usar los límites equivocados de la misma cuadratura, tirando una cifra completa de precisión.</p>
+</div>
+</div>
+<p>Con el ejemplo de las cien monedas (<span class="math inline">\(\sigma=5\)</span>, <span class="math inline">\(a=45\)</span>, <span class="math inline">\(b=55\)</span>):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>exacto <span class="ot">&lt;-</span> <span class="fu">pbinom</span>(<span class="dv">55</span>, <span class="dv">100</span>, <span class="fl">0.5</span>) <span class="sc">-</span> <span class="fu">pbinom</span>(<span class="dv">44</span>, <span class="dv">100</span>, <span class="fl">0.5</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>sin_cc <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(<span class="dv">1</span>)   <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>con_cc <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(<span class="fl">1.1</span>) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="fl">1.1</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>sigma  <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"error sin correccion :"</span>, <span class="fu">round</span>(<span class="fu">abs</span>(exacto <span class="sc">-</span> sin_cc), <span class="dv">4</span>), <span class="st">"  (orden 1/sigma   ="</span>, <span class="fu">round</span>(<span class="dv">1</span><span class="sc">/</span>sigma, <span class="dv">4</span>), <span class="st">")</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>error sin correccion : 0.0461   (orden 1/sigma   = 0.2 )</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"error con correccion :"</span>, <span class="fu">round</span>(<span class="fu">abs</span>(exacto <span class="sc">-</span> con_cc), <span class="dv">4</span>), <span class="st">"  (orden 1/sigma^2 ="</span>, <span class="fu">round</span>(<span class="dv">1</span><span class="sc">/</span>sigma<span class="sc">^</span><span class="dv">2</span>, <span class="dv">4</span>), <span class="st">")</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>error con correccion : 1e-04   (orden 1/sigma^2 = 0.04 )</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"razon de los errores :"</span>, <span class="fu">round</span>(<span class="fu">abs</span>(exacto <span class="sc">-</span> sin_cc) <span class="sc">/</span> <span class="fu">abs</span>(exacto <span class="sc">-</span> con_cc), <span class="dv">1</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>razon de los errores : 582.3 </code></pre>
+</div>
+</div>
+<p>El error baja en un factor de varios cientos, consistente con pasar de orden <span class="math inline">\(1/\sigma\)</span> a orden <span class="math inline">\(1/\sigma^2\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Y para la Poisson">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Y para la Poisson
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El argumento no usa nada específico de la binomial: solo que <span class="math inline">\(P(X=k)\approx f(k)\)</span> para <span class="math inline">\(f\)</span> normal, que es justamente lo que da el teorema de de Moivre y Laplace para la Poisson, más adelante. La misma corrección <span class="math inline">\(\pm\tfrac12\)</span>, por la misma razón de cuadratura, es la que se usa abajo en el ejemplo del manuscrito.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="la-normal-como-límite-de-una-poisson" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="la-normal-como-límite-de-una-poisson"><span class="header-section-number">3</span> La normal como límite de una Poisson</h2>
+<section id="preámbulo-la-suma-de-poisson-independientes-es-poisson" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="preámbulo-la-suma-de-poisson-independientes-es-poisson"><span class="header-section-number">3.1</span> Preámbulo: la suma de Poisson independientes es Poisson</h3>
 <div class="callout callout-style-default callout-tip callout-titled" title="Proposición">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -568,18 +749,18 @@ window.Quarto = {
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"P(X&lt;=10)  ="</span>, <span class="fu">ppois</span>(<span class="dv">10</span>, <span class="dv">200</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"P(X&lt;=10)  ="</span>, <span class="fu">ppois</span>(<span class="dv">10</span>, <span class="dv">200</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>P(X&lt;=10)  = 4.109585e-71 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"P(X&lt;=200) ="</span>, <span class="fu">round</span>(<span class="fu">ppois</span>(<span class="dv">200</span>, <span class="dv">200</span>), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"P(X&lt;=200) ="</span>, <span class="fu">round</span>(<span class="fu">ppois</span>(<span class="dv">200</span>, <span class="dv">200</span>), <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>P(X&lt;=200) = 0.5188 </code></pre>
 </div>
 </div>
 </section>
-<section id="qué-pasa-cuando-el-parámetro-crece" class="level3" data-number="1.2">
-<h3 data-number="1.2" class="anchored" data-anchor-id="qué-pasa-cuando-el-parámetro-crece"><span class="header-section-number">1.2</span> Qué pasa cuando el parámetro crece</h3>
+<section id="qué-pasa-cuando-el-parámetro-crece" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="qué-pasa-cuando-el-parámetro-crece"><span class="header-section-number">3.2</span> Qué pasa cuando el parámetro crece</h3>
 <p>Suponga ahora que el número de páginas <span class="math inline">\(\to\infty\)</span>; entonces <span class="math inline">\(\lambda\to\infty\)</span>, y para que la pregunta siga teniendo sentido real, <span class="math inline">\(k\)</span> también debe crecer.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Tarea">
 <div class="callout-header d-flex align-content-center">
@@ -600,8 +781,8 @@ window.Quarto = {
 <p><span class="math display">\[Z := \frac{k-\lambda}{\sqrt\lambda}\]</span></p>
 <p>que mide cuántas desviaciones estándar nos hemos alejado de la media. Vamos a mostrar que <span class="math inline">\(Z\to N(0,1)\)</span>, escribiendo <span class="math inline">\(k=\lambda+\sqrt\lambda\,z\)</span> para <span class="math inline">\(z\)</span> fijo y dejando <span class="math inline">\(\lambda\to\infty\)</span>.</p>
 </section>
-<section id="deducción-vía-el-método-de-laplace" class="level3" data-number="1.3">
-<h3 data-number="1.3" class="anchored" data-anchor-id="deducción-vía-el-método-de-laplace"><span class="header-section-number">1.3</span> Deducción vía el método de Laplace</h3>
+<section id="deducción-vía-el-método-de-laplace" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="deducción-vía-el-método-de-laplace"><span class="header-section-number">3.3</span> Deducción vía el método de Laplace</h3>
 <p>Si <span class="math inline">\(P_\lambda(k) = \dfrac1{k!}e^{-\lambda}\lambda^k\)</span>, entonces</p>
 <p><span class="math display">\[\log P_\lambda(k) = -\lambda+k\log\lambda-\log k!\]</span></p>
 <p>Usando Stirling, <span class="math inline">\(\log k! \approx k\log k - k + \tfrac12\log(2\pi k)\)</span>, así que</p>
@@ -649,121 +830,10 @@ window.Quarto = {
 <p>Volviendo al ejemplo del manuscrito: con <span class="math inline">\(\lambda=200\)</span>, la probabilidad de que todos los errores estén por debajo de la media se aproxima con</p>
 <p><span class="math display">\[P_{200}(X\le200) \approx \frac1{\sqrt{2\pi}}\int_{-\infty}^0 e^{-z^2/2}\,dz = 0{,}5\]</span></p>
 <p>muy cerca del valor exacto, <span class="math inline">\(0{,}5188\)</span>, calculado arriba.</p>
-<p>Esta aproximación mejora si se aplica la corrección de continuidad discutida más adelante para la binomial: como el entero <span class="math inline">\(k=200\)</span> representa en realidad la franja <span class="math inline">\([199{,}5,\,200{,}5]\)</span>, el evento <span class="math inline">\(\{X\le200\}\)</span> corresponde al intervalo continuo <span class="math inline">\((-\infty,\,200{,}5]\)</span>, no a <span class="math inline">\((-\infty,\,200]\)</span>. Con esa corrección,</p>
+<p>Esta aproximación mejora si se aplica la corrección de continuidad vista antes, en el ejemplo de las cien monedas: como el entero <span class="math inline">\(k=200\)</span> representa en realidad la franja <span class="math inline">\([199{,}5,\,200{,}5]\)</span>, el evento <span class="math inline">\(\{X\le200\}\)</span> corresponde al intervalo continuo <span class="math inline">\((-\infty,\,200{,}5]\)</span>, no a <span class="math inline">\((-\infty,\,200]\)</span>. Con esa corrección,</p>
 <p><span class="math display">\[P_{200}(X\le200) \approx \frac1{\sqrt{2\pi}}\int_{-\infty}^{(200{,}5-200)/\sqrt{200}} e^{-z^2/2}\,dz \approx 0{,}5141\]</span></p>
 <p>más cerca todavía del valor exacto <span class="math inline">\(0{,}5188\)</span> que el <span class="math inline">\(0,5\)</span> obtenido sin la corrección.</p>
 </section>
-</section>
-<section id="la-normal-como-límite-de-una-binomial" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="la-normal-como-límite-de-una-binomial"><span class="header-section-number">2</span> La normal como límite de una binomial</h2>
-<section id="media-y-varianza-de-la-binomial" class="level3" data-number="2.1">
-<h3 data-number="2.1" class="anchored" data-anchor-id="media-y-varianza-de-la-binomial"><span class="header-section-number">2.1</span> Media y varianza de la binomial</h3>
-<p>Repetimos el ejercicio de suma de variables aleatorias, ahora con este caso: si <span class="math inline">\(I_i\sim\text{Bernoulli}(p)\)</span> son independientes, entonces <span class="math inline">\(X=\sum_{i=1}^n I_i \sim \text{Binomial}(n,p)\)</span>, con</p>
-<p><span class="math display">\[P(X=k) = \binom nk p^k q^{n-k} \qquad q:=1-p\]</span></p>
-<p><strong>La media es</strong></p>
-<p><span class="math display">\[\sum_{k=0}^n k\binom nk p^kq^{n-k} = \sum_{k=1}^n n\binom{n-1}{k-1}p^kq^{n-k} = np\sum_{k=1}^n\binom{n-1}{k-1}p^{k-1}q^{(n-1)-(k-1)} = np(p+q)^{n-1} = np\]</span></p>
-<p>usando la identidad <span class="math inline">\(k\binom nk=n\binom{n-1}{k-1}\)</span> y reindexando <span class="math inline">\(j=k-1\)</span>.</p>
-<p><strong>La varianza.</strong> Escribimos <span class="math inline">\(k^2=k(k-1)+k\)</span> y obtenemos, con la identidad análoga <span class="math inline">\(k(k-1)\binom nk = n(n-1)\binom{n-2}{k-2}\)</span>,</p>
-<p><span class="math display">\[\sum_{k=0}^n k(k-1)\binom nk p^kq^{n-k} = n(n-1)p^2\sum_{k=2}^n\binom{n-2}{k-2}p^{k-2}q^{(n-2)-(k-2)} = n(n-1)p^2\]</span></p>
-<p>Así, <span class="math inline">\(E(k^2)=n(n-1)p^2+np\)</span>, y con <span class="math inline">\(\mu=np\)</span>,</p>
-<p><span class="math display">\[\sigma^2 = n(n-1)p^2+np-(np)^2 = np(1-p) = npq\]</span></p>
-<div class="callout callout-style-default callout-note callout-titled" title="Camino alterno, más corto">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Camino alterno, más corto
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Como <span class="math inline">\(X=\sum I_i\)</span> con <span class="math inline">\(I_i\)</span> independientes, y cada <span class="math inline">\(I_i\)</span> tiene media <span class="math inline">\(p\)</span> y varianza <span class="math inline">\(p(1-p)=pq\)</span> (pues <span class="math inline">\(I_i^2=I_i\)</span>, así que su varianza es <span class="math inline">\(p-p^2\)</span>), la media y la varianza de una suma de variables independientes son la suma de las medias y de las varianzas respectivamente: <span class="math inline">\(\mu=np\)</span>, <span class="math inline">\(\sigma^2=npq\)</span>, sin sumar ninguna serie.</p>
-</div>
-</div>
-</section>
-<section id="estandarización-y-el-método-de-laplace" class="level3" data-number="2.2">
-<h3 data-number="2.2" class="anchored" data-anchor-id="estandarización-y-el-método-de-laplace"><span class="header-section-number">2.2</span> Estandarización y el método de Laplace</h3>
-<p>Consideremos <span class="math inline">\(Z=\dfrac{k-np}{\sqrt{npq}}\)</span>, que mide cuántas desviaciones estándar nos hemos alejado de la media. Si <span class="math inline">\(X_n\sim\text{Binomial}(n,p)\)</span>, <span class="math inline">\(p\in(0,1)\)</span> fijo, entonces para <span class="math inline">\(z\in\mathbb R\)</span> fijo, para toda sucesión de enteros <span class="math inline">\(k(n)\)</span> tales que <span class="math inline">\(\dfrac{k-np}{\sqrt{npq}}\to z\)</span> cuando <span class="math inline">\(n\to\infty\)</span>, veremos que <span class="math inline">\(P(X_n=k)\to\varphi(z)/\sqrt{npq}\)</span>.</p>
-<p>Nuevamente por el método de Laplace:</p>
-<p><span class="math display">\[\log P(X=k) = \log n!-\log k!-\log(n-k)!+k\log p+(n-k)\log q\]</span></p>
-<p>Con Stirling (<span class="math inline">\(\log m!\approx m\log m-m+\tfrac12\log(2\pi m)\)</span>) en los tres factoriales,</p>
-<p><span class="math display">\[\log P(X=k) = \underbrace{n\log n-k\log k-(n-k)\log(n-k)+k\log p+(n-k)\log q}_{\displaystyle\psi(k)} + \tfrac12\log(2\pi n)-\tfrac12\log(2\pi k)-\tfrac12\log(2\pi(n-k))\]</span></p>
-<p><span class="math display">\[\psi'(k) = -\log k-1+\log(n-k)+1+\log p-\log q = \log\left(\frac{(n-k)p}{kq}\right)\]</span></p>
-<p><span class="math display">\[\psi'(k)=0 \iff (n-k)p=kq \iff np-kp=k-kp \iff k=np\]</span></p>
-<p>que es lo que esperábamos: el máximo está en la media. Ahí,</p>
-<p><span class="math display">\[\psi''(np) = -\frac1{np}-\frac1{nq} = -\frac1{npq}\]</span></p>
-<p>Con <span class="math inline">\(u=\sqrt{npq}\,z\)</span>, Taylor de orden <span class="math inline">\(2\)</span> da <span class="math inline">\(\psi(np+u)\approx-\dfrac{u^2}{2npq}=-\dfrac{z^2}2\)</span>. La parte polinomial, evaluada en <span class="math inline">\(k=np\)</span>, <span class="math inline">\(n-k=nq\)</span>, se simplifica a <span class="math inline">\(-\tfrac12\log(2\pi\,npq)\)</span> (el mismo tipo de cancelación que en la Poisson). Entonces</p>
-<p><span class="math display">\[P(X=np+z\sqrt{npq}) \approx \frac1{\sqrt{2\pi\,npq}}e^{-z^2/2}\]</span></p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Teorema (de Moivre y Laplace para la binomial)">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Teorema (de Moivre y Laplace para la binomial)
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Si <span class="math inline">\(X_n\sim\text{Binomial}(n,p)\)</span>, <span class="math inline">\(p\in(0,1)\)</span> fijo, entonces para cada <span class="math inline">\(z\in\mathbb R\)</span> fijo, y toda sucesión de enteros <span class="math inline">\(k(n)\)</span> con <span class="math inline">\(\dfrac{k-np}{\sqrt{npq}}\to z\)</span> cuando <span class="math inline">\(n\to\infty\)</span>,</p>
-<p><span class="math display">\[\sqrt{npq}\,P(X_n=k) \longrightarrow \frac1{\sqrt{2\pi}}e^{-z^2/2}\]</span></p>
-<p>Equivalentemente, si <span class="math inline">\(Z_n:=\dfrac{X_n-np}{\sqrt{npq}}\)</span>, entonces <span class="math inline">\(Z_n\to N(0,1)\)</span>.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled" title="Dos límites distintos, no confundir">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Dos límites distintos, no confundir
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Este es un límite diferente del que vimos en la sección de <a href="../../../cursos/probabilidad/vadiscretas/index.html">variables aleatorias discretas</a>, donde <span class="math inline">\(n\to\infty\)</span> y <span class="math inline">\(p\to0\)</span> manteniendo <span class="math inline">\(np\to\lambda\)</span> fijo (el régimen de sucesos raros, que da la aproximación de Poisson). Aquí, en cambio, <span class="math inline">\(p\)</span> se mantiene fijo y es <span class="math inline">\(n\)</span> el que crece sin control: es el mismo régimen de “muchos aportes independientes” que en la Poisson, solo que ahora los aportes son Bernoulli en vez de Poisson unitarias.</p>
-</div>
-</div>
-</section>
-</section>
-<section id="ejemplo-cien-lanzamientos-de-una-moneda-justa" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="ejemplo-cien-lanzamientos-de-una-moneda-justa"><span class="header-section-number">3</span> Ejemplo: cien lanzamientos de una moneda justa</h2>
-<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Ejemplo
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Si lanzamos una moneda justa <span class="math inline">\(100\)</span> veces, <span class="math inline">\(\mu=np=50\)</span> y <span class="math inline">\(\sigma=\sqrt{npq}=5\)</span>. ¿Cuál es la probabilidad de obtener entre <span class="math inline">\(45\)</span> y <span class="math inline">\(55\)</span> caras?</p>
-<p><strong>Cálculo exacto.</strong></p>
-<p><span class="math display">\[P(45\le X\le55) = F_X(55)-F_X(44)\]</span></p>
-<p>En R: <code>pbinom(55, 100, 0.5) - pbinom(44, 100, 0.5)</code>.</p>
-<p><strong>Usando la aproximación normal, sin corrección de continuidad</strong> (un error apreciable):</p>
-<p><span class="math display">\[P\left(\frac{45-50}5\le Z\le\frac{55-50}5\right) = P(-1\le Z\le1) \approx 0{,}68\]</span></p>
-<p><strong>Extendiendo medio paso a cada lado</strong> (corrección de continuidad: cada entero <span class="math inline">\(k\)</span> representa, en realidad, la franja <span class="math inline">\([k-\tfrac12,k+\tfrac12]\)</span>, así que el rango de enteros del <span class="math inline">\(45\)</span> al <span class="math inline">\(55\)</span> corresponde al intervalo continuo <span class="math inline">\([44{,}5,\,55{,}5]\)</span>):</p>
-<p><span class="math display">\[P\left(\frac{44{,}5-50}5\le Z\le\frac{55{,}5-50}5\right) \approx 0{,}72\]</span></p>
-<p>mucho más cerca del valor exacto.</p>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>exacto <span class="ot">&lt;-</span> <span class="fu">pbinom</span>(<span class="dv">55</span>, <span class="dv">100</span>, <span class="fl">0.5</span>) <span class="sc">-</span> <span class="fu">pbinom</span>(<span class="dv">44</span>, <span class="dv">100</span>, <span class="fl">0.5</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sin_cc <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(<span class="dv">1</span>) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>con_cc <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(<span class="fl">1.1</span>) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="fl">1.1</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Exacto (binomial)               :"</span>, <span class="fu">round</span>(exacto, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Exacto (binomial)               : 0.7287 </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Aprox. normal, sin correccion   :"</span>, <span class="fu">round</span>(sin_cc, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Aprox. normal, sin correccion   : 0.6827 </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Aprox. normal, con correccion   :"</span>, <span class="fu">round</span>(con_cc, <span class="dv">4</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Aprox. normal, con correccion   : 0.7287 </code></pre>
-</div>
-</div>
 </section>
 <section id="panel-interactivo-de-la-binomial-y-la-poisson-a-la-normal" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="panel-interactivo-de-la-binomial-y-la-poisson-a-la-normal"><span class="header-section-number">4</span> Panel interactivo: de la binomial y la Poisson a la normal</h2>
