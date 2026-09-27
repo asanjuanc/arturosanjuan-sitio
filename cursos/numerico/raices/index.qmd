@@ -12,7 +12,7 @@ format:
     code-fold: false
     smooth-scroll: true
     highlight-style: github
-order: 9
+order: 12
 ---
 
 El problema de la raíz: dada una función $f$, posiblemente muy no lineal, buscamos $r$ tal que $f(r)=0$. Seguimos la sección 4.1 y 4.2 del libro de Driscoll y Braun.
