@@ -14,5 +14,5 @@ listing:
 ---
 
 ::: {.callout-note title="Declaración de uso de IA"}
-Estas notas de clase las escribo a mano en una tableta [Lenovo](https://www.lenovo.com/ec/es/p/tablets/android/lenovo-tb-j706/zzitztatb0j) con [Nebo](https://www.myscript.com/es/). El paso del formato pdf a este formato web con [Quarto](https://quarto.org/) lo hago con ayuda de [Claude](https://claude.ai/), pero el contenido matemático es mío llenando los detalles de los textos guía: yo lo escribo y yo lo reviso antes de publicarlo.
+Estas notas de clase las escribo a mano en una tableta [Lenovo](https://www.lenovo.com/ec/es/p/tablets/android/lenovo-tb-j706/zzitztatb0j) con [Nebo](https://www.myscript.com/es/). El paso del formato pdf a este formato web con [Quarto](https://quarto.org/) lo hago con ayuda de [Claude](https://claude.ai/), pero el contenido matemático es mío llenando los detalles de los textos guía: yo lo escribo y yo lo reviso antes de publicarlo. No pretendo tampoco hacer libros de texto con estas notas. Son solo guías del trabajo realizado en la clase con mis estudiantes.
 :::
