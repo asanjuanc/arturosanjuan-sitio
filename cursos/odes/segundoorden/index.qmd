@@ -214,3 +214,8 @@ $$v=\int\frac{1}{x^2}\,e^{\int x\,f(x)\,dx}\,dx,$$
 y la solución general, en cualquier intervalo que no contenga al cero, es
 
 $$y=c_1x+c_2\,x\int\frac{1}{x^2}\,e^{\int x\,f(x)\,dx}\,dx.$$
+
+
+::: {.callout-important title="Tarea"}
+Haga todos los ejercicios de las secciones 14, 14 y 16 del libro de Simmons.
+:::
