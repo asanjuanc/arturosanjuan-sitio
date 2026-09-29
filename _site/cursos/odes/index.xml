@@ -15,7 +15,304 @@
 <link>https://arturosanjuan.xyz/cursos/odes/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Fri, 25 Sep 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 28 Sep 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Ecuaciones Lineales de Segundo Orden</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/odes/segundoorden/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="por-qué-el-segundo-orden" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="por-qué-el-segundo-orden"><span class="header-section-number">1</span> Por qué el segundo orden</h2>
+<p>Si se recorre la física matemática con una lupa, la ecuación de segundo orden aparece por todas partes. Hay una razón evidente, la segunda ley de Newton (la fuerza fija la aceleración, que es una segunda derivada), y otra menos evidente pero igual de importante: cuando se separan variables en las grandes ecuaciones en derivadas parciales, la de Laplace, la del calor, la de onda y la de Schrödinger, lo que queda en cada variable es una ecuación lineal de segundo orden. Al cambiar la geometría del problema cambia la ecuación que resulta: en coordenadas esféricas sale la de Legendre, en un disco o en un cilindro la de Bessel, y en el oscilador cuántico la de Hermite.</p>
+<p>Casi ninguna de esas ecuaciones se puede resolver con funciones elementales. Sus soluciones definen funciones nuevas, las funciones especiales, que llevan el nombre de quienes las estudiaron a fondo y que el Simmons trata en los capítulos 5 y 8. El cuadro reúne las más conocidas, con los lugares donde suelen aparecer. La primera fila es la más sencilla de todas, el oscilador armónico, con la que empezamos aquí.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 23%">
+<col style="width: 48%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Ecuación</th>
+<th style="text-align: left;">Funciones especiales</th>
+<th style="text-align: left;">Dónde aparece</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Oscilador armónico: <img src="https://latex.codecogs.com/png.latex?y''+%5Comega%5E2y=0"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7Bsen%7D%5Comega%20x">, <img src="https://latex.codecogs.com/png.latex?%5Ccos%5Comega%20x"></td>
+<td style="text-align: left;">Resortes, péndulos con oscilaciones pequeñas y circuitos LC. Es lo que queda, en primera aproximación, cerca de cualquier equilibrio estable.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Legendre: <img src="https://latex.codecogs.com/png.latex?(1-x%5E2)y''-2xy'+n(n+1)y=0"></td>
+<td style="text-align: left;">Polinomios de Legendre <img src="https://latex.codecogs.com/png.latex?P_n"></td>
+<td style="text-align: left;">Potencial gravitatorio y eléctrico con simetría esférica, y temperatura en una esfera. El desarrollo multipolar del potencial se escribe con ellos.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bessel: <img src="https://latex.codecogs.com/png.latex?x%5E2y''+xy'+(x%5E2-p%5E2)y=0"></td>
+<td style="text-align: left;">Funciones de Bessel <img src="https://latex.codecogs.com/png.latex?J_p"> y <img src="https://latex.codecogs.com/png.latex?Y_p"></td>
+<td style="text-align: left;">Membrana circular vibrante, calor en un cilindro y ondas en tubos y guías cilíndricas.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hermite: <img src="https://latex.codecogs.com/png.latex?y''-2xy'+2ny=0"></td>
+<td style="text-align: left;">Polinomios de Hermite <img src="https://latex.codecogs.com/png.latex?H_n"></td>
+<td style="text-align: left;">Oscilador armónico cuántico: los niveles discretos de energía salen de exigir soluciones acotadas.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Laguerre: <img src="https://latex.codecogs.com/png.latex?xy''+(1-x)y'+ny=0"></td>
+<td style="text-align: left;">Polinomios de Laguerre <img src="https://latex.codecogs.com/png.latex?L_n"></td>
+<td style="text-align: left;">Parte radial de la función de onda del átomo de hidrógeno, con polinomios de Laguerre asociados.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Chebyshev: <img src="https://latex.codecogs.com/png.latex?(1-x%5E2)y''-xy'+n%5E2y=0"></td>
+<td style="text-align: left;">Polinomios de Chebyshev <img src="https://latex.codecogs.com/png.latex?T_n"> y <img src="https://latex.codecogs.com/png.latex?U_n"></td>
+<td style="text-align: left;">Aproximación polinomial óptima, cuadratura numérica y métodos espectrales.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Airy: <img src="https://latex.codecogs.com/png.latex?y''-xy=0"></td>
+<td style="text-align: left;">Funciones de Airy <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7BAi%7D"> y <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7BBi%7D"></td>
+<td style="text-align: left;">Puntos de retorno en mecánica cuántica, partícula en un campo uniforme y cáusticas del arco iris en óptica.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hipergeométrica de Gauss: <img src="https://latex.codecogs.com/png.latex?x(1-x)y''+%5Bc-(a+b+1)x%5Dy'-aby=0"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%7B%7D_2F_1(a,b;c;x)"></td>
+<td style="text-align: left;">Contiene a Legendre y a Chebyshev como casos particulares, y aparece también en funciones de variable compleja.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hipergeométrica confluente: <img src="https://latex.codecogs.com/png.latex?xy''+(c-x)y'-ay=0"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%7B%7D_1F_1(a;c;x)"></td>
+<td style="text-align: left;">Contiene a Hermite y a Laguerre, y da las funciones de onda de Coulomb.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mathieu: <img src="https://latex.codecogs.com/png.latex?y''+(a-2q%5Ccos%202x)y=0"></td>
+<td style="text-align: left;">Funciones de Mathieu</td>
+<td style="text-align: left;">Membrana elíptica, trampas de iones, resonancia paramétrica y estabilidad de sistemas con coeficientes periódicos.</td>
+</tr>
+</tbody>
+</table>
+<p>Todas comparten con el oscilador la misma estructura: son lineales, de segundo orden, y sus soluciones forman un espacio de dimensión dos. Esa estructura es lo que vamos a entender bien en estas notas, antes de pasar a los casos que no se resuelven con funciones elementales.</p>
+</section>
+<section id="existencia-y-unicidad" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="existencia-y-unicidad"><span class="header-section-number">2</span> Existencia y unicidad</h2>
+<section id="repaso-la-ecuación-lineal-de-primer-orden" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="repaso-la-ecuación-lineal-de-primer-orden"><span class="header-section-number">2.1</span> Repaso: la ecuación lineal de primer orden</h3>
+<p>Ya vimos cómo resolver la ecuación lineal general de primer orden</p>
+<p><img src="https://latex.codecogs.com/png.latex?y'+P(x)y=Q(x)."></p>
+<p>Si <img src="https://latex.codecogs.com/png.latex?P"> y <img src="https://latex.codecogs.com/png.latex?Q"> son continuas en <img src="https://latex.codecogs.com/png.latex?%5Ba,b%5D">, siempre podemos encontrar una solución. Más aún, si <img src="https://latex.codecogs.com/png.latex?x_0%5Cin%5Ba,b%5D"> y prescribimos el valor inicial <img src="https://latex.codecogs.com/png.latex?y(x_0)=y_0">, la solución es única. En efecto, multiplicamos ambos lados por el factor integrante</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cmu(x)=e%5E%7B%5Cint_%7Bx_0%7D%5E%7Bx%7DP(s)%5C,ds%7D,"></p>
+<p>que cumple <img src="https://latex.codecogs.com/png.latex?%5Cmu'=P%5Cmu"> y <img src="https://latex.codecogs.com/png.latex?%5Cmu(x_0)=1">, y obtenemos</p>
+<p><img src="https://latex.codecogs.com/png.latex?(%5Cmu%20y)'=%5Cmu%20Q."></p>
+<p>Integrando de <img src="https://latex.codecogs.com/png.latex?x_0"> a <img src="https://latex.codecogs.com/png.latex?x">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cmu(x)%5C,y(x)-y_0=%5Cint_%7Bx_0%7D%5E%7Bx%7D%5Cmu(%5Czeta)%5C,Q(%5Czeta)%5C,d%5Czeta,"></p>
+<p>de donde</p>
+<p><img src="https://latex.codecogs.com/png.latex?y(x)=e%5E%7B-%5Cint_%7Bx_0%7D%5E%7Bx%7DP(s)%5C,ds%7D%5Cleft(%5Cint_%7Bx_0%7D%5E%7Bx%7De%5E%7B%5Cint_%7Bx_0%7D%5E%7B%5Czeta%7DP(s)%5C,ds%7D%5C,Q(%5Czeta)%5C,d%5Czeta+y_0%5Cright)."></p>
+<p>Aplicar esta fórmula tal cual rara vez tiene sentido (es mejor hacer las cuentas en cada caso), pero su valor está en que muestra que hay solución, que es única, y que está definida en todo el intervalo <img src="https://latex.codecogs.com/png.latex?%5Ba,b%5D">.</p>
+</section>
+<section id="segundo-orden-un-acto-de-fe" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="segundo-orden-un-acto-de-fe"><span class="header-section-number">2.2</span> Segundo orden: un acto de fe</h3>
+<p>Si consideramos ahora la ecuación lineal regular general de segundo orden</p>
+<p><img src="https://latex.codecogs.com/png.latex?y''+P(x)%5C,y'+Q(x)%5C,y=R(x),%5Ctag%7B1%7D"></p>
+<p>no podemos proceder de la misma manera. Para garantizar existencia y unicidad hace falta el teorema de Picard y Lindelöf, y aun así el teorema no dice cuál es la solución, solo que existe y es única. Su demostración se sale del alcance de este curso, y hay que verla en un curso de teoría de ecuaciones diferenciales ordinarias. Por ahora hacemos, entonces, un acto de fe con el siguiente teorema.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Teorema A (existencia y unicidad)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Teorema A (existencia y unicidad)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sean <img src="https://latex.codecogs.com/png.latex?P(x)">, <img src="https://latex.codecogs.com/png.latex?Q(x)"> y <img src="https://latex.codecogs.com/png.latex?R(x)"> funciones continuas en un intervalo cerrado <img src="https://latex.codecogs.com/png.latex?%5Ba,b%5D">. Si <img src="https://latex.codecogs.com/png.latex?x_0"> es cualquier punto de <img src="https://latex.codecogs.com/png.latex?%5Ba,b%5D">, y <img src="https://latex.codecogs.com/png.latex?y_0"> y <img src="https://latex.codecogs.com/png.latex?y_0'"> son números cualesquiera, entonces la ecuación (1) tiene una y solo una solución <img src="https://latex.codecogs.com/png.latex?y(x)"> en todo el intervalo tal que <img src="https://latex.codecogs.com/png.latex?y(x_0)=y_0"> y <img src="https://latex.codecogs.com/png.latex?y'(x_0)=y_0'">.</p>
+</div>
+</div>
+<p>Es el Teorema A con el que abre el capítulo 3 del Simmons, que allí se enuncia sin demostración y se prueba en el capítulo 13, reduciendo la ecuación a un sistema de dos ecuaciones de primer orden con <img src="https://latex.codecogs.com/png.latex?z=y'">. Dicho geométricamente, por cada punto <img src="https://latex.codecogs.com/png.latex?(x_0,y_0)"> y con cada pendiente prescrita <img src="https://latex.codecogs.com/png.latex?y_0'"> pasa exactamente una solución.</p>
+</section>
+</section>
+<section id="la-ecuación-reducida" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="la-ecuación-reducida"><span class="header-section-number">3</span> La ecuación reducida</h2>
+<p>La ecuación (1) se llama <em>reducida</em> (u <em>homogénea</em>) cuando <img src="https://latex.codecogs.com/png.latex?R%5Cequiv0">. El ejemplo más importante es el oscilador armónico,</p>
+<p><img src="https://latex.codecogs.com/png.latex?y''+y=0."></p>
+<p>Podríamos resolverla por reducción de orden, pero más adelante daremos un método más eficiente. Por ahora basta comprobar directamente que <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7Bsen%7Dx"> y <img src="https://latex.codecogs.com/png.latex?%5Ccos%20x"> son soluciones, y que de hecho <img src="https://latex.codecogs.com/png.latex?c_1%5Ccos%20x+c_2%5Coperatorname%7Bsen%7Dx"> también lo es. Intuitivamente salen dos constantes porque, al ser la ecuación de orden dos, hay que integrar dos veces.</p>
+<p>Si ahora imponemos las condiciones iniciales <img src="https://latex.codecogs.com/png.latex?y(0)=1"> y <img src="https://latex.codecogs.com/png.latex?y'(0)=0">, el Teorema A dice que hay una única solución, y es <img src="https://latex.codecogs.com/png.latex?%5Ccos%20x">. Si en cambio imponemos <img src="https://latex.codecogs.com/png.latex?y(0)=0"> y <img src="https://latex.codecogs.com/png.latex?y'(0)=0">, la única solución es la trivial, <img src="https://latex.codecogs.com/png.latex?y%5Cequiv0">.</p>
+<section id="dos-condiciones-en-puntos-distintos" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="dos-condiciones-en-puntos-distintos"><span class="header-section-number">3.1</span> Dos condiciones en puntos distintos</h3>
+<p>Tomemos ahora la misma ecuación, <img src="https://latex.codecogs.com/png.latex?y''+y=0">, pero con las condiciones <img src="https://latex.codecogs.com/png.latex?y(0)=0"> y <img src="https://latex.codecogs.com/png.latex?y(%5Cpi)=0">: una en cada extremo del intervalo <img src="https://latex.codecogs.com/png.latex?%5B0,%5Cpi%5D">, en lugar de dos en el mismo punto. Como <img src="https://latex.codecogs.com/png.latex?y=a%5Ccos%20x+b%5Coperatorname%7Bsen%7Dx">, la primera condición da <img src="https://latex.codecogs.com/png.latex?a=0">, y la segunda, <img src="https://latex.codecogs.com/png.latex?y(%5Cpi)=b%5Coperatorname%7Bsen%7D%5Cpi=0">, se cumple para cualquier <img src="https://latex.codecogs.com/png.latex?b">. Entonces <img src="https://latex.codecogs.com/png.latex?y=b%5Coperatorname%7Bsen%7Dx"> es solución para todo <img src="https://latex.codecogs.com/png.latex?b"> real, y hay infinitas soluciones.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Pregunta">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Pregunta
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Qué falló?</p>
+</div>
+</div>
+</section>
+</section>
+<section id="la-ecuación-forzada" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="la-ecuación-forzada"><span class="header-section-number">4</span> La ecuación forzada</h2>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?y_c"> la solución general de la ecuación reducida (la que trae las dos constantes) y sea <img src="https://latex.codecogs.com/png.latex?y_p"> una solución cualquiera de la ecuación completa (1). Si <img src="https://latex.codecogs.com/png.latex?y"> es otra solución de (1), entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?(y-y_p)''+P(x)%5C,(y-y_p)'+Q(x)%5C,(y-y_p)=R(x)-R(x)=0,"></p>
+<p>así que <img src="https://latex.codecogs.com/png.latex?y-y_p"> resuelve la ecuación reducida, es decir, <img src="https://latex.codecogs.com/png.latex?y-y_p=y_c"> para alguna elección de las constantes. La solución general de la ecuación forzada es entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?y=y_p+y_c."></p>
+<p>Es inmediato ver que el conjunto de soluciones de la ecuación reducida es un espacio vectorial, y esperamos que, al no ser una múltiplo de la otra, dos soluciones basten para tener todas las soluciones posibles del problema general.</p>
+</section>
+<section id="un-ejercicio-por-inspección" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="un-ejercicio-por-inspección"><span class="header-section-number">5</span> Un ejercicio por inspección</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Encuentre, por intuición, olfato, inspección o experimentación, la solución general de</p>
+<p><img src="https://latex.codecogs.com/png.latex?xy''-y'=3x%5E2."></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Por inspección, <img src="https://latex.codecogs.com/png.latex?y_1=1"> y <img src="https://latex.codecogs.com/png.latex?y_2=x%5E2"> resuelven la ecuación reducida <img src="https://latex.codecogs.com/png.latex?xy''-y'=0">, y <img src="https://latex.codecogs.com/png.latex?y_p=x%5E3"> resuelve la ecuación completa, porque <img src="https://latex.codecogs.com/png.latex?x%5Ccdot6x-3x%5E2=3x%5E2">. Por lo tanto</p>
+<p><img src="https://latex.codecogs.com/png.latex?y=c_1+c_2x%5E2+x%5E3."></p>
+</div>
+</div>
+<p>Impongamos, por ejemplo, <img src="https://latex.codecogs.com/png.latex?y(0)=0"> y <img src="https://latex.codecogs.com/png.latex?y'(0)=2">. La primera condición da <img src="https://latex.codecogs.com/png.latex?c_1=0">. Como <img src="https://latex.codecogs.com/png.latex?y'(x)=2c_2x+3x%5E2"> vale <img src="https://latex.codecogs.com/png.latex?0"> en <img src="https://latex.codecogs.com/png.latex?x=0"> sin importar el valor de <img src="https://latex.codecogs.com/png.latex?c_2">, la segunda condición no se puede cumplir, y <img src="https://latex.codecogs.com/png.latex?c_2"> queda libre: no hay solución. Si en cambio pedimos <img src="https://latex.codecogs.com/png.latex?y'(0)=0">, la segunda condición se cumple para todo <img src="https://latex.codecogs.com/png.latex?c_2">, y hay infinitas soluciones, <img src="https://latex.codecogs.com/png.latex?y=c_2x%5E2+x%5E3">.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Pregunta">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Pregunta
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Qué falló?</p>
+</div>
+</div>
+<p>Ahora sí imponemos las condiciones en otro punto, <img src="https://latex.codecogs.com/png.latex?y(1)=0"> y <img src="https://latex.codecogs.com/png.latex?y'(1)=2">, y todo funciona. Con la solución general de arriba,</p>
+<p><img src="https://latex.codecogs.com/png.latex?y(1)=c_1+c_2+1=0%5Cquad%5CLongrightarrow%5Cquad%20c_1+c_2=-1,"></p>
+<p><img src="https://latex.codecogs.com/png.latex?y'(1)=2c_2+3=2%5Cquad%5CLongrightarrow%5Cquad%20c_2=-%5Ctfrac12,"></p>
+<p>y por tanto <img src="https://latex.codecogs.com/png.latex?c_1=-%5Ctfrac12">. La única solución es</p>
+<p><img src="https://latex.codecogs.com/png.latex?y(x)=x%5E3-%5Cfrac%7Bx%5E2%7D%7B2%7D-%5Cfrac12."></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Pregunta">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Pregunta
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Por qué aquí sí funcionó?</p>
+</div>
+</div>
+</section>
+<section id="de-la-familia-a-la-ecuación" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="de-la-familia-a-la-ecuación"><span class="header-section-number">6</span> De la familia a la ecuación</h2>
+<p>Un ejercicio en sentido contrario: en lugar de resolver una ecuación, encontrar la ecuación a partir de una familia de soluciones.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Ejercicio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Ejercicio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Encuentre la ecuación diferencial de la siguiente familia de curvas:</p>
+<p><img src="https://latex.codecogs.com/png.latex?y(x)=c_1+c_2e%5E%7B-2x%7D."></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Derivando, <img src="https://latex.codecogs.com/png.latex?y'=-2c_2e%5E%7B-2x%7D"> y <img src="https://latex.codecogs.com/png.latex?y''=4c_2e%5E%7B-2x%7D">. De la primera, <img src="https://latex.codecogs.com/png.latex?c_2e%5E%7B-2x%7D=-y'/2">, y sustituyendo en la segunda queda <img src="https://latex.codecogs.com/png.latex?y''=-2y'">, es decir,</p>
+<p><img src="https://latex.codecogs.com/png.latex?y''+2y'=0."></p>
+<p>La constante <img src="https://latex.codecogs.com/png.latex?c_1"> desaparece al derivar, y como la familia tiene dos parámetros, la ecuación es de segundo orden.</p>
+</div>
+</div>
+</section>
+<section id="un-primer-resultado-cualitativo" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="un-primer-resultado-cualitativo"><span class="header-section-number">7</span> Un primer resultado cualitativo</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Proposición">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Proposición
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sean <img src="https://latex.codecogs.com/png.latex?P"> y <img src="https://latex.codecogs.com/png.latex?Q"> continuas en <img src="https://latex.codecogs.com/png.latex?%5Ba,b%5D">. Si <img src="https://latex.codecogs.com/png.latex?y_1"> y <img src="https://latex.codecogs.com/png.latex?y_2"> son soluciones de la ecuación reducida <img src="https://latex.codecogs.com/png.latex?y''+P(x)y'+Q(x)y=0"> con un cero común <img src="https://latex.codecogs.com/png.latex?x_0%5Cin%5Ba,b%5D">, es decir, <img src="https://latex.codecogs.com/png.latex?y_1(x_0)=0=y_2(x_0)">, entonces una de ellas es un múltiplo escalar de la otra.</p>
+</div>
+</div>
+<p>Basta considerar el problema de valor inicial</p>
+<p><img src="https://latex.codecogs.com/png.latex?y''+P(x)%5C,y'+Q(x)%5C,y=0,%5Cqquad%20y(x_0)=0,%5Cquad%20y'(x_0)=0,"></p>
+<p>que por el Teorema A tiene una sola solución, la trivial <img src="https://latex.codecogs.com/png.latex?y%5Cequiv0">. Distinguimos dos casos.</p>
+<p><strong>Caso 1: <img src="https://latex.codecogs.com/png.latex?y_1'(x_0)=0">.</strong> Entonces <img src="https://latex.codecogs.com/png.latex?y_1"> resuelve ese problema, luego <img src="https://latex.codecogs.com/png.latex?y_1%5Cequiv0"> y <img src="https://latex.codecogs.com/png.latex?y_1=0%5Ccdot%20y_2">.</p>
+<p><strong>Caso 2: <img src="https://latex.codecogs.com/png.latex?y_1'(x_0)%5Cneq0">.</strong> Sea</p>
+<p><img src="https://latex.codecogs.com/png.latex?c=%5Cfrac%7By_2'(x_0)%7D%7By_1'(x_0)%7D."></p>
+<p>Por linealidad, <img src="https://latex.codecogs.com/png.latex?cy_1-y_2"> es solución de la ecuación reducida, y además <img src="https://latex.codecogs.com/png.latex?(cy_1-y_2)(x_0)=0"> y <img src="https://latex.codecogs.com/png.latex?(cy_1-y_2)'(x_0)=cy_1'(x_0)-y_2'(x_0)=0">. Por la unicidad, <img src="https://latex.codecogs.com/png.latex?cy_1-y_2%5Cequiv0">, es decir, <img src="https://latex.codecogs.com/png.latex?y_2=cy_1">.</p>
+<p>En el texto están los detalles de que el espacio de soluciones de la ecuación reducida tiene dimensión dos. Los hacemos en clase.</p>
+<p>Volvamos al ejemplo que teníamos, ahora en su versión reducida:</p>
+<p><img src="https://latex.codecogs.com/png.latex?xy''-y'=0."></p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?y_1=1"> y <img src="https://latex.codecogs.com/png.latex?y_2=x%5E2">, el determinante</p>
+<p><img src="https://latex.codecogs.com/png.latex?W(y_1,y_2)=%5Cbegin%7Bvmatrix%7D1&amp;x%5E2%5C%5C0&amp;2x%5Cend%7Bvmatrix%7D=2x"></p>
+<p>(que se llama wronskiano) no se anula en un intervalo que no contenga al cero. Por eso <img src="https://latex.codecogs.com/png.latex?c_1+c_2x%5E2"> es la solución general en cualquier intervalo que no contenga a <img src="https://latex.codecogs.com/png.latex?0">.</p>
+</section>
+<section id="una-solución-conocida-da-otra" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="una-solución-conocida-da-otra"><span class="header-section-number">8</span> Una solución conocida da otra</h2>
+<p>Si tenemos una solución <img src="https://latex.codecogs.com/png.latex?y_1"> de la ecuación reducida, podemos encontrar otra proponiendo <img src="https://latex.codecogs.com/png.latex?y_2=vy_1"> y buscando <img src="https://latex.codecogs.com/png.latex?v"> (ver Simmons). Resulta</p>
+<p><img src="https://latex.codecogs.com/png.latex?v=%5Cint%5Cfrac%7B1%7D%7By_1%5E2%7D%5C,e%5E%7B-%5Cint%20P%5C,dx%7D%5C,dx."></p>
+<p>También lo podemos hacer con la ayuda del wronskiano. Con <img src="https://latex.codecogs.com/png.latex?y_2=vy_1"> tenemos <img src="https://latex.codecogs.com/png.latex?y_2'=v'y_1+vy_1'">, y así</p>
+<p><img src="https://latex.codecogs.com/png.latex?v'=%5Cfrac%7By_2'%7D%7By_1%7D-v%5C,%5Cfrac%7By_1'%7D%7By_1%7D=%5Cfrac%7By_2'%7D%7By_1%7D-%5Cfrac%7By_2%5C,y_1'%7D%7By_1%5E2%7D=%5Cfrac%7By_1y_2'-y_1'y_2%7D%7By_1%5E2%7D=%5Cleft(%5Cfrac%7By_2%7D%7By_1%7D%5Cright)'=%5Cfrac%7BW(y_1,y_2)%7D%7By_1%5E2%7D=%5Cfrac%7BC%5C,e%5E%7B-%5Cint%20P%5C,dx%7D%7D%7By_1%5E2%7D."></p>
+<p>En el último paso usamos la fórmula de Abel, <img src="https://latex.codecogs.com/png.latex?W=Ce%5E%7B-%5Cint%20P%5C,dx%7D">, que sale de <img src="https://latex.codecogs.com/png.latex?W'=y_1y_2''-y_1''y_2=-PW"> al usar que <img src="https://latex.codecogs.com/png.latex?y_1"> y <img src="https://latex.codecogs.com/png.latex?y_2"> resuelven la ecuación reducida. Tomando <img src="https://latex.codecogs.com/png.latex?C=1"> e integrando se obtiene la expresión de <img src="https://latex.codecogs.com/png.latex?v"> de arriba.</p>
+<p><strong>Ejemplo.</strong> Consideremos</p>
+<p><img src="https://latex.codecogs.com/png.latex?y''-x%5C,f(x)%5C,y'+f(x)%5C,y=0,"></p>
+<p>con <img src="https://latex.codecogs.com/png.latex?f"> continua. Por inspección, <img src="https://latex.codecogs.com/png.latex?y_1=x"> es solución: <img src="https://latex.codecogs.com/png.latex?y_1''=0"> y <img src="https://latex.codecogs.com/png.latex?-xf(x)%5Ccdot1+f(x)%5Ccdot%20x=0">. Aquí <img src="https://latex.codecogs.com/png.latex?P=-xf(x)">, así que</p>
+<p><img src="https://latex.codecogs.com/png.latex?v=%5Cint%5Cfrac%7B1%7D%7Bx%5E2%7D%5C,e%5E%7B%5Cint%20x%5C,f(x)%5C,dx%7D%5C,dx,"></p>
+<p>y la solución general, en cualquier intervalo que no contenga al cero, es</p>
+<p><img src="https://latex.codecogs.com/png.latex?y=c_1x+c_2%5C,x%5Cint%5Cfrac%7B1%7D%7Bx%5E2%7D%5C,e%5E%7B%5Cint%20x%5C,f(x)%5C,dx%7D%5C,dx."></p>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/odes/segundoorden/</guid>
+  <pubDate>Mon, 28 Sep 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Parcial 1</title>
   <dc:creator>Arturo Sanjuán</dc:creator>

@@ -1,0 +1,216 @@
+---
+title: "Ecuaciones Lineales de Segundo Orden"
+subtitle: "Existencia, unicidad y estructura de las soluciones"
+description: ""
+author: "Arturo Sanjuán"
+date: 2026-09-28
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 11
+---
+
+## Por qué el segundo orden
+
+Si se recorre la física matemática con una lupa, la ecuación de segundo orden aparece por todas partes. Hay una razón evidente, la segunda ley de Newton (la fuerza fija la aceleración, que es una segunda derivada), y otra menos evidente pero igual de importante: cuando se separan variables en las grandes ecuaciones en derivadas parciales, la de Laplace, la del calor, la de onda y la de Schrödinger, lo que queda en cada variable es una ecuación lineal de segundo orden. Al cambiar la geometría del problema cambia la ecuación que resulta: en coordenadas esféricas sale la de Legendre, en un disco o en un cilindro la de Bessel, y en el oscilador cuántico la de Hermite.
+
+Casi ninguna de esas ecuaciones se puede resolver con funciones elementales. Sus soluciones definen funciones nuevas, las funciones especiales, que llevan el nombre de quienes las estudiaron a fondo y que el Simmons trata en los capítulos 5 y 8. El cuadro reúne las más conocidas, con los lugares donde suelen aparecer. La primera fila es la más sencilla de todas, el oscilador armónico, con la que empezamos aquí.
+
+| Ecuación | Funciones especiales | Dónde aparece |
+|:-------------------------|:---------------------|:--------------------------------------------|
+| Oscilador armónico: $y''+\omega^2y=0$ | $\operatorname{sen}\omega x$, $\cos\omega x$ | Resortes, péndulos con oscilaciones pequeñas y circuitos LC. Es lo que queda, en primera aproximación, cerca de cualquier equilibrio estable. |
+| Legendre: $(1-x^2)y''-2xy'+n(n+1)y=0$ | Polinomios de Legendre $P_n$ | Potencial gravitatorio y eléctrico con simetría esférica, y temperatura en una esfera. El desarrollo multipolar del potencial se escribe con ellos. |
+| Bessel: $x^2y''+xy'+(x^2-p^2)y=0$ | Funciones de Bessel $J_p$ y $Y_p$ | Membrana circular vibrante, calor en un cilindro y ondas en tubos y guías cilíndricas. |
+| Hermite: $y''-2xy'+2ny=0$ | Polinomios de Hermite $H_n$ | Oscilador armónico cuántico: los niveles discretos de energía salen de exigir soluciones acotadas. |
+| Laguerre: $xy''+(1-x)y'+ny=0$ | Polinomios de Laguerre $L_n$ | Parte radial de la función de onda del átomo de hidrógeno, con polinomios de Laguerre asociados. |
+| Chebyshev: $(1-x^2)y''-xy'+n^2y=0$ | Polinomios de Chebyshev $T_n$ y $U_n$ | Aproximación polinomial óptima, cuadratura numérica y métodos espectrales. |
+| Airy: $y''-xy=0$ | Funciones de Airy $\operatorname{Ai}$ y $\operatorname{Bi}$ | Puntos de retorno en mecánica cuántica, partícula en un campo uniforme y cáusticas del arco iris en óptica. |
+| Hipergeométrica de Gauss: $x(1-x)y''+[c-(a+b+1)x]y'-aby=0$ | ${}_2F_1(a,b;c;x)$ | Contiene a Legendre y a Chebyshev como casos particulares, y aparece también en funciones de variable compleja. |
+| Hipergeométrica confluente: $xy''+(c-x)y'-ay=0$ | ${}_1F_1(a;c;x)$ | Contiene a Hermite y a Laguerre, y da las funciones de onda de Coulomb. |
+| Mathieu: $y''+(a-2q\cos 2x)y=0$ | Funciones de Mathieu | Membrana elíptica, trampas de iones, resonancia paramétrica y estabilidad de sistemas con coeficientes periódicos. |
+
+Todas comparten con el oscilador la misma estructura: son lineales, de segundo orden, y sus soluciones forman un espacio de dimensión dos. Esa estructura es lo que vamos a entender bien en estas notas, antes de pasar a los casos que no se resuelven con funciones elementales.
+
+## Existencia y unicidad
+
+### Repaso: la ecuación lineal de primer orden
+
+Ya vimos cómo resolver la ecuación lineal general de primer orden
+
+$$y'+P(x)y=Q(x).$$
+
+Si $P$ y $Q$ son continuas en $[a,b]$, siempre podemos encontrar una solución. Más aún, si $x_0\in[a,b]$ y prescribimos el valor inicial $y(x_0)=y_0$, la solución es única. En efecto, multiplicamos ambos lados por el factor integrante
+
+$$\mu(x)=e^{\int_{x_0}^{x}P(s)\,ds},$$
+
+que cumple $\mu'=P\mu$ y $\mu(x_0)=1$, y obtenemos
+
+$$(\mu y)'=\mu Q.$$
+
+Integrando de $x_0$ a $x$,
+
+$$\mu(x)\,y(x)-y_0=\int_{x_0}^{x}\mu(\zeta)\,Q(\zeta)\,d\zeta,$$
+
+de donde
+
+$$y(x)=e^{-\int_{x_0}^{x}P(s)\,ds}\left(\int_{x_0}^{x}e^{\int_{x_0}^{\zeta}P(s)\,ds}\,Q(\zeta)\,d\zeta+y_0\right).$$
+
+Aplicar esta fórmula tal cual rara vez tiene sentido (es mejor hacer las cuentas en cada caso), pero su valor está en que muestra que hay solución, que es única, y que está definida en todo el intervalo $[a,b]$.
+
+### Segundo orden: un acto de fe
+
+Si consideramos ahora la ecuación lineal regular general de segundo orden
+
+$$y''+P(x)\,y'+Q(x)\,y=R(x),\tag{1}$$
+
+no podemos proceder de la misma manera. Para garantizar existencia y unicidad hace falta el teorema de Picard y Lindelöf, y aun así el teorema no dice cuál es la solución, solo que existe y es única. Su demostración se sale del alcance de este curso, y hay que verla en un curso de teoría de ecuaciones diferenciales ordinarias. Por ahora hacemos, entonces, un acto de fe con el siguiente teorema.
+
+::: {.callout-note title="Teorema A (existencia y unicidad)"}
+Sean $P(x)$, $Q(x)$ y $R(x)$ funciones continuas en un intervalo cerrado $[a,b]$. Si $x_0$ es cualquier punto de $[a,b]$, y $y_0$ y $y_0'$ son números cualesquiera, entonces la ecuación (1) tiene una y solo una solución $y(x)$ en todo el intervalo tal que $y(x_0)=y_0$ y $y'(x_0)=y_0'$.
+:::
+
+Es el Teorema A con el que abre el capítulo 3 del Simmons, que allí se enuncia sin demostración y se prueba en el capítulo 13, reduciendo la ecuación a un sistema de dos ecuaciones de primer orden con $z=y'$. Dicho geométricamente, por cada punto $(x_0,y_0)$ y con cada pendiente prescrita $y_0'$ pasa exactamente una solución.
+
+## La ecuación reducida
+
+La ecuación (1) se llama *reducida* (u *homogénea*) cuando $R\equiv0$. El ejemplo más importante es el oscilador armónico,
+
+$$y''+y=0.$$
+
+Podríamos resolverla por reducción de orden, pero más adelante daremos un método más eficiente. Por ahora basta comprobar directamente que $\operatorname{sen}x$ y $\cos x$ son soluciones, y que de hecho $c_1\cos x+c_2\operatorname{sen}x$ también lo es. Intuitivamente salen dos constantes porque, al ser la ecuación de orden dos, hay que integrar dos veces.
+
+Si ahora imponemos las condiciones iniciales $y(0)=1$ y $y'(0)=0$, el Teorema A dice que hay una única solución, y es $\cos x$. Si en cambio imponemos $y(0)=0$ y $y'(0)=0$, la única solución es la trivial, $y\equiv0$.
+
+### Dos condiciones en puntos distintos
+
+Tomemos ahora la misma ecuación, $y''+y=0$, pero con las condiciones $y(0)=0$ y $y(\pi)=0$: una en cada extremo del intervalo $[0,\pi]$, en lugar de dos en el mismo punto. Como $y=a\cos x+b\operatorname{sen}x$, la primera condición da $a=0$, y la segunda, $y(\pi)=b\operatorname{sen}\pi=0$, se cumple para cualquier $b$. Entonces $y=b\operatorname{sen}x$ es solución para todo $b$ real, y hay infinitas soluciones.
+
+::: {.callout-important title="Pregunta"}
+¿Qué falló?
+:::
+
+## La ecuación forzada
+
+Sea $y_c$ la solución general de la ecuación reducida (la que trae las dos constantes) y sea $y_p$ una solución cualquiera de la ecuación completa (1). Si $y$ es otra solución de (1), entonces
+
+$$(y-y_p)''+P(x)\,(y-y_p)'+Q(x)\,(y-y_p)=R(x)-R(x)=0,$$
+
+así que $y-y_p$ resuelve la ecuación reducida, es decir, $y-y_p=y_c$ para alguna elección de las constantes. La solución general de la ecuación forzada es entonces
+
+$$y=y_p+y_c.$$
+
+Es inmediato ver que el conjunto de soluciones de la ecuación reducida es un espacio vectorial, y esperamos que, al no ser una múltiplo de la otra, dos soluciones basten para tener todas las soluciones posibles del problema general.
+
+## Un ejercicio por inspección
+
+::: {.callout-important title="Ejercicio"}
+Encuentre, por intuición, olfato, inspección o experimentación, la solución general de
+
+$$xy''-y'=3x^2.$$
+:::
+
+::: {.callout-tip title="Solución"}
+Por inspección, $y_1=1$ y $y_2=x^2$ resuelven la ecuación reducida $xy''-y'=0$, y $y_p=x^3$ resuelve la ecuación completa, porque $x\cdot6x-3x^2=3x^2$. Por lo tanto
+
+$$y=c_1+c_2x^2+x^3.$$
+:::
+
+Impongamos, por ejemplo, $y(0)=0$ y $y'(0)=2$. La primera condición da $c_1=0$. Como $y'(x)=2c_2x+3x^2$ vale $0$ en $x=0$ sin importar el valor de $c_2$, la segunda condición no se puede cumplir, y $c_2$ queda libre: no hay solución. Si en cambio pedimos $y'(0)=0$, la segunda condición se cumple para todo $c_2$, y hay infinitas soluciones, $y=c_2x^2+x^3$.
+
+::: {.callout-important title="Pregunta"}
+¿Qué falló?
+:::
+
+Ahora sí imponemos las condiciones en otro punto, $y(1)=0$ y $y'(1)=2$, y todo funciona. Con la solución general de arriba,
+
+$$y(1)=c_1+c_2+1=0\quad\Longrightarrow\quad c_1+c_2=-1,$$
+
+$$y'(1)=2c_2+3=2\quad\Longrightarrow\quad c_2=-\tfrac12,$$
+
+y por tanto $c_1=-\tfrac12$. La única solución es
+
+$$y(x)=x^3-\frac{x^2}{2}-\frac12.$$
+
+::: {.callout-important title="Pregunta"}
+¿Por qué aquí sí funcionó?
+:::
+
+## De la familia a la ecuación
+
+Un ejercicio en sentido contrario: en lugar de resolver una ecuación, encontrar la ecuación a partir de una familia de soluciones.
+
+::: {.callout-important title="Ejercicio"}
+Encuentre la ecuación diferencial de la siguiente familia de curvas:
+
+$$y(x)=c_1+c_2e^{-2x}.$$
+:::
+
+::: {.callout-tip title="Solución"}
+Derivando, $y'=-2c_2e^{-2x}$ y $y''=4c_2e^{-2x}$. De la primera, $c_2e^{-2x}=-y'/2$, y sustituyendo en la segunda queda $y''=-2y'$, es decir,
+
+$$y''+2y'=0.$$
+
+La constante $c_1$ desaparece al derivar, y como la familia tiene dos parámetros, la ecuación es de segundo orden.
+:::
+
+## Un primer resultado cualitativo
+
+::: {.callout-note title="Proposición"}
+Sean $P$ y $Q$ continuas en $[a,b]$. Si $y_1$ y $y_2$ son soluciones de la ecuación reducida $y''+P(x)y'+Q(x)y=0$ con un cero común $x_0\in[a,b]$, es decir, $y_1(x_0)=0=y_2(x_0)$, entonces una de ellas es un múltiplo escalar de la otra.
+:::
+
+Basta considerar el problema de valor inicial
+
+$$y''+P(x)\,y'+Q(x)\,y=0,\qquad y(x_0)=0,\quad y'(x_0)=0,$$
+
+que por el Teorema A tiene una sola solución, la trivial $y\equiv0$. Distinguimos dos casos.
+
+**Caso 1: $y_1'(x_0)=0$.** Entonces $y_1$ resuelve ese problema, luego $y_1\equiv0$ y $y_1=0\cdot y_2$.
+
+**Caso 2: $y_1'(x_0)\neq0$.** Sea
+
+$$c=\frac{y_2'(x_0)}{y_1'(x_0)}.$$
+
+Por linealidad, $cy_1-y_2$ es solución de la ecuación reducida, y además $(cy_1-y_2)(x_0)=0$ y $(cy_1-y_2)'(x_0)=cy_1'(x_0)-y_2'(x_0)=0$. Por la unicidad, $cy_1-y_2\equiv0$, es decir, $y_2=cy_1$.
+
+En el texto están los detalles de que el espacio de soluciones de la ecuación reducida tiene dimensión dos. Los hacemos en clase.
+
+Volvamos al ejemplo que teníamos, ahora en su versión reducida:
+
+$$xy''-y'=0.$$
+
+Con $y_1=1$ y $y_2=x^2$, el determinante
+
+$$W(y_1,y_2)=\begin{vmatrix}1&x^2\\0&2x\end{vmatrix}=2x$$
+
+(que se llama wronskiano) no se anula en un intervalo que no contenga al cero. Por eso $c_1+c_2x^2$ es la solución general en cualquier intervalo que no contenga a $0$.
+
+## Una solución conocida da otra
+
+Si tenemos una solución $y_1$ de la ecuación reducida, podemos encontrar otra proponiendo $y_2=vy_1$ y buscando $v$ (ver Simmons). Resulta
+
+$$v=\int\frac{1}{y_1^2}\,e^{-\int P\,dx}\,dx.$$
+
+También lo podemos hacer con la ayuda del wronskiano. Con $y_2=vy_1$ tenemos $y_2'=v'y_1+vy_1'$, y así
+
+$$v'=\frac{y_2'}{y_1}-v\,\frac{y_1'}{y_1}=\frac{y_2'}{y_1}-\frac{y_2\,y_1'}{y_1^2}=\frac{y_1y_2'-y_1'y_2}{y_1^2}=\left(\frac{y_2}{y_1}\right)'=\frac{W(y_1,y_2)}{y_1^2}=\frac{C\,e^{-\int P\,dx}}{y_1^2}.$$
+
+En el último paso usamos la fórmula de Abel, $W=Ce^{-\int P\,dx}$, que sale de $W'=y_1y_2''-y_1''y_2=-PW$ al usar que $y_1$ y $y_2$ resuelven la ecuación reducida. Tomando $C=1$ e integrando se obtiene la expresión de $v$ de arriba.
+
+**Ejemplo.** Consideremos
+
+$$y''-x\,f(x)\,y'+f(x)\,y=0,$$
+
+con $f$ continua. Por inspección, $y_1=x$ es solución: $y_1''=0$ y $-xf(x)\cdot1+f(x)\cdot x=0$. Aquí $P=-xf(x)$, así que
+
+$$v=\int\frac{1}{x^2}\,e^{\int x\,f(x)\,dx}\,dx,$$
+
+y la solución general, en cualquier intervalo que no contenga al cero, es
+
+$$y=c_1x+c_2\,x\int\frac{1}{x^2}\,e^{\int x\,f(x)\,dx}\,dx.$$
