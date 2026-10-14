@@ -142,7 +142,7 @@
 <section id="tablero-newton-en-tres-casos" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="tablero-newton-en-tres-casos"><span class="header-section-number">4</span> Tablero: Newton en tres casos</h2>
 <p>El tablero reúne tres ejemplos: el polinomio de Newton, donde todo sale como en la teoría; la raíz cúbica, donde el método falla para toda semilla; y el arco tangente, donde la raíz es buena pero la iteración se vuelve inestable según la semilla. Elija el caso, mueva la semilla <img src="https://latex.codecogs.com/png.latex?x_0"> y cambie el número de pasos; la tabla muestra el error y las cifras correctas de cada iterado.</p>
-<iframe src="notebooks/newton-simulacion.html" width="100%" height="1000px" style="border:none;">
+<iframe src="newton-simulacion.html" width="100%" height="1000px" style="border:none;">
 </iframe>
 <p>La geometría es importante: en los tres casos el siguiente iterado es el punto donde la tangente corta el eje, y todo depende de cómo sea la curva entre un iterado y el siguiente.</p>
 

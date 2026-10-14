@@ -150,6 +150,6 @@ Complete el inciso (e): calcule $g'(x)$ y describa cómo se comporta cerca de $\
 
 El tablero reúne tres ejemplos: el polinomio de Newton, donde todo sale como en la teoría; la raíz cúbica, donde el método falla para toda semilla; y el arco tangente, donde la raíz es buena pero la iteración se vuelve inestable según la semilla. Elija el caso, mueva la semilla $x_0$ y cambie el número de pasos; la tabla muestra el error y las cifras correctas de cada iterado.
 
-<iframe src="notebooks/newton-simulacion.html" width="100%" height="1000px" style="border:none;"></iframe>
+<iframe src="newton-simulacion.html" width="100%" height="1000px" style="border:none;"></iframe>
 
 La geometría es importante: en los tres casos el siguiente iterado es el punto donde la tangente corta el eje, y todo depende de cómo sea la curva entre un iterado y el siguiente.
