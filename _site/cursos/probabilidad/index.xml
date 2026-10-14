@@ -15,7 +15,515 @@
 <link>https://arturosanjuan.xyz/cursos/probabilidad/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Wed, 23 Sep 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 13 Oct 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Función de riesgo y distribución Weibull</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/probabilidad/riesgo/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>En la <a href="../../../cursos/probabilidad/continuasespeciales/index.html">sección anterior</a> la exponencial salió de la ausencia de memoria: el tiempo que un componente ya lleva funcionando no cambia la probabilidad de que falle en lo que viene. Casi ningún componente real se comporta así, un cojinete se desgasta y una persona envejece. Esta sección suelta esa condición y pregunta por el objeto que sí se puede medir en cada instante: qué tan probable es que falle justo ahora, dado que ha sobrevivido hasta aquí.</p>
+<section id="la-función-de-riesgo" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="la-función-de-riesgo"><span class="header-section-number">1</span> La función de riesgo</h2>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?T"> la variable aleatoria que mide el tiempo de duración de un componente dado, con función de distribución <img src="https://latex.codecogs.com/png.latex?F_T"> y densidad <img src="https://latex.codecogs.com/png.latex?f_T">. La probabilidad de que el componente falle en el siguiente intervalo de longitud <img src="https://latex.codecogs.com/png.latex?%5CDelta%20t">, sabiendo que ha sobrevivido hasta el tiempo <img src="https://latex.codecogs.com/png.latex?t">, se llama la <strong>función de falla</strong>:</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(t%3CT%5Cle%20t+%5CDelta%20t%5Cmid%20T%3Et)%20=%20%5Cfrac%7BP(t%3CT%5Cle%20t+%5CDelta%20t)%7D%7B1-P(T%5Cle%20t)%7D%20%5Capprox%20%5Cfrac%7Bf_T(t)%5C,%5CDelta%20t%7D%7B1-F_T(t)%7D"></p>
+<p>La igualdad es la definición de probabilidad condicional (el evento <img src="https://latex.codecogs.com/png.latex?%5C%7Bt%3CT%5Cle%20t+%5CDelta%20t%5C%7D"> está contenido en <img src="https://latex.codecogs.com/png.latex?%5C%7BT%3Et%5C%7D">), y la aproximación es la receta de siempre: la probabilidad de un intervalo chiquito es la densidad por el ancho.</p>
+<p>El cociente <img src="https://latex.codecogs.com/png.latex?f_T(t)/(1-F_T(t))"> no es una probabilidad, es una tasa: lo que sí es una probabilidad es esa tasa multiplicada por un <img src="https://latex.codecogs.com/png.latex?%5CDelta%20t"> chiquito, igual que <img src="https://latex.codecogs.com/png.latex?f(x)%5C,dx">. Esto sugiere la siguiente definición.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Definición: función de riesgo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Definición: función de riesgo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La <strong>función de riesgo</strong> (en inglés, <em>hazard</em>) de <img src="https://latex.codecogs.com/png.latex?T"> es</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clambda(t)%20=%20%5Cfrac%7BF_T'(t)%7D%7B1-F_T(t)%7D%20=%20%5Cfrac%7Bf_T(t)%7D%7B1-F_T(t)%7D"></p>
+<p>Así, <img src="https://latex.codecogs.com/png.latex?%5Clambda(t)%5C,%5CDelta%20t"> es, aproximadamente, la probabilidad de fallar en los próximos <img src="https://latex.codecogs.com/png.latex?%5CDelta%20t"> sabiendo que se sobrevivió hasta <img src="https://latex.codecogs.com/png.latex?t">.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre que si el riesgo es constante, es decir <img src="https://latex.codecogs.com/png.latex?%5Clambda(t)=%5Clambda"> para todo <img src="https://latex.codecogs.com/png.latex?t%5Cge0"> con <img src="https://latex.codecogs.com/png.latex?%5Clambda%3E0">, entonces <img src="https://latex.codecogs.com/png.latex?T%5Csim%5Ctext%7BExponencial%7D(%5Clambda)">.</p>
+</div>
+</div>
+<p>Note la dirección de la pregunta. Dada una distribución, la fórmula de arriba entrega su riesgo. Lo que sigue va al revés: se propone un riesgo razonable y se despeja la distribución.</p>
+</section>
+<section id="la-distribución-weibull" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="la-distribución-weibull"><span class="header-section-number">2</span> La distribución Weibull</h2>
+<p>Si el riesgo no es constante, la propuesta más simple es que sea una potencia del tiempo:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clambda(t)%20=%20%5Calpha%5Cbeta%5C,t%5E%7B%5Cbeta-1%7D,%20%5Cqquad%20t%5Cge0"></p>
+<p>con <img src="https://latex.codecogs.com/png.latex?%5Calpha,%5Cbeta%3E0">. Con <img src="https://latex.codecogs.com/png.latex?%5Cbeta%3E1"> el riesgo crece con el tiempo, con <img src="https://latex.codecogs.com/png.latex?%5Cbeta%3C1"> decrece, y con <img src="https://latex.codecogs.com/png.latex?%5Cbeta=1"> es constante e igual a <img src="https://latex.codecogs.com/png.latex?%5Calpha">.</p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?%5Clambda=F_T'/(1-F_T)">, la función de distribución resuelve la ecuación lineal de primer orden</p>
+<p><img src="https://latex.codecogs.com/png.latex?F_T'%20+%20%5Calpha%5Cbeta%5C,t%5E%7B%5Cbeta-1%7DF_T%20=%20%5Calpha%5Cbeta%5C,t%5E%7B%5Cbeta-1%7D"></p>
+<p>Una primitiva del coeficiente <img src="https://latex.codecogs.com/png.latex?%5Calpha%5Cbeta%5C,t%5E%7B%5Cbeta-1%7D"> es <img src="https://latex.codecogs.com/png.latex?%5Calpha%20t%5E%5Cbeta">, así que el factor integrante es <img src="https://latex.codecogs.com/png.latex?e%5E%7B%5Calpha%20t%5E%5Cbeta%7D">. Multiplicando la ecuación por él, el lado izquierdo es una derivada exacta:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cleft(e%5E%7B%5Calpha%20t%5E%5Cbeta%7DF_T%5Cright)'%20=%20e%5E%7B%5Calpha%20t%5E%5Cbeta%7D%5C,%5Calpha%5Cbeta%5C,t%5E%7B%5Cbeta-1%7D%20=%20%5Cleft(e%5E%7B%5Calpha%20t%5E%5Cbeta%7D%5Cright)'"></p>
+<p>Integrando, <img src="https://latex.codecogs.com/png.latex?e%5E%7B%5Calpha%20t%5E%5Cbeta%7DF_T(t)%20=%20e%5E%7B%5Calpha%20t%5E%5Cbeta%7D%20+%20C">. La condición inicial <img src="https://latex.codecogs.com/png.latex?F_T(0)=0"> da <img src="https://latex.codecogs.com/png.latex?0=1+C">, es decir <img src="https://latex.codecogs.com/png.latex?C=-1">, y por lo tanto</p>
+<p><img src="https://latex.codecogs.com/png.latex?F_T(t)%20=%201-e%5E%7B-%5Calpha%20t%5E%5Cbeta%7D,%20%5Cqquad%20f_T(t)%20=%20%5Calpha%5Cbeta%5C,t%5E%7B%5Cbeta-1%7D%5C,e%5E%7B-%5Calpha%20t%5E%5Cbeta%7D,%20%5Cqquad%20t%5Cge0"></p>
+<p>Se dice que <img src="https://latex.codecogs.com/png.latex?T"> tiene distribución <strong>Weibull</strong> de parámetros <img src="https://latex.codecogs.com/png.latex?%5Calpha"> y <img src="https://latex.codecogs.com/png.latex?%5Cbeta">.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="El caso $\beta=1$">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>El caso <img src="https://latex.codecogs.com/png.latex?%5Cbeta=1">
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con <img src="https://latex.codecogs.com/png.latex?%5Cbeta=1"> el riesgo es la constante <img src="https://latex.codecogs.com/png.latex?%5Calpha">, y las fórmulas anteriores dan <img src="https://latex.codecogs.com/png.latex?F_T(t)=1-e%5E%7B-%5Calpha%20t%7D"> y <img src="https://latex.codecogs.com/png.latex?f_T(t)=%5Calpha%20e%5E%7B-%5Calpha%20t%7D">: la exponencial de parámetro <img src="https://latex.codecogs.com/png.latex?%5Calpha">. La Weibull contiene a la exponencial como el caso de riesgo constante, y para <img src="https://latex.codecogs.com/png.latex?%5Cbeta%5Cne1"> describe componentes cuyo riesgo cambia con el tiempo.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre las fórmulas de la media y la varianza de la distribución Weibull.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Encuentre las funciones de densidad y de distribución acumulada de <img src="https://latex.codecogs.com/png.latex?T"> si el riesgo propuesto por Gompertz es</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clambda(t)%20=%20%5Calpha%5Cbeta%5Et,%20%5Cqquad%20t%5Cge0,%20%5Cquad%20%5Calpha%3E0,%20%5C%20%5Cbeta%3E1"></p>
+<p>Haga lo mismo con el riesgo de Makeham, <img src="https://latex.codecogs.com/png.latex?%5Clambda(t)=%5Cgamma+%5Calpha%5Cbeta%5Et">, con <img src="https://latex.codecogs.com/png.latex?%5Cgamma%3E0">.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Nota histórica">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Nota histórica
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Las tres leyes de esta sección nacieron en oficios distintos, y lo único que las separa es cómo crece el riesgo <img src="https://latex.codecogs.com/png.latex?%5Clambda(t)">. <strong>Benjamin Gompertz</strong>, actuario inglés, propuso en 1825 (<em>Philosophical Transactions of the Royal Society</em>) que la fuerza de mortalidad humana crece geométricamente con la edad, <img src="https://latex.codecogs.com/png.latex?%5Clambda(t)=%5Calpha%5Cbeta%5Et">. Treinta y cinco años después, <strong>William Makeham</strong> (1860, <em>Journal of the Institute of Actuaries</em>) sumó una constante <img src="https://latex.codecogs.com/png.latex?%5Cgamma"> para recoger el riesgo que no depende de la edad, como accidentes e infecciones agudas: <img src="https://latex.codecogs.com/png.latex?%5Clambda(t)=%5Cgamma+%5Calpha%5Cbeta%5Et">.</p>
+<p>La Weibull llegó desde la ingeniería. Entre 1932 y 1936, Rosin, Rammler, Sperling y Bennett la obtuvieron midiendo el tamaño de partículas de carbón pulverizado y de cemento (en esa literatura se la llama distribución RRSB). En 1939 <strong>Waloddi Weibull</strong>, ingeniero sueco, llegó a la misma familia de forma independiente estudiando la resistencia de los materiales, y en 1951 (<em>Journal of Applied Mechanics</em>) mostró lo ampliamente que servía. Su éxito en confiabilidad se explica por el riesgo <img src="https://latex.codecogs.com/png.latex?%5Clambda(t)=%5Calpha%5Cbeta%20t%5E%7B%5Cbeta-1%7D">: la forma <img src="https://latex.codecogs.com/png.latex?%5Cbeta"> decide si el riesgo decrece (<img src="https://latex.codecogs.com/png.latex?%5Cbeta%3C1">), es constante (<img src="https://latex.codecogs.com/png.latex?%5Cbeta=1">, la exponencial de Erlang) o crece (<img src="https://latex.codecogs.com/png.latex?%5Cbeta%3E1">). Actuaría e ingeniería, dos oficios sin relación, frente a la misma pregunta de fondo: cómo envejece el riesgo.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo aplicado: la vida de una bomba de agua">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo aplicado: la vida de una bomba de agua
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El tiempo de vida <img src="https://latex.codecogs.com/png.latex?T">, en años, de la bomba de un acueducto rural se modela con una Weibull de parámetros <img src="https://latex.codecogs.com/png.latex?%5Calpha=0%7B,%7D01"> y <img src="https://latex.codecogs.com/png.latex?%5Cbeta=2">. Como <img src="https://latex.codecogs.com/png.latex?%5Cbeta%3E1">, el riesgo crece con el uso, que es el caso del desgaste:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clambda(t)=0%7B,%7D02%5C,t,%20%5Cqquad%20F_T(t)=1-e%5E%7B-0%7B,%7D01%5C,t%5E2%7D"></p>
+<p><strong>¿Con qué probabilidad dura más de <img src="https://latex.codecogs.com/png.latex?5"> años? ¿Y más de <img src="https://latex.codecogs.com/png.latex?10">?</strong></p>
+<p><img src="https://latex.codecogs.com/png.latex?P(T%3E5)=e%5E%7B-0%7B,%7D25%7D%5Capprox0%7B,%7D7788,%20%5Cqquad%20P(T%3E10)=e%5E%7B-1%7D%5Capprox0%7B,%7D3679"></p>
+<p><strong>¿Cuál es la vida media?</strong> Se resuelve <img src="https://latex.codecogs.com/png.latex?1-e%5E%7B-0%7B,%7D01%5C,m%5E2%7D=%5Ctfrac12">, de donde <img src="https://latex.codecogs.com/png.latex?m=%5Csqrt%7B%5Cln%202/0%7B,%7D01%7D%5Capprox8%7B,%7D33"> años.</p>
+<p><strong>Una bomba con <img src="https://latex.codecogs.com/png.latex?5"> años de uso, ¿sobrevive <img src="https://latex.codecogs.com/png.latex?3"> años más?</strong> Por probabilidad condicional,</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(T%3E8%5Cmid%20T%3E5)=%5Cfrac%7BP(T%3E8)%7D%7BP(T%3E5)%7D=e%5E%7B-0%7B,%7D01%5C,(64-25)%7D=e%5E%7B-0%7B,%7D39%7D%5Capprox0%7B,%7D6771"></p>
+<p>mientras que una bomba nueva sobrevive esos mismos <img src="https://latex.codecogs.com/png.latex?3"> años con probabilidad <img src="https://latex.codecogs.com/png.latex?P(T%3E3)=e%5E%7B-0%7B,%7D09%7D%5Capprox0%7B,%7D9139">. La bomba usada tiene menos probabilidad de seguir funcionando: aquí no hay ausencia de memoria, el tiempo ya transcurrido sí cuenta. Con una exponencial las dos probabilidades coincidirían.</p>
+<p><strong>Función de falla frente a riesgo.</strong> Para <img src="https://latex.codecogs.com/png.latex?t=5"> y <img src="https://latex.codecogs.com/png.latex?%5CDelta%20t=0%7B,%7D1">, el riesgo da <img src="https://latex.codecogs.com/png.latex?%5Clambda(5)%5C,%5CDelta%20t=0%7B,%7D1%5Ccdot0%7B,%7D1=0%7B,%7D01">, y la probabilidad condicional exacta es <img src="https://latex.codecogs.com/png.latex?1-e%5E%7B-0%7B,%7D01%5C,(5%7B,%7D1%5E2-5%5E2)%7D%5Capprox0%7B,%7D01005">. La aproximación <img src="https://latex.codecogs.com/png.latex?%5Clambda(t)%5C,%5CDelta%20t"> es muy buena para un <img src="https://latex.codecogs.com/png.latex?%5CDelta%20t"> chiquito.</p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">alfa  <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.01</span>              <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># parámetro alpha de la clase</span></span>
+<span id="cb1-2">forma <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>                 <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># parámetro beta de la clase</span></span>
+<span id="cb1-3">escala <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> alfa<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">^</span>(<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>forma)  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># escala de R: scale = alpha^(-1/beta), aquí 10 años</span></span>
+<span id="cb1-4"></span>
+<span id="cb1-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># probabilidad de sobrevivir al tiempo t</span></span>
+<span id="cb1-6">S <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(t) <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">pweibull</span>(t, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">shape =</span> forma, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">scale =</span> escala, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lower.tail =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>)</span>
+<span id="cb1-7"></span>
+<span id="cb1-8"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cat</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"P(T &gt; 5)  ="</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">S</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(T &gt; 5)  = 0.7788 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cat</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"P(T &gt; 10) ="</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">S</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(T &gt; 10) = 0.3679 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cat</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"vida mediana ="</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">qweibull</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">shape =</span> forma, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">scale =</span> escala), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"años</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>vida mediana = 8.33 años</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># bomba con 5 años de uso frente a bomba nueva, 3 años más</span></span>
+<span id="cb7-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cat</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"P(T &gt; 8 | T &gt; 5) ="</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">S</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">S</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(T &gt; 8 | T &gt; 5) = 0.6771 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cat</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"P(T &gt; 3)         ="</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">S</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(T &gt; 3)         = 0.9139 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># función de falla en (5, 5.1] frente a riesgo por ancho</span></span>
+<span id="cb11-2">riesgo <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(t) alfa <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> forma <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> t<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">^</span>(forma <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb11-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cat</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"exacta   ="</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>((<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">S</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">S</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.1</span>)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">S</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>), <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>exacta   = 0.01005 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cat</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"riesgo*dt ="</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">round</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">riesgo</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\n</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>riesgo*dt = 0.01 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">par</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mfrow =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span>
+<span id="cb15-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">curve</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">riesgo</span>(x), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">from =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">to =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">n =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"darkgreen"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lwd =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,</span>
+<span id="cb15-3">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xlab =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"t (años)"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ylab =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expression</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">lambda</span>(t)), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">main =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Riesgo"</span>)</span>
+<span id="cb15-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">curve</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dweibull</span>(x, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">shape =</span> forma, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">scale =</span> escala), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">from =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">to =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">n =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>,</span>
+<span id="cb15-5">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"steelblue"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lwd =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xlab =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"t (años)"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ylab =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expression</span>(f[T](t)),</span>
+<span id="cb15-6">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">main =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Densidad"</span>)</span></code></pre></div></div>
+<div class="cell-output-display">
+<div id="fig-weibull-bomba" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-weibull-bomba-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/probabilidad/riesgo/index_files/figure-html/fig-weibull-bomba-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-weibull-bomba-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Riesgo y densidad del tiempo de vida de la bomba, Weibull con alpha = 0,01 y beta = 2
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="panel-interactivo-riesgo-densidad-y-acumulada" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="panel-interactivo-riesgo-densidad-y-acumulada"><span class="header-section-number">3</span> Panel interactivo: riesgo, densidad y acumulada</h2>
+<p>El siguiente panel dibuja la función de riesgo, la densidad o la función de distribución de la Weibull, la Gompertz y la de Makeham, con sus parámetros ajustables. Mueva los parámetros y compare cómo cambia la forma del riesgo en cada modelo. Los valores de <img src="https://latex.codecogs.com/png.latex?E%5BT%5D"> y <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BVar%7D(T)"> son numéricos, sirven para contrastar con lo que usted demuestre.</p>
+<iframe src="riesgo.html" width="100%" height="700" style="border:1px solid #dfe3e2; border-radius:6px;" title="Panel interactivo: funciones de riesgo Weibull, Gompertz y Makeham"></iframe>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/probabilidad/riesgo/</guid>
+  <pubDate>Tue, 13 Oct 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Parcial 1</title>
   <dc:creator>Arturo Sanjuán</dc:creator>

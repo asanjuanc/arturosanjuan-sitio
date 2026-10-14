@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tablero del método de Newton</title>
+<style>
+  :root{
+    --ink:#1e2327; --muted:#5a6570; --line:#dde3e8; --bg:#fbfcfd;
+    --accent:#2563a8; --accent2:#c1440e; --good:#1a7f5a; --bad:#c1440e;
+    --panel:#ffffff;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; padding:18px 20px 26px; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:14.5px; line-height:1.45;
+  }
+  h2{font-size:16px; margin:0 0 4px;}
+  .sub{color:var(--muted); margin:0 0 16px; font-size:13px;}
+
+  .nw-tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;}
+  .nw-tab{
+    border:1px solid var(--line); background:var(--panel); color:var(--ink); border-radius:999px;
+    padding:5px 15px; cursor:pointer; font:inherit; font-size:13.5px;
+  }
+  .nw-tab:hover{background:#f2f5f7;}
+  .nw-tab[aria-selected="true"]{background:#e6eef8; border-color:var(--accent); font-weight:600; color:var(--accent);}
+
+  .nw-eq{
+    background:#f2f5f7; border:1px solid var(--line); border-radius:10px;
+    padding:10px 14px; margin-bottom:14px; font-size:13.5px;
+  }
+  .nw-eq div{margin:2px 0;}
+  .nw-eq .nw-lbl{color:var(--muted); display:inline-block; min-width:8.4em;}
+
+  .nw-grid{display:flex; gap:18px; flex-wrap:wrap; align-items:flex-start;}
+  .nw-panel{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 16px;}
+  .nw-ctrl{flex:1 1 250px; max-width:340px;}
+  .nw-plot{flex:2 1 380px; min-width:0;}
+  .nw-plot canvas{width:100%; height:330px; display:block; background:#fff; border-radius:6px;}
+  .nw-lab{display:block; font-size:13px; margin:2px 0 4px;}
+  .nw-val{font-variant-numeric:tabular-nums; color:var(--accent); font-weight:600;}
+  .nw-ctrl input[type=range]{width:100%; margin:0 0 12px; accent-color:var(--accent);}
+  .nw-presets{display:flex; flex-wrap:wrap; gap:6px; margin:0 0 14px;}
+  .nw-pre{
+    border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:6px;
+    padding:3px 9px; font:inherit; font-size:12.5px; cursor:pointer;
+  }
+  .nw-pre:hover{background:#f2f5f7;}
+  .nw-pre[aria-pressed="true"]{border-color:var(--accent); background:#e6eef8;}
+  .nw-ver{display:inline-block; padding:2px 11px; border-radius:20px; font-weight:600; font-size:12.5px; margin:2px 0 10px;}
+  .nw-ver.good{background:#e4f4ec; color:var(--good);}
+  .nw-ver.bad{background:#fbe9e2; color:var(--bad);}
+  .nw-ver.warn{background:#fdf3da; color:#9a7300;}
+  .nw-nota{margin:0; font-size:13px; color:var(--muted);}
+  .nw-pie{margin:8px 0 0; font-size:12px; color:var(--muted);}
+
+  .nw-tabla{width:100%; border-collapse:collapse; font-size:13px;}
+  .nw-tabla th,.nw-tabla td{padding:5px 8px; text-align:right; border-bottom:1px solid var(--line);}
+  .nw-tabla th:first-child,.nw-tabla td:first-child{text-align:left;}
+  .nw-tabla th{color:var(--muted); font-weight:600; font-size:12.5px;}
+  .nw-tabla td{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-variant-numeric:tabular-nums;}
+  .nw-tabla td.nw-ok{color:var(--good); font-weight:600;}
+  .nw-tabla td.nw-mal{color:var(--bad);}
+</style>
+</head>
+<body>
+
+<h2>Método de Newton: <i>x<sub>k+1</sub> = x<sub>k</sub> &minus; f(x<sub>k</sub>)/f&prime;(x<sub>k</sub>)</i></h2>
+<p class="sub">Elija un caso, mueva la semilla <i>x<sub>0</sub></i> y cambie el número de pasos. Cada caso muestra la gráfica con las tangentes de Newton y la tabla de iterados, residuos y errores.</p>
+
+<div class="nw-tablero" id="nw-tablero">
+  <div class="nw-tabs" role="tablist" id="nw-tabs"></div>
+
+  <div class="nw-eq" id="nw-eq"></div>
+
+  <div class="nw-grid">
+    <div class="nw-panel nw-ctrl">
+      <label class="nw-lab" for="nw-x0">Semilla x<sub>0</sub> = <span class="nw-val" id="nw-x0v"></span></label>
+      <input type="range" id="nw-x0">
+      <div class="nw-presets" id="nw-presets"></div>
+      <label class="nw-lab" for="nw-n">Pasos mostrados: <span class="nw-val" id="nw-nv"></span></label>
+      <input type="range" id="nw-n" min="1" max="12" step="1">
+      <div class="nw-ver" id="nw-ver"></div>
+      <p class="nw-nota" id="nw-nota"></p>
+    </div>
+    <div class="nw-panel nw-plot">
+      <canvas id="nw-canvas" role="img" aria-label="Gráfica de la función con las tangentes de Newton y los iterados"></canvas>
+      <p class="nw-pie">Curva de f en azul, tangentes de Newton en naranja, iterados x<sub>k</sub> sobre el eje. Lo que cae fuera de la ventana no se dibuja, pero sí aparece en la tabla.</p>
+    </div>
+  </div>
+
+  <div class="nw-panel" style="margin-top:16px; overflow-x:auto;">
+    <table class="nw-tabla">
+      <thead>
+        <tr>
+          <th>k</th>
+          <th>x<sub>k</sub></th>
+          <th>f(x<sub>k</sub>)</th>
+          <th>error |x<sub>k</sub> &minus; r|</th>
+          <th>cifras correctas</th>
+        </tr>
+      </thead>
+      <tbody id="nw-tbody"></tbody>
+    </table>
+    <p class="nw-pie">Las cifras correctas son &minus;log<sub>10</sub> del error; 16+ indica que, en doble precisión, el iterado ya coincide con la raíz.</p>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  const MENOS = '−';
+  const SUBS = '₀₁₂₃₄₅₆₇₈₉';
+  const SUPS = { '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵',
+                 '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹', '-': '⁻' };
+  const sub = n => String(n).split('').map(c => SUBS[+c]).join('');
+  const signo = s => s.replace(/^-/, MENOS);
+  const $ = id => document.getElementById(id);
+
+  const COL = { ink: '#1e2327', curva: '#2563a8', camino: '#c1440e', raiz: '#1a7f5a',
+                grid: 'rgba(0,0,0,.09)', eje: 'rgba(0,0,0,.55)' };
+
+  function fmtSci(x, d) {
+    if (Number.isNaN(x)) return 'no definido';
+    if (!isFinite(x)) return (x > 0 ? '' : MENOS) + '∞';
+    if (x === 0) return '0';
+    const partes = x.toExponential(d).split('e');
+    const ex = String(parseInt(partes[1], 10));
+    return signo(partes[0]) + '×10' + ex.split('').map(c => SUPS[c] || c).join('');
+  }
+
+  function fmtNum(x) {
+    if (Number.isNaN(x)) return 'no definido';
+    if (!isFinite(x)) return (x > 0 ? '' : MENOS) + '∞';
+    if (x === 0) return '0';
+    const a = Math.abs(x);
+    if (a >= 1e7 || a < 1e-4) return fmtSci(x, 4);
+    return signo(String(Number(x.toPrecision(15))));
+  }
+
+  function cifras(err) {
+    if (Number.isNaN(err) || !isFinite(err)) return { txt: '', cls: '' };
+    if (err === 0) return { txt: '16+', cls: 'nw-ok' };
+    const d = -Math.log10(err);
+    if (d >= 16) return { txt: '16+', cls: 'nw-ok' };
+    if (Math.abs(d) < 0.05) return { txt: '0.0', cls: '' };
+    return { txt: signo(d.toFixed(1)), cls: d < 0 ? 'nw-mal' : (d >= 15 ? 'nw-ok' : '') };
+  }
+
+  /* ---------- Los tres casos ---------- */
+  const CASOS = {
+    poli: {
+      tab: 'Polinomio',
+      f: x => x * x * x - 2 * x - 5,
+      df: x => 3 * x * x - 2,
+      raiz: 2.0945514815423265,
+      x0: { def: 2, min: -3, max: 4, step: 0.01 },
+      pasos: 5, minAncho: 0.3, maxVentana: 100,
+      eq: [
+        ['Función', 'f(x) = x<sup>3</sup> &minus; 2x &minus; 5'],
+        ['Paso de Newton', 'x &minus; f(x)/f&prime;(x), con f&prime;(x) = 3x<sup>2</sup> &minus; 2'],
+        ['Raíz', 'r &asymp; 2.0945514815, simple, con f&prime;(r) &asymp; 11.16']
+      ],
+      presets: [['Semilla de Newton (2)', 2], ['Derivada casi nula (0.8)', 0.8], ['Semilla negativa (−1)', -1]],
+      nota: 'Con la semilla 2 las cifras correctas se duplican en cada paso. Pruebe 0.8: ahí f&prime; es casi cero y el primer paso lanza el iterado muy lejos.'
+    },
+    cbrt: {
+      tab: 'Raíz cúbica',
+      f: x => Math.cbrt(x),
+      df: x => 1 / (3 * Math.cbrt(x) * Math.cbrt(x)),
+      raiz: 0,
+      x0: { def: 1, min: -2, max: 2, step: 0.01 },
+      pasos: 6, minAncho: 1, maxVentana: 200,
+      eq: [
+        ['Función', 'f(x) = x<sup>1/3</sup> (raíz cúbica real, negativa si x &lt; 0)'],
+        ['Paso de Newton', 'x &minus; f(x)/f&prime;(x), con f&prime;(x) = (1/3) x<sup>&minus;2/3</sup>, es decir x &minus; 3x = &minus;2x'],
+        ['Raíz', 'r = 0, donde f&prime; no está acotada']
+      ],
+      presets: [['x₀ = 1', 1], ['x₀ = 0.01', 0.01], ['x₀ = −0.5', -0.5]],
+      nota: 'Cada paso duplica la distancia a la raíz y cambia el signo, sin importar qué tan cerca empiece la semilla.'
+    },
+    atan: {
+      tab: 'Arco tangente',
+      f: x => Math.atan(x),
+      df: x => 1 / (1 + x * x),
+      raiz: 0,
+      x0: { def: 1.4, min: 0.2, max: 2.5, step: 0.0001 },
+      pasos: 8, minAncho: 1.5, maxVentana: 3.5,
+      eq: [
+        ['Función', 'f(x) = arctan x'],
+        ['Paso de Newton', 'x &minus; (1 + x<sup>2</sup>) arctan x, porque f&prime;(x) = 1/(1 + x<sup>2</sup>)'],
+        ['Raíz', 'r = 0, simple, con f&prime;(0) = 1']
+      ],
+      presets: [['Converge (1.3)', 1.3], ['Ciclo exacto (x*)', 1.391745200270735], ['Diverge (1.4)', 1.4], ['Diverge rápido (2)', 2]],
+      nota: 'La semilla crítica es x* = 1.3917452003. Por debajo converge, por encima diverge, y en x* el iterado salta entre x* y &minus;x* sin acercarse ni alejarse.'
+    }
+  };
+
+  /* ---------- Cálculo ---------- */
+  function orbita(c, x0, n) {
+    const xs = [x0];
+    for (let k = 0; k < n; k++) {
+      const x = xs[k];
+      xs.push(isFinite(x) ? x - c.f(x) / c.df(x) : NaN);
+    }
+    return xs;
+  }
+
+  function veredicto(c, x0, n) {
+    const xs = orbita(c, x0, n);
+    const m = xs.length;
+    if (m >= 4) {
+      const a = xs[m - 1], b = xs[m - 2], a2 = xs[m - 3], b2 = xs[m - 4];
+      if ([a, b, a2, b2].every(isFinite)) {
+        const e = v => Math.max(1, Math.abs(v));
+        if (Math.abs(a - a2) < 1e-3 * e(a) && Math.abs(b - b2) < 1e-3 * e(b) && Math.abs(a - b) > 0.1 * e(a)) {
+          return { tipo: 'warn', txt: 'Ciclo de periodo 2: ni converge ni diverge' };
+        }
+      }
+    }
+    let x = x0;
+    for (let k = 0; k < 400; k++) {
+      const xn = x - c.f(x) / c.df(x);
+      if (!isFinite(xn) || Math.abs(xn) > 1e10) return { tipo: 'bad', txt: 'Diverge: |xₖ| crece sin cota' };
+      if (Math.abs(xn - x) <= 1e-13 * Math.max(1, Math.abs(xn))) return { tipo: 'good', txt: 'Converge a la raíz' };
+      x = xn;
+    }
+    return { tipo: 'warn', txt: 'Sin decidir en 400 pasos' };
+  }
+
+  /* ---------- Estado e interfaz ---------- */
+  let estado = { caso: 'poli', x0: 2, n: 5 };
+
+  function renderTabla() {
+    const c = CASOS[estado.caso];
+    const xs = orbita(c, estado.x0, estado.n);
+    let html = '';
+    xs.forEach((x, k) => {
+      const fx = isFinite(x) ? c.f(x) : NaN;
+      const err = isFinite(x) ? Math.abs(x - c.raiz) : NaN;
+      const ci = cifras(err);
+      html += '<tr><td>' + k + '</td><td>' + fmtNum(x) + '</td><td>' + (isFinite(fx) ? fmtSci(fx, 3) : '') +
+              '</td><td>' + (isFinite(err) ? fmtSci(err, 3) : '') + '</td><td class="' + ci.cls + '">' + ci.txt + '</td></tr>';
+    });
+    $('nw-tbody').innerHTML = html;
+  }
+
+  function ticks(lo, hi, aprox) {
+    const paso0 = (hi - lo) / aprox;
+    const pot = Math.pow(10, Math.floor(Math.log10(paso0)));
+    const r = paso0 / pot;
+    const paso = (r < 1.5 ? 1 : r < 3.5 ? 2 : r < 7.5 ? 5 : 10) * pot;
+    const out = [];
+    for (let t = Math.ceil(lo / paso) * paso; t <= hi + paso * 1e-9; t += paso) out.push(Math.abs(t) < paso * 1e-9 ? 0 : t);
+    return out;
+  }
+
+  function fmtTick(t, paso) {
+    const d = Math.max(0, -Math.floor(Math.log10(paso)));
+    return signo(Math.abs(t) >= 1e5 ? fmtSci(t, 1) : String(Number(t.toFixed(Math.min(d, 8)))));
+  }
+
+  function limitar(x0, y0, x1, y1) {
+    const dx = x1 - x0, dy = y1 - y0, L = Math.hypot(dx, dy);
+    if (!isFinite(L) || L < 1e4) return [x1, y1];
+    return [x0 + dx * 1e4 / L, y0 + dy * 1e4 / L];
+  }
+
+  function dibujar() {
+    const c = CASOS[estado.caso];
+    const xs = orbita(c, estado.x0, estado.n);
+    const cv = $('nw-canvas');
+    const dpr = window.devicePixelRatio || 1;
+    const W = cv.clientWidth || 600, H = cv.clientHeight || 330;
+    cv.width = Math.round(W * dpr);
+    cv.height = Math.round(H * dpr);
+    const g = cv.getContext('2d');
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    g.clearRect(0, 0, W, H);
+    const M = { l: 50, r: 14, t: 12, b: 30 };
+    const pw = W - M.l - M.r, ph = H - M.t - M.b;
+
+    const dentro = xs.filter(v => isFinite(v) && Math.abs(v) <= c.maxVentana);
+    const cand = [c.raiz].concat(dentro);
+    const lo0 = Math.min.apply(null, cand), hi0 = Math.max.apply(null, cand);
+    const ancho = Math.max(hi0 - lo0, c.minAncho), cen = (lo0 + hi0) / 2;
+    const lo = cen - 0.58 * ancho, hi = cen + 0.58 * ancho;
+
+    const ys = [0];
+    for (let i = 0; i <= 200; i++) ys.push(c.f(lo + (hi - lo) * i / 200));
+    dentro.forEach(v => ys.push(c.f(v)));
+    let ymin = Math.min.apply(null, ys), ymax = Math.max.apply(null, ys);
+    const pad = 0.12 * Math.max(ymax - ymin, 1e-9);
+    ymin -= pad; ymax += pad;
+
+    const X = x => M.l + (x - lo) / (hi - lo) * pw;
+    const Y = y => M.t + (ymax - y) / (ymax - ymin) * ph;
+
+    g.font = '12px system-ui, sans-serif';
+    g.fillStyle = COL.ink; g.strokeStyle = COL.grid; g.lineWidth = 1;
+
+    const tx = ticks(lo, hi, 6), ty = ticks(ymin, ymax, 5);
+    const pasoX = tx.length > 1 ? tx[1] - tx[0] : 1, pasoY = ty.length > 1 ? ty[1] - ty[0] : 1;
+    g.textAlign = 'center'; g.textBaseline = 'top';
+    tx.forEach(t => {
+      g.beginPath(); g.moveTo(X(t), M.t); g.lineTo(X(t), M.t + ph); g.stroke();
+      g.fillText(fmtTick(t, pasoX), X(t), M.t + ph + 6);
+    });
+    g.textAlign = 'right'; g.textBaseline = 'middle';
+    ty.forEach(t => {
+      g.beginPath(); g.moveTo(M.l, Y(t)); g.lineTo(M.l + pw, Y(t)); g.stroke();
+      g.fillText(fmtTick(t, pasoY), M.l - 6, Y(t));
+    });
+
+    g.save();
+    g.beginPath(); g.rect(M.l, M.t, pw, ph); g.clip();
+
+    g.strokeStyle = COL.eje; g.lineWidth = 1.2;
+    g.beginPath(); g.moveTo(M.l, Y(0)); g.lineTo(M.l + pw, Y(0)); g.stroke();
+    if (lo < 0 && hi > 0) { g.beginPath(); g.moveTo(X(0), M.t); g.lineTo(X(0), M.t + ph); g.stroke(); }
+
+    g.strokeStyle = COL.curva; g.lineWidth = 2;
+    g.beginPath();
+    for (let i = 0; i <= 400; i++) {
+      const x = lo + (hi - lo) * i / 400, y = c.f(x);
+      if (i === 0) g.moveTo(X(x), Y(y)); else g.lineTo(X(x), Y(y));
+    }
+    g.stroke();
+
+    for (let k = 0; k < xs.length - 1; k++) {
+      const x = xs[k], xn = xs[k + 1];
+      if (!isFinite(x) || !isFinite(xn)) continue;
+      const fx = c.f(x);
+      g.strokeStyle = COL.camino; g.lineWidth = 1.4;
+      g.setLineDash([4, 4]);
+      g.beginPath(); g.moveTo(X(x), Y(0)); g.lineTo(X(x), Y(fx)); g.stroke();
+      g.setLineDash([]);
+      const p1 = limitar(X(x), Y(fx), X(xn), Y(0));
+      g.lineWidth = 1.8;
+      g.beginPath(); g.moveTo(X(x), Y(fx)); g.lineTo(p1[0], p1[1]); g.stroke();
+    }
+
+    g.fillStyle = COL.camino;
+    dentro.forEach(v => { g.beginPath(); g.arc(X(v), Y(c.f(v)), 3.5, 0, 2 * Math.PI); g.fill(); });
+
+    g.fillStyle = COL.raiz;
+    g.beginPath(); g.moveTo(X(c.raiz), Y(0) - 6); g.lineTo(X(c.raiz) + 5, Y(0)); g.lineTo(X(c.raiz), Y(0) + 6); g.lineTo(X(c.raiz) - 5, Y(0)); g.closePath(); g.fill();
+    g.restore();
+
+    g.font = '12px system-ui, sans-serif';
+    g.textAlign = 'center'; g.textBaseline = 'bottom';
+    const usados = [];
+    g.fillStyle = COL.camino;
+    xs.forEach((v, k) => {
+      if (!isFinite(v) || Math.abs(v) > c.maxVentana) return;
+      const px = X(v);
+      if (px < M.l || px > M.l + pw) return;
+      if (usados.some(u => Math.abs(u - px) < 17)) return;
+      usados.push(px);
+      const py = Y(0);
+      g.fillText('x' + sub(k), px, py - 8 < M.t + 12 ? py + 20 : py - 8);
+    });
+    g.fillStyle = COL.raiz; g.textBaseline = 'top';
+    g.fillText('r', X(c.raiz), Y(0) + 8);
+  }
+
+  /* Dentro del iframe de la nota, ajusta su altura al contenido (mismo origen). */
+  function ajustarMarco() {
+    try {
+      const marco = window.frameElement;
+      if (!marco) return;
+      const h = document.body.offsetHeight + 4;
+      if (Math.abs(marco.offsetHeight - h) > 2) marco.style.height = h + 'px';
+    } catch (e) { /* otro origen: se conserva la altura del iframe */ }
+  }
+
+  function actualizar() {
+    const c = CASOS[estado.caso];
+    $('nw-x0v').textContent = fmtNum(estado.x0);
+    $('nw-nv').textContent = estado.n;
+    const v = veredicto(c, estado.x0, estado.n);
+    const el = $('nw-ver');
+    el.className = 'nw-ver ' + v.tipo;
+    el.textContent = v.txt;
+    document.querySelectorAll('#nw-presets .nw-pre').forEach(b => {
+      b.setAttribute('aria-pressed', String(parseFloat(b.dataset.v) === estado.x0));
+    });
+    renderTabla();
+    dibujar();
+    ajustarMarco();
+  }
+
+  function elegir(id) {
+    const c = CASOS[id];
+    estado = { caso: id, x0: c.x0.def, n: c.pasos };
+    document.querySelectorAll('#nw-tabs .nw-tab').forEach(b => b.setAttribute('aria-selected', String(b.dataset.caso === id)));
+    $('nw-eq').innerHTML = c.eq.map(p => '<div><span class="nw-lbl">' + p[0] + '</span>' + p[1] + '</div>').join('');
+    const sl = $('nw-x0');
+    sl.min = c.x0.min; sl.max = c.x0.max; sl.step = c.x0.step; sl.value = c.x0.def;
+    $('nw-n').value = c.pasos;
+    $('nw-presets').innerHTML = c.presets.map(p =>
+      '<button type="button" class="nw-pre" data-v="' + p[1] + '" aria-pressed="false">' + p[0] + '</button>').join('');
+    document.querySelectorAll('#nw-presets .nw-pre').forEach(b => b.addEventListener('click', () => {
+      estado.x0 = parseFloat(b.dataset.v);
+      $('nw-x0').value = estado.x0;
+      actualizar();
+    }));
+    $('nw-nota').innerHTML = c.nota;
+    actualizar();
+  }
+
+  $('nw-tabs').innerHTML = Object.keys(CASOS).map(id =>
+    '<button type="button" role="tab" class="nw-tab" data-caso="' + id + '" aria-selected="false">' + CASOS[id].tab + '</button>').join('');
+  document.querySelectorAll('#nw-tabs .nw-tab').forEach(b => b.addEventListener('click', () => elegir(b.dataset.caso)));
+  $('nw-x0').addEventListener('input', e => { estado.x0 = parseFloat(e.target.value); actualizar(); });
+  $('nw-n').addEventListener('input', e => { estado.n = parseInt(e.target.value, 10); actualizar(); });
+
+  window.addEventListener('resize', () => { dibujar(); ajustarMarco(); });
+
+  elegir('poli');
+})();
+</script>
+
+</body>
+</html>

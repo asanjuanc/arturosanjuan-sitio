@@ -15,7 +15,144 @@
 <link>https://arturosanjuan.xyz/cursos/numerico/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Sat, 26 Sep 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 13 Oct 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>El método de Newton</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/numerico/newton/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>En la nota anterior vimos que hay mucha libertad para convertir la ecuación <img src="https://latex.codecogs.com/png.latex?f(x)=0"> en un problema de punto fijo, y que Newton es una forma particular de elegir <img src="https://latex.codecogs.com/png.latex?g">. Aquí vemos de dónde sale esa elección, siguiendo la idea con la que Newton la usó en <em>De analysi</em> (1669), y cómo se reescribe con derivadas.</p>
+<section id="la-idea-de-newton-a-mano" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="la-idea-de-newton-a-mano"><span class="header-section-number">1</span> La idea de Newton, a mano</h2>
+<p>Newton trabajó con <img src="https://latex.codecogs.com/png.latex?f(x)=x%5E3-2x-5">, y tomamos la misma función. Como semilla elegimos <img src="https://latex.codecogs.com/png.latex?x_0=2">. Como <img src="https://latex.codecogs.com/png.latex?f(2)=-1">, el <img src="https://latex.codecogs.com/png.latex?2"> no es raíz pero no está lejos: con <img src="https://latex.codecogs.com/png.latex?x_0=1"> se obtiene <img src="https://latex.codecogs.com/png.latex?f(1)=-6"> y con <img src="https://latex.codecogs.com/png.latex?x_0=3"> se obtiene <img src="https://latex.codecogs.com/png.latex?f(3)=16">, ambos mucho más lejos de cero.</p>
+<p>Perturbamos un poco la semilla, escribiendo <img src="https://latex.codecogs.com/png.latex?x=2+p"> con <img src="https://latex.codecogs.com/png.latex?p"> pequeño:</p>
+<p><img src="https://latex.codecogs.com/png.latex?f(2+p)=(2+p)%5E3-2(2+p)-5=p%5E3+6p%5E2+10p-1."></p>
+<p>El <img src="https://latex.codecogs.com/png.latex?-1"> es lo que le toca a <img src="https://latex.codecogs.com/png.latex?f(2)">. Como <img src="https://latex.codecogs.com/png.latex?p"> es pequeño, <img src="https://latex.codecogs.com/png.latex?p%5E3"> y <img src="https://latex.codecogs.com/png.latex?p%5E2"> son despreciables frente a <img src="https://latex.codecogs.com/png.latex?10p">, y queda <img src="https://latex.codecogs.com/png.latex?10p-1=0">, es decir <img src="https://latex.codecogs.com/png.latex?p=0%7B,%7D1">. La nueva aproximación es <img src="https://latex.codecogs.com/png.latex?x_1=2%7B,%7D1">, y <img src="https://latex.codecogs.com/png.latex?f(2%7B,%7D1)=0%7B,%7D061">: mucho más cerca de cero que <img src="https://latex.codecogs.com/png.latex?f(2)=-1">.</p>
+<p>Pulimos ahora <img src="https://latex.codecogs.com/png.latex?p"> con el mismo truco: escribimos <img src="https://latex.codecogs.com/png.latex?p=0%7B,%7D1+q"> en el polinomio <img src="https://latex.codecogs.com/png.latex?p%5E3+6p%5E2+10p-1"> y obtenemos</p>
+<p><img src="https://latex.codecogs.com/png.latex?q%5E3+6%7B,%7D3%5C,q%5E2+11%7B,%7D23%5C,q+0%7B,%7D061."></p>
+<p>Despreciando otra vez <img src="https://latex.codecogs.com/png.latex?q%5E3"> y <img src="https://latex.codecogs.com/png.latex?q%5E2"> queda <img src="https://latex.codecogs.com/png.latex?q=-0%7B,%7D061/11%7B,%7D23%5Capprox-0%7B,%7D0054319">, y <img src="https://latex.codecogs.com/png.latex?x_2=2%7B,%7D1+q%5Capprox2%7B,%7D094568">.</p>
+<p>Podemos seguir así indefinidamente. Con <img src="https://latex.codecogs.com/png.latex?x_2"> el error relativo ya es bajo, cerca de <img src="https://latex.codecogs.com/png.latex?8%5Ccdot10%5E%7B-6%7D">, y el residuo es <img src="https://latex.codecogs.com/png.latex?f(x_2)%5Capprox1%7B,%7D9%5Ccdot10%5E%7B-4%7D">. Existe además la solución exacta por Cardano, la que entrega un sistema de álgebra computacional,</p>
+<p><img src="https://latex.codecogs.com/png.latex?r=%5Cfrac%7B%5Csqrt%5B3%5D%7B45-%5Csqrt%7B1929%7D%7D+%5Csqrt%5B3%5D%7B45+%5Csqrt%7B1929%7D%7D%7D%7B%5Csqrt%5B3%5D%7B18%7D%7D%5Capprox2%7B,%7D0945515,"></p>
+<p>pero es de muy poca utilidad para efectos prácticos.</p>
+</section>
+<section id="newton-con-derivadas" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="newton-con-derivadas"><span class="header-section-number">2</span> Newton con derivadas</h2>
+<p>Veamos lo mismo con derivadas. Desarrollando alrededor de <img src="https://latex.codecogs.com/png.latex?x_0"> y quedándonos con el término lineal en <img src="https://latex.codecogs.com/png.latex?p"> (que es lo que hacía Newton al despreciar las potencias altas de <img src="https://latex.codecogs.com/png.latex?p">),</p>
+<p><img src="https://latex.codecogs.com/png.latex?0=f(x_0+p)=f(x_0)+f'(x_0)%5C,p+o(p)%5Cquad%5CLongrightarrow%5Cquad%20p%5Capprox-%5Cfrac%7Bf(x_0)%7D%7Bf'(x_0)%7D,"></p>
+<p>de modo que <img src="https://latex.codecogs.com/png.latex?x_1=x_0+p=x_0-%5Cdfrac%7Bf(x_0)%7D%7Bf'(x_0)%7D">. Repetimos desde <img src="https://latex.codecogs.com/png.latex?x_1">: <img src="https://latex.codecogs.com/png.latex?0=f(x_1+q)=f(x_1)+f'(x_1)%5C,q+o(q)"> da <img src="https://latex.codecogs.com/png.latex?q%5Capprox-f(x_1)/f'(x_1)"> y <img src="https://latex.codecogs.com/png.latex?x_2=x_1+q=x_1-f(x_1)/f'(x_1)">. En general</p>
+<p><img src="https://latex.codecogs.com/png.latex?x_%7Bk+1%7D=x_k-%5Cfrac%7Bf(x_k)%7D%7Bf'(x_k)%7D."></p>
+<p>Los coeficientes que Newton iba obteniendo al reescribir el polinomio son justamente <img src="https://latex.codecogs.com/png.latex?f"> y <img src="https://latex.codecogs.com/png.latex?f'"> evaluadas en cada aproximación: en <img src="https://latex.codecogs.com/png.latex?p%5E3+6p%5E2+10p-1"> el término independiente es <img src="https://latex.codecogs.com/png.latex?f(2)=-1"> y el coeficiente de <img src="https://latex.codecogs.com/png.latex?p"> es <img src="https://latex.codecogs.com/png.latex?f'(2)=10">, y en el segundo paso son <img src="https://latex.codecogs.com/png.latex?f(2%7B,%7D1)=0%7B,%7D061"> y <img src="https://latex.codecogs.com/png.latex?f'(2%7B,%7D1)=11%7B,%7D23">.</p>
+<p>Importante: que <img src="https://latex.codecogs.com/png.latex?f'(x)%5Cne0"> en donde se están realizando las iteraciones. El siguiente ejercicio es un caso ideal en el que las hipótesis lo garantizan.</p>
+</section>
+<section id="un-caso-ideal-el-ejercicio-de-rudin" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="un-caso-ideal-el-ejercicio-de-rudin"><span class="header-section-number">3</span> Un caso ideal: el ejercicio de Rudin</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio 25 del capítulo 5 de Rudin">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicio 25 del capítulo 5 de Rudin
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sea <img src="https://latex.codecogs.com/png.latex?f"> dos veces diferenciable en <img src="https://latex.codecogs.com/png.latex?%5Ba,b%5D"> con <img src="https://latex.codecogs.com/png.latex?f(a)%3C0%3Cf(b)">, <img src="https://latex.codecogs.com/png.latex?f'(x)%5Cge%5Cdelta%3E0"> y <img src="https://latex.codecogs.com/png.latex?0%5Cle%20f''(x)%5Cle%20M"> para todo <img src="https://latex.codecogs.com/png.latex?x%5Cin%5Ba,b%5D">. Es un caso ideal: hay un único cero de <img src="https://latex.codecogs.com/png.latex?f"> en <img src="https://latex.codecogs.com/png.latex?%5Ba,b%5D">, que llamamos <img src="https://latex.codecogs.com/png.latex?%5Cxi">. Tomemos <img src="https://latex.codecogs.com/png.latex?x_1%5Cin(%5Cxi,b)"> y sea <img src="https://latex.codecogs.com/png.latex?x_%7Bn+1%7D=x_n-f(x_n)/f'(x_n)">.</p>
+<p><strong>(a)</strong> Interprete esta iteración gráficamente.</p>
+<p><strong>(b)</strong> Demuestre que <img src="https://latex.codecogs.com/png.latex?x_%7Bn+1%7D%3Cx_n"> y que <img src="https://latex.codecogs.com/png.latex?x_n%5Cto%5Cxi">.</p>
+<p><strong>(c)</strong> Use el teorema de Taylor para mostrar que <img src="https://latex.codecogs.com/png.latex?x_%7Bn+1%7D-%5Cxi=%5Cdfrac%7Bf''(t_n)%7D%7B2f'(x_n)%7D%5C,(x_n-%5Cxi)%5E2"> para algún <img src="https://latex.codecogs.com/png.latex?t_n%5Cin(%5Cxi,x_n)">.</p>
+<p><strong>(d)</strong> Si <img src="https://latex.codecogs.com/png.latex?A=M/(2%5Cdelta)">, deduzca que <img src="https://latex.codecogs.com/png.latex?0%5Cle%20x_%7Bn+1%7D-%5Cxi%5Cle%5Cdfrac1A%5Cbig%5BA(x_1-%5Cxi)%5Cbig%5D%5E%7B2%5En%7D">.</p>
+<p><strong>(e)</strong> Muestre que el método de Newton equivale a hallar un punto fijo de <img src="https://latex.codecogs.com/png.latex?g(x)=x-f(x)/f'(x)">. ¿Cómo se comporta <img src="https://latex.codecogs.com/png.latex?g'(x)"> cerca de <img src="https://latex.codecogs.com/png.latex?%5Cxi">?</p>
+<p><strong>(f)</strong> Tome <img src="https://latex.codecogs.com/png.latex?f(x)=x%5E%7B1/3%7D"> en <img src="https://latex.codecogs.com/png.latex?(-%5Cinfty,%5Cinfty)"> e intente el método de Newton. ¿Qué pasa?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>(a)</strong> La tangente a la gráfica en <img src="https://latex.codecogs.com/png.latex?(x_n,f(x_n))"> es <img src="https://latex.codecogs.com/png.latex?y=f(x_n)+f'(x_n)(x-x_n)">, y corta el eje horizontal en <img src="https://latex.codecogs.com/png.latex?x_%7Bn+1%7D=x_n-f(x_n)/f'(x_n)">. En la figura, el segmento de <img src="https://latex.codecogs.com/png.latex?x_2"> a <img src="https://latex.codecogs.com/png.latex?x_1"> sobre el eje mide <img src="https://latex.codecogs.com/png.latex?f(x_1)/f'(x_1)">.</p>
+<svg viewbox="0 0 480 280" width="100%" style="max-width:520px;display:block;margin:0.75rem auto;" aria-label="Gráfica de una función convexa y creciente con las tangentes de Newton desde x1 y x2 hacia el cero xi" font-family="system-ui, sans-serif" font-size="13">
+  <title>Interpretación gráfica del método de Newton: cada iterado es el punto donde la tangente corta el eje</title>
+  <line x1="24.0" y1="140.0" x2="456.0" y2="140.0" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.2"></line>
+  <line x1="196.8" y1="14" x2="196.8" y2="224" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.2"></line>
+  <line x1="52.8" y1="140.0" x2="52.8" y2="202.3" stroke="#1a7f5a" stroke-width="1.4" stroke-dasharray="4 4"></line>
+  <line x1="427.2" y1="140.0" x2="427.2" y2="27.2" stroke="#1a7f5a" stroke-width="1.4" stroke-dasharray="4 4"></line>
+  <text x="52.8" y="132.0" fill="#1a7f5a" text-anchor="middle">a</text>
+  <text x="427.2" y="156.0" fill="#1a7f5a" text-anchor="middle">b</text>
+  <polyline points="52.8,202.3 55.9,202.0 59.0,201.7 62.2,201.4 65.3,201.0 68.4,200.7 71.5,200.4 74.6,200.0 77.8,199.7 80.9,199.3 84.0,198.9 87.1,198.5 90.2,198.1 93.4,197.7 96.5,197.3 99.6,196.9 102.7,196.5 105.8,196.1 109.0,195.6 112.1,195.2 115.2,194.7 118.3,194.2 121.4,193.7 124.6,193.2 127.7,192.7 130.8,192.2 133.9,191.7 137.0,191.2 140.2,190.6 143.3,190.0 146.4,189.5 149.5,188.9 152.6,188.3 155.8,187.7 158.9,187.0 162.0,186.4 165.1,185.7 168.2,185.1 171.4,184.4 174.5,183.7 177.6,182.9 180.7,182.2 183.8,181.5 187.0,180.7 190.1,179.9 193.2,179.1 196.3,178.3 199.4,177.5 202.6,176.6 205.7,175.8 208.8,174.9 211.9,174.0 215.0,173.0 218.2,172.1 221.3,171.1 224.4,170.1 227.5,169.1 230.6,168.1 233.8,167.0 236.9,165.9 240.0,164.8 243.1,163.7 246.2,162.5 249.4,161.4 252.5,160.2 255.6,158.9 258.7,157.7 261.8,156.4 265.0,155.1 268.1,153.7 271.2,152.4 274.3,151.0 277.4,149.5 280.6,148.1 283.7,146.6 286.8,145.0 289.9,143.5 293.0,141.9 296.2,140.2 299.3,138.6 302.4,136.9 305.5,135.1 308.6,133.3 311.8,131.5 314.9,129.7 318.0,127.8 321.1,125.8 324.2,123.8 327.4,121.8 330.5,119.8 333.6,117.6 336.7,115.5 339.8,113.3 343.0,111.0 346.1,108.7 349.2,106.3 352.3,103.9 355.4,101.5 358.6,99.0 361.7,96.4 364.8,93.8 367.9,91.1 371.0,88.3 374.2,85.5 377.3,82.7 380.4,79.7 383.5,76.7 386.6,73.7 389.8,70.5 392.9,67.4 396.0,64.1 399.1,60.8 402.2,57.3 405.4,53.9 408.5,50.3 411.6,46.7 414.7,42.9 417.8,39.1 421.0,35.3 424.1,31.3 427.2,27.2" fill="none" stroke="#2563a8" stroke-width="2.2"></polyline>
+  <line x1="376.8" y1="140.0" x2="376.8" y2="83.1" stroke="#c1440e" stroke-width="1.4" stroke-dasharray="4 4"></line>
+  <line x1="315.3" y1="140.0" x2="315.3" y2="129.4" stroke="#c1440e" stroke-width="1.4" stroke-dasharray="4 4"></line>
+  <line x1="376.8" y1="83.1" x2="315.3" y2="140.0" stroke="#c1440e" stroke-width="1.8"></line>
+  <line x1="315.3" y1="129.4" x2="297.8" y2="140.0" stroke="#c1440e" stroke-width="1.8"></line>
+  <circle cx="376.8" cy="83.1" r="3.5" fill="#c1440e"></circle>
+  <circle cx="315.3" cy="129.4" r="3.5" fill="#c1440e"></circle>
+  <line x1="315.3" y1="166.0" x2="376.8" y2="166.0" stroke="#c1440e" stroke-width="3"></line>
+  <text x="346.1" y="186.0" fill="currentColor" text-anchor="middle">f(x₁)/f′(x₁)</text>
+  <text x="376.8" y="156.0" fill="#c1440e" text-anchor="middle">x₁</text>
+  <text x="306.3" y="156.0" fill="#c1440e" text-anchor="middle">x₂</text>
+  <path d="M 296.6 134.0 l 5 6 l -5 6 l -5 -6 z" fill="#1a7f5a"></path>
+  <text x="288.6" y="128.0" fill="#1a7f5a" text-anchor="middle">ξ</text>
+</svg>
+<p><strong>(b)</strong> Como <img src="https://latex.codecogs.com/png.latex?f''%5Cge0">, <img src="https://latex.codecogs.com/png.latex?f'"> es creciente: la función es cóncava hacia arriba. Probamos por inducción que <img src="https://latex.codecogs.com/png.latex?%5Cxi%5Cle%20x_n"> y <img src="https://latex.codecogs.com/png.latex?x_%7Bn+1%7D%5Cle%20x_n"> para todo <img src="https://latex.codecogs.com/png.latex?n">. Para <img src="https://latex.codecogs.com/png.latex?n=1"> se cumple <img src="https://latex.codecogs.com/png.latex?%5Cxi%3Cx_1"> por hipótesis. Supongamos <img src="https://latex.codecogs.com/png.latex?%5Cxi%5Cle%20x_n">. Como <img src="https://latex.codecogs.com/png.latex?f"> es creciente y <img src="https://latex.codecogs.com/png.latex?f(%5Cxi)=0">, tenemos <img src="https://latex.codecogs.com/png.latex?f(x_n)%5Cge0">, y como <img src="https://latex.codecogs.com/png.latex?f'%3E0">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?x_%7Bn+1%7D=x_n-%5Cfrac%7Bf(x_n)%7D%7Bf'(x_n)%7D%5Cle%20x_n."></p>
+<p>Falta ver que <img src="https://latex.codecogs.com/png.latex?%5Cxi%5Cle%20x_%7Bn+1%7D">. Si <img src="https://latex.codecogs.com/png.latex?x_n=%5Cxi"> no hay nada que probar. Si <img src="https://latex.codecogs.com/png.latex?x_n%3E%5Cxi">, por el teorema del valor medio, para algún <img src="https://latex.codecogs.com/png.latex?t%5Cin(%5Cxi,x_n)">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?f(x_n)=f(x_n)-f(%5Cxi)=f'(t)(x_n-%5Cxi)%5Cle%20f'(x_n)(x_n-%5Cxi),"></p>
+<p>porque <img src="https://latex.codecogs.com/png.latex?f'"> es creciente. Dividiendo por <img src="https://latex.codecogs.com/png.latex?f'(x_n)%3E0"> queda <img src="https://latex.codecogs.com/png.latex?f(x_n)/f'(x_n)%5Cle%20x_n-%5Cxi">, es decir <img src="https://latex.codecogs.com/png.latex?x_%7Bn+1%7D%5Cge%5Cxi">. (Si <img src="https://latex.codecogs.com/png.latex?f"> fuese lineal cerca de <img src="https://latex.codecogs.com/png.latex?%5Cxi">, Newton llegaría a <img src="https://latex.codecogs.com/png.latex?%5Cxi"> en un paso y la sucesión quedaría constante; por eso las desigualdades son estrictas solo mientras <img src="https://latex.codecogs.com/png.latex?x_n%3E%5Cxi">.)</p>
+<p>Entonces <img src="https://latex.codecogs.com/png.latex?(x_n)"> es no creciente y acotada inferiormente por <img src="https://latex.codecogs.com/png.latex?%5Cxi">, así que converge a un <img src="https://latex.codecogs.com/png.latex?x%5E%5Cast%5Cge%5Cxi">. Pasando al límite en la recursión, <img src="https://latex.codecogs.com/png.latex?x%5E%5Cast=x%5E%5Cast-f(x%5E%5Cast)/f'(x%5E%5Cast)">, luego <img src="https://latex.codecogs.com/png.latex?f(x%5E%5Cast)=0">, y como <img src="https://latex.codecogs.com/png.latex?%5Cxi"> es el único cero de <img src="https://latex.codecogs.com/png.latex?f">, <img src="https://latex.codecogs.com/png.latex?x%5E%5Cast=%5Cxi">.</p>
+<p><strong>(c)</strong> Por Taylor alrededor de <img src="https://latex.codecogs.com/png.latex?x_n">, con <img src="https://latex.codecogs.com/png.latex?t_n"> entre <img src="https://latex.codecogs.com/png.latex?%5Cxi"> y <img src="https://latex.codecogs.com/png.latex?x_n">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?-f(x_n)=f(%5Cxi)-f(x_n)=f'(x_n)(%5Cxi-x_n)+%5Cfrac%7Bf''(t_n)%7D%7B2%7D(%5Cxi-x_n)%5E2."></p>
+<p>Dividiendo por <img src="https://latex.codecogs.com/png.latex?f'(x_n)">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?-%5Cfrac%7Bf(x_n)%7D%7Bf'(x_n)%7D=(%5Cxi-x_n)+%5Cfrac%7Bf''(t_n)%7D%7B2f'(x_n)%7D(x_n-%5Cxi)%5E2,"></p>
+<p>y sumando <img src="https://latex.codecogs.com/png.latex?x_n">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?x_%7Bn+1%7D=x_n-%5Cfrac%7Bf(x_n)%7D%7Bf'(x_n)%7D=%5Cxi+%5Cfrac%7Bf''(t_n)%7D%7B2f'(x_n)%7D(x_n-%5Cxi)%5E2,%0A%5Cqquad%5Ctext%7Bes%20decir%7D%5Cqquad%0Ax_%7Bn+1%7D-%5Cxi=%5Cfrac%7Bf''(t_n)%7D%7B2f'(x_n)%7D(x_n-%5Cxi)%5E2."></p>
+<p><strong>(d)</strong> Con <img src="https://latex.codecogs.com/png.latex?A=M/(2%5Cdelta)"> se tiene <img src="https://latex.codecogs.com/png.latex?0%5Cle%5Cdfrac%7Bf''(t_n)%7D%7B2f'(x_n)%7D%5Cle%20A">, y aplicando la cota una y otra vez,</p>
+<p><img src="https://latex.codecogs.com/png.latex?0%5Cle%20x_%7Bn+1%7D-%5Cxi%5Cle%20A(x_n-%5Cxi)%5E2=%5Cfrac1A%5Cbig(A(x_n-%5Cxi)%5Cbig)%5E2%5Cle%5Cfrac1A%5CBig(A%5Ccdot%5Cfrac1A%5Cbig(A(x_%7Bn-1%7D-%5Cxi)%5Cbig)%5E2%5CBig)%5E2=%5Cfrac1A%5Cbig(A(x_%7Bn-1%7D-%5Cxi)%5Cbig)%5E%7B4%7D%5Cle%5Ccdots%5Cle%5Cfrac1A%5Cbig(A(x_1-%5Cxi)%5Cbig)%5E%7B2%5En%7D."></p>
+<p><strong>(e)</strong> Los puntos fijos de <img src="https://latex.codecogs.com/png.latex?g(x)=x-f(x)/f'(x)"> son los <img src="https://latex.codecogs.com/png.latex?x"> con <img src="https://latex.codecogs.com/png.latex?f(x)/f'(x)=0">, es decir los ceros de <img src="https://latex.codecogs.com/png.latex?f"> (donde <img src="https://latex.codecogs.com/png.latex?f'%5Cne0">), y la iteración de Newton es exactamente <img src="https://latex.codecogs.com/png.latex?x_%7Bn+1%7D=g(x_n)">: aplicar Newton es buscar un punto fijo de <img src="https://latex.codecogs.com/png.latex?g">.</p>
+<p><strong>(f)</strong> Con <img src="https://latex.codecogs.com/png.latex?f(x)=x%5E%7B1/3%7D"> y <img src="https://latex.codecogs.com/png.latex?f'(x)=%5Ctfrac13x%5E%7B-2/3%7D"> (con la raíz cúbica real, <img src="https://latex.codecogs.com/png.latex?f'(x)=%5Ctfrac13%7Cx%7C%5E%7B-2/3%7D"> para <img src="https://latex.codecogs.com/png.latex?x%5Cne0">), tomemos <img src="https://latex.codecogs.com/png.latex?x_0%3E0">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?x_1=x_0-%5Cfrac%7Bx_0%5E%7B1/3%7D%7D%7B%5Ctfrac13x_0%5E%7B-2/3%7D%7D=x_0-3x_0=-2x_0%5Cquad(%5Ctext%7Bnegativo%7D),"></p>
+<p><img src="https://latex.codecogs.com/png.latex?x_2=x_1-3x_1=-2x_0-3(-2x_0)=4x_0%5Cquad(%5Ctext%7Bpositivo%7D),"></p>
+<p><img src="https://latex.codecogs.com/png.latex?x_3=x_2-3x_2=4x_0-12x_0=-8x_0,%5Cqquad%20x_4=x_3-3x_3=-8x_0+24x_0=16x_0,"></p>
+<p>y en general <img src="https://latex.codecogs.com/png.latex?x_n=(-1)%5En2%5Enx_0">: cada vez se aleja más del cero. La función <img src="https://latex.codecogs.com/png.latex?x%5E%7B1/3%7D"> tiene derivada positiva pero no está alejada de cero (tiende a <img src="https://latex.codecogs.com/png.latex?0"> cuando <img src="https://latex.codecogs.com/png.latex?%7Cx%7C%5Cto%5Cinfty">, así que no existe <img src="https://latex.codecogs.com/png.latex?%5Cdelta%3E0"> con <img src="https://latex.codecogs.com/png.latex?f'%5Cge%5Cdelta">), y además cambia la concavidad en <img src="https://latex.codecogs.com/png.latex?0">, de modo que tampoco vale <img src="https://latex.codecogs.com/png.latex?f''%5Cge0">. Fallan las hipótesis del caso ideal.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Complete el inciso (e): calcule <img src="https://latex.codecogs.com/png.latex?g'(x)"> y describa cómo se comporta cerca de <img src="https://latex.codecogs.com/png.latex?%5Cxi">. Haga todos los ejercicios de la sección de Método de Newton del texto guía.</p>
+</div>
+</div>
+</section>
+<section id="tablero-newton-en-tres-casos" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="tablero-newton-en-tres-casos"><span class="header-section-number">4</span> Tablero: Newton en tres casos</h2>
+<p>El tablero reúne tres ejemplos: el polinomio de Newton, donde todo sale como en la teoría; la raíz cúbica, donde el método falla para toda semilla; y el arco tangente, donde la raíz es buena pero la iteración se vuelve inestable según la semilla. Elija el caso, mueva la semilla <img src="https://latex.codecogs.com/png.latex?x_0"> y cambie el número de pasos; la tabla muestra el error y las cifras correctas de cada iterado.</p>
+<iframe src="notebooks/newton-simulacion.html" width="100%" height="1000px" style="border:none;">
+</iframe>
+<p>La geometría es importante: en los tres casos el siguiente iterado es el punto donde la tangente corta el eje, y todo depende de cómo sea la curva entre un iterado y el siguiente.</p>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/numerico/newton/</guid>
+  <pubDate>Tue, 13 Oct 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Parcial 1</title>
   <dc:creator>Arturo Sanjuán</dc:creator>
