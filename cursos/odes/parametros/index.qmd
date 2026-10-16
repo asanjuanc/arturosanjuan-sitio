@@ -1,0 +1,589 @@
+---
+title: "Coeficientes Constantes y Variación de Parámetros"
+subtitle: "Un parámetro que bifurca, el forzamiento resonante y una ecuación de Euler forzada"
+description: ""
+author: "Arturo Sanjuán"
+date: 2026-10-15
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 12
+---
+
+## Un parámetro que bifurca
+
+En clase vimos cómo funciona el método de coeficientes constantes cuando la ecuación es homogénea. Vimos los casos en los que las raíces son reales y distintas, reales e iguales, y complejas conjugadas, y cómo es el comportamiento cualitativo de estas soluciones. En el siguiente ejemplo vamos a hacer una ecuación con un parámetro y ver cómo cambia su comportamiento cualitativo cuando movemos dicho parámetro. Esto, en teoría de ecuaciones diferenciales, se conoce como *bifurcación*.
+
+Consideremos la ecuación
+
+$$y''+2\mu y'+y=0.$$
+
+Aquí $\mu$ es un parámetro que toma valores en $\mathbb{R}$. Entonces el polinomio característico es
+
+$$\lambda^2+2\mu\lambda+1=0,$$
+
+de donde obtenemos las raíces
+
+$$\lambda=-\mu\pm\sqrt{\mu^2-1}.$$
+
+**Caso $|\mu|>1$.** El discriminante es positivo, así que hay dos raíces reales distintas. Además $\sqrt{\mu^2-1}<|\mu|$, porque $\mu^2-1<\mu^2$, es decir, $-1<0$. Entonces, si $\mu<-1$, las dos raíces $-\mu\pm\sqrt{\mu^2-1}$ son positivas, y si $\mu>1$ son negativas.
+
+**Caso $\mu=\pm1$.** El discriminante se anula, y hay una raíz doble, $\lambda=\mp1$.
+
+**Caso $|\mu|<1$.** Ahora $\mu^2-1<0$, y las raíces son complejas conjugadas,
+
+$$\lambda=-\mu\pm i\sqrt{1-\mu^2},\qquad |\lambda|^2=\mu^2+(1-\mu^2)=1,$$
+
+de donde $\lambda$ está en la circunferencia unitaria $\mathbb{T}$. Si $\mu=0$, las raíces son imaginarias puras, $\lambda=\pm i$.
+
+El siguiente tablero resume el comportamiento cualitativo de las soluciones. Mueva el parámetro $\mu$ y observe a la vez el plano de fase, las gráficas de las soluciones y la posición de las raíces. Los valores $\mu=-1$, $\mu=0$ y $\mu=1$ están marcados en rojo, y cuando el parámetro cae exactamente sobre uno de ellos todo el tablero se enciende.
+
+::: {.callout-note title="Simulador: cómo cambian las soluciones al mover μ"}
+```{=html}
+<style>
+  #pa-tablero button{padding:5px 12px;border:1px solid #bbb;border-radius:6px;background:#f5f5f5;color:#222;cursor:pointer;font-size:0.95em;}
+  #pa-tablero button:hover{background:#e9e9e9;}
+  #pa-tablero .pa-tit{font-size:0.9em;font-weight:bold;margin-bottom:4px;}
+</style>
+<div id="pa-tablero" style="border:3px solid #ddd;border-radius:8px;padding:16px;max-width:780px;margin:1em auto;font-family:sans-serif;background:#fff;color:#222;">
+
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px;">
+    <div style="font-size:1.3em;">μ = <strong id="pa-mu-val">0.50</strong></div>
+    <div id="pa-insignia" style="padding:3px 12px;border-radius:12px;font-size:0.9em;background:#eee;color:#333;"></div>
+  </div>
+
+  <canvas id="pa-eje" width="720" height="86" style="width:100%;height:auto;display:block;cursor:pointer;"></canvas>
+  <input type="range" id="pa-mu" min="-2" max="2" step="0.01" value="0.5" style="width:100%;margin:2px 0 8px;" aria-label="Parámetro mu">
+
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
+    <button type="button" id="pa-b-m1">μ = −1</button>
+    <button type="button" id="pa-b-0">μ = 0</button>
+    <button type="button" id="pa-b-1">μ = 1</button>
+    <button type="button" id="pa-play" style="margin-left:auto;">▶ Recorrer</button>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;">
+    <div>
+      <div class="pa-tit">Plano de fase (y, y′)</div>
+      <canvas id="pa-fase" width="440" height="440" style="width:100%;height:auto;display:block;border:2px solid #ddd;"></canvas>
+    </div>
+    <div>
+      <div class="pa-tit">Soluciones y(x)</div>
+      <canvas id="pa-tiempo" width="440" height="440" style="width:100%;height:auto;display:block;border:2px solid #ddd;"></canvas>
+    </div>
+    <div>
+      <div class="pa-tit">Raíces del polinomio característico</div>
+      <canvas id="pa-raices" width="440" height="270" style="width:100%;height:auto;display:block;border:2px solid #ddd;"></canvas>
+    </div>
+    <div id="pa-info" style="font-size:0.95em;line-height:1.55;"></div>
+  </div>
+
+  <p style="font-size:0.88em;color:#555;margin-top:12px;">
+    Cada color es una solución distinta: el círculo marca las condiciones iniciales y(0) y y′(0), y la flecha indica el sentido en que crece x. Las rectas punteadas del plano de fase son las soluciones puramente exponenciales y = c e^(λx), una por cada raíz real λ; en μ = ±1 las dos se funden en una sola, que se dibuja en rojo. En el plano de las raíces, la mitad izquierda es la zona donde las soluciones decaen y la derecha la zona donde crecen. Se puede hacer clic sobre la franja de arriba para fijar μ, o usar el botón Recorrer para que el parámetro avance solo y se detenga un momento en cada punto de bifurcación.
+  </p>
+</div>
+<script>
+(function(){
+  function el(id){ return document.getElementById(id); }
+  const cEje = el('pa-eje'), cFase = el('pa-fase'), cTiempo = el('pa-tiempo'), cRaices = el('pa-raices');
+  const gEje = cEje.getContext('2d'), gFase = cFase.getContext('2d');
+  const gTiempo = cTiempo.getContext('2d'), gRaices = cRaices.getContext('2d');
+  const slider = el('pa-mu'), muVal = el('pa-mu-val'), insignia = el('pa-insignia');
+  const info = el('pa-info'), caja = el('pa-tablero'), btnPlay = el('pa-play');
+
+  const ROJO = '#d62728', ROJO_SUAVE = '#fdecec';
+  const COLORES = ['#1f77b4', '#2ca02c', '#9467bd', '#008b8b', '#8c564b', '#666666', '#8a8a00', '#1a2a6c'];
+  const PASO = 0.03, NPASOS = 400, VENT = 2, LIM = 8, XMAX = 12, PAD = 10;
+  const TOL = 1e-9;
+
+  // Ocho soluciones con condiciones iniciales repartidas en espiral
+  const SOLS = [];
+  for (let k = 0; k < 8; k++) {
+    const r = 0.35 + 0.15 * k;
+    const th = 0.5 + k * 2.399963;
+    SOLS.push({ y0: r * Math.cos(th), v0: r * Math.sin(th), color: COLORES[k] });
+  }
+
+  let mu = 0.5, jugando = false, dir = 1, espera = 0, ultimo = null, acum = 0;
+
+  function redondear(v){ return Math.round(v * 100) / 100; }
+  function esBif(m){ return Math.abs(m + 1) < TOL || Math.abs(m) < TOL || Math.abs(m - 1) < TOL; }
+  function fmt(v, d){
+    let s = v.toFixed(d === undefined ? 2 : d);
+    if (/^-0\.?0*$/.test(s)) s = s.replace('-', '');
+    return s.replace('-', '−');
+  }
+
+  // Solucion exacta de y'' + 2 mu y' + y = 0 con y(0) = y0, y'(0) = v0
+  function resolver(m, y0, v0){
+    const D = m * m - 1;
+    if (Math.abs(D) < TOL) {
+      const l = -m, c1 = y0, c2 = v0 - l * y0;
+      return function(x){
+        const e = Math.exp(l * x);
+        return [(c1 + c2 * x) * e, (c2 + l * (c1 + c2 * x)) * e];
+      };
+    } else if (D > 0) {
+      const s = Math.sqrt(D), l1 = -m + s, l2 = -m - s;
+      const c1 = (v0 - l2 * y0) / (l1 - l2), c2 = (l1 * y0 - v0) / (l1 - l2);
+      return function(x){
+        const e1 = Math.exp(l1 * x), e2 = Math.exp(l2 * x);
+        return [c1 * e1 + c2 * e2, c1 * l1 * e1 + c2 * l2 * e2];
+      };
+    } else {
+      const w = Math.sqrt(-D), A = y0, B = (v0 + m * y0) / w;
+      return function(x){
+        const e = Math.exp(-m * x), c = Math.cos(w * x), s = Math.sin(w * x);
+        return [e * (A * c + B * s), e * ((-m * A + B * w) * c + (-m * B - A * w) * s)];
+      };
+    }
+  }
+
+  function clasificar(m){
+    const D = m * m - 1;
+    if (Math.abs(D) < TOL) {
+      if (m > 0) return { tipo: 'nodo degenerado estable', desc: 'Raíz doble λ = −1: las dos exponenciales se funden en una sola y aparece el factor x. Es el amortiguamiento crítico: las soluciones decaen sin oscilar, lo más rápido posible.' };
+      return { tipo: 'nodo degenerado inestable', desc: 'Raíz doble λ = 1: las dos exponenciales se funden en una sola y aparece el factor x. Las soluciones crecen sin oscilar.' };
+    }
+    if (D > 0) {
+      if (m > 0) return { tipo: 'nodo estable', desc: 'Dos raíces reales negativas distintas: todas las soluciones decaen a cero sin oscilar.' };
+      return { tipo: 'nodo inestable', desc: 'Dos raíces reales positivas distintas: las soluciones crecen sin oscilar.' };
+    }
+    if (Math.abs(m) < TOL) return { tipo: 'centro', desc: 'Raíces imaginarias puras λ = ±i: las soluciones oscilan con amplitud constante, y las órbitas del plano de fase son circunferencias.' };
+    if (m > 0) return { tipo: 'foco estable', desc: 'Raíces complejas con parte real negativa: las soluciones oscilan y decaen, y las órbitas giran en espiral hacia el origen.' };
+    return { tipo: 'foco inestable', desc: 'Raíces complejas con parte real positiva: las soluciones oscilan y crecen, y las órbitas giran en espiral alejándose del origen.' };
+  }
+
+  function mapa(cv, M, x0, x1, y0, y1){
+    const pw = cv.width - M.l - M.r, ph = cv.height - M.t - M.b;
+    return {
+      M: M, pw: pw, ph: ph, H: cv.height,
+      X: function(x){ return M.l + (x - x0) / (x1 - x0) * pw; },
+      Y: function(y){ return M.t + (y1 - y) / (y1 - y0) * ph; }
+    };
+  }
+
+  function fondo(g, cv, bif){
+    g.clearRect(0, 0, cv.width, cv.height);
+    g.fillStyle = bif ? ROJO_SUAVE : '#ffffff';
+    g.fillRect(0, 0, cv.width, cv.height);
+    cv.style.borderColor = bif ? ROJO : '#ddd';
+  }
+
+  function ejes(g, m, xt, yt, etx, ety){
+    const M = m.M;
+    g.save();
+    g.lineWidth = 1; g.strokeStyle = '#e3e3e3'; g.fillStyle = '#777'; g.font = '13px sans-serif';
+    xt.forEach(function(t){
+      const px = m.X(t);
+      g.beginPath(); g.moveTo(px, M.t); g.lineTo(px, M.t + m.ph); g.stroke();
+      g.textAlign = 'center'; g.fillText(fmt(t, 0), px, M.t + m.ph + 16);
+    });
+    yt.forEach(function(t){
+      const py = m.Y(t);
+      g.beginPath(); g.moveTo(M.l, py); g.lineTo(M.l + m.pw, py); g.stroke();
+      g.textAlign = 'right'; g.fillText(fmt(t, 0), M.l - 6, py + 4);
+    });
+    g.strokeStyle = '#888'; g.lineWidth = 1.4;
+    g.beginPath(); g.moveTo(m.X(0), M.t); g.lineTo(m.X(0), M.t + m.ph); g.stroke();
+    g.beginPath(); g.moveTo(M.l, m.Y(0)); g.lineTo(M.l + m.pw, m.Y(0)); g.stroke();
+    g.strokeStyle = '#999'; g.lineWidth = 1; g.strokeRect(M.l, M.t, m.pw, m.ph);
+    g.fillStyle = '#333'; g.font = '15px sans-serif'; g.textAlign = 'center';
+    g.fillText(etx, M.l + m.pw / 2, m.H - 6);
+    g.save(); g.translate(13, M.t + m.ph / 2); g.rotate(-Math.PI / 2); g.fillText(ety, 0, 0); g.restore();
+    g.restore();
+  }
+
+  function puntos(f, sgn){
+    const out = [];
+    for (let i = 0; i <= NPASOS; i++) {
+      const x = sgn * i * PASO, p = f(x);
+      out.push([x, p[0], p[1]]);
+    }
+    return out;
+  }
+  function abFase(pt){ return [pt[1], pt[2]]; }
+  function abTiempo(pt){ return [pt[0], pt[1]]; }
+
+  function trazar(g, pts, ab, limA, limB, MX, MY){
+    let abierto = false;
+    for (let i = 0; i < pts.length; i++) {
+      const d = ab(pts[i]);
+      if (!isFinite(d[0]) || !isFinite(d[1]) || Math.abs(d[0]) > limA || Math.abs(d[1]) > limB) break;
+      if (!abierto) { g.moveTo(MX(d[0]), MY(d[1])); abierto = true; }
+      else g.lineTo(MX(d[0]), MY(d[1]));
+    }
+  }
+
+  function recta(g, m, pend, color, ancho, dash, alfa){
+    g.save();
+    g.globalAlpha = alfa; g.strokeStyle = color; g.lineWidth = ancho; g.setLineDash(dash);
+    g.beginPath(); g.moveTo(m.X(-4), m.Y(-4 * pend)); g.lineTo(m.X(4), m.Y(4 * pend)); g.stroke();
+    g.restore();
+  }
+
+  function flecha(g, m, f, color){
+    let prev = [m.X(f(0)[0]), m.Y(f(0)[1])], largo = 0;
+    for (let i = 1; i <= NPASOS; i++) {
+      const p = f(i * PASO), cur = [m.X(p[0]), m.Y(p[1])];
+      const dx = cur[0] - prev[0], dy = cur[1] - prev[1], n = Math.sqrt(dx * dx + dy * dy);
+      if (!isFinite(n)) return;
+      largo += n;
+      if (largo >= 22 && n > 1e-9) {
+        const ux = dx / n, uy = dy / n, L = 11, A = 5;
+        g.fillStyle = color;
+        g.beginPath();
+        g.moveTo(cur[0] + ux * L * 0.5, cur[1] + uy * L * 0.5);
+        g.lineTo(cur[0] - ux * L * 0.5 - uy * A, cur[1] - uy * L * 0.5 + ux * A);
+        g.lineTo(cur[0] - ux * L * 0.5 + uy * A, cur[1] - uy * L * 0.5 - ux * A);
+        g.closePath(); g.fill();
+        return;
+      }
+      prev = cur;
+    }
+  }
+
+  function dibujarFase(bif){
+    const g = gFase, m = mapa(cFase, { l: 42, r: 14, t: 14, b: 40 }, -VENT, VENT, -VENT, VENT);
+    fondo(g, cFase, bif);
+    ejes(g, m, [-2, -1, 0, 1, 2], [-2, -1, 0, 1, 2], 'y', 'y′');
+    g.save();
+    g.beginPath(); g.rect(m.M.l, m.M.t, m.pw, m.ph); g.clip();
+    const D = mu * mu - 1;
+    if (D > TOL) {
+      const s = Math.sqrt(D);
+      recta(g, m, -mu + s, '#888', 1.4, [6, 4], 1);
+      recta(g, m, -mu - s, '#888', 1.4, [6, 4], 1);
+    } else if (Math.abs(D) <= TOL) {
+      recta(g, m, -mu, ROJO, 8, [], 0.4);
+    }
+    SOLS.forEach(function(s){
+      const f = resolver(mu, s.y0, s.v0);
+      g.strokeStyle = s.color; g.lineWidth = 2; g.setLineDash([]);
+      g.beginPath(); trazar(g, puntos(f, 1), abFase, LIM, LIM, m.X, m.Y); g.stroke();
+      g.beginPath(); trazar(g, puntos(f, -1), abFase, LIM, LIM, m.X, m.Y); g.stroke();
+      flecha(g, m, f, s.color);
+      g.fillStyle = s.color; g.strokeStyle = '#fff'; g.lineWidth = 1.5;
+      g.beginPath(); g.arc(m.X(s.y0), m.Y(s.v0), 4.5, 0, 2 * Math.PI); g.fill(); g.stroke();
+    });
+    g.fillStyle = bif ? ROJO : '#222';
+    g.beginPath(); g.arc(m.X(0), m.Y(0), bif ? 6 : 3.5, 0, 2 * Math.PI); g.fill();
+    g.restore();
+  }
+
+  function dibujarTiempo(bif){
+    const g = gTiempo, m = mapa(cTiempo, { l: 42, r: 14, t: 14, b: 40 }, 0, XMAX, -VENT, VENT);
+    fondo(g, cTiempo, bif);
+    ejes(g, m, [0, 2, 4, 6, 8, 10, 12], [-2, -1, 0, 1, 2], 'x', 'y');
+    g.save();
+    g.beginPath(); g.rect(m.M.l, m.M.t, m.pw, m.ph); g.clip();
+    const D = mu * mu - 1;
+    if (Math.abs(D) <= TOL) {
+      const e = resolver(mu, 1, -mu);
+      g.save(); g.globalAlpha = 0.4; g.strokeStyle = ROJO; g.lineWidth = 8;
+      g.beginPath(); trazar(g, puntos(e, 1), abTiempo, 1000, LIM, m.X, m.Y); g.stroke();
+      g.restore();
+    }
+    SOLS.forEach(function(s){
+      const f = resolver(mu, s.y0, s.v0);
+      g.strokeStyle = s.color; g.lineWidth = 2; g.setLineDash([]);
+      g.beginPath(); trazar(g, puntos(f, 1), abTiempo, 1000, LIM, m.X, m.Y); g.stroke();
+      g.fillStyle = s.color; g.strokeStyle = '#fff'; g.lineWidth = 1.5;
+      g.beginPath(); g.arc(m.X(0), m.Y(s.y0), 4.5, 0, 2 * Math.PI); g.fill(); g.stroke();
+    });
+    g.restore();
+  }
+
+  function dibujarRaices(bif){
+    const g = gRaices, W = cRaices.width, H = cRaices.height;
+    fondo(g, cRaices, bif);
+    const s = 52, cx = W / 2, cy = 14 + (H - 14 - 30) / 2;
+    g.save();
+    g.globalAlpha = 0.7;
+    g.fillStyle = '#e4effa'; g.fillRect(2, 14, cx - 2, H - 44);
+    g.fillStyle = '#f6ecd8'; g.fillRect(cx, 14, W - 2 - cx, H - 44);
+    g.restore();
+    g.save();
+    g.strokeStyle = '#888'; g.lineWidth = 1.4;
+    g.beginPath(); g.moveTo(8, cy); g.lineTo(W - 8, cy); g.stroke();
+    g.beginPath(); g.moveTo(cx, 14); g.lineTo(cx, H - 30); g.stroke();
+    g.fillStyle = '#777'; g.font = '13px sans-serif'; g.textAlign = 'center';
+    [-3, -2, -1, 1, 2, 3].forEach(function(t){
+      g.beginPath(); g.moveTo(cx + t * s, cy - 4); g.lineTo(cx + t * s, cy + 4); g.stroke();
+      g.fillText(fmt(t, 0), cx + t * s, cy + 19);
+    });
+    g.setLineDash([5, 4]); g.strokeStyle = '#777'; g.lineWidth = 1.3;
+    g.beginPath(); g.arc(cx, cy, s, 0, 2 * Math.PI); g.stroke();
+    g.setLineDash([]);
+    g.fillStyle = '#555'; g.font = '13px sans-serif'; g.textAlign = 'left';
+    g.fillText('|λ| = 1', cx + s * 0.72 + 4, cy - s * 0.72 - 4);
+    g.fillStyle = '#333'; g.font = '15px sans-serif';
+    g.textAlign = 'right'; g.fillText('Re λ', W - 10, cy - 8);
+    g.textAlign = 'left'; g.fillText('Im λ', cx + 8, 28);
+    g.fillStyle = '#556'; g.font = '13px sans-serif';
+    g.textAlign = 'left'; g.fillText('Re λ < 0: decae', 10, H - 12);
+    g.textAlign = 'right'; g.fillText('Re λ > 0: crece', W - 10, H - 12);
+    g.restore();
+    const D = mu * mu - 1;
+    let raices;
+    if (D >= 0) { const r = Math.sqrt(D); raices = [[-mu + r, 0], [-mu - r, 0]]; }
+    else { const w = Math.sqrt(-D); raices = [[-mu, w], [-mu, -w]]; }
+    raices.forEach(function(z){
+      const px = cx + z[0] * s, py = cy - z[1] * s;
+      if (bif) { g.strokeStyle = ROJO; g.lineWidth = 2.5; g.beginPath(); g.arc(px, py, 12, 0, 2 * Math.PI); g.stroke(); }
+      g.fillStyle = bif ? ROJO : '#222'; g.strokeStyle = '#fff'; g.lineWidth = 1.5;
+      g.beginPath(); g.arc(px, py, 6, 0, 2 * Math.PI); g.fill(); g.stroke();
+    });
+  }
+
+  function dibujarEje(bif){
+    const g = gEje, W = cEje.width, H = cEje.height;
+    g.clearRect(0, 0, W, H);
+    function X(v){ return PAD + (v + 2) / 4 * (W - 2 * PAD); }
+    const top = 20, bot = 58;
+    const bandas = [
+      [-2, -1, '#f1e4cc', 'nodo inestable'], [-1, 0, '#f8f0e0', 'foco inestable'],
+      [0, 1, '#e9f2fb', 'foco estable'], [1, 2, '#d9e8f6', 'nodo estable']
+    ];
+    g.font = '15px sans-serif'; g.textAlign = 'center';
+    bandas.forEach(function(b){
+      g.fillStyle = b[2]; g.fillRect(X(b[0]), top, X(b[1]) - X(b[0]), bot - top);
+      g.fillStyle = '#444'; g.fillText(b[3], (X(b[0]) + X(b[1])) / 2, (top + bot) / 2 + 5);
+    });
+    g.strokeStyle = '#999'; g.lineWidth = 1; g.strokeRect(X(-2), top, X(2) - X(-2), bot - top);
+    [-1, 0, 1].forEach(function(v){
+      g.strokeStyle = ROJO; g.lineWidth = 3;
+      g.beginPath(); g.moveTo(X(v), top - 3); g.lineTo(X(v), bot + 3); g.stroke();
+    });
+    [-2, -1, 0, 1, 2].forEach(function(v){
+      const marca = (v === -1 || v === 0 || v === 1);
+      g.fillStyle = marca ? ROJO : '#777';
+      g.font = (marca ? 'bold ' : '') + '15px sans-serif';
+      g.fillText(fmt(v, 0), X(v), H - 10);
+    });
+    g.fillStyle = bif ? ROJO : '#222'; g.strokeStyle = bif ? ROJO : '#222'; g.lineWidth = 2;
+    g.beginPath(); g.moveTo(X(mu), top); g.lineTo(X(mu), bot); g.stroke();
+    g.beginPath(); g.moveTo(X(mu) - 8, 3); g.lineTo(X(mu) + 8, 3); g.lineTo(X(mu), 17); g.closePath(); g.fill();
+  }
+
+  function actualizarInfo(){
+    const D = mu * mu - 1, c = clasificar(mu);
+    let raices, formula;
+    if (Math.abs(D) < TOL) {
+      raices = 'λ = ' + fmt(-mu, 0) + ' (raíz doble)';
+      formula = '(c<sub>1</sub> + c<sub>2</sub>x) e<sup>' + (mu > 0 ? '−x' : 'x') + '</sup>';
+    } else if (D > 0) {
+      const s = Math.sqrt(D), l1 = -mu + s, l2 = -mu - s;
+      raices = 'λ<sub>1</sub> = ' + fmt(l1) + ', λ<sub>2</sub> = ' + fmt(l2);
+      formula = 'c<sub>1</sub> e<sup>' + fmt(l1) + 'x</sup> + c<sub>2</sub> e<sup>' + fmt(l2) + 'x</sup>';
+    } else if (Math.abs(mu) < TOL) {
+      raices = 'λ = ± i';
+      formula = 'c<sub>1</sub> cos x + c<sub>2</sub> sen x';
+    } else {
+      const w = Math.sqrt(-D);
+      raices = 'λ = ' + fmt(-mu) + ' ± ' + fmt(w) + ' i';
+      formula = 'e<sup>' + fmt(-mu) + 'x</sup> (c<sub>1</sub> cos ' + fmt(w) + 'x + c<sub>2</sub> sen ' + fmt(w) + 'x)';
+    }
+    info.innerHTML =
+      '<div><strong>Tipo:</strong> ' + c.tipo + '</div>' +
+      '<div><strong>Raíces:</strong> ' + raices + '</div>' +
+      '<div><strong>Solución general:</strong> y = ' + formula + '</div>' +
+      '<div style="margin-top:6px;color:#444;">' + c.desc + '</div>';
+  }
+
+  function render(){
+    const bif = esBif(mu);
+    muVal.textContent = fmt(mu);
+    slider.value = String(mu);
+    caja.style.borderColor = bif ? ROJO : '#ddd';
+    caja.style.boxShadow = bif ? '0 0 0 4px rgba(214,39,40,0.2)' : 'none';
+    insignia.textContent = bif
+      ? 'Punto de bifurcación: ' + (Math.abs(mu) < TOL ? 'raíces imaginarias puras' : 'raíz doble')
+      : 'Región: ' + clasificar(mu).tipo;
+    insignia.style.background = bif ? ROJO : '#eee';
+    insignia.style.color = bif ? '#fff' : '#333';
+    insignia.style.fontWeight = bif ? 'bold' : 'normal';
+    dibujarEje(bif); dibujarFase(bif); dibujarTiempo(bif); dibujarRaices(bif);
+    actualizarInfo();
+  }
+
+  function detener(){
+    jugando = false;
+    btnPlay.textContent = '▶ Recorrer';
+  }
+
+  function ciclo(t){
+    if (!jugando) return;
+    if (ultimo === null) ultimo = t;
+    const dt = Math.min(t - ultimo, 100);
+    ultimo = t;
+    if (espera > 0) {
+      espera -= dt;
+    } else {
+      acum += dt;
+      let cambio = false;
+      while (acum >= 25) {
+        acum -= 25;
+        mu = redondear(mu + dir * 0.01);
+        if (mu >= 2) { mu = 2; dir = -1; }
+        else if (mu <= -2) { mu = -2; dir = 1; }
+        cambio = true;
+        if (esBif(mu)) { espera = 1300; acum = 0; break; }
+      }
+      if (cambio) render();
+    }
+    requestAnimationFrame(ciclo);
+  }
+
+  slider.addEventListener('input', function(){
+    detener();
+    mu = redondear(parseFloat(slider.value));
+    render();
+  });
+  el('pa-b-m1').addEventListener('click', function(){ detener(); mu = -1; render(); });
+  el('pa-b-0').addEventListener('click', function(){ detener(); mu = 0; render(); });
+  el('pa-b-1').addEventListener('click', function(){ detener(); mu = 1; render(); });
+  cEje.addEventListener('click', function(ev){
+    detener();
+    const r = cEje.getBoundingClientRect();
+    const fx = (ev.clientX - r.left) / r.width * cEje.width;
+    const v = (fx - PAD) / (cEje.width - 2 * PAD) * 4 - 2;
+    mu = redondear(Math.max(-2, Math.min(2, v)));
+    render();
+  });
+  btnPlay.addEventListener('click', function(){
+    if (jugando) { detener(); return; }
+    jugando = true; ultimo = null; acum = 0; espera = 0;
+    btnPlay.textContent = '❚❚ Pausar';
+    requestAnimationFrame(ciclo);
+  });
+
+  render();
+})();
+</script>
+```
+:::
+
+Hay tres valores del parámetro donde el comportamiento cualitativo cambia: $\mu=-1$, $\mu=0$ y $\mu=1$. Son los *puntos de bifurcación*. En $\mu=\pm1$ las dos raíces reales se juntan en una sola, y al pasar al otro lado dejan de ser reales (o vuelven a serlo): aparece o desaparece la oscilación. En $\mu=0$ las raíces cruzan el eje imaginario, y lo que decaía pasa a crecer: cambia la estabilidad. El cuadro resume lo que se ve en el tablero.
+
+| $\mu$ | Raíces | Plano de fase | Soluciones |
+|:--------------|:-------------------------|:--------------------------|:-------------------------------|
+| $\mu<-1$ | dos reales positivas | nodo inestable | crecen sin oscilar |
+| $\mu=-1$ | $\lambda=1$ doble | nodo degenerado inestable | $(c_1+c_2x)e^{x}$, crecen |
+| $-1<\mu<0$ | complejas, parte real positiva | foco inestable | oscilan y crecen |
+| $\mu=0$ | $\lambda=\pm i$ | centro | oscilan con amplitud constante |
+| $0<\mu<1$ | complejas, parte real negativa | foco estable | oscilan y decaen |
+| $\mu=1$ | $\lambda=-1$ doble | nodo degenerado estable | $(c_1+c_2x)e^{-x}$, decaen |
+| $\mu>1$ | dos reales negativas | nodo estable | decaen sin oscilar |
+
+## Forzamiento y coeficientes indeterminados
+
+Ahora supongamos que esta ecuación está forzada, en $\mu=-1$, por $e^x$:
+
+$$y''-2y'+y=e^x.$$
+
+Sabemos que la solución general de la homogénea es
+
+$$y_H=ae^x+bxe^x.$$
+
+¿Cómo encontramos una solución particular? Si al lado derecho hay una $e^x$, es porque seguramente $y=Ae^x$ para algún $A$. Pero
+
+$$y''-2y'+y=(A-2A+A)\,e^x=0\qquad\text{para todo }A,$$
+
+así que de esta forma nunca se obtiene $e^x$. Este caso excepcional ocurre porque el forzamiento es una solución de la homogénea. Y como $xe^x$ también es solución de la homogénea, no tiene sentido intentar $Axe^x$. Intentemos entonces con $Ax^2e^x$. Como
+
+$$(Ax^2e^x)'=A(2x+x^2)e^x,\qquad (Ax^2e^x)''=A(2+4x+x^2)e^x,$$
+
+tenemos
+
+$$y''-2y'+y=A\left[(2+4x+x^2)-2(2x+x^2)+x^2\right]e^x=2A\,e^x=e^x,$$
+
+de donde $A=\tfrac12$. Por lo tanto,
+
+$$y=y_H+y_p=c_1e^x+c_2xe^x+\tfrac12\,x^2e^x.$$
+
+La misma lógica funciona cuando al lado derecho hay cosenos, polinomios, polinomios por cosenos o exponenciales. Por ejemplo, si el forzamiento es algo como $27x^3$, suponemos algo como $Ax^3+Bx^2+Cx+D$ y encontramos $A$, $B$, $C$ y $D$. Y si es algo como $\operatorname{sen}bx$, suponemos algo como $A\operatorname{sen}bx+B\cos bx$, a menos que $ib$ sea un valor propio (una raíz del polinomio característico). En ese caso tenemos que multiplicar por $x$.
+
+## Variación de parámetros
+
+Ahora puede pasar que el forzamiento no tenga una forma tan bonita como un polinomio, una exponencial o un coseno, o que no estemos dando con un candidato adecuado. Hay una fórmula que nos permite resolver esto, que está demostrada en la sección 19 y que explicamos en clase. Veamos cómo funciona en un ejemplo concreto.
+
+**Ejemplo 6.** Resolver
+
+$$x^2y''-2xy'+2y=xe^{-x}.$$
+
+Si hicimos los ejercicios de la sección 17, vimos que esta es la ecuación equidimensional de Euler (que también se asocia con el nombre de Cauchy). En esa misma sección hay otras ecuaciones con coeficientes variables que se reducen a coeficientes constantes. Empezamos con la homogénea,
+
+$$x^2y''-2xy'+2y=0.$$
+
+Por inspección sabemos que $x$ y $x^2$ son soluciones. Supongamos que no nos dimos cuenta de esto, y que vamos a hacer la sustitución $x=e^z$, que es la que se sugiere en este tipo de ecuaciones equidimensionales. Por la regla de la cadena,
+
+$$\frac{dy}{dx}=\frac{dy}{dz}\,\frac{dz}{dx}=\frac1x\,\frac{dy}{dz},$$
+
+y derivando otra vez,
+
+$$\frac{d^2y}{dx^2}=\frac{d}{dx}\left(\frac1x\,\frac{dy}{dz}\right)=-\frac1{x^2}\,\frac{dy}{dz}+\frac1x\,\frac{dz}{dx}\,\frac{d^2y}{dz^2}=\frac1{x^2}\,\frac{d^2y}{dz^2}-\frac1{x^2}\,\frac{dy}{dz}.$$
+
+Entonces
+
+$$x^2y''-2xy'+2y=\frac{d^2y}{dz^2}-\frac{dy}{dz}-2\,\frac{dy}{dz}+2y=\frac{d^2y}{dz^2}-3\,\frac{dy}{dz}+2y=0.$$
+
+El polinomio característico es $\lambda^2-3\lambda+2=0$, con raíces $\lambda=1,2$, de donde $y(z)=e^z,\,e^{2z}$. Pero $z=\ln x$, y entonces $y(x)=x,\,x^2$. Es decir,
+
+$$y_H=ax+bx^2.$$
+
+La sustitución $x=e^z$ vale para $x>0$. Para $x<0$ se usa $x=-e^z$, y se llega a la misma ecuación en $z$ y a las mismas soluciones $x$ y $x^2$.
+
+Por variación de parámetros, una solución particular es $y_p=v_1y_1+v_2y_2$, con
+
+$$v_1=\int\frac{-y_2\,R(x)}{W(y_1,y_2)}\,dx,\qquad v_2=\int\frac{y_1\,R(x)}{W(y_1,y_2)}\,dx,$$
+
+donde, con $y_1=x$ y $y_2=x^2$,
+
+$$W(y_1,y_2)=\begin{vmatrix}x&x^2\\1&2x\end{vmatrix}=2x^2-x^2=x^2.$$
+
+Ojo: el intervalo $[a,b]$ donde buscamos la solución no puede contener al cero.
+
+::: {.callout-important title="Pregunta"}
+Cuidado al reemplazar en la fórmula de la solución particular: $R(x)$ no es $xe^{-x}$, sino $\dfrac{e^{-x}}{x}$. ¿Por qué?
+:::
+
+Entonces
+
+$$v_1=\int\frac{-y_2\,R(x)}{W}\,dx=-\int\frac{x^2\,e^{-x}/x}{x^2}\,dx=-\int\frac{e^{-x}}{x}\,dx=-\operatorname{Ei}(-x),$$
+
+$$v_2=\int\frac{y_1\,R(x)}{W}\,dx=\int\frac{x\,e^{-x}/x}{x^2}\,dx=\int\frac{e^{-x}}{x^2}\,dx=-\frac{e^{-x}}{x}-\operatorname{Ei}(-x),$$
+
+donde en el último paso integramos por partes. Aquí $\operatorname{Ei}$ es la integral exponencial,
+
+$$\operatorname{Ei}(x)=-\int_{-x}^{\infty}\frac{e^{-t}}{t}\,dt=\int_{-\infty}^{x}\frac{e^{t}}{t}\,dt,\qquad \operatorname{Ei}'(x)=\frac{e^x}{x},$$
+
+donde, para $x>0$, la integral se entiende como valor principal. Por la regla de la cadena, $\dfrac{d}{dx}\operatorname{Ei}(-x)=\dfrac{e^{-x}}{x}$, que es lo que usamos para integrar. Entonces
+
+$$y_p=y_1v_1+y_2v_2=-x\operatorname{Ei}(-x)-xe^{-x}-x^2\operatorname{Ei}(-x)=-x\left[(1+x)\operatorname{Ei}(-x)+e^{-x}\right],$$
+
+y la solución general es
+
+$$y=ax+bx^2-x\left[(1+x)\operatorname{Ei}(-x)+e^{-x}\right].$$
+
+Busquemos la única solución que cumple $y(-1)=0$ y $y'(-1)=0$. Como $-1<0$, el intervalo no tiene por qué contener al cero. Derivando,
+
+$$y'=a+2bx-(1+2x)\operatorname{Ei}(-x)-2e^{-x}.$$
+
+En $x=-1$ el factor $1+x$ se anula, y queda
+
+$$y(-1)=-a+b+e=0,\qquad y'(-1)=a-2b+\operatorname{Ei}(1)-2e=0.$$
+
+De la primera, $a=b+e$. Sustituyendo en la segunda, $-b-e+\operatorname{Ei}(1)=0$, de donde
+
+$$b=\operatorname{Ei}(1)-e,\qquad a=\operatorname{Ei}(1).$$
+
+La única solución que cumple esas condiciones iniciales, en cualquier intervalo de números negativos que contenga a $-1$, es
+
+$$y(x)=\operatorname{Ei}(1)\,x+\left(\operatorname{Ei}(1)-e\right)x^2-x\left[(1+x)\operatorname{Ei}(-x)+e^{-x}\right].$$

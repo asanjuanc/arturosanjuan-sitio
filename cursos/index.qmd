@@ -14,5 +14,5 @@ listing:
 ---
 
 ::: {.callout-note title="Declaración de uso de IA"}
-Estas notas de clase las escribo a mano en una tableta [Lenovo](https://www.lenovo.com/ec/es/p/tablets/android/lenovo-tb-j706/zzitztatb0j) con [Nebo](https://www.myscript.com/es/). El paso del formato pdf a este formato web con [Quarto](https://quarto.org/) lo hago con ayuda de [Claude](https://claude.ai/) Sonnet, pero el contenido matemático es mío llenando los detalles de los textos guía: yo lo escribo y yo lo reviso antes de publicarlo. Los applets interactivos en HTML/JavaScript que aparecen en algunas páginas los hace la IA.
+Estas notas de clase las escribo a mano en una tableta [Lenovo](https://www.lenovo.com/ec/es/p/tablets/android/lenovo-tb-j706/zzitztatb0j) con [Nebo](https://www.myscript.com/es/), siguiendo los textos guía del curso y completando yo los detalles. Para pasarlas a esta versión web con [Quarto](https://quarto.org/) y pulir su redacción me ayudo de [Claude](https://claude.ai/), un asistente de inteligencia artificial (IA) de Anthropic. La IA también programa, a partir de mis indicaciones, los applets interactivos en HTML y JavaScript que aparecen en algunas páginas. El contenido matemático es mío: lo escribo yo y lo reviso antes de publicarlo. Si encuentra un error, le agradezco que me lo cuente en los comentarios de la página correspondiente.
 :::
