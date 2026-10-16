@@ -15,7 +15,327 @@
 <link>https://arturosanjuan.xyz/cursos/numerico/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Tue, 13 Oct 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 15 Oct 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Orden de convergencia</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/numerico/convergencia/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Recordemos el análisis de la serie de errores del método de punto fijo, que vimos en la nota de <a href="../../../cursos/numerico/raices/index.html">raíces y puntos fijos</a>, y usémoslo para darle nombre a la velocidad con que converge un método. Después lo aplicamos a Newton, que vimos en la nota <a href="../../../cursos/numerico/newton/index.html">anterior</a>, y a la secante. Seguimos las secciones 4.2, 4.3 y 4.4 del libro de Driscoll y Braun.</p>
+<section id="el-error-en-la-iteración-de-punto-fijo" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="el-error-en-la-iteración-de-punto-fijo"><span class="header-section-number">1</span> El error en la iteración de punto fijo</h2>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?p"> la solución exacta, es decir, <img src="https://latex.codecogs.com/png.latex?g(p)=p"> o, de forma equivalente, <img src="https://latex.codecogs.com/png.latex?f(p)=g(p)-p=0">. El error absoluto en el paso <img src="https://latex.codecogs.com/png.latex?k"> es <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_k=x_k-p">. Como <img src="https://latex.codecogs.com/png.latex?x_%7Bk+1%7D=g(x_k)">, expandiendo <img src="https://latex.codecogs.com/png.latex?g"> en Taylor alrededor de <img src="https://latex.codecogs.com/png.latex?p"> y usando <img src="https://latex.codecogs.com/png.latex?g(p)=p">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_%7Bk+1%7D+p=g(p+%5Cvarepsilon_k)=g(p)+g'(p)%5C,%5Cvarepsilon_k+o(%5Cvarepsilon_k)=p+g'(p)%5C,%5Cvarepsilon_k+o(%5Cvarepsilon_k)."></p>
+<p>Para <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_k"> pequeño el resto <img src="https://latex.codecogs.com/png.latex?o(%5Cvarepsilon_k)"> se puede despreciar, y queda</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cboxed%7B%5Cvarepsilon_%7Bk+1%7D%5Capprox%20g'(p)%5C,%5Cvarepsilon_k.%7D"></p>
+<p>Ya vimos que para que el método funcione cerca de una semilla se requiere <img src="https://latex.codecogs.com/png.latex?%7Cg'(p)%7C%3C1">, y que entonces el error decrece como un múltiplo escalar del error anterior. Esto motiva la definición.</p>
+</section>
+<section id="convergencia-lineal" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="convergencia-lineal"><span class="header-section-number">2</span> Convergencia lineal</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="Definición: convergencia lineal">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Definición: convergencia lineal
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si <img src="https://latex.codecogs.com/png.latex?x_k%5Cto%20x%5E*"> y el error <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_k=x_k-x%5E*"> satisface</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bk%5Cto%5Cinfty%7D%5Cfrac%7B%7C%5Cvarepsilon_%7Bk+1%7D%7C%7D%7B%7C%5Cvarepsilon_k%7C%7D=%5Csigma%3C1,"></p>
+<p>se dice que la convergencia es lineal.</p>
+</div>
+</div>
+<p>En el punto fijo, <img src="https://latex.codecogs.com/png.latex?%5Csigma=%7Cg'(p)%7C">. Supongamos que la razón es exactamente <img src="https://latex.codecogs.com/png.latex?%5Csigma"> en cada paso. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%7C%5Cvarepsilon_k%7C=%5Csigma%5C,%7C%5Cvarepsilon_%7Bk-1%7D%7C=%5Csigma%5E2%5C,%7C%5Cvarepsilon_%7Bk-2%7D%7C=%5Ccdots=%5Csigma%5Ek%5C,%7C%5Cvarepsilon_0%7C=%5Csigma%5Ek%20c,%5Cqquad%20c=%7C%5Cvarepsilon_0%7C,"></p>
+<p>de donde, al tomar logaritmos,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clog%7C%5Cvarepsilon_k%7C=k%5Clog%5Csigma+%5Clog%20c."></p>
+<p>Es una relación lineal entre <img src="https://latex.codecogs.com/png.latex?%5Clog%7C%5Cvarepsilon_k%7C"> y <img src="https://latex.codecogs.com/png.latex?k">, con pendiente <img src="https://latex.codecogs.com/png.latex?%5Clog%5Csigma%3C0">: si graficamos los errores en escala logarítmica contra <img src="https://latex.codecogs.com/png.latex?k">, aparece una recta. De ahí el nombre.</p>
+<p>Por ejemplo, para <img src="https://latex.codecogs.com/png.latex?g(x)=%5Ccos%20x"> y <img src="https://latex.codecogs.com/png.latex?x_0=1">, el punto fijo es <img src="https://latex.codecogs.com/png.latex?p%5Capprox0%7B,%7D7390851"> y <img src="https://latex.codecogs.com/png.latex?g'(p)=-%5Coperatorname%7Bsen%7D(p)%5Capprox-0%7B,%7D67361">. Los cocientes <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_%7Bk+1%7D/%5Cvarepsilon_k"> se acercan a ese valor, alternando de signo porque <img src="https://latex.codecogs.com/png.latex?g'(p)%3C0">, de modo que <img src="https://latex.codecogs.com/png.latex?%5Csigma%5Capprox0%7B,%7D6736">:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?k"></th>
+<th style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_k"></th>
+<th style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_%7Bk+1%7D/%5Cvarepsilon_k"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0%7B,%7D26091"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?-0%7B,%7D76187"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?5"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?-0%7B,%7D037716"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?-0%7B,%7D65952"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?10"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0%7B,%7D0051522"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?-0%7B,%7D67551"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?20"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?9%7B,%7D9267%5Ctimes10%5E%7B-5%7D"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?-0%7B,%7D67365"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?30"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1%7B,%7D9095%5Ctimes10%5E%7B-6%7D"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?-0%7B,%7D67361"></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="convergencia-cuadrática-el-método-de-newton" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="convergencia-cuadrática-el-método-de-newton"><span class="header-section-number">3</span> Convergencia cuadrática: el método de Newton</h2>
+<p>Veamos ahora la convergencia del método de Newton con este lenguaje del error; en la nota anterior vimos que era cuadrática. Sea <img src="https://latex.codecogs.com/png.latex?r"> una raíz de <img src="https://latex.codecogs.com/png.latex?f"> con <img src="https://latex.codecogs.com/png.latex?f'(r)%5Cne0">, y <img src="https://latex.codecogs.com/png.latex?f"> dos veces diferenciable cerca de <img src="https://latex.codecogs.com/png.latex?r">. Con <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_k=x_k-r">, restando <img src="https://latex.codecogs.com/png.latex?r"> a ambos lados de <img src="https://latex.codecogs.com/png.latex?x_%7Bk+1%7D=x_k-f(x_k)/f'(x_k)"> se obtiene</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_%7Bk+1%7D=%5Cvarepsilon_k-%5Cfrac%7Bf(r+%5Cvarepsilon_k)%7D%7Bf'(r+%5Cvarepsilon_k)%7D."></p>
+<p>Hacemos una expansión de Taylor de orden 2 en <img src="https://latex.codecogs.com/png.latex?f"> y de orden 1 en <img src="https://latex.codecogs.com/png.latex?f'">. Como <img src="https://latex.codecogs.com/png.latex?f(r)=0">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_%7Bk+1%7D=%5Cvarepsilon_k-%5Cfrac%7Bf'(r)%5C,%5Cvarepsilon_k+%5Ctfrac12f''(r)%5C,%5Cvarepsilon_k%5E2+o(%5Cvarepsilon_k%5E2)%7D%7Bf'(r)+f''(r)%5C,%5Cvarepsilon_k+o(%5Cvarepsilon_k)%7D=%5Cvarepsilon_k-%5Cvarepsilon_k%5C,%5Cfrac%7B1+%5Cdfrac%7Bf''(r)%7D%7B2f'(r)%7D%5C,%5Cvarepsilon_k+o(%5Cvarepsilon_k)%7D%7B1+%5Cdfrac%7Bf''(r)%7D%7Bf'(r)%7D%5C,%5Cvarepsilon_k+o(%5Cvarepsilon_k)%7D."></p>
+<p>El denominador es <img src="https://latex.codecogs.com/png.latex?1+%5Cdfrac%7Bf''(r)%7D%7Bf'(r)%7D%5Cvarepsilon_k+o(%5Cvarepsilon_k)">, con <img src="https://latex.codecogs.com/png.latex?%5Cleft%7C%5Cdfrac%7Bf''(r)%7D%7Bf'(r)%7D%5Cvarepsilon_k%5Cright%7C%3C1"> porque <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_k"> es pequeño. Por la serie geométrica,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7B1+%5Cdfrac%7Bf''(r)%7D%7Bf'(r)%7D%5C,%5Cvarepsilon_k+o(%5Cvarepsilon_k)%7D=1-%5Cfrac%7Bf''(r)%7D%7Bf'(r)%7D%5C,%5Cvarepsilon_k+o(%5Cvarepsilon_k),"></p>
+<p>de donde</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7D%0A%5Cvarepsilon_%7Bk+1%7D&amp;=%5Cvarepsilon_k-%5Cvarepsilon_k%5Cleft(1+%5Cfrac%7Bf''(r)%7D%7B2f'(r)%7D%5C,%5Cvarepsilon_k+o(%5Cvarepsilon_k)%5Cright)%5Cleft(1-%5Cfrac%7Bf''(r)%7D%7Bf'(r)%7D%5C,%5Cvarepsilon_k+o(%5Cvarepsilon_k)%5Cright)%5C%5C%0A&amp;=%5Cvarepsilon_k-%5Cvarepsilon_k%5Cleft(1-%5Cfrac%7Bf''(r)%7D%7B2f'(r)%7D%5C,%5Cvarepsilon_k+o(%5Cvarepsilon_k)%5Cright)%5C%5C%0A&amp;=%5Cfrac12%5C,%5Cfrac%7Bf''(r)%7D%7Bf'(r)%7D%5C,%5Cvarepsilon_k%5E2+o(%5Cvarepsilon_k%5E2).%0A%5Cend%7Baligned%7D"></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Definición: convergencia cuadrática">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Definición: convergencia cuadrática
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si <img src="https://latex.codecogs.com/png.latex?x_k%5Cto%20x%5E*"> y el error <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_k=x_k-x%5E*"> satisface</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bk%5Cto%5Cinfty%7D%5Cfrac%7B%7C%5Cvarepsilon_%7Bk+1%7D%7C%7D%7B%7C%5Cvarepsilon_k%7C%5E2%7D=L%3E0,"></p>
+<p>se dice que la convergencia es cuadrática.</p>
+</div>
+</div>
+<p>Es el caso de Newton: dividiendo el resultado anterior por <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_k%5E2">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%7C%5Cvarepsilon_%7Bk+1%7D%7C%7D%7B%7C%5Cvarepsilon_k%7C%5E2%7D=%5Cfrac12%5Cleft%7C%5Cfrac%7Bf''(r)%7D%7Bf'(r)%7D%5Cright%7C+o(1),"></p>
+<p>y tomando <img src="https://latex.codecogs.com/png.latex?k%5Cto%5Cinfty"> a ambos lados, <img src="https://latex.codecogs.com/png.latex?L=%5Cdfrac12%5Cdfrac%7B%7Cf''(r)%7C%7D%7B%7Cf'(r)%7C%7D">, que es positivo siempre que <img src="https://latex.codecogs.com/png.latex?f''(r)%5Cne0">. Tomando logaritmos en <img src="https://latex.codecogs.com/png.latex?%7C%5Cvarepsilon_%7Bk+1%7D%7C%5Capprox%20L%5C,%7C%5Cvarepsilon_k%7C%5E2">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clog%7C%5Cvarepsilon_%7Bk+1%7D%7C%5Capprox2%5Clog%7C%5Cvarepsilon_k%7C+%5Clog%20L,%5Cqquad%5Cfrac%7B%5Clog%7C%5Cvarepsilon_%7Bk+1%7D%7C%7D%7B%5Clog%7C%5Cvarepsilon_k%7C%7D%5Capprox2+%5Cfrac%7B%5Clog%20L%7D%7B%5Clog%7C%5Cvarepsilon_k%7C%7D%5Clongrightarrow2%5Cquad(k%5Cto%5Cinfty),"></p>
+<p>porque <img src="https://latex.codecogs.com/png.latex?%5Clog%7C%5Cvarepsilon_k%7C%5Cto-%5Cinfty">. En palabras, cada paso de Newton duplica aproximadamente el número de cifras correctas.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Definición: convergencia superlineal">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Definición: convergencia superlineal
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si <img src="https://latex.codecogs.com/png.latex?x_k%5Cto%20x%5E*"> y existen constantes <img src="https://latex.codecogs.com/png.latex?%5Calpha%3E1"> y <img src="https://latex.codecogs.com/png.latex?L%3E0"> tales que</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bk%5Cto%5Cinfty%7D%5Cfrac%7B%7C%5Cvarepsilon_%7Bk+1%7D%7C%7D%7B%7C%5Cvarepsilon_k%7C%5E%5Calpha%7D=L,"></p>
+<p>se dice que la convergencia es superlineal de orden <img src="https://latex.codecogs.com/png.latex?%5Calpha">. Con <img src="https://latex.codecogs.com/png.latex?%5Calpha=2"> es cuadrática, y con <img src="https://latex.codecogs.com/png.latex?%5Calpha%3E2"> se llama supercuadrática.</p>
+</div>
+</div>
+</section>
+<section id="la-secante-superlineal-pero-no-cuadrática" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="la-secante-superlineal-pero-no-cuadrática"><span class="header-section-number">4</span> La secante: superlineal, pero no cuadrática</h2>
+<p>En el método de Newton reemplacemos <img src="https://latex.codecogs.com/png.latex?f'(x_k)"> por una pendiente <img src="https://latex.codecogs.com/png.latex?m"> que aproxime la tangente: la de la recta secante por los dos últimos puntos de la gráfica,</p>
+<p><img src="https://latex.codecogs.com/png.latex?m=%5Cfrac%7Bf(x_k)-f(x_%7Bk-1%7D)%7D%7Bx_k-x_%7Bk-1%7D%7D."></p>
+<p>El método de la secante es entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?x_%7Bk+1%7D=x_k-%5Cfrac%7Bf(x_k)%7D%7Bm%7D=x_k-f(x_k)%5C,%5Cfrac%7Bx_k-x_%7Bk-1%7D%7D%7Bf(x_k)-f(x_%7Bk-1%7D)%7D,"></p>
+<p>y necesita dos iterados iniciales. Geométricamente, <img src="https://latex.codecogs.com/png.latex?x_%7Bk+1%7D"> es el punto donde la recta secante corta el eje horizontal.</p>
+<svg viewbox="0 0 480 280" width="100%" style="max-width:520px;display:block;margin:0.75rem auto;" aria-label="Gráfica de una función creciente y convexa con la recta secante por dos iterados consecutivos, que corta el eje horizontal en el siguiente iterado" font-family="system-ui, sans-serif" font-size="13">
+  <title>Interpretación gráfica del método de la secante: el siguiente iterado es donde la recta por los dos últimos puntos corta el eje</title>
+  <line x1="24.0" y1="159.6" x2="456.0" y2="159.6" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.2"></line>
+  <polyline points="38.9,249.0 42.2,248.5 45.6,248.1 49.0,247.6 52.3,247.1 55.7,246.6 59.0,246.1 62.4,245.6 65.7,245.1 69.1,244.6 72.4,244.0 75.8,243.4 79.1,242.9 82.5,242.3 85.8,241.7 89.2,241.1 92.5,240.4 95.9,239.8 99.2,239.2 102.6,238.5 105.9,237.8 109.3,237.1 112.6,236.4 116.0,235.7 119.3,234.9 122.7,234.2 126.0,233.4 129.4,232.6 132.7,231.8 136.1,231.0 139.4,230.2 142.8,229.3 146.2,228.5 149.5,227.6 152.9,226.7 156.2,225.8 159.6,224.8 162.9,223.9 166.3,222.9 169.6,221.9 173.0,220.9 176.3,219.8 179.7,218.8 183.0,217.7 186.4,216.6 189.7,215.5 193.1,214.4 196.4,213.2 199.8,212.0 203.1,210.8 206.5,209.6 209.8,208.3 213.2,207.0 216.5,205.7 219.9,204.4 223.2,203.1 226.6,201.7 229.9,200.3 233.3,198.9 236.6,197.4 240.0,196.0 243.4,194.5 246.7,192.9 250.1,191.4 253.4,189.8 256.8,188.2 260.1,186.5 263.5,184.8 266.8,183.1 270.2,181.4 273.5,179.6 276.9,177.8 280.2,176.0 283.6,174.1 286.9,172.2 290.3,170.3 293.6,168.3 297.0,166.3 300.3,164.3 303.7,162.2 307.0,160.1 310.4,158.0 313.7,155.8 317.1,153.6 320.4,151.3 323.8,149.0 327.1,146.7 330.5,144.3 333.8,141.9 337.2,139.4 340.6,136.9 343.9,134.4 347.3,131.8 350.6,129.2 354.0,126.5 357.3,123.8 360.7,121.0 364.0,118.2 367.4,115.3 370.7,112.4 374.1,109.5 377.4,106.5 380.8,103.4 384.1,100.3 387.5,97.1 390.8,93.9 394.2,90.6 397.5,87.3 400.9,83.9 404.2,80.5 407.6,77.0 410.9,73.5 414.3,69.8 417.6,66.2 421.0,62.4 424.3,58.7 427.7,54.8 431.0,50.9 434.4,46.9 437.8,42.9 441.1,38.8" fill="none" stroke="#2563a8" stroke-width="2.2"></polyline>
+  <line x1="173.0" y1="159.6" x2="173.0" y2="220.9" stroke="#c1440e" stroke-width="1.4" stroke-dasharray="4 4"></line>
+  <line x1="426.2" y1="159.6" x2="426.2" y2="56.5" stroke="#c1440e" stroke-width="1.4" stroke-dasharray="4 4"></line>
+  <line x1="128.3" y1="249.9" x2="441.1" y2="46.9" stroke="#c1440e" stroke-width="1.8"></line>
+  <circle cx="173.0" cy="220.9" r="3.5" fill="#c1440e"></circle>
+  <circle cx="426.2" cy="56.5" r="3.5" fill="#c1440e"></circle>
+  <circle cx="267.3" cy="159.6" r="3.5" fill="#c1440e"></circle>
+  <path d="M 302.8 153.6 l 5 6 l -5 6 l -5 -6 z" transform="translate(5 0)" fill="#1a7f5a"></path>
+  <text x="173.0" y="151.6" fill="#c1440e" text-anchor="middle">xₖ₋₁</text>
+  <text x="426.2" y="177.6" fill="#c1440e" text-anchor="middle">xₖ</text>
+  <text x="261.3" y="151.6" fill="#c1440e" text-anchor="end">xₖ₊₁</text>
+  <text x="321.8" y="147.6" fill="#1a7f5a" text-anchor="middle">r</text>
+  <text x="341.7" y="90.9" fill="#c1440e" text-anchor="end">pendiente m</text>
+</svg>
+<section id="el-error-de-la-secante" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="el-error-de-la-secante"><span class="header-section-number">4.1</span> El error de la secante</h3>
+<p>Con <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_j=x_j-r"> se tiene <img src="https://latex.codecogs.com/png.latex?x_k-x_%7Bk-1%7D=%5Cvarepsilon_k-%5Cvarepsilon_%7Bk-1%7D">, y restando <img src="https://latex.codecogs.com/png.latex?r"> en la fórmula anterior,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_%7Bk+1%7D=%5Cvarepsilon_k-f(x_k)%5C,%5Cfrac%7B%5Cvarepsilon_k-%5Cvarepsilon_%7Bk-1%7D%7D%7Bf(x_k)-f(x_%7Bk-1%7D)%7D."></p>
+<p>Llevando todo al denominador común <img src="https://latex.codecogs.com/png.latex?f(x_k)-f(x_%7Bk-1%7D)">, los términos <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_k%20f(x_k)"> se cancelan:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_%7Bk+1%7D=%5Cfrac%7B%5Cvarepsilon_k%5C,%5Bf(x_k)-f(x_%7Bk-1%7D)%5D-f(x_k)%5C,(%5Cvarepsilon_k-%5Cvarepsilon_%7Bk-1%7D)%7D%7Bf(x_k)-f(x_%7Bk-1%7D)%7D=%5Cfrac%7Bf(x_k)%5C,%5Cvarepsilon_%7Bk-1%7D-f(x_%7Bk-1%7D)%5C,%5Cvarepsilon_k%7D%7Bf(x_k)-f(x_%7Bk-1%7D)%7D."></p>
+<p>Expandimos ahora con Taylor de orden 2 alrededor de <img src="https://latex.codecogs.com/png.latex?r">: <img src="https://latex.codecogs.com/png.latex?f(x_j)=f'(r)%5C,%5Cvarepsilon_j+%5Ctfrac12f''(r)%5C,%5Cvarepsilon_j%5E2+o(%5Cvarepsilon_j%5E2)"> para <img src="https://latex.codecogs.com/png.latex?j=k,k-1">. En el numerador, los términos con <img src="https://latex.codecogs.com/png.latex?f'(r)"> se cancelan entre sí y queda</p>
+<p><img src="https://latex.codecogs.com/png.latex?f(x_k)%5C,%5Cvarepsilon_%7Bk-1%7D-f(x_%7Bk-1%7D)%5C,%5Cvarepsilon_k=%5Ctfrac12f''(r)%5C,%5Cvarepsilon_k%5E2%5Cvarepsilon_%7Bk-1%7D-%5Ctfrac12f''(r)%5C,%5Cvarepsilon_%7Bk-1%7D%5E2%5Cvarepsilon_k+%5Ccdots=%5Ctfrac12f''(r)%5C,%5Cvarepsilon_k%5Cvarepsilon_%7Bk-1%7D%5C,(%5Cvarepsilon_k-%5Cvarepsilon_%7Bk-1%7D)+%5Ccdots,"></p>
+<p>mientras que el denominador es <img src="https://latex.codecogs.com/png.latex?f'(r)%5C,(%5Cvarepsilon_k-%5Cvarepsilon_%7Bk-1%7D)+%5Ccdots">. Por lo tanto</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_%7Bk+1%7D%5Capprox%5Cfrac%7B%5Ctfrac12f''(r)%5C,%5Cvarepsilon_k%5Cvarepsilon_%7Bk-1%7D%5C,(%5Cvarepsilon_k-%5Cvarepsilon_%7Bk-1%7D)%7D%7Bf'(r)%5C,(%5Cvarepsilon_k-%5Cvarepsilon_%7Bk-1%7D)%7D=%5Cfrac12%5C,%5Cfrac%7Bf''(r)%7D%7Bf'(r)%7D%5C,%5Cvarepsilon_k%5Cvarepsilon_%7Bk-1%7D."></p>
+<p>Los puntos suspensivos también llevan el factor <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_k-%5Cvarepsilon_%7Bk-1%7D">: un término <img src="https://latex.codecogs.com/png.latex?c_i%5Cvarepsilon%5Ei"> del desarrollo de <img src="https://latex.codecogs.com/png.latex?f">, con <img src="https://latex.codecogs.com/png.latex?i%5Cge2">, aporta <img src="https://latex.codecogs.com/png.latex?c_i%5C,%5Cvarepsilon_k%5Cvarepsilon_%7Bk-1%7D%5C,(%5Cvarepsilon_k%5E%7B%5C,i-1%7D-%5Cvarepsilon_%7Bk-1%7D%5E%7B%5C,i-1%7D)"> al numerador, y con <img src="https://latex.codecogs.com/png.latex?i%5Cge1"> aporta <img src="https://latex.codecogs.com/png.latex?c_i%5C,(%5Cvarepsilon_k%5E%7B%5C,i%7D-%5Cvarepsilon_%7Bk-1%7D%5E%7B%5C,i%7D)"> al denominador. Ambos son divisibles por <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_k-%5Cvarepsilon_%7Bk-1%7D">, y por eso la cancelación es legítima.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cboxed%7B%5Cvarepsilon_%7Bk+1%7D%5Capprox%5Cfrac12%5C,%5Cfrac%7Bf''(r)%7D%7Bf'(r)%7D%5C,%5Cvarepsilon_k%5Cvarepsilon_%7Bk-1%7D%7D"></p>
+<p>Si <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_%7Bk-1%7D"> fuera igual a <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_k">, la secante sería la tangente y recuperaríamos la fórmula de Newton, <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_%7Bk+1%7D%5Capprox%5Cfrac12%5Cfrac%7Bf''(r)%7D%7Bf'(r)%7D%5Cvarepsilon_k%5E2">.</p>
+</section>
+<section id="el-orden-de-la-secante" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="el-orden-de-la-secante"><span class="header-section-number">4.2</span> El orden de la secante</h3>
+<p>Como <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_%7Bk+1%7D"> depende de los dos errores anteriores, no sabemos de antemano a qué potencia de <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_k"> es proporcional. Supongamos que los errores tienen esta forma, con <img src="https://latex.codecogs.com/png.latex?c%3E0"> y <img src="https://latex.codecogs.com/png.latex?%5Calpha%3E0">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%7C%5Cvarepsilon_%7Bk+1%7D%7C=c%5C,%7C%5Cvarepsilon_k%7C%5E%5Calpha,%5Cqquad%7C%5Cvarepsilon_k%7C=c%5C,%7C%5Cvarepsilon_%7Bk-1%7D%7C%5E%5Calpha."></p>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?C=%5Cleft%7C%5Cdfrac%7Bf''(r)%7D%7B2f'(r)%7D%5Cright%7C">. Por la fórmula del error de la secante,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%7C%5Cvarepsilon_%7Bk+1%7D%7C%5Capprox%20C%5C,%7C%5Cvarepsilon_k%7C%5C,%7C%5Cvarepsilon_%7Bk-1%7D%7C=C%5C,c%5C,%7C%5Cvarepsilon_%7Bk-1%7D%7C%5E%7B%5Calpha+1%7D,"></p>
+<p>y por otro lado</p>
+<p><img src="https://latex.codecogs.com/png.latex?%7C%5Cvarepsilon_%7Bk+1%7D%7C=c%5C,%7C%5Cvarepsilon_k%7C%5E%5Calpha=c%5C,%5Cbig(c%5C,%7C%5Cvarepsilon_%7Bk-1%7D%7C%5E%5Calpha%5Cbig)%5E%5Calpha=c%5E%7B1+%5Calpha%7D%5C,%7C%5Cvarepsilon_%7Bk-1%7D%7C%5E%7B%5Calpha%5E2%7D."></p>
+<p>Igualando ambas expresiones,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%7C%5Cvarepsilon_%7Bk-1%7D%7C%5E%7B%5Calpha%5E2-%5Calpha-1%7D%5Capprox%20C%5C,c%5E%7B-%5Calpha%7D."></p>
+<p>El lado derecho es una constante positiva, mientras que <img src="https://latex.codecogs.com/png.latex?%7C%5Cvarepsilon_%7Bk-1%7D%7C%5Cto0">. Esto solo es posible si el exponente es cero, es decir, si</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Calpha%5E2=%5Calpha+1%5Cqquad%5CLongrightarrow%5Cqquad%5Calpha=%5Cfrac%7B1+%5Csqrt5%7D%7B2%7D=%5Cphi%5Capprox1%7B,%7D618,"></p>
+<p>la razón áurea, que es la única raíz positiva. De paso, la constante queda determinada por <img src="https://latex.codecogs.com/png.latex?c%5E%5Calpha=C">, o sea <img src="https://latex.codecogs.com/png.latex?c=%5Cleft%7C%5Cdfrac%7Bf''(r)%7D%7B2f'(r)%7D%5Cright%7C%5E%7B%5Calpha-1%7D">, porque <img src="https://latex.codecogs.com/png.latex?1/%5Cphi=%5Cphi-1">.</p>
+<p>Entonces los errores de la secante satisfacen</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bk%5Cto%5Cinfty%7D%5Cfrac%7B%7C%5Cvarepsilon_%7Bk+1%7D%7C%7D%7B%7C%5Cvarepsilon_k%7C%5E%5Calpha%7D=L%3E0,%5Cqquad%5Calpha=%5Cfrac%7B1+%5Csqrt5%7D%7B2%7D%5Cin(1,2),"></p>
+<p>es decir, la convergencia es superlineal pero no cuadrática. Tomando logaritmos a ambos lados, <img src="https://latex.codecogs.com/png.latex?%5Clog%7C%5Cvarepsilon_%7Bk+1%7D%7C%5Capprox%5Calpha%5Clog%7C%5Cvarepsilon_k%7C+%5Clog%20L">, de donde</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%5Clog%7C%5Cvarepsilon_%7Bk+1%7D%7C%7D%7B%5Clog%7C%5Cvarepsilon_k%7C%7D%5Clongrightarrow%5Calpha."></p>
+</section>
+</section>
+<section id="leer-el-orden-en-la-práctica" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="leer-el-orden-en-la-práctica"><span class="header-section-number">5</span> Leer el orden en la práctica</h2>
+<p>La sucesión de cocientes <img src="https://latex.codecogs.com/png.latex?%5Clog%7C%5Cvarepsilon_%7Bk+1%7D%7C/%5Clog%7C%5Cvarepsilon_k%7C"> sirve en general: su límite <img src="https://latex.codecogs.com/png.latex?%5Calpha"> es el orden de convergencia del algoritmo que estemos probando. Para calcularla necesitamos errores, así que usamos aritmética de precisión extendida (200 dígitos) y una raíz de referencia calculada con mucha más precisión que los iterados. En doble precisión el error llega a <img src="https://latex.codecogs.com/png.latex?10%5E%7B-16%7D"> en pocos pasos y la sucesión se estanca antes de mostrar la tendencia.</p>
+<p>Tomamos <img src="https://latex.codecogs.com/png.latex?f(x)=xe%5Ex-2">, cuya raíz es <img src="https://latex.codecogs.com/png.latex?r%5Capprox0%7B,%7D8526055020137255">. Con Newton desde <img src="https://latex.codecogs.com/png.latex?x_0=1">:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?k"></th>
+<th style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Clvert%5Cvarepsilon_k%5Crvert"></th>
+<th style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Clog%5Clvert%5Cvarepsilon_%7Bk+1%7D%5Crvert%5Cbig/%5Clog%5Clvert%5Cvarepsilon_k%5Crvert"></th>
+<th style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Clvert%5Cvarepsilon_%7Bk+1%7D%5Crvert%5Cbig/%5Clvert%5Cvarepsilon_k%5Crvert%5E2"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0%7B,%7D1474"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?2%7B,%7D184"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0%7B,%7D70305"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0%7B,%7D01527"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?2%7B,%7D065"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0%7B,%7D76244"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?2"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1%7B,%7D779%5Ctimes10%5E%7B-4%7D"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?2%7B,%7D030"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0%7B,%7D76980"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?3"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?2%7B,%7D436%5Ctimes10%5E%7B-8%7D"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?2%7B,%7D015"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0%7B,%7D76989"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?4"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?4%7B,%7D567%5Ctimes10%5E%7B-16%7D"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?2%7B,%7D007"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0%7B,%7D76989"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?5"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1%7B,%7D606%5Ctimes10%5E%7B-31%7D"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?2%7B,%7D004"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0%7B,%7D76989"></td>
+</tr>
+</tbody>
+</table>
+<p>El cociente de logaritmos tiende a <img src="https://latex.codecogs.com/png.latex?2">, y el cociente <img src="https://latex.codecogs.com/png.latex?%7C%5Cvarepsilon_%7Bk+1%7D%7C/%7C%5Cvarepsilon_k%7C%5E2"> se estabiliza en <img src="https://latex.codecogs.com/png.latex?0%7B,%7D76989">, que es justamente <img src="https://latex.codecogs.com/png.latex?%5Cfrac12%7Cf''(r)/f'(r)%7C">. Con la secante, partiendo de <img src="https://latex.codecogs.com/png.latex?x_1=1"> y <img src="https://latex.codecogs.com/png.latex?x_2=0%7B,%7D5">:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?k"></th>
+<th style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Clvert%5Cvarepsilon_k%5Crvert"></th>
+<th style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Clog%5Clvert%5Cvarepsilon_%7Bk+1%7D%5Crvert%5Cbig/%5Clog%5Clvert%5Cvarepsilon_k%5Crvert"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?4"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0%7B,%7D01303"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1%7B,%7D787"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?5"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?4%7B,%7D275%5Ctimes10%5E%7B-4%7D"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1%7B,%7D594"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?6"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?4%7B,%7D270%5Ctimes10%5E%7B-6%7D"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1%7B,%7D649"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?7"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1%7B,%7D405%5Ctimes10%5E%7B-9%7D"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1%7B,%7D619"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?8"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?4%7B,%7D620%5Ctimes10%5E%7B-15%7D"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1%7B,%7D625"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?9"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?4%7B,%7D999%5Ctimes10%5E%7B-24%7D"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1%7B,%7D620"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?10"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1%7B,%7D778%5Ctimes10%5E%7B-38%7D"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1%7B,%7D620"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?11"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?6%7B,%7D845%5Ctimes10%5E%7B-62%7D"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1%7B,%7D619"></td>
+</tr>
+</tbody>
+</table>
+<p>El cociente de logaritmos se acerca a <img src="https://latex.codecogs.com/png.latex?%5Cphi%5Capprox1%7B,%7D618">. El cociente <img src="https://latex.codecogs.com/png.latex?%7C%5Cvarepsilon_%7Bk+1%7D%7C/%7C%5Cvarepsilon_k%7C%5E%5Calpha"> oscila alrededor de <img src="https://latex.codecogs.com/png.latex?0%7B,%7D85"> y se acerca lentamente al valor que predice la deducción, <img src="https://latex.codecogs.com/png.latex?%5Cleft%7C%5Cfrac%7Bf''(r)%7D%7B2f'(r)%7D%5Cright%7C%5E%7B%5Calpha-1%7D%5Capprox0%7B,%7D8508">.</p>
+<p>Para convergencia lineal el cociente de logaritmos también tiende a <img src="https://latex.codecogs.com/png.latex?%5Calpha=1">, pero muy despacio: con <img src="https://latex.codecogs.com/png.latex?%7C%5Cvarepsilon_k%7C=%5Csigma%5Ekc"> vale <img src="https://latex.codecogs.com/png.latex?1+%5Cdfrac%7B%5Clog%5Csigma%7D%7Bk%5Clog%5Csigma+%5Clog%20c%7D">, que decrece como <img src="https://latex.codecogs.com/png.latex?1/k">. En la iteración <img src="https://latex.codecogs.com/png.latex?x_%7Bk+1%7D=%5Ccos%20x_k"> de arriba vale <img src="https://latex.codecogs.com/png.latex?1%7B,%7D20"> en <img src="https://latex.codecogs.com/png.latex?k=0"> y todavía <img src="https://latex.codecogs.com/png.latex?1%7B,%7D02"> en <img src="https://latex.codecogs.com/png.latex?k=39">. Para detectar una convergencia lineal conviene mirar directamente el cociente <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_%7Bk+1%7D/%5Cvarepsilon_k">.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Resuelva todos los ejercicios de las secciones 4.2, 4.3 y 4.4 de <em>Fundamentals of Numerical Computation</em> (iteración de punto fijo, método de Newton y métodos basados en interpolación), disponibles en <a href="https://fncbook.com/julia/fixed-point/#exercises" class="uri">https://fncbook.com/julia/fixed-point/#exercises</a>, <a href="https://fncbook.com/julia/newton/#exercises" class="uri">https://fncbook.com/julia/newton/#exercises</a> y <a href="https://fncbook.com/julia/secant/#exercises" class="uri">https://fncbook.com/julia/secant/#exercises</a>.</p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/numerico/convergencia/</guid>
+  <pubDate>Thu, 15 Oct 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>El método de Newton</title>
   <dc:creator>Arturo Sanjuán</dc:creator>
