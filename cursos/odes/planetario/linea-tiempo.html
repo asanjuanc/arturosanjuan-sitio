@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>De esfera a planeta</title>
+<style>
+  :root{
+    --ink:#1e2327; --muted:#5a6570; --line:#dde3e8; --bg:#fbfcfd; --panel:#ffffff;
+    --accent:#2563a8; --accent-ink:#ffffff; --warm:#c1440e; --warm-tint:#fbe9e2; --soft:#f2f5f7; --softblue:#e6eef8;
+    --c1:#2563a8; --c2:#c1440e; --c3:#1a7f5a; --c4:#a63a7a;
+    --mono: ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; padding:18px 20px 26px; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:14.5px; line-height:1.45;
+  }
+  h2{font-size:16px; margin:0 0 4px;}
+  .sub{color:var(--muted); margin:0 0 14px; font-size:13px;}
+
+  .legend{display:flex; flex-wrap:wrap; gap:6px 18px; margin:0 0 10px; font-size:12.5px; color:var(--muted);}
+  .legend span{display:inline-flex; align-items:center; gap:6px;}
+  .dot{display:inline-block; width:10px; height:10px; border-radius:50%; border:1.5px solid currentColor; flex:none;}
+  .dot.full{background:currentColor;}
+  .dot.half{background:linear-gradient(90deg,currentColor 50%,transparent 50%);}
+
+  .tl{display:flex; gap:8px; overflow-x:auto; padding-bottom:6px;}
+  .node{
+    flex:1 0 104px; text-align:left; cursor:pointer; background:var(--panel); color:var(--ink);
+    border:1px solid var(--line); border-radius:10px; padding:8px 11px; font:inherit;
+    display:flex; flex-direction:column; gap:2px;
+  }
+  .node:hover{background:var(--soft);}
+  .node:focus-visible,.nav button:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+  .node .yr{font-size:11.5px; color:var(--muted);}
+  .node .nm{font-size:14px; font-weight:600; line-height:1.2;}
+  .node .dots{display:flex; gap:6px; margin-top:5px; color:var(--accent);}
+  .node[aria-selected="true"]{background:var(--softblue); border-color:var(--accent); color:var(--accent);}
+  .node[aria-selected="true"] .yr{color:inherit; opacity:.85;}
+
+  .scale{margin-top:8px;}
+  .scale-in{position:relative; height:62px; margin:0 22px;}
+  .gap-lbl{position:absolute; top:0; transform:translateX(-50%); font-size:11.5px; color:var(--muted); white-space:nowrap;}
+  .gap-br{position:absolute; top:20px; height:6px; border:1px solid var(--muted); border-bottom:0;}
+  .axis{position:absolute; left:0; right:0; top:40px; height:1px; background:var(--line);}
+  .tk{position:absolute; top:30px; width:2px; height:16px; background:var(--muted); transform:translateX(-1px);}
+  .tk.on{top:26px; height:24px; width:3px; background:var(--accent); transform:translateX(-1.5px);}
+  .ax{position:absolute; top:52px; transform:translateX(-50%); font-size:10.5px; color:var(--muted); white-space:nowrap;}
+
+  .detail{
+    display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); gap:22px;
+    margin-top:14px; padding:16px; background:var(--panel); border:1px solid var(--line); border-radius:10px;
+  }
+  .fig{margin:0; min-width:0;}
+  .fig svg{display:block; width:100%; height:auto; background:var(--bg); border:1px solid var(--line); border-radius:6px;}
+  .fig figcaption{margin-top:8px; font-size:12.5px; line-height:1.4; color:var(--muted);}
+  .info{min-width:0;}
+  .info h2{font-size:18px; margin:0;}
+  .dates{font-size:12.5px; color:var(--muted); margin:3px 0 2px;}
+  .role{color:var(--accent); font-weight:600; font-size:13px; margin:0 0 10px;}
+  .did{margin:0 0 6px; font-size:13.5px;}
+
+  .rd{border-top:1px solid var(--line); padding:9px 0; display:grid; gap:5px;}
+  .rd-h{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+  .rd-h h3{margin:0; font-size:13px; font-weight:600; color:var(--ink);}
+  .chip{font-size:11.5px; padding:1px 10px; border-radius:20px; border:1px solid var(--line); color:var(--muted); font-weight:600;}
+  .chip.full{background:#e4f4ec; border-color:#e4f4ec; color:var(--c3);}
+  .chip.half{background:#fdf3da; border-color:#fdf3da; color:#9a7300;}
+  .rd p{margin:0; font-size:13px; color:var(--ink);}
+
+  .nav{display:flex; justify-content:space-between; gap:10px; margin-top:12px;}
+  .nav button{
+    border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:6px;
+    padding:4px 12px; font:inherit; font-size:12.5px; cursor:pointer;
+  }
+  .nav button:hover:not(:disabled){background:var(--soft);}
+  .nav button:disabled{opacity:.4; cursor:default;}
+
+svg text {
+  font-family: var(--mono); font-size: 10px; fill: var(--ink);
+  paint-order: stroke; stroke: #fbfcfd; stroke-width: 3px; stroke-linejoin: round;
+}
+.s-ink { fill: none; stroke: var(--ink); stroke-width: 1.4; }
+.s-soft { fill: none; stroke: var(--line); stroke-width: 1; }
+.s-mut { fill: none; stroke: var(--muted); stroke-width: 1; stroke-dasharray: 3 3; }
+.s-warm { fill: none; stroke: var(--warm); stroke-width: 1.6; }
+.s-acc { fill: none; stroke: var(--accent); stroke-width: 2; }
+.sc1 { fill: none; stroke: var(--c1); stroke-width: 2; }
+.sc2 { fill: none; stroke: var(--c2); stroke-width: 2; }
+.sc3 { fill: none; stroke: var(--c3); stroke-width: 2; }
+.sc4 { fill: none; stroke: var(--c4); stroke-width: 2; stroke-dasharray: 5 3; }
+.f-ink { fill: var(--ink); stroke: none; }
+.f-acc { fill: var(--accent); stroke: none; }
+.f-warm { fill: var(--warm); stroke: none; }
+.f-wash { fill: var(--line); fill-opacity: 0.3; stroke: none; }
+.f-earth { fill: var(--accent); fill-opacity: 0.18; stroke: var(--accent); stroke-width: 1.6; }
+.thick { stroke-width: 3.5; }
+
+@media (max-width:760px){ .detail{grid-template-columns:minmax(0,1fr); padding:14px; gap:16px;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h2>De esfera a planeta</h2>
+  <p class="sub">Siete autores, de Aristarco a Newton. De cada uno: qué aportó sobre la Tierra redonda, su rotación y su condición de planeta. Elija un autor en la línea de tiempo.</p>
+
+  <div class="legend" aria-label="Cómo leer los puntos">
+    <span>Puntos en orden: redonda, gira, planeta</span>
+    <span><i class="dot full"></i> aporta</span>
+    <span><i class="dot half"></i> indirecto o discutido</span>
+    <span><i class="dot"></i> no lo trata o lo rechaza</span>
+  </div>
+
+  <div class="tl" id="tl" role="tablist" aria-label="Autores"></div>
+  <div class="scale" aria-hidden="true"><div class="scale-in" id="scale"></div></div>
+
+  <section class="detail" id="detail" aria-live="polite">
+    <figure class="fig">
+      <div id="svgbox"></div>
+      <figcaption id="cap"></figcaption>
+    </figure>
+    <div class="info">
+      <h2 id="nm"></h2>
+      <div class="dates" id="dates"></div>
+      <p class="role" id="role"></p>
+      <p class="did" id="did"></p>
+      <div id="rds"></div>
+    </div>
+  </section>
+
+  <div class="nav">
+    <button id="prev" type="button"></button>
+    <button id="next" type="button"></button>
+  </div>
+</div>
+
+<script>
+(function () {
+  var CX = 160, CY = 120;
+  function P(cx, cy, r, deg) {
+    var a = deg * Math.PI / 180;
+    return [cx + r * Math.cos(a), cy - r * Math.sin(a)];
+  }
+  function f(n) { return (Math.round(n * 10) / 10).toString(); }
+  function poly(cx, cy, r, n, start) {
+    var pts = [];
+    for (var k = 0; k < n; k++) {
+      var p = P(cx, cy, r, start + 360 * k / n);
+      pts.push(f(p[0]) + "," + f(p[1]));
+    }
+    return pts.join(" ");
+  }
+  function wrapSvg(inner, label) {
+    return '<svg viewBox="0 0 320 240" role="img" aria-label="' + label + '">' + inner + '</svg>';
+  }
+
+  /* Diagramas */
+  function dAristarco() {
+    return wrapSvg(
+      '<path class="f-wash" d="M60 200 L130 200 L130 38 Z"/>' +
+      '<line class="s-ink" x1="60" y1="200" x2="130" y2="200"/>' +
+      '<line class="s-ink" x1="130" y1="200" x2="130" y2="38"/>' +
+      '<line class="s-mut" x1="60" y1="200" x2="130" y2="38"/>' +
+      '<path class="s-ink" d="M122 200 L122 192 L130 192"/>' +
+      '<path class="sc2" d="M90 200 A30 30 0 0 0 71.9 172.4"/>' +
+      '<circle class="f-acc" cx="60" cy="200" r="12"/>' +
+      '<circle class="f-ink" cx="130" cy="200" r="5"/>' +
+      '<circle class="f-warm" cx="130" cy="38" r="16"/>' +
+      '<text x="96" y="186">87°</text>' +
+      '<text x="136" y="190">90°</text>' +
+      '<text x="60" y="226" text-anchor="middle">Tierra</text>' +
+      '<text x="130" y="226" text-anchor="middle">Luna</text>' +
+      '<text x="152" y="42">Sol</text>',
+      'Triángulo rectángulo formado por la Tierra, la Luna y el Sol'
+    );
+  }
+  function dEratostenes() {
+    return wrapSvg(
+      '<circle class="f-earth" cx="160" cy="130" r="80"/>' +
+      '<line class="s-ink" x1="312" y1="130" x2="240" y2="130"/>' +
+      '<line class="s-ink" x1="312" y1="65.7" x2="207.6" y2="65.7"/>' +
+      '<line class="s-soft" x1="160" y1="130" x2="240" y2="130"/>' +
+      '<line class="s-soft" x1="160" y1="130" x2="221.3" y2="78.6"/>' +
+      '<line class="sc2" x1="221.3" y1="78.6" x2="236.6" y2="65.7"/>' +
+      '<line class="sc1 thick" x1="221.3" y1="78.6" x2="207.6" y2="65.7"/>' +
+      '<path class="sc2" d="M188 130 A28 28 0 0 0 181.4 112"/>' +
+      '<circle class="f-ink" cx="240" cy="130" r="3.5"/>' +
+      '<circle class="f-ink" cx="221.3" cy="78.6" r="3.5"/>' +
+      '<circle class="f-ink" cx="160" cy="130" r="2.5"/>' +
+      '<text x="192" y="124">7,2°</text>' +
+      '<text x="246" y="148">Siena</text>' +
+      '<text x="236" y="56" text-anchor="middle">Alejandría</text>' +
+      '<text x="250" y="108">5000 estadios</text>' +
+      '<text x="160" y="148" text-anchor="middle">centro</text>',
+      'Rayos paralelos sobre la Tierra, con Siena y Alejandría separadas un arco'
+    );
+  }
+  function dApolonio() {
+    return wrapSvg(
+      '<path class="f-wash" d="M20 20 L220 20 L20 220 L220 220 Z"/>' +
+      '<line class="s-mut" x1="120" y1="8" x2="120" y2="232"/>' +
+      '<line class="s-ink" x1="20" y1="20" x2="220" y2="220"/>' +
+      '<line class="s-ink" x1="220" y1="20" x2="20" y2="220"/>' +
+      '<line class="sc1" x1="30" y1="30" x2="210" y2="30"/>' +
+      '<line class="sc2" x1="70" y1="70" x2="185" y2="55"/>' +
+      '<line class="sc3" x1="80" y1="160" x2="140" y2="220"/>' +
+      '<line class="sc4" x1="175" y1="20" x2="175" y2="220"/>' +
+      '<line class="sc1" x1="240" y1="60" x2="256" y2="60"/><text x="262" y="64">círculo</text>' +
+      '<line class="sc2" x1="240" y1="90" x2="256" y2="90"/><text x="262" y="94">elipse</text>' +
+      '<line class="sc3" x1="240" y1="120" x2="256" y2="120"/><text x="262" y="124">parábola</text>' +
+      '<line class="sc4" x1="240" y1="150" x2="256" y2="150"/><text x="262" y="154">hipérbola</text>',
+      'Cono doble cortado por cuatro planos que dan círculo, elipse, parábola e hipérbola'
+    );
+  }
+  function dPtolomeo() {
+    return wrapSvg(
+      '<circle class="s-ink" cx="170" cy="120" r="90"/>' +
+      '<circle class="s-warm" cx="227.9" cy="51.1" r="30"/>' +
+      '<line class="s-mut" x1="190" y1="120" x2="227.9" y2="51.1"/>' +
+      '<line class="s-soft" x1="227.9" y1="51.1" x2="251.9" y2="33.1"/>' +
+      '<line class="s-mut" x1="150" y1="120" x2="251.9" y2="33.1"/>' +
+      '<circle class="f-acc" cx="150" cy="120" r="7"/>' +
+      '<circle class="f-ink" cx="170" cy="120" r="2.5"/>' +
+      '<path class="s-ink" d="M187 117 L193 123 M193 117 L187 123"/>' +
+      '<circle class="f-ink" cx="227.9" cy="51.1" r="3"/>' +
+      '<circle class="f-warm" cx="251.9" cy="33.1" r="5"/>' +
+      '<text x="150" y="140" text-anchor="middle">Tierra</text>' +
+      '<text x="194" y="140" text-anchor="middle">ecuante</text>' +
+      '<text x="170" y="106" text-anchor="middle">centro</text>' +
+      '<text x="76" y="124" text-anchor="end">deferente</text>' +
+      '<text x="262" y="80">epiciclo</text>' +
+      '<text x="258" y="28">planeta</text>',
+      'Deferente, epiciclo y ecuante del sistema de Ptolomeo'
+    );
+  }
+  function dCopernico() {
+    var radii = [22, 38, 56, 76, 96, 108];
+    var angs = [200, 120, 20, 300, 70, 160];
+    var out = '';
+    radii.forEach(function (r) { out += '<circle class="s-soft" cx="' + CX + '" cy="' + CY + '" r="' + r + '"/>'; });
+    out += '<circle class="s-mut" cx="' + CX + '" cy="' + CY + '" r="56"/>';
+    radii.forEach(function (r, i) {
+      var p = P(CX, CY, r, angs[i]);
+      if (i === 2) {
+        out += '<circle class="s-soft" cx="' + f(p[0]) + '" cy="' + f(p[1]) + '" r="11"/>';
+        var m = P(p[0], p[1], 11, 60);
+        out += '<circle class="f-acc" cx="' + f(p[0]) + '" cy="' + f(p[1]) + '" r="5"/>';
+        out += '<circle class="f-ink" cx="' + f(m[0]) + '" cy="' + f(m[1]) + '" r="2"/>';
+        out += '<text x="' + f(p[0] + 9) + '" y="' + f(p[1] - 12) + '">Tierra</text>';
+      } else {
+        out += '<circle class="f-ink" cx="' + f(p[0]) + '" cy="' + f(p[1]) + '" r="3"/>';
+      }
+    });
+    out += '<circle class="f-warm" cx="' + CX + '" cy="' + CY + '" r="8"/>';
+    var s = P(CX, CY, 108, 160);
+    out += '<text x="' + f(s[0] - 4) + '" y="' + f(s[1] + 16) + '">Saturno</text>';
+    out += '<text x="' + (CX + 12) + '" y="' + (CY + 20) + '">Sol</text>';
+    return wrapSvg(out, 'Órbitas de los seis planetas alrededor del Sol con la Tierra como tercer planeta');
+  }
+  function dKepler() {
+    var ns = [4, 3, 5, 5, 4];
+    var r = 108, out = '';
+    out += '<circle class="s-ink" cx="' + CX + '" cy="' + CY + '" r="' + f(r) + '"/>';
+    ns.forEach(function (n, i) {
+      var start = (n % 2 === 1) ? 90 : 45;
+      out += '<polygon class="s-warm" points="' + poly(CX, CY, r, n, start) + '"/>';
+      r = r * Math.cos(Math.PI / n);
+      var cls = (i === 2) ? 's-acc' : 's-ink';
+      out += '<circle class="' + cls + '" cx="' + CX + '" cy="' + CY + '" r="' + f(r) + '"/>';
+    });
+    out += '<circle class="f-warm" cx="' + CX + '" cy="' + CY + '" r="3.5"/>';
+    return wrapSvg(out, 'Esferas y sólidos platónicos encajados, del Mysterium Cosmographicum');
+  }
+  function dNewton() {
+    return wrapSvg(
+      '<circle class="s-mut" cx="160" cy="125" r="80"/>' +
+      '<circle class="f-earth" cx="160" cy="125" r="70"/>' +
+      '<path class="f-ink" d="M148 56 L160 43 L172 56 Z"/>' +
+      '<path class="sc1" d="M160 45 Q185 38 195 64.4"/>' +
+      '<path class="sc2" d="M160 45 Q228 40 229.7 131.1"/>' +
+      '<circle class="f-warm" cx="115" cy="45.7" r="0"/>' +
+      '<text x="160" y="24" text-anchor="middle">cañón en la montaña</text>' +
+      '<text x="160" y="129" text-anchor="middle">Tierra</text>' +
+      '<text x="10" y="210">órbita</text>' +
+      '<line class="s-mut" x1="46" y1="207" x2="74" y2="188"/>',
+      'Cañón de Newton: trayectorias cada vez más largas hasta quedar en órbita'
+    );
+  }
+
+  /* Datos */
+  var D = [
+    {
+      id: "aristarco", yr: "~270 a.C.", y: -270, nm: "Aristarco", full: "Aristarco de Samos",
+      dates: "~310 a ~230 a.C.", role: "Primer modelo heliocéntrico conocido",
+      did: "Midió con geometría el tamaño relativo del Sol y la Luna, y propuso que la Tierra gira alrededor del Sol. Su obra heliocéntrica se perdió y la conocemos por Arquímedes.",
+      svg: dAristarco,
+      cap: "Sol, Tierra y Luna en cuarto creciente forman un triángulo rectángulo con el ángulo recto en la Luna. Los ángulos del dibujo no están a escala.",
+      r: [
+        ["half", "Indirecto", "Parte de una Tierra esférica y usa la sombra circular de los eclipses. Midió 87° entre el Sol y la Luna vistos desde la Tierra (el valor real es unos 89,85°) y concluyó un Sol 18 a 20 veces más lejos que la Luna (real: unas 390)."],
+        ["half", "Discutido", "Plutarco y Aecio le atribuyen la rotación diaria de la Tierra. Hay debate sobre cuánto de eso es suyo."],
+        ["full", "Aporta", "La Tierra orbita el Sol, con las estrellas fijas inmóviles y muy lejanas, lo que explica que no se vea paralaje. No prosperó: la física aristotélica ponía lo pesado en el centro."]
+      ]
+    },
+    {
+      id: "eratostenes", yr: "~240 a.C.", y: -240, nm: "Eratóstenes", full: "Eratóstenes de Cirene",
+      dates: "~276 a ~194 a.C.", role: "Primer método documentado para medir la Tierra",
+      did: "Comparó la sombra de un gnomon en Alejandría con el Sol en el cenit en Siena. Un arco de 7,2° (1/50 de círculo) y 5000 estadios dan una circunferencia de 50 x 5000 = 250.000 estadios, que luego ajustó a 252.000.",
+      svg: dEratostenes,
+      cap: "Rayos solares paralelos, Siena con el Sol en el cenit y Alejandría con sombra. El ángulo está exagerado para poder verlo.",
+      r: [
+        ["full", "Aporta", "Convierte la esfericidad en una medida. Supone rayos paralelos y ciudades en el mismo meridiano. El error real depende del estadio que usó, entre 1% y 16%. Su obra se perdió y se conoce por Cleomedes."],
+        ["none", "No lo trata", "No habla de rotación. Su trabajo es de geografía y medida."],
+        ["half", "Indirecto", "No lo plantea. Con una Tierra de tamaño conocido, se la puede comparar con la Luna y el Sol."]
+      ]
+    },
+    {
+      id: "apolonio", yr: "~210 a.C.", y: -210, nm: "Apolonio", full: "Apolonio de Perge",
+      dates: "~262 a ~190 a.C.", role: "Cónicas, epiciclos y excéntricas",
+      did: "En las Cónicas obtiene elipse, parábola e hipérbola de un solo cono doble variando la inclinación del plano. En astronomía Ptolomeo le atribuye la equivalencia entre epiciclos y excéntricas y el cálculo de los puntos estacionarios.",
+      svg: dApolonio,
+      cap: "Un plano horizontal da círculo, uno inclinado da elipse, uno paralelo a un lado da parábola y uno que corta ambas hojas da hipérbola.",
+      r: [
+        ["none", "No lo trata", "No aporta a la forma de la Tierra."],
+        ["none", "No lo trata", "Sus modelos dejan la Tierra en el centro y no tratan la rotación."],
+        ["half", "Indirecto", "Mostró que movimientos geométricamente distintos dan las mismas posiciones aparentes. Esa equivalencia permitió pasar de un modelo geocéntrico a uno heliocéntrico sin cambiar lo observado. Sus cónicas serán la geometría de las órbitas de Kepler y Newton."]
+      ]
+    },
+    {
+      id: "ptolomeo", yr: "~150 d.C.", y: 150, nm: "Ptolomeo", full: "Claudio Ptolomeo",
+      dates: "~100 a ~170 d.C.", role: "El Almagesto y la referencia geocéntrica por unos 1400 años",
+      did: "Unió la física de Aristóteles con los epiciclos y excéntricas de Apolonio e Hiparco en un sistema de deferentes, epiciclos y ecuante, capaz de predecir posiciones planetarias.",
+      svg: dPtolomeo,
+      cap: "El planeta gira en el epiciclo. El centro del epiciclo recorre el deferente con velocidad uniforme vista desde el ecuante, no desde la Tierra.",
+      r: [
+        ["full", "Aporta", "Recoge los argumentos de la esfericidad (horizonte, eclipses, estrellas según la latitud) y escribe una Geografía con coordenadas. Adoptó una circunferencia de unos 180.000 estadios, menor que la de Eratóstenes."],
+        ["none", "La rechaza", "Una Tierra que rota dejaría atrás las nubes y los objetos sueltos."],
+        ["none", "Lo rechaza", "La Tierra es fija y está en el centro. Su sistema fue la astronomía estándar porque tenía la autoridad de Aristóteles y capacidad de predicción."]
+      ]
+    },
+    {
+      id: "copernico", yr: "1543", y: 1543, nm: "Copérnico", full: "Nicolás Copérnico",
+      dates: "1473 a 1543", role: "De revolutionibus: el Sol en el centro",
+      did: "Puso el Sol en el centro y ordenó los planetas por su periodo. Mantuvo círculos y epiciclos, así que no era más preciso que Ptolomeo. Su ventaja fue explicar el movimiento retrógrado y fijar las distancias relativas de forma natural.",
+      svg: dCopernico,
+      cap: "Desde el Sol: Mercurio, Venus, Tierra con la Luna, Marte, Júpiter y Saturno.",
+      r: [
+        ["half", "Indirecto", "Acepta la esfericidad y recoge los argumentos clásicos en el libro I."],
+        ["full", "Aporta", "La rotación diaria explica el giro aparente del cielo con un movimiento mucho menor que el de la esfera de las estrellas."],
+        ["full", "Aporta", "Primer sistema completo con la Tierra como tercer planeta y la Luna orbitándola. Cambia la definición de planeta: el Sol y la Luna dejan de serlo y la Tierra pasa a serlo."]
+      ]
+    },
+    {
+      id: "kepler", yr: "1609", y: 1609, nm: "Kepler", full: "Johannes Kepler",
+      dates: "1571 a 1630", role: "Sólidos platónicos y leyes planetarias",
+      did: "En 1596 propuso que las órbitas de los seis planetas están encajadas en los cinco sólidos platónicos. El modelo es falso, pero buscaba explicar la estructura. Con los datos de Tycho llegó a las órbitas elípticas (1609) y a que T² es proporcional a a³ (1619).",
+      svg: dKepler,
+      cap: "Corte plano esquemático del Mysterium Cosmographicum. De afuera hacia adentro: Saturno, cubo, Júpiter, tetraedro, Marte, dodecaedro, Tierra (en azul), icosaedro, Venus, octaedro, Mercurio. Las formas planas son ilustrativas.",
+      r: [
+        ["none", "No lo trata", "La da por supuesta. No es su tema."],
+        ["half", "Indirecto", "Acepta la rotación de la Tierra de Copérnico y propone que el Sol también rota y que esa rotación mueve a los planetas."],
+        ["full", "Aporta", "La Tierra recorre una elipse con las mismas leyes que los demás planetas. Los sólidos explican por qué hay seis planetas y las tres leyes dan la regla que los une."]
+      ]
+    },
+    {
+      id: "newton", yr: "1687", y: 1687, nm: "Newton", full: "Isaac Newton",
+      dates: "1642 a 1727", role: "Gravitación universal, Principia (1687)",
+      did: "Derivó las leyes de Kepler de una fuerza de atracción proporcional a 1 sobre r². La misma fuerza explica la caída de una manzana, la órbita de la Luna y las de los planetas.",
+      svg: dNewton,
+      cap: "Cañón de Newton: con más velocidad el proyectil cae más lejos, y con la suficiente queda en órbita alrededor de la Tierra.",
+      r: [
+        ["full", "Aporta", "Predijo que la rotación achata la Tierra en los polos, cerca de 1 en 230. La Tierra pasa de esfera a esferoide achatado. Las misiones francesas a Laponia y Perú (1735 a 1744) lo confirmaron."],
+        ["full", "Aporta", "La rotación tiene una consecuencia física calculable, el achatamiento. Con su mecánica, una Tierra que gira es coherente con la física."],
+        ["full", "Aporta", "Unifica la física terrestre y la celeste: no hay una naturaleza distinta para la Tierra y los astros. La Tierra es un planeta también en la dinámica, no solo en la geometría."]
+      ]
+    }
+  ];
+  var LABELS = ["Tierra redonda", "Gira sobre su eje", "Un planeta más"];
+  var MIN = -350, MAX = 1750;
+  function pct(y) { return ((y - MIN) / (MAX - MIN)) * 100; }
+  function dotClass(s) { return s === "full" ? "full" : (s === "half" ? "half" : ""); }
+
+  var tl = document.getElementById("tl");
+  var scale = document.getElementById("scale");
+  var cur = 0;
+
+  /* Nodos */
+  D.forEach(function (d, i) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "node";
+    b.setAttribute("role", "tab");
+    b.id = "tab-" + d.id;
+    var dots = d.r.map(function (r, k) {
+      return '<i class="dot ' + dotClass(r[0]) + '" title="' + LABELS[k] + ': ' + r[1] + '"></i>';
+    }).join("");
+    b.innerHTML = '<span class="yr">' + d.yr + '</span><span class="nm">' + d.nm + '</span><span class="dots">' + dots + '</span>';
+    b.addEventListener("click", function () { select(i, false); });
+    tl.appendChild(b);
+  });
+
+  /* Regla a escala */
+  var html = "";
+  var gl = pct(150), gr = pct(1543);
+  html += '<div class="gap-br" style="left:' + gl + '%;width:' + (gr - gl) + '%"></div>';
+  html += '<div class="gap-lbl" style="left:' + ((gl + gr) / 2) + '%">unos 1400 años entre Ptolomeo y Copérnico</div>';
+  html += '<div class="axis"></div>';
+  [[-300, "300 a.C."], [0, "0"], [500, "500"], [1000, "1000"], [1500, "1500"]].forEach(function (t) {
+    html += '<div class="ax" style="left:' + pct(t[0]) + '%">' + t[1] + '</div>';
+  });
+  D.forEach(function (d, i) {
+    html += '<div class="tk" data-i="' + i + '" style="left:' + pct(d.y) + '%"></div>';
+  });
+  scale.innerHTML = html;
+
+  function select(i, focus) {
+    cur = i;
+    var d = D[i];
+    var nodes = tl.querySelectorAll(".node");
+    nodes.forEach(function (n, k) {
+      var on = k === i;
+      n.setAttribute("aria-selected", on ? "true" : "false");
+      n.tabIndex = on ? 0 : -1;
+    });
+    scale.querySelectorAll(".tk").forEach(function (t) {
+      t.classList.toggle("on", Number(t.getAttribute("data-i")) === i);
+    });
+    document.getElementById("svgbox").innerHTML = d.svg();
+    document.getElementById("cap").textContent = d.cap;
+    document.getElementById("nm").textContent = d.full;
+    document.getElementById("dates").textContent = d.dates;
+    document.getElementById("role").textContent = d.role;
+    document.getElementById("did").textContent = d.did;
+    document.getElementById("rds").innerHTML = d.r.map(function (r, k) {
+      return '<div class="rd"><div class="rd-h"><i class="dot ' + dotClass(r[0]) + '" style="color:var(--accent)"></i><h3>' + LABELS[k] + '</h3><span class="chip ' + dotClass(r[0]) + '">' + r[1] + '</span></div><p>' + r[2] + '</p></div>';
+    }).join("");
+    var pv = document.getElementById("prev"), nx = document.getElementById("next");
+    pv.disabled = i === 0;
+    nx.disabled = i === D.length - 1;
+    pv.textContent = i > 0 ? "← " + D[i - 1].nm : "←";
+    nx.textContent = i < D.length - 1 ? D[i + 1].nm + " →" : "→";
+    var sel = nodes[i];
+    if (sel && sel.scrollIntoView) {
+      try { sel.scrollIntoView({ block: "nearest", inline: "nearest" }); } catch (e) {}
+    }
+    if (focus) sel.focus();
+  }
+
+  document.getElementById("prev").addEventListener("click", function () { if (cur > 0) select(cur - 1, false); });
+  document.getElementById("next").addEventListener("click", function () { if (cur < D.length - 1) select(cur + 1, false); });
+  document.addEventListener("keydown", function (e) {
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    if (e.key === "ArrowRight" && cur < D.length - 1) { e.preventDefault(); select(cur + 1, document.activeElement && document.activeElement.classList.contains("node")); }
+    if (e.key === "ArrowLeft" && cur > 0) { e.preventDefault(); select(cur - 1, document.activeElement && document.activeElement.classList.contains("node")); }
+  });
+
+  select(0, false);
+})();
+</script>
+</body>
+</html>

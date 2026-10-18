@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulación de la explosión de la Tierra</title>
+<style>
+  :root{
+    --ink:#1e2327; --muted:#5a6570; --line:#dde3e8; --bg:#fbfcfd;
+    --accent:#2563a8; --accent2:#c1440e; --good:#1a7f5a; --bad:#c1440e;
+    --panel:#ffffff; --soft:#f2f5f7; --softblue:#e6eef8;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; padding:18px 20px 26px; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:14.5px; line-height:1.45;
+  }
+  h2{font-size:16px; margin:0 0 4px;}
+  .sub{color:var(--muted); margin:0 0 14px; font-size:13px;}
+
+  .ex-eq{background:var(--soft); border:1px solid var(--line); border-radius:10px; padding:9px 14px; margin-bottom:14px; font-size:13.5px;}
+  .ex-eq div{margin:2px 0;}
+  .ex-eq .ex-lbl{color:var(--muted); display:inline-block; min-width:9.5em;}
+
+  .ex-grid{display:flex; gap:18px; flex-wrap:wrap; align-items:flex-start;}
+  .ex-panel{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 16px;}
+  .ex-ctrl{flex:1 1 260px; max-width:340px;}
+  .ex-plot{flex:2 1 380px; min-width:0;}
+  .ex-plot canvas{width:100%; display:block; background:#fff; border-radius:6px;}
+  .ex-lab{display:block; font-size:13px; margin:2px 0 4px;}
+  .ex-val{font-variant-numeric:tabular-nums; color:var(--accent); font-weight:600;}
+  input[type=range]{width:100%; margin:0 0 11px; accent-color:var(--accent);}
+  .ex-presets{display:flex; flex-wrap:wrap; gap:6px; margin:0 0 12px;}
+  .ex-btn{
+    border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:6px;
+    padding:3px 9px; font:inherit; font-size:12.5px; cursor:pointer;
+  }
+  .ex-btn:hover{background:var(--soft);}
+  .ex-btn.main{border-color:var(--accent); background:var(--softblue); color:var(--accent); font-weight:600;}
+  .ex-btn:focus-visible,input:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+  .ex-ver{display:inline-block; padding:2px 11px; border-radius:20px; font-weight:600; font-size:12.5px; margin:4px 0 8px;}
+  .ex-ver.good{background:#e4f4ec; color:var(--good);}
+  .ex-ver.bad{background:#fbe9e2; color:var(--bad);}
+  .ex-ver.warn{background:#fdf3da; color:#9a7300;}
+  .ex-nota{margin:0; font-size:13px; color:var(--muted);}
+  .ex-pie{margin:8px 0 0; font-size:12px; color:var(--muted);}
+  .ex-chk{display:flex; align-items:center; gap:7px; font-size:13px; margin:0 0 6px; cursor:pointer;}
+
+  dl.ex-read{margin:8px 0 0; display:grid; grid-template-columns:1fr auto; gap:3px 12px; font-size:13px;}
+  dl.ex-read dt{color:var(--muted);}
+  dl.ex-read dd{margin:0; font-family:var(--mono); text-align:right; font-variant-numeric:tabular-nums;}
+  .ex-sp{margin-top:16px;}
+  .ex-sp canvas{width:100%; height:150px; display:block; background:#fff; border-radius:6px;}
+</style>
+</head>
+<body>
+
+<h2>La explosión de la Tierra: los fragmentos, ¿se reúnen?</h2>
+<p class="sub">La Tierra estalla en el punto marcado, en órbita circular de 1 UA. Cada fragmento sigue su propia órbita kepleriana. Con la misma rapidez que tenía la Tierra, todos tienen el mismo semieje mayor a, y por la tercera ley el mismo periodo.</p>
+
+<div class="ex-eq">
+  <div><span class="ex-lbl">Rapidez en una órbita</span> v² = k (2/r &minus; 1/a), &nbsp; k = 4&pi;² UA³/año²</div>
+  <div><span class="ex-lbl">Periodo (tercera ley)</span> T = 2&pi; a<sup>3/2</sup> / &radic;k = a<sup>3/2</sup> años</div>
+  <div><span class="ex-lbl">Rapidez de escape</span> v<sub>esc</sub> = &radic;2 &middot; v<sub>circ</sub> &asymp; 42,1 km/s</div>
+</div>
+
+<div class="ex-grid">
+  <div class="ex-panel ex-ctrl">
+    <label class="ex-lab" for="v">Rapidez de los fragmentos: <span class="ex-val" id="vv"></span></label>
+    <input type="range" id="v" min="5" max="46" step="0.005" value="29.785">
+    <div class="ex-presets" id="presets">
+      <button type="button" class="ex-btn" data-v="29.785">Igual a la Tierra</button>
+      <button type="button" class="ex-btn" data-v="33">33 km/s</button>
+      <button type="button" class="ex-btn" data-v="38">38 km/s</button>
+      <button type="button" class="ex-btn" data-v="44">44 km/s</button>
+    </div>
+
+    <label class="ex-lab" for="sg">Dispersión de las rapideces: <span class="ex-val" id="sgv"></span></label>
+    <input type="range" id="sg" min="0" max="10" step="0.1" value="0">
+
+    <label class="ex-lab" for="n">Número de fragmentos: <span class="ex-val" id="nv"></span></label>
+    <input type="range" id="n" min="6" max="60" step="2" value="24">
+
+    <label class="ex-lab" for="w">Abanico de direcciones: <span class="ex-val" id="wv"></span></label>
+    <input type="range" id="w" min="20" max="360" step="5" value="360">
+
+    <label class="ex-lab" for="win">Ventana: <span class="ex-val" id="winv"></span></label>
+    <input type="range" id="win" min="1.5" max="10" step="0.1" value="2.4">
+
+    <label class="ex-chk"><input type="checkbox" id="chOrb" checked> Mostrar las órbitas</label>
+    <label class="ex-chk"><input type="checkbox" id="chEarth" checked> Mostrar la órbita de la Tierra</label>
+
+    <div class="ex-ver" id="ver"></div>
+    <p class="ex-nota" id="nota"></p>
+  </div>
+
+  <div class="ex-panel ex-plot">
+    <canvas id="cv" role="img" aria-label="Órbitas de los fragmentos alrededor del Sol"></canvas>
+    <div class="ex-presets" style="margin:10px 0 6px;">
+      <button type="button" class="ex-btn main" id="play">Reproducir</button>
+      <button type="button" class="ex-btn" id="reset">Volver a t = 0</button>
+      <button type="button" class="ex-btn" id="toT">Ir a t = T</button>
+    </div>
+    <label class="ex-lab" for="t">Tiempo t = <span class="ex-val" id="tv"></span></label>
+    <input type="range" id="t" min="0" max="3" step="0.001" value="0" style="margin-bottom:4px;">
+    <label class="ex-lab" for="rate">Velocidad de la animación: <span class="ex-val" id="rv"></span></label>
+    <input type="range" id="rate" min="0.05" max="1" step="0.05" value="0.3" style="margin-bottom:2px;">
+    <p class="ex-pie">El Sol está en el centro. La explosión ocurre en el círculo marcado, en (1, 0). Cada color es una dirección de lanzamiento. Un fragmento cuyo perihelio queda dentro del Sol (radio 0,00465 UA) cae en él y desaparece. Los fragmentos con rapidez de escape o más se alejan en parábola o hipérbola.</p>
+  </div>
+</div>
+
+<div class="ex-panel ex-sp">
+  <div style="display:flex; flex-wrap:wrap; gap:24px;">
+    <div style="flex:2 1 360px; min-width:0;">
+      <label class="ex-lab" style="margin-bottom:6px;">Dispersión del grupo en función del tiempo (desviación cuadrática de las posiciones respecto del centroide, en UA)</label>
+      <canvas id="sp" role="img" aria-label="Dispersión de los fragmentos en función del tiempo"></canvas>
+    </div>
+    <div style="flex:1 1 230px;">
+      <label class="ex-lab" style="margin-bottom:0;">Lecturas</label>
+      <dl class="ex-read" id="read"></dl>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var K = 4 * Math.PI * Math.PI;          // UA^3 / año^2
+  var KMS = 4.740470;                      // 1 UA/año en km/s
+  var RSUN = 0.00465;                      // radio solar en UA
+  var VCIRC = 2 * Math.PI;                 // UA/año a 1 UA
+  var TMAX = 3;
+  var TWO_PI = 2 * Math.PI;
+
+  var S = { v: 29.785, sg: 0, n: 24, w: 360, win: 2.4, orb: true, earth: true, t: 0, play: false };
+  var frags = [], info = {};
+
+  /* Números pseudoaleatorios fijos en [-1, 1], para que la dispersión sea reproducible */
+  var U = [];
+  (function () { var s = 12345; for (var i = 0; i < 80; i++) { s = (s * 1103515245 + 12345) % 2147483648; U.push(2 * s / 2147483648 - 1); } })();
+
+  function wrap(a) { while (a > Math.PI) a -= TWO_PI; while (a <= -Math.PI) a += TWO_PI; return a; }
+
+  /* Elementos orbitales a partir de r0 = (1,0) y la velocidad inicial */
+  function makeFrag(speedAUy, ang, idx, total) {
+    var x = 1, y = 0, vx = speedAUy * Math.cos(ang), vy = speedAUy * Math.sin(ang);
+    var r = 1, vsq = vx * vx + vy * vy, rv = x * vx + y * vy;
+    var h = x * vy - y * vx;
+    if (Math.abs(h) < 1e-9) h = 1e-9;
+    var s = h > 0 ? 1 : -1;
+    var eps = vsq / 2 - K / r;
+    if (Math.abs(eps) < 1e-7) eps = 1e-7;
+    var a = -K / (2 * eps);                                  // negativo si es hiperbólica
+    var ex = ((vsq - K / r) * x - rv * vx) / K, ey = ((vsq - K / r) * y - rv * vy) / K;
+    var e = Math.hypot(ex, ey);
+    var om = e > 1e-10 ? Math.atan2(ey, ex) : Math.atan2(y, x);
+    var th0 = wrap(s * (Math.atan2(y, x) - om));
+    var p = h * h / K;
+    var q = p / (1 + e);
+    var f = { idx: idx, hue: Math.round(360 * idx / total), ang: ang, v: speedAUy, h: h, s: s, a: a, e: e, om: om, th0: th0, p: p, q: q,
+              bound: eps < 0, hit: q < RSUN, thit: Infinity };
+    if (f.bound) {
+      f.n = Math.sqrt(K / (a * a * a));
+      f.T = TWO_PI / f.n;
+      var E0 = 2 * Math.atan2(Math.sqrt(1 - e) * Math.sin(th0 / 2), Math.sqrt(1 + e) * Math.cos(th0 / 2));
+      f.E0 = E0; f.M0 = E0 - e * Math.sin(E0);
+      if (f.hit) {
+        var c = (1 - RSUN / a) / e; c = Math.max(-1, Math.min(1, c));
+        var Eh = Math.acos(c);
+        var cand = [-Eh, Eh, TWO_PI - Eh, TWO_PI + Eh], Es = null, i;
+        for (i = 0; i < cand.length; i++) { if (cand[i] > E0 + 1e-12) { Es = cand[i]; break; } }
+        if (Es !== null) f.thit = ((Es - e * Math.sin(Es)) - f.M0) / f.n;
+      }
+    } else {
+      f.n = Math.sqrt(K / Math.pow(-a, 3));
+      f.T = Infinity;
+      var ee = Math.max(e, 1 + 1e-12);
+      f.e = ee;
+      var arg = Math.sqrt((ee - 1) / (ee + 1)) * Math.tan(th0 / 2);
+      var H0 = 2 * 0.5 * Math.log((1 + arg) / (1 - arg));
+      f.H0 = H0; f.M0 = ee * Math.sinh(H0) - H0;
+      if (f.hit) {
+        var ch = (1 + RSUN / (-a)) / ee, Hh = Math.log(ch + Math.sqrt(ch * ch - 1));
+        if (H0 < -Hh) f.thit = ((ee * Math.sinh(-Hh) + Hh) - f.M0) / f.n;
+      }
+    }
+    return f;
+  }
+
+  function kepE(M, e) {
+    M = wrap(M);
+    var E = e < 0.8 ? M : (M >= 0 ? Math.PI : -Math.PI), i;
+    for (i = 0; i < 60; i++) {
+      var d = (E - e * Math.sin(E) - M) / (1 - e * Math.cos(E));
+      E -= d;
+      if (Math.abs(d) < 1e-13) break;
+    }
+    return E;
+  }
+  function kepH(M, e) {
+    var H = Math.asinh ? Math.asinh(M / e) : Math.log(M / e + Math.sqrt(M * M / (e * e) + 1)), i;
+    for (i = 0; i < 80; i++) {
+      var d = (e * Math.sinh(H) - H - M) / (e * Math.cosh(H) - 1);
+      H -= d;
+      if (Math.abs(d) < 1e-12 * Math.max(1, Math.abs(H))) break;
+    }
+    return H;
+  }
+
+  /* Posición en el tiempo t (null si ya cayó al Sol) */
+  function pos(f, t) {
+    if (t >= f.thit) return null;
+    var th, r;
+    if (f.bound) {
+      var E = kepE(f.M0 + f.n * t, f.e);
+      th = 2 * Math.atan2(Math.sqrt(1 + f.e) * Math.sin(E / 2), Math.sqrt(1 - f.e) * Math.cos(E / 2));
+      r = Math.abs(f.a) * (1 - f.e * Math.cos(E));
+    } else {
+      var H = kepH(f.M0 + f.n * t, f.e);
+      th = 2 * Math.atan(Math.sqrt((f.e + 1) / (f.e - 1)) * Math.tanh(H / 2));
+      r = (-f.a) * (f.e * Math.cosh(H) - 1);
+    }
+    var ang = f.om + f.s * th;
+    return [r * Math.cos(ang), r * Math.sin(ang)];
+  }
+
+  function rebuild() {
+    frags = [];
+    var N = S.n, W = S.w * Math.PI / 180, i;
+    for (i = 0; i < N; i++) {
+      var phi = -W / 2 + W * (i + 0.5) / N;
+      var sp = VCIRC * (S.v / (VCIRC * KMS)) * (1 + (S.sg / 100) * U[i]);
+      frags.push(makeFrag(sp, Math.PI / 2 + phi, i, N));
+    }
+    // curva de dispersión
+    info.sp = [];
+    var M = 480, j, k2;
+    for (j = 0; j <= M; j++) {
+      var t = TMAX * j / M, xs = [], ys = [];
+      for (k2 = 0; k2 < N; k2++) { var p = pos(frags[k2], t); if (p) { xs.push(p[0]); ys.push(p[1]); } }
+      var m = xs.length, val = null;
+      if (m > 1) {
+        var mx = 0, my = 0, q;
+        for (q = 0; q < m; q++) { mx += xs[q]; my += ys[q]; }
+        mx /= m; my /= m;
+        var ss = 0;
+        for (q = 0; q < m; q++) ss += (xs[q] - mx) * (xs[q] - mx) + (ys[q] - my) * (ys[q] - my);
+        val = Math.sqrt(ss / m);
+      }
+      info.sp.push([t, val]);
+    }
+    summarize();
+  }
+
+  function summarize() {
+    var nb = 0, ne = 0, ns = 0, Tmin = Infinity, Tmax = 0, amin = Infinity, amax = -Infinity;
+    frags.forEach(function (f) {
+      if (f.hit && f.thit < Infinity) { ns++; return; }
+      if (f.bound) {
+        nb++; Tmin = Math.min(Tmin, f.T); Tmax = Math.max(Tmax, f.T);
+        amin = Math.min(amin, f.a); amax = Math.max(amax, f.a);
+      } else ne++;
+    });
+    info.nb = nb; info.ne = ne; info.ns = ns; info.Tmin = Tmin; info.Tmax = Tmax; info.amin = amin; info.amax = amax;
+  }
+
+  /* Dibujo */
+  var cv = document.getElementById("cv"), ctx = cv.getContext("2d");
+  var spc = document.getElementById("sp"), sctx = spc.getContext("2d");
+  var W0 = 0, H0c = 0, SW = 0;
+
+  function sizeCanvas(c, w, h) {
+    var d = Math.min(window.devicePixelRatio || 1, 2);
+    c.width = Math.round(w * d); c.height = Math.round(h * d);
+    c.style.height = h + "px";
+    c.getContext("2d").setTransform(d, 0, 0, d, 0, 0);
+  }
+  function resize() {
+    W0 = cv.parentNode.clientWidth - 32; if (W0 < 200) W0 = 200;
+    H0c = Math.round(Math.max(300, Math.min(W0 * 0.82, 520)));
+    sizeCanvas(cv, W0, H0c);
+    SW = spc.parentNode.clientWidth; if (SW < 200) SW = 200;
+    sizeCanvas(spc, SW, 150);
+    draw();
+  }
+
+  function toPx(x, y) {
+    var sc = Math.min(W0, H0c) / (2 * S.win);
+    return [W0 / 2 + x * sc, H0c / 2 - y * sc, sc];
+  }
+
+  function orbitPath(f) {
+    var pts = [], Nn = 240, i, th, lim;
+    if (f.e < 1) { lim = Math.PI; }
+    else { lim = Math.acos(-1 / f.e) - 0.002; }
+    for (i = 0; i <= Nn; i++) {
+      th = -lim + 2 * lim * i / Nn;
+      var r = f.p / (1 + f.e * Math.cos(th));
+      if (r > 4 * S.win || r < 0) { pts.push(null); continue; }
+      var ang = f.om + f.s * th;
+      pts.push([r * Math.cos(ang), r * Math.sin(ang)]);
+    }
+    return pts;
+  }
+
+  function draw() {
+    if (!W0) return;
+    var c = ctx, i, p, q;
+    c.clearRect(0, 0, W0, H0c);
+    // cuadrícula de referencia: círculos cada 0,5 UA
+    c.lineWidth = 1; c.strokeStyle = "#eef1f4";
+    var cen = toPx(0, 0), sc = cen[2], R;
+    for (R = 0.5; R * sc < Math.hypot(W0, H0c) / 2 + 2; R += 0.5) { c.beginPath(); c.arc(cen[0], cen[1], R * sc, 0, TWO_PI); c.stroke(); }
+    c.strokeStyle = "#dde3e8";
+    c.beginPath(); c.moveTo(0, cen[1]); c.lineTo(W0, cen[1]); c.moveTo(cen[0], 0); c.lineTo(cen[0], H0c); c.stroke();
+    c.fillStyle = "#5a6570"; c.font = "11px ui-monospace,Menlo,Consolas,monospace";
+    for (R = 1; R < S.win; R += 1) { c.fillText(R + " UA", cen[0] - R * sc + 3, cen[1] + 14); }
+
+    // órbita de la Tierra
+    if (S.earth) {
+      c.setLineDash([5, 4]); c.strokeStyle = "#5a6570"; c.lineWidth = 1.2;
+      c.beginPath(); c.arc(cen[0], cen[1], sc, 0, TWO_PI); c.stroke(); c.setLineDash([]);
+    }
+    // órbitas
+    if (S.orb) {
+      frags.forEach(function (f) {
+        var pts = orbitPath(f), started = false;
+        c.beginPath();
+        pts.forEach(function (pt) {
+          if (!pt) { started = false; return; }
+          var px = toPx(pt[0], pt[1]);
+          if (!started) { c.moveTo(px[0], px[1]); started = true; } else c.lineTo(px[0], px[1]);
+        });
+        c.strokeStyle = "hsla(" + f.hue + ",65%,45%," + (f.hit ? 0.22 : 0.4) + ")";
+        c.lineWidth = 1.1; c.stroke();
+      });
+    }
+    // punto de explosión
+    var ex = toPx(1, 0);
+    c.strokeStyle = "#1e2327"; c.lineWidth = 1.4;
+    c.beginPath(); c.arc(ex[0], ex[1], 8, 0, TWO_PI); c.stroke();
+    // Sol
+    c.fillStyle = "#c1440e"; c.beginPath(); c.arc(cen[0], cen[1], 6, 0, TWO_PI); c.fill();
+    c.fillStyle = "#1e2327"; c.beginPath(); c.arc(cen[0], cen[1], 2.2, 0, TWO_PI); c.fill();
+
+    // fragmentos
+    var t = S.t, together = 0;
+    frags.forEach(function (f) {
+      p = pos(f, t);
+      if (!p) return;
+      if (Math.hypot(p[0] - 1, p[1]) < 0.03) together++;
+      q = toPx(p[0], p[1]);
+      if (q[0] < -10 || q[0] > W0 + 10 || q[1] < -10 || q[1] > H0c + 10) return;
+      c.fillStyle = "hsl(" + f.hue + ",70%," + (f.bound ? 42 : 55) + "%)";
+      c.beginPath(); c.arc(q[0], q[1], 3.8, 0, TWO_PI); c.fill();
+      c.strokeStyle = "#fff"; c.lineWidth = 1; c.stroke();
+    });
+    info.together = together;
+
+    // etiqueta de tiempo
+    c.fillStyle = "#1e2327"; c.font = "600 13px -apple-system,Segoe UI,Helvetica,Arial,sans-serif";
+    c.fillText("t = " + t.toFixed(3).replace(".", ",") + " años", 10, 20);
+
+    drawSpread();
+    updateReadout();
+  }
+
+  function drawSpread() {
+    var c = sctx, w = SW, h = 150, L = 38, Rr = 10, Tp = 10, Bt = 24, i;
+    c.clearRect(0, 0, w, h);
+    var maxv = 0.2;
+    info.sp.forEach(function (d) { if (d[1] !== null) maxv = Math.max(maxv, d[1]); });
+    maxv = Math.min(maxv, 12);
+    function X(t) { return L + (w - L - Rr) * t / TMAX; }
+    function Y(v) { return h - Bt - (h - Bt - Tp) * Math.min(v, maxv) / maxv; }
+    c.strokeStyle = "#dde3e8"; c.lineWidth = 1; c.fillStyle = "#5a6570"; c.font = "11px ui-monospace,Menlo,Consolas,monospace";
+    c.beginPath(); c.moveTo(L, Tp); c.lineTo(L, h - Bt); c.lineTo(w - Rr, h - Bt); c.stroke();
+    for (i = 0; i <= 3; i++) { c.fillText(i === 3 ? "3 años" : String(i), X(i) - (i === 3 ? 30 : 3), h - 8); c.beginPath(); c.moveTo(X(i), h - Bt); c.lineTo(X(i), h - Bt + 4); c.stroke(); }
+    c.fillText(maxv.toFixed(1), 4, Tp + 8); c.fillText("0", 24, h - Bt);
+    // banda de periodos
+    if (info.nb > 0 && isFinite(info.Tmax)) {
+      var x1 = X(Math.min(info.Tmin, TMAX)), x2 = X(Math.min(info.Tmax, TMAX));
+      c.fillStyle = "rgba(26,127,90,0.15)"; c.fillRect(x1, Tp, Math.max(2, x2 - x1), h - Bt - Tp);
+      c.strokeStyle = "rgba(26,127,90,0.8)"; c.beginPath(); c.moveTo(x1, Tp); c.lineTo(x1, h - Bt); c.stroke();
+    }
+    // curva
+    c.strokeStyle = "#2563a8"; c.lineWidth = 2; c.beginPath();
+    var open = false;
+    info.sp.forEach(function (d) {
+      if (d[1] === null) { open = false; return; }
+      if (!open) { c.moveTo(X(d[0]), Y(d[1])); open = true; } else c.lineTo(X(d[0]), Y(d[1]));
+    });
+    c.stroke();
+    // marcador de tiempo actual
+    c.strokeStyle = "#c1440e"; c.lineWidth = 1.5; c.beginPath(); c.moveTo(X(S.t), Tp); c.lineTo(X(S.t), h - Bt); c.stroke();
+  }
+
+  function f2(x, d) { return (isFinite(x) ? x.toFixed(d) : "no acotado").replace(".", ","); }
+
+  function updateReadout() {
+    var rows = [], t = S.t;
+    rows.push(["Fragmentos en órbita cerrada", info.nb]);
+    rows.push(["Fragmentos que escapan", info.ne]);
+    rows.push(["Caen al Sol", info.ns]);
+    if (info.nb > 0) {
+      rows.push(["a mínimo y máximo (UA)", f2(info.amin, 3) + " ; " + f2(info.amax, 3)]);
+      rows.push(["T mínimo (años)", f2(info.Tmin, 3)]);
+      rows.push(["T máximo (años)", f2(info.Tmax, 3)]);
+    }
+    rows.push(["A menos de 0,03 UA del punto de la explosión", info.together]);
+    document.getElementById("read").innerHTML = rows.map(function (r) { return "<dt>" + r[0] + "</dt><dd>" + r[1] + "</dd>"; }).join("");
+  }
+
+  function verdict() {
+    var ver = document.getElementById("ver"), nota = document.getElementById("nota"), txt, cls, msg;
+    var vesc = VCIRC * Math.SQRT2 * KMS;
+    var sameA = info.nb > 0 && (info.amax - info.amin) / info.amax < 1e-3;
+    var vs = f2(S.v, 1) + " km/s";
+    if (S.v >= vesc) {
+      cls = "bad"; txt = "Escapan: v ≥ v_esc";
+      msg = "Con " + vs + " la energía es mayor o igual que cero y las órbitas son parábolas o hipérbolas. Ningún fragmento regresa.";
+    } else if (S.sg === 0 && sameA) {
+      cls = "good"; txt = "Mismo a: se reúnen en t = T = " + f2(info.Tmin, 3) + " años";
+      msg = "Todos los fragmentos tienen la misma rapidez en el mismo punto, así que 1/a = 2/r − v²/k es el mismo para todos, y T = 2π a^(3/2)/√k también. Cada uno regresa al punto de la explosión en t = T, sin importar la dirección. Los que no se ven pasaron tan cerca del Sol que cayeron en él.";
+    } else if (info.nb > 0 && info.ne === 0) {
+      cls = "warn"; txt = "Periodos distintos: se dispersan";
+      msg = "Rapideces distintas dan semiejes distintos, entre " + f2(info.amin, 3) + " y " + f2(info.amax, 3) + " UA, y periodos entre " + f2(info.Tmin, 3) + " y " + f2(info.Tmax, 3) + " años. Como dT/T = (3/2) da/a, una diferencia pequeña de rapidez ya impide la reunión.";
+    } else {
+      cls = "warn"; txt = "Algunos escapan";
+      msg = "Con la dispersión de rapideces, algunos fragmentos superan la rapidez de escape (" + f2(vesc, 1) + " km/s) y no regresan.";
+    }
+    ver.className = "ex-ver " + cls; ver.textContent = txt; nota.textContent = msg;
+  }
+
+  /* Controles */
+  function $(id) { return document.getElementById(id); }
+  function syncLabels() {
+    $("vv").textContent = f2(S.v, 1) + " km/s";
+    $("sgv").textContent = "± " + f2(S.sg, 1) + " %";
+    $("nv").textContent = S.n;
+    $("wv").textContent = S.w + "°";
+    $("winv").textContent = f2(S.win, 1) + " UA";
+    $("tv").textContent = f2(S.t, 3) + " años";
+    $("rv").textContent = f2(parseFloat($("rate").value), 2) + " año/s";
+    var btns = document.querySelectorAll("#presets .ex-btn");
+    btns.forEach(function (b) { b.classList.toggle("main", Math.abs(parseFloat(b.getAttribute("data-v")) - S.v) < 0.05); });
+  }
+  function full() { rebuild(); verdict(); syncLabels(); draw(); }
+
+  $("v").addEventListener("input", function () { S.v = parseFloat(this.value); full(); });
+  $("sg").addEventListener("input", function () { S.sg = parseFloat(this.value); full(); });
+  $("n").addEventListener("input", function () { S.n = parseInt(this.value, 10); full(); });
+  $("w").addEventListener("input", function () { S.w = parseInt(this.value, 10); full(); });
+  $("win").addEventListener("input", function () { S.win = parseFloat(this.value); syncLabels(); draw(); });
+  $("chOrb").addEventListener("change", function () { S.orb = this.checked; draw(); });
+  $("chEarth").addEventListener("change", function () { S.earth = this.checked; draw(); });
+  $("t").addEventListener("input", function () { S.t = parseFloat(this.value); syncLabels(); draw(); });
+  $("rate").addEventListener("input", syncLabels);
+  document.querySelectorAll("#presets .ex-btn").forEach(function (b) {
+    b.addEventListener("click", function () {
+      S.v = parseFloat(b.getAttribute("data-v")); $("v").value = S.v;
+      if (S.v >= VCIRC * Math.SQRT2 * KMS) { $("win").value = S.win = 5; }
+      full();
+    });
+  });
+  $("reset").addEventListener("click", function () { S.t = 0; $("t").value = 0; syncLabels(); draw(); });
+  $("toT").addEventListener("click", function () {
+    var T = info.nb > 0 ? info.Tmin : 1;
+    S.t = Math.min(TMAX, T); $("t").value = S.t; syncLabels(); draw();
+  });
+
+  var last = 0;
+  function tick(ts) {
+    if (!S.play) return;
+    var dt = last ? Math.min(0.05, (ts - last) / 1000) : 0.016;
+    last = ts;
+    S.t += dt * parseFloat($("rate").value);
+    if (S.t >= TMAX) { S.t = TMAX; S.play = false; $("play").textContent = "Reproducir"; }
+    $("t").value = S.t; syncLabels(); draw();
+    if (S.play) requestAnimationFrame(tick);
+  }
+  $("play").addEventListener("click", function () {
+    if (S.play) { S.play = false; this.textContent = "Reproducir"; return; }
+    if (S.t >= TMAX) { S.t = 0; }
+    S.play = true; last = 0; this.textContent = "Pausar";
+    requestAnimationFrame(tick);
+  });
+
+  window.addEventListener("resize", resize);
+  if (window.ResizeObserver) new ResizeObserver(function () { resize(); }).observe(cv.parentNode);
+  rebuild(); verdict(); syncLabels(); resize();
+
+  // para pruebas
+  window.__ex = { frags: function () { return frags; }, pos: pos, S: S, info: info, rebuild: full };
+})();
+</script>
+</body>
+</html>

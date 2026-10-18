@@ -15,7 +15,965 @@
 <link>https://arturosanjuan.xyz/cursos/odes/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Thu, 15 Oct 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 18 Oct 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Movimiento Planetario</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/odes/planetario/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Esta sección sigue el §21 del Simmons y la sección 13.18 del Apostol (<em>Calculus</em>, vol.&nbsp;1). El plan tiene dos partes. Primero se construye la geometría: la elipse como sección de un cono, con las esferas de Dandelin, y su ecuación en coordenadas polares. Después se llega a la misma ecuación desde la física, resolviendo una ecuación diferencial: la ley de gravitación de Newton y la conservación del momento angular dan la órbita, y de ella salen las tres leyes de Kepler.</p>
+<p>Convenciones: un punto sobre una variable indica derivada respecto al tiempo, <img src="https://latex.codecogs.com/png.latex?%5Cdot%20r=dr/dt">, y una prima indica derivada respecto al ángulo, <img src="https://latex.codecogs.com/png.latex?z'=dz/d%5Ctheta">. Cuando haga falta se escribe <img src="https://latex.codecogs.com/png.latex?dt"> o <img src="https://latex.codecogs.com/png.latex?d%5Ctheta"> de forma explícita.</p>
+<section id="de-esfera-a-planeta" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="de-esfera-a-planeta"><span class="header-section-number">1</span> De esfera a planeta</h2>
+<p>Las cuentas de esta sección son la última etapa de una historia larga: la Tierra pasó de ser una esfera en el centro del cielo a ser un planeta más, y las cónicas de Apolonio resultaron ser las órbitas que dibujan esos planetas. El siguiente panel recorre siete autores, de Aristarco a Newton, y para cada uno responde tres preguntas: qué aportó sobre la Tierra redonda, sobre su rotación y sobre su condición de planeta.</p>
+<iframe src="linea-tiempo.html" width="100%" height="830" style="border:1px solid #dfe3e2; border-radius:6px;" title="Línea de tiempo: de esfera a planeta"></iframe>
+</section>
+<section id="las-cónicas-y-las-esferas-de-dandelin" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="las-cónicas-y-las-esferas-de-dandelin"><span class="header-section-number">2</span> Las cónicas y las esferas de Dandelin</h2>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?A"> una recta fija y <img src="https://latex.codecogs.com/png.latex?G"> una recta móvil que la corta en un punto <img src="https://latex.codecogs.com/png.latex?V"> y que forma con <img src="https://latex.codecogs.com/png.latex?A"> un ángulo constante <img src="https://latex.codecogs.com/png.latex?%5Calpha%5Cin(0,%5Cpi/2)">. La superficie que barre <img src="https://latex.codecogs.com/png.latex?G"> al girar alrededor de <img src="https://latex.codecogs.com/png.latex?A"> es un <strong>cono</strong> (doble): <img src="https://latex.codecogs.com/png.latex?G"> es la generatriz, <img src="https://latex.codecogs.com/png.latex?A"> el eje y <img src="https://latex.codecogs.com/png.latex?V"> el vértice. Las curvas que se obtienen al cortar el cono con un plano que no pasa por <img src="https://latex.codecogs.com/png.latex?V"> se llaman <strong>cónicas</strong>:</p>
+<ol type="1">
+<li>si el plano es paralelo a una generatriz, la curva es una <strong>parábola</strong>;</li>
+<li>si no es paralelo a ninguna y corta una sola hoja del cono, es una <strong>elipse</strong>, y es un <strong>círculo</strong> cuando el plano es ortogonal al eje;</li>
+<li>si corta las dos hojas, es una <strong>hipérbola</strong>.</li>
+</ol>
+<p>La idea que sigue es de Dandelin (1822). Tomemos dos esferas <img src="https://latex.codecogs.com/png.latex?S_1"> y <img src="https://latex.codecogs.com/png.latex?S_2"> tangentes al cono y al plano de corte, una a cada lado del plano, y llamemos <img src="https://latex.codecogs.com/png.latex?F_1"> y <img src="https://latex.codecogs.com/png.latex?F_2"> a los puntos donde cada esfera toca el plano. Sea <img src="https://latex.codecogs.com/png.latex?P"> un punto de la elipse. La generatriz que pasa por <img src="https://latex.codecogs.com/png.latex?P"> y por el vértice corta a las circunferencias de tangencia de <img src="https://latex.codecogs.com/png.latex?S_1"> y <img src="https://latex.codecogs.com/png.latex?S_2"> con el cono en dos puntos <img src="https://latex.codecogs.com/png.latex?A_1"> y <img src="https://latex.codecogs.com/png.latex?A_2">.</p>
+<div id="fig-dandelin" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dandelin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/odes/planetario/dandelin-corte.svg" class="img-fluid figure-img" style="width:62.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dandelin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Corte del cono por un plano que contiene al eje. Aquí <img src="https://latex.codecogs.com/png.latex?P"> es un extremo del eje mayor, para que todo quede en el plano del dibujo.
+</figcaption>
+</figure>
+</div>
+<p>Los segmentos <img src="https://latex.codecogs.com/png.latex?PF_1"> y <img src="https://latex.codecogs.com/png.latex?PA_1"> son dos tangentes a la esfera <img src="https://latex.codecogs.com/png.latex?S_1"> desde un mismo punto exterior <img src="https://latex.codecogs.com/png.latex?P">, así que <img src="https://latex.codecogs.com/png.latex?%7CPF_1%7C=%7CPA_1%7C">. Lo mismo ocurre con <img src="https://latex.codecogs.com/png.latex?S_2">: <img src="https://latex.codecogs.com/png.latex?%7CPF_2%7C=%7CPA_2%7C">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%7CPF_1%7C+%7CPF_2%7C%20=%20%7CPA_1%7C+%7CPA_2%7C%20=%20%7CA_1A_2%7C"></p>
+<p>y <img src="https://latex.codecogs.com/png.latex?%7CA_1A_2%7C"> no depende de <img src="https://latex.codecogs.com/png.latex?P">: es la distancia, medida sobre una generatriz, entre las dos circunferencias de tangencia, y por la simetría de revolución es la misma para todas las generatrices. La suma de las distancias a <img src="https://latex.codecogs.com/png.latex?F_1"> y <img src="https://latex.codecogs.com/png.latex?F_2"> es constante, que es precisamente la definición escolar de la elipse, con focos <img src="https://latex.codecogs.com/png.latex?F_1"> y <img src="https://latex.codecogs.com/png.latex?F_2">.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Simulador: cónicas y esferas de Dandelin">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Simulador: cónicas y esferas de Dandelin
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Mueva el deslizador de la excentricidad <img src="https://latex.codecogs.com/png.latex?e"> y vea cómo el plano rueda sobre la esfera inscrita en el cono. Con <img src="https://latex.codecogs.com/png.latex?e=0"> el plano es ortogonal al eje (círculo), con <img src="https://latex.codecogs.com/png.latex?0%3Ce%3C1"> se tiene una elipse, con <img src="https://latex.codecogs.com/png.latex?e=1"> el plano es paralelo a una generatriz (parábola) y con <img src="https://latex.codecogs.com/png.latex?e%3E1"> corta las dos hojas (hipérbola). El panel muestra <img src="https://latex.codecogs.com/png.latex?PF_1+PF_2"> en la elipse y <img src="https://latex.codecogs.com/png.latex?%7CPF_1-PF_2%7C"> en la hipérbola, y también la directriz, que se define en la siguiente sección. Arrastre la imagen para girarla.</p>
+<iframe src="conicas-dandelin.html" width="100%" height="1010" style="border:1px solid #dfe3e2; border-radius:6px;" title="Simulador: cónicas y esferas de Dandelin"></iframe>
+</div>
+</div>
+</section>
+<section id="la-directriz-y-la-forma-polar" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="la-directriz-y-la-forma-polar"><span class="header-section-number">3</span> La directriz y la forma polar</h2>
+<p>Hay otra definición de las cónicas, que sirve también para la parábola y la hipérbola. Sea <img src="https://latex.codecogs.com/png.latex?L"> una recta, <img src="https://latex.codecogs.com/png.latex?F"> un punto fuera de <img src="https://latex.codecogs.com/png.latex?L"> y <img src="https://latex.codecogs.com/png.latex?e%3E0"> un número. El conjunto de todos los puntos <img src="https://latex.codecogs.com/png.latex?X"> que cumplen</p>
+<p><img src="https://latex.codecogs.com/png.latex?%7CX-F%7C%20=%20e%5C,d(X,L)"></p>
+<p>es una cónica de <strong>excentricidad</strong> <img src="https://latex.codecogs.com/png.latex?e">: una elipse si <img src="https://latex.codecogs.com/png.latex?e%3C1">, una parábola si <img src="https://latex.codecogs.com/png.latex?e=1"> y una hipérbola si <img src="https://latex.codecogs.com/png.latex?e%3E1">. El punto <img src="https://latex.codecogs.com/png.latex?F"> es un foco y <img src="https://latex.codecogs.com/png.latex?L"> la <strong>directriz</strong>.</p>
+<section id="la-directriz-en-el-cono" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="la-directriz-en-el-cono"><span class="header-section-number">3.1</span> La directriz en el cono</h3>
+<p>En la representación de Dandelin, <img src="https://latex.codecogs.com/png.latex?L"> es la intersección del plano de corte <img src="https://latex.codecogs.com/png.latex?%5CPi"> con el plano <img src="https://latex.codecogs.com/png.latex?%5CPi_1"> de la circunferencia de tangencia de <img src="https://latex.codecogs.com/png.latex?S_1"> con el cono, y <img src="https://latex.codecogs.com/png.latex?F=F_1">. Veamos que se cumple la relación y de paso quién es <img src="https://latex.codecogs.com/png.latex?e">. Sea <img src="https://latex.codecogs.com/png.latex?%5Cbeta"> el ángulo entre el plano <img src="https://latex.codecogs.com/png.latex?%5CPi"> y el eje del cono. Para un punto <img src="https://latex.codecogs.com/png.latex?P"> de la curva:</p>
+<ol type="1">
+<li><img src="https://latex.codecogs.com/png.latex?P"> y <img src="https://latex.codecogs.com/png.latex?A_1"> están en la misma generatriz, que forma el ángulo <img src="https://latex.codecogs.com/png.latex?%5Calpha"> con el eje, y <img src="https://latex.codecogs.com/png.latex?%5CPi_1"> es ortogonal al eje y contiene a <img src="https://latex.codecogs.com/png.latex?A_1">. Entonces la distancia de <img src="https://latex.codecogs.com/png.latex?P"> al plano <img src="https://latex.codecogs.com/png.latex?%5CPi_1"> vale <img src="https://latex.codecogs.com/png.latex?%7CPA_1%7C%5Ccos%5Calpha">.</li>
+<li>Como <img src="https://latex.codecogs.com/png.latex?P"> está en <img src="https://latex.codecogs.com/png.latex?%5CPi">, esa misma distancia es <img src="https://latex.codecogs.com/png.latex?d(P,L)"> por el seno del ángulo diedro entre <img src="https://latex.codecogs.com/png.latex?%5CPi"> y <img src="https://latex.codecogs.com/png.latex?%5CPi_1">, que es <img src="https://latex.codecogs.com/png.latex?90%5E%5Ccirc-%5Cbeta">. Es decir, vale <img src="https://latex.codecogs.com/png.latex?d(P,L)%5Ccos%5Cbeta">.</li>
+</ol>
+<p>Igualando, y usando que <img src="https://latex.codecogs.com/png.latex?%7CPF_1%7C=%7CPA_1%7C">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%7CPF_1%7C%20=%20%5Cfrac%7B%5Ccos%5Cbeta%7D%7B%5Ccos%5Calpha%7D%5C,d(P,L),%20%5Cqquad%20e=%5Cfrac%7B%5Ccos%5Cbeta%7D%7B%5Ccos%5Calpha%7D"></p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?%5Cbeta=90%5E%5Ccirc"> se tiene <img src="https://latex.codecogs.com/png.latex?e=0"> (círculo), con <img src="https://latex.codecogs.com/png.latex?%5Cbeta%3E%5Calpha"> se tiene <img src="https://latex.codecogs.com/png.latex?e%3C1"> (elipse), con <img src="https://latex.codecogs.com/png.latex?%5Cbeta=%5Calpha"> se tiene <img src="https://latex.codecogs.com/png.latex?e=1"> (parábola) y con <img src="https://latex.codecogs.com/png.latex?%5Cbeta%3C%5Calpha"> se tiene <img src="https://latex.codecogs.com/png.latex?e%3E1"> (hipérbola). El simulador de arriba calcula <img src="https://latex.codecogs.com/png.latex?%5Ccos%5Cbeta/%5Ccos%5Calpha"> y el cociente <img src="https://latex.codecogs.com/png.latex?%7CPF_1%7C/d(P,L)">, y los dos coinciden con <img src="https://latex.codecogs.com/png.latex?e">.</p>
+</section>
+<section id="la-ecuación-polar" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="la-ecuación-polar"><span class="header-section-number">3.2</span> La ecuación polar</h3>
+<p>Pongamos <img src="https://latex.codecogs.com/png.latex?F"> en el origen y sea <img src="https://latex.codecogs.com/png.latex?N=(1,0)"> el vector unitario normal a <img src="https://latex.codecogs.com/png.latex?L">, de modo que <img src="https://latex.codecogs.com/png.latex?L=%5C%7BX:%5C%20X%5Ccdot%20N=d%5C%7D"> con <img src="https://latex.codecogs.com/png.latex?d%3E0">. Entonces <img src="https://latex.codecogs.com/png.latex?d(X,L)=%7Cd-X%5Ccdot%20N%7C"> y la condición es <img src="https://latex.codecogs.com/png.latex?%7CX%7C=e%5C,%7Cd-X%5Ccdot%20N%7C">.</p>
+<div id="fig-directriz" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-directriz-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/odes/planetario/foco-directriz.svg" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-directriz-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Foco <img src="https://latex.codecogs.com/png.latex?F">, directriz <img src="https://latex.codecogs.com/png.latex?L">, normal <img src="https://latex.codecogs.com/png.latex?N"> y un punto <img src="https://latex.codecogs.com/png.latex?X"> de la cónica.
+</figcaption>
+</figure>
+</div>
+<p>En coordenadas polares, <img src="https://latex.codecogs.com/png.latex?X=(r%5Ccos%5Ctheta,%5C%20r%5Csin%5Ctheta)"> y la relación queda <img src="https://latex.codecogs.com/png.latex?r=e%5C,%7Cd-r%5Ccos%5Ctheta%7C">. Si <img src="https://latex.codecogs.com/png.latex?X"> está del lado de <img src="https://latex.codecogs.com/png.latex?F"> respecto de <img src="https://latex.codecogs.com/png.latex?L">, el valor absoluto se quita sin cambiar el signo:</p>
+<p><img src="https://latex.codecogs.com/png.latex?r=e%5C,(d-r%5Ccos%5Ctheta)%5Cquad%5CLongrightarrow%5Cquad%20r%5C,(1+e%5Ccos%5Ctheta)=ed%5Cquad%5CLongrightarrow%5Cquad%20r=%5Cfrac%7Bed%7D%7B1+e%5Ccos%5Ctheta%7D"></p>
+<p>Si <img src="https://latex.codecogs.com/png.latex?X"> está del otro lado de <img src="https://latex.codecogs.com/png.latex?L"> (la otra rama de la hipérbola), <img src="https://latex.codecogs.com/png.latex?r=e%5C,(r%5Ccos%5Ctheta-d)"> y se obtiene <img src="https://latex.codecogs.com/png.latex?r=ed/(e%5Ccos%5Ctheta-1)">.</p>
+</section>
+<section id="la-elipse-en-coordenadas-cartesianas" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="la-elipse-en-coordenadas-cartesianas"><span class="header-section-number">3.3</span> La elipse en coordenadas cartesianas</h3>
+<p>Supongamos <img src="https://latex.codecogs.com/png.latex?e%3C1">. Con <img src="https://latex.codecogs.com/png.latex?r=ed-ex"> y <img src="https://latex.codecogs.com/png.latex?r%5E2=x%5E2+y%5E2">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?x%5E2+y%5E2=(ed-ex)%5E2%20%5Cquad%5CLongrightarrow%5Cquad%20(1-e%5E2)%5C,x%5E2+2e%5E2d%5C,x+y%5E2=e%5E2d%5E2"></p>
+<p>Dividimos por <img src="https://latex.codecogs.com/png.latex?1-e%5E2"> y completamos el cuadrado en <img src="https://latex.codecogs.com/png.latex?x">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cleft(x+%5Cfrac%7Be%5E2d%7D%7B1-e%5E2%7D%5Cright)%5E2+%5Cfrac%7By%5E2%7D%7B1-e%5E2%7D=%5Cfrac%7Be%5E2d%5E2%7D%7B(1-e%5E2)%5E2%7D"></p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?a=%5Cdfrac%7Bed%7D%7B1-e%5E2%7D"> (es decir, <img src="https://latex.codecogs.com/png.latex?d=%5Cdfrac%7Ba(1-e%5E2)%7D%7Be%7D">), el centro queda en <img src="https://latex.codecogs.com/png.latex?x=-ea"> y la ecuación se reduce a</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B(x+ea)%5E2%7D%7Ba%5E2%7D+%5Cfrac%7By%5E2%7D%7Ba%5E2(1-e%5E2)%7D=1"></p>
+<p>Es una elipse canónica de semieje mayor <img src="https://latex.codecogs.com/png.latex?a"> y semieje menor <img src="https://latex.codecogs.com/png.latex?b=a%5Csqrt%7B1-e%5E2%7D">, trasladada <img src="https://latex.codecogs.com/png.latex?-ea"> en <img src="https://latex.codecogs.com/png.latex?x">. Como <img src="https://latex.codecogs.com/png.latex?a%5E2-b%5E2=e%5E2a%5E2">, la distancia focal es <img src="https://latex.codecogs.com/png.latex?c=ea"> y <img src="https://latex.codecogs.com/png.latex?e=c/a">. La elipse pasa por <img src="https://latex.codecogs.com/png.latex?(-ea%5Cpm%20a,%5C%200)"> y por <img src="https://latex.codecogs.com/png.latex?(-ea,%5C%20%5Cpm%20b)">. El foco <img src="https://latex.codecogs.com/png.latex?F"> en el origen queda a la distancia <img src="https://latex.codecogs.com/png.latex?c"> del centro, y el otro foco simétrico respecto del centro.</p>
+<div id="fig-elipse" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-elipse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/odes/planetario/elipse-geometria.svg" class="img-fluid figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-elipse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: La elipse con foco <img src="https://latex.codecogs.com/png.latex?F"> en el origen de la ecuación polar. El ángulo <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> se mide desde el eje que apunta hacia la directriz, así que <img src="https://latex.codecogs.com/png.latex?%5Ctheta=0"> es el punto más cercano a <img src="https://latex.codecogs.com/png.latex?F">.
+</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kill</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">all</span>);</span>
+<span id="cb1-2"></span>
+<span id="cb1-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* La relacion x^2+y^2 = (e*d - e*x)^2 equivale a la elipse canonica</span></span>
+<span id="cb1-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">   con a = e*d/(1-e^2): comparamos los dos lados multiplicados por (1-e^2) */</span></span>
+<span id="cb1-5"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">a</span>: <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">e</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">d</span>/(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> - <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">e</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>);</span>
+<span id="cb1-6"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">izq</span>: <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> + <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> - (<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">e</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">d</span> - <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">e</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>)^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>;</span>
+<span id="cb1-7"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">der</span>: (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> - <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">e</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)*(((<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span> + <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">e</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">a</span>)^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> + <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>/(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> - <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">e</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)) - <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">a</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>);</span>
+<span id="cb1-8"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ratsimp</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">izq</span> - <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">der</span>);                   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* debe dar 0 */</span></span>
+<span id="cb1-9"></span>
+<span id="cb1-10"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* Semieje menor y distancia focal */</span></span>
+<span id="cb1-11"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">b2</span>: <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">a</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> - <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">e</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>);</span>
+<span id="cb1-12"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ratsimp</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">a</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> - <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">b2</span> - (<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">e</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">a</span>)^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>);          <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* debe dar 0: a^2 - b^2 = c^2 con c = e*a */</span></span></code></pre></div></div>
+</div>
+</div>
+</section>
+</section>
+<section id="velocidad-y-aceleración-en-coordenadas-polares" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="velocidad-y-aceleración-en-coordenadas-polares"><span class="header-section-number">4</span> Velocidad y aceleración en coordenadas polares</h2>
+<p>Consideremos un cuerpo de masa <img src="https://latex.codecogs.com/png.latex?m"> que se mueve en un plano, con el Sol de masa <img src="https://latex.codecogs.com/png.latex?M"> en el origen. En cada punto de la trayectoria tomamos la base ortonormal</p>
+<p><img src="https://latex.codecogs.com/png.latex?u_r=(%5Ccos%5Ctheta,%5C%20%5Csin%5Ctheta),%20%5Cqquad%20u_%5Ctheta=(-%5Csin%5Ctheta,%5C%20%5Ccos%5Ctheta)"></p>
+<div id="fig-polar" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/odes/planetario/base-polar.svg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4: Base polar en la posición <img src="https://latex.codecogs.com/png.latex?m"> y las componentes de una fuerza <img src="https://latex.codecogs.com/png.latex?F">.
+</figcaption>
+</figure>
+</div>
+<p>Derivando respecto del ángulo, <img src="https://latex.codecogs.com/png.latex?u_r'=u_%5Ctheta"> y <img src="https://latex.codecogs.com/png.latex?u_%5Ctheta'=-u_r">. Con la regla de la cadena, <img src="https://latex.codecogs.com/png.latex?%5Cdot%20u_r=%5Cdfrac%7Bd%5Ctheta%7D%7Bdt%7D%5Cdfrac%7Bdu_r%7D%7Bd%5Ctheta%7D=%5Cdot%5Ctheta%5C,u_%5Ctheta"> y <img src="https://latex.codecogs.com/png.latex?%5Cdot%20u_%5Ctheta=-%5Cdot%5Ctheta%5C,u_r">.</p>
+<p>El vector de posición es <img src="https://latex.codecogs.com/png.latex?r%5C,u_r">, y su velocidad es</p>
+<p><img src="https://latex.codecogs.com/png.latex?v=%5Cfrac%7Bd%7D%7Bdt%7D%5Cleft(r%5C,u_r%5Cright)=%5Cdot%20r%5C,u_r+r%5Cdot%5Ctheta%5C,u_%5Ctheta"></p>
+<p>Derivando otra vez,</p>
+<p><img src="https://latex.codecogs.com/png.latex?a=%5Cddot%20r%5C,u_r+%5Cdot%20r%5Cdot%5Ctheta%5C,u_%5Ctheta+%5Cleft(%5Cdot%20r%5Cdot%5Ctheta+r%5Cddot%5Ctheta%5Cright)u_%5Ctheta-r%5Cdot%5Ctheta%5E2%5C,u_r=%5Cleft(%5Cddot%20r-r%5Cdot%5Ctheta%5E2%5Cright)u_r+%5Cleft(r%5Cddot%5Ctheta+2%5Cdot%20r%5Cdot%5Ctheta%5Cright)u_%5Ctheta"></p>
+<p>Si la fuerza es <img src="https://latex.codecogs.com/png.latex?F=F_r%5C,u_r+F_%5Ctheta%5C,u_%5Ctheta">, la segunda ley de Newton <img src="https://latex.codecogs.com/png.latex?F=ma"> da</p>
+<p><img src="https://latex.codecogs.com/png.latex?F_r=m%5Cleft(%5Cddot%20r-r%5Cdot%5Ctheta%5E2%5Cright),%20%5Cqquad%20F_%5Ctheta=m%5Cleft(r%5Cddot%5Ctheta+2%5Cdot%20r%5Cdot%5Ctheta%5Cright)"></p>
+</section>
+<section id="la-segunda-ley-de-kepler" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="la-segunda-ley-de-kepler"><span class="header-section-number">5</span> La segunda ley de Kepler</h2>
+<p>Estudiemos el caso de una fuerza central, la que apunta siempre hacia el Sol. Entonces <img src="https://latex.codecogs.com/png.latex?F_%5Ctheta=0">, es decir,</p>
+<p><img src="https://latex.codecogs.com/png.latex?r%5Cddot%5Ctheta+2%5Cdot%20r%5Cdot%5Ctheta=0"></p>
+<p>Multiplicando por <img src="https://latex.codecogs.com/png.latex?r"> se reconoce una derivada exacta:</p>
+<p><img src="https://latex.codecogs.com/png.latex?r%5E2%5Cddot%5Ctheta+2r%5Cdot%20r%5Cdot%5Ctheta=%5Cfrac%7Bd%7D%7Bdt%7D%5Cleft(r%5E2%5Cdot%5Ctheta%5Cright)=0%20%5Cquad%5CLongrightarrow%5Cquad%20r%5E2%5Cdot%5Ctheta=h"></p>
+<p>con <img src="https://latex.codecogs.com/png.latex?h"> constante (el momento angular por unidad de masa). Recordemos que el área barrida por el radio vector entre los ángulos <img src="https://latex.codecogs.com/png.latex?%5Ctheta_1"> y <img src="https://latex.codecogs.com/png.latex?%5Ctheta_2"> es <img src="https://latex.codecogs.com/png.latex?%5Ctfrac12%5Cint_%7B%5Ctheta_1%7D%5E%7B%5Ctheta_2%7D%20r%5E2%5C,d%5Ctheta">. Como <img src="https://latex.codecogs.com/png.latex?d%5Ctheta=%5Cdot%5Ctheta%5C,dt">, entre los tiempos <img src="https://latex.codecogs.com/png.latex?t_1"> y <img src="https://latex.codecogs.com/png.latex?t_2"> es</p>
+<p><img src="https://latex.codecogs.com/png.latex?A(t_1,t_2)=%5Cfrac12%5Cint_%7Bt_1%7D%5E%7Bt_2%7D%20r%5E2%5Cdot%5Ctheta%5C,dt=%5Cfrac12%5Cint_%7Bt_1%7D%5E%7Bt_2%7D%20h%5C,dt=%5Cfrac12%5C,h%5C,(t_2-t_1)"></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Segunda ley de Kepler">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Segunda ley de Kepler
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El radio vector del Sol a un planeta barre áreas iguales en intervalos de tiempo iguales.</p>
+</div>
+</div>
+<div id="fig-areas" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-areas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/odes/planetario/areas-iguales.svg" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-areas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5: Las dos regiones sombreadas se recorren en el mismo tiempo, así que tienen la misma área. Cerca del perihelio el planeta es más rápido.
+</figcaption>
+</figure>
+</div>
+<p>Note que solo se usó que la fuerza es central: la segunda ley vale para cualquier fuerza central, no solo para la gravedad.</p>
+</section>
+<section id="la-primera-ley-de-kepler" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="la-primera-ley-de-kepler"><span class="header-section-number">6</span> La primera ley de Kepler</h2>
+<p>Ahora usamos la ley de gravitación universal de Newton, <img src="https://latex.codecogs.com/png.latex?F=-%5Cdfrac%7BGmM%7D%7Br%5E2%7D%5C,u_r">, con <img src="https://latex.codecogs.com/png.latex?G"> la constante gravitacional. La componente radial de <img src="https://latex.codecogs.com/png.latex?F=ma"> es</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cddot%20r-r%5Cdot%5Ctheta%5E2=-%5Cfrac%7Bk%7D%7Br%5E2%7D,%20%5Cqquad%20k=GM%20%5Ctag%7B*%7D"></p>
+<p>De <img src="https://latex.codecogs.com/png.latex?r%5E2%5Cdot%5Ctheta=h"> se tiene <img src="https://latex.codecogs.com/png.latex?%5Cdot%5Ctheta=h/r%5E2">, y entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cddot%20r-%5Cfrac%7Bh%5E2%7D%7Br%5E3%7D=-%5Cfrac%7Bk%7D%7Br%5E2%7D"></p>
+<p>Es una ecuación de segundo orden no lineal, y ni la reducción de orden ni una solución por tanteo funcionan bien. La idea es cambiar de variables: tomar <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> como variable independiente y <img src="https://latex.codecogs.com/png.latex?z=1/r"> como incógnita. Como <img src="https://latex.codecogs.com/png.latex?%5Cdot%5Ctheta=h/r%5E2=hz%5E2">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cdot%20r=%5Cfrac%7Bd%7D%7Bdt%7D%5Cleft(%5Cfrac1z%5Cright)=-%5Cfrac%7B%5Cdot%20z%7D%7Bz%5E2%7D=-%5Cfrac1%7Bz%5E2%7D%5C,%5Cfrac%7Bdz%7D%7Bd%5Ctheta%7D%5C,%5Cfrac%7Bd%5Ctheta%7D%7Bdt%7D=-%5Cfrac%7B1%7D%7Bz%5E2%7D%5C,z'%5C,hz%5E2=-h%5C,z'"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cddot%20r=%5Cfrac%7Bd%7D%7Bdt%7D%5Cleft(-h%5C,z'%5Cright)=-h%5C,z''%5C,%5Cfrac%7Bd%5Ctheta%7D%7Bdt%7D=-h%5E2z%5E2z''"></p>
+<p>Sustituyendo en <img src="https://latex.codecogs.com/png.latex?(%5Cast)">, con <img src="https://latex.codecogs.com/png.latex?r%5Cdot%5Ctheta%5E2=h%5E2z%5E3"> y <img src="https://latex.codecogs.com/png.latex?k/r%5E2=kz%5E2">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?-h%5E2z%5E2z''-h%5E2z%5E3=-kz%5E2%20%5Cquad%5CLongrightarrow%5Cquad%20z''+z=%5Cfrac%7Bk%7D%7Bh%5E2%7D"></p>
+<p>Es una ecuación lineal con coeficientes constantes, con solución general</p>
+<p><img src="https://latex.codecogs.com/png.latex?z(%5Ctheta)=B%5Ccos%5Ctheta+A%5Csin%5Ctheta+%5Cfrac%7Bk%7D%7Bh%5E2%7D"></p>
+<p>Elijamos el eje polar de modo que <img src="https://latex.codecogs.com/png.latex?%5Ctheta=0"> sea el punto de mayor <img src="https://latex.codecogs.com/png.latex?z">, es decir, el de menor <img src="https://latex.codecogs.com/png.latex?r"> (el perihelio). Allí <img src="https://latex.codecogs.com/png.latex?z'(0)=0"> y <img src="https://latex.codecogs.com/png.latex?z''(0)%3C0">, lo que da <img src="https://latex.codecogs.com/png.latex?A=0"> y <img src="https://latex.codecogs.com/png.latex?B%3E0">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac1r=B%5Ccos%5Ctheta+%5Cfrac%7Bk%7D%7Bh%5E2%7D%20%5Cquad%5CLongrightarrow%5Cquad%20r=%5Cfrac%7Bh%5E2/k%7D%7B1+%5Cdfrac%7BBh%5E2%7D%7Bk%7D%5Ccos%5Ctheta%7D"></p>
+<p>Es exactamente la ecuación polar de una cónica, <img src="https://latex.codecogs.com/png.latex?r=ed/(1+e%5Ccos%5Ctheta)">, con</p>
+<p><img src="https://latex.codecogs.com/png.latex?ed=%5Cfrac%7Bh%5E2%7D%7Bk%7D,%20%5Cqquad%20e=%5Cfrac%7BBh%5E2%7D%7Bk%7D,%20%5Cqquad%20d=%5Cfrac1B"></p>
+<p>El Sol está en el foco, y la directriz queda a la distancia <img src="https://latex.codecogs.com/png.latex?d=1/B"> del Sol. Como los planetas siguen órbitas acotadas, <img src="https://latex.codecogs.com/png.latex?e%3C1">, es decir <img src="https://latex.codecogs.com/png.latex?0%3CB%3Ck/h%5E2">.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Primera ley de Kepler">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Primera ley de Kepler
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Los planetas se mueven en elipses con el Sol en uno de los focos.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kill</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">all</span>);</span>
+<span id="cb2-2"></span>
+<span id="cb2-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* La ecuacion lineal z'' + z = k/h^2 */</span></span>
+<span id="cb2-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ode2</span>(<span class="do" style="color: #5E5E5E;
+background-color: null;
+font-style: italic;">'</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">z</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) + <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">z</span> = <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>/<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">h</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">z</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span>);   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* z = %k1*sin(th) + %k2*cos(th) + k/h^2 */</span></span>
+<span id="cb2-5"></span>
+<span id="cb2-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* Verificamos que r = (h^2/k)/(1+e*cos(th)) cumple r'' - r*(theta')^2 = -k/r^2,</span></span>
+<span id="cb2-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">   donde theta' = h/r^2 y la derivada en t es (d/dtheta)*theta' */</span></span>
+<span id="cb2-8"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">p</span>: <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">h</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>/<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>;</span>
+<span id="cb2-9"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>: <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">p</span>/(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> + <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">e</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cos</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span>));</span>
+<span id="cb2-10"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">thd</span>: <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">h</span>/<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>;</span>
+<span id="cb2-11"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">rd</span>: <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span>)*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">thd</span>;</span>
+<span id="cb2-12"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">rdd</span>: <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">rd</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span>)*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">thd</span>;</span>
+<span id="cb2-13"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">chequeo</span>: <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">rdd</span> - <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">thd</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> + <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>/<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>;</span>
+<span id="cb2-14"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ratsimp</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ratsubst</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> - <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cos</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span>)^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span>)^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ratsimp</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">chequeo</span>)));   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* debe dar 0 */</span></span></code></pre></div></div>
+</div>
+</div>
+</section>
+<section id="análisis-de-energía" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="análisis-de-energía"><span class="header-section-number">7</span> Análisis de energía</h2>
+<p>La energía cinética es</p>
+<p><img src="https://latex.codecogs.com/png.latex?E_C=%5Cfrac12%20mv%5E2=%5Cfrac12%20m%5Cleft(r%5E2%5Cdot%5Ctheta%5E2+%5Cdot%20r%5E2%5Cright)"></p>
+<p>y la energía potencial gravitacional, tomando cero en el infinito, es</p>
+<p><img src="https://latex.codecogs.com/png.latex?E_P=-%5Cint_r%5E%5Cinfty%20%5Cfrac%7Bkm%7D%7B%5Crho%5E2%7D%5C,d%5Crho=-%5Cfrac%7Bkm%7D%7Br%7D"></p>
+<p>La energía total es <img src="https://latex.codecogs.com/png.latex?E=E_C+E_P"> y se conserva. Calculémosla en el perihelio, <img src="https://latex.codecogs.com/png.latex?%5Ctheta=0">. Allí <img src="https://latex.codecogs.com/png.latex?%5Cdot%20r=-hz'(0)=0">, el radio es <img src="https://latex.codecogs.com/png.latex?r_%7B%5Cmin%7D=1/z_0"> y, por la ecuación de la órbita,</p>
+<p><img src="https://latex.codecogs.com/png.latex?z_0=%5Cfrac%7B1+e%7D%7Bh%5E2/k%7D=(1+e)%5C,%5Cfrac%7Bk%7D%7Bh%5E2%7D"></p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?%5Cdot%5Ctheta=hz%5E2">, se tiene <img src="https://latex.codecogs.com/png.latex?r%5E2%5Cdot%5Ctheta%5E2=h%5E2z_0%5E2"> y</p>
+<p><img src="https://latex.codecogs.com/png.latex?E=%5Cfrac12%20m%20h%5E2z_0%5E2-km%5C,z_0=%5Cfrac%7Bmk%5E2%7D%7Bh%5E2%7D%5Cleft%5B%5Cfrac%7B(1+e)%5E2%7D%7B2%7D-(1+e)%5Cright%5D=%5Cfrac%7Bmk%5E2%7D%7B2h%5E2%7D%5Cleft(e%5E2-1%5Cright)"></p>
+<p>Despejando la excentricidad,</p>
+<p><img src="https://latex.codecogs.com/png.latex?e=%5Csqrt%7B1+%5Cfrac%7B2Eh%5E2%7D%7Bmk%5E2%7D%7D"></p>
+<div class="callout callout-style-default callout-important callout-titled" title="La energía decide el tipo de órbita">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>La energía decide el tipo de órbita
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Según el signo de <img src="https://latex.codecogs.com/png.latex?E">, la órbita es una <strong>elipse</strong> (<img src="https://latex.codecogs.com/png.latex?E%3C0">, <img src="https://latex.codecogs.com/png.latex?e%3C1">), una <strong>parábola</strong> (<img src="https://latex.codecogs.com/png.latex?E=0">, <img src="https://latex.codecogs.com/png.latex?e=1">) o una <strong>hipérbola</strong> (<img src="https://latex.codecogs.com/png.latex?E%3E0">, <img src="https://latex.codecogs.com/png.latex?e%3E1">).</p>
+</div>
+</div>
+<p>Los planetas del Sistema Solar tienen energía negativa y se mueven en elipses, y los cuerpos que pasan por el sistema a gran velocidad tienen energía positiva y recorren hipérbolas. Que <img src="https://latex.codecogs.com/png.latex?E"> sea negativa no contradice nada: la energía cinética es siempre positiva, pero la potencial es negativa porque se tomó el cero en el infinito. Que <img src="https://latex.codecogs.com/png.latex?E%3C0"> significa que el cuerpo está ligado al Sol: no tiene energía suficiente para llegar al infinito. Una Tierra a la que se le diera un empujón que subiera su energía por encima de cero entraría en una hipérbola y dejaría el Sistema Solar para siempre.</p>
+</section>
+<section id="la-tercera-ley-de-kepler" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="la-tercera-ley-de-kepler"><span class="header-section-number">8</span> La tercera ley de Kepler</h2>
+<p>Restrinjamos la atención a la órbita elíptica. Los valores extremos de <img src="https://latex.codecogs.com/png.latex?r"> se alcanzan en <img src="https://latex.codecogs.com/png.latex?%5Ctheta=0"> y <img src="https://latex.codecogs.com/png.latex?%5Ctheta=%5Cpi">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?r_%7B%5Cmin%7D=%5Cfrac%7Bh%5E2%7D%7Bk(1+e)%7D,%20%5Cqquad%20r_%7B%5Cmax%7D=%5Cfrac%7Bh%5E2%7D%7Bk(1-e)%7D"></p>
+<p>En astronomía, el semieje mayor <img src="https://latex.codecogs.com/png.latex?a"> se llama la distancia media, porque es la mitad de la suma de estos dos valores:</p>
+<p><img src="https://latex.codecogs.com/png.latex?a=%5Cfrac12%5Cleft(r_%7B%5Cmin%7D+r_%7B%5Cmax%7D%5Cright)=%5Cfrac%7Bh%5E2%7D%7B2k%7D%5Ccdot%5Cfrac%7B(1-e)+(1+e)%7D%7B1-e%5E2%7D=%5Cfrac%7Bh%5E2%7D%7Bk%5C,(1-e%5E2)%7D"></p>
+<p>(geométricamente, <img src="https://latex.codecogs.com/png.latex?r_%7B%5Cmin%7D=a-c=a(1-e)"> y <img src="https://latex.codecogs.com/png.latex?r_%7B%5Cmax%7D=a+c=a(1+e)">, como en la Figura&nbsp;3). Como <img src="https://latex.codecogs.com/png.latex?b%5E2=a%5E2(1-e%5E2)">, se tiene <img src="https://latex.codecogs.com/png.latex?1-e%5E2=b%5E2/a%5E2"> y la igualdad anterior queda <img src="https://latex.codecogs.com/png.latex?a=h%5E2a%5E2/(kb%5E2)">, es decir,</p>
+<p><img src="https://latex.codecogs.com/png.latex?b%5E2=%5Cfrac%7Bh%5E2%7D%7Bk%7D%5C,a"></p>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?T"> el periodo del planeta. El área de la elipse es <img src="https://latex.codecogs.com/png.latex?%5Cpi%20ab">, y por la segunda ley es <img src="https://latex.codecogs.com/png.latex?%5Ctfrac12%20hT"> (la integral de <img src="https://latex.codecogs.com/png.latex?0"> a <img src="https://latex.codecogs.com/png.latex?T"> de <img src="https://latex.codecogs.com/png.latex?%5Ctfrac12%20h%5C,dt">). Entonces <img src="https://latex.codecogs.com/png.latex?%5Cpi%20ab=%5Ctfrac12%20hT"> y</p>
+<p><img src="https://latex.codecogs.com/png.latex?T%5E2=%5Cfrac%7B4%5Cpi%5E2a%5E2b%5E2%7D%7Bh%5E2%7D=%5Cfrac%7B4%5Cpi%5E2a%5E2%7D%7Bh%5E2%7D%5Ccdot%5Cfrac%7Bh%5E2%7D%7Bk%7D%5C,a=%5Cfrac%7B4%5Cpi%5E2%7D%7Bk%7D%5C,a%5E3"></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Tercera ley de Kepler">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Tercera ley de Kepler
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El cuadrado del periodo de un planeta es proporcional al cubo de su distancia media al Sol: <img src="https://latex.codecogs.com/png.latex?T%5E2=%5Cdfrac%7B4%5Cpi%5E2%7D%7Bk%7D%5C,a%5E3">.</p>
+</div>
+</div>
+<p>La constante <img src="https://latex.codecogs.com/png.latex?k=GM"> depende de la masa central y no de <img src="https://latex.codecogs.com/png.latex?m">, así que es la misma para todos los planetas. Midiendo <img src="https://latex.codecogs.com/png.latex?T"> en años y <img src="https://latex.codecogs.com/png.latex?a"> en unidades astronómicas (la distancia media de la Tierra al Sol), <img src="https://latex.codecogs.com/png.latex?k=4%5Cpi%5E2"> y la ley queda <img src="https://latex.codecogs.com/png.latex?T%5E2=a%5E3">.</p>
+</section>
+<section id="problema-la-energía-orbital" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="problema-la-energía-orbital"><span class="header-section-number">9</span> Problema: la energía orbital</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejercicio (Simmons, §21, problema 4)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejercicio (Simmons, §21, problema 4)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre que la rapidez <img src="https://latex.codecogs.com/png.latex?v"> de un planeta en cualquier punto de su órbita es</p>
+<p><img src="https://latex.codecogs.com/png.latex?v%5E2=k%5Cleft(%5Cfrac2r-%5Cfrac1a%5Cright)"></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Escribimos <img src="https://latex.codecogs.com/png.latex?p=h%5E2/k">, de modo que la órbita es <img src="https://latex.codecogs.com/png.latex?r=p/(1+e%5Ccos%5Ctheta)">. Partimos de <img src="https://latex.codecogs.com/png.latex?v%5E2=r%5E2%5Cdot%5Ctheta%5E2+%5Cdot%20r%5E2">.</p>
+<p>Del primer término, como <img src="https://latex.codecogs.com/png.latex?%5Cdot%5Ctheta=h/r%5E2">, se tiene <img src="https://latex.codecogs.com/png.latex?r%5E2%5Cdot%5Ctheta%5E2=h%5E2/r%5E2">.</p>
+<p>Para el segundo, <img src="https://latex.codecogs.com/png.latex?%5Cdot%20r=%5Cdfrac%7Bdr%7D%7Bd%5Ctheta%7D%5C,%5Cdot%5Ctheta=%5Cdfrac%7Bh%7D%7Br%5E2%7D%5C,%5Cdfrac%7Bdr%7D%7Bd%5Ctheta%7D">, y derivando la órbita,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bdr%7D%7Bd%5Ctheta%7D=%5Cfrac%7Bp%5C,e%5Csin%5Ctheta%7D%7B(1+e%5Ccos%5Ctheta)%5E2%7D=%5Cfrac%7Br%5E2%7D%7Bp%7D%5C,e%5Csin%5Ctheta%20%5Cquad%5CLongrightarrow%5Cquad%20%5Cdot%20r=%5Cfrac%20hp%5C,e%5Csin%5Ctheta"></p>
+<p>De <img src="https://latex.codecogs.com/png.latex?r(1+e%5Ccos%5Ctheta)=p"> se despeja <img src="https://latex.codecogs.com/png.latex?%5Ccos%5Ctheta=(p/r-1)/e">, así que <img src="https://latex.codecogs.com/png.latex?e%5E2%5Csin%5E2%5Ctheta=e%5E2-(p/r-1)%5E2"> y</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cdot%20r%5E2=%5Cfrac%7Bh%5E2%7D%7Bp%5E2%7D%5Cleft%5Be%5E2-%5Cleft(%5Cfrac%20pr-1%5Cright)%5E2%5Cright%5D=%5Cfrac%7Bh%5E2%7D%7Bp%5E2%7D%5Cleft(e%5E2-1+%5Cfrac%7B2p%7D%7Br%7D-%5Cfrac%7Bp%5E2%7D%7Br%5E2%7D%5Cright)"></p>
+<p>Sumando los dos términos, el <img src="https://latex.codecogs.com/png.latex?h%5E2/r%5E2"> se cancela con el que sale de <img src="https://latex.codecogs.com/png.latex?-h%5E2p%5E2/(p%5E2r%5E2)">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?v%5E2=%5Cfrac%7Bh%5E2%7D%7Bp%5E2%7D%5Cleft(e%5E2-1%5Cright)+%5Cfrac%7B2h%5E2%7D%7Bp%5C,r%7D"></p>
+<p>Ahora usamos <img src="https://latex.codecogs.com/png.latex?p=h%5E2/k">, de donde <img src="https://latex.codecogs.com/png.latex?h%5E2/p%5E2=k%5E2/h%5E2"> y <img src="https://latex.codecogs.com/png.latex?h%5E2/p=k">. Además, de <img src="https://latex.codecogs.com/png.latex?a=%5Cdfrac%7Bh%5E2%7D%7Bk(1-e%5E2)%7D"> se tiene <img src="https://latex.codecogs.com/png.latex?1-e%5E2=%5Cdfrac%7Bh%5E2%7D%7Bka%7D">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?v%5E2=%5Cfrac%7Bk%5E2%7D%7Bh%5E2%7D%5Cleft(e%5E2-1%5Cright)+%5Cfrac%7B2k%7D%7Br%7D=-%5Cfrac%7Bk%5E2%7D%7Bh%5E2%7D%5Ccdot%5Cfrac%7Bh%5E2%7D%7Bka%7D+%5Cfrac%7B2k%7D%7Br%7D=k%5Cleft(%5Cfrac2r-%5Cfrac1a%5Cright)%5Cqquad%5Cblacksquare"></p>
+</div>
+</div>
+</div>
+<p>Esta fórmula es la energía orbital escrita en otra forma. Multiplicando por <img src="https://latex.codecogs.com/png.latex?m/2"> y pasando <img src="https://latex.codecogs.com/png.latex?km/r"> al lado izquierdo queda <img src="https://latex.codecogs.com/png.latex?%5Ctfrac12%20mv%5E2-%5Cdfrac%7Bkm%7D%7Br%7D=-%5Cdfrac%7Bkm%7D%7B2a%7D">, de modo que en una órbita elíptica la energía total depende solo del semieje mayor: <img src="https://latex.codecogs.com/png.latex?E=-%5Cdfrac%7Bkm%7D%7B2a%7D">. Dos casos límite: en una órbita circular, <img src="https://latex.codecogs.com/png.latex?r=a"> y <img src="https://latex.codecogs.com/png.latex?v%5E2=k/a">; y la rapidez de escape, que corresponde a <img src="https://latex.codecogs.com/png.latex?a%5Cto%5Cinfty"> (<img src="https://latex.codecogs.com/png.latex?E=0">), es <img src="https://latex.codecogs.com/png.latex?v%5E2=2k/r">.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kill</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">all</span>);</span>
+<span id="cb3-2"></span>
+<span id="cb3-3"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">p</span>: <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">h</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>/<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>;</span>
+<span id="cb3-4"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>: <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">p</span>/(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> + <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">e</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cos</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span>));</span>
+<span id="cb3-5"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">thd</span>: <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">h</span>/<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>;</span>
+<span id="cb3-6"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">rd</span>: <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span>)*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">thd</span>;</span>
+<span id="cb3-7"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">v2</span>: <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">thd</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> + <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">rd</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>;</span>
+<span id="cb3-8"></span>
+<span id="cb3-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* Rapidez al cuadrado contra k*(2/r - 1/a), con a = p/(1-e^2) */</span></span>
+<span id="cb3-10"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">a</span>: <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">p</span>/(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> - <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">e</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>);</span>
+<span id="cb3-11"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">chequeo</span>: <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">v2</span> - <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>*(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>/<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span> - <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>/<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">a</span>);</span>
+<span id="cb3-12"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ratsimp</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ratsubst</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> - <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cos</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span>)^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span>)^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ratsimp</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">chequeo</span>)));   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* debe dar 0 */</span></span>
+<span id="cb3-13"></span>
+<span id="cb3-14"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* La energia total es una constante, E = m*k^2*(e^2-1)/(2*h^2) = -k*m/(2*a) */</span></span>
+<span id="cb3-15"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">E</span>: <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">v2</span>/<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> - <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span>/<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>;</span>
+<span id="cb3-16"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ratsimp</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ratsubst</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> - <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cos</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span>)^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span>)^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ratsimp</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">E</span> - <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">e</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> - <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)/(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">h</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))));   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* 0 */</span></span>
+<span id="cb3-17"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ratsimp</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">E</span> + <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span>/(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">a</span>));                                                               <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* 0 */</span></span></code></pre></div></div>
+</div>
+</div>
+</section>
+<section id="problema-la-explosión-de-la-tierra" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="problema-la-explosión-de-la-tierra"><span class="header-section-number">10</span> Problema: la explosión de la Tierra</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejercicio (Simmons, §21, problema 5)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejercicio (Simmons, §21, problema 5)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suponga que la Tierra explota en fragmentos que salen con la misma rapidez en direcciones distintas, cada uno hacia una órbita propia. Use la tercera ley de Kepler y el resultado del problema anterior para demostrar que todos los fragmentos que no caen al Sol ni escapan del Sistema Solar se reúnen más tarde en el mismo punto donde empezaron a separarse.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Sea <img src="https://latex.codecogs.com/png.latex?r"> la distancia al Sol del punto de la explosión y <img src="https://latex.codecogs.com/png.latex?v"> la rapidez común de los fragmentos justo después. Por el problema anterior, cada fragmento cumple <img src="https://latex.codecogs.com/png.latex?v%5E2=k%5C,(2/r-1/a)"> con su propio semieje mayor <img src="https://latex.codecogs.com/png.latex?a">. Pero <img src="https://latex.codecogs.com/png.latex?r"> y <img src="https://latex.codecogs.com/png.latex?v"> son iguales para todos, así que despejando</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac1a=%5Cfrac2r-%5Cfrac%7Bv%5E2%7D%7Bk%7D%20%5Cquad%5CLongrightarrow%5Cquad%20a=%5Cfrac%7Bkr%7D%7B2k-v%5E2r%7D"></p>
+<p>es el <strong>mismo <img src="https://latex.codecogs.com/png.latex?a"> para todos</strong>, sin importar la dirección. Esto tiene sentido solo si <img src="https://latex.codecogs.com/png.latex?a%3E0">, es decir <img src="https://latex.codecogs.com/png.latex?v%5E2%3C2k/r">, la condición de energía negativa. Los fragmentos con <img src="https://latex.codecogs.com/png.latex?v%5E2%5Cge%202k/r"> tienen <img src="https://latex.codecogs.com/png.latex?E%5Cge0">, siguen una parábola o una hipérbola y se pierden.</p>
+<p>Por la tercera ley,</p>
+<p><img src="https://latex.codecogs.com/png.latex?T%5E2=%5Cfrac%7B4%5Cpi%5E2%7D%7Bk%7D%5C,a%5E3=%5Cfrac%7B4%5Cpi%5E2k%5E2%5C,r%5E3%7D%7B(2k-v%5E2r)%5E3%7D"></p>
+<p>que depende de <img src="https://latex.codecogs.com/png.latex?r"> y de <img src="https://latex.codecogs.com/png.latex?v"> y no de la dirección: <strong>todos los fragmentos tienen el mismo periodo <img src="https://latex.codecogs.com/png.latex?T"></strong>. Cada uno parte del mismo punto con una órbita que se repite cada <img src="https://latex.codecogs.com/png.latex?T">, así que al cabo de un tiempo <img src="https://latex.codecogs.com/png.latex?T"> todos están de nuevo en el punto de partida, y se reúnen allí. Los que no vuelven son los que caen al Sol (los que salen casi en dirección radial y tienen su perihelio dentro del Sol) y los que escapan.</p>
+<p>Para la Tierra, <img src="https://latex.codecogs.com/png.latex?r=1"> UA y <img src="https://latex.codecogs.com/png.latex?v=v_%7B%5Crm%20circ%7D=2%5Cpi"> UA/año <img src="https://latex.codecogs.com/png.latex?%5Capprox%2029%7B,%7D8"> km/s dan <img src="https://latex.codecogs.com/png.latex?a=1"> y <img src="https://latex.codecogs.com/png.latex?T=1"> año: los fragmentos se reúnen un año después. La rapidez de escape es <img src="https://latex.codecogs.com/png.latex?%5Csqrt2%5C,v_%7B%5Crm%20circ%7D%5Capprox%2042%7B,%7D1"> km/s. Y si salen con la rapidez de la Tierra, un fragmento que sale con un ángulo <img src="https://latex.codecogs.com/png.latex?%5Cvarphi"> medido desde la dirección tangencial tiene <img src="https://latex.codecogs.com/png.latex?e=%7C%5Csin%5Cvarphi%7C"> y perihelio <img src="https://latex.codecogs.com/png.latex?1-%7C%5Csin%5Cvarphi%7C"> UA. Como el radio del Sol es <img src="https://latex.codecogs.com/png.latex?0%7B,%7D00465"> UA, el fragmento cae en el Sol si <img src="https://latex.codecogs.com/png.latex?%7C%5Csin%5Cvarphi%7C%3E0%7B,%7D99535">, es decir, si sale a menos de unos <img src="https://latex.codecogs.com/png.latex?5%7B,%7D5%5E%5Ccirc"> de la dirección radial.</p>
+</div>
+</div>
+</div>
+<p>La demostración depende de que la rapidez sea exactamente la misma. Si las rapideces difieren, los semiejes difieren y también los periodos: como <img src="https://latex.codecogs.com/png.latex?T%5Cpropto%20a%5E%7B3/2%7D"> se tiene <img src="https://latex.codecogs.com/png.latex?dT/T=%5Ctfrac32%5C,da/a">, y partiendo de una órbita circular (<img src="https://latex.codecogs.com/png.latex?r=a">), de <img src="https://latex.codecogs.com/png.latex?1/a=2/r-v%5E2/k"> sale <img src="https://latex.codecogs.com/png.latex?da/a=2%5C,dv/v">, así que</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7BdT%7D%7BT%7D=3%5C,%5Cfrac%7Bdv%7D%7Bv%7D"></p>
+<p>Una diferencia de <img src="https://latex.codecogs.com/png.latex?1%5C,%5C%25"> en la rapidez (<img src="https://latex.codecogs.com/png.latex?0%7B,%7D3"> km/s, alrededor de <img src="https://latex.codecogs.com/png.latex?1%7B,%7D031"> años de periodo en vez de <img src="https://latex.codecogs.com/png.latex?1">) separa el regreso de ese fragmento unos <img src="https://latex.codecogs.com/png.latex?11"> días, y a un año de la explosión estaría a unos <img src="https://latex.codecogs.com/png.latex?0%7B,%7D19"> UA, casi <img src="https://latex.codecogs.com/png.latex?30"> millones de kilómetros, del punto de partida.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kill</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">all</span>);</span>
+<span id="cb4-2"></span>
+<span id="cb4-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* Unidades: UA y años, k = 4*pi^2. Explosion a r = 1 UA */</span></span>
+<span id="cb4-4"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>*<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">%pi</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>;</span>
+<span id="cb4-5"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r0</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>;</span>
+<span id="cb4-6"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">semieje</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">v</span>) := <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r0</span>/(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span> - <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">v</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r0</span>);</span>
+<span id="cb4-7"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">periodo</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">v</span>) := <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>*<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">%pi</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>/<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">semieje</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">v</span>)^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>);</span>
+<span id="cb4-8"></span>
+<span id="cb4-9"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">periodo</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">%pi</span>);                       <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* 1: la rapidez circular da T = 1 ano */</span></span>
+<span id="cb4-10"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">float</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">periodo</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.01</span>*<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">%pi</span>));           <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* aprox. 1.0309: 1% mas de rapidez, 3% mas de periodo */</span></span>
+<span id="cb4-11"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">float</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>/<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r0</span>));                  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* rapidez de escape en UA/ano, aprox. 8.886 (42.1 km/s) */</span></span></code></pre></div></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Simulador: la explosión de la Tierra">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Simulador: la explosión de la Tierra
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Los fragmentos salen del mismo punto, a 1 UA del Sol, con la misma rapidez y en direcciones repartidas en un abanico. Cada uno recorre su órbita kepleriana, calculada con la ecuación de Kepler, y el panel marca cuándo vuelven a reunirse. Algunas cosas para probar:</p>
+<ol type="1">
+<li>Con la rapidez de la Tierra (botón “Igual a la Tierra”) todos los fragmentos regresan al punto de la explosión en <img src="https://latex.codecogs.com/png.latex?t=T=1"> año. La curva de abajo, que mide qué tan dispersos están, vuelve a cero en <img src="https://latex.codecogs.com/png.latex?t=1">, <img src="https://latex.codecogs.com/png.latex?2"> y <img src="https://latex.codecogs.com/png.latex?3"> años.</li>
+<li>Con rapidez mayor (33 o 38 km/s) todos los fragmentos siguen teniendo el mismo <img src="https://latex.codecogs.com/png.latex?a"> y el mismo <img src="https://latex.codecogs.com/png.latex?T">, y se reúnen al cabo de ese nuevo periodo. Con 44 km/s, por encima del escape, ya no regresa ninguno.</li>
+<li>Active la dispersión de rapideces: aunque sea de un <img src="https://latex.codecogs.com/png.latex?1%5C,%5C%25"> el grupo deja de reunirse. Reduzca el abanico a unos grados alrededor de la dirección tangencial y vea cómo cambia la forma del grupo.</li>
+</ol>
+<iframe src="explosion.html" width="100%" height="1160" style="border:1px solid #dfe3e2; border-radius:6px;" title="Simulador: la explosión de la Tierra"></iframe>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/odes/planetario/</guid>
+  <pubDate>Sun, 18 Oct 2026 05:00:00 GMT</pubDate>
+  <media:content url="https://arturosanjuan.xyz/cursos/odes/planetario/elipse.png" medium="image" type="image/png" height="79" width="144"/>
+</item>
 <item>
   <title>Coeficientes Constantes y Variación de Parámetros</title>
   <dc:creator>Arturo Sanjuán</dc:creator>

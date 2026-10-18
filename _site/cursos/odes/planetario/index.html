@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Arturo Sanjuán">
+<meta name="description" content="Las cónicas como secciones de un cono y como lugar de foco y directriz, la ecuación polar de la elipse, y de ahí, con una sola ecuación diferencial, las tres leyes de Kepler, la energía orbital y la explosión de la Tierra.">
+
+<title>Movimiento Planetario – Arturo Sanjuán</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-5a1953863e1f72ef3b996ef827f01ca7.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-06ef128ffaab2aaffa18b1038abc86f3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-979bd06565eab1ad32ed49e916b209dc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/bootstrap/bootstrap-06ef128ffaab2aaffa18b1038abc86f3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Arturo Sanjuán</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../research/index.html"> 
+<span class="menu-text">research</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../cursos/index.html"> 
+<span class="menu-text">cursos</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../trabajos/index.html"> 
+<span class="menu-text">trabajos</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../research/genealogy/index.html"> 
+<span class="menu-text">genealogy</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../links.html"> 
+<span class="menu-text">contacto</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../files/cv_sanjuan.pdf"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo oscuro"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#de-esfera-a-planeta" id="toc-de-esfera-a-planeta" class="nav-link active" data-scroll-target="#de-esfera-a-planeta"><span class="header-section-number">1</span> De esfera a planeta</a></li>
+  <li><a href="#las-cónicas-y-las-esferas-de-dandelin" id="toc-las-cónicas-y-las-esferas-de-dandelin" class="nav-link" data-scroll-target="#las-cónicas-y-las-esferas-de-dandelin"><span class="header-section-number">2</span> Las cónicas y las esferas de Dandelin</a></li>
+  <li><a href="#la-directriz-y-la-forma-polar" id="toc-la-directriz-y-la-forma-polar" class="nav-link" data-scroll-target="#la-directriz-y-la-forma-polar"><span class="header-section-number">3</span> La directriz y la forma polar</a>
+  <ul class="collapse">
+  <li><a href="#la-directriz-en-el-cono" id="toc-la-directriz-en-el-cono" class="nav-link" data-scroll-target="#la-directriz-en-el-cono"><span class="header-section-number">3.1</span> La directriz en el cono</a></li>
+  <li><a href="#la-ecuación-polar" id="toc-la-ecuación-polar" class="nav-link" data-scroll-target="#la-ecuación-polar"><span class="header-section-number">3.2</span> La ecuación polar</a></li>
+  <li><a href="#la-elipse-en-coordenadas-cartesianas" id="toc-la-elipse-en-coordenadas-cartesianas" class="nav-link" data-scroll-target="#la-elipse-en-coordenadas-cartesianas"><span class="header-section-number">3.3</span> La elipse en coordenadas cartesianas</a></li>
+  </ul></li>
+  <li><a href="#velocidad-y-aceleración-en-coordenadas-polares" id="toc-velocidad-y-aceleración-en-coordenadas-polares" class="nav-link" data-scroll-target="#velocidad-y-aceleración-en-coordenadas-polares"><span class="header-section-number">4</span> Velocidad y aceleración en coordenadas polares</a></li>
+  <li><a href="#la-segunda-ley-de-kepler" id="toc-la-segunda-ley-de-kepler" class="nav-link" data-scroll-target="#la-segunda-ley-de-kepler"><span class="header-section-number">5</span> La segunda ley de Kepler</a></li>
+  <li><a href="#la-primera-ley-de-kepler" id="toc-la-primera-ley-de-kepler" class="nav-link" data-scroll-target="#la-primera-ley-de-kepler"><span class="header-section-number">6</span> La primera ley de Kepler</a></li>
+  <li><a href="#análisis-de-energía" id="toc-análisis-de-energía" class="nav-link" data-scroll-target="#análisis-de-energía"><span class="header-section-number">7</span> Análisis de energía</a></li>
+  <li><a href="#la-tercera-ley-de-kepler" id="toc-la-tercera-ley-de-kepler" class="nav-link" data-scroll-target="#la-tercera-ley-de-kepler"><span class="header-section-number">8</span> La tercera ley de Kepler</a></li>
+  <li><a href="#problema-la-energía-orbital" id="toc-problema-la-energía-orbital" class="nav-link" data-scroll-target="#problema-la-energía-orbital"><span class="header-section-number">9</span> Problema: la energía orbital</a></li>
+  <li><a href="#problema-la-explosión-de-la-tierra" id="toc-problema-la-explosión-de-la-tierra" class="nav-link" data-scroll-target="#problema-la-explosión-de-la-tierra"><span class="header-section-number">10</span> Problema: la explosión de la Tierra</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Movimiento Planetario</h1>
+<p class="subtitle lead">De las esferas de Dandelin a las tres leyes de Kepler</p>
+</div>
+
+<div>
+  <div class="description">
+    Las cónicas como secciones de un cono y como lugar de foco y directriz, la ecuación polar de la elipse, y de ahí, con una sola ecuación diferencial, las tres leyes de Kepler, la energía orbital y la explosión de la Tierra.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor</div>
+    <div class="quarto-title-meta-contents">
+             <p>Arturo Sanjuán </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">18 de octubre de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Esta sección sigue el §21 del Simmons y la sección 13.18 del Apostol (<em>Calculus</em>, vol.&nbsp;1). El plan tiene dos partes. Primero se construye la geometría: la elipse como sección de un cono, con las esferas de Dandelin, y su ecuación en coordenadas polares. Después se llega a la misma ecuación desde la física, resolviendo una ecuación diferencial: la ley de gravitación de Newton y la conservación del momento angular dan la órbita, y de ella salen las tres leyes de Kepler.</p>
+<p>Convenciones: un punto sobre una variable indica derivada respecto al tiempo, <span class="math inline">\(\dot r=dr/dt\)</span>, y una prima indica derivada respecto al ángulo, <span class="math inline">\(z'=dz/d\theta\)</span>. Cuando haga falta se escribe <span class="math inline">\(dt\)</span> o <span class="math inline">\(d\theta\)</span> de forma explícita.</p>
+<section id="de-esfera-a-planeta" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="de-esfera-a-planeta"><span class="header-section-number">1</span> De esfera a planeta</h2>
+<p>Las cuentas de esta sección son la última etapa de una historia larga: la Tierra pasó de ser una esfera en el centro del cielo a ser un planeta más, y las cónicas de Apolonio resultaron ser las órbitas que dibujan esos planetas. El siguiente panel recorre siete autores, de Aristarco a Newton, y para cada uno responde tres preguntas: qué aportó sobre la Tierra redonda, sobre su rotación y sobre su condición de planeta.</p>
+<iframe src="linea-tiempo.html" width="100%" height="830" style="border:1px solid #dfe3e2; border-radius:6px;" title="Línea de tiempo: de esfera a planeta"></iframe>
+</section>
+<section id="las-cónicas-y-las-esferas-de-dandelin" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="las-cónicas-y-las-esferas-de-dandelin"><span class="header-section-number">2</span> Las cónicas y las esferas de Dandelin</h2>
+<p>Sea <span class="math inline">\(A\)</span> una recta fija y <span class="math inline">\(G\)</span> una recta móvil que la corta en un punto <span class="math inline">\(V\)</span> y que forma con <span class="math inline">\(A\)</span> un ángulo constante <span class="math inline">\(\alpha\in(0,\pi/2)\)</span>. La superficie que barre <span class="math inline">\(G\)</span> al girar alrededor de <span class="math inline">\(A\)</span> es un <strong>cono</strong> (doble): <span class="math inline">\(G\)</span> es la generatriz, <span class="math inline">\(A\)</span> el eje y <span class="math inline">\(V\)</span> el vértice. Las curvas que se obtienen al cortar el cono con un plano que no pasa por <span class="math inline">\(V\)</span> se llaman <strong>cónicas</strong>:</p>
+<ol type="1">
+<li>si el plano es paralelo a una generatriz, la curva es una <strong>parábola</strong>;</li>
+<li>si no es paralelo a ninguna y corta una sola hoja del cono, es una <strong>elipse</strong>, y es un <strong>círculo</strong> cuando el plano es ortogonal al eje;</li>
+<li>si corta las dos hojas, es una <strong>hipérbola</strong>.</li>
+</ol>
+<p>La idea que sigue es de Dandelin (1822). Tomemos dos esferas <span class="math inline">\(S_1\)</span> y <span class="math inline">\(S_2\)</span> tangentes al cono y al plano de corte, una a cada lado del plano, y llamemos <span class="math inline">\(F_1\)</span> y <span class="math inline">\(F_2\)</span> a los puntos donde cada esfera toca el plano. Sea <span class="math inline">\(P\)</span> un punto de la elipse. La generatriz que pasa por <span class="math inline">\(P\)</span> y por el vértice corta a las circunferencias de tangencia de <span class="math inline">\(S_1\)</span> y <span class="math inline">\(S_2\)</span> con el cono en dos puntos <span class="math inline">\(A_1\)</span> y <span class="math inline">\(A_2\)</span>.</p>
+<div id="fig-dandelin" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dandelin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="dandelin-corte.svg" class="img-fluid figure-img" style="width:62.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dandelin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Corte del cono por un plano que contiene al eje. Aquí <span class="math inline">\(P\)</span> es un extremo del eje mayor, para que todo quede en el plano del dibujo.
+</figcaption>
+</figure>
+</div>
+<p>Los segmentos <span class="math inline">\(PF_1\)</span> y <span class="math inline">\(PA_1\)</span> son dos tangentes a la esfera <span class="math inline">\(S_1\)</span> desde un mismo punto exterior <span class="math inline">\(P\)</span>, así que <span class="math inline">\(|PF_1|=|PA_1|\)</span>. Lo mismo ocurre con <span class="math inline">\(S_2\)</span>: <span class="math inline">\(|PF_2|=|PA_2|\)</span>. Entonces</p>
+<p><span class="math display">\[|PF_1|+|PF_2| = |PA_1|+|PA_2| = |A_1A_2|\]</span></p>
+<p>y <span class="math inline">\(|A_1A_2|\)</span> no depende de <span class="math inline">\(P\)</span>: es la distancia, medida sobre una generatriz, entre las dos circunferencias de tangencia, y por la simetría de revolución es la misma para todas las generatrices. La suma de las distancias a <span class="math inline">\(F_1\)</span> y <span class="math inline">\(F_2\)</span> es constante, que es precisamente la definición escolar de la elipse, con focos <span class="math inline">\(F_1\)</span> y <span class="math inline">\(F_2\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Simulador: cónicas y esferas de Dandelin">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Simulador: cónicas y esferas de Dandelin
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Mueva el deslizador de la excentricidad <span class="math inline">\(e\)</span> y vea cómo el plano rueda sobre la esfera inscrita en el cono. Con <span class="math inline">\(e=0\)</span> el plano es ortogonal al eje (círculo), con <span class="math inline">\(0&lt;e&lt;1\)</span> se tiene una elipse, con <span class="math inline">\(e=1\)</span> el plano es paralelo a una generatriz (parábola) y con <span class="math inline">\(e&gt;1\)</span> corta las dos hojas (hipérbola). El panel muestra <span class="math inline">\(PF_1+PF_2\)</span> en la elipse y <span class="math inline">\(|PF_1-PF_2|\)</span> en la hipérbola, y también la directriz, que se define en la siguiente sección. Arrastre la imagen para girarla.</p>
+<iframe src="conicas-dandelin.html" width="100%" height="1010" style="border:1px solid #dfe3e2; border-radius:6px;" title="Simulador: cónicas y esferas de Dandelin"></iframe>
+</div>
+</div>
+</section>
+<section id="la-directriz-y-la-forma-polar" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="la-directriz-y-la-forma-polar"><span class="header-section-number">3</span> La directriz y la forma polar</h2>
+<p>Hay otra definición de las cónicas, que sirve también para la parábola y la hipérbola. Sea <span class="math inline">\(L\)</span> una recta, <span class="math inline">\(F\)</span> un punto fuera de <span class="math inline">\(L\)</span> y <span class="math inline">\(e&gt;0\)</span> un número. El conjunto de todos los puntos <span class="math inline">\(X\)</span> que cumplen</p>
+<p><span class="math display">\[|X-F| = e\,d(X,L)\]</span></p>
+<p>es una cónica de <strong>excentricidad</strong> <span class="math inline">\(e\)</span>: una elipse si <span class="math inline">\(e&lt;1\)</span>, una parábola si <span class="math inline">\(e=1\)</span> y una hipérbola si <span class="math inline">\(e&gt;1\)</span>. El punto <span class="math inline">\(F\)</span> es un foco y <span class="math inline">\(L\)</span> la <strong>directriz</strong>.</p>
+<section id="la-directriz-en-el-cono" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="la-directriz-en-el-cono"><span class="header-section-number">3.1</span> La directriz en el cono</h3>
+<p>En la representación de Dandelin, <span class="math inline">\(L\)</span> es la intersección del plano de corte <span class="math inline">\(\Pi\)</span> con el plano <span class="math inline">\(\Pi_1\)</span> de la circunferencia de tangencia de <span class="math inline">\(S_1\)</span> con el cono, y <span class="math inline">\(F=F_1\)</span>. Veamos que se cumple la relación y de paso quién es <span class="math inline">\(e\)</span>. Sea <span class="math inline">\(\beta\)</span> el ángulo entre el plano <span class="math inline">\(\Pi\)</span> y el eje del cono. Para un punto <span class="math inline">\(P\)</span> de la curva:</p>
+<ol type="1">
+<li><span class="math inline">\(P\)</span> y <span class="math inline">\(A_1\)</span> están en la misma generatriz, que forma el ángulo <span class="math inline">\(\alpha\)</span> con el eje, y <span class="math inline">\(\Pi_1\)</span> es ortogonal al eje y contiene a <span class="math inline">\(A_1\)</span>. Entonces la distancia de <span class="math inline">\(P\)</span> al plano <span class="math inline">\(\Pi_1\)</span> vale <span class="math inline">\(|PA_1|\cos\alpha\)</span>.</li>
+<li>Como <span class="math inline">\(P\)</span> está en <span class="math inline">\(\Pi\)</span>, esa misma distancia es <span class="math inline">\(d(P,L)\)</span> por el seno del ángulo diedro entre <span class="math inline">\(\Pi\)</span> y <span class="math inline">\(\Pi_1\)</span>, que es <span class="math inline">\(90^\circ-\beta\)</span>. Es decir, vale <span class="math inline">\(d(P,L)\cos\beta\)</span>.</li>
+</ol>
+<p>Igualando, y usando que <span class="math inline">\(|PF_1|=|PA_1|\)</span>,</p>
+<p><span class="math display">\[|PF_1| = \frac{\cos\beta}{\cos\alpha}\,d(P,L), \qquad e=\frac{\cos\beta}{\cos\alpha}\]</span></p>
+<p>Con <span class="math inline">\(\beta=90^\circ\)</span> se tiene <span class="math inline">\(e=0\)</span> (círculo), con <span class="math inline">\(\beta&gt;\alpha\)</span> se tiene <span class="math inline">\(e&lt;1\)</span> (elipse), con <span class="math inline">\(\beta=\alpha\)</span> se tiene <span class="math inline">\(e=1\)</span> (parábola) y con <span class="math inline">\(\beta&lt;\alpha\)</span> se tiene <span class="math inline">\(e&gt;1\)</span> (hipérbola). El simulador de arriba calcula <span class="math inline">\(\cos\beta/\cos\alpha\)</span> y el cociente <span class="math inline">\(|PF_1|/d(P,L)\)</span>, y los dos coinciden con <span class="math inline">\(e\)</span>.</p>
+</section>
+<section id="la-ecuación-polar" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="la-ecuación-polar"><span class="header-section-number">3.2</span> La ecuación polar</h3>
+<p>Pongamos <span class="math inline">\(F\)</span> en el origen y sea <span class="math inline">\(N=(1,0)\)</span> el vector unitario normal a <span class="math inline">\(L\)</span>, de modo que <span class="math inline">\(L=\{X:\ X\cdot N=d\}\)</span> con <span class="math inline">\(d&gt;0\)</span>. Entonces <span class="math inline">\(d(X,L)=|d-X\cdot N|\)</span> y la condición es <span class="math inline">\(|X|=e\,|d-X\cdot N|\)</span>.</p>
+<div id="fig-directriz" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-directriz-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="foco-directriz.svg" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-directriz-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Foco <span class="math inline">\(F\)</span>, directriz <span class="math inline">\(L\)</span>, normal <span class="math inline">\(N\)</span> y un punto <span class="math inline">\(X\)</span> de la cónica.
+</figcaption>
+</figure>
+</div>
+<p>En coordenadas polares, <span class="math inline">\(X=(r\cos\theta,\ r\sin\theta)\)</span> y la relación queda <span class="math inline">\(r=e\,|d-r\cos\theta|\)</span>. Si <span class="math inline">\(X\)</span> está del lado de <span class="math inline">\(F\)</span> respecto de <span class="math inline">\(L\)</span>, el valor absoluto se quita sin cambiar el signo:</p>
+<p><span class="math display">\[r=e\,(d-r\cos\theta)\quad\Longrightarrow\quad r\,(1+e\cos\theta)=ed\quad\Longrightarrow\quad r=\frac{ed}{1+e\cos\theta}\]</span></p>
+<p>Si <span class="math inline">\(X\)</span> está del otro lado de <span class="math inline">\(L\)</span> (la otra rama de la hipérbola), <span class="math inline">\(r=e\,(r\cos\theta-d)\)</span> y se obtiene <span class="math inline">\(r=ed/(e\cos\theta-1)\)</span>.</p>
+</section>
+<section id="la-elipse-en-coordenadas-cartesianas" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="la-elipse-en-coordenadas-cartesianas"><span class="header-section-number">3.3</span> La elipse en coordenadas cartesianas</h3>
+<p>Supongamos <span class="math inline">\(e&lt;1\)</span>. Con <span class="math inline">\(r=ed-ex\)</span> y <span class="math inline">\(r^2=x^2+y^2\)</span>,</p>
+<p><span class="math display">\[x^2+y^2=(ed-ex)^2 \quad\Longrightarrow\quad (1-e^2)\,x^2+2e^2d\,x+y^2=e^2d^2\]</span></p>
+<p>Dividimos por <span class="math inline">\(1-e^2\)</span> y completamos el cuadrado en <span class="math inline">\(x\)</span>:</p>
+<p><span class="math display">\[\left(x+\frac{e^2d}{1-e^2}\right)^2+\frac{y^2}{1-e^2}=\frac{e^2d^2}{(1-e^2)^2}\]</span></p>
+<p>Con <span class="math inline">\(a=\dfrac{ed}{1-e^2}\)</span> (es decir, <span class="math inline">\(d=\dfrac{a(1-e^2)}{e}\)</span>), el centro queda en <span class="math inline">\(x=-ea\)</span> y la ecuación se reduce a</p>
+<p><span class="math display">\[\frac{(x+ea)^2}{a^2}+\frac{y^2}{a^2(1-e^2)}=1\]</span></p>
+<p>Es una elipse canónica de semieje mayor <span class="math inline">\(a\)</span> y semieje menor <span class="math inline">\(b=a\sqrt{1-e^2}\)</span>, trasladada <span class="math inline">\(-ea\)</span> en <span class="math inline">\(x\)</span>. Como <span class="math inline">\(a^2-b^2=e^2a^2\)</span>, la distancia focal es <span class="math inline">\(c=ea\)</span> y <span class="math inline">\(e=c/a\)</span>. La elipse pasa por <span class="math inline">\((-ea\pm a,\ 0)\)</span> y por <span class="math inline">\((-ea,\ \pm b)\)</span>. El foco <span class="math inline">\(F\)</span> en el origen queda a la distancia <span class="math inline">\(c\)</span> del centro, y el otro foco simétrico respecto del centro.</p>
+<div id="fig-elipse" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-elipse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="elipse-geometria.svg" class="img-fluid figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-elipse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: La elipse con foco <span class="math inline">\(F\)</span> en el origen de la ecuación polar. El ángulo <span class="math inline">\(\theta\)</span> se mide desde el eje que apunta hacia la directriz, así que <span class="math inline">\(\theta=0\)</span> es el punto más cercano a <span class="math inline">\(F\)</span>.
+</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">/* La relacion x^2+y^2 = (e*d - e*x)^2 equivale a la elipse canonica</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">   con a = e*d/(1-e^2): comparamos los dos lados multiplicados por (1-e^2) */</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cn">a</span>: <span class="cn">e</span>*<span class="cn">d</span>/(<span class="dv">1</span> - <span class="cn">e</span>^<span class="dv">2</span>);</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="cn">izq</span>: <span class="cn">x</span>^<span class="dv">2</span> + <span class="cn">y</span>^<span class="dv">2</span> - (<span class="cn">e</span>*<span class="cn">d</span> - <span class="cn">e</span>*<span class="cn">x</span>)^<span class="dv">2</span>;</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="cn">der</span>: (<span class="dv">1</span> - <span class="cn">e</span>^<span class="dv">2</span>)*(((<span class="cn">x</span> + <span class="cn">e</span>*<span class="cn">a</span>)^<span class="dv">2</span> + <span class="cn">y</span>^<span class="dv">2</span>/(<span class="dv">1</span> - <span class="cn">e</span>^<span class="dv">2</span>)) - <span class="cn">a</span>^<span class="dv">2</span>);</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ratsimp</span>(<span class="cn">izq</span> - <span class="cn">der</span>);                   <span class="co">/* debe dar 0 */</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">/* Semieje menor y distancia focal */</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="cn">b2</span>: <span class="cn">a</span>^<span class="dv">2</span>*(<span class="dv">1</span> - <span class="cn">e</span>^<span class="dv">2</span>);</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ratsimp</span>(<span class="cn">a</span>^<span class="dv">2</span> - <span class="cn">b2</span> - (<span class="cn">e</span>*<span class="cn">a</span>)^<span class="dv">2</span>);          <span class="co">/* debe dar 0: a^2 - b^2 = c^2 con c = e*a */</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</section>
+</section>
+<section id="velocidad-y-aceleración-en-coordenadas-polares" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="velocidad-y-aceleración-en-coordenadas-polares"><span class="header-section-number">4</span> Velocidad y aceleración en coordenadas polares</h2>
+<p>Consideremos un cuerpo de masa <span class="math inline">\(m\)</span> que se mueve en un plano, con el Sol de masa <span class="math inline">\(M\)</span> en el origen. En cada punto de la trayectoria tomamos la base ortonormal</p>
+<p><span class="math display">\[u_r=(\cos\theta,\ \sin\theta), \qquad u_\theta=(-\sin\theta,\ \cos\theta)\]</span></p>
+<div id="fig-polar" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="base-polar.svg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4: Base polar en la posición <span class="math inline">\(m\)</span> y las componentes de una fuerza <span class="math inline">\(F\)</span>.
+</figcaption>
+</figure>
+</div>
+<p>Derivando respecto del ángulo, <span class="math inline">\(u_r'=u_\theta\)</span> y <span class="math inline">\(u_\theta'=-u_r\)</span>. Con la regla de la cadena, <span class="math inline">\(\dot u_r=\dfrac{d\theta}{dt}\dfrac{du_r}{d\theta}=\dot\theta\,u_\theta\)</span> y <span class="math inline">\(\dot u_\theta=-\dot\theta\,u_r\)</span>.</p>
+<p>El vector de posición es <span class="math inline">\(r\,u_r\)</span>, y su velocidad es</p>
+<p><span class="math display">\[v=\frac{d}{dt}\left(r\,u_r\right)=\dot r\,u_r+r\dot\theta\,u_\theta\]</span></p>
+<p>Derivando otra vez,</p>
+<p><span class="math display">\[a=\ddot r\,u_r+\dot r\dot\theta\,u_\theta+\left(\dot r\dot\theta+r\ddot\theta\right)u_\theta-r\dot\theta^2\,u_r=\left(\ddot r-r\dot\theta^2\right)u_r+\left(r\ddot\theta+2\dot r\dot\theta\right)u_\theta\]</span></p>
+<p>Si la fuerza es <span class="math inline">\(F=F_r\,u_r+F_\theta\,u_\theta\)</span>, la segunda ley de Newton <span class="math inline">\(F=ma\)</span> da</p>
+<p><span class="math display">\[F_r=m\left(\ddot r-r\dot\theta^2\right), \qquad F_\theta=m\left(r\ddot\theta+2\dot r\dot\theta\right)\]</span></p>
+</section>
+<section id="la-segunda-ley-de-kepler" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="la-segunda-ley-de-kepler"><span class="header-section-number">5</span> La segunda ley de Kepler</h2>
+<p>Estudiemos el caso de una fuerza central, la que apunta siempre hacia el Sol. Entonces <span class="math inline">\(F_\theta=0\)</span>, es decir,</p>
+<p><span class="math display">\[r\ddot\theta+2\dot r\dot\theta=0\]</span></p>
+<p>Multiplicando por <span class="math inline">\(r\)</span> se reconoce una derivada exacta:</p>
+<p><span class="math display">\[r^2\ddot\theta+2r\dot r\dot\theta=\frac{d}{dt}\left(r^2\dot\theta\right)=0 \quad\Longrightarrow\quad r^2\dot\theta=h\]</span></p>
+<p>con <span class="math inline">\(h\)</span> constante (el momento angular por unidad de masa). Recordemos que el área barrida por el radio vector entre los ángulos <span class="math inline">\(\theta_1\)</span> y <span class="math inline">\(\theta_2\)</span> es <span class="math inline">\(\tfrac12\int_{\theta_1}^{\theta_2} r^2\,d\theta\)</span>. Como <span class="math inline">\(d\theta=\dot\theta\,dt\)</span>, entre los tiempos <span class="math inline">\(t_1\)</span> y <span class="math inline">\(t_2\)</span> es</p>
+<p><span class="math display">\[A(t_1,t_2)=\frac12\int_{t_1}^{t_2} r^2\dot\theta\,dt=\frac12\int_{t_1}^{t_2} h\,dt=\frac12\,h\,(t_2-t_1)\]</span></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Segunda ley de Kepler">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Segunda ley de Kepler
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El radio vector del Sol a un planeta barre áreas iguales en intervalos de tiempo iguales.</p>
+</div>
+</div>
+<div id="fig-areas" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-areas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="areas-iguales.svg" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-areas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5: Las dos regiones sombreadas se recorren en el mismo tiempo, así que tienen la misma área. Cerca del perihelio el planeta es más rápido.
+</figcaption>
+</figure>
+</div>
+<p>Note que solo se usó que la fuerza es central: la segunda ley vale para cualquier fuerza central, no solo para la gravedad.</p>
+</section>
+<section id="la-primera-ley-de-kepler" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="la-primera-ley-de-kepler"><span class="header-section-number">6</span> La primera ley de Kepler</h2>
+<p>Ahora usamos la ley de gravitación universal de Newton, <span class="math inline">\(F=-\dfrac{GmM}{r^2}\,u_r\)</span>, con <span class="math inline">\(G\)</span> la constante gravitacional. La componente radial de <span class="math inline">\(F=ma\)</span> es</p>
+<p><span class="math display">\[\ddot r-r\dot\theta^2=-\frac{k}{r^2}, \qquad k=GM \tag{*}\]</span></p>
+<p>De <span class="math inline">\(r^2\dot\theta=h\)</span> se tiene <span class="math inline">\(\dot\theta=h/r^2\)</span>, y entonces</p>
+<p><span class="math display">\[\ddot r-\frac{h^2}{r^3}=-\frac{k}{r^2}\]</span></p>
+<p>Es una ecuación de segundo orden no lineal, y ni la reducción de orden ni una solución por tanteo funcionan bien. La idea es cambiar de variables: tomar <span class="math inline">\(\theta\)</span> como variable independiente y <span class="math inline">\(z=1/r\)</span> como incógnita. Como <span class="math inline">\(\dot\theta=h/r^2=hz^2\)</span>,</p>
+<p><span class="math display">\[\dot r=\frac{d}{dt}\left(\frac1z\right)=-\frac{\dot z}{z^2}=-\frac1{z^2}\,\frac{dz}{d\theta}\,\frac{d\theta}{dt}=-\frac{1}{z^2}\,z'\,hz^2=-h\,z'\]</span></p>
+<p><span class="math display">\[\ddot r=\frac{d}{dt}\left(-h\,z'\right)=-h\,z''\,\frac{d\theta}{dt}=-h^2z^2z''\]</span></p>
+<p>Sustituyendo en <span class="math inline">\((\ast)\)</span>, con <span class="math inline">\(r\dot\theta^2=h^2z^3\)</span> y <span class="math inline">\(k/r^2=kz^2\)</span>:</p>
+<p><span class="math display">\[-h^2z^2z''-h^2z^3=-kz^2 \quad\Longrightarrow\quad z''+z=\frac{k}{h^2}\]</span></p>
+<p>Es una ecuación lineal con coeficientes constantes, con solución general</p>
+<p><span class="math display">\[z(\theta)=B\cos\theta+A\sin\theta+\frac{k}{h^2}\]</span></p>
+<p>Elijamos el eje polar de modo que <span class="math inline">\(\theta=0\)</span> sea el punto de mayor <span class="math inline">\(z\)</span>, es decir, el de menor <span class="math inline">\(r\)</span> (el perihelio). Allí <span class="math inline">\(z'(0)=0\)</span> y <span class="math inline">\(z''(0)&lt;0\)</span>, lo que da <span class="math inline">\(A=0\)</span> y <span class="math inline">\(B&gt;0\)</span>. Entonces</p>
+<p><span class="math display">\[\frac1r=B\cos\theta+\frac{k}{h^2} \quad\Longrightarrow\quad r=\frac{h^2/k}{1+\dfrac{Bh^2}{k}\cos\theta}\]</span></p>
+<p>Es exactamente la ecuación polar de una cónica, <span class="math inline">\(r=ed/(1+e\cos\theta)\)</span>, con</p>
+<p><span class="math display">\[ed=\frac{h^2}{k}, \qquad e=\frac{Bh^2}{k}, \qquad d=\frac1B\]</span></p>
+<p>El Sol está en el foco, y la directriz queda a la distancia <span class="math inline">\(d=1/B\)</span> del Sol. Como los planetas siguen órbitas acotadas, <span class="math inline">\(e&lt;1\)</span>, es decir <span class="math inline">\(0&lt;B&lt;k/h^2\)</span>.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Primera ley de Kepler">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Primera ley de Kepler
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Los planetas se mueven en elipses con el Sol en uno de los focos.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">/* La ecuacion lineal z'' + z = k/h^2 */</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ode2</span>(<span class="do">'</span><span class="cn">diff</span>(<span class="cn">z</span>, <span class="cn">th</span>, <span class="dv">2</span>) + <span class="cn">z</span> = <span class="cn">k</span>/<span class="cn">h</span>^<span class="dv">2</span>, <span class="cn">z</span>, <span class="cn">th</span>);   <span class="co">/* z = %k1*sin(th) + %k2*cos(th) + k/h^2 */</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">/* Verificamos que r = (h^2/k)/(1+e*cos(th)) cumple r'' - r*(theta')^2 = -k/r^2,</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">   donde theta' = h/r^2 y la derivada en t es (d/dtheta)*theta' */</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="cn">p</span>: <span class="cn">h</span>^<span class="dv">2</span>/<span class="cn">k</span>;</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="cn">r</span>: <span class="cn">p</span>/(<span class="dv">1</span> + <span class="cn">e</span>*<span class="fu">cos</span>(<span class="cn">th</span>));</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="cn">thd</span>: <span class="cn">h</span>/<span class="cn">r</span>^<span class="dv">2</span>;</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="cn">rd</span>: <span class="fu">diff</span>(<span class="cn">r</span>, <span class="cn">th</span>)*<span class="cn">thd</span>;</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="cn">rdd</span>: <span class="fu">diff</span>(<span class="cn">rd</span>, <span class="cn">th</span>)*<span class="cn">thd</span>;</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="cn">chequeo</span>: <span class="cn">rdd</span> - <span class="cn">r</span>*<span class="cn">thd</span>^<span class="dv">2</span> + <span class="cn">k</span>/<span class="cn">r</span>^<span class="dv">2</span>;</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ratsimp</span>(<span class="fu">ratsubst</span>(<span class="dv">1</span> - <span class="fu">cos</span>(<span class="cn">th</span>)^<span class="dv">2</span>, <span class="fu">sin</span>(<span class="cn">th</span>)^<span class="dv">2</span>, <span class="fu">ratsimp</span>(<span class="cn">chequeo</span>)));   <span class="co">/* debe dar 0 */</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</section>
+<section id="análisis-de-energía" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="análisis-de-energía"><span class="header-section-number">7</span> Análisis de energía</h2>
+<p>La energía cinética es</p>
+<p><span class="math display">\[E_C=\frac12 mv^2=\frac12 m\left(r^2\dot\theta^2+\dot r^2\right)\]</span></p>
+<p>y la energía potencial gravitacional, tomando cero en el infinito, es</p>
+<p><span class="math display">\[E_P=-\int_r^\infty \frac{km}{\rho^2}\,d\rho=-\frac{km}{r}\]</span></p>
+<p>La energía total es <span class="math inline">\(E=E_C+E_P\)</span> y se conserva. Calculémosla en el perihelio, <span class="math inline">\(\theta=0\)</span>. Allí <span class="math inline">\(\dot r=-hz'(0)=0\)</span>, el radio es <span class="math inline">\(r_{\min}=1/z_0\)</span> y, por la ecuación de la órbita,</p>
+<p><span class="math display">\[z_0=\frac{1+e}{h^2/k}=(1+e)\,\frac{k}{h^2}\]</span></p>
+<p>Como <span class="math inline">\(\dot\theta=hz^2\)</span>, se tiene <span class="math inline">\(r^2\dot\theta^2=h^2z_0^2\)</span> y</p>
+<p><span class="math display">\[E=\frac12 m h^2z_0^2-km\,z_0=\frac{mk^2}{h^2}\left[\frac{(1+e)^2}{2}-(1+e)\right]=\frac{mk^2}{2h^2}\left(e^2-1\right)\]</span></p>
+<p>Despejando la excentricidad,</p>
+<p><span class="math display">\[e=\sqrt{1+\frac{2Eh^2}{mk^2}}\]</span></p>
+<div class="callout callout-style-default callout-important callout-titled" title="La energía decide el tipo de órbita">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>La energía decide el tipo de órbita
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Según el signo de <span class="math inline">\(E\)</span>, la órbita es una <strong>elipse</strong> (<span class="math inline">\(E&lt;0\)</span>, <span class="math inline">\(e&lt;1\)</span>), una <strong>parábola</strong> (<span class="math inline">\(E=0\)</span>, <span class="math inline">\(e=1\)</span>) o una <strong>hipérbola</strong> (<span class="math inline">\(E&gt;0\)</span>, <span class="math inline">\(e&gt;1\)</span>).</p>
+</div>
+</div>
+<p>Los planetas del Sistema Solar tienen energía negativa y se mueven en elipses, y los cuerpos que pasan por el sistema a gran velocidad tienen energía positiva y recorren hipérbolas. Que <span class="math inline">\(E\)</span> sea negativa no contradice nada: la energía cinética es siempre positiva, pero la potencial es negativa porque se tomó el cero en el infinito. Que <span class="math inline">\(E&lt;0\)</span> significa que el cuerpo está ligado al Sol: no tiene energía suficiente para llegar al infinito. Una Tierra a la que se le diera un empujón que subiera su energía por encima de cero entraría en una hipérbola y dejaría el Sistema Solar para siempre.</p>
+</section>
+<section id="la-tercera-ley-de-kepler" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="la-tercera-ley-de-kepler"><span class="header-section-number">8</span> La tercera ley de Kepler</h2>
+<p>Restrinjamos la atención a la órbita elíptica. Los valores extremos de <span class="math inline">\(r\)</span> se alcanzan en <span class="math inline">\(\theta=0\)</span> y <span class="math inline">\(\theta=\pi\)</span>:</p>
+<p><span class="math display">\[r_{\min}=\frac{h^2}{k(1+e)}, \qquad r_{\max}=\frac{h^2}{k(1-e)}\]</span></p>
+<p>En astronomía, el semieje mayor <span class="math inline">\(a\)</span> se llama la distancia media, porque es la mitad de la suma de estos dos valores:</p>
+<p><span class="math display">\[a=\frac12\left(r_{\min}+r_{\max}\right)=\frac{h^2}{2k}\cdot\frac{(1-e)+(1+e)}{1-e^2}=\frac{h^2}{k\,(1-e^2)}\]</span></p>
+<p>(geométricamente, <span class="math inline">\(r_{\min}=a-c=a(1-e)\)</span> y <span class="math inline">\(r_{\max}=a+c=a(1+e)\)</span>, como en la <a href="#fig-elipse" class="quarto-xref">Figura&nbsp;3</a>). Como <span class="math inline">\(b^2=a^2(1-e^2)\)</span>, se tiene <span class="math inline">\(1-e^2=b^2/a^2\)</span> y la igualdad anterior queda <span class="math inline">\(a=h^2a^2/(kb^2)\)</span>, es decir,</p>
+<p><span class="math display">\[b^2=\frac{h^2}{k}\,a\]</span></p>
+<p>Sea <span class="math inline">\(T\)</span> el periodo del planeta. El área de la elipse es <span class="math inline">\(\pi ab\)</span>, y por la segunda ley es <span class="math inline">\(\tfrac12 hT\)</span> (la integral de <span class="math inline">\(0\)</span> a <span class="math inline">\(T\)</span> de <span class="math inline">\(\tfrac12 h\,dt\)</span>). Entonces <span class="math inline">\(\pi ab=\tfrac12 hT\)</span> y</p>
+<p><span class="math display">\[T^2=\frac{4\pi^2a^2b^2}{h^2}=\frac{4\pi^2a^2}{h^2}\cdot\frac{h^2}{k}\,a=\frac{4\pi^2}{k}\,a^3\]</span></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Tercera ley de Kepler">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Tercera ley de Kepler
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El cuadrado del periodo de un planeta es proporcional al cubo de su distancia media al Sol: <span class="math inline">\(T^2=\dfrac{4\pi^2}{k}\,a^3\)</span>.</p>
+</div>
+</div>
+<p>La constante <span class="math inline">\(k=GM\)</span> depende de la masa central y no de <span class="math inline">\(m\)</span>, así que es la misma para todos los planetas. Midiendo <span class="math inline">\(T\)</span> en años y <span class="math inline">\(a\)</span> en unidades astronómicas (la distancia media de la Tierra al Sol), <span class="math inline">\(k=4\pi^2\)</span> y la ley queda <span class="math inline">\(T^2=a^3\)</span>.</p>
+</section>
+<section id="problema-la-energía-orbital" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="problema-la-energía-orbital"><span class="header-section-number">9</span> Problema: la energía orbital</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejercicio (Simmons, §21, problema 4)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejercicio (Simmons, §21, problema 4)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre que la rapidez <span class="math inline">\(v\)</span> de un planeta en cualquier punto de su órbita es</p>
+<p><span class="math display">\[v^2=k\left(\frac2r-\frac1a\right)\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Escribimos <span class="math inline">\(p=h^2/k\)</span>, de modo que la órbita es <span class="math inline">\(r=p/(1+e\cos\theta)\)</span>. Partimos de <span class="math inline">\(v^2=r^2\dot\theta^2+\dot r^2\)</span>.</p>
+<p>Del primer término, como <span class="math inline">\(\dot\theta=h/r^2\)</span>, se tiene <span class="math inline">\(r^2\dot\theta^2=h^2/r^2\)</span>.</p>
+<p>Para el segundo, <span class="math inline">\(\dot r=\dfrac{dr}{d\theta}\,\dot\theta=\dfrac{h}{r^2}\,\dfrac{dr}{d\theta}\)</span>, y derivando la órbita,</p>
+<p><span class="math display">\[\frac{dr}{d\theta}=\frac{p\,e\sin\theta}{(1+e\cos\theta)^2}=\frac{r^2}{p}\,e\sin\theta \quad\Longrightarrow\quad \dot r=\frac hp\,e\sin\theta\]</span></p>
+<p>De <span class="math inline">\(r(1+e\cos\theta)=p\)</span> se despeja <span class="math inline">\(\cos\theta=(p/r-1)/e\)</span>, así que <span class="math inline">\(e^2\sin^2\theta=e^2-(p/r-1)^2\)</span> y</p>
+<p><span class="math display">\[\dot r^2=\frac{h^2}{p^2}\left[e^2-\left(\frac pr-1\right)^2\right]=\frac{h^2}{p^2}\left(e^2-1+\frac{2p}{r}-\frac{p^2}{r^2}\right)\]</span></p>
+<p>Sumando los dos términos, el <span class="math inline">\(h^2/r^2\)</span> se cancela con el que sale de <span class="math inline">\(-h^2p^2/(p^2r^2)\)</span>:</p>
+<p><span class="math display">\[v^2=\frac{h^2}{p^2}\left(e^2-1\right)+\frac{2h^2}{p\,r}\]</span></p>
+<p>Ahora usamos <span class="math inline">\(p=h^2/k\)</span>, de donde <span class="math inline">\(h^2/p^2=k^2/h^2\)</span> y <span class="math inline">\(h^2/p=k\)</span>. Además, de <span class="math inline">\(a=\dfrac{h^2}{k(1-e^2)}\)</span> se tiene <span class="math inline">\(1-e^2=\dfrac{h^2}{ka}\)</span>. Entonces</p>
+<p><span class="math display">\[v^2=\frac{k^2}{h^2}\left(e^2-1\right)+\frac{2k}{r}=-\frac{k^2}{h^2}\cdot\frac{h^2}{ka}+\frac{2k}{r}=k\left(\frac2r-\frac1a\right)\qquad\blacksquare\]</span></p>
+</div>
+</div>
+</div>
+<p>Esta fórmula es la energía orbital escrita en otra forma. Multiplicando por <span class="math inline">\(m/2\)</span> y pasando <span class="math inline">\(km/r\)</span> al lado izquierdo queda <span class="math inline">\(\tfrac12 mv^2-\dfrac{km}{r}=-\dfrac{km}{2a}\)</span>, de modo que en una órbita elíptica la energía total depende solo del semieje mayor: <span class="math inline">\(E=-\dfrac{km}{2a}\)</span>. Dos casos límite: en una órbita circular, <span class="math inline">\(r=a\)</span> y <span class="math inline">\(v^2=k/a\)</span>; y la rapidez de escape, que corresponde a <span class="math inline">\(a\to\infty\)</span> (<span class="math inline">\(E=0\)</span>), es <span class="math inline">\(v^2=2k/r\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cn">p</span>: <span class="cn">h</span>^<span class="dv">2</span>/<span class="cn">k</span>;</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cn">r</span>: <span class="cn">p</span>/(<span class="dv">1</span> + <span class="cn">e</span>*<span class="fu">cos</span>(<span class="cn">th</span>));</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cn">thd</span>: <span class="cn">h</span>/<span class="cn">r</span>^<span class="dv">2</span>;</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="cn">rd</span>: <span class="fu">diff</span>(<span class="cn">r</span>, <span class="cn">th</span>)*<span class="cn">thd</span>;</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="cn">v2</span>: <span class="cn">r</span>^<span class="dv">2</span>*<span class="cn">thd</span>^<span class="dv">2</span> + <span class="cn">rd</span>^<span class="dv">2</span>;</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">/* Rapidez al cuadrado contra k*(2/r - 1/a), con a = p/(1-e^2) */</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="cn">a</span>: <span class="cn">p</span>/(<span class="dv">1</span> - <span class="cn">e</span>^<span class="dv">2</span>);</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="cn">chequeo</span>: <span class="cn">v2</span> - <span class="cn">k</span>*(<span class="dv">2</span>/<span class="cn">r</span> - <span class="dv">1</span>/<span class="cn">a</span>);</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ratsimp</span>(<span class="fu">ratsubst</span>(<span class="dv">1</span> - <span class="fu">cos</span>(<span class="cn">th</span>)^<span class="dv">2</span>, <span class="fu">sin</span>(<span class="cn">th</span>)^<span class="dv">2</span>, <span class="fu">ratsimp</span>(<span class="cn">chequeo</span>)));   <span class="co">/* debe dar 0 */</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">/* La energia total es una constante, E = m*k^2*(e^2-1)/(2*h^2) = -k*m/(2*a) */</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="cn">E</span>: <span class="cn">m</span>*<span class="cn">v2</span>/<span class="dv">2</span> - <span class="cn">k</span>*<span class="cn">m</span>/<span class="cn">r</span>;</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ratsimp</span>(<span class="fu">ratsubst</span>(<span class="dv">1</span> - <span class="fu">cos</span>(<span class="cn">th</span>)^<span class="dv">2</span>, <span class="fu">sin</span>(<span class="cn">th</span>)^<span class="dv">2</span>, <span class="fu">ratsimp</span>(<span class="cn">E</span> - <span class="cn">m</span>*<span class="cn">k</span>^<span class="dv">2</span>*(<span class="cn">e</span>^<span class="dv">2</span> - <span class="dv">1</span>)/(<span class="dv">2</span>*<span class="cn">h</span>^<span class="dv">2</span>))));   <span class="co">/* 0 */</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="fu">ratsimp</span>(<span class="cn">E</span> + <span class="cn">k</span>*<span class="cn">m</span>/(<span class="dv">2</span>*<span class="cn">a</span>));                                                               <span class="co">/* 0 */</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</section>
+<section id="problema-la-explosión-de-la-tierra" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="problema-la-explosión-de-la-tierra"><span class="header-section-number">10</span> Problema: la explosión de la Tierra</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejercicio (Simmons, §21, problema 5)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejercicio (Simmons, §21, problema 5)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suponga que la Tierra explota en fragmentos que salen con la misma rapidez en direcciones distintas, cada uno hacia una órbita propia. Use la tercera ley de Kepler y el resultado del problema anterior para demostrar que todos los fragmentos que no caen al Sol ni escapan del Sistema Solar se reúnen más tarde en el mismo punto donde empezaron a separarse.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Sea <span class="math inline">\(r\)</span> la distancia al Sol del punto de la explosión y <span class="math inline">\(v\)</span> la rapidez común de los fragmentos justo después. Por el problema anterior, cada fragmento cumple <span class="math inline">\(v^2=k\,(2/r-1/a)\)</span> con su propio semieje mayor <span class="math inline">\(a\)</span>. Pero <span class="math inline">\(r\)</span> y <span class="math inline">\(v\)</span> son iguales para todos, así que despejando</p>
+<p><span class="math display">\[\frac1a=\frac2r-\frac{v^2}{k} \quad\Longrightarrow\quad a=\frac{kr}{2k-v^2r}\]</span></p>
+<p>es el <strong>mismo <span class="math inline">\(a\)</span> para todos</strong>, sin importar la dirección. Esto tiene sentido solo si <span class="math inline">\(a&gt;0\)</span>, es decir <span class="math inline">\(v^2&lt;2k/r\)</span>, la condición de energía negativa. Los fragmentos con <span class="math inline">\(v^2\ge 2k/r\)</span> tienen <span class="math inline">\(E\ge0\)</span>, siguen una parábola o una hipérbola y se pierden.</p>
+<p>Por la tercera ley,</p>
+<p><span class="math display">\[T^2=\frac{4\pi^2}{k}\,a^3=\frac{4\pi^2k^2\,r^3}{(2k-v^2r)^3}\]</span></p>
+<p>que depende de <span class="math inline">\(r\)</span> y de <span class="math inline">\(v\)</span> y no de la dirección: <strong>todos los fragmentos tienen el mismo periodo <span class="math inline">\(T\)</span></strong>. Cada uno parte del mismo punto con una órbita que se repite cada <span class="math inline">\(T\)</span>, así que al cabo de un tiempo <span class="math inline">\(T\)</span> todos están de nuevo en el punto de partida, y se reúnen allí. Los que no vuelven son los que caen al Sol (los que salen casi en dirección radial y tienen su perihelio dentro del Sol) y los que escapan.</p>
+<p>Para la Tierra, <span class="math inline">\(r=1\)</span> UA y <span class="math inline">\(v=v_{\rm circ}=2\pi\)</span> UA/año <span class="math inline">\(\approx 29{,}8\)</span> km/s dan <span class="math inline">\(a=1\)</span> y <span class="math inline">\(T=1\)</span> año: los fragmentos se reúnen un año después. La rapidez de escape es <span class="math inline">\(\sqrt2\,v_{\rm circ}\approx 42{,}1\)</span> km/s. Y si salen con la rapidez de la Tierra, un fragmento que sale con un ángulo <span class="math inline">\(\varphi\)</span> medido desde la dirección tangencial tiene <span class="math inline">\(e=|\sin\varphi|\)</span> y perihelio <span class="math inline">\(1-|\sin\varphi|\)</span> UA. Como el radio del Sol es <span class="math inline">\(0{,}00465\)</span> UA, el fragmento cae en el Sol si <span class="math inline">\(|\sin\varphi|&gt;0{,}99535\)</span>, es decir, si sale a menos de unos <span class="math inline">\(5{,}5^\circ\)</span> de la dirección radial.</p>
+</div>
+</div>
+</div>
+<p>La demostración depende de que la rapidez sea exactamente la misma. Si las rapideces difieren, los semiejes difieren y también los periodos: como <span class="math inline">\(T\propto a^{3/2}\)</span> se tiene <span class="math inline">\(dT/T=\tfrac32\,da/a\)</span>, y partiendo de una órbita circular (<span class="math inline">\(r=a\)</span>), de <span class="math inline">\(1/a=2/r-v^2/k\)</span> sale <span class="math inline">\(da/a=2\,dv/v\)</span>, así que</p>
+<p><span class="math display">\[\frac{dT}{T}=3\,\frac{dv}{v}\]</span></p>
+<p>Una diferencia de <span class="math inline">\(1\,\%\)</span> en la rapidez (<span class="math inline">\(0{,}3\)</span> km/s, alrededor de <span class="math inline">\(1{,}031\)</span> años de periodo en vez de <span class="math inline">\(1\)</span>) separa el regreso de ese fragmento unos <span class="math inline">\(11\)</span> días, y a un año de la explosión estaría a unos <span class="math inline">\(0{,}19\)</span> UA, casi <span class="math inline">\(30\)</span> millones de kilómetros, del punto de partida.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">/* Unidades: UA y años, k = 4*pi^2. Explosion a r = 1 UA */</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cn">k</span>: <span class="dv">4</span>*<span class="va">%pi</span>^<span class="dv">2</span>;</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="cn">r0</span>: <span class="dv">1</span>;</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="cn">semieje</span>(<span class="cn">v</span>) := <span class="cn">k</span>*<span class="cn">r0</span>/(<span class="dv">2</span>*<span class="cn">k</span> - <span class="cn">v</span>^<span class="dv">2</span>*<span class="cn">r0</span>);</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="cn">periodo</span>(<span class="cn">v</span>) := <span class="fu">sqrt</span>(<span class="dv">4</span>*<span class="va">%pi</span>^<span class="dv">2</span>/<span class="cn">k</span>*<span class="cn">semieje</span>(<span class="cn">v</span>)^<span class="dv">3</span>);</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="cn">periodo</span>(<span class="dv">2</span>*<span class="va">%pi</span>);                       <span class="co">/* 1: la rapidez circular da T = 1 ano */</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">float</span>(<span class="cn">periodo</span>(<span class="fl">1.01</span>*<span class="dv">2</span>*<span class="va">%pi</span>));           <span class="co">/* aprox. 1.0309: 1% mas de rapidez, 3% mas de periodo */</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">float</span>(<span class="fu">sqrt</span>(<span class="dv">2</span>*<span class="cn">k</span>/<span class="cn">r0</span>));                  <span class="co">/* rapidez de escape en UA/ano, aprox. 8.886 (42.1 km/s) */</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Simulador: la explosión de la Tierra">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Simulador: la explosión de la Tierra
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Los fragmentos salen del mismo punto, a 1 UA del Sol, con la misma rapidez y en direcciones repartidas en un abanico. Cada uno recorre su órbita kepleriana, calculada con la ecuación de Kepler, y el panel marca cuándo vuelven a reunirse. Algunas cosas para probar:</p>
+<ol type="1">
+<li>Con la rapidez de la Tierra (botón “Igual a la Tierra”) todos los fragmentos regresan al punto de la explosión en <span class="math inline">\(t=T=1\)</span> año. La curva de abajo, que mide qué tan dispersos están, vuelve a cero en <span class="math inline">\(t=1\)</span>, <span class="math inline">\(2\)</span> y <span class="math inline">\(3\)</span> años.</li>
+<li>Con rapidez mayor (33 o 38 km/s) todos los fragmentos siguen teniendo el mismo <span class="math inline">\(a\)</span> y el mismo <span class="math inline">\(T\)</span>, y se reúnen al cabo de ese nuevo periodo. Con 44 km/s, por encima del escape, ya no regresa ninguno.</li>
+<li>Active la dispersión de rapideces: aunque sea de un <span class="math inline">\(1\,\%\)</span> el grupo deja de reunirse. Reduzca el abanico a unos grados alrededor de la dirección tangencial y vea cómo cambia la forma del grupo.</li>
+</ol>
+<iframe src="explosion.html" width="100%" height="1160" style="border:1px solid #dfe3e2; border-radius:6px;" title="Simulador: la explosión de la Tierra"></iframe>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/arturosanjuan\.xyz");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="preferred_color_scheme">
+<input type="hidden" id="giscus-alt-theme" value="preferred_color_scheme">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      if (authorPrefersDark) {
+          [baseTheme, altTheme] = [altTheme, baseTheme];
+      }
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "asanjuanc/arturosanjuan-sitio";
+    script.dataset.repoId = "R_kgDOTzuHrw";
+    script.dataset.category = "Comentarios";
+    script.dataset.categoryId = "DIC_kwDOTzuHr84DD_eD";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "es";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cónicas y esferas de Dandelin</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+  :root{
+    --ink:#1e2327; --muted:#5a6570; --line:#dde3e8; --bg:#fbfcfd; --panel:#ffffff;
+    --accent:#2563a8; --accent2:#c1440e; --good:#1a7f5a; --soft:#f2f5f7; --softblue:#e6eef8;
+    --c1:#2563a8; --c2:#c1440e; --c3:#1a7f5a; --c4:#a63a7a; --cone:#9fb3c8;
+    --mono: ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; padding:18px 20px 26px; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:14.5px; line-height:1.45;
+  }
+  h2{font-size:16px; margin:0 0 4px;}
+  .sub{color:var(--muted); margin:0 0 16px; font-size:13px;}
+
+  .stage{display:grid; grid-template-columns:minmax(0,1fr) 330px; gap:18px; align-items:start;}
+  .view{position:relative; min-width:0; background:var(--panel); border:1px solid var(--line); border-radius:10px; overflow:hidden;}
+  .view canvas{display:block; width:100%; touch-action:none; cursor:grab;}
+  .view canvas:active{cursor:grabbing;}
+  .lbl{
+    position:absolute; left:0; top:0; pointer-events:none; display:none;
+    font-family:var(--mono); font-size:12px; font-weight:600; margin:-20px 0 0 8px; white-space:nowrap;
+    text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 6px #fff;
+  }
+  .vbtn{position:absolute; right:10px; top:10px; display:flex; gap:6px;}
+  .vbtn button,.btn{
+    border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:6px;
+    padding:4px 10px; font:inherit; font-size:12.5px; cursor:pointer;
+  }
+  .vbtn button:hover,.btn:hover{background:var(--soft);}
+  .btn:focus-visible,.vbtn button:focus-visible,input:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+  .hint{position:absolute; left:12px; bottom:10px; font-size:11.5px; color:var(--muted); text-shadow:0 0 3px #fff,0 0 3px #fff;}
+  .nogl{padding:40px 20px; color:var(--muted);}
+
+  .panel{min-width:0; background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 16px; display:grid; gap:14px;}
+  .ctl{display:grid; gap:4px;}
+  .ctl-h{display:flex; justify-content:space-between; align-items:baseline; gap:8px;}
+  .ctl label,.sec{font-size:13px; color:var(--ink);}
+  .sec{color:var(--muted); font-weight:600;}
+  .val{font-variant-numeric:tabular-nums; color:var(--accent); font-weight:600;}
+  input[type="range"]{width:100%; accent-color:var(--accent); margin:4px 0 0;}
+  .presets{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px;}
+  .presets .btn{padding:5px 2px;}
+  .chip{display:inline-block; padding:2px 11px; border-radius:20px; font-weight:600; font-size:12.5px; background:var(--softblue); color:var(--accent);}
+  .checks{display:grid; gap:6px; font-size:13.5px;}
+  .checks label{display:flex; gap:8px; align-items:center; cursor:pointer;}
+  .row{display:flex; gap:8px; flex-wrap:wrap;}
+  dl.read{margin:0; display:grid; grid-template-columns:1fr auto; gap:4px 12px; font-size:13px;}
+  dl.read dt{color:var(--muted);}
+  dl.read dd{margin:0; font-family:var(--mono); text-align:right; font-variant-numeric:tabular-nums;}
+  .explain{margin:0; font-size:13px; color:var(--muted);}
+  .legend{display:flex; flex-wrap:wrap; gap:6px 14px; font-size:12px; color:var(--muted);}
+  .legend span{display:inline-flex; align-items:center; gap:6px;}
+  .sw{width:10px; height:10px; border-radius:50%; display:inline-block;}
+  @media (max-width:860px){ .stage{grid-template-columns:minmax(0,1fr);} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h2>Cónicas y esferas de Dandelin</h2>
+  <p class="sub">Mueva la excentricidad e y vea cómo el plano rueda sobre una esfera inscrita en el cono. Arrastre la imagen para girarla.</p>
+
+  <div class="stage">
+    <div class="view" id="view">
+      <canvas id="cv" aria-label="Cono doble cortado por un plano, con las esferas de Dandelin"></canvas>
+      <span class="lbl" id="lF1" style="color:var(--c1)">F₁</span>
+      <span class="lbl" id="lF2" style="color:var(--c3)">F₂</span>
+      <span class="lbl" id="lP" style="color:var(--ink)">P</span>
+      <span class="lbl" id="lD" style="color:var(--c4)">directriz</span>
+      <div class="vbtn">
+        <button type="button" id="zin" aria-label="Acercar">+</button>
+        <button type="button" id="zout" aria-label="Alejar">−</button>
+        <button type="button" id="rv">Vista inicial</button>
+      </div>
+      <div class="hint" id="hint">arrastrar: girar · rueda: zoom</div>
+    </div>
+
+    <div class="panel">
+      <div class="ctl">
+        <div class="ctl-h"><label for="eS">Excentricidad e</label><span class="val" id="eV">0.50</span></div>
+        <input type="range" id="eS" min="0" max="1.41" step="0.01" value="0.5">
+        <div class="presets">
+          <button type="button" class="btn" data-p="circ">Círculo</button>
+          <button type="button" class="btn" data-p="ell">Elipse</button>
+          <button type="button" class="btn" data-p="par">Parábola</button>
+          <button type="button" class="btn" data-p="hyp">Hipérbola</button>
+        </div>
+        <div class="row" style="margin-top:6px">
+          <button type="button" class="btn" id="play">Animar e</button>
+          <button type="button" class="btn" id="br" hidden>Cambiar de rama</button>
+        </div>
+      </div>
+
+      <div class="ctl">
+        <div class="ctl-h"><label for="aS">Apertura del cono α</label><span class="val" id="aV">45°</span></div>
+        <input type="range" id="aS" min="25" max="65" step="1" value="45">
+        <span class="sec" id="emaxT" style="font-weight:400"></span>
+      </div>
+
+      <div class="ctl">
+        <div class="ctl-h"><label for="tS">Punto P sobre la curva</label></div>
+        <input type="range" id="tS" min="0" max="1" step="0.005" value="0.3">
+      </div>
+
+      <div class="checks">
+        <label><input type="checkbox" id="chS" checked> Esferas de Dandelin</label>
+        <label><input type="checkbox" id="chP" checked> Punto P y generatriz</label>
+        <label><input type="checkbox" id="chD" checked> Directriz</label>
+      </div>
+
+      <div class="legend">
+        <span><i class="sw" style="background:var(--c1)"></i>esfera y foco F₁</span>
+        <span><i class="sw" style="background:var(--c3)"></i>esfera y foco F₂</span>
+        <span><i class="sw" style="background:var(--c2)"></i>curva</span>
+        <span><i class="sw" style="background:var(--c4)"></i>generatriz y directriz</span>
+      </div>
+
+      <div>
+        <div class="ctl-h" style="margin-bottom:8px"><span class="sec">Lecturas</span><span class="chip" id="typ"></span></div>
+        <dl class="read" id="read"></dl>
+      </div>
+
+      <p class="explain" id="expl"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var view = document.getElementById("view");
+  var canvas = document.getElementById("cv");
+  if (!window.THREE) { view.innerHTML = '<div class="nogl">No se pudo cargar three.js. Revisa la conexión y recarga la página.</div>'; return; }
+  var THREE = window.THREE;
+  var renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+  } catch (err) {
+    view.innerHTML = '<div class="nogl">Este navegador no pudo iniciar WebGL, necesario para el visor 3D.</div>';
+    return;
+  }
+  renderer.setClearColor(0x000000, 0);
+
+  var C0 = 1.8, HU = 16, HL = 8;
+  var state = { alpha: 45, e: 0.5, t: 0.3, branch: 0, spheres: true, pt: true, dir: true, play: false, dirn: 1 };
+  var TWO_PI = Math.PI * 2;
+
+  /* Escena */
+  var scene = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(38, 1, 0.1, 300);
+  camera.up.set(0, 0, 1);
+  scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+  var dl = new THREE.DirectionalLight(0xffffff, 0.6);
+  dl.position.set(10, -12, 20);
+  scene.add(dl);
+
+  var tg = new THREE.Vector3(0, 0, 7);
+  var VIEW0 = { az: -1.25, el: 0.3, dist: 56 };
+  var az = VIEW0.az, el = VIEW0.el, dist = VIEW0.dist;
+
+  function css(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim() || "#888888"; }
+  var col = {};
+  function readColors() {
+    ["c1", "c2", "c3", "c4", "ink", "muted", "line", "cone"].forEach(function (k) { col[k] = css("--" + k); });
+  }
+  readColors();
+
+  function mBasic(c, o) { return new THREE.MeshBasicMaterial({ color: c, transparent: o < 1, opacity: o, side: THREE.DoubleSide, depthWrite: o >= 1 }); }
+  var M = {
+    cone: mBasic(col.cone, 0.28),
+    wire: new THREE.LineBasicMaterial({ color: col.muted, transparent: true, opacity: 0.55 }),
+    axis: new THREE.LineBasicMaterial({ color: col.muted, transparent: true, opacity: 0.4 }),
+    plane: mBasic(col.c2, 0.15),
+    s1: new THREE.MeshLambertMaterial({ color: col.c1, transparent: true, opacity: 0.5, depthWrite: false }),
+    s2: new THREE.MeshLambertMaterial({ color: col.c3, transparent: true, opacity: 0.5, depthWrite: false }),
+    curve: new THREE.MeshBasicMaterial({ color: col.c2 }),
+    f1: new THREE.MeshBasicMaterial({ color: col.c1 }),
+    f2: new THREE.MeshBasicMaterial({ color: col.c3 }),
+    p: new THREE.MeshBasicMaterial({ color: col.ink }),
+    gen: new THREE.MeshBasicMaterial({ color: col.c4 }),
+    c1: new THREE.LineBasicMaterial({ color: col.c1 }),
+    c2: new THREE.LineBasicMaterial({ color: col.c3 }),
+    dir: new THREE.LineDashedMaterial({ color: col.c4, dashSize: 0.45, gapSize: 0.3 }),
+    pf1: new THREE.LineBasicMaterial({ color: col.c1 }),
+    pf2: new THREE.LineBasicMaterial({ color: col.c3 })
+  };
+  function applyColors() {
+    readColors();
+    M.cone.color.set(col.cone); M.wire.color.set(col.muted); M.axis.color.set(col.muted);
+    M.plane.color.set(col.c2); M.s1.color.set(col.c1); M.s2.color.set(col.c3);
+    M.curve.color.set(col.c2); M.f1.color.set(col.c1); M.f2.color.set(col.c3);
+    M.p.color.set(col.ink); M.gen.color.set(col.c4); M.c1.color.set(col.c1); M.c2.color.set(col.c3);
+    M.dir.color.set(col.c4); M.pf1.color.set(col.c1); M.pf2.color.set(col.c3);
+    rq();
+  }
+
+  var sphGeo = new THREE.SphereGeometry(1, 48, 32);
+  var circPts = [];
+  for (var i = 0; i < 97; i++) { var a0 = TWO_PI * i / 96; circPts.push(Math.cos(a0), Math.sin(a0), 0); }
+  var circGeo = new THREE.BufferGeometry();
+  circGeo.setAttribute("position", new THREE.Float32BufferAttribute(circPts, 3));
+
+  var coneU = new THREE.Mesh(new THREE.BufferGeometry(), M.cone);
+  var coneL = new THREE.Mesh(new THREE.BufferGeometry(), M.cone);
+  var wireU = new THREE.LineSegments(new THREE.BufferGeometry(), M.wire);
+  var wireL = new THREE.LineSegments(new THREE.BufferGeometry(), M.wire);
+  var axisGeo = new THREE.BufferGeometry();
+  axisGeo.setAttribute("position", new THREE.Float32BufferAttribute([0, 0, -HL - 1, 0, 0, HU + 1], 3));
+  var axisLine = new THREE.Line(axisGeo, M.axis);
+  var planeMesh = new THREE.Mesh(new THREE.PlaneGeometry(24, 24), M.plane);
+  var s1 = new THREE.Mesh(sphGeo, M.s1);
+  var s2 = new THREE.Mesh(sphGeo, M.s2);
+  var circ1 = new THREE.LineLoop(circGeo, M.c1);
+  var circ2 = new THREE.LineLoop(circGeo, M.c2);
+  var f1m = new THREE.Mesh(sphGeo, M.f1); f1m.scale.setScalar(0.17);
+  var f2m = new THREE.Mesh(sphGeo, M.f2); f2m.scale.setScalar(0.17);
+  var pm = new THREE.Mesh(sphGeo, M.p); pm.scale.setScalar(0.17);
+  var g1m = new THREE.Mesh(sphGeo, M.f1); g1m.scale.setScalar(0.1);
+  var g2m = new THREE.Mesh(sphGeo, M.f2); g2m.scale.setScalar(0.1);
+  var dyn = new THREE.Group();
+  [coneU, coneL, wireU, wireL, axisLine, planeMesh, s1, s2, circ1, circ2, f1m, f2m, pm, g1m, g2m, dyn].forEach(function (o) { scene.add(o); });
+  planeMesh.renderOrder = 1; s1.renderOrder = 2; s2.renderOrder = 2;
+
+  function clearGroup(g) {
+    while (g.children.length) {
+      var o = g.children.pop();
+      if (o.geometry) o.geometry.dispose();
+    }
+  }
+
+  function coneGeo(H, sign, k) {
+    var R = H * k, N = 72, pos = [0, 0, 0], idx = [];
+    for (var j = 0; j <= N; j++) { var a = TWO_PI * j / N; pos.push(R * Math.cos(a), R * Math.sin(a), sign * H); }
+    for (var q = 1; q <= N; q++) idx.push(0, q, q + 1);
+    var g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
+    g.setIndex(idx);
+    return g;
+  }
+  function wireGeo(H, sign, k) {
+    var R = H * k, arr = [], N = 72, G = 24, i2, j2;
+    for (i2 = 0; i2 < G; i2++) {
+      var a = TWO_PI * i2 / G;
+      arr.push(0, 0, 0, R * Math.cos(a), R * Math.sin(a), sign * H);
+    }
+    [0.25, 0.5, 0.75, 1].forEach(function (f) {
+      var r = R * f, z = sign * H * f;
+      for (j2 = 0; j2 < N; j2++) {
+        var b0 = TWO_PI * j2 / N, b1 = TWO_PI * (j2 + 1) / N;
+        arr.push(r * Math.cos(b0), r * Math.sin(b0), z, r * Math.cos(b1), r * Math.sin(b1), z);
+      }
+    });
+    var g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.Float32BufferAttribute(arr, 3));
+    return g;
+  }
+  function buildCones() {
+    var k = Math.tan(state.alpha * Math.PI / 180);
+    [[coneU, HU, 1, false], [coneL, HL, -1, false]].forEach(function (c) { c[0].geometry.dispose(); c[0].geometry = coneGeo(c[1], c[2], k); });
+    [[wireU, HU, 1], [wireL, HL, -1]].forEach(function (c) { c[0].geometry.dispose(); c[0].geometry = wireGeo(c[1], c[2], k); });
+  }
+
+  /* Matemática */
+  var G = null;
+  function compute() {
+    var a = state.alpha * Math.PI / 180, sA = Math.sin(a), cA = Math.cos(a), k = Math.tan(a);
+    var emax = 1 / cA;
+    var e = Math.min(state.e, emax);
+    var th = Math.asin(Math.min(1, e * cA)), sT = Math.sin(th), cT = Math.cos(th);
+    var rho = C0 * sA;
+    var F1 = [rho * sT, 0, C0 + rho * cT];
+    var D = C0 * cT + rho;
+    var ell = Math.sqrt(Math.max(0, k * k * F1[2] * F1[2] - F1[0] * F1[0]));
+    var d2 = cT - sA;
+    var par = Math.abs(d2) < 1e-6;
+    var type = e < 1e-9 ? "circ" : (par ? "par" : (d2 > 0 ? "ell" : "hyp"));
+    var g = { a: a, sA: sA, cA: cA, k: k, emax: emax, e: e, th: th, sT: sT, cT: cT, rho: rho, F1: F1, D: D, ell: ell, par: par, type: type };
+    g.n = [sT, 0, cT]; g.u = [cT, 0, -sT];
+    if (!par) {
+      g.c2 = C0 * (cT + sA) / d2;
+      g.rho2 = g.c2 * sA;
+      g.F2 = [-g.rho2 * sT, 0, g.c2 - g.rho2 * cT];
+      g.t2 = Math.abs(g.c2) * cA;
+      g.show2 = (g.c2 > 0 && g.c2 <= 15) || (g.c2 < 0 && -g.c2 <= 9);
+    } else { g.show2 = false; }
+    g.t1 = C0 * cA;
+    return g;
+  }
+  function ptAt(g, psi) {
+    var den = 1 + g.e * Math.cos(psi), r = g.ell / den, c = Math.cos(psi), s = Math.sin(psi);
+    return { r: r, den: den, p: [g.F1[0] + r * (c * g.u[0]), g.F1[1] + r * s, g.F1[2] + r * (c * g.u[2])] };
+  }
+  function inBounds(p) { return p[2] <= HU && p[2] >= -HL; }
+  function validAt(g, psi, neg) {
+    var q = ptAt(g, psi);
+    if (neg ? q.den > -1e-3 : q.den < 1e-3) return false;
+    if (Math.abs(q.r) > 60) return false;
+    return inBounds(q.p);
+  }
+  function scanMax(g, center, neg) {
+    var s = 0, step = 0.01, last = 0.02;
+    while (s < Math.PI) {
+      if (!validAt(g, center + s, neg) || !validAt(g, center - s, neg)) break;
+      last = s; s += step;
+    }
+    return Math.max(0.02, last);
+  }
+  function psiOf(g, t) {
+    if (g.type === "circ" || g.type === "ell") return t * TWO_PI;
+    if (g.type === "par") { var sm = scanMax(g, 0, false); return -sm + 2 * sm * t; }
+    if (state.branch === 0) { var s0 = scanMax(g, 0, false); return -s0 + 2 * s0 * t; }
+    var s1v = scanMax(g, Math.PI, true); return Math.PI - s1v + 2 * s1v * t;
+  }
+
+  function v3(a) { return new THREE.Vector3(a[0], a[1], a[2]); }
+  function mkLine(a, b, mat) {
+    var g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.Float32BufferAttribute([a[0], a[1], a[2], b[0], b[1], b[2]], 3));
+    return new THREE.Line(g, mat);
+  }
+  function mkTube(pts, closed, radius, mat) {
+    var curve = new THREE.CatmullRomCurve3(pts.map(v3), closed);
+    var geo = new THREE.TubeGeometry(curve, Math.max(8, pts.length), radius, 6, closed);
+    return new THREE.Mesh(geo, mat);
+  }
+  function dist3(a, b) { return Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]); }
+
+  var labelTargets = { F1: null, F2: null, P: null, D: null };
+
+  function updateScene() {
+    G = compute();
+    var g = G;
+    var eS = document.getElementById("eS");
+    var mx = Math.floor(g.emax * 100) / 100;
+    eS.max = mx.toFixed(2);
+    if (state.e > mx) { state.e = mx; eS.value = mx; g = G = compute(); }
+    document.getElementById("emaxT").textContent = "e máximo con este cono: " + mx.toFixed(2);
+    document.getElementById("eV").textContent = g.e.toFixed(2);
+    document.getElementById("aV").textContent = state.alpha + "°";
+
+    planeMesh.position.set(g.F1[0], g.F1[1], g.F1[2]);
+    planeMesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), v3(g.n));
+
+    s1.position.set(0, 0, C0); s1.scale.setScalar(g.rho);
+    f1m.position.set(g.F1[0], g.F1[1], g.F1[2]);
+    circ1.position.set(0, 0, C0 * g.cA * g.cA);
+    circ1.scale.set(C0 * g.cA * g.sA, C0 * g.cA * g.sA, 1);
+
+    var showS = state.spheres;
+    s1.visible = showS; circ1.visible = showS;
+    var s2on = g.show2;
+    s2.visible = showS && s2on; circ2.visible = showS && s2on; f2m.visible = s2on; g2m.visible = false;
+    if (!g.par) {
+      s2.position.set(0, 0, g.c2); s2.scale.setScalar(Math.abs(g.rho2));
+      circ2.position.set(0, 0, g.c2 * g.cA * g.cA);
+      circ2.scale.set(Math.abs(g.c2) * g.cA * g.sA, Math.abs(g.c2) * g.cA * g.sA, 1);
+      f2m.position.set(g.F2[0], g.F2[1], g.F2[2]);
+    }
+
+    clearGroup(dyn);
+
+    /* Directriz */
+    var dirOn = false, dirEnd = null;
+    if (state.dir && g.e > 0.02 && g.sT > 0.02) {
+      var zc = C0 * g.cA * g.cA;
+      var xd = (g.D - g.cT * zc) / g.sT;
+      if (Math.abs(xd) < 30) {
+        var ln = mkLine([xd, -9, zc], [xd, 9, zc], M.dir);
+        ln.computeLineDistances();
+        dyn.add(ln);
+        dirOn = true; dirEnd = [xd, 9, zc];
+      }
+    }
+
+    /* Curva */
+    var N = 600, pts = [], valid = [], i3;
+    for (i3 = 0; i3 <= N; i3++) {
+      var psi = TWO_PI * i3 / N;
+      var q = ptAt(g, psi);
+      var ok = Math.abs(q.den) > 1e-3 && Math.abs(q.r) <= 60 && inBounds(q.p);
+      pts.push(q.p); valid.push(ok);
+    }
+    var pieces = [], cur = [];
+    for (i3 = 0; i3 <= N; i3++) {
+      if (valid[i3]) cur.push(pts[i3]);
+      else if (cur.length) { pieces.push(cur); cur = []; }
+    }
+    if (cur.length) pieces.push(cur);
+    var closed = false;
+    if (pieces.length === 1 && valid[0] && valid[N] && g.e < 1) { closed = true; pieces[0] = pieces[0].slice(0, N); }
+    else if (pieces.length > 1 && valid[0] && valid[N]) {
+      var lastP = pieces.pop();
+      pieces[0] = lastP.concat(pieces[0].slice(1));
+    }
+    pieces.forEach(function (pc) {
+      if (pc.length > 2) dyn.add(mkTube(pc, closed, 0.05, M.curve));
+    });
+
+    /* Punto P */
+    var psiP = psiOf(g, state.t);
+    var qP = ptAt(g, psiP), P = qP.p;
+    var showPt = state.pt;
+    pm.visible = showPt;
+    pm.position.set(P[0], P[1], P[2]);
+    var pf1 = dist3(P, g.F1);
+    var pf2 = g.par ? null : dist3(P, g.F2);
+    var xP = qP.r * Math.cos(psiP);
+    var dd = g.e > 1e-9 ? Math.abs(g.ell / g.e - xP) : null;
+
+    g1m.visible = false;
+    if (showPt) {
+      dyn.add(mkLine(P, g.F1, M.pf1));
+      if (s2on) dyn.add(mkLine(P, g.F2, M.pf2));
+      var len = Math.hypot(P[0], P[1], P[2]);
+      var gx = [P[0] / len, P[1] / len, P[2] / len];
+      var G1, G2 = null;
+      if (P[2] >= 0) {
+        G1 = [g.t1 * gx[0], g.t1 * gx[1], g.t1 * gx[2]];
+        if (!g.par) { var sg = (g.type === "hyp") ? -1 : 1; G2 = [sg * g.t2 * gx[0], sg * g.t2 * gx[1], sg * g.t2 * gx[2]]; }
+      } else {
+        G1 = [-g.t1 * gx[0], -g.t1 * gx[1], -g.t1 * gx[2]];
+        if (!g.par) G2 = [g.t2 * gx[0], g.t2 * gx[1], g.t2 * gx[2]];
+      }
+      var endB = (G2 && s2on) ? G2 : P;
+      dyn.add(mkTube([G1, endB], false, 0.045, M.gen));
+      g1m.visible = showS; g1m.position.set(G1[0], G1[1], G1[2]);
+      if (G2 && s2on) { g2m.visible = showS; g2m.position.set(G2[0], G2[1], G2[2]); }
+    }
+
+    labelTargets.F1 = v3(g.F1);
+    labelTargets.F2 = s2on ? v3(g.F2) : null;
+    labelTargets.P = showPt ? v3(P) : null;
+    labelTargets.D = dirOn ? v3(dirEnd) : null;
+
+    document.getElementById("br").hidden = g.type !== "hyp";
+
+    readout(g, pf1, pf2, dd);
+    rq();
+  }
+
+  var TN = { circ: "círculo", ell: "elipse", par: "parábola", hyp: "hipérbola" };
+  function f2d(x) { return x.toFixed(2); }
+  function readout(g, pf1, pf2, dd) {
+    var betaDeg = 90 - g.th * 180 / Math.PI;
+    var rows = [
+      ["Excentricidad e", f2d(g.e)],
+      ["Ángulo del plano con el eje β", betaDeg.toFixed(1) + "°"],
+      ["Ángulo del cono α", state.alpha + "°"],
+      ["cos β / cos α", f2d(Math.cos(betaDeg * Math.PI / 180) / g.cA)],
+      [g.type === "circ" ? "Radio" : "Semilado recto ℓ", f2d(g.ell)]
+    ];
+    if (g.type === "ell" || g.type === "hyp") {
+      var a = g.ell / Math.abs(1 - g.e * g.e);
+      rows.push(["Semieje a", f2d(a)], ["2a", f2d(2 * a)], ["Semidistancia focal c = a e", f2d(a * g.e)]);
+    }
+    if (state.pt) {
+      rows.push(["PF₁", f2d(pf1)]);
+      if (pf2 !== null) rows.push(["PF₂", f2d(pf2)]);
+      if (g.type === "ell" || g.type === "circ") rows.push(["PF₁ + PF₂", f2d(pf1 + pf2)]);
+      if (g.type === "hyp") rows.push(["Diferencia entre PF₁ y PF₂", f2d(Math.abs(pf2 - pf1))]);
+      if (dd !== null) { rows.push(["Distancia de P a la directriz", f2d(dd)], ["PF₁ / distancia", f2d(pf1 / dd)]); }
+    }
+    document.getElementById("read").innerHTML = rows.map(function (r) { return "<dt>" + r[0] + "</dt><dd>" + r[1] + "</dd>"; }).join("");
+    document.getElementById("typ").textContent = TN[g.type];
+    var ex = {
+      circ: "El plano es perpendicular al eje, β = 90°. Las dos esferas tocan el plano en el mismo punto, el centro del círculo, así que los dos focos coinciden y e = 0.",
+      ell: "El plano es más tendido que la generatriz, β > α. Cada esfera toca el plano en un foco. Para cualquier punto P, PF₁ + PF₂ vale 2a: es el tramo de generatriz que queda entre las dos circunferencias de tangencia.",
+      par: "El plano es paralelo a una generatriz, β = α. La segunda esfera se va al infinito y solo queda una. La curva queda definida por el foco y la directriz: PF₁ es igual a la distancia de P a la directriz.",
+      hyp: "El plano es más inclinado que la generatriz, β < α. Corta las dos hojas y hay una esfera en cada una, del mismo lado del plano. Para P en cualquier rama, la diferencia entre PF₁ y PF₂ en valor absoluto vale 2a."
+    };
+    var t = ex[g.type];
+    if ((g.type === "ell" || g.type === "circ" || g.type === "hyp") && !g.show2) t += " La segunda esfera queda fuera de la zona dibujada, pero sus valores siguen en las lecturas.";
+    document.getElementById("expl").textContent = t;
+  }
+
+  /* Cámara, render y etiquetas */
+  var dirty = false;
+  function rq() { if (!dirty) { dirty = true; requestAnimationFrame(draw); } }
+  function camPos() {
+    var cp = Math.cos(el);
+    camera.position.set(tg.x + dist * cp * Math.cos(az), tg.y + dist * cp * Math.sin(az), tg.z + dist * Math.sin(el));
+    camera.lookAt(tg);
+  }
+  var lbl = { F1: document.getElementById("lF1"), F2: document.getElementById("lF2"), P: document.getElementById("lP"), D: document.getElementById("lD") };
+  function place(elm, v, w, h) {
+    if (!v) { elm.style.display = "none"; return; }
+    var p = v.clone().project(camera);
+    if (p.z > 1) { elm.style.display = "none"; return; }
+    elm.style.display = "block";
+    elm.style.transform = "translate(" + ((p.x * 0.5 + 0.5) * w).toFixed(1) + "px," + ((-p.y * 0.5 + 0.5) * h).toFixed(1) + "px)";
+  }
+  function draw() {
+    dirty = false;
+    camPos();
+    renderer.render(scene, camera);
+    var w = view.clientWidth, h = canvas.clientHeight;
+    place(lbl.F1, labelTargets.F1, w, h);
+    place(lbl.F2, labelTargets.F2, w, h);
+    place(lbl.P, labelTargets.P, w, h);
+    place(lbl.D, labelTargets.D, w, h);
+  }
+  function resize() {
+    var w = view.clientWidth;
+    var h = Math.round(Math.max(340, Math.min(w * 0.78, 620)));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setSize(w, h, false);
+    canvas.style.height = h + "px";
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    rq();
+  }
+  if (window.ResizeObserver) new ResizeObserver(resize).observe(view);
+  window.addEventListener("resize", resize);
+
+  /* Interacción */
+  var drag = null;
+  canvas.addEventListener("pointerdown", function (ev) {
+    drag = { x: ev.clientX, y: ev.clientY };
+    try { canvas.setPointerCapture(ev.pointerId); } catch (e) {}
+  });
+  canvas.addEventListener("pointermove", function (ev) {
+    if (!drag) return;
+    az -= (ev.clientX - drag.x) * 0.008;
+    el = Math.max(-1.5, Math.min(1.5, el + (ev.clientY - drag.y) * 0.008));
+    drag.x = ev.clientX; drag.y = ev.clientY;
+    rq();
+  });
+  function endDrag() { drag = null; }
+  canvas.addEventListener("pointerup", endDrag);
+  canvas.addEventListener("pointercancel", endDrag);
+  canvas.addEventListener("wheel", function (ev) {
+    ev.preventDefault();
+    dist = Math.max(8, Math.min(90, dist * Math.exp(ev.deltaY * 0.001)));
+    rq();
+  }, { passive: false });
+  document.getElementById("zin").addEventListener("click", function () { dist = Math.max(8, dist * 0.85); rq(); });
+  document.getElementById("zout").addEventListener("click", function () { dist = Math.min(90, dist * 1.18); rq(); });
+  document.getElementById("rv").addEventListener("click", function () { az = VIEW0.az; el = VIEW0.el; dist = VIEW0.dist; rq(); });
+
+  var eS = document.getElementById("eS"), aS = document.getElementById("aS"), tS = document.getElementById("tS");
+  eS.addEventListener("input", function () { state.e = parseFloat(eS.value); updateScene(); });
+  aS.addEventListener("input", function () { state.alpha = parseInt(aS.value, 10); buildCones(); updateScene(); });
+  tS.addEventListener("input", function () { state.t = parseFloat(tS.value); updateScene(); });
+  document.getElementById("chS").addEventListener("change", function (ev) { state.spheres = ev.target.checked; updateScene(); });
+  document.getElementById("chP").addEventListener("change", function (ev) { state.pt = ev.target.checked; updateScene(); });
+  document.getElementById("chD").addEventListener("change", function (ev) { state.dir = ev.target.checked; updateScene(); });
+  document.getElementById("br").addEventListener("click", function () { state.branch = 1 - state.branch; updateScene(); });
+  document.querySelectorAll("[data-p]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var p = b.getAttribute("data-p");
+      var mx = Math.floor((1 / Math.cos(state.alpha * Math.PI / 180)) * 100) / 100;
+      var v = p === "circ" ? 0 : (p === "ell" ? 0.5 : (p === "par" ? 1 : Math.round(((1 + mx) / 2) * 100) / 100));
+      state.e = Math.min(v, mx); state.branch = 0;
+      eS.max = mx.toFixed(2); eS.value = state.e;
+      updateScene();
+    });
+  });
+
+  var playBtn = document.getElementById("play"), lastT = 0;
+  function tick(ts) {
+    if (!state.play) return;
+    var dt = lastT ? Math.min(0.05, (ts - lastT) / 1000) : 0.016;
+    lastT = ts;
+    var mx = parseFloat(eS.max);
+    state.e += state.dirn * dt * 0.35;
+    if (state.e >= mx) { state.e = mx; state.dirn = -1; }
+    if (state.e <= 0) { state.e = 0; state.dirn = 1; }
+    state.e = Math.round(state.e * 1000) / 1000;
+    eS.value = state.e;
+    updateScene();
+    requestAnimationFrame(tick);
+  }
+  playBtn.addEventListener("click", function () {
+    state.play = !state.play;
+    playBtn.textContent = state.play ? "Detener" : "Animar e";
+    lastT = 0;
+    if (state.play) requestAnimationFrame(tick);
+  });
+
+  buildCones();
+  resize();
+  updateScene();
+})();
+</script>
+</body>
+</html>
