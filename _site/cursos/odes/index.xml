@@ -975,6 +975,746 @@ font-style: inherit;">/* rapidez de escape en UA/ano, aprox. 8.886 (42.1 km/s) *
   <media:content url="https://arturosanjuan.xyz/cursos/odes/planetario/elipse.png" medium="image" type="image/png" height="79" width="144"/>
 </item>
 <item>
+  <title>Oscilaciones Mecánicas y Circuitos</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/odes/osciladores/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Esta sección sigue el §20 del Simmons (vibraciones en sistemas mecánicos y eléctricos), con el §13 para los circuitos. Empezamos con un resorte y al final vemos que el mismo modelo describe un circuito eléctrico, de modo que todo lo que aprendamos del uno vale para el otro.</p>
+<p>Convención: un punto sobre una variable indica derivada respecto al tiempo, <img src="https://latex.codecogs.com/png.latex?%5Cdot%20x=dx/dt">, y dos puntos indican la segunda derivada.</p>
+<section id="un-resorte-con-rozamiento" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="un-resorte-con-rozamiento"><span class="header-section-number">1</span> Un resorte con rozamiento</h2>
+<p>Suponga que tenemos un resorte con un extremo fijo y el otro atado a una masa <img src="https://latex.codecogs.com/png.latex?M">, como en la Figura&nbsp;1. La fuerza restauradora del resorte es</p>
+<p><img src="https://latex.codecogs.com/png.latex?F_r=-kx,"></p>
+<p>donde <img src="https://latex.codecogs.com/png.latex?x"> es el desplazamiento desde la posición de equilibrio y <img src="https://latex.codecogs.com/png.latex?k%3E0"> es la constante de Hooke. Si además suponemos que no hay rozamiento con el suelo pero el medio es viscoso, aparece una fuerza de amortiguamiento proporcional a la velocidad,</p>
+<p><img src="https://latex.codecogs.com/png.latex?F_a=-c%5Cdot%20x,%5Cqquad%20c%5Cgeq0."></p>
+<div id="fig-resorte" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-resorte-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/odes/osciladores/resorte.svg" class="img-fluid figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-resorte-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: El carrito de masa <img src="https://latex.codecogs.com/png.latex?M">, el resorte de constante <img src="https://latex.codecogs.com/png.latex?k"> y el amortiguador de constante <img src="https://latex.codecogs.com/png.latex?c">. Para <img src="https://latex.codecogs.com/png.latex?x%3E0">, la fuerza del resorte <img src="https://latex.codecogs.com/png.latex?F_r"> y la del rozamiento <img src="https://latex.codecogs.com/png.latex?F_a"> (si el carrito va hacia la derecha) apuntan hacia la pared.
+</figcaption>
+</figure>
+</div>
+<p>Por la segunda ley de Newton,</p>
+<p><img src="https://latex.codecogs.com/png.latex?M%5Cddot%20x=-c%5Cdot%20x-kx%5Cqquad%5CLongrightarrow%5Cqquad%20M%5Cddot%20x+c%5Cdot%20x+kx=0."></p>
+<p>Dividimos por <img src="https://latex.codecogs.com/png.latex?M"> y escribimos</p>
+<p><img src="https://latex.codecogs.com/png.latex?b=%5Cfrac%7Bc%7D%7B2M%7D,%5Cqquad%20a=%5Csqrt%7B%5Cfrac%20kM%7D,"></p>
+<p>de modo que la ecuación queda</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cddot%20x+2b%5Cdot%20x+a%5E2x=0."></p>
+<p>El polinomio característico es <img src="https://latex.codecogs.com/png.latex?%5Clambda%5E2+2b%5Clambda+a%5E2=0">, con raíces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clambda=-b%5Cpm%5Csqrt%7Bb%5E2-a%5E2%7D,%5Cqquad%20%5CDelta=b%5E2-a%5E2."></p>
+<p>El signo de <img src="https://latex.codecogs.com/png.latex?%5CDelta"> decide el comportamiento. Como <img src="https://latex.codecogs.com/png.latex?a"> y <img src="https://latex.codecogs.com/png.latex?b"> son positivos o nulos, todo se resume en el plano <img src="https://latex.codecogs.com/png.latex?(a,b)"> de la Figura&nbsp;2: la recta <img src="https://latex.codecogs.com/png.latex?b=a"> separa los dos regímenes oscilatorio y no oscilatorio, y el eje <img src="https://latex.codecogs.com/png.latex?b=0"> es el caso sin rozamiento.</p>
+<div id="fig-plano" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-plano-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/odes/osciladores/plano-ab.svg" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-plano-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: El plano de parámetros <img src="https://latex.codecogs.com/png.latex?(a,b)">. La recta <img src="https://latex.codecogs.com/png.latex?b=a"> (azul) es el amortiguamiento crítico y el eje <img src="https://latex.codecogs.com/png.latex?b=0"> (verde) es el oscilador armónico.
+</figcaption>
+</figure>
+</div>
+<p><strong>Caso <img src="https://latex.codecogs.com/png.latex?b=0"> (armónico).</strong> Sin rozamiento las raíces son imaginarias puras, <img src="https://latex.codecogs.com/png.latex?%5Clambda=%5Cpm%20ia">, y <img src="https://latex.codecogs.com/png.latex?x=c_1%5Ccos%20at+c_2%5Csin%20at">. Es un movimiento periódico de periodo <img src="https://latex.codecogs.com/png.latex?2%5Cpi/a"> y amplitud constante.</p>
+<p><strong>Caso <img src="https://latex.codecogs.com/png.latex?0%3Cb%3Ca"> (subamortiguado).</strong> El discriminante es negativo y las raíces son complejas conjugadas, <img src="https://latex.codecogs.com/png.latex?%5Clambda=-b%5Cpm%20i%5Csqrt%7Ba%5E2-b%5E2%7D">. Hay oscilación, pero con una amplitud que decae.</p>
+<p><strong>Caso <img src="https://latex.codecogs.com/png.latex?b=a"> (críticamente amortiguado).</strong> Hay una raíz doble, <img src="https://latex.codecogs.com/png.latex?%5Clambda=-b">, y <img src="https://latex.codecogs.com/png.latex?x=(c_1+c_2t)e%5E%7B-bt%7D">. No hay oscilación, y el carrito vuelve al equilibrio lo más rápido posible.</p>
+<p><strong>Caso <img src="https://latex.codecogs.com/png.latex?b%3Ea"> (sobreamortiguado).</strong> Hay dos raíces reales distintas y las dos son negativas, porque <img src="https://latex.codecogs.com/png.latex?%5Csqrt%7Bb%5E2-a%5E2%7D%3Cb"> ya que <img src="https://latex.codecogs.com/png.latex?a%5E2%3E0">. La solución <img src="https://latex.codecogs.com/png.latex?c_1e%5E%7B%5Clambda_1t%7D+c_2e%5E%7B%5Clambda_2t%7D"> decae sin oscilar.</p>
+</section>
+<section id="la-oscilación-subamortiguada" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="la-oscilación-subamortiguada"><span class="header-section-number">2</span> La oscilación subamortiguada</h2>
+<p>Quedémonos en el caso subamortiguado, que incluye al armónico cuando <img src="https://latex.codecogs.com/png.latex?b=0">. Pongamos las condiciones iniciales <img src="https://latex.codecogs.com/png.latex?x(0)=x_0"> y <img src="https://latex.codecogs.com/png.latex?%5Cdot%20x(0)=0">: soltamos el carrito en reposo desde la posición <img src="https://latex.codecogs.com/png.latex?x_0">. Con</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Calpha=%5Csqrt%7Ba%5E2-b%5E2%7D"></p>
+<p>la solución general es <img src="https://latex.codecogs.com/png.latex?e%5E%7B-bt%7D(c_1%5Ccos%5Calpha%20t+c_2%5Csin%5Calpha%20t)">. La condición <img src="https://latex.codecogs.com/png.latex?x(0)=x_0"> da <img src="https://latex.codecogs.com/png.latex?c_1=x_0">, y como</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cdot%20x=e%5E%7B-bt%7D%5Cleft%5B(-bc_1+%5Calpha%20c_2)%5Ccos%5Calpha%20t-(bc_2+%5Calpha%20c_1)%5Csin%5Calpha%20t%5Cright%5D,"></p>
+<p>la condición <img src="https://latex.codecogs.com/png.latex?%5Cdot%20x(0)=0"> da <img src="https://latex.codecogs.com/png.latex?c_2=bx_0/%5Calpha">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?x(t)=%5Cfrac%7Bx_0%7D%7B%5Calpha%7D%5C,e%5E%7B-bt%7D%5Cleft(%5Calpha%5Ccos%5Calpha%20t+b%5Csin%5Calpha%20t%5Cright)."></p>
+<p>Si hacemos <img src="https://latex.codecogs.com/png.latex?%5Cvarphi=%5Carctan(b/%5Calpha)">, como <img src="https://latex.codecogs.com/png.latex?%5Csqrt%7B%5Calpha%5E2+b%5E2%7D=a"> podemos escribirla en la forma de amplitud y fase,</p>
+<p><img src="https://latex.codecogs.com/png.latex?x(t)=x_0%5C,%5Cfrac%7B%5Csqrt%7B%5Calpha%5E2+b%5E2%7D%7D%7B%5Calpha%7D%5C,e%5E%7B-bt%7D%5Ccos(%5Calpha%20t-%5Cvarphi)."></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Verifique que las dos expresiones de <img src="https://latex.codecogs.com/png.latex?x(t)"> coinciden, y encuentre la forma de amplitud y fase cuando la velocidad inicial es <img src="https://latex.codecogs.com/png.latex?v_0%5Cneq0">.</p>
+</div>
+</div>
+<p>La amplitud</p>
+<p><img src="https://latex.codecogs.com/png.latex?A(t)=x_0%5C,%5Cfrac%7B%5Csqrt%7B%5Calpha%5E2+b%5E2%7D%7D%7B%5Calpha%7D%5C,e%5E%7B-bt%7D"></p>
+<p>decrece con el tiempo a menos que <img src="https://latex.codecogs.com/png.latex?b=0">, que es la oscilación armónica. El siguiente tablero resuelve la ecuación con el carrito y la gráfica de la solución. Mueva <img src="https://latex.codecogs.com/png.latex?a">, <img src="https://latex.codecogs.com/png.latex?b"> y <img src="https://latex.codecogs.com/png.latex?x_0">, o recorra los cuatro regímenes con los botones, incluido <img src="https://latex.codecogs.com/png.latex?b=0">. Cuando <img src="https://latex.codecogs.com/png.latex?b%3Ca">, la curva punteada naranja es la envolvente <img src="https://latex.codecogs.com/png.latex?%5Cpm%20A(t)"> y las líneas verticales punteadas marcan los múltiplos del periodo.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Simulador: el resorte libre">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Simulador: el resorte libre
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<style>
+  .osc-caja{border:3px solid #ddd;border-radius:8px;padding:14px;max-width:780px;margin:1em auto;font-family:sans-serif;background:#fff;color:#222;transition:border-color .2s,box-shadow .2s;}
+  .osc-caja canvas{display:block;width:100%;height:auto;background:#fff;border:1px solid #e3e3e3;border-radius:6px;margin-top:8px;}
+  .osc-caja button{padding:5px 11px;border:1px solid #bbb;border-radius:6px;background:#f5f5f5;color:#222;cursor:pointer;font-size:0.9em;}
+  .osc-caja button:hover{background:#e9e9e9;}
+  .osc-fila{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .osc-insignia{padding:3px 12px;border-radius:12px;font-size:0.9em;background:#eee;color:#333;}
+  .osc-ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px 18px;margin-top:12px;}
+  .osc-ctrl label{font-size:0.92em;display:block;}
+  .osc-ctrl input[type=range]{width:100%;}
+  .osc-dos{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  @media (max-width:640px){.osc-dos{grid-template-columns:1fr;}}
+  .osc-botones{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
+  .osc-info{margin-top:10px;font-size:0.93em;line-height:1.5;}
+</style>
+<div id="osc-libre"></div>
+<script>
+/*NUCLEO*/
+function armarOsc(p){
+  var a = p.a, b = p.b, w = p.w, F0 = p.F0, x0 = p.x0, v0 = 0;
+  var TOL = 1e-9;
+  var resPura = (F0 > 0 && b < TOL && Math.abs(w - a) < TOL);
+  var C = 0, del = 0, xp0 = 0, vp0 = 0;
+  var xpf = function(t){ return 0; }, vpf = function(t){ return 0; };
+  if (F0 > 0) {
+    if (resPura) {
+      C = Infinity;
+      xpf = function(t){ return F0 * t * Math.sin(a * t) / (2 * a); };
+      vpf = function(t){ return F0 / (2 * a) * (Math.sin(a * t) + a * t * Math.cos(a * t)); };
+    } else {
+      var D = Math.sqrt(Math.pow(a * a - w * w, 2) + 4 * b * b * w * w);
+      C = F0 / D;
+      del = Math.atan2(2 * b * w, a * a - w * w);
+      xpf = function(t){ return C * Math.cos(w * t - del); };
+      vpf = function(t){ return -C * w * Math.sin(w * t - del); };
+    }
+    xp0 = xpf(0); vp0 = vpf(0);
+  }
+  var xh0 = x0 - xp0, vh0 = v0 - vp0;
+  var disc = b * b - a * a, tipo, alpha = 0, r1 = 0, r2 = 0, hom, hv, c1, c2, A, B;
+  if (Math.abs(disc) < TOL) {
+    tipo = 'critico';
+    c1 = xh0; c2 = vh0 + b * xh0;
+    hom = function(t){ return (c1 + c2 * t) * Math.exp(-b * t); };
+    hv = function(t){ return (c2 - b * (c1 + c2 * t)) * Math.exp(-b * t); };
+  } else if (disc > 0) {
+    tipo = 'sobre';
+    var s = Math.sqrt(disc); r1 = -b + s; r2 = -b - s;
+    c2 = (vh0 - r1 * xh0) / (r2 - r1); c1 = xh0 - c2;
+    hom = function(t){ return c1 * Math.exp(r1 * t) + c2 * Math.exp(r2 * t); };
+    hv = function(t){ return c1 * r1 * Math.exp(r1 * t) + c2 * r2 * Math.exp(r2 * t); };
+  } else {
+    alpha = Math.sqrt(-disc);
+    tipo = (b < TOL) ? 'armonico' : 'sub';
+    A = xh0; B = (vh0 + b * xh0) / alpha;
+    hom = function(t){ return Math.exp(-b * t) * (A * Math.cos(alpha * t) + B * Math.sin(alpha * t)); };
+    hv = function(t){ return Math.exp(-b * t) * ((-b * A + alpha * B) * Math.cos(alpha * t) + (-b * B - alpha * A) * Math.sin(alpha * t)); };
+  }
+  return {
+    tipo: tipo, alpha: alpha, r1: r1, r2: r2, resPura: resPura, C: C, del: del,
+    T: alpha > 0 ? 2 * Math.PI / alpha : Infinity,
+    f: alpha > 0 ? alpha / (2 * Math.PI) : 0,
+    K: alpha > 0 ? x0 * a / alpha : 0,
+    fase: alpha > 0 ? Math.atan(b / alpha) : 0,
+    estado: function(t){ return [hom(t) + xpf(t), hv(t) + vpf(t)]; },
+    energia: function(t){ var e = [hom(t) + xpf(t), hv(t) + vpf(t)]; return 0.5 * (e[1] * e[1] + a * a * e[0] * e[0]); }
+  };
+}
+function amplitudResp(a, b, F0, w){
+  var D = Math.sqrt(Math.pow(a * a - w * w, 2) + 4 * b * b * w * w);
+  return D === 0 ? Infinity : F0 / D;
+}
+/*FIN NUCLEO*/
+
+window.crearTableroOsc = function(idRaiz, opc){
+  var raiz = document.getElementById(idRaiz);
+  if (!raiz) return;
+  var forzado = !!opc.forzado;
+  var TMAX = 40, NPTS = 800;
+  var AZUL = '#1f5fa8', ROJO = '#c1440e', GRIS = '#777', VERDE = '#1a7f5a';
+  var p = {a: 2, b: 0.3, w: 1.5, F0: 0, x0: 1};
+  Object.keys(opc.inicial).forEach(function(k){ p[k] = opc.inicial[k]; });
+
+  var defs = forzado
+    ? [['a', 'a, frecuencia natural', 0.5, 4], ['b', 'b, amortiguamiento', 0, 3], ['w', 'ω, frecuencia del forzamiento', 0.1, 6], ['F0', 'F₀, amplitud del forzamiento', 0, 2], ['x0', 'x₀, posición inicial', -2, 2]]
+    : [['a', 'a, frecuencia natural', 0.5, 4], ['b', 'b, amortiguamiento', 0, 3], ['x0', 'x₀, posición inicial', -2, 2]];
+
+  var html = '<div class="osc-fila"><div class="osc-insignia" data-r="insignia"></div><div style="font-size:0.9em;color:#555;" data-r="reloj"></div></div>' +
+    '<canvas data-r="cart" width="760" height="150" role="img" aria-label="Carrito unido a un resorte"></canvas>' +
+    '<canvas data-r="x" width="760" height="230" role="img" aria-label="Gráfica de la posición x(t)"></canvas>';
+  if (forzado) {
+    html += '<div class="osc-dos"><canvas data-r="resp" width="380" height="220" role="img" aria-label="Amplitud estacionaria en función de la frecuencia"></canvas>' +
+      '<canvas data-r="en" width="380" height="220" role="img" aria-label="Energía en función del tiempo"></canvas></div>';
+  }
+  html += '<div class="osc-ctrl">';
+  defs.forEach(function(d){
+    html += '<label>' + d[1] + ' = <strong data-v="' + d[0] + '"></strong><input type="range" data-s="' + d[0] + '" min="' + d[2] + '" max="' + d[3] + '" step="0.05" aria-label="' + d[1] + '"></label>';
+  });
+  html += '</div><div class="osc-botones"><button type="button" data-r="play">❚❚ Pausar</button><button type="button" data-r="reset">↺ Reiniciar</button><button type="button" data-r="vel">Velocidad ×1</button></div>' +
+    '<div class="osc-botones" data-r="presets"></div><div class="osc-info" data-r="info"></div>';
+  raiz.innerHTML = html;
+  raiz.classList.add('osc-caja');
+
+  function q(n){ return raiz.querySelector('[data-r="' + n + '"]'); }
+  var cCart = q('cart'), cX = q('x'), cResp = q('resp'), cEn = q('en');
+  var gCart = cCart.getContext('2d'), gX = cX.getContext('2d');
+  var gResp = cResp ? cResp.getContext('2d') : null, gEn = cEn ? cEn.getContext('2d') : null;
+  var info = q('info'), insignia = q('insignia'), reloj = q('reloj'), btnPlay = q('play'), btnVel = q('vel');
+
+  var sol, t = 0, jugando = true, visible = true, ultimo = null, vel = 1;
+  var xs = [], Es = [], yMax = 1, eMax = 1;
+
+  function redondear(v){ return Math.round(v * 100) / 100; }
+  function fmt(v, d){
+    if (d === undefined) d = 2;
+    if (!isFinite(v)) return '∞';
+    return v.toFixed(d).replace('-', '−');
+  }
+
+  function recalcular(){
+    sol = armarOsc(p);
+    xs = []; Es = [];
+    var mx = 0, me = 0;
+    for (var i = 0; i <= NPTS; i++) {
+      var tt = TMAX * i / NPTS, e = sol.estado(tt), en = 0.5 * (e[1] * e[1] + p.a * p.a * e[0] * e[0]);
+      xs.push(e[0]); Es.push(en);
+      if (Math.abs(e[0]) > mx) mx = Math.abs(e[0]);
+      if (en > me) me = en;
+    }
+    yMax = Math.max(0.5, mx * 1.12);
+    eMax = Math.max(0.5, me * 1.08);
+  }
+
+  function flecha(g, x1, y1, x2, y2, color){
+    var ang = Math.atan2(y2 - y1, x2 - x1), h = 8;
+    g.strokeStyle = color; g.fillStyle = color; g.lineWidth = 2.4;
+    g.beginPath(); g.moveTo(x1, y1); g.lineTo(x2, y2); g.stroke();
+    g.beginPath(); g.moveTo(x2, y2);
+    g.lineTo(x2 - h * Math.cos(ang - 0.45), y2 - h * Math.sin(ang - 0.45));
+    g.lineTo(x2 - h * Math.cos(ang + 0.45), y2 - h * Math.sin(ang + 0.45));
+    g.closePath(); g.fill();
+  }
+
+  function dibujarCarrito(){
+    var g = gCart, W = cCart.width, H = cCart.height;
+    g.clearRect(0, 0, W, H);
+    var xt = sol.estado(t)[0], cx0 = 400, escala = 150 / yMax;
+    var pos = cx0 + escala * xt, cw = 80, ch = 44, top = 62, suelo = 128;
+    g.strokeStyle = '#222'; g.lineWidth = 2;
+    g.beginPath(); g.moveTo(20, suelo); g.lineTo(W - 20, suelo); g.stroke();
+    g.lineWidth = 3; g.beginPath(); g.moveTo(40, 40); g.lineTo(40, suelo); g.stroke();
+    g.lineWidth = 1.2; g.strokeStyle = '#888';
+    for (var y = 44; y < suelo; y += 10) { g.beginPath(); g.moveTo(40, y); g.lineTo(30, y + 10); g.stroke(); }
+    g.setLineDash([4, 4]); g.strokeStyle = '#999'; g.lineWidth = 1.2;
+    g.beginPath(); g.moveTo(cx0, 22); g.lineTo(cx0, suelo); g.stroke(); g.setLineDash([]);
+    g.fillStyle = '#666'; g.font = '13px sans-serif'; g.textAlign = 'center'; g.fillText('x = 0', cx0, 16);
+    var izq = pos - cw / 2;
+    g.strokeStyle = '#222'; g.lineWidth = 1.8;
+    g.beginPath(); g.moveTo(40, 80); g.lineTo(54, 80);
+    var n = 14, x1 = 54, x2 = izq - 14;
+    for (var i = 1; i < 2 * n; i++) { g.lineTo(x1 + (x2 - x1) * i / (2 * n), 80 + (i % 2 ? 11 : -11)); }
+    g.lineTo(x2, 80); g.lineTo(izq, 80); g.stroke();
+    if (p.b > 0) {
+      var piston = Math.max(76, Math.min(128, 102 + 0.25 * (pos - cx0)));
+      g.globalAlpha = Math.min(1, 0.35 + p.b / 1.5);
+      g.beginPath(); g.moveTo(40, 100); g.lineTo(70, 100); g.stroke();
+      g.beginPath(); g.moveTo(134, 91); g.lineTo(70, 91); g.lineTo(70, 109); g.lineTo(134, 109); g.stroke();
+      g.lineWidth = 3.5; g.beginPath(); g.moveTo(piston, 94); g.lineTo(piston, 106); g.stroke();
+      g.lineWidth = 1.8; g.beginPath(); g.moveTo(piston, 100); g.lineTo(izq, 100); g.stroke();
+      g.globalAlpha = 1;
+    }
+    g.fillStyle = '#f2f5f7'; g.strokeStyle = '#222'; g.lineWidth = 2;
+    g.beginPath(); g.rect(izq, top, cw, ch); g.fill(); g.stroke();
+    [izq + 17, izq + cw - 17].forEach(function(wx){
+      g.fillStyle = '#fff'; g.beginPath(); g.arc(wx, suelo - 10, 10, 0, 2 * Math.PI); g.fill(); g.stroke();
+    });
+    g.fillStyle = '#222'; g.font = 'italic 16px serif'; g.textAlign = 'center'; g.fillText('M', pos, top + 28);
+    if (forzado && p.F0 > 0) {
+      var Fv = p.F0 * Math.cos(p.w * t), len = 34 * Fv;
+      if (Math.abs(len) > 2) flecha(g, pos, 48, pos + len, 48, ROJO);
+      g.fillStyle = ROJO; g.font = '13px sans-serif'; g.textAlign = 'center';
+      g.fillText('F(t)', pos, 36);
+    }
+  }
+
+  function dibujarX(){
+    var g = gX, W = cX.width, H = cX.height, L = 56, R = 14, T = 16, B = 30;
+    g.clearRect(0, 0, W, H);
+    function X(tt){ return L + tt / TMAX * (W - L - R); }
+    function Y(v){ return H - B - (v + yMax) / (2 * yMax) * (H - T - B); }
+    g.strokeStyle = '#e6e6e6'; g.lineWidth = 1; g.fillStyle = '#666'; g.font = '12px sans-serif';
+    [-yMax, 0, yMax].forEach(function(v){
+      g.beginPath(); g.moveTo(L, Y(v)); g.lineTo(W - R, Y(v)); g.stroke();
+      g.textAlign = 'right'; g.fillText(fmt(v, 2), L - 6, Y(v) + 4);
+    });
+    for (var tk = 0; tk <= TMAX; tk += 10) {
+      g.beginPath(); g.moveTo(X(tk), Y(0) - 4); g.lineTo(X(tk), Y(0) + 4); g.strokeStyle = '#999'; g.stroke();
+      g.textAlign = 'center'; g.fillText(String(tk), X(tk), H - 10);
+    }
+    g.textAlign = 'left'; g.fillText('x', L + 6, T + 8); g.textAlign = 'right'; g.fillText('t', W - R, Y(0) - 8);
+    g.strokeStyle = '#555'; g.lineWidth = 1.4; g.beginPath(); g.moveTo(L, Y(0)); g.lineTo(W - R, Y(0)); g.stroke();
+    g.beginPath(); g.moveTo(L, T); g.lineTo(L, H - B); g.stroke();
+    if (p.F0 === 0 && sol.alpha > 0 && isFinite(sol.T)) {
+      g.setLineDash([2, 4]); g.strokeStyle = '#bbb'; g.lineWidth = 1;
+      for (var k = 1; k * sol.T < TMAX && k < 41; k++) { g.beginPath(); g.moveTo(X(k * sol.T), T); g.lineTo(X(k * sol.T), H - B); g.stroke(); }
+      g.setLineDash([]);
+      if (sol.T < TMAX) { g.fillStyle = '#888'; g.textAlign = 'center'; g.fillText('T', X(sol.T), T + 10); }
+    }
+    g.setLineDash([6, 4]); g.strokeStyle = ROJO; g.lineWidth = 1.6; g.fillStyle = ROJO;
+    if (p.F0 === 0 && sol.tipo === 'sub') {
+      [1, -1].forEach(function(sg){
+        g.beginPath();
+        for (var i = 0; i <= NPTS; i++) { var tt = TMAX * i / NPTS, v = sg * sol.K * Math.exp(-p.b * tt); if (i === 0) g.moveTo(X(tt), Y(v)); else g.lineTo(X(tt), Y(v)); }
+        g.stroke();
+      });
+      g.setLineDash([]); g.textAlign = 'left'; g.fillText('±A(t)', X(TMAX * 0.2) + 6, Y(sol.K * Math.exp(-p.b * TMAX * 0.2)) - 8);
+    } else if (p.F0 > 0 && p.b > 0 && isFinite(sol.C) && sol.C < yMax * 1.02) {
+      [1, -1].forEach(function(sg){ g.beginPath(); g.moveTo(L, Y(sg * sol.C)); g.lineTo(W - R, Y(sg * sol.C)); g.stroke(); });
+      g.setLineDash([]); g.textAlign = 'right'; g.fillText('±C', W - R, Y(sol.C) - 6);
+    }
+    g.setLineDash([]);
+    g.strokeStyle = 'rgba(31,95,168,0.25)'; g.lineWidth = 2; g.beginPath();
+    for (var j = 0; j <= NPTS; j++) { var t2 = TMAX * j / NPTS; if (j === 0) g.moveTo(X(t2), Y(xs[j])); else g.lineTo(X(t2), Y(xs[j])); }
+    g.stroke();
+    g.strokeStyle = AZUL; g.lineWidth = 2.6; g.beginPath();
+    var nUp = Math.max(1, Math.round(t / TMAX * NPTS));
+    for (var m = 0; m <= nUp; m++) { var t3 = TMAX * m / NPTS; if (m === 0) g.moveTo(X(t3), Y(xs[m])); else g.lineTo(X(t3), Y(xs[m])); }
+    g.stroke();
+    var xa = sol.estado(t)[0];
+    g.fillStyle = AZUL; g.beginPath(); g.arc(X(t), Y(xa), 5, 0, 2 * Math.PI); g.fill();
+  }
+
+  function dibujarEnergia(){
+    var g = gEn, W = cEn.width, H = cEn.height, L = 46, R = 10, T = 26, B = 28;
+    g.clearRect(0, 0, W, H);
+    function X(tt){ return L + tt / TMAX * (W - L - R); }
+    function Y(v){ return H - B - Math.min(v, eMax) / eMax * (H - T - B); }
+    g.fillStyle = '#333'; g.font = '13px sans-serif'; g.textAlign = 'left';
+    g.fillText('Energía E = ½ẋ² + ½a²x²', L, 16);
+    g.fillStyle = '#666'; g.font = '12px sans-serif';
+    [0, eMax].forEach(function(v){ g.textAlign = 'right'; g.fillText(fmt(v, v === 0 ? 0 : 1), L - 5, Y(v) + 4); });
+    for (var tk = 0; tk <= TMAX; tk += 10) { g.textAlign = 'center'; g.fillText(String(tk), X(tk), H - 10); }
+    g.strokeStyle = '#555'; g.lineWidth = 1.4;
+    g.beginPath(); g.moveTo(L, Y(0)); g.lineTo(W - R, Y(0)); g.stroke();
+    g.beginPath(); g.moveTo(L, T - 6); g.lineTo(L, H - B); g.stroke();
+    if (sol.resPura) {
+      g.setLineDash([6, 4]); g.strokeStyle = ROJO; g.lineWidth = 1.6; g.beginPath();
+      for (var i = 0; i <= NPTS; i++) { var tt = TMAX * i / NPTS, v = p.F0 * p.F0 * tt * tt / 8; if (i === 0) g.moveTo(X(tt), Y(v)); else g.lineTo(X(tt), Y(v)); }
+      g.stroke(); g.setLineDash([]); g.fillStyle = ROJO; g.textAlign = 'left'; g.fillText('F₀² t²/8', L + 8, T + 12);
+    }
+    g.strokeStyle = 'rgba(31,95,168,0.25)'; g.lineWidth = 2; g.beginPath();
+    for (var j = 0; j <= NPTS; j++) { var t2 = TMAX * j / NPTS; if (j === 0) g.moveTo(X(t2), Y(Es[j])); else g.lineTo(X(t2), Y(Es[j])); }
+    g.stroke();
+    g.strokeStyle = AZUL; g.lineWidth = 2.6; g.beginPath();
+    var nUp = Math.max(1, Math.round(t / TMAX * NPTS));
+    for (var m = 0; m <= nUp; m++) { var t3 = TMAX * m / NPTS; if (m === 0) g.moveTo(X(t3), Y(Es[m])); else g.lineTo(X(t3), Y(Es[m])); }
+    g.stroke();
+    g.fillStyle = AZUL; g.beginPath(); g.arc(X(t), Y(sol.energia(t)), 4.5, 0, 2 * Math.PI); g.fill();
+  }
+
+  function dibujarResp(){
+    var g = gResp, W = cResp.width, H = cResp.height, L = 46, R = 10, T = 26, B = 28, WM = 6;
+    g.clearRect(0, 0, W, H);
+    g.fillStyle = '#333'; g.font = '13px sans-serif'; g.textAlign = 'left';
+    g.fillText('Amplitud estacionaria C(ω)', L, 16);
+    function X(w){ return L + w / WM * (W - L - R); }
+    g.strokeStyle = '#555'; g.lineWidth = 1.4;
+    g.beginPath(); g.moveTo(L, H - B); g.lineTo(W - R, H - B); g.stroke();
+    g.beginPath(); g.moveTo(L, T - 6); g.lineTo(L, H - B); g.stroke();
+    g.fillStyle = '#666'; g.font = '12px sans-serif'; g.textAlign = 'center';
+    for (var tk = 0; tk <= WM; tk += 1) g.fillText(String(tk), X(tk), H - 10);
+    g.textAlign = 'right'; g.fillText('ω', W - R, H - B - 6);
+    if (p.F0 <= 0) { g.fillStyle = '#888'; g.textAlign = 'center'; g.font = '13px sans-serif'; g.fillText('F₀ = 0: no hay forzamiento', (L + W - R) / 2, H / 2); return; }
+    var pts = [], mx = 0, i;
+    for (i = 0; i <= 400; i++) { var w = WM * i / 400, c = amplitudResp(p.a, p.b, p.F0, w); pts.push(c); if (isFinite(c) && c > mx) mx = c; }
+    var cap = 8 * p.F0 / (p.a * p.a), ymax = Math.min(mx * 1.08, cap);
+    ymax = Math.max(ymax, 0.2);
+    function Y(v){ return H - B - Math.min(v, ymax * 1.02) / ymax * (H - T - B); }
+    g.textAlign = 'right'; g.fillStyle = '#666'; g.fillText(fmt(ymax, 1), L - 5, Y(ymax) + 4); g.fillText('0', L - 5, H - B + 4);
+    g.setLineDash([3, 4]); g.strokeStyle = VERDE; g.lineWidth = 1.2;
+    g.beginPath(); g.moveTo(X(p.a), T - 6); g.lineTo(X(p.a), H - B); g.stroke();
+    g.setLineDash([]); g.fillStyle = VERDE; g.textAlign = 'left'; g.fillText('a', X(p.a) + 4, T + 8);
+    g.strokeStyle = AZUL; g.lineWidth = 2.6; g.beginPath();
+    for (i = 0; i <= 400; i++) { var ww = WM * i / 400, v = pts[i]; if (!isFinite(v)) v = ymax * 1.02; if (i === 0) g.moveTo(X(ww), Y(v)); else g.lineTo(X(ww), Y(v)); }
+    g.stroke();
+    var cw = amplitudResp(p.a, p.b, p.F0, p.w);
+    g.setLineDash([5, 4]); g.strokeStyle = ROJO; g.lineWidth = 1.4;
+    g.beginPath(); g.moveTo(X(p.w), T - 6); g.lineTo(X(p.w), H - B); g.stroke(); g.setLineDash([]);
+    g.fillStyle = ROJO; g.beginPath(); g.arc(X(p.w), Y(isFinite(cw) ? cw : ymax * 1.02), 5, 0, 2 * Math.PI); g.fill();
+    g.fillStyle = ROJO; g.textAlign = 'center'; g.fillText('ω', X(p.w), Math.max(T, Y(isFinite(cw) ? cw : ymax * 1.02) - 9));
+  }
+
+  function actualizarInfo(){
+    var s = sol, h = '', a = p.a, b = p.b;
+    var nombres = {armonico: 'Oscilación armónica (b = 0)', sub: 'Subamortiguado (b < a)', critico: 'Críticamente amortiguado (b = a)', sobre: 'Sobreamortiguado (b > a)'};
+    var tx = s.resPura ? 'Resonancia pura: b = 0 y ω = a' : nombres[s.tipo];
+    insignia.textContent = tx;
+    insignia.style.background = s.resPura ? ROJO : '#eee';
+    insignia.style.color = s.resPura ? '#fff' : '#333';
+    insignia.style.fontWeight = s.resPura ? 'bold' : 'normal';
+    raiz.style.borderColor = s.resPura ? ROJO : '#ddd';
+    raiz.style.boxShadow = s.resPura ? '0 0 0 4px rgba(214,39,40,0.2)' : 'none';
+    if (s.tipo === 'armonico') h += '<div><strong>Raíces:</strong> λ = ± i a = ± ' + fmt(a) + ' i</div>';
+    else if (s.tipo === 'sub') h += '<div><strong>Raíces:</strong> λ = −b ± iα = ' + fmt(-b) + ' ± ' + fmt(s.alpha) + ' i</div>';
+    else if (s.tipo === 'critico') h += '<div><strong>Raíz doble:</strong> λ = −b = ' + fmt(-b) + '</div>';
+    else h += '<div><strong>Raíces:</strong> λ₁ = ' + fmt(s.r1) + ', λ₂ = ' + fmt(s.r2) + '</div>';
+    if (s.alpha > 0) h += '<div><strong>Periodo y frecuencia:</strong> α = ' + fmt(s.alpha) + ', T = 2π/α = ' + fmt(s.T) + ', f = 1/T = ' + fmt(s.f, 3) + '</div>';
+    if (p.F0 === 0 && s.tipo === 'sub') h += '<div><strong>Amplitud y fase:</strong> A(t) = x₀ (a/α) e<sup>−bt</sup> = ' + fmt(s.K) + ' e<sup>−' + fmt(b) + ' t</sup>, φ = arctan(b/α) = ' + fmt(s.fase, 3) + ' rad</div>';
+    if (p.F0 === 0 && s.tipo === 'armonico') h += '<div><strong>Amplitud:</strong> constante, igual a ' + fmt(Math.abs(p.x0)) + '</div>';
+    if (forzado && p.F0 > 0) {
+      if (s.resPura) h += '<div style="margin-top:6px;"><strong>Solución particular:</strong> x<sub>p</sub> = F₀ t sen(at)/(2a). La amplitud crece como F₀ t/(2a) y la energía como F₀² t²/8.</div>';
+      else if (b > 0) h += '<div style="margin-top:6px;"><strong>Estado estacionario:</strong> C = ' + fmt(s.C) + ', δ = ' + fmt(s.del, 3) + ' rad. Frente a la respuesta estática F₀/a² = ' + fmt(p.F0 / (a * a)) + ', la amplitud se multiplica por ' + fmt(s.C * a * a / p.F0) + '.</div>';
+      else h += '<div style="margin-top:6px;"><strong>Sin amortiguamiento</strong> no hay estado estacionario: el término libre no decae. Con ω cerca de a se ven batimientos.</div>';
+    }
+    h += '<div style="margin-top:6px;color:#555;">t = ' + fmt(t, 1) + ', x = ' + fmt(sol.estado(t)[0]) + ', E = ' + fmt(sol.energia(t)) + '</div>';
+    info.innerHTML = h;
+  }
+
+  function dibujar(){
+    dibujarCarrito(); dibujarX();
+    if (forzado) { dibujarResp(); dibujarEnergia(); }
+    reloj.textContent = 't = ' + fmt(t, 1);
+    actualizarInfo();
+  }
+
+  function sincronizar(){
+    defs.forEach(function(d){
+      raiz.querySelector('[data-s="' + d[0] + '"]').value = String(p[d[0]]);
+      raiz.querySelector('[data-v="' + d[0] + '"]').textContent = fmt(p[d[0]]);
+    });
+  }
+
+  function cambiar(){ recalcular(); t = 0; sincronizar(); dibujar(); }
+
+  defs.forEach(function(d){
+    raiz.querySelector('[data-s="' + d[0] + '"]').addEventListener('input', function(ev){
+      p[d[0]] = redondear(parseFloat(ev.target.value)); cambiar();
+    });
+  });
+
+  var contP = q('presets');
+  opc.presets.forEach(function(pr){
+    var bt = document.createElement('button'); bt.type = 'button'; bt.textContent = pr[0];
+    bt.addEventListener('click', function(){ Object.keys(pr[1]).forEach(function(k){ p[k] = pr[1][k]; }); cambiar(); });
+    contP.appendChild(bt);
+  });
+
+  btnPlay.addEventListener('click', function(){
+    jugando = !jugando;
+    btnPlay.textContent = jugando ? '❚❚ Pausar' : '▶ Seguir';
+    if (jugando) { ultimo = null; requestAnimationFrame(ciclo); }
+  });
+  q('reset').addEventListener('click', function(){ t = 0; dibujar(); });
+  btnVel.addEventListener('click', function(){
+    vel = (vel === 1) ? 2 : (vel === 2 ? 0.5 : 1);
+    btnVel.textContent = 'Velocidad ×' + vel;
+  });
+
+  function ciclo(ts){
+    if (!jugando || !visible) { ultimo = null; return; }
+    if (ultimo === null) ultimo = ts;
+    var dt = Math.min((ts - ultimo) / 1000, 0.05); ultimo = ts;
+    t += dt * vel;
+    if (t > TMAX) t = 0;
+    dibujar();
+    requestAnimationFrame(ciclo);
+  }
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(es){
+      visible = es[0].isIntersecting;
+      if (visible && jugando) { ultimo = null; requestAnimationFrame(ciclo); }
+    }, {threshold: 0.05}).observe(raiz);
+  }
+
+  cambiar();
+  requestAnimationFrame(ciclo);
+};
+window.crearTableroOsc('osc-libre', {
+  forzado: false,
+  inicial: {a: 2, b: 0.3, w: 1, F0: 0, x0: 1},
+  presets: [
+    ['Armónico (b = 0)', {a: 2, b: 0, x0: 1}],
+    ['Subamortiguado', {a: 2, b: 0.3, x0: 1}],
+    ['Crítico (b = a)', {a: 2, b: 2, x0: 1}],
+    ['Sobreamortiguado', {a: 2, b: 3, x0: 1}]
+  ]
+});
+</script>
+</div>
+</div>
+<p>El periodo <img src="https://latex.codecogs.com/png.latex?T"> es lo que tarda el carrito en completar un ciclo. La función no es periódica en sentido estricto, pero el cociente <img src="https://latex.codecogs.com/png.latex?x(t)/A(t)=%5Ccos(%5Calpha%20t-%5Cvarphi)"> se repite cada vez que <img src="https://latex.codecogs.com/png.latex?%5Calpha%20t"> avanza <img src="https://latex.codecogs.com/png.latex?2%5Cpi">, es decir, cuando <img src="https://latex.codecogs.com/png.latex?%5Calpha%20T=2%5Cpi">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?T=%5Cfrac%7B2%5Cpi%7D%7B%5Calpha%7D,%5Cqquad%20f=%5Cfrac1T=%5Cfrac%7B%5Calpha%7D%7B2%5Cpi%7D=%5Cfrac1%7B2%5Cpi%7D%5Csqrt%7B%5Cfrac%20kM-%5Cfrac%7Bc%5E2%7D%7B4M%5E2%7D%7D."></p>
+<p>Este número se llama la frecuencia natural del sistema (cuando <img src="https://latex.codecogs.com/png.latex?b=0"> vale <img src="https://latex.codecogs.com/png.latex?a/2%5Cpi">), y el amortiguamiento la disminuye. El ángulo <img src="https://latex.codecogs.com/png.latex?%5Cvarphi"> se llama el ángulo de fase. La Figura&nbsp;3 resume todo esto en una gráfica.</p>
+<div id="fig-amortiguada" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-amortiguada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/odes/osciladores/amortiguada.svg" class="img-fluid figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-amortiguada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: La solución subamortiguada con <img src="https://latex.codecogs.com/png.latex?x(0)=x_0"> y <img src="https://latex.codecogs.com/png.latex?%5Cdot%20x(0)=0">. Los máximos de <img src="https://latex.codecogs.com/png.latex?x"> ocurren en <img src="https://latex.codecogs.com/png.latex?t=0,T,2T,%5Cdots">, y las curvas punteadas son la envolvente <img src="https://latex.codecogs.com/png.latex?%5Cpm%20A(t)">.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="oscilaciones-forzadas" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="oscilaciones-forzadas"><span class="header-section-number">3</span> Oscilaciones forzadas</h2>
+<p>Veamos ahora qué pasa cuando sobre el carrito actúa una fuerza externa. Usualmente se toman forzamientos periódicos,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cddot%20x+2b%5Cdot%20x+a%5E2x=F_0%5Ccos%5Comega%20t,"></p>
+<p>donde <img src="https://latex.codecogs.com/png.latex?%5Comega"> es la frecuencia del forzamiento y <img src="https://latex.codecogs.com/png.latex?F_0"> es la amplitud de la fuerza por unidad de masa (la fuerza externa dividida por <img src="https://latex.codecogs.com/png.latex?M">).</p>
+<p>Como ya conocemos la solución general de la ecuación reducida, solo falta una solución particular. Busquémosla de la forma</p>
+<p><img src="https://latex.codecogs.com/png.latex?x_p=C_1%5Ccos%5Comega%20t+C_2%5Csin%5Comega%20t."></p>
+<p>Al reemplazar, los coeficientes de <img src="https://latex.codecogs.com/png.latex?%5Ccos%5Comega%20t"> y de <img src="https://latex.codecogs.com/png.latex?%5Csin%5Comega%20t"> dan el sistema</p>
+<p><img src="https://latex.codecogs.com/png.latex?(a%5E2-%5Comega%5E2)%5C,C_1+2b%5Comega%5C,C_2=F_0,%5Cqquad%20-2b%5Comega%5C,C_1+(a%5E2-%5Comega%5E2)%5C,C_2=0,"></p>
+<p>cuyo determinante es <img src="https://latex.codecogs.com/png.latex?D%5E2=(a%5E2-%5Comega%5E2)%5E2+4b%5E2%5Comega%5E2">, y cuya solución es</p>
+<p><img src="https://latex.codecogs.com/png.latex?C_1=%5Cfrac%7BF_0%5C,(a%5E2-%5Comega%5E2)%7D%7BD%5E2%7D,%5Cqquad%20C_2=%5Cfrac%7B2b%5Comega%5C,F_0%7D%7BD%5E2%7D."></p>
+<p>Definamos <img src="https://latex.codecogs.com/png.latex?%5Cdelta"> por <img src="https://latex.codecogs.com/png.latex?%5Ccos%5Cdelta=(a%5E2-%5Comega%5E2)/D"> y <img src="https://latex.codecogs.com/png.latex?%5Csin%5Cdelta=2b%5Comega/D">. Como <img src="https://latex.codecogs.com/png.latex?C_1=%5Cfrac%7BF_0%7D%7BD%7D%5Ccos%5Cdelta"> y <img src="https://latex.codecogs.com/png.latex?C_2=%5Cfrac%7BF_0%7D%7BD%7D%5Csin%5Cdelta">, resulta</p>
+<p><img src="https://latex.codecogs.com/png.latex?x_p=%5Cfrac%7BF_0%7D%7B%5Csqrt%7B(a%5E2-%5Comega%5E2)%5E2+4b%5E2%5Comega%5E2%7D%7D%5C,%5Ccos(%5Comega%20t-%5Cdelta),"></p>
+<p>donde <img src="https://latex.codecogs.com/png.latex?%5Cdelta=%5Carctan%5Cdfrac%7B2b%5Comega%7D%7Ba%5E2-%5Comega%5E2%7D"> cuando <img src="https://latex.codecogs.com/png.latex?%5Comega%3Ca">.</p>
+<p>Si el movimiento es amortiguado (<img src="https://latex.codecogs.com/png.latex?b%3E0">), el término libre de la solución general decae como <img src="https://latex.codecogs.com/png.latex?e%5E%7B-bt%7D"> en los tres regímenes, porque las raíces tienen parte real negativa, y la solución tiende a <img src="https://latex.codecogs.com/png.latex?x_p">. Por eso a <img src="https://latex.codecogs.com/png.latex?x_p"> también se le conoce como el <em>estado estacionario</em>, y a lo que se va se le llama el <em>transitorio</em>.</p>
+<p>Hagamos el caso armónico como ilustración, es decir, <img src="https://latex.codecogs.com/png.latex?b=0">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cddot%20x+a%5E2x=F_0%5Ccos%5Comega%20t."></p>
+<p>La solución general de la reducida es <img src="https://latex.codecogs.com/png.latex?A%5Ccos(at-%5Cphi)">. Si suponemos <img src="https://latex.codecogs.com/png.latex?x_p=C_1%5Ccos%5Comega%20t+C_2%5Csin%5Comega%20t">, al reemplazar queda</p>
+<p><img src="https://latex.codecogs.com/png.latex?-C_1%5Comega%5E2%5Ccos%5Comega%20t-C_2%5Comega%5E2%5Csin%5Comega%20t+a%5E2C_1%5Ccos%5Comega%20t+a%5E2C_2%5Csin%5Comega%20t=F_0%5Ccos%5Comega%20t,"></p>
+<p>es decir,</p>
+<p><img src="https://latex.codecogs.com/png.latex?C_1%5C,(a%5E2-%5Comega%5E2)=F_0,%5Cqquad%20C_2%5C,(a%5E2-%5Comega%5E2)=0."></p>
+<p>Esto tiene solución siempre y cuando <img src="https://latex.codecogs.com/png.latex?a%5Cneq%5Comega">, es decir, mientras el sistema no entre en resonancia. La <em>resonancia</em> es el caso <img src="https://latex.codecogs.com/png.latex?%5Comega=a">: la frecuencia del forzamiento igual a la natural del sistema.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dé un ejemplo con los columpios.</p>
+</div>
+</div>
+<p>Cuando <img src="https://latex.codecogs.com/png.latex?a%5Cneq%5Comega"> se tiene <img src="https://latex.codecogs.com/png.latex?C_1=F_0/(a%5E2-%5Comega%5E2)"> y <img src="https://latex.codecogs.com/png.latex?C_2=0">, y la solución general es</p>
+<p><img src="https://latex.codecogs.com/png.latex?x=A%5Ccos(at-%5Cphi)+%5Cfrac%7BF_0%7D%7Ba%5E2-%5Comega%5E2%7D%5Ccos%5Comega%20t."></p>
+<p>Vemos que si <img src="https://latex.codecogs.com/png.latex?%5Comega%5Cto%20a"> la solución adquiere una amplitud cada vez mayor. En <img src="https://latex.codecogs.com/png.latex?%5Comega=a"> exacto la primera ecuación queda <img src="https://latex.codecogs.com/png.latex?0%5Ccdot%20C_1=F_0">, que no tiene solución, y hay que multiplicar por <img src="https://latex.codecogs.com/png.latex?t">, igual que en coeficientes indeterminados cuando el forzamiento es solución de la ecuación reducida. Probemos con</p>
+<p><img src="https://latex.codecogs.com/png.latex?x_p=%5Cfrac%7BF_0%7D%7B2a%7D%5C,t%5Csin%20at."></p>
+<p>Derivando,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cdot%20x_p=%5Cfrac%7BF_0%7D%7B2a%7D%5Cleft(%5Csin%20at+at%5Ccos%20at%5Cright),%5Cqquad%20%5Cddot%20x_p=F_0%5Ccos%20at-a%5E2x_p,"></p>
+<p>así que <img src="https://latex.codecogs.com/png.latex?%5Cddot%20x_p+a%5E2x_p=F_0%5Ccos%20at">, y la solución general en resonancia es</p>
+<p><img src="https://latex.codecogs.com/png.latex?x=A%5Ccos(at-%5Cphi)+%5Cfrac%7BF_0%7D%7B2a%7D%5C,t%5Csin%20at."></p>
+<p>El segundo término oscila con una amplitud <img src="https://latex.codecogs.com/png.latex?F_0t/(2a)"> que crece linealmente y sin cota. Es la <em>resonancia pura</em>.</p>
+<p>El siguiente tablero resuelve <img src="https://latex.codecogs.com/png.latex?%5Cddot%20x+2b%5Cdot%20x+a%5E2x=F_0%5Ccos%5Comega%20t"> con <img src="https://latex.codecogs.com/png.latex?%5Cdot%20x(0)=0">, y muestra el carrito con la fuerza <img src="https://latex.codecogs.com/png.latex?F(t)">, la solución <img src="https://latex.codecogs.com/png.latex?x(t)">, la amplitud estacionaria <img src="https://latex.codecogs.com/png.latex?C(%5Comega)"> en función de la frecuencia del forzamiento, y la energía. Con <img src="https://latex.codecogs.com/png.latex?F_0=0"> se recupera el resorte libre. Pruebe los casos de los botones: en la resonancia pura (<img src="https://latex.codecogs.com/png.latex?b=0">, <img src="https://latex.codecogs.com/png.latex?%5Comega=a">) el tablero se enciende en rojo.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Simulador: el resorte forzado">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Simulador: el resorte forzado
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div id="osc-forzado"></div>
+<script>
+window.crearTableroOsc('osc-forzado', {
+  forzado: true,
+  inicial: {a: 2, b: 0.3, w: 1.5, F0: 1, x0: 0},
+  presets: [
+    ['Libre (F₀ = 0)', {F0: 0, x0: 1}],
+    ['Estado estacionario', {a: 2, b: 0.5, w: 1.5, F0: 1, x0: 1}],
+    ['Batimientos (ω cerca de a)', {a: 2, b: 0, w: 1.8, F0: 1, x0: 0}],
+    ['Resonancia pura (b = 0, ω = a)', {a: 2, b: 0, w: 2, F0: 1, x0: 0}],
+    ['Resonancia con amortiguamiento', {a: 2, b: 0.2, w: 2, F0: 1, x0: 0}],
+    ['Caso de la tarea (a = 2, b = 1)', {a: 2, b: 1, w: 1.5, F0: 1, x0: 0}]
+  ]
+});
+</script>
+</div>
+</div>
+<section id="la-energía-en-resonancia" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="la-energía-en-resonancia"><span class="header-section-number">3.1</span> La energía en resonancia</h3>
+<p>¿Qué pasa con la energía? Por unidad de masa, la energía del oscilador es</p>
+<p><img src="https://latex.codecogs.com/png.latex?E=%5Ctfrac12%5Cdot%20x%5E2+%5Ctfrac12a%5E2x%5E2."></p>
+<p>Derivando y usando la ecuación,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cdot%20E=%5Cdot%20x%5C,(%5Cddot%20x+a%5E2x)=%5Cdot%20x%5C,(F_0%5Ccos%5Comega%20t-2b%5Cdot%20x)=F_0%5C,%5Cdot%20x%5Ccos%5Comega%20t-2b%5C,%5Cdot%20x%5E2."></p>
+<p>El primer término es la potencia que entrega la fuerza y el segundo es la que disipa el rozamiento.</p>
+<p>Sin rozamiento y en resonancia, de <img src="https://latex.codecogs.com/png.latex?x_p=%5Cdfrac%7BF_0%7D%7B2a%7D%5C,t%5Csin%20at"> (que cumple <img src="https://latex.codecogs.com/png.latex?x(0)=0"> y <img src="https://latex.codecogs.com/png.latex?%5Cdot%20x(0)=0">) sale la energía exacta</p>
+<p><img src="https://latex.codecogs.com/png.latex?E(t)=%5Cfrac%7BF_0%5E2%7D%7B8a%5E2%7D%5Cleft(a%5E2t%5E2+%5Csin%5E2at+at%5Csin2at%5Cright)%5Capprox%5Cfrac%7BF_0%5E2%5C,t%5E2%7D%7B8%7D."></p>
+<p>La velocidad es <img src="https://latex.codecogs.com/png.latex?%5Cdot%20x%5Capprox%5Cfrac%7BF_0t%7D%7B2%7D%5Ccos%20at">, que está en fase con la fuerza <img src="https://latex.codecogs.com/png.latex?F_0%5Ccos%20at">. La fuerza empuja siempre en el sentido del movimiento, entrega potencia positiva todo el tiempo, y la energía crece sin cota, como <img src="https://latex.codecogs.com/png.latex?t%5E2">. Es la curva punteada del panel de energía del tablero.</p>
+<p>Con rozamiento la historia cambia. En <img src="https://latex.codecogs.com/png.latex?%5Comega=a"> la amplitud estacionaria es <img src="https://latex.codecogs.com/png.latex?C=F_0/(2ab)">, que es finita, y la potencia promedio que entrega la fuerza, <img src="https://latex.codecogs.com/png.latex?%5Ctfrac12F_0C%5Comega%5Csin%5Cdelta">, coincide con la que disipa el rozamiento, <img src="https://latex.codecogs.com/png.latex?bC%5E2%5Comega%5E2">. La energía se estabiliza: en un sistema real la resonancia es una amplitud grande pero finita, producto del balance entre lo que entra y lo que se disipa.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Una nota de familia: Lazer y los puentes">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Una nota de familia: Lazer y los puentes
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El caso lineal que acabamos de ver es el fácil. ¿Qué pasa si la fuerza restauradora no es lineal, <img src="https://latex.codecogs.com/png.latex?%5Cddot%20x+g(x)=F_0%5Ccos%5Comega%20t">? Es el caso <em>semilineal</em>, y ahí la pregunta de si hay soluciones cuando la parte lineal está en resonancia es delicada. La respuesta clásica es de Landesman y Lazer (1970): bajo condiciones sobre el comportamiento de la no linealidad en el infinito, sí hay solución aun cuando la parte lineal está en resonancia.</p>
+<p>Alan Lazer fue el director de tesis de Alfonso Castro, y Castro codirigió la mía: Lazer es mi abuelo matemático, como se ve en la <a href="../../../research/genealogy/index.html">página de genealogía</a>. Con McKenna, Lazer propuso en 1990 un modelo de puente colgante en el que los cables resisten el estiramiento pero no la compresión. Ese modelo produce oscilaciones de gran amplitud sostenidas por forzamientos pequeños, y es uno de los que se han usado para intentar explicar el comportamiento de puentes como el de Tacoma. Conviene saber que la causa del colapso de Tacoma sigue en discusión: Billah y Scanlan (1991) criticaron la versión de los textos, que lo atribuye a un forzamiento resonante simple, y hoy muchos ingenieros apuntan más bien a la realimentación entre el viento y el movimiento del tablero (ver <a href="https://arxiv.org/pdf/physics/0408101">este análisis</a>).</p>
+<p>Lo que sí es conocimiento canónico es el fenómeno de resonancia que vimos arriba: aparece en los textos de ecuaciones diferenciales, como el Simmons (con el ejemplo de una columna de soldados que marcha sobre un puente) y el Zill.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Qué forzamiento debería tener un oscilador amortiguado para entrar en resonancia? Considere <img src="https://latex.codecogs.com/png.latex?a=2"> y <img src="https://latex.codecogs.com/png.latex?b=1">.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="el-circuito-lrc" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="el-circuito-lrc"><span class="header-section-number">4</span> El circuito LRC</h2>
+<p>Imaginemos ahora un circuito en serie con una resistencia <img src="https://latex.codecogs.com/png.latex?R">, un inductor <img src="https://latex.codecogs.com/png.latex?L"> y un capacitor <img src="https://latex.codecogs.com/png.latex?C">, alimentado por una fuente de voltaje <img src="https://latex.codecogs.com/png.latex?E(t)"> (Figura&nbsp;4). Sean <img src="https://latex.codecogs.com/png.latex?I"> la corriente y <img src="https://latex.codecogs.com/png.latex?Q"> la carga del capacitor. Cada elemento aporta una caída de voltaje:</p>
+<div id="fig-circuito" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-circuito-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/odes/osciladores/circuito-rlc.svg" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-circuito-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4: Circuito LRC en serie. La corriente <img src="https://latex.codecogs.com/png.latex?I"> circula en el sentido de las flechas y <img src="https://latex.codecogs.com/png.latex?Q"> es la carga de la placa positiva del capacitor.
+</figcaption>
+</figure>
+</div>
+<ul>
+<li>La resistencia se opone a la corriente: <img src="https://latex.codecogs.com/png.latex?E_R=RI">.</li>
+<li>El inductor se opone al cambio de la corriente: <img src="https://latex.codecogs.com/png.latex?E_L=L%5C,%5Cdfrac%7BdI%7D%7Bdt%7D">.</li>
+<li>El capacitor almacena una carga <img src="https://latex.codecogs.com/png.latex?Q"> y tiene capacitancia <img src="https://latex.codecogs.com/png.latex?C">. La carga acumulada en el condensador resiste la llegada de nueva carga: <img src="https://latex.codecogs.com/png.latex?E_C=%5Cdfrac1C%5C,Q">.</li>
+</ul>
+<p>La corriente es la tasa de cambio del flujo de carga,</p>
+<p><img src="https://latex.codecogs.com/png.latex?I=%5Cfrac%7BdQ%7D%7Bdt%7D."></p>
+<div class="callout callout-style-default callout-note callout-titled" title="La analogía con el agua y los tubos">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>La analogía con el agua y los tubos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Conviene pensar el circuito como un circuito de agua (Figura&nbsp;5). La carga <img src="https://latex.codecogs.com/png.latex?Q"> es el volumen de agua que ha pasado, la corriente <img src="https://latex.codecogs.com/png.latex?I"> es el caudal y el voltaje es la presión.</p>
+<p>La fuente <img src="https://latex.codecogs.com/png.latex?E(t)"> es una bomba que empuja el agua. La resistencia <img src="https://latex.codecogs.com/png.latex?R"> es un tubo estrecho: cuanto más estrecho, más presión hace falta para el mismo caudal, y la energía se pierde en forma de calor por la fricción. El inductor <img src="https://latex.codecogs.com/png.latex?L"> es una rueda de paletas pesada puesta en el tubo: al agua le cuesta ponerla en movimiento y le cuesta frenarla, así que se opone a los cambios del caudal y no al caudal mismo. El capacitor <img src="https://latex.codecogs.com/png.latex?C"> es una membrana elástica dentro de una cámara: el agua no la atraviesa, pero la estira, y la membrana estirada empuja de vuelta con una presión proporcional al volumen acumulado, <img src="https://latex.codecogs.com/png.latex?Q/C">. Una membrana más rígida corresponde a una capacitancia menor.</p>
+<div id="fig-hidraulica" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hidraulica-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/odes/osciladores/analogia-hidraulica.svg" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hidraulica-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5: El circuito como un circuito de agua: bomba, tubo estrecho, rueda pesada y membrana elástica.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Por la ley de voltajes de Kirchhoff, que expresa la conservación de la energía (el trabajo por unidad de carga a lo largo de un lazo cerrado es cero), la fuerza electromotriz aplicada es igual a la suma de las caídas de voltaje, <img src="https://latex.codecogs.com/png.latex?E(t)-(E_R+E_L+E_C)=0">. De aquí,</p>
+<p><img src="https://latex.codecogs.com/png.latex?E(t)=RI+L%5Cfrac%7BdI%7D%7Bdt%7D+%5Cfrac1C%5C,Q."></p>
+<p>Derivando respecto a <img src="https://latex.codecogs.com/png.latex?t"> obtenemos una ecuación para la corriente,</p>
+<p><img src="https://latex.codecogs.com/png.latex?L%5Cfrac%7Bd%5E2I%7D%7Bdt%5E2%7D+R%5Cfrac%7BdI%7D%7Bdt%7D+%5Cfrac1C%5C,I=%5Cfrac%7BdE%7D%7Bdt%7D,"></p>
+<p>y si queremos la ecuación de la carga <img src="https://latex.codecogs.com/png.latex?Q">, reemplazamos <img src="https://latex.codecogs.com/png.latex?I=dQ/dt">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?L%5Cfrac%7Bd%5E2Q%7D%7Bdt%5E2%7D+R%5Cfrac%7BdQ%7D%7Bdt%7D+%5Cfrac1C%5C,Q=E(t)."></p>
+<p>Comparemos con la del resorte,</p>
+<p><img src="https://latex.codecogs.com/png.latex?M%5Cfrac%7Bd%5E2x%7D%7Bdt%5E2%7D+c%5Cfrac%7Bdx%7D%7Bdt%7D+kx=F(t)."></p>
+<p>Las dos ecuaciones son idénticas salvo por los nombres. El cuadro dice qué es cada cantidad.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Resorte</th>
+<th style="text-align: left;">Circuito</th>
+<th style="text-align: left;">Analogía con el agua</th>
+<th style="text-align: left;">Qué representa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?x">, desplazamiento</td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?Q">, carga</td>
+<td style="text-align: left;">volumen que ha pasado</td>
+<td style="text-align: left;">la variable que buscamos</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Cdot%20x">, velocidad</td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?I">, corriente</td>
+<td style="text-align: left;">caudal</td>
+<td style="text-align: left;">su tasa de cambio</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?M">, masa</td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?L">, inductancia</td>
+<td style="text-align: left;">rueda pesada</td>
+<td style="text-align: left;">inercia: se opone a los cambios de velocidad (o de corriente)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?c">, viscosidad</td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?R">, resistencia</td>
+<td style="text-align: left;">tubo estrecho</td>
+<td style="text-align: left;">rozamiento: disipa energía en forma de calor</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?k">, rigidez</td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?1/C">, inverso de la capacitancia</td>
+<td style="text-align: left;">membrana elástica</td>
+<td style="text-align: left;">restitución: empuja hacia el equilibrio</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?F(t)">, fuerza externa</td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?E(t)">, fuerza electromotriz</td>
+<td style="text-align: left;">bomba</td>
+<td style="text-align: left;">el forzamiento</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Ctfrac12M%5Cdot%20x%5E2"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Ctfrac12LI%5E2"></td>
+<td style="text-align: left;">energía cinética del agua</td>
+<td style="text-align: left;">energía de movimiento</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Ctfrac12kx%5E2"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7BQ%5E2%7D%7B2C%7D"></td>
+<td style="text-align: left;">energía elástica de la membrana</td>
+<td style="text-align: left;">energía almacenada</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?c%5Cdot%20x%5E2"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?RI%5E2"></td>
+<td style="text-align: left;">calor por fricción</td>
+<td style="text-align: left;">potencia disipada</td>
+</tr>
+</tbody>
+</table>
+<p>Como las ecuaciones coinciden, todo lo que aprendimos del resorte vale para el circuito, cambiando los nombres. La frecuencia natural <img src="https://latex.codecogs.com/png.latex?a=%5Csqrt%7Bk/M%7D"> corresponde a <img src="https://latex.codecogs.com/png.latex?1/%5Csqrt%7BLC%7D">, y el parámetro de amortiguamiento <img src="https://latex.codecogs.com/png.latex?b=c/(2M)"> corresponde a <img src="https://latex.codecogs.com/png.latex?R/(2L)">. El circuito oscila libremente cuando <img src="https://latex.codecogs.com/png.latex?b%3Ca">, es decir, cuando <img src="https://latex.codecogs.com/png.latex?R%3C2%5Csqrt%7BL/C%7D">, y la resistencia crítica es <img src="https://latex.codecogs.com/png.latex?R=2%5Csqrt%7BL/C%7D">. Con una fuente <img src="https://latex.codecogs.com/png.latex?E_0%5Ccos%5Comega%20t"> hay resonancia cuando <img src="https://latex.codecogs.com/png.latex?%5Comega"> se acerca a <img src="https://latex.codecogs.com/png.latex?1/%5Csqrt%7BLC%7D">: es el principio de sintonizar una radio, variando <img src="https://latex.codecogs.com/png.latex?C"> hasta que la frecuencia natural del circuito coincide con la de la emisora.</p>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/odes/osciladores/</guid>
+  <pubDate>Sun, 18 Oct 2026 05:00:00 GMT</pubDate>
+</item>
+<item>
   <title>Coeficientes Constantes y Variación de Parámetros</title>
   <dc:creator>Arturo Sanjuán</dc:creator>
   <link>https://arturosanjuan.xyz/cursos/odes/parametros/</link>
