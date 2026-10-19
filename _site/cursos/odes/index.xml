@@ -1706,8 +1706,186 @@ Figura&nbsp;5: El circuito como un circuito de agua: bomba, tubo estrecho, rueda
 </tbody>
 </table>
 <p>Como las ecuaciones coinciden, todo lo que aprendimos del resorte vale para el circuito, cambiando los nombres. La frecuencia natural <img src="https://latex.codecogs.com/png.latex?a=%5Csqrt%7Bk/M%7D"> corresponde a <img src="https://latex.codecogs.com/png.latex?1/%5Csqrt%7BLC%7D">, y el parámetro de amortiguamiento <img src="https://latex.codecogs.com/png.latex?b=c/(2M)"> corresponde a <img src="https://latex.codecogs.com/png.latex?R/(2L)">. El circuito oscila libremente cuando <img src="https://latex.codecogs.com/png.latex?b%3Ca">, es decir, cuando <img src="https://latex.codecogs.com/png.latex?R%3C2%5Csqrt%7BL/C%7D">, y la resistencia crítica es <img src="https://latex.codecogs.com/png.latex?R=2%5Csqrt%7BL/C%7D">. Con una fuente <img src="https://latex.codecogs.com/png.latex?E_0%5Ccos%5Comega%20t"> hay resonancia cuando <img src="https://latex.codecogs.com/png.latex?%5Comega"> se acerca a <img src="https://latex.codecogs.com/png.latex?1/%5Csqrt%7BLC%7D">: es el principio de sintonizar una radio, variando <img src="https://latex.codecogs.com/png.latex?C"> hasta que la frecuencia natural del circuito coincide con la de la emisora.</p>
+</section>
+<section id="un-experimento-real" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="un-experimento-real"><span class="header-section-number">5</span> Un experimento real</h2>
+<p>Armamos el circuito de la Figura&nbsp;4 con componentes de verdad y medimos con un osciloscopio. Los valores de partida son:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 45%">
+<col style="width: 54%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Elemento</th>
+<th style="text-align: left;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Resistor <img src="https://latex.codecogs.com/png.latex?R"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?99.51%5C%20%5COmega"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Capacitor <img src="https://latex.codecogs.com/png.latex?C"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?95.15%5C%20%5Ctext%7BnF%7D"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Inductor <img src="https://latex.codecogs.com/png.latex?L"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?4.7%5C%20%5Ctext%7BmH%7D"> (valor nominal, con tolerancia)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Alambre del inductor <img src="https://latex.codecogs.com/png.latex?R_L"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?41.04%5C%20%5COmega"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Salida del generador <img src="https://latex.codecogs.com/png.latex?R_g"></td>
+<td style="text-align: left;">no se conoce</td>
+</tr>
+</tbody>
+</table>
+<section id="la-ecuación-con-números" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="la-ecuación-con-números"><span class="header-section-number">5.1</span> La ecuación con números</h3>
+<p>Dividimos la ecuación de la carga por <img src="https://latex.codecogs.com/png.latex?L">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cddot%20Q+%5Cfrac%20RL%5C,%5Cdot%20Q+%5Cfrac1%7BLC%7D%5C,Q=%5Cfrac%7BE(t)%7D%7BL%7D."></p>
+<p>Es la ecuación del resorte forzado con</p>
+<p><img src="https://latex.codecogs.com/png.latex?b=%5Cfrac%20R%7B2L%7D,%5Cqquad%20a=%5Cfrac1%7B%5Csqrt%7BLC%7D%7D."></p>
+<p>Aquí <img src="https://latex.codecogs.com/png.latex?R"> es la resistencia total del lazo, porque las resistencias en serie se suman:</p>
+<p><img src="https://latex.codecogs.com/png.latex?R=R_%7B%5Ctext%7Bresistor%7D%7D+R_L+R_g."></p>
+<p>Si olvidamos el alambre del inductor, calculamos menos amortiguamiento del que hay en realidad.</p>
+<p>Un ohmio es V/A y un henrio es V·s/A, así que <img src="https://latex.codecogs.com/png.latex?b=R/2L"> tiene unidades de <img src="https://latex.codecogs.com/png.latex?1/%5Ctext%7Bs%7D">. Pero <img src="https://latex.codecogs.com/png.latex?b"> no es una frecuencia de oscilación: es una tasa de decaimiento, y la amplitud se divide por <img src="https://latex.codecogs.com/png.latex?e"> cada <img src="https://latex.codecogs.com/png.latex?1/b"> segundos. Los hercios se reservan para la frecuencia de la oscilación. Con <img src="https://latex.codecogs.com/png.latex?L=4.7"> mH y <img src="https://latex.codecogs.com/png.latex?R=99.51+41.04=140.55%5C%20%5COmega"> (sin contar <img src="https://latex.codecogs.com/png.latex?R_g">) resulta:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 32%">
+<col style="width: 28%">
+<col style="width: 38%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Cantidad</th>
+<th style="text-align: left;">Fórmula</th>
+<th style="text-align: left;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Decaimiento <img src="https://latex.codecogs.com/png.latex?b"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?R/2L"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?14%5C,950%5C%20%5Ctext%7Bs%7D%5E%7B-1%7D"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?a"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?1/%5Csqrt%7BLC%7D"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?47%5C,290%5C%20%5Ctext%7Bs%7D%5E%7B-1%7D"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Calpha"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Csqrt%7Ba%5E2-b%5E2%7D"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?44%5C,860%5C%20%5Ctext%7Brad/s%7D"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Frecuencia <img src="https://latex.codecogs.com/png.latex?f=%5Calpha/2%5Cpi"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?7.14%5C%20%5Ctext%7BkHz%7D"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Periodo <img src="https://latex.codecogs.com/png.latex?T=2%5Cpi/%5Calpha"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?140%5C%20%5Cmu%5Ctext%7Bs%7D"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Resistencia crítica</td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?2%5Csqrt%7BL/C%7D"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?444.5%5C%20%5COmega"></td>
+</tr>
+</tbody>
+</table>
+<p>Como <img src="https://latex.codecogs.com/png.latex?140.55%3C444.5">, se tiene <img src="https://latex.codecogs.com/png.latex?b%3Ca"> y el circuito es subamortiguado. La solución general es</p>
+<p><img src="https://latex.codecogs.com/png.latex?Q(t)=Q_0%5C,e%5E%7B-bt%7D%5Ccos(%5Calpha%20t-%5Cvarphi)+Q_p(t),"></p>
+<p>donde el primer término es el transitorio y <img src="https://latex.codecogs.com/png.latex?Q_p"> es lo que queda cuando el transitorio desaparece.</p>
+</section>
+<section id="una-fuente-constante" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="una-fuente-constante"><span class="header-section-number">5.2</span> Una fuente constante</h3>
+<p>Si <img src="https://latex.codecogs.com/png.latex?E(t)=E_0">, la solución particular es constante, y de <img src="https://latex.codecogs.com/png.latex?a%5E2Q_p=E_0/L"> sale</p>
+<p><img src="https://latex.codecogs.com/png.latex?Q_p=E_0%5C,C."></p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?E_0=0.5253"> V y <img src="https://latex.codecogs.com/png.latex?C=9.515%5Ctimes10%5E%7B-8%7D"> F,</p>
+<p><img src="https://latex.codecogs.com/png.latex?Q_p=0.5253%5Ctimes9.515%5Ctimes10%5E%7B-8%7D=4.998%5Ctimes10%5E%7B-8%7D%5C%20%5Ctext%7BC%7D."></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Pregunta">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Pregunta
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En <img src="https://latex.codecogs.com/png.latex?Q_p"> no aparecen ni <img src="https://latex.codecogs.com/png.latex?L"> ni <img src="https://latex.codecogs.com/png.latex?R">. ¿Se puede obtener el valor real de <img src="https://latex.codecogs.com/png.latex?L"> a partir del estado estacionario?</p>
+</div>
+</div>
+<p>No se puede: <img src="https://latex.codecogs.com/png.latex?L"> solo interviene en el transitorio. Para medirlo hay que mirar cómo se llega al equilibrio.</p>
+</section>
+<section id="cuánto-tarda-en-desaparecer-el-transitorio" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="cuánto-tarda-en-desaparecer-el-transitorio"><span class="header-section-number">5.3</span> ¿Cuánto tarda en desaparecer el transitorio?</h3>
+<p>Consideramos que el transitorio es despreciable cuando su amplitud cae al <img src="https://latex.codecogs.com/png.latex?1%5C%25">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?e%5E%7B-bt%7D=0.01%5Cqquad%5CLongrightarrow%5Cqquad%20t=%5Cfrac%7B%5Cln%20100%7D%7Bb%7D%5Capprox%5Cfrac%7B4.605%7D%7Bb%7D."></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 36%">
+<col style="width: 16%">
+<col style="width: 32%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Resistencia usada</th>
+<th style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?R"></th>
+<th style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?b"></th>
+<th style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?t"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Solo el resistor</td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?99.51%5C%20%5COmega"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?10%5C,590%5C%20%5Ctext%7Bs%7D%5E%7B-1%7D"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?0.435%5C%20%5Ctext%7Bms%7D"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Resistor y alambre del inductor</td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?140.55%5C%20%5COmega"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?14%5C,950%5C%20%5Ctext%7Bs%7D%5E%7B-1%7D"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?0.31%5C%20%5Ctext%7Bms%7D"></td>
+</tr>
+</tbody>
+</table>
+<p>El tiempo no depende de <img src="https://latex.codecogs.com/png.latex?E_0">, porque el <img src="https://latex.codecogs.com/png.latex?1%5C%25"> es relativo. Pasado <img src="https://latex.codecogs.com/png.latex?0.31"> ms queda solo la solución particular, sea cual sea la fuente que pongamos. Si el generador aporta resistencia de salida, el tiempo es un poco menor. En la pantalla, el <img src="https://latex.codecogs.com/png.latex?1%5C%25"> de <img src="https://latex.codecogs.com/png.latex?0.5253"> V son unos <img src="https://latex.codecogs.com/png.latex?5"> mV, por debajo del ruido del osciloscopio (unos <img src="https://latex.codecogs.com/png.latex?20"> mV), así que la oscilación se pierde en el ruido antes de ese tiempo.</p>
+</section>
+<section id="medir-el-valor-real-de-l" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="medir-el-valor-real-de-l"><span class="header-section-number">5.4</span> Medir el valor real de <img src="https://latex.codecogs.com/png.latex?L"></h3>
+<p>Del transitorio sí se puede. En la pantalla se leen el periodo <img src="https://latex.codecogs.com/png.latex?T"> entre dos máximos y su cociente <img src="https://latex.codecogs.com/png.latex?x_1/x_2=e%5E%7BbT%7D"> (el decremento logarítmico, problema 2 del §20). Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Calpha=%5Cfrac%7B2%5Cpi%7D%7BT%7D,%5Cqquad%20b=%5Cfrac%7B%5Cln(x_1/x_2)%7D%7BT%7D."></p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?%5Calpha%5E2+b%5E2=a%5E2=1/(LC)"> y <img src="https://latex.codecogs.com/png.latex?R=2Lb">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?L=%5Cfrac1%7BC%5C,(%5Calpha%5E2+b%5E2)%7D,%5Cqquad%20R=2Lb."></p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?C"> conocido, dos lecturas del osciloscopio dan <img src="https://latex.codecogs.com/png.latex?L"> y la resistencia total del lazo. Restando <img src="https://latex.codecogs.com/png.latex?99.51%5C%20%5COmega"> y <img src="https://latex.codecogs.com/png.latex?41.04%5C%20%5COmega"> queda la resistencia de salida del generador, <img src="https://latex.codecogs.com/png.latex?R_g">.</p>
+<p>Para comparar, con los valores nominales se espera <img src="https://latex.codecogs.com/png.latex?T%5Capprox140%5C%20%5Cmu%5Ctext%7Bs%7D"> y <img src="https://latex.codecogs.com/png.latex?e%5E%7BbT%7D%5Capprox8.1">: cada máximo es unas ocho veces menor que el anterior. Las desviaciones respecto del equilibrio son de unos <img src="https://latex.codecogs.com/png.latex?184">, <img src="https://latex.codecogs.com/png.latex?65"> y <img src="https://latex.codecogs.com/png.latex?23"> mV, y la siguiente (unos <img src="https://latex.codecogs.com/png.latex?8"> mV) ya queda bajo el ruido. Se ven solo tres picos.</p>
+</section>
+<section id="una-fuente-senoidal-de-1-khz" class="level3" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="una-fuente-senoidal-de-1-khz"><span class="header-section-number">5.5</span> Una fuente senoidal de 1 kHz</h3>
+<p>Ahora ponemos <img src="https://latex.codecogs.com/png.latex?E(t)=E_0%5Ccos%5Comega%20t"> con <img src="https://latex.codecogs.com/png.latex?%5Comega=2%5Cpi%5Ccdot1000">. El generador marcó <img src="https://latex.codecogs.com/png.latex?520"> mV pico a pico, así que <img src="https://latex.codecogs.com/png.latex?E_0=0.26"> V. Por lo que vimos en las oscilaciones forzadas, la solución particular es</p>
+<p><img src="https://latex.codecogs.com/png.latex?Q_p=Q_m%5Ccos(%5Comega%20t-%5Cvarphi),%5Cqquad%20Q_m=%5Cfrac%7BE_0%5C,C%7D%7B%5Csqrt%7B(1-LC%5Comega%5E2)%5E2+(RC%5Comega)%5E2%7D%7D,%5Cqquad%20%5Ctan%5Cvarphi=%5Cfrac%7BRC%5Comega%7D%7B1-LC%5Comega%5E2%7D."></p>
+<p>Con nuestros valores, <img src="https://latex.codecogs.com/png.latex?LC%5Comega%5E2=0.0177"> y <img src="https://latex.codecogs.com/png.latex?RC%5Comega=0.0840">, de donde <img src="https://latex.codecogs.com/png.latex?Q_m=1.014%5C,C%20E_0"> y <img src="https://latex.codecogs.com/png.latex?%5Cvarphi=0.0853"> rad (<img src="https://latex.codecogs.com/png.latex?4.9%5E%5Ccirc">). Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?Q_p(t)=2.51%5Ctimes10%5E%7B-8%7D%5Ccos(2000%5Cpi%20t-0.0853)%5C%20%5Ctext%7BC%7D."></p>
+<p>Es la onda que sobrevive en la carga. El voltaje del capacitor es <img src="https://latex.codecogs.com/png.latex?Q_p/C">, con amplitud <img src="https://latex.codecogs.com/png.latex?0.264"> V, es decir, <img src="https://latex.codecogs.com/png.latex?527"> mV pico a pico. El osciloscopio midió <img src="https://latex.codecogs.com/png.latex?514"> mV, un <img src="https://latex.codecogs.com/png.latex?2.5%5C%25"> menos, que cabe dentro de las tolerancias de <img src="https://latex.codecogs.com/png.latex?L"> y <img src="https://latex.codecogs.com/png.latex?C"> y de la lectura de la pantalla. A <img src="https://latex.codecogs.com/png.latex?1"> kHz estamos muy por debajo de la frecuencia natural (<img src="https://latex.codecogs.com/png.latex?7.5"> kHz), así que <img src="https://latex.codecogs.com/png.latex?Q"> sigue casi en fase a la fuente, con una ganancia apenas mayor que <img src="https://latex.codecogs.com/png.latex?1">.</p>
+</section>
+<section id="la-resonancia-en-el-laboratorio" class="level3" data-number="5.6">
+<h3 data-number="5.6" class="anchored" data-anchor-id="la-resonancia-en-el-laboratorio"><span class="header-section-number">5.6</span> La resonancia en el laboratorio</h3>
+<p>Si ahora barremos la frecuencia del generador, la amplitud de <img src="https://latex.codecogs.com/png.latex?Q_p"> tiene un máximo en <img src="https://latex.codecogs.com/png.latex?%5Comega_r=%5Csqrt%7Ba%5E2-2b%5E2%7D">, que es menor que la frecuencia natural de la oscilación amortiguada (problema 1 del §20). Con nuestros valores se predice</p>
+<p><img src="https://latex.codecogs.com/png.latex?f_r%5Capprox6.73%5C%20%5Ctext%7BkHz%7D,%5Cqquad%20%5Cfrac%7BV_%7BC,%5Cmax%7D%7D%7BE_0%7D=%5Cfrac%7Ba%5E2%7D%7B2b%5Calpha%7D%5Capprox1.67,"></p>
+<p>es decir, unos <img src="https://latex.codecogs.com/png.latex?0.43"> V de amplitud (<img src="https://latex.codecogs.com/png.latex?867"> mV pico a pico) con <img src="https://latex.codecogs.com/png.latex?E_0=0.26"> V. Si el generador aporta resistencia de salida, el pico será algo menor.</p>
 
 
+</section>
 </section>
 
  ]]></description>

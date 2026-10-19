@@ -661,3 +661,111 @@ Las dos ecuaciones son idénticas salvo por los nombres. El cuadro dice qué es 
 | $c\dot x^2$ | $RI^2$ | calor por fricción | potencia disipada |
 
 Como las ecuaciones coinciden, todo lo que aprendimos del resorte vale para el circuito, cambiando los nombres. La frecuencia natural $a=\sqrt{k/M}$ corresponde a $1/\sqrt{LC}$, y el parámetro de amortiguamiento $b=c/(2M)$ corresponde a $R/(2L)$. El circuito oscila libremente cuando $b<a$, es decir, cuando $R<2\sqrt{L/C}$, y la resistencia crítica es $R=2\sqrt{L/C}$. Con una fuente $E_0\cos\omega t$ hay resonancia cuando $\omega$ se acerca a $1/\sqrt{LC}$: es el principio de sintonizar una radio, variando $C$ hasta que la frecuencia natural del circuito coincide con la de la emisora.
+
+## Un experimento real
+
+Armamos el circuito de la @fig-circuito con componentes de verdad y medimos con un osciloscopio. Los valores de partida son:
+
+| Elemento | Valor |
+|:--------------------------------|:---------------------------------------|
+| Resistor $R$ | $99.51\ \Omega$ |
+| Capacitor $C$ | $95.15\ \text{nF}$ |
+| Inductor $L$ | $4.7\ \text{mH}$ (valor nominal, con tolerancia) |
+| Alambre del inductor $R_L$ | $41.04\ \Omega$ |
+| Salida del generador $R_g$ | no se conoce |
+
+### La ecuación con números
+
+Dividimos la ecuación de la carga por $L$:
+
+$$\ddot Q+\frac RL\,\dot Q+\frac1{LC}\,Q=\frac{E(t)}{L}.$$
+
+Es la ecuación del resorte forzado con
+
+$$b=\frac R{2L},\qquad a=\frac1{\sqrt{LC}}.$$
+
+Aquí $R$ es la resistencia total del lazo, porque las resistencias en serie se suman:
+
+$$R=R_{\text{resistor}}+R_L+R_g.$$
+
+Si olvidamos el alambre del inductor, calculamos menos amortiguamiento del que hay en realidad.
+
+Un ohmio es V/A y un henrio es V·s/A, así que $b=R/2L$ tiene unidades de $1/\text{s}$. Pero $b$ no es una frecuencia de oscilación: es una tasa de decaimiento, y la amplitud se divide por $e$ cada $1/b$ segundos. Los hercios se reservan para la frecuencia de la oscilación. Con $L=4.7$ mH y $R=99.51+41.04=140.55\ \Omega$ (sin contar $R_g$) resulta:
+
+| Cantidad | Fórmula | Valor |
+|:------------------------|:---------------------|:-----------------------------|
+| Decaimiento $b$ | $R/2L$ | $14\,950\ \text{s}^{-1}$ |
+| $a$ | $1/\sqrt{LC}$ | $47\,290\ \text{s}^{-1}$ |
+| $\alpha$ | $\sqrt{a^2-b^2}$ | $44\,860\ \text{rad/s}$ |
+| Frecuencia $f=\alpha/2\pi$ | | $7.14\ \text{kHz}$ |
+| Periodo $T=2\pi/\alpha$ | | $140\ \mu\text{s}$ |
+| Resistencia crítica | $2\sqrt{L/C}$ | $444.5\ \Omega$ |
+
+Como $140.55<444.5$, se tiene $b<a$ y el circuito es subamortiguado. La solución general es
+
+$$Q(t)=Q_0\,e^{-bt}\cos(\alpha t-\varphi)+Q_p(t),$$
+
+donde el primer término es el transitorio y $Q_p$ es lo que queda cuando el transitorio desaparece.
+
+### Una fuente constante
+
+Si $E(t)=E_0$, la solución particular es constante, y de $a^2Q_p=E_0/L$ sale
+
+$$Q_p=E_0\,C.$$
+
+Con $E_0=0.5253$ V y $C=9.515\times10^{-8}$ F,
+
+$$Q_p=0.5253\times9.515\times10^{-8}=4.998\times10^{-8}\ \text{C}.$$
+
+::: {.callout-important title="Pregunta"}
+En $Q_p$ no aparecen ni $L$ ni $R$. ¿Se puede obtener el valor real de $L$ a partir del estado estacionario?
+:::
+
+No se puede: $L$ solo interviene en el transitorio. Para medirlo hay que mirar cómo se llega al equilibrio.
+
+### ¿Cuánto tarda en desaparecer el transitorio?
+
+Consideramos que el transitorio es despreciable cuando su amplitud cae al $1\%$:
+
+$$e^{-bt}=0.01\qquad\Longrightarrow\qquad t=\frac{\ln 100}{b}\approx\frac{4.605}{b}.$$
+
+| Resistencia usada | $R$ | $b$ | $t$ |
+|:------------------------------|:-------------|:--------------------------|:-----------|
+| Solo el resistor | $99.51\ \Omega$ | $10\,590\ \text{s}^{-1}$ | $0.435\ \text{ms}$ |
+| Resistor y alambre del inductor | $140.55\ \Omega$ | $14\,950\ \text{s}^{-1}$ | $0.31\ \text{ms}$ |
+
+El tiempo no depende de $E_0$, porque el $1\%$ es relativo. Pasado $0.31$ ms queda solo la solución particular, sea cual sea la fuente que pongamos. Si el generador aporta resistencia de salida, el tiempo es un poco menor. En la pantalla, el $1\%$ de $0.5253$ V son unos $5$ mV, por debajo del ruido del osciloscopio (unos $20$ mV), así que la oscilación se pierde en el ruido antes de ese tiempo.
+
+### Medir el valor real de $L$
+
+Del transitorio sí se puede. En la pantalla se leen el periodo $T$ entre dos máximos y su cociente $x_1/x_2=e^{bT}$ (el decremento logarítmico, problema 2 del §20). Entonces
+
+$$\alpha=\frac{2\pi}{T},\qquad b=\frac{\ln(x_1/x_2)}{T}.$$
+
+Como $\alpha^2+b^2=a^2=1/(LC)$ y $R=2Lb$,
+
+$$L=\frac1{C\,(\alpha^2+b^2)},\qquad R=2Lb.$$
+
+Con $C$ conocido, dos lecturas del osciloscopio dan $L$ y la resistencia total del lazo. Restando $99.51\ \Omega$ y $41.04\ \Omega$ queda la resistencia de salida del generador, $R_g$.
+
+Para comparar, con los valores nominales se espera $T\approx140\ \mu\text{s}$ y $e^{bT}\approx8.1$: cada máximo es unas ocho veces menor que el anterior. Las desviaciones respecto del equilibrio son de unos $184$, $65$ y $23$ mV, y la siguiente (unos $8$ mV) ya queda bajo el ruido. Se ven solo tres picos.
+
+### Una fuente senoidal de 1 kHz
+
+Ahora ponemos $E(t)=E_0\cos\omega t$ con $\omega=2\pi\cdot1000$. El generador marcó $520$ mV pico a pico, así que $E_0=0.26$ V. Por lo que vimos en las oscilaciones forzadas, la solución particular es
+
+$$Q_p=Q_m\cos(\omega t-\varphi),\qquad Q_m=\frac{E_0\,C}{\sqrt{(1-LC\omega^2)^2+(RC\omega)^2}},\qquad \tan\varphi=\frac{RC\omega}{1-LC\omega^2}.$$
+
+Con nuestros valores, $LC\omega^2=0.0177$ y $RC\omega=0.0840$, de donde $Q_m=1.014\,C E_0$ y $\varphi=0.0853$ rad ($4.9^\circ$). Entonces
+
+$$Q_p(t)=2.51\times10^{-8}\cos(2000\pi t-0.0853)\ \text{C}.$$
+
+Es la onda que sobrevive en la carga. El voltaje del capacitor es $Q_p/C$, con amplitud $0.264$ V, es decir, $527$ mV pico a pico. El osciloscopio midió $514$ mV, un $2.5\%$ menos, que cabe dentro de las tolerancias de $L$ y $C$ y de la lectura de la pantalla. A $1$ kHz estamos muy por debajo de la frecuencia natural ($7.5$ kHz), así que $Q$ sigue casi en fase a la fuente, con una ganancia apenas mayor que $1$.
+
+### La resonancia en el laboratorio
+
+Si ahora barremos la frecuencia del generador, la amplitud de $Q_p$ tiene un máximo en $\omega_r=\sqrt{a^2-2b^2}$, que es menor que la frecuencia natural de la oscilación amortiguada (problema 1 del §20). Con nuestros valores se predice
+
+$$f_r\approx6.73\ \text{kHz},\qquad \frac{V_{C,\max}}{E_0}=\frac{a^2}{2b\alpha}\approx1.67,$$
+
+es decir, unos $0.43$ V de amplitud ($867$ mV pico a pico) con $E_0=0.26$ V. Si el generador aporta resistencia de salida, el pico será algo menor.

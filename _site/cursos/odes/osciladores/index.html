@@ -347,6 +347,15 @@ window.Quarto = {
   <li><a href="#la-energía-en-resonancia" id="toc-la-energía-en-resonancia" class="nav-link" data-scroll-target="#la-energía-en-resonancia"><span class="header-section-number">3.1</span> La energía en resonancia</a></li>
   </ul></li>
   <li><a href="#el-circuito-lrc" id="toc-el-circuito-lrc" class="nav-link" data-scroll-target="#el-circuito-lrc"><span class="header-section-number">4</span> El circuito LRC</a></li>
+  <li><a href="#un-experimento-real" id="toc-un-experimento-real" class="nav-link" data-scroll-target="#un-experimento-real"><span class="header-section-number">5</span> Un experimento real</a>
+  <ul class="collapse">
+  <li><a href="#la-ecuación-con-números" id="toc-la-ecuación-con-números" class="nav-link" data-scroll-target="#la-ecuación-con-números"><span class="header-section-number">5.1</span> La ecuación con números</a></li>
+  <li><a href="#una-fuente-constante" id="toc-una-fuente-constante" class="nav-link" data-scroll-target="#una-fuente-constante"><span class="header-section-number">5.2</span> Una fuente constante</a></li>
+  <li><a href="#cuánto-tarda-en-desaparecer-el-transitorio" id="toc-cuánto-tarda-en-desaparecer-el-transitorio" class="nav-link" data-scroll-target="#cuánto-tarda-en-desaparecer-el-transitorio"><span class="header-section-number">5.3</span> ¿Cuánto tarda en desaparecer el transitorio?</a></li>
+  <li><a href="#medir-el-valor-real-de-l" id="toc-medir-el-valor-real-de-l" class="nav-link" data-scroll-target="#medir-el-valor-real-de-l"><span class="header-section-number">5.4</span> Medir el valor real de <span class="math inline">\(L\)</span></a></li>
+  <li><a href="#una-fuente-senoidal-de-1-khz" id="toc-una-fuente-senoidal-de-1-khz" class="nav-link" data-scroll-target="#una-fuente-senoidal-de-1-khz"><span class="header-section-number">5.5</span> Una fuente senoidal de 1 kHz</a></li>
+  <li><a href="#la-resonancia-en-el-laboratorio" id="toc-la-resonancia-en-el-laboratorio" class="nav-link" data-scroll-target="#la-resonancia-en-el-laboratorio"><span class="header-section-number">5.6</span> La resonancia en el laboratorio</a></li>
+  </ul></li>
   </ul>
 </nav>
 </nav>
@@ -1117,8 +1126,186 @@ Figura&nbsp;5: El circuito como un circuito de agua: bomba, tubo estrecho, rueda
 </tbody>
 </table>
 <p>Como las ecuaciones coinciden, todo lo que aprendimos del resorte vale para el circuito, cambiando los nombres. La frecuencia natural <span class="math inline">\(a=\sqrt{k/M}\)</span> corresponde a <span class="math inline">\(1/\sqrt{LC}\)</span>, y el parámetro de amortiguamiento <span class="math inline">\(b=c/(2M)\)</span> corresponde a <span class="math inline">\(R/(2L)\)</span>. El circuito oscila libremente cuando <span class="math inline">\(b&lt;a\)</span>, es decir, cuando <span class="math inline">\(R&lt;2\sqrt{L/C}\)</span>, y la resistencia crítica es <span class="math inline">\(R=2\sqrt{L/C}\)</span>. Con una fuente <span class="math inline">\(E_0\cos\omega t\)</span> hay resonancia cuando <span class="math inline">\(\omega\)</span> se acerca a <span class="math inline">\(1/\sqrt{LC}\)</span>: es el principio de sintonizar una radio, variando <span class="math inline">\(C\)</span> hasta que la frecuencia natural del circuito coincide con la de la emisora.</p>
+</section>
+<section id="un-experimento-real" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="un-experimento-real"><span class="header-section-number">5</span> Un experimento real</h2>
+<p>Armamos el circuito de la <a href="#fig-circuito" class="quarto-xref">Figura&nbsp;4</a> con componentes de verdad y medimos con un osciloscopio. Los valores de partida son:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 45%">
+<col style="width: 54%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Elemento</th>
+<th style="text-align: left;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Resistor <span class="math inline">\(R\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(99.51\ \Omega\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Capacitor <span class="math inline">\(C\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(95.15\ \text{nF}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Inductor <span class="math inline">\(L\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(4.7\ \text{mH}\)</span> (valor nominal, con tolerancia)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Alambre del inductor <span class="math inline">\(R_L\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(41.04\ \Omega\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Salida del generador <span class="math inline">\(R_g\)</span></td>
+<td style="text-align: left;">no se conoce</td>
+</tr>
+</tbody>
+</table>
+<section id="la-ecuación-con-números" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="la-ecuación-con-números"><span class="header-section-number">5.1</span> La ecuación con números</h3>
+<p>Dividimos la ecuación de la carga por <span class="math inline">\(L\)</span>:</p>
+<p><span class="math display">\[\ddot Q+\frac RL\,\dot Q+\frac1{LC}\,Q=\frac{E(t)}{L}.\]</span></p>
+<p>Es la ecuación del resorte forzado con</p>
+<p><span class="math display">\[b=\frac R{2L},\qquad a=\frac1{\sqrt{LC}}.\]</span></p>
+<p>Aquí <span class="math inline">\(R\)</span> es la resistencia total del lazo, porque las resistencias en serie se suman:</p>
+<p><span class="math display">\[R=R_{\text{resistor}}+R_L+R_g.\]</span></p>
+<p>Si olvidamos el alambre del inductor, calculamos menos amortiguamiento del que hay en realidad.</p>
+<p>Un ohmio es V/A y un henrio es V·s/A, así que <span class="math inline">\(b=R/2L\)</span> tiene unidades de <span class="math inline">\(1/\text{s}\)</span>. Pero <span class="math inline">\(b\)</span> no es una frecuencia de oscilación: es una tasa de decaimiento, y la amplitud se divide por <span class="math inline">\(e\)</span> cada <span class="math inline">\(1/b\)</span> segundos. Los hercios se reservan para la frecuencia de la oscilación. Con <span class="math inline">\(L=4.7\)</span> mH y <span class="math inline">\(R=99.51+41.04=140.55\ \Omega\)</span> (sin contar <span class="math inline">\(R_g\)</span>) resulta:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 32%">
+<col style="width: 28%">
+<col style="width: 38%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Cantidad</th>
+<th style="text-align: left;">Fórmula</th>
+<th style="text-align: left;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Decaimiento <span class="math inline">\(b\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(R/2L\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(14\,950\ \text{s}^{-1}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(a\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(1/\sqrt{LC}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(47\,290\ \text{s}^{-1}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\alpha\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\sqrt{a^2-b^2}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(44\,860\ \text{rad/s}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Frecuencia <span class="math inline">\(f=\alpha/2\pi\)</span></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><span class="math inline">\(7.14\ \text{kHz}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Periodo <span class="math inline">\(T=2\pi/\alpha\)</span></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><span class="math inline">\(140\ \mu\text{s}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Resistencia crítica</td>
+<td style="text-align: left;"><span class="math inline">\(2\sqrt{L/C}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(444.5\ \Omega\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Como <span class="math inline">\(140.55&lt;444.5\)</span>, se tiene <span class="math inline">\(b&lt;a\)</span> y el circuito es subamortiguado. La solución general es</p>
+<p><span class="math display">\[Q(t)=Q_0\,e^{-bt}\cos(\alpha t-\varphi)+Q_p(t),\]</span></p>
+<p>donde el primer término es el transitorio y <span class="math inline">\(Q_p\)</span> es lo que queda cuando el transitorio desaparece.</p>
+</section>
+<section id="una-fuente-constante" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="una-fuente-constante"><span class="header-section-number">5.2</span> Una fuente constante</h3>
+<p>Si <span class="math inline">\(E(t)=E_0\)</span>, la solución particular es constante, y de <span class="math inline">\(a^2Q_p=E_0/L\)</span> sale</p>
+<p><span class="math display">\[Q_p=E_0\,C.\]</span></p>
+<p>Con <span class="math inline">\(E_0=0.5253\)</span> V y <span class="math inline">\(C=9.515\times10^{-8}\)</span> F,</p>
+<p><span class="math display">\[Q_p=0.5253\times9.515\times10^{-8}=4.998\times10^{-8}\ \text{C}.\]</span></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Pregunta">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Pregunta
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En <span class="math inline">\(Q_p\)</span> no aparecen ni <span class="math inline">\(L\)</span> ni <span class="math inline">\(R\)</span>. ¿Se puede obtener el valor real de <span class="math inline">\(L\)</span> a partir del estado estacionario?</p>
+</div>
+</div>
+<p>No se puede: <span class="math inline">\(L\)</span> solo interviene en el transitorio. Para medirlo hay que mirar cómo se llega al equilibrio.</p>
+</section>
+<section id="cuánto-tarda-en-desaparecer-el-transitorio" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="cuánto-tarda-en-desaparecer-el-transitorio"><span class="header-section-number">5.3</span> ¿Cuánto tarda en desaparecer el transitorio?</h3>
+<p>Consideramos que el transitorio es despreciable cuando su amplitud cae al <span class="math inline">\(1\%\)</span>:</p>
+<p><span class="math display">\[e^{-bt}=0.01\qquad\Longrightarrow\qquad t=\frac{\ln 100}{b}\approx\frac{4.605}{b}.\]</span></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 36%">
+<col style="width: 16%">
+<col style="width: 32%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Resistencia usada</th>
+<th style="text-align: left;"><span class="math inline">\(R\)</span></th>
+<th style="text-align: left;"><span class="math inline">\(b\)</span></th>
+<th style="text-align: left;"><span class="math inline">\(t\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Solo el resistor</td>
+<td style="text-align: left;"><span class="math inline">\(99.51\ \Omega\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(10\,590\ \text{s}^{-1}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(0.435\ \text{ms}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Resistor y alambre del inductor</td>
+<td style="text-align: left;"><span class="math inline">\(140.55\ \Omega\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(14\,950\ \text{s}^{-1}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(0.31\ \text{ms}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>El tiempo no depende de <span class="math inline">\(E_0\)</span>, porque el <span class="math inline">\(1\%\)</span> es relativo. Pasado <span class="math inline">\(0.31\)</span> ms queda solo la solución particular, sea cual sea la fuente que pongamos. Si el generador aporta resistencia de salida, el tiempo es un poco menor. En la pantalla, el <span class="math inline">\(1\%\)</span> de <span class="math inline">\(0.5253\)</span> V son unos <span class="math inline">\(5\)</span> mV, por debajo del ruido del osciloscopio (unos <span class="math inline">\(20\)</span> mV), así que la oscilación se pierde en el ruido antes de ese tiempo.</p>
+</section>
+<section id="medir-el-valor-real-de-l" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="medir-el-valor-real-de-l"><span class="header-section-number">5.4</span> Medir el valor real de <span class="math inline">\(L\)</span></h3>
+<p>Del transitorio sí se puede. En la pantalla se leen el periodo <span class="math inline">\(T\)</span> entre dos máximos y su cociente <span class="math inline">\(x_1/x_2=e^{bT}\)</span> (el decremento logarítmico, problema 2 del §20). Entonces</p>
+<p><span class="math display">\[\alpha=\frac{2\pi}{T},\qquad b=\frac{\ln(x_1/x_2)}{T}.\]</span></p>
+<p>Como <span class="math inline">\(\alpha^2+b^2=a^2=1/(LC)\)</span> y <span class="math inline">\(R=2Lb\)</span>,</p>
+<p><span class="math display">\[L=\frac1{C\,(\alpha^2+b^2)},\qquad R=2Lb.\]</span></p>
+<p>Con <span class="math inline">\(C\)</span> conocido, dos lecturas del osciloscopio dan <span class="math inline">\(L\)</span> y la resistencia total del lazo. Restando <span class="math inline">\(99.51\ \Omega\)</span> y <span class="math inline">\(41.04\ \Omega\)</span> queda la resistencia de salida del generador, <span class="math inline">\(R_g\)</span>.</p>
+<p>Para comparar, con los valores nominales se espera <span class="math inline">\(T\approx140\ \mu\text{s}\)</span> y <span class="math inline">\(e^{bT}\approx8.1\)</span>: cada máximo es unas ocho veces menor que el anterior. Las desviaciones respecto del equilibrio son de unos <span class="math inline">\(184\)</span>, <span class="math inline">\(65\)</span> y <span class="math inline">\(23\)</span> mV, y la siguiente (unos <span class="math inline">\(8\)</span> mV) ya queda bajo el ruido. Se ven solo tres picos.</p>
+</section>
+<section id="una-fuente-senoidal-de-1-khz" class="level3" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="una-fuente-senoidal-de-1-khz"><span class="header-section-number">5.5</span> Una fuente senoidal de 1 kHz</h3>
+<p>Ahora ponemos <span class="math inline">\(E(t)=E_0\cos\omega t\)</span> con <span class="math inline">\(\omega=2\pi\cdot1000\)</span>. El generador marcó <span class="math inline">\(520\)</span> mV pico a pico, así que <span class="math inline">\(E_0=0.26\)</span> V. Por lo que vimos en las oscilaciones forzadas, la solución particular es</p>
+<p><span class="math display">\[Q_p=Q_m\cos(\omega t-\varphi),\qquad Q_m=\frac{E_0\,C}{\sqrt{(1-LC\omega^2)^2+(RC\omega)^2}},\qquad \tan\varphi=\frac{RC\omega}{1-LC\omega^2}.\]</span></p>
+<p>Con nuestros valores, <span class="math inline">\(LC\omega^2=0.0177\)</span> y <span class="math inline">\(RC\omega=0.0840\)</span>, de donde <span class="math inline">\(Q_m=1.014\,C E_0\)</span> y <span class="math inline">\(\varphi=0.0853\)</span> rad (<span class="math inline">\(4.9^\circ\)</span>). Entonces</p>
+<p><span class="math display">\[Q_p(t)=2.51\times10^{-8}\cos(2000\pi t-0.0853)\ \text{C}.\]</span></p>
+<p>Es la onda que sobrevive en la carga. El voltaje del capacitor es <span class="math inline">\(Q_p/C\)</span>, con amplitud <span class="math inline">\(0.264\)</span> V, es decir, <span class="math inline">\(527\)</span> mV pico a pico. El osciloscopio midió <span class="math inline">\(514\)</span> mV, un <span class="math inline">\(2.5\%\)</span> menos, que cabe dentro de las tolerancias de <span class="math inline">\(L\)</span> y <span class="math inline">\(C\)</span> y de la lectura de la pantalla. A <span class="math inline">\(1\)</span> kHz estamos muy por debajo de la frecuencia natural (<span class="math inline">\(7.5\)</span> kHz), así que <span class="math inline">\(Q\)</span> sigue casi en fase a la fuente, con una ganancia apenas mayor que <span class="math inline">\(1\)</span>.</p>
+</section>
+<section id="la-resonancia-en-el-laboratorio" class="level3" data-number="5.6">
+<h3 data-number="5.6" class="anchored" data-anchor-id="la-resonancia-en-el-laboratorio"><span class="header-section-number">5.6</span> La resonancia en el laboratorio</h3>
+<p>Si ahora barremos la frecuencia del generador, la amplitud de <span class="math inline">\(Q_p\)</span> tiene un máximo en <span class="math inline">\(\omega_r=\sqrt{a^2-2b^2}\)</span>, que es menor que la frecuencia natural de la oscilación amortiguada (problema 1 del §20). Con nuestros valores se predice</p>
+<p><span class="math display">\[f_r\approx6.73\ \text{kHz},\qquad \frac{V_{C,\max}}{E_0}=\frac{a^2}{2b\alpha}\approx1.67,\]</span></p>
+<p>es decir, unos <span class="math inline">\(0.43\)</span> V de amplitud (<span class="math inline">\(867\)</span> mV pico a pico) con <span class="math inline">\(E_0=0.26\)</span> V. Si el generador aporta resistencia de salida, el pico será algo menor.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
