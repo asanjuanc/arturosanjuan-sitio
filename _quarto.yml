@@ -65,7 +65,7 @@ website:
         - cursos/odes/segundoorden/index.qmd
         - cursos/odes/parametros/index.qmd
         - cursos/odes/planetario/index.qmd
-        - cursos/odes/oscilaciones/index.qmd
+        - cursos/odes/osciladores/index.qmd
     - id: numerico
       title: "Análisis Numérico"
       style: docked
