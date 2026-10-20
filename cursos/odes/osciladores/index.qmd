@@ -1,7 +1,8 @@
 ---
 title: "Oscilaciones Mecánicas y Circuitos"
-subtitle: "El resorte amortiguado, la resonancia y el circuito LRC"
-description: "El resorte con rozamiento viscoso y sus tres regímenes, el forzamiento periódico, la resonancia y su energía, y la analogía con el circuito LRC."
+subtitle: "El resorte amortiguado, la resonancia, el circuito LRC y un experimento"
+description: "El resorte con rozamiento viscoso y sus tres regímenes, el forzamiento periódico, la resonancia y su energía, la analogía con el circuito LRC, y un circuito armado de verdad donde las predicciones de la ecuación se comparan con el osciloscopio."
+image: "osc-escalon.jpg"
 author: "Arturo Sanjuán"
 date: 2026-10-18
 format:
@@ -662,110 +663,140 @@ Las dos ecuaciones son idénticas salvo por los nombres. El cuadro dice qué es 
 
 Como las ecuaciones coinciden, todo lo que aprendimos del resorte vale para el circuito, cambiando los nombres. La frecuencia natural $a=\sqrt{k/M}$ corresponde a $1/\sqrt{LC}$, y el parámetro de amortiguamiento $b=c/(2M)$ corresponde a $R/(2L)$. El circuito oscila libremente cuando $b<a$, es decir, cuando $R<2\sqrt{L/C}$, y la resistencia crítica es $R=2\sqrt{L/C}$. Con una fuente $E_0\cos\omega t$ hay resonancia cuando $\omega$ se acerca a $1/\sqrt{LC}$: es el principio de sintonizar una radio, variando $C$ hasta que la frecuencia natural del circuito coincide con la de la emisora.
 
-## Un experimento real
+## Un experimento de verdad
 
-Armamos el circuito de la @fig-circuito con componentes de verdad y medimos con un osciloscopio. Los valores de partida son:
+Hasta aquí todo ha sido papel. Armemos ahora el circuito con componentes reales y comparemos lo que dice la ecuación con lo que hace el aparato. El montaje tiene tres partes, y conviene decir qué hace cada una sin meternos en electrónica:
+
+- El **generador** es una fuente de voltaje programable. Uno le pide la función $E(t)$ que quiere y él la produce.
+- El **circuito** es el de la @fig-circuito, con el resistor, el inductor y el capacitor en serie.
+- El **osciloscopio** es un graficador de voltaje contra tiempo. Tiene dos canales. El amarillo lo conectamos a la salida del generador, para ver el forzamiento $E(t)$, y el azul a los extremos del capacitor, para ver $Q/C$.
+
+Vale la pena detenerse en esto último: el osciloscopio dibuja la solución de la ecuación diferencial, en vivo. El circuito la resuelve solo y la pantalla la muestra. Las piezas que usamos fueron estas:
 
 | Elemento | Valor |
-|:--------------------------------|:---------------------------------------|
+|:--------------------------------|:------------------------------|
 | Resistor $R$ | $99.51\ \Omega$ |
 | Capacitor $C$ | $95.15\ \text{nF}$ |
-| Inductor $L$ | $4.7\ \text{mH}$ (valor nominal, con tolerancia) |
-| Alambre del inductor $R_L$ | $41.04\ \Omega$ |
-| Salida del generador $R_g$ | no se conoce |
+| Inductor $L$ | $4.7\ \text{mH}$ (valor nominal) |
+| Alambre del inductor | $41.04\ \Omega$ |
 
-### La ecuación con números
+La última fila merece una explicación. Un inductor real es una bobina de alambre, y ese alambre tiene su propia resistencia, que se suma a la del resistor porque están en serie. Si la olvidamos, la $R$ de la ecuación queda corta. Con eso,
 
-Dividimos la ecuación de la carga por $L$:
+$$R=99.51+41.04=140.55\ \Omega.$$
 
-$$\ddot Q+\frac RL\,\dot Q+\frac1{LC}\,Q=\frac{E(t)}{L}.$$
+### Los números de la ecuación
 
-Es la ecuación del resorte forzado con
+Dividimos por $L$ la ecuación de la carga que ya teníamos,
+
+$$\ddot Q+\frac RL\,\dot Q+\frac1{LC}\,Q=\frac{E(t)}{L},$$
+
+y la comparamos con $\ddot x+2b\dot x+a^2x=F_0\cos\omega t$ para leer los dos parámetros que deciden todo:
 
 $$b=\frac R{2L},\qquad a=\frac1{\sqrt{LC}}.$$
 
-Aquí $R$ es la resistencia total del lazo, porque las resistencias en serie se suman:
+Reemplazando los valores de la tabla, $a=47\,290\ \text{s}^{-1}$ y $b=14\,950\ \text{s}^{-1}$. Como $b<a$, estamos en el caso subamortiguado y el circuito debería oscilar. Dicho de otro modo, la resistencia está por debajo de la crítica, que es $2\sqrt{L/C}=444.5\ \Omega$. Entonces
 
-$$R=R_{\text{resistor}}+R_L+R_g.$$
+$$\alpha=\sqrt{a^2-b^2}=44\,860\ \text{s}^{-1},\qquad T=\frac{2\pi}{\alpha}=140\ \mu\text{s},\qquad \frac1T=7.1\ \text{kHz}.$$
 
-Si olvidamos el alambre del inductor, calculamos menos amortiguamiento del que hay en realidad.
+Esa es la primera predicción: si sacudimos el circuito, debería responder con una oscilación de un rizo cada $140\ \mu$s. Decir que su frecuencia es de $7.1$ kHz es decir lo mismo con otras palabras: es el ritmo al que oscilaría si siguiera oscilando, no el número de rizos que vamos a ver. Es la escala de tiempo en la que trabajaremos, y el motivo de que todo lo interesante ocurra en millonésimas de segundo.
 
-Un ohmio es V/A y un henrio es V·s/A, así que $b=R/2L$ tiene unidades de $1/\text{s}$. Pero $b$ no es una frecuencia de oscilación: es una tasa de decaimiento, y la amplitud se divide por $e$ cada $1/b$ segundos. Los hercios se reservan para la frecuencia de la oscilación. Con $L=4.7$ mH y $R=99.51+41.04=140.55\ \Omega$ (sin contar $R_g$) resulta:
+Pero $T$ solo dice qué tan rápido oscila, no cuánto dura la sacudida. Eso lo decide $b$, porque la envolvente es $e^{-bt}$ y la amplitud se divide por $e$ cada $1/b=67\ \mu$s. Si convenimos, como es costumbre, en que el transitorio ya es despreciable cuando ha caído al $1\%$,
 
-| Cantidad | Fórmula | Valor |
-|:------------------------|:---------------------|:-----------------------------|
-| Decaimiento $b$ | $R/2L$ | $14\,950\ \text{s}^{-1}$ |
-| $a$ | $1/\sqrt{LC}$ | $47\,290\ \text{s}^{-1}$ |
-| $\alpha$ | $\sqrt{a^2-b^2}$ | $44\,860\ \text{rad/s}$ |
-| Frecuencia $f=\alpha/2\pi$ | | $7.14\ \text{kHz}$ |
-| Periodo $T=2\pi/\alpha$ | | $140\ \mu\text{s}$ |
-| Resistencia crítica | $2\sqrt{L/C}$ | $444.5\ \Omega$ |
+$$e^{-bt}=0.01\qquad\Longrightarrow\qquad t=\frac{\ln 100}{b}=\frac{4.6}{b}=0.31\ \text{ms}.$$
 
-Como $140.55<444.5$, se tiene $b<a$ y el circuito es subamortiguado. La solución general es
+Conviene no confundir los dos tiempos: $\alpha$ dice qué tan rápido oscila y $b$ qué tan rápido se apaga. Su cociente dice cuántos rizos alcanzamos a ver antes de que todo se calme,
 
-$$Q(t)=Q_0\,e^{-bt}\cos(\alpha t-\varphi)+Q_p(t),$$
+$$\frac{0.31\ \text{ms}}{140\ \mu\text{s}}=\frac{\ln 100}{2\pi}\cdot\frac\alpha b\approx2.2,$$
 
-donde el primer término es el transitorio y $Q_p$ es lo que queda cuando el transitorio desaparece.
+o sea un par de rizos y ya. De paso, eso dice cada cuánto podemos repetir la sacudida: si esperamos bastante más de $0.31$ ms entre una y otra, cada una encuentra el circuito en reposo y vuelve a empezar la misma historia.
 
-### Una fuente constante
+### Primera prueba: encender y apagar
 
-Si $E(t)=E_0$, la solución particular es constante, y de $a^2Q_p=E_0/L$ sale
+Para sacudir el circuito lo encendemos y lo apagamos: el generador produce una onda cuadrada, que salta entre $0$ y $0.5$ V cada $2.5$ ms. Cada salto es un escalón, y como se repite doscientas veces por segundo, la pantalla puede mostrarlo quieto.
 
-$$Q_p=E_0\,C.$$
+![Onda cuadrada de 200 Hz. El canal amarillo es el generador y el azul el capacitor. Los dos canales tienen escalas verticales distintas, que aparecen abajo en la pantalla, así que el azul se ve más alto sin serlo.](osc-cuadrada.jpg){#fig-osc-cuadrada width=70%}
 
-Con $E_0=0.5253$ V y $C=9.515\times10^{-8}$ F,
+Lo que se ve en la @fig-osc-cuadrada es que el azul copia al amarillo: sube cuando sube, baja cuando baja, y entre un salto y otro se queda plano. Esa parte plana es la solución particular. Con $E(t)=E_0$ constante, la ecuación pide $a^2Q_p=E_0/L$, es decir
 
-$$Q_p=0.5253\times9.515\times10^{-8}=4.998\times10^{-8}\ \text{C}.$$
+$$Q_p=E_0\,C,$$
 
-::: {.callout-important title="Pregunta"}
-En $Q_p$ no aparecen ni $L$ ni $R$. ¿Se puede obtener el valor real de $L$ a partir del estado estacionario?
+y como el canal azul muestra $Q/C$, la predicción es que ese canal termine exactamente en $E_0$, el mismo valor del amarillo. Medido en la pantalla: $0.502$ V en el azul contra $0.500$ V en el amarillo. El capacitor se queda con el voltaje de la fuente, ni más ni menos.
+
+Lo interesante está en el pequeño rizo pegado a cada salto. Eso es el transitorio, y para verlo hay que ampliar el tiempo unas veinte veces.
+
+### El transitorio de cerca
+
+![El mismo salto, ampliado a $50\ \mu$s por división. El canal azul está amplificado cinco veces respecto del amarillo, y por eso su primer pico se sale por el borde de arriba.](osc-escalon.jpg){#fig-osc-escalon width=70%}
+
+En la @fig-osc-escalon está la oscilación que predijimos. Para comparar con números, resolvamos el problema de valor inicial. Antes del salto el capacitor está descargado y no circula corriente, así que $Q(0)=0$ y $\dot Q(0)=0$. Es el mismo cálculo de la sección de la oscilación subamortiguada, y da
+
+$$\frac{Q(t)}{C}=E_0\left[1-e^{-bt}\left(\cos\alpha t+\frac b\alpha\,\operatorname{sen}\alpha t\right)\right].$$
+
+Es la curva de la @fig-amortiguada puesta al revés: en vez de salir de $x_0$ y morir en cero, sale de cero y muere en $E_0$, con el mismo rizo y la misma envolvente $e^{-bt}$.
+
+De esta fórmula sale una predicción fácil de verificar con una regla. El corchete se anula cuando
+
+$$\tan\alpha t=-\frac\alpha b,$$
+
+y las soluciones de esa ecuación están separadas por $\pi/\alpha$, porque la tangente tiene periodo $\pi$. Entonces los instantes en que la curva cruza su valor final están separados por medio periodo, sin importar cuál sea el valor de $b$. Midiendo dos cruces consecutivos se obtiene $T$ directamente.
+
+| | Predicho | Medido |
+|:------------------------------|:----------------|:-----------------|
+| Primer cruce del valor final | $42\ \mu\text{s}$ | $47\ \mu\text{s}$ |
+| Periodo $T$ | $140\ \mu\text{s}$ | $148\ \mu\text{s}$ |
+| Frecuencia $1/T$ | $7.1\ \text{kHz}$ | $6.8\ \text{kHz}$ |
+
+La lectura tiene un error de unos $2\ \mu$s por cada cruce, así que el periodo cae dentro de lo previsto. Pero los dos números medidos están del mismo lado, y eso sugiere que algo falta.
+
+### Lo que faltaba
+
+Al dibujar la predicción encima de la medida, en la @fig-cmp, se ve dónde está el problema. La curva punteada usa la resistencia que medimos con el multímetro, $140.6\ \Omega$. Acierta en el tiempo de subida pero se pasa de largo: predice un rizo más alto y más duradero que el real. Al circuito le sobra amortiguamiento desde algún lado.
+
+![La predicción contra la medida. Los puntos son la curva azul del osciloscopio, leída de la pantalla.](prediccion-medida.svg){#fig-cmp width=92%}
+
+La explicación es que el generador tampoco es ideal. También está hecho de alambre, y tiene su propia resistencia interna, que se suma a las otras dos porque todo está en serie. Si añadimos unos $50\ \Omega$ por ese concepto, la curva continua pasa justo por los puntos medidos. Es la misma lección de la fila del alambre del inductor, un escalón más arriba: la $R$ de la ecuación es la del lazo completo, no la de la pieza que compramos.
+
+Esa resistencia escondida deja además una huella visible. Mientras el capacitor se carga circula una corriente de algo más de un miliamperio, y en esos primeros microsegundos el canal amarillo se hunde un poco, en lugar de ser el escalón perfecto que pedimos. El generador no logra sostener su propio voltaje mientras le sacan corriente, que es exactamente lo que uno esperaría de una fuente con resistencia interna.
+
+::: {.callout-important title="Tarea"}
+Con el primer pico completo en la pantalla se puede medir el inductor sin desarmar nada. Llame $M$ al cociente entre lo que el primer pico sobrepasa al valor final y el valor final mismo. Compruebe, a partir de la fórmula de arriba, que el primer pico ocurre en $t=T/2$ y que
+
+$$M=e^{-b\pi/\alpha}.$$
+
+Deduzca entonces que dos lecturas de la pantalla, $T$ y $M$, bastan para obtener
+
+$$\alpha=\frac{2\pi}T,\qquad b=-\frac\alpha\pi\ln M,\qquad L=\frac1{C\,(\alpha^2+b^2)},\qquad R=2Lb.$$
+
+Repita la captura con el canal azul en una escala que no se salga de la pantalla, mida $T$ y $M$, y compare el $L$ que obtenga con los $4.7$ mH nominales y la $R$ con los $140.6\ \Omega$ del multímetro. La diferencia es la resistencia del generador.
 :::
 
-No se puede: $L$ solo interviene en el transitorio. Para medirlo hay que mirar cómo se llega al equilibrio.
+### Segunda prueba: un coseno
 
-### ¿Cuánto tarda en desaparecer el transitorio?
+Cambiemos ahora el forzamiento por $E(t)=E_0\cos\omega t$ con una frecuencia de $1$ kHz, muy por debajo de los $7$ kHz naturales del circuito. Por lo que vimos en las oscilaciones forzadas, pasado el transitorio queda el estado estacionario $Q_p=Q_m\cos(\omega t-\delta)$ con
 
-Consideramos que el transitorio es despreciable cuando su amplitud cae al $1\%$:
+$$Q_m=\frac{E_0/L}{\sqrt{(a^2-\omega^2)^2+4b^2\omega^2}},\qquad \delta=\arctan\frac{2b\omega}{a^2-\omega^2}.$$
 
-$$e^{-bt}=0.01\qquad\Longrightarrow\qquad t=\frac{\ln 100}{b}\approx\frac{4.605}{b}.$$
+Como el canal azul muestra $Q/C$ y $1/(LC)=a^2$, la amplitud que veremos en la pantalla es
 
-| Resistencia usada | $R$ | $b$ | $t$ |
-|:------------------------------|:-------------|:--------------------------|:-----------|
-| Solo el resistor | $99.51\ \Omega$ | $10\,590\ \text{s}^{-1}$ | $0.435\ \text{ms}$ |
-| Resistor y alambre del inductor | $140.55\ \Omega$ | $14\,950\ \text{s}^{-1}$ | $0.31\ \text{ms}$ |
+$$\frac{Q_m}C=\frac{a^2\,E_0}{\sqrt{(a^2-\omega^2)^2+4b^2\omega^2}},$$
 
-El tiempo no depende de $E_0$, porque el $1\%$ es relativo. Pasado $0.31$ ms queda solo la solución particular, sea cual sea la fuente que pongamos. Si el generador aporta resistencia de salida, el tiempo es un poco menor. En la pantalla, el $1\%$ de $0.5253$ V son unos $5$ mV, por debajo del ruido del osciloscopio (unos $20$ mV), así que la oscilación se pierde en el ruido antes de ese tiempo.
+o sea $E_0$ multiplicado por un factor que depende solo de $\omega$. Con los números de arriba ese factor vale $1.014$, y el desfase es $\delta=4.9^\circ$, que a $1$ kHz corresponde a un retraso de $13.6\ \mu$s. Aquí usamos $R=140.6\ \Omega$, porque el canal amarillo ya muestra lo que el generador realmente entrega, con su propia caída incluida.
 
-### Medir el valor real de $L$
+Son dos predicciones modestas y por eso mismo interesantes: el capacitor debería oscilar un $1.4\%$ más alto que la fuente, y llegar tarde por catorce millonésimas de segundo. A la escala de la pantalla completa las dos curvas se ven idénticas, y hay que ampliar el tiempo, como en la @fig-osc-senoidal, para notar la diferencia.
 
-Del transitorio sí se puede. En la pantalla se leen el periodo $T$ entre dos máximos y su cociente $x_1/x_2=e^{bT}$ (el decremento logarítmico, problema 2 del §20). Entonces
+![El coseno de 1 kHz ampliado a $100\ \mu$s por división, con los dos canales en la misma escala y separados verticalmente para poder compararlos. El azul va ligeramente atrasado.](osc-senoidal.jpg){#fig-osc-senoidal width=70%}
 
-$$\alpha=\frac{2\pi}{T},\qquad b=\frac{\ln(x_1/x_2)}{T}.$$
+| | Predicho | Medido |
+|:-------------------------------|:-----------------|:------------------|
+| Azul sobre amarillo, amplitud | $1.014$ | $0.99$ a $1.00$ |
+| Retraso del azul | $13.6\ \mu\text{s}$ | $12$ a $14\ \mu\text{s}$ |
 
-Como $\alpha^2+b^2=a^2=1/(LC)$ y $R=2Lb$,
+### Qué nos dice esto
 
-$$L=\frac1{C\,(\alpha^2+b^2)},\qquad R=2Lb.$$
+Conviene mirar lo que acaba de pasar. Escribimos una ecuación mirando un resorte, la tradujimos a un circuito cambiando nombres, le pusimos los valores de las piezas y salieron predicciones concretas: que oscilaría a unos siete mil ciclos por segundo, que el capacitor terminaría exactamente con el voltaje de la fuente, que a mil hercios lo seguiría un uno por ciento más alto y catorce millonésimas de segundo tarde. Todas se cumplieron dentro del error con que se puede leer una pantalla.
 
-Con $C$ conocido, dos lecturas del osciloscopio dan $L$ y la resistencia total del lazo. Restando $99.51\ \Omega$ y $41.04\ \Omega$ queda la resistencia de salida del generador, $R_g$.
+Y donde la predicción falló, falló de manera útil. El rizo se apagaba más rápido de lo previsto, y eso nos obligó a admitir una resistencia que no habíamos contado. La ecuación no se limitó a describir lo que ya sabíamos: nos señaló algo del montaje que habíamos pasado por alto.
 
-Para comparar, con los valores nominales se espera $T\approx140\ \mu\text{s}$ y $e^{bT}\approx8.1$: cada máximo es unas ocho veces menor que el anterior. Las desviaciones respecto del equilibrio son de unos $184$, $65$ y $23$ mV, y la siguiente (unos $8$ mV) ya queda bajo el ruido. Se ven solo tres picos.
-
-### Una fuente senoidal de 1 kHz
-
-Ahora ponemos $E(t)=E_0\cos\omega t$ con $\omega=2\pi\cdot1000$. El generador marcó $520$ mV pico a pico, así que $E_0=0.26$ V. Por lo que vimos en las oscilaciones forzadas, la solución particular es
-
-$$Q_p=Q_m\cos(\omega t-\varphi),\qquad Q_m=\frac{E_0\,C}{\sqrt{(1-LC\omega^2)^2+(RC\omega)^2}},\qquad \tan\varphi=\frac{RC\omega}{1-LC\omega^2}.$$
-
-Con nuestros valores, $LC\omega^2=0.0177$ y $RC\omega=0.0840$, de donde $Q_m=1.014\,C E_0$ y $\varphi=0.0853$ rad ($4.9^\circ$). Entonces
-
-$$Q_p(t)=2.51\times10^{-8}\cos(2000\pi t-0.0853)\ \text{C}.$$
-
-Es la onda que sobrevive en la carga. El voltaje del capacitor es $Q_p/C$, con amplitud $0.264$ V, es decir, $527$ mV pico a pico. El osciloscopio midió $514$ mV, un $2.5\%$ menos, que cabe dentro de las tolerancias de $L$ y $C$ y de la lectura de la pantalla. A $1$ kHz estamos muy por debajo de la frecuencia natural ($7.5$ kHz), así que $Q$ sigue casi en fase a la fuente, con una ganancia apenas mayor que $1$.
-
-### La resonancia en el laboratorio
-
-Si ahora barremos la frecuencia del generador, la amplitud de $Q_p$ tiene un máximo en $\omega_r=\sqrt{a^2-2b^2}$, que es menor que la frecuencia natural de la oscilación amortiguada (problema 1 del §20). Con nuestros valores se predice
-
-$$f_r\approx6.73\ \text{kHz},\qquad \frac{V_{C,\max}}{E_0}=\frac{a^2}{2b\alpha}\approx1.67,$$
-
-es decir, unos $0.43$ V de amplitud ($867$ mV pico a pico) con $E_0=0.26$ V. Si el generador aporta resistencia de salida, el pico será algo menor.
+::: {.callout-important title="Tarea"}
+El circuito tiene su pico de resonancia en $\omega_r=\sqrt{a^2-2b^2}$, alrededor de $6$ kHz. Prediga cuánto debería crecer la amplitud del capacitor respecto de la de la fuente en ese punto, barra la frecuencia del generador y compruébelo.
+:::

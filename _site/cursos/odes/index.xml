@@ -1707,14 +1707,16 @@ Figura&nbsp;5: El circuito como un circuito de agua: bomba, tubo estrecho, rueda
 </table>
 <p>Como las ecuaciones coinciden, todo lo que aprendimos del resorte vale para el circuito, cambiando los nombres. La frecuencia natural <img src="https://latex.codecogs.com/png.latex?a=%5Csqrt%7Bk/M%7D"> corresponde a <img src="https://latex.codecogs.com/png.latex?1/%5Csqrt%7BLC%7D">, y el parámetro de amortiguamiento <img src="https://latex.codecogs.com/png.latex?b=c/(2M)"> corresponde a <img src="https://latex.codecogs.com/png.latex?R/(2L)">. El circuito oscila libremente cuando <img src="https://latex.codecogs.com/png.latex?b%3Ca">, es decir, cuando <img src="https://latex.codecogs.com/png.latex?R%3C2%5Csqrt%7BL/C%7D">, y la resistencia crítica es <img src="https://latex.codecogs.com/png.latex?R=2%5Csqrt%7BL/C%7D">. Con una fuente <img src="https://latex.codecogs.com/png.latex?E_0%5Ccos%5Comega%20t"> hay resonancia cuando <img src="https://latex.codecogs.com/png.latex?%5Comega"> se acerca a <img src="https://latex.codecogs.com/png.latex?1/%5Csqrt%7BLC%7D">: es el principio de sintonizar una radio, variando <img src="https://latex.codecogs.com/png.latex?C"> hasta que la frecuencia natural del circuito coincide con la de la emisora.</p>
 </section>
-<section id="un-experimento-real" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="un-experimento-real"><span class="header-section-number">5</span> Un experimento real</h2>
-<p>Armamos el circuito de la Figura&nbsp;4 con componentes de verdad y medimos con un osciloscopio. Los valores de partida son:</p>
+<section id="un-experimento-de-verdad" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="un-experimento-de-verdad"><span class="header-section-number">5</span> Un experimento de verdad</h2>
+<p>Hasta aquí todo ha sido papel. Armemos ahora el circuito con componentes reales y comparemos lo que dice la ecuación con lo que hace el aparato. El montaje tiene tres partes, y conviene decir qué hace cada una sin meternos en electrónica:</p>
+<ul>
+<li>El <strong>generador</strong> es una fuente de voltaje programable. Uno le pide la función <img src="https://latex.codecogs.com/png.latex?E(t)"> que quiere y él la produce.</li>
+<li>El <strong>circuito</strong> es el de la Figura&nbsp;4, con el resistor, el inductor y el capacitor en serie.</li>
+<li>El <strong>osciloscopio</strong> es un graficador de voltaje contra tiempo. Tiene dos canales. El amarillo lo conectamos a la salida del generador, para ver el forzamiento <img src="https://latex.codecogs.com/png.latex?E(t)">, y el azul a los extremos del capacitor, para ver <img src="https://latex.codecogs.com/png.latex?Q/C">.</li>
+</ul>
+<p>Vale la pena detenerse en esto último: el osciloscopio dibuja la solución de la ecuación diferencial, en vivo. El circuito la resuelve solo y la pantalla la muestra. Las piezas que usamos fueron estas:</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 45%">
-<col style="width: 54%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Elemento</th>
@@ -1732,157 +1734,190 @@ Figura&nbsp;5: El circuito como un circuito de agua: bomba, tubo estrecho, rueda
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Inductor <img src="https://latex.codecogs.com/png.latex?L"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?4.7%5C%20%5Ctext%7BmH%7D"> (valor nominal, con tolerancia)</td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?4.7%5C%20%5Ctext%7BmH%7D"> (valor nominal)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Alambre del inductor <img src="https://latex.codecogs.com/png.latex?R_L"></td>
+<td style="text-align: left;">Alambre del inductor</td>
 <td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?41.04%5C%20%5COmega"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Salida del generador <img src="https://latex.codecogs.com/png.latex?R_g"></td>
-<td style="text-align: left;">no se conoce</td>
 </tr>
 </tbody>
 </table>
-<section id="la-ecuación-con-números" class="level3" data-number="5.1">
-<h3 data-number="5.1" class="anchored" data-anchor-id="la-ecuación-con-números"><span class="header-section-number">5.1</span> La ecuación con números</h3>
-<p>Dividimos la ecuación de la carga por <img src="https://latex.codecogs.com/png.latex?L">:</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cddot%20Q+%5Cfrac%20RL%5C,%5Cdot%20Q+%5Cfrac1%7BLC%7D%5C,Q=%5Cfrac%7BE(t)%7D%7BL%7D."></p>
-<p>Es la ecuación del resorte forzado con</p>
+<p>La última fila merece una explicación. Un inductor real es una bobina de alambre, y ese alambre tiene su propia resistencia, que se suma a la del resistor porque están en serie. Si la olvidamos, la <img src="https://latex.codecogs.com/png.latex?R"> de la ecuación queda corta. Con eso,</p>
+<p><img src="https://latex.codecogs.com/png.latex?R=99.51+41.04=140.55%5C%20%5COmega."></p>
+<section id="los-números-de-la-ecuación" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="los-números-de-la-ecuación"><span class="header-section-number">5.1</span> Los números de la ecuación</h3>
+<p>Dividimos por <img src="https://latex.codecogs.com/png.latex?L"> la ecuación de la carga que ya teníamos,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cddot%20Q+%5Cfrac%20RL%5C,%5Cdot%20Q+%5Cfrac1%7BLC%7D%5C,Q=%5Cfrac%7BE(t)%7D%7BL%7D,"></p>
+<p>y la comparamos con <img src="https://latex.codecogs.com/png.latex?%5Cddot%20x+2b%5Cdot%20x+a%5E2x=F_0%5Ccos%5Comega%20t"> para leer los dos parámetros que deciden todo:</p>
 <p><img src="https://latex.codecogs.com/png.latex?b=%5Cfrac%20R%7B2L%7D,%5Cqquad%20a=%5Cfrac1%7B%5Csqrt%7BLC%7D%7D."></p>
-<p>Aquí <img src="https://latex.codecogs.com/png.latex?R"> es la resistencia total del lazo, porque las resistencias en serie se suman:</p>
-<p><img src="https://latex.codecogs.com/png.latex?R=R_%7B%5Ctext%7Bresistor%7D%7D+R_L+R_g."></p>
-<p>Si olvidamos el alambre del inductor, calculamos menos amortiguamiento del que hay en realidad.</p>
-<p>Un ohmio es V/A y un henrio es V·s/A, así que <img src="https://latex.codecogs.com/png.latex?b=R/2L"> tiene unidades de <img src="https://latex.codecogs.com/png.latex?1/%5Ctext%7Bs%7D">. Pero <img src="https://latex.codecogs.com/png.latex?b"> no es una frecuencia de oscilación: es una tasa de decaimiento, y la amplitud se divide por <img src="https://latex.codecogs.com/png.latex?e"> cada <img src="https://latex.codecogs.com/png.latex?1/b"> segundos. Los hercios se reservan para la frecuencia de la oscilación. Con <img src="https://latex.codecogs.com/png.latex?L=4.7"> mH y <img src="https://latex.codecogs.com/png.latex?R=99.51+41.04=140.55%5C%20%5COmega"> (sin contar <img src="https://latex.codecogs.com/png.latex?R_g">) resulta:</p>
+<p>Reemplazando los valores de la tabla, <img src="https://latex.codecogs.com/png.latex?a=47%5C,290%5C%20%5Ctext%7Bs%7D%5E%7B-1%7D"> y <img src="https://latex.codecogs.com/png.latex?b=14%5C,950%5C%20%5Ctext%7Bs%7D%5E%7B-1%7D">. Como <img src="https://latex.codecogs.com/png.latex?b%3Ca">, estamos en el caso subamortiguado y el circuito debería oscilar. Dicho de otro modo, la resistencia está por debajo de la crítica, que es <img src="https://latex.codecogs.com/png.latex?2%5Csqrt%7BL/C%7D=444.5%5C%20%5COmega">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Calpha=%5Csqrt%7Ba%5E2-b%5E2%7D=44%5C,860%5C%20%5Ctext%7Bs%7D%5E%7B-1%7D,%5Cqquad%20T=%5Cfrac%7B2%5Cpi%7D%7B%5Calpha%7D=140%5C%20%5Cmu%5Ctext%7Bs%7D,%5Cqquad%20%5Cfrac1T=7.1%5C%20%5Ctext%7BkHz%7D."></p>
+<p>Esa es la primera predicción: si sacudimos el circuito, debería responder con una oscilación de un rizo cada <img src="https://latex.codecogs.com/png.latex?140%5C%20%5Cmu">s. Decir que su frecuencia es de <img src="https://latex.codecogs.com/png.latex?7.1"> kHz es decir lo mismo con otras palabras: es el ritmo al que oscilaría si siguiera oscilando, no el número de rizos que vamos a ver. Es la escala de tiempo en la que trabajaremos, y el motivo de que todo lo interesante ocurra en millonésimas de segundo.</p>
+<p>Pero <img src="https://latex.codecogs.com/png.latex?T"> solo dice qué tan rápido oscila, no cuánto dura la sacudida. Eso lo decide <img src="https://latex.codecogs.com/png.latex?b">, porque la envolvente es <img src="https://latex.codecogs.com/png.latex?e%5E%7B-bt%7D"> y la amplitud se divide por <img src="https://latex.codecogs.com/png.latex?e"> cada <img src="https://latex.codecogs.com/png.latex?1/b=67%5C%20%5Cmu">s. Si convenimos, como es costumbre, en que el transitorio ya es despreciable cuando ha caído al <img src="https://latex.codecogs.com/png.latex?1%5C%25">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?e%5E%7B-bt%7D=0.01%5Cqquad%5CLongrightarrow%5Cqquad%20t=%5Cfrac%7B%5Cln%20100%7D%7Bb%7D=%5Cfrac%7B4.6%7D%7Bb%7D=0.31%5C%20%5Ctext%7Bms%7D."></p>
+<p>Conviene no confundir los dos tiempos: <img src="https://latex.codecogs.com/png.latex?%5Calpha"> dice qué tan rápido oscila y <img src="https://latex.codecogs.com/png.latex?b"> qué tan rápido se apaga. Su cociente dice cuántos rizos alcanzamos a ver antes de que todo se calme,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B0.31%5C%20%5Ctext%7Bms%7D%7D%7B140%5C%20%5Cmu%5Ctext%7Bs%7D%7D=%5Cfrac%7B%5Cln%20100%7D%7B2%5Cpi%7D%5Ccdot%5Cfrac%5Calpha%20b%5Capprox2.2,"></p>
+<p>o sea un par de rizos y ya. De paso, eso dice cada cuánto podemos repetir la sacudida: si esperamos bastante más de <img src="https://latex.codecogs.com/png.latex?0.31"> ms entre una y otra, cada una encuentra el circuito en reposo y vuelve a empezar la misma historia.</p>
+</section>
+<section id="primera-prueba-encender-y-apagar" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="primera-prueba-encender-y-apagar"><span class="header-section-number">5.2</span> Primera prueba: encender y apagar</h3>
+<p>Para sacudir el circuito lo encendemos y lo apagamos: el generador produce una onda cuadrada, que salta entre <img src="https://latex.codecogs.com/png.latex?0"> y <img src="https://latex.codecogs.com/png.latex?0.5"> V cada <img src="https://latex.codecogs.com/png.latex?2.5"> ms. Cada salto es un escalón, y como se repite doscientas veces por segundo, la pantalla puede mostrarlo quieto.</p>
+<div id="fig-osc-cuadrada" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-osc-cuadrada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/odes/osciladores/osc-cuadrada.jpg" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-osc-cuadrada-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6: Onda cuadrada de 200 Hz. El canal amarillo es el generador y el azul el capacitor. Los dos canales tienen escalas verticales distintas, que aparecen abajo en la pantalla, así que el azul se ve más alto sin serlo.
+</figcaption>
+</figure>
+</div>
+<p>Lo que se ve en la Figura&nbsp;6 es que el azul copia al amarillo: sube cuando sube, baja cuando baja, y entre un salto y otro se queda plano. Esa parte plana es la solución particular. Con <img src="https://latex.codecogs.com/png.latex?E(t)=E_0"> constante, la ecuación pide <img src="https://latex.codecogs.com/png.latex?a%5E2Q_p=E_0/L">, es decir</p>
+<p><img src="https://latex.codecogs.com/png.latex?Q_p=E_0%5C,C,"></p>
+<p>y como el canal azul muestra <img src="https://latex.codecogs.com/png.latex?Q/C">, la predicción es que ese canal termine exactamente en <img src="https://latex.codecogs.com/png.latex?E_0">, el mismo valor del amarillo. Medido en la pantalla: <img src="https://latex.codecogs.com/png.latex?0.502"> V en el azul contra <img src="https://latex.codecogs.com/png.latex?0.500"> V en el amarillo. El capacitor se queda con el voltaje de la fuente, ni más ni menos.</p>
+<p>Lo interesante está en el pequeño rizo pegado a cada salto. Eso es el transitorio, y para verlo hay que ampliar el tiempo unas veinte veces.</p>
+</section>
+<section id="el-transitorio-de-cerca" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="el-transitorio-de-cerca"><span class="header-section-number">5.3</span> El transitorio de cerca</h3>
+<div id="fig-osc-escalon" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-osc-escalon-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/odes/osciladores/osc-escalon.jpg" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-osc-escalon-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7: El mismo salto, ampliado a <img src="https://latex.codecogs.com/png.latex?50%5C%20%5Cmu">s por división. El canal azul está amplificado cinco veces respecto del amarillo, y por eso su primer pico se sale por el borde de arriba.
+</figcaption>
+</figure>
+</div>
+<p>En la Figura&nbsp;7 está la oscilación que predijimos. Para comparar con números, resolvamos el problema de valor inicial. Antes del salto el capacitor está descargado y no circula corriente, así que <img src="https://latex.codecogs.com/png.latex?Q(0)=0"> y <img src="https://latex.codecogs.com/png.latex?%5Cdot%20Q(0)=0">. Es el mismo cálculo de la sección de la oscilación subamortiguada, y da</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7BQ(t)%7D%7BC%7D=E_0%5Cleft%5B1-e%5E%7B-bt%7D%5Cleft(%5Ccos%5Calpha%20t+%5Cfrac%20b%5Calpha%5C,%5Coperatorname%7Bsen%7D%5Calpha%20t%5Cright)%5Cright%5D."></p>
+<p>Es la curva de la Figura&nbsp;3 puesta al revés: en vez de salir de <img src="https://latex.codecogs.com/png.latex?x_0"> y morir en cero, sale de cero y muere en <img src="https://latex.codecogs.com/png.latex?E_0">, con el mismo rizo y la misma envolvente <img src="https://latex.codecogs.com/png.latex?e%5E%7B-bt%7D">.</p>
+<p>De esta fórmula sale una predicción fácil de verificar con una regla. El corchete se anula cuando</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ctan%5Calpha%20t=-%5Cfrac%5Calpha%20b,"></p>
+<p>y las soluciones de esa ecuación están separadas por <img src="https://latex.codecogs.com/png.latex?%5Cpi/%5Calpha">, porque la tangente tiene periodo <img src="https://latex.codecogs.com/png.latex?%5Cpi">. Entonces los instantes en que la curva cruza su valor final están separados por medio periodo, sin importar cuál sea el valor de <img src="https://latex.codecogs.com/png.latex?b">. Midiendo dos cruces consecutivos se obtiene <img src="https://latex.codecogs.com/png.latex?T"> directamente.</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 32%">
-<col style="width: 28%">
-<col style="width: 38%">
-</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Cantidad</th>
-<th style="text-align: left;">Fórmula</th>
-<th style="text-align: left;">Valor</th>
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Predicho</th>
+<th style="text-align: left;">Medido</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Decaimiento <img src="https://latex.codecogs.com/png.latex?b"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?R/2L"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?14%5C,950%5C%20%5Ctext%7Bs%7D%5E%7B-1%7D"></td>
+<td style="text-align: left;">Primer cruce del valor final</td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?42%5C%20%5Cmu%5Ctext%7Bs%7D"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?47%5C%20%5Cmu%5Ctext%7Bs%7D"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?a"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?1/%5Csqrt%7BLC%7D"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?47%5C,290%5C%20%5Ctext%7Bs%7D%5E%7B-1%7D"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Calpha"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Csqrt%7Ba%5E2-b%5E2%7D"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?44%5C,860%5C%20%5Ctext%7Brad/s%7D"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Frecuencia <img src="https://latex.codecogs.com/png.latex?f=%5Calpha/2%5Cpi"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?7.14%5C%20%5Ctext%7BkHz%7D"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Periodo <img src="https://latex.codecogs.com/png.latex?T=2%5Cpi/%5Calpha"></td>
-<td style="text-align: left;"></td>
+<td style="text-align: left;">Periodo <img src="https://latex.codecogs.com/png.latex?T"></td>
 <td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?140%5C%20%5Cmu%5Ctext%7Bs%7D"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?148%5C%20%5Cmu%5Ctext%7Bs%7D"></td>
 </tr>
-<tr class="even">
-<td style="text-align: left;">Resistencia crítica</td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?2%5Csqrt%7BL/C%7D"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?444.5%5C%20%5COmega"></td>
+<tr class="odd">
+<td style="text-align: left;">Frecuencia <img src="https://latex.codecogs.com/png.latex?1/T"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?7.1%5C%20%5Ctext%7BkHz%7D"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?6.8%5C%20%5Ctext%7BkHz%7D"></td>
 </tr>
 </tbody>
 </table>
-<p>Como <img src="https://latex.codecogs.com/png.latex?140.55%3C444.5">, se tiene <img src="https://latex.codecogs.com/png.latex?b%3Ca"> y el circuito es subamortiguado. La solución general es</p>
-<p><img src="https://latex.codecogs.com/png.latex?Q(t)=Q_0%5C,e%5E%7B-bt%7D%5Ccos(%5Calpha%20t-%5Cvarphi)+Q_p(t),"></p>
-<p>donde el primer término es el transitorio y <img src="https://latex.codecogs.com/png.latex?Q_p"> es lo que queda cuando el transitorio desaparece.</p>
+<p>La lectura tiene un error de unos <img src="https://latex.codecogs.com/png.latex?2%5C%20%5Cmu">s por cada cruce, así que el periodo cae dentro de lo previsto. Pero los dos números medidos están del mismo lado, y eso sugiere que algo falta.</p>
 </section>
-<section id="una-fuente-constante" class="level3" data-number="5.2">
-<h3 data-number="5.2" class="anchored" data-anchor-id="una-fuente-constante"><span class="header-section-number">5.2</span> Una fuente constante</h3>
-<p>Si <img src="https://latex.codecogs.com/png.latex?E(t)=E_0">, la solución particular es constante, y de <img src="https://latex.codecogs.com/png.latex?a%5E2Q_p=E_0/L"> sale</p>
-<p><img src="https://latex.codecogs.com/png.latex?Q_p=E_0%5C,C."></p>
-<p>Con <img src="https://latex.codecogs.com/png.latex?E_0=0.5253"> V y <img src="https://latex.codecogs.com/png.latex?C=9.515%5Ctimes10%5E%7B-8%7D"> F,</p>
-<p><img src="https://latex.codecogs.com/png.latex?Q_p=0.5253%5Ctimes9.515%5Ctimes10%5E%7B-8%7D=4.998%5Ctimes10%5E%7B-8%7D%5C%20%5Ctext%7BC%7D."></p>
-<div class="callout callout-style-default callout-important callout-titled" title="Pregunta">
+<section id="lo-que-faltaba" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="lo-que-faltaba"><span class="header-section-number">5.4</span> Lo que faltaba</h3>
+<p>Al dibujar la predicción encima de la medida, en la Figura&nbsp;8, se ve dónde está el problema. La curva punteada usa la resistencia que medimos con el multímetro, <img src="https://latex.codecogs.com/png.latex?140.6%5C%20%5COmega">. Acierta en el tiempo de subida pero se pasa de largo: predice un rizo más alto y más duradero que el real. Al circuito le sobra amortiguamiento desde algún lado.</p>
+<div id="fig-cmp" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cmp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/odes/osciladores/prediccion-medida.svg" class="img-fluid figure-img" style="width:92.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cmp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;8: La predicción contra la medida. Los puntos son la curva azul del osciloscopio, leída de la pantalla.
+</figcaption>
+</figure>
+</div>
+<p>La explicación es que el generador tampoco es ideal. También está hecho de alambre, y tiene su propia resistencia interna, que se suma a las otras dos porque todo está en serie. Si añadimos unos <img src="https://latex.codecogs.com/png.latex?50%5C%20%5COmega"> por ese concepto, la curva continua pasa justo por los puntos medidos. Es la misma lección de la fila del alambre del inductor, un escalón más arriba: la <img src="https://latex.codecogs.com/png.latex?R"> de la ecuación es la del lazo completo, no la de la pieza que compramos.</p>
+<p>Esa resistencia escondida deja además una huella visible. Mientras el capacitor se carga circula una corriente de algo más de un miliamperio, y en esos primeros microsegundos el canal amarillo se hunde un poco, en lugar de ser el escalón perfecto que pedimos. El generador no logra sostener su propio voltaje mientras le sacan corriente, que es exactamente lo que uno esperaría de una fuente con resistencia interna.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Tarea">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Pregunta
+<span class="screen-reader-only">Importante</span>Tarea
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>En <img src="https://latex.codecogs.com/png.latex?Q_p"> no aparecen ni <img src="https://latex.codecogs.com/png.latex?L"> ni <img src="https://latex.codecogs.com/png.latex?R">. ¿Se puede obtener el valor real de <img src="https://latex.codecogs.com/png.latex?L"> a partir del estado estacionario?</p>
+<p>Con el primer pico completo en la pantalla se puede medir el inductor sin desarmar nada. Llame <img src="https://latex.codecogs.com/png.latex?M"> al cociente entre lo que el primer pico sobrepasa al valor final y el valor final mismo. Compruebe, a partir de la fórmula de arriba, que el primer pico ocurre en <img src="https://latex.codecogs.com/png.latex?t=T/2"> y que</p>
+<p><img src="https://latex.codecogs.com/png.latex?M=e%5E%7B-b%5Cpi/%5Calpha%7D."></p>
+<p>Deduzca entonces que dos lecturas de la pantalla, <img src="https://latex.codecogs.com/png.latex?T"> y <img src="https://latex.codecogs.com/png.latex?M">, bastan para obtener</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Calpha=%5Cfrac%7B2%5Cpi%7DT,%5Cqquad%20b=-%5Cfrac%5Calpha%5Cpi%5Cln%20M,%5Cqquad%20L=%5Cfrac1%7BC%5C,(%5Calpha%5E2+b%5E2)%7D,%5Cqquad%20R=2Lb."></p>
+<p>Repita la captura con el canal azul en una escala que no se salga de la pantalla, mida <img src="https://latex.codecogs.com/png.latex?T"> y <img src="https://latex.codecogs.com/png.latex?M">, y compare el <img src="https://latex.codecogs.com/png.latex?L"> que obtenga con los <img src="https://latex.codecogs.com/png.latex?4.7"> mH nominales y la <img src="https://latex.codecogs.com/png.latex?R"> con los <img src="https://latex.codecogs.com/png.latex?140.6%5C%20%5COmega"> del multímetro. La diferencia es la resistencia del generador.</p>
 </div>
 </div>
-<p>No se puede: <img src="https://latex.codecogs.com/png.latex?L"> solo interviene en el transitorio. Para medirlo hay que mirar cómo se llega al equilibrio.</p>
 </section>
-<section id="cuánto-tarda-en-desaparecer-el-transitorio" class="level3" data-number="5.3">
-<h3 data-number="5.3" class="anchored" data-anchor-id="cuánto-tarda-en-desaparecer-el-transitorio"><span class="header-section-number">5.3</span> ¿Cuánto tarda en desaparecer el transitorio?</h3>
-<p>Consideramos que el transitorio es despreciable cuando su amplitud cae al <img src="https://latex.codecogs.com/png.latex?1%5C%25">:</p>
-<p><img src="https://latex.codecogs.com/png.latex?e%5E%7B-bt%7D=0.01%5Cqquad%5CLongrightarrow%5Cqquad%20t=%5Cfrac%7B%5Cln%20100%7D%7Bb%7D%5Capprox%5Cfrac%7B4.605%7D%7Bb%7D."></p>
+<section id="segunda-prueba-un-coseno" class="level3" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="segunda-prueba-un-coseno"><span class="header-section-number">5.5</span> Segunda prueba: un coseno</h3>
+<p>Cambiemos ahora el forzamiento por <img src="https://latex.codecogs.com/png.latex?E(t)=E_0%5Ccos%5Comega%20t"> con una frecuencia de <img src="https://latex.codecogs.com/png.latex?1"> kHz, muy por debajo de los <img src="https://latex.codecogs.com/png.latex?7"> kHz naturales del circuito. Por lo que vimos en las oscilaciones forzadas, pasado el transitorio queda el estado estacionario <img src="https://latex.codecogs.com/png.latex?Q_p=Q_m%5Ccos(%5Comega%20t-%5Cdelta)"> con</p>
+<p><img src="https://latex.codecogs.com/png.latex?Q_m=%5Cfrac%7BE_0/L%7D%7B%5Csqrt%7B(a%5E2-%5Comega%5E2)%5E2+4b%5E2%5Comega%5E2%7D%7D,%5Cqquad%20%5Cdelta=%5Carctan%5Cfrac%7B2b%5Comega%7D%7Ba%5E2-%5Comega%5E2%7D."></p>
+<p>Como el canal azul muestra <img src="https://latex.codecogs.com/png.latex?Q/C"> y <img src="https://latex.codecogs.com/png.latex?1/(LC)=a%5E2">, la amplitud que veremos en la pantalla es</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7BQ_m%7DC=%5Cfrac%7Ba%5E2%5C,E_0%7D%7B%5Csqrt%7B(a%5E2-%5Comega%5E2)%5E2+4b%5E2%5Comega%5E2%7D%7D,"></p>
+<p>o sea <img src="https://latex.codecogs.com/png.latex?E_0"> multiplicado por un factor que depende solo de <img src="https://latex.codecogs.com/png.latex?%5Comega">. Con los números de arriba ese factor vale <img src="https://latex.codecogs.com/png.latex?1.014">, y el desfase es <img src="https://latex.codecogs.com/png.latex?%5Cdelta=4.9%5E%5Ccirc">, que a <img src="https://latex.codecogs.com/png.latex?1"> kHz corresponde a un retraso de <img src="https://latex.codecogs.com/png.latex?13.6%5C%20%5Cmu">s. Aquí usamos <img src="https://latex.codecogs.com/png.latex?R=140.6%5C%20%5COmega">, porque el canal amarillo ya muestra lo que el generador realmente entrega, con su propia caída incluida.</p>
+<p>Son dos predicciones modestas y por eso mismo interesantes: el capacitor debería oscilar un <img src="https://latex.codecogs.com/png.latex?1.4%5C%25"> más alto que la fuente, y llegar tarde por catorce millonésimas de segundo. A la escala de la pantalla completa las dos curvas se ven idénticas, y hay que ampliar el tiempo, como en la Figura&nbsp;9, para notar la diferencia.</p>
+<div id="fig-osc-senoidal" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-osc-senoidal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/odes/osciladores/osc-senoidal.jpg" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-osc-senoidal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;9: El coseno de 1 kHz ampliado a <img src="https://latex.codecogs.com/png.latex?100%5C%20%5Cmu">s por división, con los dos canales en la misma escala y separados verticalmente para poder compararlos. El azul va ligeramente atrasado.
+</figcaption>
+</figure>
+</div>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 36%">
-<col style="width: 16%">
-<col style="width: 32%">
-<col style="width: 14%">
+<col style="width: 46%">
+<col style="width: 26%">
+<col style="width: 27%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Resistencia usada</th>
-<th style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?R"></th>
-<th style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?b"></th>
-<th style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?t"></th>
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Predicho</th>
+<th style="text-align: left;">Medido</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Solo el resistor</td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?99.51%5C%20%5COmega"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?10%5C,590%5C%20%5Ctext%7Bs%7D%5E%7B-1%7D"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?0.435%5C%20%5Ctext%7Bms%7D"></td>
+<td style="text-align: left;">Azul sobre amarillo, amplitud</td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?1.014"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?0.99"> a <img src="https://latex.codecogs.com/png.latex?1.00"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Resistor y alambre del inductor</td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?140.55%5C%20%5COmega"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?14%5C,950%5C%20%5Ctext%7Bs%7D%5E%7B-1%7D"></td>
-<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?0.31%5C%20%5Ctext%7Bms%7D"></td>
+<td style="text-align: left;">Retraso del azul</td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?13.6%5C%20%5Cmu%5Ctext%7Bs%7D"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?12"> a <img src="https://latex.codecogs.com/png.latex?14%5C%20%5Cmu%5Ctext%7Bs%7D"></td>
 </tr>
 </tbody>
 </table>
-<p>El tiempo no depende de <img src="https://latex.codecogs.com/png.latex?E_0">, porque el <img src="https://latex.codecogs.com/png.latex?1%5C%25"> es relativo. Pasado <img src="https://latex.codecogs.com/png.latex?0.31"> ms queda solo la solución particular, sea cual sea la fuente que pongamos. Si el generador aporta resistencia de salida, el tiempo es un poco menor. En la pantalla, el <img src="https://latex.codecogs.com/png.latex?1%5C%25"> de <img src="https://latex.codecogs.com/png.latex?0.5253"> V son unos <img src="https://latex.codecogs.com/png.latex?5"> mV, por debajo del ruido del osciloscopio (unos <img src="https://latex.codecogs.com/png.latex?20"> mV), así que la oscilación se pierde en el ruido antes de ese tiempo.</p>
 </section>
-<section id="medir-el-valor-real-de-l" class="level3" data-number="5.4">
-<h3 data-number="5.4" class="anchored" data-anchor-id="medir-el-valor-real-de-l"><span class="header-section-number">5.4</span> Medir el valor real de <img src="https://latex.codecogs.com/png.latex?L"></h3>
-<p>Del transitorio sí se puede. En la pantalla se leen el periodo <img src="https://latex.codecogs.com/png.latex?T"> entre dos máximos y su cociente <img src="https://latex.codecogs.com/png.latex?x_1/x_2=e%5E%7BbT%7D"> (el decremento logarítmico, problema 2 del §20). Entonces</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Calpha=%5Cfrac%7B2%5Cpi%7D%7BT%7D,%5Cqquad%20b=%5Cfrac%7B%5Cln(x_1/x_2)%7D%7BT%7D."></p>
-<p>Como <img src="https://latex.codecogs.com/png.latex?%5Calpha%5E2+b%5E2=a%5E2=1/(LC)"> y <img src="https://latex.codecogs.com/png.latex?R=2Lb">,</p>
-<p><img src="https://latex.codecogs.com/png.latex?L=%5Cfrac1%7BC%5C,(%5Calpha%5E2+b%5E2)%7D,%5Cqquad%20R=2Lb."></p>
-<p>Con <img src="https://latex.codecogs.com/png.latex?C"> conocido, dos lecturas del osciloscopio dan <img src="https://latex.codecogs.com/png.latex?L"> y la resistencia total del lazo. Restando <img src="https://latex.codecogs.com/png.latex?99.51%5C%20%5COmega"> y <img src="https://latex.codecogs.com/png.latex?41.04%5C%20%5COmega"> queda la resistencia de salida del generador, <img src="https://latex.codecogs.com/png.latex?R_g">.</p>
-<p>Para comparar, con los valores nominales se espera <img src="https://latex.codecogs.com/png.latex?T%5Capprox140%5C%20%5Cmu%5Ctext%7Bs%7D"> y <img src="https://latex.codecogs.com/png.latex?e%5E%7BbT%7D%5Capprox8.1">: cada máximo es unas ocho veces menor que el anterior. Las desviaciones respecto del equilibrio son de unos <img src="https://latex.codecogs.com/png.latex?184">, <img src="https://latex.codecogs.com/png.latex?65"> y <img src="https://latex.codecogs.com/png.latex?23"> mV, y la siguiente (unos <img src="https://latex.codecogs.com/png.latex?8"> mV) ya queda bajo el ruido. Se ven solo tres picos.</p>
-</section>
-<section id="una-fuente-senoidal-de-1-khz" class="level3" data-number="5.5">
-<h3 data-number="5.5" class="anchored" data-anchor-id="una-fuente-senoidal-de-1-khz"><span class="header-section-number">5.5</span> Una fuente senoidal de 1 kHz</h3>
-<p>Ahora ponemos <img src="https://latex.codecogs.com/png.latex?E(t)=E_0%5Ccos%5Comega%20t"> con <img src="https://latex.codecogs.com/png.latex?%5Comega=2%5Cpi%5Ccdot1000">. El generador marcó <img src="https://latex.codecogs.com/png.latex?520"> mV pico a pico, así que <img src="https://latex.codecogs.com/png.latex?E_0=0.26"> V. Por lo que vimos en las oscilaciones forzadas, la solución particular es</p>
-<p><img src="https://latex.codecogs.com/png.latex?Q_p=Q_m%5Ccos(%5Comega%20t-%5Cvarphi),%5Cqquad%20Q_m=%5Cfrac%7BE_0%5C,C%7D%7B%5Csqrt%7B(1-LC%5Comega%5E2)%5E2+(RC%5Comega)%5E2%7D%7D,%5Cqquad%20%5Ctan%5Cvarphi=%5Cfrac%7BRC%5Comega%7D%7B1-LC%5Comega%5E2%7D."></p>
-<p>Con nuestros valores, <img src="https://latex.codecogs.com/png.latex?LC%5Comega%5E2=0.0177"> y <img src="https://latex.codecogs.com/png.latex?RC%5Comega=0.0840">, de donde <img src="https://latex.codecogs.com/png.latex?Q_m=1.014%5C,C%20E_0"> y <img src="https://latex.codecogs.com/png.latex?%5Cvarphi=0.0853"> rad (<img src="https://latex.codecogs.com/png.latex?4.9%5E%5Ccirc">). Entonces</p>
-<p><img src="https://latex.codecogs.com/png.latex?Q_p(t)=2.51%5Ctimes10%5E%7B-8%7D%5Ccos(2000%5Cpi%20t-0.0853)%5C%20%5Ctext%7BC%7D."></p>
-<p>Es la onda que sobrevive en la carga. El voltaje del capacitor es <img src="https://latex.codecogs.com/png.latex?Q_p/C">, con amplitud <img src="https://latex.codecogs.com/png.latex?0.264"> V, es decir, <img src="https://latex.codecogs.com/png.latex?527"> mV pico a pico. El osciloscopio midió <img src="https://latex.codecogs.com/png.latex?514"> mV, un <img src="https://latex.codecogs.com/png.latex?2.5%5C%25"> menos, que cabe dentro de las tolerancias de <img src="https://latex.codecogs.com/png.latex?L"> y <img src="https://latex.codecogs.com/png.latex?C"> y de la lectura de la pantalla. A <img src="https://latex.codecogs.com/png.latex?1"> kHz estamos muy por debajo de la frecuencia natural (<img src="https://latex.codecogs.com/png.latex?7.5"> kHz), así que <img src="https://latex.codecogs.com/png.latex?Q"> sigue casi en fase a la fuente, con una ganancia apenas mayor que <img src="https://latex.codecogs.com/png.latex?1">.</p>
-</section>
-<section id="la-resonancia-en-el-laboratorio" class="level3" data-number="5.6">
-<h3 data-number="5.6" class="anchored" data-anchor-id="la-resonancia-en-el-laboratorio"><span class="header-section-number">5.6</span> La resonancia en el laboratorio</h3>
-<p>Si ahora barremos la frecuencia del generador, la amplitud de <img src="https://latex.codecogs.com/png.latex?Q_p"> tiene un máximo en <img src="https://latex.codecogs.com/png.latex?%5Comega_r=%5Csqrt%7Ba%5E2-2b%5E2%7D">, que es menor que la frecuencia natural de la oscilación amortiguada (problema 1 del §20). Con nuestros valores se predice</p>
-<p><img src="https://latex.codecogs.com/png.latex?f_r%5Capprox6.73%5C%20%5Ctext%7BkHz%7D,%5Cqquad%20%5Cfrac%7BV_%7BC,%5Cmax%7D%7D%7BE_0%7D=%5Cfrac%7Ba%5E2%7D%7B2b%5Calpha%7D%5Capprox1.67,"></p>
-<p>es decir, unos <img src="https://latex.codecogs.com/png.latex?0.43"> V de amplitud (<img src="https://latex.codecogs.com/png.latex?867"> mV pico a pico) con <img src="https://latex.codecogs.com/png.latex?E_0=0.26"> V. Si el generador aporta resistencia de salida, el pico será algo menor.</p>
+<section id="qué-nos-dice-esto" class="level3" data-number="5.6">
+<h3 data-number="5.6" class="anchored" data-anchor-id="qué-nos-dice-esto"><span class="header-section-number">5.6</span> Qué nos dice esto</h3>
+<p>Conviene mirar lo que acaba de pasar. Escribimos una ecuación mirando un resorte, la tradujimos a un circuito cambiando nombres, le pusimos los valores de las piezas y salieron predicciones concretas: que oscilaría a unos siete mil ciclos por segundo, que el capacitor terminaría exactamente con el voltaje de la fuente, que a mil hercios lo seguiría un uno por ciento más alto y catorce millonésimas de segundo tarde. Todas se cumplieron dentro del error con que se puede leer una pantalla.</p>
+<p>Y donde la predicción falló, falló de manera útil. El rizo se apagaba más rápido de lo previsto, y eso nos obligó a admitir una resistencia que no habíamos contado. La ecuación no se limitó a describir lo que ya sabíamos: nos señaló algo del montaje que habíamos pasado por alto.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El circuito tiene su pico de resonancia en <img src="https://latex.codecogs.com/png.latex?%5Comega_r=%5Csqrt%7Ba%5E2-2b%5E2%7D">, alrededor de <img src="https://latex.codecogs.com/png.latex?6"> kHz. Prediga cuánto debería crecer la amplitud del capacitor respecto de la de la fuente en ese punto, barra la frecuencia del generador y compruébelo.</p>
+</div>
+</div>
 
 
 </section>
@@ -1891,6 +1926,7 @@ Figura&nbsp;5: El circuito como un circuito de agua: bomba, tubo estrecho, rueda
  ]]></description>
   <guid>https://arturosanjuan.xyz/cursos/odes/osciladores/</guid>
   <pubDate>Sun, 18 Oct 2026 05:00:00 GMT</pubDate>
+  <media:content url="https://arturosanjuan.xyz/cursos/odes/osciladores/osc-escalon.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>Coeficientes Constantes y Variación de Parámetros</title>
