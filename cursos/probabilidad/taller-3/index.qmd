@@ -1,0 +1,172 @@
+---
+title: "Taller 3"
+subtitle: "Una aseguradora: función de riesgo, gamma entera, aproximación normal de la Poisson, Gompertz y cambio de variable"
+description: ""
+date: 2026-10-21
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 13
+---
+
+Una aseguradora vende pólizas de vehículos y seguros de vida, y en este taller van a recorrer un mismo objeto, el riesgo, bajo cuatro lentes distintos: la función de riesgo, el tiempo entre siniestros de una cartera, el número de siniestros en un año y el valor presente de un pago. Recuerden que si $T$ es un tiempo de vida con densidad $f=F'$ y distribución $F$, su función de riesgo es $\lambda(t)=\dfrac{f(t)}{1-F(t)}$, y que $F(0)=0$.
+
+1. Partiendo de la definición de $\lambda(t)$, demuestren, usando ecuación de variables separables, que para un riesgo cualquiera se cumple $F(t)=1-\exp\!\Big(-\displaystyle\int_0^t\lambda(s)\,ds\Big)$. Apliquen este resultado a una póliza de vehículo cuyo tiempo $T$, en años, hasta el primer siniestro tiene riesgo constante $\lambda(t)=0{,}02$, reconozcan la distribución de $T$ y calculen $P(T>5)$. (4 puntos)
+
+::: {.callout-tip title="Solución"}
+Como $f=F'$, la definición dice $\dfrac{F'(t)}{1-F(t)}=\lambda(t)$, que es una ecuación de variables separables para $F$:
+
+$$\frac{dF}{1-F}=\lambda(t)\,dt$$
+
+Integrando de $0$ a $t$ y usando $F(0)=0$,
+
+$$-\ln\big(1-F(t)\big)=\int_0^t\lambda(s)\,ds\qquad\Longrightarrow\qquad F(t)=1-\exp\!\Big(-\int_0^t\lambda(s)\,ds\Big)$$
+
+Con $\lambda(t)=0{,}02$ la integral vale $0{,}02\,t$, así que $F(t)=1-e^{-0{,}02\,t}$ para $t\ge0$. Es la distribución $\text{Exponencial}(0{,}02)$, de media $50$ años. Entonces
+
+$$P(T>5)=1-F(5)=e^{-0{,}1}\approx0{,}9048$$
+:::
+
+2. La cartera tiene 2500 pólizas independientes como la anterior. Supongan que el número de siniestros de la cartera en $t$ años, $N_t$, tiene distribución Poisson de parámetro $\lambda t$ con $\lambda=2500\cdot0{,}02=50$, y sea $W_r$ el tiempo hasta el siniestro número $r$. Supongan también, como justificamos en clase, que el evento $\{W_r\le t\}$ coincide con el evento $\{N_t\ge r\}$, y que de esto resulta que $W_r$ tiene densidad $\Gamma$ entera (o Erlang) de parámetros $\lambda$ (tasa) y $r$ (forma)
+$$f(w)=\frac{\lambda^r w^{r-1}e^{-\lambda w}}{\Gamma(r)},\qquad w>0,$$
+donde $\Gamma(r)=\displaystyle\int_0^\infty t^{r-1}e^{-t}\,dt$. Demuestren que $f$ es una función de densidad. *Ayuda:* hagan el cambio de variable $u=\lambda w$. (6 puntos)
+
+::: {.callout-tip title="Solución"}
+Para $r>0$ el número $\Gamma(r)$ es finito y positivo, así que $f\ge0$. Falta ver que integra $1$. Con $u=\lambda w$ se tiene $w=u/\lambda$ y $dw=du/\lambda$, y por lo tanto
+
+$$\int_0^\infty f(w)\,dw=\frac{\lambda^r}{\Gamma(r)}\int_0^\infty\Big(\frac u\lambda\Big)^{r-1}e^{-u}\,\frac{du}{\lambda}=\frac1{\Gamma(r)}\int_0^\infty u^{r-1}e^{-u}\,du=\frac{\Gamma(r)}{\Gamma(r)}=1$$
+
+Las potencias de $\lambda$ se cancelan: $\lambda^r\cdot\lambda^{-(r-1)}\cdot\lambda^{-1}=1$.
+:::
+
+3. Recuerden que la función gamma cumple $\Gamma(r+1)=r\,\Gamma(r)$. Usando esto, calculen $E[W_r]$ y $\text{Var}(W_r)$. *Ayuda:* para la varianza calculen primero $E[W_r^2]$ y recuerden que $\text{Var}(W_r)=E[W_r^2]-\big(E[W_r]\big)^2$. (6 puntos)
+
+::: {.callout-tip title="Solución"}
+Con el mismo cambio de variable, para $k=1,2$,
+
+$$E[W_r^k]=\frac{\lambda^r}{\Gamma(r)}\int_0^\infty w^{r+k-1}e^{-\lambda w}\,dw=\frac{\Gamma(r+k)}{\lambda^k\,\Gamma(r)}$$
+
+Para $k=1$:
+
+$$E[W_r]=\frac{\Gamma(r+1)}{\lambda\,\Gamma(r)}=\frac r\lambda$$
+
+Para $k=2$ se usa $\Gamma(r+2)=(r+1)\,r\,\Gamma(r)$, de donde $E[W_r^2]=\dfrac{r(r+1)}{\lambda^2}$. Entonces
+
+$$\text{Var}(W_r)=\frac{r(r+1)}{\lambda^2}-\frac{r^2}{\lambda^2}=\frac r{\lambda^2}$$
+:::
+
+4. Con $\lambda=50$, calculen el tiempo esperado hasta el décimo siniestro de la cartera. Calculen también $P(W_3\le0{,}1)$ sin integrar la densidad, usando la igualdad de eventos $\{W_r\le t\}=\{N_t\ge r\}$ y la función de masa de la Poisson. (5 puntos)
+
+::: {.callout-tip title="Solución"}
+Por el punto anterior, $E[W_{10}]=\dfrac{10}{50}=0{,}2$ años, unos $73$ días.
+
+Para la segunda parte, $\{W_3\le0{,}1\}=\{N_{0{,}1}\ge3\}$ y $N_{0{,}1}\sim\text{Poisson}(50\cdot0{,}1=5)$. Entonces
+
+$$P(W_3\le0{,}1)=1-P(N_{0{,}1}\le2)=1-e^{-5}\Big(1+5+\frac{25}{2}\Big)=1-18{,}5\,e^{-5}\approx0{,}8753$$
+:::
+
+5. Sea $N$ el número de siniestros de la cartera en un año completo, de modo que $N$ es Poisson de parámetro $50$. Recuerden que una Poisson de parámetro $\lambda$ grande se aproxima por una normal que tiene la misma media y la misma varianza que ella, es decir, media $\lambda$ y varianza $\lambda$, y que como $N$ solo toma valores enteros se usa la corrección de continuidad: $P(N\ge k)$ se aproxima por la probabilidad de que la normal sea mayor o igual que $k-0{,}5$. Identifiquen la media y la desviación estándar de la normal que aproxima a $N$ y aproximen $P(N>60)$. Les sirve saber que $\Phi(1{,}41)=0{,}9207$, $\Phi(1{,}48)=0{,}9306$, $\Phi(1{,}49)=0{,}9319$ y $\Phi(1{,}56)=0{,}9406$, donde $\Phi$ es la distribución normal estándar. (4 puntos)
+
+::: {.callout-tip title="Solución"}
+La normal tiene media $50$, varianza $50$ y desviación estándar $\sqrt{50}\approx7{,}07$. Como $N$ es entera, $P(N>60)=P(N\ge61)$, que se aproxima por la probabilidad de que la normal sea mayor o igual que $60{,}5$:
+
+$$P(N>60)\approx P\Big(Z\ge\frac{60{,}5-50}{\sqrt{50}}\Big)=P(Z\ge1{,}4849)=1-\Phi(1{,}4849)$$
+
+Como $1{,}4849$ queda entre $1{,}48$ y $1{,}49$, se interpola: $\Phi(1{,}4849)\approx0{,}9312$, y la probabilidad es aproximadamente $0{,}0688$. Tomar $\Phi(1{,}48)$ directamente, que da $0{,}0694$, también es aceptable.
+:::
+
+6. Aproximen de nuevo $P(N>60)$, ahora sin corrección de continuidad. Comparen las dos aproximaciones con el valor exacto obtenido de la Poisson, $0{,}0722$, y expliquen por qué una de ellas se acerca más. (2 puntos)
+
+::: {.callout-tip title="Solución"}
+Sin corrección se usa $60$ como frontera: $z=10/\sqrt{50}\approx1{,}41$, y la probabilidad es $1-\Phi(1{,}41)=1-0{,}9207=0{,}0793$. Con corrección se obtuvo $0{,}0688$. Los errores respecto del valor exacto $0{,}0722$ son $0{,}0071$ sin corrección y $0{,}0034$ con ella, así que la corrección se acerca más.
+
+La razón es que $N$ es discreta: el valor $k$ ocupa en la escala continua el intervalo $[k-0{,}5,\,k+0{,}5]$, de modo que el evento $\{N\ge61\}$ empieza en $60{,}5$. Empezar en $60$ cuenta media unidad de masa de más y sobreestima. Si en cambio se empezara en $61$, con $z=11/\sqrt{50}\approx1{,}56$, se obtendría $1-\Phi(1{,}56)=0{,}0594$, que subestima. El valor exacto queda entre los dos extremos, y la corrección usa el punto medio.
+:::
+
+7. Pasemos a los seguros de vida. En 1825 el actuario Benjamin Gompertz propuso, para modelar el tiempo de vida de los seres humanos, el riesgo $\lambda(t)=\alpha\beta^t$ con $\alpha>0$ y $\beta>1$. Verifiquen derivando que una primitiva de $\beta^s$ es $\dfrac{\beta^s}{\ln\beta}$ (escriban $\beta^s=e^{s\ln\beta}$) y úsenla, junto con la fórmula de $F(t)$ en términos del riesgo que demostraron al comienzo, para deducir $F(t)$. (6 puntos)
+
+::: {.callout-tip title="Solución"}
+Con $\beta^s=e^{s\ln\beta}$,
+
+$$\frac{d}{ds}\,\frac{\beta^s}{\ln\beta}=\frac{\ln\beta\cdot e^{s\ln\beta}}{\ln\beta}=\beta^s$$
+
+así que es una primitiva. Entonces
+
+$$\int_0^t\alpha\beta^s\,ds=\frac{\alpha\,(\beta^t-1)}{\ln\beta}$$
+
+y por la fórmula del punto 1,
+
+$$F(t)=1-\exp\!\Big(-\frac{\alpha\,(\beta^t-1)}{\ln\beta}\Big),\qquad t\ge0$$
+:::
+
+8. Tomen $\alpha=0{,}00003$ y $\beta=1{,}1$, con $t$ medido en años de edad. Calculen $P(T>70)$ y la probabilidad de que una persona que llega a los 70 años llegue a los 90, es decir, $P(T>90\mid T>70)$. (3 puntos)
+
+::: {.callout-tip title="Solución"}
+Con $\ln1{,}1\approx0{,}09531$ y $P(T>t)=1-F(t)$, que por el punto anterior es $\exp\!\big(-\alpha(\beta^t-1)/\ln\beta\big)$,
+
+$$P(T>70)=\exp\!\Big(-\frac{0{,}00003\,(1{,}1^{70}-1)}{0{,}09531}\Big)=e^{-0{,}2483}\approx0{,}7802$$
+
+$$P(T>90)=e^{-1{,}6721}\approx0{,}1879$$
+
+Como $\{T>90\}\subset\{T>70\}$,
+
+$$P(T>90\mid T>70)=\frac{P(T>90)}{P(T>70)}=\frac{0{,}1879}{0{,}7802}\approx0{,}2408$$
+
+Una persona que llega a los $70$ años tiene cerca de un $24\%$ de probabilidad de llegar a los $90$.
+:::
+
+9. Calculen $\lambda(30)$ y $\lambda(90)$ con los valores del numeral anterior, donde $\lambda$ es el *hazard* de la Gompertz, y expliquen con ellos por qué una distribución exponencial no sirve para modelar la vida humana. (2 puntos)
+
+::: {.callout-tip title="Solución"}
+Reemplazando en $\lambda(t)=\alpha\beta^t$,
+
+$$\lambda(30)=0{,}00003\cdot1{,}1^{30}\approx0{,}00052,\qquad\lambda(90)=0{,}00003\cdot1{,}1^{90}\approx0{,}159$$
+
+A los $30$ años el riesgo anual es de unos $5$ en $10\,000$, y a los $90$ es de casi $16$ en $100$. El cociente es $1{,}1^{60}\approx304$, y no depende de $\alpha$. La exponencial tiene riesgo constante, de modo que asignaría el mismo riesgo a los $30$ y a los $90$ años, y la mortalidad humana no se comporta así.
+:::
+
+10. Volvamos a una póliza de vehículo, con $T$ exponencial de parámetro $\mu=0{,}02$. La aseguradora paga un peso en el momento del siniestro y descuenta a una tasa $\delta=0{,}05$, de modo que el valor presente del pago es $V=e^{-\delta T}$. Recuerden el teorema de cambio de variable: si $X$ es continua con densidad $f_X$, $g$ es derivable y estrictamente monótona sobre el rango de $X$, y $Y=g(X)$, entonces $f_Y(y)=f_X\big(h(y)\big)\,|h'(y)|$, donde $h$ es la inversa de $g$. Úsenlo para hallar la densidad de $V$ e indiquen en qué intervalo toma valores y qué distribución es. (6 puntos)
+
+::: {.callout-tip title="Solución"}
+La función $g(t)=e^{-\delta t}$ es estrictamente decreciente sobre $(0,\infty)$, que es el rango de $T$, y su imagen es $(0,1)$. Por lo tanto $V$ toma valores en $(0,1)$. La inversa es $h(v)=-\dfrac{\ln v}{\delta}$, con $|h'(v)|=\dfrac1{\delta v}$. Como $f_T(t)=\mu e^{-\mu t}$,
+
+$$f_T\big(h(v)\big)=\mu\,e^{\mu\ln v/\delta}=\mu\,v^{\mu/\delta}$$
+
+y entonces
+
+$$f_V(v)=\mu\,v^{\mu/\delta}\cdot\frac1{\delta v}=\frac\mu\delta\,v^{\mu/\delta-1},\qquad0<v<1$$
+
+Con $\mu/\delta=0{,}4$ queda $f_V(v)=0{,}4\,v^{-0{,}6}$ en $(0,1)$. Se comprueba que integra $1$:
+
+$$\int_0^10{,}4\,v^{-0{,}6}\,dv=v^{0{,}4}\Big|_0^1=1$$
+
+La densidad de una $\text{Beta}(a,b)$ es $\dfrac{x^{a-1}(1-x)^{b-1}}{B(a,b)}$. Con $b=1$ el factor $(1-x)^0$ desaparece, y como $B(a,1)=\dfrac{\Gamma(a)\Gamma(1)}{\Gamma(a+1)}=\dfrac1a$, la densidad queda $a\,x^{a-1}$. Por lo tanto $V\sim\text{Beta}(a,1)$ con $a=\mu/\delta=0{,}4$, es decir, $V\sim\text{Beta}(0{,}4,\,1)$.
+:::
+
+11. Calculen $E[V]$ de dos maneras: integrando $v$ contra la densidad de $V$ que obtuvieron, y calculando directamente $E[e^{-\delta T}]$ contra la densidad de $T$. Verifiquen que los dos resultados coinciden. Encuentren la fórmula general de la esperanza para $\mu$ y $\delta$ arbitrarios. (6 puntos)
+
+::: {.callout-tip title="Solución"}
+Con la densidad de $V$:
+
+$$E[V]=\int_0^1v\cdot0{,}4\,v^{-0{,}6}\,dv=0{,}4\int_0^1v^{0{,}4}\,dv=\frac{0{,}4}{1{,}4}=\frac27\approx0{,}2857$$
+
+Directamente con la densidad de $T$:
+
+$$E[e^{-\delta T}]=\int_0^\infty e^{-0{,}05\,t}\cdot0{,}02\,e^{-0{,}02\,t}\,dt=0{,}02\int_0^\infty e^{-0{,}07\,t}\,dt=\frac{0{,}02}{0{,}07}=\frac27$$
+
+Coinciden. Para $\mu$ y $\delta$ arbitrarios, el cálculo directo da
+
+$$E[V]=E[e^{-\delta T}]=\int_0^\infty e^{-\delta t}\,\mu\,e^{-\mu t}\,dt=\mu\int_0^\infty e^{-(\mu+\delta)t}\,dt=\frac{\mu}{\mu+\delta}$$
+
+Con la densidad de $V$ se llega a lo mismo:
+
+$$E[V]=\int_0^1v\cdot\frac\mu\delta\,v^{\mu/\delta-1}\,dv=\frac\mu\delta\cdot\frac1{\mu/\delta+1}=\frac{\mu}{\mu+\delta}$$
+
+que es la media $\dfrac a{a+1}$ de una $\text{Beta}(a,1)$ con $a=\mu/\delta$.
+:::

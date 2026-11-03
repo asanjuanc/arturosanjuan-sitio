@@ -15,7 +15,930 @@
 <link>https://arturosanjuan.xyz/cursos/numerico/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Thu, 15 Oct 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 29 Oct 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Taller 3</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/numerico/taller-3/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Si se conocen la temperatura <img src="https://latex.codecogs.com/png.latex?T"> y la presión <img src="https://latex.codecogs.com/png.latex?P"> de un gas, ¿qué volumen <img src="https://latex.codecogs.com/png.latex?V"> ocupa? Para un gas ideal la respuesta es inmediata: <img src="https://latex.codecogs.com/png.latex?V%20=%20RT/P">, donde <img src="https://latex.codecogs.com/png.latex?R"> es la constante de los gases y <img src="https://latex.codecogs.com/png.latex?V"> es el volumen de una cantidad fija de gas (un mol). Para un gas real como el CO₂, el modelo más sencillo es la ecuación de van der Waals,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cleft(P%20+%20%5Cfrac%7Ba%7D%7BV%5E2%7D%5Cright)(V%20-%20b)%20=%20RT,%20%5Ctag%7B1%7D"></p>
+<p>donde <img src="https://latex.codecogs.com/png.latex?a%20%3E%200"> mide la atracción entre las moléculas y <img src="https://latex.codecogs.com/png.latex?b%20%3E%200"> el espacio que ellas mismas ocupan; cada gas tiene sus propios <img src="https://latex.codecogs.com/png.latex?a"> y <img src="https://latex.codecogs.com/png.latex?b">. Con <img src="https://latex.codecogs.com/png.latex?T"> y <img src="https://latex.codecogs.com/png.latex?P"> dadas, <img src="https://latex.codecogs.com/png.latex?V"> es raíz de un polinomio cúbico. Con Cardano tendríamos una fórmula (inmanejable), pero aquí encontraremos <img src="https://latex.codecogs.com/png.latex?V"> con los métodos del curso.</p>
+<p>Una cúbica puede tener hasta tres raíces reales (siempre al menos una), y aquí eso tiene sentido físico. A temperatura baja, una misma temperatura y presión pueden corresponder a dos estados del CO₂: líquido (volumen pequeño) y vapor (volumen grande). Es lo que pasa en una olla de agua hirviendo, donde conviven el agua y el vapor. La tercera raíz, entre esas dos, no se observa: en ella, al comprimir el gas su presión bajaría en vez de subir, y cualquier perturbación lo lleva al líquido o al vapor.</p>
+<p>Al subir la temperatura, el líquido y el vapor se parecen cada vez más, hasta que en una temperatura llamada crítica, <img src="https://latex.codecogs.com/png.latex?T_c">, se vuelven indistinguibles. Por encima de <img src="https://latex.codecogs.com/png.latex?T_c"> no hay ebullición: al comprimir el CO₂ su densidad aumenta de forma continua sin que aparezca nunca un líquido separado, y se dice que es un fluido supercrítico. En la ecuación, el punto crítico es el único donde las tres raíces se juntan en una raíz triple. La temperatura, la presión y el volumen en ese punto se llaman <img src="https://latex.codecogs.com/png.latex?T_c">, <img src="https://latex.codecogs.com/png.latex?P_c"> y <img src="https://latex.codecogs.com/png.latex?V_c">; para van der Waals, <img src="https://latex.codecogs.com/png.latex?T_c%20=%208a/(27Rb)">, <img src="https://latex.codecogs.com/png.latex?P_c%20=%20a/(27b%5E2)"> y <img src="https://latex.codecogs.com/png.latex?V_c%20=%203b">.</p>
+<p>Conviene medir todo en unidades del punto crítico. La temperatura, la presión y el volumen reducidos son <img src="https://latex.codecogs.com/png.latex?T_r%20=%20T/T_c">, <img src="https://latex.codecogs.com/png.latex?P_r%20=%20P/P_c"> y <img src="https://latex.codecogs.com/png.latex?v%20=%20V/V_c">; por ejemplo, <img src="https://latex.codecogs.com/png.latex?T_r%20=%200.9"> es el 90 % de la temperatura crítica. En esas variables desaparecen <img src="https://latex.codecogs.com/png.latex?a">, <img src="https://latex.codecogs.com/png.latex?b"> y <img src="https://latex.codecogs.com/png.latex?R">, y la ecuación es la misma para cualquier gas:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cleft(P_r%20+%20%5Cfrac%7B3%7D%7Bv%5E2%7D%5Cright)(3v%20-%201)%20=%208T_r.%20%5Ctag%7B2%7D"></p>
+<p>En papel, demuestren que a partir de la ecuación (2) se obtiene la cúbica</p>
+<p><img src="https://latex.codecogs.com/png.latex?p(v)%20=%203P_r%20v%5E3%20-%20(P_r%20+%208T_r)v%5E2%20+%209v%20-%203%20=%200.%20%5Ctag%7B3%7D"></p>
+<p>Casi todo el taller estudia el CO₂ con <img src="https://latex.codecogs.com/png.latex?T_r%20=%200.9"> y <img src="https://latex.codecogs.com/png.latex?P_r%20=%200.65">, es decir, a 90 % de su temperatura crítica y a 65 % de su presión crítica, un poco por debajo del punto crítico. Confirmen, usando Julia como calculadora, que para ese caso la cúbica es</p>
+<p><img src="https://latex.codecogs.com/png.latex?p(v)%20=%201.95v%5E3%20-%207.85v%5E2%20+%209v%20-%203.%20%5Ctag%7B4%7D"></p>
+<p>Esta ecuación (4) tiene tres raíces: el líquido, el estado intermedio (inobservable e inestable) y el vapor. Calculen a mano su derivada <img src="https://latex.codecogs.com/png.latex?p'">. Usen <code>newton</code> del libro, con <img src="https://latex.codecogs.com/png.latex?p"> y <img src="https://latex.codecogs.com/png.latex?p'">, y la función <code>punto_fijo</code> del taller de estudio.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Al multiplicar (2) por <img src="https://latex.codecogs.com/png.latex?v%5E2"> queda <img src="https://latex.codecogs.com/png.latex?(P_r%20v%5E2%20+%203)(3v%20-%201)%20=%208T_r%20v%5E2">, es decir <img src="https://latex.codecogs.com/png.latex?3P_r%20v%5E3%20-%20P_r%20v%5E2%20+%209v%20-%203%20-%208T_r%20v%5E2%20=%200">, que es (3). Con <img src="https://latex.codecogs.com/png.latex?T_r%20=%200.9"> y <img src="https://latex.codecogs.com/png.latex?P_r%20=%200.65">: <img src="https://latex.codecogs.com/png.latex?3%5Ccdot%200.65%20=%201.95"> y <img src="https://latex.codecogs.com/png.latex?0.65%20+%208%5Ccdot%200.9%20=%207.85">, lo que da (4).</p>
+<p>La derivada, a mano, es <img src="https://latex.codecogs.com/png.latex?p'(v)%20=%209P_r%20v%5E2%20-%202(P_r%20+%208T_r)v%20+%209">, que para este caso vale <img src="https://latex.codecogs.com/png.latex?p'(v)%20=%205.85v%5E2%20-%2015.7v%20+%209">.</p>
+</div>
+</div>
+<p>Comprueben primero a mano que con <img src="https://latex.codecogs.com/png.latex?T_r%20=%20P_r%20=%201"> la cúbica (3) se reduce a <img src="https://latex.codecogs.com/png.latex?3(v%20-%201)%5E3">: una raíz triple en <img src="https://latex.codecogs.com/png.latex?v%20=%201">, el punto crítico. Luego despejen a mano <img src="https://latex.codecogs.com/png.latex?P_r"> de la ecuación (2) en función de <img src="https://latex.codecogs.com/png.latex?v"> y <img src="https://latex.codecogs.com/png.latex?T_r">; llamen <img src="https://latex.codecogs.com/png.latex?q(v)"> al resultado, que es la presión que la ecuación asigna al volumen <img src="https://latex.codecogs.com/png.latex?v">. Entreguen en papel la verificación y el despeje. Ya en la computadora, grafiquen la <img src="https://latex.codecogs.com/png.latex?p"> del CO₂ con <img src="https://latex.codecogs.com/png.latex?T_r%20=%200.9"> y <img src="https://latex.codecogs.com/png.latex?P_r%20=%200.65">, es decir la ecuación (4), en <img src="https://latex.codecogs.com/png.latex?%5B0.5,%203%5D"> junto con el eje horizontal, y lean a ojo en qué intervalos de ancho 0.1 están sus tres raíces. Grafiquen también <img src="https://latex.codecogs.com/png.latex?q"> con <img src="https://latex.codecogs.com/png.latex?T_r%20=%200.9"> junto con la recta horizontal <img src="https://latex.codecogs.com/png.latex?P_r%20=%200.65">: las tres raíces son los cruces. Identifiquen cuál corresponde al líquido (volumen pequeño, mayor densidad) y cuál al vapor. Del estado intermedio no basta con decir que está en el medio: un fluido estable se resiste a ser comprimido, porque si se reduce un poco su volumen la presión sube y lo empuja de vuelta. Con eso expliquen por qué ese cruce corresponde a un volumen inestable que no puede observarse. <em>(10 pts)</em></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">p</span>(v)  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.95</span>v<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">^</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7.85</span>v<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">^</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>v <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span></span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dp</span>(v) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5.85</span>v<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">^</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15.7</span>v <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span></span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">q</span>(v, Tr) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>Tr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>v <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>v<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">^</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb1-4"></span>
+<span id="cb1-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot</span>(p, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>; label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"p"</span>, xlabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"v"</span>)</span>
+<span id="cb1-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">hline!</span>([<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>]; color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=:</span>black, label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>)</span>
+<span id="cb1-7"></span>
+<span id="cb1-8"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot</span>(v <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">q</span>(v, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>), <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>; label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"q"</span>, xlabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"v"</span>)</span>
+<span id="cb1-9"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">hline!</span>([<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.65</span>]; label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Pr"</span>)</span></code></pre></div></div>
+<div id="fig-q" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-q-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/numerico/taller-3/q-presion.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-q-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: La curva <img src="https://latex.codecogs.com/png.latex?q"> para <img src="https://latex.codecogs.com/png.latex?T_r%20=%200.9"> y la recta <img src="https://latex.codecogs.com/png.latex?P_r%20=%200.65">: los tres cruces son las raíces de <img src="https://latex.codecogs.com/png.latex?p">.
+</figcaption>
+</figure>
+</div>
+<p>Con <img src="https://latex.codecogs.com/png.latex?T_r%20=%20P_r%20=%201">, <img src="https://latex.codecogs.com/png.latex?p(v)%20=%203v%5E3%20-%209v%5E2%20+%209v%20-%203%20=%203(v%20-%201)%5E3">. Del despeje, <img src="https://latex.codecogs.com/png.latex?P_r%20+%203/v%5E2%20=%208T_r/(3v%20-%201)">, así que <img src="https://latex.codecogs.com/png.latex?q(v)%20=%208T_r/(3v%20-%201)%20-%203/v%5E2">.</p>
+<p>Las tres raíces están en <img src="https://latex.codecogs.com/png.latex?%5B0.6,%200.7%5D">, <img src="https://latex.codecogs.com/png.latex?%5B1.0,%201.1%5D"> y <img src="https://latex.codecogs.com/png.latex?%5B2.3,%202.4%5D"> (cerca de 0.60, 1.10 y 2.33). La menor es el líquido (volumen pequeño, mayor densidad) y la mayor es el vapor.</p>
+<p>La curva <img src="https://latex.codecogs.com/png.latex?q"> baja hasta un mínimo local cerca de <img src="https://latex.codecogs.com/png.latex?v%20=%200.72"> (presión 0.42), sube hasta un máximo local cerca de <img src="https://latex.codecogs.com/png.latex?v%20=%201.53"> (presión 0.72) y vuelve a bajar. En los cruces cerca de 0.60 y 2.33 la presión baja al aumentar el volumen (<img src="https://latex.codecogs.com/png.latex?q'"> vale <img src="https://latex.codecogs.com/png.latex?-5.65"> y <img src="https://latex.codecogs.com/png.latex?-0.13">): si el fluido se comprime un poco, la presión sube y lo empuja de vuelta, así que son estables. En el cruce cerca de 1.10 la presión sube al aumentar el volumen (<img src="https://latex.codecogs.com/png.latex?q'"> vale <img src="https://latex.codecogs.com/png.latex?0.43">): si el fluido se comprime un poco, su presión queda por debajo de <img src="https://latex.codecogs.com/png.latex?P_r"> y la compresión continúa hasta el líquido; si se expande un poco, queda por encima de <img src="https://latex.codecogs.com/png.latex?P_r"> y la expansión continúa hasta el vapor. Por eso el estado intermedio no se observa.</p>
+</div>
+</div>
+<p>Ahora estudien cómo se comporta Newton según la semilla. Corran <code>newton</code> (<code>maxiter</code> <img src="https://latex.codecogs.com/png.latex?=%2060">, <code>ftol</code> <img src="https://latex.codecogs.com/png.latex?="> <code>xtol</code> <img src="https://latex.codecogs.com/png.latex?=%2010%5E%7B-13%7D">) desde 1001 semillas igualmente espaciadas en <img src="https://latex.codecogs.com/png.latex?%5B0.3,%204%5D">, guarden el último iterado de cada una y grafiquen la raíz alcanzada contra la semilla. Lean en su gráfica qué intervalos de semillas llevan a cada raíz y señalen los resultados que no esperarían, es decir, semillas que terminan lejos de la raíz más cercana. <em>(10 pts)</em></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1">semillas  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">range</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>; length<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1001</span>)</span>
+<span id="cb2-2">alcanzada <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">last</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">newton</span>(p, dp, s; maxiter<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">60</span>, ftol<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-13</span>, xtol<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-13</span>)) for s <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> semillas]</span>
+<span id="cb2-3"></span>
+<span id="cb2-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">scatter</span>(semillas, alcanzada; ms<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, legend<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">false</span>,</span>
+<span id="cb2-5">        xlabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"semilla"</span>, ylabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"raíz alcanzada"</span>)</span></code></pre></div></div>
+<div id="fig-semillas" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-semillas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/numerico/taller-3/newton-semillas.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-semillas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Raíz alcanzada por <code>newton</code> contra la semilla, con 1001 semillas en <img src="https://latex.codecogs.com/png.latex?%5B0.3,%204%5D">.
+</figcaption>
+</figure>
+</div>
+<p>Aproximadamente: de 0.3 a 0.83 llegan al líquido (0.603); de 0.87 a 1.65 a la raíz intermedia (1.097); y desde 1.85 en adelante al vapor (2.325). Lo inesperado está en dos franjas: las semillas entre 1.67 y 1.85 terminan en el líquido, a más de 1.0 de distancia, aunque están más cerca del vapor; y las semillas entre 0.83 y 0.86 saltan hasta el vapor. Hay además ventanas diminutas alternadas cerca de 0.86 y 1.66. Los cambios ocurren cerca de <img src="https://latex.codecogs.com/png.latex?v%20=%200.83"> y <img src="https://latex.codecogs.com/png.latex?v%20=%201.85">, que son los ceros de <img src="https://latex.codecogs.com/png.latex?p'">: la tangente es casi horizontal y el primer paso de Newton lanza el iterado muy lejos.</p>
+</div>
+</div>
+<p>Pasemos al punto fijo. La ecuación (2) se puede despejar de dos maneras para obtener una función <img src="https://latex.codecogs.com/png.latex?g"> cuyos puntos fijos son las raíces de <img src="https://latex.codecogs.com/png.latex?p">. Deduzcan las dos en papel: para <img src="https://latex.codecogs.com/png.latex?g_1">, dividan la ecuación (2) entre <img src="https://latex.codecogs.com/png.latex?P_r%20+%203/v%5E2"> y despejen <img src="https://latex.codecogs.com/png.latex?v"> del factor <img src="https://latex.codecogs.com/png.latex?3v%20-%201">; para <img src="https://latex.codecogs.com/png.latex?g_2">, dividan la ecuación (2) entre <img src="https://latex.codecogs.com/png.latex?3v%20-%201">, pasen <img src="https://latex.codecogs.com/png.latex?P_r"> al otro lado y despejen <img src="https://latex.codecogs.com/png.latex?v"> de <img src="https://latex.codecogs.com/png.latex?3/v%5E2">. Entreguen los despejes en papel. Grafiquen <img src="https://latex.codecogs.com/png.latex?g_1"> y <img src="https://latex.codecogs.com/png.latex?g_2"> junto con la identidad <img src="https://latex.codecogs.com/png.latex?y%20=%20v"> en <img src="https://latex.codecogs.com/png.latex?%5B0.5,%203%5D">: los cruces con la identidad son los puntos fijos y deben coincidir con las tres raíces de <img src="https://latex.codecogs.com/png.latex?p"> (si no coinciden, revisen el despeje). Antes de iterar, lean en la gráfica qué raíces atrapa cada despeje, recordando que un punto fijo atrae cuando <img src="https://latex.codecogs.com/png.latex?%7Cg'%7C%20%3C%201"> en él. Programen una derivada numérica centrada, <code>derivada(h, x)</code> <img src="https://latex.codecogs.com/png.latex?=%20(h(x%20+%20%5Cdelta)%20-%20h(x%20-%20%5Cdelta))/(2%5Cdelta)"> con <img src="https://latex.codecogs.com/png.latex?%5Cdelta%20=%2010%5E%7B-6%7D">, y calculen <img src="https://latex.codecogs.com/png.latex?g_1'"> y <img src="https://latex.codecogs.com/png.latex?g_2'"> en las tres raíces para confirmarlo. Compruébenlo con <code>punto_fijo</code> (<code>ftol</code> <img src="https://latex.codecogs.com/png.latex?=%2010%5E%7B-8%7D">, <code>xtol</code> <img src="https://latex.codecogs.com/png.latex?=%200">): <img src="https://latex.codecogs.com/png.latex?g_1"> desde las semillas 0.5 y 2, y <img src="https://latex.codecogs.com/png.latex?g_2"> desde la semilla 1.2. Reporten redactando en el cuadernillo las iteraciones y raíz alcanzada. <em>(10 pts)</em></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para <img src="https://latex.codecogs.com/png.latex?g_1">, al dividir (2) entre <img src="https://latex.codecogs.com/png.latex?P_r%20+%203/v%5E2"> queda <img src="https://latex.codecogs.com/png.latex?3v%20-%201%20=%208T_r/(P_r%20+%203/v%5E2)">, y despejando <img src="https://latex.codecogs.com/png.latex?v">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?g_1(v)%20=%20%5Cfrac%7B1%7D%7B3%7D%5Cleft(1%20+%20%5Cfrac%7B8T_r%7D%7BP_r%20+%203/v%5E2%7D%5Cright)."></p>
+<p>Para <img src="https://latex.codecogs.com/png.latex?g_2">, al dividir (2) entre <img src="https://latex.codecogs.com/png.latex?3v%20-%201"> queda <img src="https://latex.codecogs.com/png.latex?P_r%20+%203/v%5E2%20=%208T_r/(3v%20-%201)">, luego <img src="https://latex.codecogs.com/png.latex?3/v%5E2%20=%208T_r/(3v%20-%201)%20-%20P_r"> y</p>
+<p><img src="https://latex.codecogs.com/png.latex?g_2(v)%20=%20%5Csqrt%7B%5Cfrac%7B3%7D%7B%5Cdfrac%7B8T_r%7D%7B3v%20-%201%7D%20-%20P_r%7D%7D."></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1">Tr, Pr <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.65</span></span>
+<span id="cb3-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">g1</span>(v) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>Tr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>(Pr <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>v<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">^</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span></span>
+<span id="cb3-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">g2</span>(v) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> (<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>Tr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>v <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> Pr))</span>
+<span id="cb3-4"></span>
+<span id="cb3-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot</span>(g1, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>; label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"g1"</span>, xlabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"v"</span>)</span>
+<span id="cb3-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot!</span>(g2, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>; label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"g2"</span>)</span>
+<span id="cb3-7"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot!</span>(identity, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>; label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"y = v"</span>, color<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=:</span>black)</span>
+<span id="cb3-8"></span>
+<span id="cb3-9"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">derivada</span>(h, x; δ<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-6</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> (<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">h</span>(x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> δ) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">h</span>(x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> δ)) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> (<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>δ)</span>
+<span id="cb3-10"></span>
+<span id="cb3-11">rs <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">last</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">newton</span>(p, dp, s; ftol<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-14</span>, xtol<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)) for s <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> (<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.0</span>)]</span>
+<span id="cb3-12">[<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">derivada</span>(g1, r) for r <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> rs], [<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">derivada</span>(g2, r) for r <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> rs]</span>
+<span id="cb3-13"></span>
+<span id="cb3-14"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">punto_fijo</span>(p, g1, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>; maxiter<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3000</span>, ftol<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-8</span>, xtol<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb3-15"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">punto_fijo</span>(p, g1, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.0</span>; maxiter<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3000</span>, ftol<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-8</span>, xtol<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb3-16"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">punto_fijo</span>(p, g2, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.2</span>; maxiter<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3000</span>, ftol<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-8</span>, xtol<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span></code></pre></div></div>
+<div id="fig-g" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-g-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/numerico/taller-3/g1-g2.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-g-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: Las funciones <img src="https://latex.codecogs.com/png.latex?g_1"> y <img src="https://latex.codecogs.com/png.latex?g_2"> junto con la identidad <img src="https://latex.codecogs.com/png.latex?y%20=%20v">: los cruces son los puntos fijos.
+</figcaption>
+</figure>
+</div>
+<p><strong>(a)</strong> Los cruces de <img src="https://latex.codecogs.com/png.latex?g_1"> y <img src="https://latex.codecogs.com/png.latex?g_2"> con la identidad están en 0.603, 1.097 y 2.325, las raíces de <img src="https://latex.codecogs.com/png.latex?p">.</p>
+<p><strong>(b)</strong> Para <img src="https://latex.codecogs.com/png.latex?g_1">: 0.829 en el líquido, 1.104 en la intermedia y 0.789 en el vapor. Para <img src="https://latex.codecogs.com/png.latex?g_2">: 1.206; 0.906 y 1.268. Un punto fijo atrae cuando <img src="https://latex.codecogs.com/png.latex?%7Cg'%7C%20%3C%201">: <img src="https://latex.codecogs.com/png.latex?g_1"> atrapa el líquido y el vapor y repele la intermedia; <img src="https://latex.codecogs.com/png.latex?g_2"> atrapa solo la intermedia.</p>
+<p><strong>(c)</strong> <img src="https://latex.codecogs.com/png.latex?g_1"> desde 0.5: 88 iteraciones y 0.6029. <img src="https://latex.codecogs.com/png.latex?g_1"> desde 2: 81 iteraciones y 2.3253. <img src="https://latex.codecogs.com/png.latex?g_2"> desde 1.2: 164 iteraciones y 1.0974. Para hallar los tres volúmenes con punto fijo hacen falta los dos despejes.</p>
+</div>
+</div>
+<p>Con los iterados de <img src="https://latex.codecogs.com/png.latex?g_1"> desde 0.5 (que llegan al líquido) calculen el orden de convergencia del punto fijo. Tomen como <img src="https://latex.codecogs.com/png.latex?r"> la raíz que da <code>newton</code> con <code>ftol</code> <img src="https://latex.codecogs.com/png.latex?=%2010%5E%7B-14%7D">, definan <img src="https://latex.codecogs.com/png.latex?%5Cepsilon_k%20=%20%7Cx_k%20-%20r%7C"> y calculen los cocientes <img src="https://latex.codecogs.com/png.latex?%5Cepsilon_%7Bk+1%7D/%5Cepsilon_k">; mírenlos hacia el final de la lista y compárenlos con <img src="https://latex.codecogs.com/png.latex?%7Cg_1'(r)%7C">. ¿Qué orden de convergencia tiene el punto fijo? Después programen <code>kappa(dp, r)</code> <img src="https://latex.codecogs.com/png.latex?=%201/%7Cp'(r)%7C"> y calculen <img src="https://latex.codecogs.com/png.latex?%5Ckappa"> en las tres raíces: ¿cuál es la más sensible a una perturbación de <img src="https://latex.codecogs.com/png.latex?p">? Por último, en la raíz del líquido, paren punto fijo (<img src="https://latex.codecogs.com/png.latex?g_1">) y Newton solo por residuo (<code>ftol</code> <img src="https://latex.codecogs.com/png.latex?=%2010%5E%7B-8%7D">, <code>xtol</code> <img src="https://latex.codecogs.com/png.latex?=%200">) y calculen al final el cociente <img src="https://latex.codecogs.com/png.latex?%5Ctext%7Berror%7D/(%5Ckappa%5Ccdot%5Ctext%7Bresiduo%7D)">. ¿Qué dice ese número sobre el residuo como criterio de parada en este problema? <em>(10 pts)</em></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb4-1">r  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">last</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">newton</span>(p, dp, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>; ftol<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-14</span>, xtol<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>))</span>
+<span id="cb4-2">xf <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">punto_fijo</span>(p, g1, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>; maxiter<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3000</span>, ftol<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-8</span>, xtol<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb4-3">ε  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">abs</span>.(xf <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.-</span> r)</span>
+<span id="cb4-4">ε[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">./</span> ε[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># mirar los últimos cocientes</span></span></code></pre></div></div>
+<p><strong>(a)</strong> Los últimos cocientes valen 0.8289, igual que <img src="https://latex.codecogs.com/png.latex?%7Cg_1'(r)%7C%20=%200.8289">: el error se multiplica por una constante en cada paso, es decir, convergencia lineal (orden 1).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kappa</span>(dp, r) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">abs</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dp</span>(r))</span>
+<span id="cb5-2"></span>
+<span id="cb5-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kappa</span>.(dp, rs)   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># rs: las tres raíces de la parte anterior</span></span></code></pre></div></div>
+<p><strong>(b)</strong> <img src="https://latex.codecogs.com/png.latex?%5Ckappa%20%5Capprox%200.602"> en el líquido, 0.844 en la intermedia y 0.243 en el vapor. La intermedia es la más sensible: tiene la derivada más pequeña en valor absoluto, <img src="https://latex.codecogs.com/png.latex?%7Cp'%7C%20%5Capprox%201.18">.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1">κ <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kappa</span>(dp, r)</span>
+<span id="cb6-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">razon</span>(x) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">abs</span>(x[<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> r) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> (κ <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">abs</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">p</span>(x[<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span>])))</span>
+<span id="cb6-3"></span>
+<span id="cb6-4">xn <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">newton</span>(p, dp, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>; ftol<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-8</span>, xtol<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)</span>
+<span id="cb6-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">razon</span>.((xf, xn))</span></code></pre></div></div>
+<p><strong>(c)</strong> El cociente da aproximadamente 1 en los dos métodos: el error final es <img src="https://latex.codecogs.com/png.latex?%5Ckappa"> veces el residuo final. Como aquí <img src="https://latex.codecogs.com/png.latex?%5Ckappa%20%5Capprox%200.6"> es menor que 1, el error siempre es menor que el residuo, y pedir <code>ftol</code> <img src="https://latex.codecogs.com/png.latex?=%2010%5E%7B-8%7D"> ya garantiza error menor que <img src="https://latex.codecogs.com/png.latex?10%5E%7B-8%7D"> (es lo contrario de Kepler, donde <img src="https://latex.codecogs.com/png.latex?%5Ckappa%20%5Capprox%2016.6">). Los errores finales son unos <img src="https://latex.codecogs.com/png.latex?5%5Ctimes10%5E%7B-9%7D"> en punto fijo (88 pasos) y <img src="https://latex.codecogs.com/png.latex?10%5E%7B-11%7D"> en Newton (4 pasos): el método superlineal termina muy por debajo de la tolerancia porque el último paso corrige de golpe.</p>
+</div>
+</div>
+<p>Para cerrar, programen <code>raices(Tr, Pr, semillas; err)</code> con <code>newton</code>: escriban <img src="https://latex.codecogs.com/png.latex?p"> y su derivada <img src="https://latex.codecogs.com/png.latex?p'">, calculada a mano, para ese par <img src="https://latex.codecogs.com/png.latex?(T_r,%20P_r)"> y, desde cada semilla del vector <code>semillas</code>, corran <code>newton</code> con <code>ftol</code> <img src="https://latex.codecogs.com/png.latex?=%2010%5E%7B-6%7D"> para estimar la raíz, calculen <img src="https://latex.codecogs.com/png.latex?%5Ckappa"> y vuelvan a correr con <code>ftol</code> <img src="https://latex.codecogs.com/png.latex?=%20%5Ctext%7Berr%7D/%5Ckappa">. Devuelvan la lista de pares (raíz, <img src="https://latex.codecogs.com/png.latex?%5Ckappa">). Pruébenla con <img src="https://latex.codecogs.com/png.latex?(T_r,%20P_r)%20=%20(0.85,%200.5)">, <img src="https://latex.codecogs.com/png.latex?(0.9,%200.65)"> y <img src="https://latex.codecogs.com/png.latex?(1.1,%201.0)">; para escoger las semillas grafiquen antes la <img src="https://latex.codecogs.com/png.latex?p"> de cada caso en <img src="https://latex.codecogs.com/png.latex?%5B0.5,%204%5D">. Digan cuántas raíces encuentra la función en cada caso.</p>
+<p>Para entender por qué, grafiquen en una misma figura la función <img src="https://latex.codecogs.com/png.latex?q(v)"> de la primera parte en <img src="https://latex.codecogs.com/png.latex?%5B0.5,%203%5D">, para <img src="https://latex.codecogs.com/png.latex?T_r%20=%200.85">, <img src="https://latex.codecogs.com/png.latex?0.9">, <img src="https://latex.codecogs.com/png.latex?0.95">, <img src="https://latex.codecogs.com/png.latex?1">, <img src="https://latex.codecogs.com/png.latex?1.05"> y <img src="https://latex.codecogs.com/png.latex?1.1"> (con <code>ylims=(0, 1.5)</code>). Una presión fija es una recta horizontal en esa figura: ¿cuántas veces puede cortar cada curva? ¿A partir de qué temperatura reducida deja de haber tres volúmenes, y qué estado del CO₂ representa entonces el único volumen? <em>(10 pts)</em></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">raices</span>(Tr, Pr, semillas; err<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-10</span>)</span>
+<span id="cb7-2">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">p</span>(v)  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>Pr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>v<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">^</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> (Pr <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>Tr)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>v<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">^</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>v <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span></span>
+<span id="cb7-3">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dp</span>(v) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>Pr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>v<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">^</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>(Pr <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>Tr)<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span>v <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span></span>
+<span id="cb7-4">    res <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">Tuple</span>{<span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">Float64</span>,<span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">Float64</span>}[]</span>
+<span id="cb7-5">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> x1 <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> semillas</span>
+<span id="cb7-6">        r0 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">last</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">newton</span>(p, dp, x1; ftol<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-6</span>, xtol<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>))</span>
+<span id="cb7-7">        κ  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">abs</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dp</span>(r0))</span>
+<span id="cb7-8">        r  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">last</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">newton</span>(p, dp, x1; ftol<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>err<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span>κ, xtol<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>))</span>
+<span id="cb7-9">        <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">push!</span>(res, (r, κ))</span>
+<span id="cb7-10">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span>
+<span id="cb7-11">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> res</span>
+<span id="cb7-12"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span>
+<span id="cb7-13"></span>
+<span id="cb7-14"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">raices</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, (<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3.0</span>)),</span>
+<span id="cb7-15"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">raices</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.65</span>, (<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.3</span>)),</span>
+<span id="cb7-16"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">raices</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span>, (<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.0</span>,))</span>
+<span id="cb7-17"></span>
+<span id="cb7-18">fig <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot</span>(xlabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"v"</span>, ylabel<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"q"</span>, ylims<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>))</span>
+<span id="cb7-19"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> Tr <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> (<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.95</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.05</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.1</span>)</span>
+<span id="cb7-20">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot!</span>(fig, v <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">q</span>(v, Tr), <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>; label<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Tr = </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>Tr<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb7-21"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span>
+<span id="cb7-22">fig</span></code></pre></div></div>
+<p>Para <img src="https://latex.codecogs.com/png.latex?(0.85,%200.5)">: raíces 0.5538; 1.1373 y 3.1756, con <img src="https://latex.codecogs.com/png.latex?%5Ckappa%20%5Capprox%200.436">; 0.560 y 0.125. Para <img src="https://latex.codecogs.com/png.latex?(0.9,%200.65)">: 0.6029; 1.0974 y 2.3253, con <img src="https://latex.codecogs.com/png.latex?%5Ckappa%20%5Capprox%200.602">; 0.844 y 0.242. Para <img src="https://latex.codecogs.com/png.latex?(1.1,%201.0)">: una sola raíz, 2.0329, con <img src="https://latex.codecogs.com/png.latex?%5Ckappa%20%5Capprox%200.157">. En cada caso Newton converge a la raíz que está junto a su semilla.</p>
+<p>En la figura de <img src="https://latex.codecogs.com/png.latex?q">, las curvas con <img src="https://latex.codecogs.com/png.latex?T_r%20%3C%201"> tienen un tramo creciente (forma de S): para <img src="https://latex.codecogs.com/png.latex?T_r%20=%200.85"> entre <img src="https://latex.codecogs.com/png.latex?v%20%5Capprox%200.67"> y <img src="https://latex.codecogs.com/png.latex?1.72">, para <img src="https://latex.codecogs.com/png.latex?T_r%20=%200.9"> entre <img src="https://latex.codecogs.com/png.latex?0.72"> y <img src="https://latex.codecogs.com/png.latex?1.53">, y para <img src="https://latex.codecogs.com/png.latex?T_r%20=%200.95"> entre <img src="https://latex.codecogs.com/png.latex?0.79"> y <img src="https://latex.codecogs.com/png.latex?1.33">. Una horizontal a una altura comprendida en ese tramo corta la curva tres veces: líquido, estado intermedio y vapor. El estado intermedio está justo en el tramo creciente, donde comprimir el gas bajaría su presión. Desde <img src="https://latex.codecogs.com/png.latex?T_r%20=%201"> las curvas son decrecientes y una horizontal las corta una sola vez: por encima de la temperatura crítica el único volumen es el del fluido supercrítico, y por eso <img src="https://latex.codecogs.com/png.latex?(1.1,%201.0)"> da una sola raíz.</p>
+<p>La frontera exacta se puede demostrar: la derivada de <img src="https://latex.codecogs.com/png.latex?q"> es <img src="https://latex.codecogs.com/png.latex?6/v%5E3%20-%2024T_r/(3v%20-%201)%5E2">, negativa exactamente cuando <img src="https://latex.codecogs.com/png.latex?T_r%20%3E%20(3v%20-%201)%5E2/(4v%5E3)">; el lado derecho tiene su máximo en <img src="https://latex.codecogs.com/png.latex?v%20=%201">, donde vale 1. Luego <img src="https://latex.codecogs.com/png.latex?q"> es decreciente para todo <img src="https://latex.codecogs.com/png.latex?v"> si y solo si <img src="https://latex.codecogs.com/png.latex?T_r%20%5Cge%201">.</p>
+</div>
+</div>
+
+
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/numerico/taller-3/</guid>
+  <pubDate>Thu, 29 Oct 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Orden de convergencia</title>
   <dc:creator>Arturo Sanjuán</dc:creator>

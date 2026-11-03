@@ -15,7 +15,243 @@
 <link>https://arturosanjuan.xyz/cursos/probabilidad/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Tue, 13 Oct 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 21 Oct 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Taller 3</title>
+  <link>https://arturosanjuan.xyz/cursos/probabilidad/taller-3/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Una aseguradora vende pólizas de vehículos y seguros de vida, y en este taller van a recorrer un mismo objeto, el riesgo, bajo cuatro lentes distintos: la función de riesgo, el tiempo entre siniestros de una cartera, el número de siniestros en un año y el valor presente de un pago. Recuerden que si <img src="https://latex.codecogs.com/png.latex?T"> es un tiempo de vida con densidad <img src="https://latex.codecogs.com/png.latex?f=F'"> y distribución <img src="https://latex.codecogs.com/png.latex?F">, su función de riesgo es <img src="https://latex.codecogs.com/png.latex?%5Clambda(t)=%5Cdfrac%7Bf(t)%7D%7B1-F(t)%7D">, y que <img src="https://latex.codecogs.com/png.latex?F(0)=0">.</p>
+<ol type="1">
+<li>Partiendo de la definición de <img src="https://latex.codecogs.com/png.latex?%5Clambda(t)">, demuestren, usando ecuación de variables separables, que para un riesgo cualquiera se cumple <img src="https://latex.codecogs.com/png.latex?F(t)=1-%5Cexp%5C!%5CBig(-%5Cdisplaystyle%5Cint_0%5Et%5Clambda(s)%5C,ds%5CBig)">. Apliquen este resultado a una póliza de vehículo cuyo tiempo <img src="https://latex.codecogs.com/png.latex?T">, en años, hasta el primer siniestro tiene riesgo constante <img src="https://latex.codecogs.com/png.latex?%5Clambda(t)=0%7B,%7D02">, reconozcan la distribución de <img src="https://latex.codecogs.com/png.latex?T"> y calculen <img src="https://latex.codecogs.com/png.latex?P(T%3E5)">. (4 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Como <img src="https://latex.codecogs.com/png.latex?f=F'">, la definición dice <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7BF'(t)%7D%7B1-F(t)%7D=%5Clambda(t)">, que es una ecuación de variables separables para <img src="https://latex.codecogs.com/png.latex?F">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7BdF%7D%7B1-F%7D=%5Clambda(t)%5C,dt"></p>
+<p>Integrando de <img src="https://latex.codecogs.com/png.latex?0"> a <img src="https://latex.codecogs.com/png.latex?t"> y usando <img src="https://latex.codecogs.com/png.latex?F(0)=0">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?-%5Cln%5Cbig(1-F(t)%5Cbig)=%5Cint_0%5Et%5Clambda(s)%5C,ds%5Cqquad%5CLongrightarrow%5Cqquad%20F(t)=1-%5Cexp%5C!%5CBig(-%5Cint_0%5Et%5Clambda(s)%5C,ds%5CBig)"></p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?%5Clambda(t)=0%7B,%7D02"> la integral vale <img src="https://latex.codecogs.com/png.latex?0%7B,%7D02%5C,t">, así que <img src="https://latex.codecogs.com/png.latex?F(t)=1-e%5E%7B-0%7B,%7D02%5C,t%7D"> para <img src="https://latex.codecogs.com/png.latex?t%5Cge0">. Es la distribución <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BExponencial%7D(0%7B,%7D02)">, de media <img src="https://latex.codecogs.com/png.latex?50"> años. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(T%3E5)=1-F(5)=e%5E%7B-0%7B,%7D1%7D%5Capprox0%7B,%7D9048"></p>
+</div>
+</div>
+<ol start="2" type="1">
+<li>La cartera tiene 2500 pólizas independientes como la anterior. Supongan que el número de siniestros de la cartera en <img src="https://latex.codecogs.com/png.latex?t"> años, <img src="https://latex.codecogs.com/png.latex?N_t">, tiene distribución Poisson de parámetro <img src="https://latex.codecogs.com/png.latex?%5Clambda%20t"> con <img src="https://latex.codecogs.com/png.latex?%5Clambda=2500%5Ccdot0%7B,%7D02=50">, y sea <img src="https://latex.codecogs.com/png.latex?W_r"> el tiempo hasta el siniestro número <img src="https://latex.codecogs.com/png.latex?r">. Supongan también, como justificamos en clase, que el evento <img src="https://latex.codecogs.com/png.latex?%5C%7BW_r%5Cle%20t%5C%7D"> coincide con el evento <img src="https://latex.codecogs.com/png.latex?%5C%7BN_t%5Cge%20r%5C%7D">, y que de esto resulta que <img src="https://latex.codecogs.com/png.latex?W_r"> tiene densidad <img src="https://latex.codecogs.com/png.latex?%5CGamma"> entera (o Erlang) de parámetros <img src="https://latex.codecogs.com/png.latex?%5Clambda"> (tasa) y <img src="https://latex.codecogs.com/png.latex?r"> (forma) <img src="https://latex.codecogs.com/png.latex?f(w)=%5Cfrac%7B%5Clambda%5Er%20w%5E%7Br-1%7De%5E%7B-%5Clambda%20w%7D%7D%7B%5CGamma(r)%7D,%5Cqquad%20w%3E0,"> donde <img src="https://latex.codecogs.com/png.latex?%5CGamma(r)=%5Cdisplaystyle%5Cint_0%5E%5Cinfty%20t%5E%7Br-1%7De%5E%7B-t%7D%5C,dt">. Demuestren que <img src="https://latex.codecogs.com/png.latex?f"> es una función de densidad. <em>Ayuda:</em> hagan el cambio de variable <img src="https://latex.codecogs.com/png.latex?u=%5Clambda%20w">. (6 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para <img src="https://latex.codecogs.com/png.latex?r%3E0"> el número <img src="https://latex.codecogs.com/png.latex?%5CGamma(r)"> es finito y positivo, así que <img src="https://latex.codecogs.com/png.latex?f%5Cge0">. Falta ver que integra <img src="https://latex.codecogs.com/png.latex?1">. Con <img src="https://latex.codecogs.com/png.latex?u=%5Clambda%20w"> se tiene <img src="https://latex.codecogs.com/png.latex?w=u/%5Clambda"> y <img src="https://latex.codecogs.com/png.latex?dw=du/%5Clambda">, y por lo tanto</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cint_0%5E%5Cinfty%20f(w)%5C,dw=%5Cfrac%7B%5Clambda%5Er%7D%7B%5CGamma(r)%7D%5Cint_0%5E%5Cinfty%5CBig(%5Cfrac%20u%5Clambda%5CBig)%5E%7Br-1%7De%5E%7B-u%7D%5C,%5Cfrac%7Bdu%7D%7B%5Clambda%7D=%5Cfrac1%7B%5CGamma(r)%7D%5Cint_0%5E%5Cinfty%20u%5E%7Br-1%7De%5E%7B-u%7D%5C,du=%5Cfrac%7B%5CGamma(r)%7D%7B%5CGamma(r)%7D=1"></p>
+<p>Las potencias de <img src="https://latex.codecogs.com/png.latex?%5Clambda"> se cancelan: <img src="https://latex.codecogs.com/png.latex?%5Clambda%5Er%5Ccdot%5Clambda%5E%7B-(r-1)%7D%5Ccdot%5Clambda%5E%7B-1%7D=1">.</p>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Recuerden que la función gamma cumple <img src="https://latex.codecogs.com/png.latex?%5CGamma(r+1)=r%5C,%5CGamma(r)">. Usando esto, calculen <img src="https://latex.codecogs.com/png.latex?E%5BW_r%5D"> y <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BVar%7D(W_r)">. <em>Ayuda:</em> para la varianza calculen primero <img src="https://latex.codecogs.com/png.latex?E%5BW_r%5E2%5D"> y recuerden que <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BVar%7D(W_r)=E%5BW_r%5E2%5D-%5Cbig(E%5BW_r%5D%5Cbig)%5E2">. (6 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con el mismo cambio de variable, para <img src="https://latex.codecogs.com/png.latex?k=1,2">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?E%5BW_r%5Ek%5D=%5Cfrac%7B%5Clambda%5Er%7D%7B%5CGamma(r)%7D%5Cint_0%5E%5Cinfty%20w%5E%7Br+k-1%7De%5E%7B-%5Clambda%20w%7D%5C,dw=%5Cfrac%7B%5CGamma(r+k)%7D%7B%5Clambda%5Ek%5C,%5CGamma(r)%7D"></p>
+<p>Para <img src="https://latex.codecogs.com/png.latex?k=1">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?E%5BW_r%5D=%5Cfrac%7B%5CGamma(r+1)%7D%7B%5Clambda%5C,%5CGamma(r)%7D=%5Cfrac%20r%5Clambda"></p>
+<p>Para <img src="https://latex.codecogs.com/png.latex?k=2"> se usa <img src="https://latex.codecogs.com/png.latex?%5CGamma(r+2)=(r+1)%5C,r%5C,%5CGamma(r)">, de donde <img src="https://latex.codecogs.com/png.latex?E%5BW_r%5E2%5D=%5Cdfrac%7Br(r+1)%7D%7B%5Clambda%5E2%7D">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ctext%7BVar%7D(W_r)=%5Cfrac%7Br(r+1)%7D%7B%5Clambda%5E2%7D-%5Cfrac%7Br%5E2%7D%7B%5Clambda%5E2%7D=%5Cfrac%20r%7B%5Clambda%5E2%7D"></p>
+</div>
+</div>
+<ol start="4" type="1">
+<li>Con <img src="https://latex.codecogs.com/png.latex?%5Clambda=50">, calculen el tiempo esperado hasta el décimo siniestro de la cartera. Calculen también <img src="https://latex.codecogs.com/png.latex?P(W_3%5Cle0%7B,%7D1)"> sin integrar la densidad, usando la igualdad de eventos <img src="https://latex.codecogs.com/png.latex?%5C%7BW_r%5Cle%20t%5C%7D=%5C%7BN_t%5Cge%20r%5C%7D"> y la función de masa de la Poisson. (5 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Por el punto anterior, <img src="https://latex.codecogs.com/png.latex?E%5BW_%7B10%7D%5D=%5Cdfrac%7B10%7D%7B50%7D=0%7B,%7D2"> años, unos <img src="https://latex.codecogs.com/png.latex?73"> días.</p>
+<p>Para la segunda parte, <img src="https://latex.codecogs.com/png.latex?%5C%7BW_3%5Cle0%7B,%7D1%5C%7D=%5C%7BN_%7B0%7B,%7D1%7D%5Cge3%5C%7D"> y <img src="https://latex.codecogs.com/png.latex?N_%7B0%7B,%7D1%7D%5Csim%5Ctext%7BPoisson%7D(50%5Ccdot0%7B,%7D1=5)">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(W_3%5Cle0%7B,%7D1)=1-P(N_%7B0%7B,%7D1%7D%5Cle2)=1-e%5E%7B-5%7D%5CBig(1+5+%5Cfrac%7B25%7D%7B2%7D%5CBig)=1-18%7B,%7D5%5C,e%5E%7B-5%7D%5Capprox0%7B,%7D8753"></p>
+</div>
+</div>
+<ol start="5" type="1">
+<li>Sea <img src="https://latex.codecogs.com/png.latex?N"> el número de siniestros de la cartera en un año completo, de modo que <img src="https://latex.codecogs.com/png.latex?N"> es Poisson de parámetro <img src="https://latex.codecogs.com/png.latex?50">. Recuerden que una Poisson de parámetro <img src="https://latex.codecogs.com/png.latex?%5Clambda"> grande se aproxima por una normal que tiene la misma media y la misma varianza que ella, es decir, media <img src="https://latex.codecogs.com/png.latex?%5Clambda"> y varianza <img src="https://latex.codecogs.com/png.latex?%5Clambda">, y que como <img src="https://latex.codecogs.com/png.latex?N"> solo toma valores enteros se usa la corrección de continuidad: <img src="https://latex.codecogs.com/png.latex?P(N%5Cge%20k)"> se aproxima por la probabilidad de que la normal sea mayor o igual que <img src="https://latex.codecogs.com/png.latex?k-0%7B,%7D5">. Identifiquen la media y la desviación estándar de la normal que aproxima a <img src="https://latex.codecogs.com/png.latex?N"> y aproximen <img src="https://latex.codecogs.com/png.latex?P(N%3E60)">. Les sirve saber que <img src="https://latex.codecogs.com/png.latex?%5CPhi(1%7B,%7D41)=0%7B,%7D9207">, <img src="https://latex.codecogs.com/png.latex?%5CPhi(1%7B,%7D48)=0%7B,%7D9306">, <img src="https://latex.codecogs.com/png.latex?%5CPhi(1%7B,%7D49)=0%7B,%7D9319"> y <img src="https://latex.codecogs.com/png.latex?%5CPhi(1%7B,%7D56)=0%7B,%7D9406">, donde <img src="https://latex.codecogs.com/png.latex?%5CPhi"> es la distribución normal estándar. (4 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La normal tiene media <img src="https://latex.codecogs.com/png.latex?50">, varianza <img src="https://latex.codecogs.com/png.latex?50"> y desviación estándar <img src="https://latex.codecogs.com/png.latex?%5Csqrt%7B50%7D%5Capprox7%7B,%7D07">. Como <img src="https://latex.codecogs.com/png.latex?N"> es entera, <img src="https://latex.codecogs.com/png.latex?P(N%3E60)=P(N%5Cge61)">, que se aproxima por la probabilidad de que la normal sea mayor o igual que <img src="https://latex.codecogs.com/png.latex?60%7B,%7D5">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(N%3E60)%5Capprox%20P%5CBig(Z%5Cge%5Cfrac%7B60%7B,%7D5-50%7D%7B%5Csqrt%7B50%7D%7D%5CBig)=P(Z%5Cge1%7B,%7D4849)=1-%5CPhi(1%7B,%7D4849)"></p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?1%7B,%7D4849"> queda entre <img src="https://latex.codecogs.com/png.latex?1%7B,%7D48"> y <img src="https://latex.codecogs.com/png.latex?1%7B,%7D49">, se interpola: <img src="https://latex.codecogs.com/png.latex?%5CPhi(1%7B,%7D4849)%5Capprox0%7B,%7D9312">, y la probabilidad es aproximadamente <img src="https://latex.codecogs.com/png.latex?0%7B,%7D0688">. Tomar <img src="https://latex.codecogs.com/png.latex?%5CPhi(1%7B,%7D48)"> directamente, que da <img src="https://latex.codecogs.com/png.latex?0%7B,%7D0694">, también es aceptable.</p>
+</div>
+</div>
+<ol start="6" type="1">
+<li>Aproximen de nuevo <img src="https://latex.codecogs.com/png.latex?P(N%3E60)">, ahora sin corrección de continuidad. Comparen las dos aproximaciones con el valor exacto obtenido de la Poisson, <img src="https://latex.codecogs.com/png.latex?0%7B,%7D0722">, y expliquen por qué una de ellas se acerca más. (2 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sin corrección se usa <img src="https://latex.codecogs.com/png.latex?60"> como frontera: <img src="https://latex.codecogs.com/png.latex?z=10/%5Csqrt%7B50%7D%5Capprox1%7B,%7D41">, y la probabilidad es <img src="https://latex.codecogs.com/png.latex?1-%5CPhi(1%7B,%7D41)=1-0%7B,%7D9207=0%7B,%7D0793">. Con corrección se obtuvo <img src="https://latex.codecogs.com/png.latex?0%7B,%7D0688">. Los errores respecto del valor exacto <img src="https://latex.codecogs.com/png.latex?0%7B,%7D0722"> son <img src="https://latex.codecogs.com/png.latex?0%7B,%7D0071"> sin corrección y <img src="https://latex.codecogs.com/png.latex?0%7B,%7D0034"> con ella, así que la corrección se acerca más.</p>
+<p>La razón es que <img src="https://latex.codecogs.com/png.latex?N"> es discreta: el valor <img src="https://latex.codecogs.com/png.latex?k"> ocupa en la escala continua el intervalo <img src="https://latex.codecogs.com/png.latex?%5Bk-0%7B,%7D5,%5C,k+0%7B,%7D5%5D">, de modo que el evento <img src="https://latex.codecogs.com/png.latex?%5C%7BN%5Cge61%5C%7D"> empieza en <img src="https://latex.codecogs.com/png.latex?60%7B,%7D5">. Empezar en <img src="https://latex.codecogs.com/png.latex?60"> cuenta media unidad de masa de más y sobreestima. Si en cambio se empezara en <img src="https://latex.codecogs.com/png.latex?61">, con <img src="https://latex.codecogs.com/png.latex?z=11/%5Csqrt%7B50%7D%5Capprox1%7B,%7D56">, se obtendría <img src="https://latex.codecogs.com/png.latex?1-%5CPhi(1%7B,%7D56)=0%7B,%7D0594">, que subestima. El valor exacto queda entre los dos extremos, y la corrección usa el punto medio.</p>
+</div>
+</div>
+<ol start="7" type="1">
+<li>Pasemos a los seguros de vida. En 1825 el actuario Benjamin Gompertz propuso, para modelar el tiempo de vida de los seres humanos, el riesgo <img src="https://latex.codecogs.com/png.latex?%5Clambda(t)=%5Calpha%5Cbeta%5Et"> con <img src="https://latex.codecogs.com/png.latex?%5Calpha%3E0"> y <img src="https://latex.codecogs.com/png.latex?%5Cbeta%3E1">. Verifiquen derivando que una primitiva de <img src="https://latex.codecogs.com/png.latex?%5Cbeta%5Es"> es <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7B%5Cbeta%5Es%7D%7B%5Cln%5Cbeta%7D"> (escriban <img src="https://latex.codecogs.com/png.latex?%5Cbeta%5Es=e%5E%7Bs%5Cln%5Cbeta%7D">) y úsenla, junto con la fórmula de <img src="https://latex.codecogs.com/png.latex?F(t)"> en términos del riesgo que demostraron al comienzo, para deducir <img src="https://latex.codecogs.com/png.latex?F(t)">. (6 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con <img src="https://latex.codecogs.com/png.latex?%5Cbeta%5Es=e%5E%7Bs%5Cln%5Cbeta%7D">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bd%7D%7Bds%7D%5C,%5Cfrac%7B%5Cbeta%5Es%7D%7B%5Cln%5Cbeta%7D=%5Cfrac%7B%5Cln%5Cbeta%5Ccdot%20e%5E%7Bs%5Cln%5Cbeta%7D%7D%7B%5Cln%5Cbeta%7D=%5Cbeta%5Es"></p>
+<p>así que es una primitiva. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cint_0%5Et%5Calpha%5Cbeta%5Es%5C,ds=%5Cfrac%7B%5Calpha%5C,(%5Cbeta%5Et-1)%7D%7B%5Cln%5Cbeta%7D"></p>
+<p>y por la fórmula del punto 1,</p>
+<p><img src="https://latex.codecogs.com/png.latex?F(t)=1-%5Cexp%5C!%5CBig(-%5Cfrac%7B%5Calpha%5C,(%5Cbeta%5Et-1)%7D%7B%5Cln%5Cbeta%7D%5CBig),%5Cqquad%20t%5Cge0"></p>
+</div>
+</div>
+<ol start="8" type="1">
+<li>Tomen <img src="https://latex.codecogs.com/png.latex?%5Calpha=0%7B,%7D00003"> y <img src="https://latex.codecogs.com/png.latex?%5Cbeta=1%7B,%7D1">, con <img src="https://latex.codecogs.com/png.latex?t"> medido en años de edad. Calculen <img src="https://latex.codecogs.com/png.latex?P(T%3E70)"> y la probabilidad de que una persona que llega a los 70 años llegue a los 90, es decir, <img src="https://latex.codecogs.com/png.latex?P(T%3E90%5Cmid%20T%3E70)">. (3 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con <img src="https://latex.codecogs.com/png.latex?%5Cln1%7B,%7D1%5Capprox0%7B,%7D09531"> y <img src="https://latex.codecogs.com/png.latex?P(T%3Et)=1-F(t)">, que por el punto anterior es <img src="https://latex.codecogs.com/png.latex?%5Cexp%5C!%5Cbig(-%5Calpha(%5Cbeta%5Et-1)/%5Cln%5Cbeta%5Cbig)">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(T%3E70)=%5Cexp%5C!%5CBig(-%5Cfrac%7B0%7B,%7D00003%5C,(1%7B,%7D1%5E%7B70%7D-1)%7D%7B0%7B,%7D09531%7D%5CBig)=e%5E%7B-0%7B,%7D2483%7D%5Capprox0%7B,%7D7802"></p>
+<p><img src="https://latex.codecogs.com/png.latex?P(T%3E90)=e%5E%7B-1%7B,%7D6721%7D%5Capprox0%7B,%7D1879"></p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?%5C%7BT%3E90%5C%7D%5Csubset%5C%7BT%3E70%5C%7D">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(T%3E90%5Cmid%20T%3E70)=%5Cfrac%7BP(T%3E90)%7D%7BP(T%3E70)%7D=%5Cfrac%7B0%7B,%7D1879%7D%7B0%7B,%7D7802%7D%5Capprox0%7B,%7D2408"></p>
+<p>Una persona que llega a los <img src="https://latex.codecogs.com/png.latex?70"> años tiene cerca de un <img src="https://latex.codecogs.com/png.latex?24%5C%25"> de probabilidad de llegar a los <img src="https://latex.codecogs.com/png.latex?90">.</p>
+</div>
+</div>
+<ol start="9" type="1">
+<li>Calculen <img src="https://latex.codecogs.com/png.latex?%5Clambda(30)"> y <img src="https://latex.codecogs.com/png.latex?%5Clambda(90)"> con los valores del numeral anterior, donde <img src="https://latex.codecogs.com/png.latex?%5Clambda"> es el <em>hazard</em> de la Gompertz, y expliquen con ellos por qué una distribución exponencial no sirve para modelar la vida humana. (2 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Reemplazando en <img src="https://latex.codecogs.com/png.latex?%5Clambda(t)=%5Calpha%5Cbeta%5Et">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clambda(30)=0%7B,%7D00003%5Ccdot1%7B,%7D1%5E%7B30%7D%5Capprox0%7B,%7D00052,%5Cqquad%5Clambda(90)=0%7B,%7D00003%5Ccdot1%7B,%7D1%5E%7B90%7D%5Capprox0%7B,%7D159"></p>
+<p>A los <img src="https://latex.codecogs.com/png.latex?30"> años el riesgo anual es de unos <img src="https://latex.codecogs.com/png.latex?5"> en <img src="https://latex.codecogs.com/png.latex?10%5C,000">, y a los <img src="https://latex.codecogs.com/png.latex?90"> es de casi <img src="https://latex.codecogs.com/png.latex?16"> en <img src="https://latex.codecogs.com/png.latex?100">. El cociente es <img src="https://latex.codecogs.com/png.latex?1%7B,%7D1%5E%7B60%7D%5Capprox304">, y no depende de <img src="https://latex.codecogs.com/png.latex?%5Calpha">. La exponencial tiene riesgo constante, de modo que asignaría el mismo riesgo a los <img src="https://latex.codecogs.com/png.latex?30"> y a los <img src="https://latex.codecogs.com/png.latex?90"> años, y la mortalidad humana no se comporta así.</p>
+</div>
+</div>
+<ol start="10" type="1">
+<li>Volvamos a una póliza de vehículo, con <img src="https://latex.codecogs.com/png.latex?T"> exponencial de parámetro <img src="https://latex.codecogs.com/png.latex?%5Cmu=0%7B,%7D02">. La aseguradora paga un peso en el momento del siniestro y descuenta a una tasa <img src="https://latex.codecogs.com/png.latex?%5Cdelta=0%7B,%7D05">, de modo que el valor presente del pago es <img src="https://latex.codecogs.com/png.latex?V=e%5E%7B-%5Cdelta%20T%7D">. Recuerden el teorema de cambio de variable: si <img src="https://latex.codecogs.com/png.latex?X"> es continua con densidad <img src="https://latex.codecogs.com/png.latex?f_X">, <img src="https://latex.codecogs.com/png.latex?g"> es derivable y estrictamente monótona sobre el rango de <img src="https://latex.codecogs.com/png.latex?X">, y <img src="https://latex.codecogs.com/png.latex?Y=g(X)">, entonces <img src="https://latex.codecogs.com/png.latex?f_Y(y)=f_X%5Cbig(h(y)%5Cbig)%5C,%7Ch'(y)%7C">, donde <img src="https://latex.codecogs.com/png.latex?h"> es la inversa de <img src="https://latex.codecogs.com/png.latex?g">. Úsenlo para hallar la densidad de <img src="https://latex.codecogs.com/png.latex?V"> e indiquen en qué intervalo toma valores y qué distribución es. (6 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La función <img src="https://latex.codecogs.com/png.latex?g(t)=e%5E%7B-%5Cdelta%20t%7D"> es estrictamente decreciente sobre <img src="https://latex.codecogs.com/png.latex?(0,%5Cinfty)">, que es el rango de <img src="https://latex.codecogs.com/png.latex?T">, y su imagen es <img src="https://latex.codecogs.com/png.latex?(0,1)">. Por lo tanto <img src="https://latex.codecogs.com/png.latex?V"> toma valores en <img src="https://latex.codecogs.com/png.latex?(0,1)">. La inversa es <img src="https://latex.codecogs.com/png.latex?h(v)=-%5Cdfrac%7B%5Cln%20v%7D%7B%5Cdelta%7D">, con <img src="https://latex.codecogs.com/png.latex?%7Ch'(v)%7C=%5Cdfrac1%7B%5Cdelta%20v%7D">. Como <img src="https://latex.codecogs.com/png.latex?f_T(t)=%5Cmu%20e%5E%7B-%5Cmu%20t%7D">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?f_T%5Cbig(h(v)%5Cbig)=%5Cmu%5C,e%5E%7B%5Cmu%5Cln%20v/%5Cdelta%7D=%5Cmu%5C,v%5E%7B%5Cmu/%5Cdelta%7D"></p>
+<p>y entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?f_V(v)=%5Cmu%5C,v%5E%7B%5Cmu/%5Cdelta%7D%5Ccdot%5Cfrac1%7B%5Cdelta%20v%7D=%5Cfrac%5Cmu%5Cdelta%5C,v%5E%7B%5Cmu/%5Cdelta-1%7D,%5Cqquad0%3Cv%3C1"></p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?%5Cmu/%5Cdelta=0%7B,%7D4"> queda <img src="https://latex.codecogs.com/png.latex?f_V(v)=0%7B,%7D4%5C,v%5E%7B-0%7B,%7D6%7D"> en <img src="https://latex.codecogs.com/png.latex?(0,1)">. Se comprueba que integra <img src="https://latex.codecogs.com/png.latex?1">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cint_0%5E10%7B,%7D4%5C,v%5E%7B-0%7B,%7D6%7D%5C,dv=v%5E%7B0%7B,%7D4%7D%5CBig%7C_0%5E1=1"></p>
+<p>La densidad de una <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BBeta%7D(a,b)"> es <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7Bx%5E%7Ba-1%7D(1-x)%5E%7Bb-1%7D%7D%7BB(a,b)%7D">. Con <img src="https://latex.codecogs.com/png.latex?b=1"> el factor <img src="https://latex.codecogs.com/png.latex?(1-x)%5E0"> desaparece, y como <img src="https://latex.codecogs.com/png.latex?B(a,1)=%5Cdfrac%7B%5CGamma(a)%5CGamma(1)%7D%7B%5CGamma(a+1)%7D=%5Cdfrac1a">, la densidad queda <img src="https://latex.codecogs.com/png.latex?a%5C,x%5E%7Ba-1%7D">. Por lo tanto <img src="https://latex.codecogs.com/png.latex?V%5Csim%5Ctext%7BBeta%7D(a,1)"> con <img src="https://latex.codecogs.com/png.latex?a=%5Cmu/%5Cdelta=0%7B,%7D4">, es decir, <img src="https://latex.codecogs.com/png.latex?V%5Csim%5Ctext%7BBeta%7D(0%7B,%7D4,%5C,1)">.</p>
+</div>
+</div>
+<ol start="11" type="1">
+<li>Calculen <img src="https://latex.codecogs.com/png.latex?E%5BV%5D"> de dos maneras: integrando <img src="https://latex.codecogs.com/png.latex?v"> contra la densidad de <img src="https://latex.codecogs.com/png.latex?V"> que obtuvieron, y calculando directamente <img src="https://latex.codecogs.com/png.latex?E%5Be%5E%7B-%5Cdelta%20T%7D%5D"> contra la densidad de <img src="https://latex.codecogs.com/png.latex?T">. Verifiquen que los dos resultados coinciden. Encuentren la fórmula general de la esperanza para <img src="https://latex.codecogs.com/png.latex?%5Cmu"> y <img src="https://latex.codecogs.com/png.latex?%5Cdelta"> arbitrarios. (6 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con la densidad de <img src="https://latex.codecogs.com/png.latex?V">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?E%5BV%5D=%5Cint_0%5E1v%5Ccdot0%7B,%7D4%5C,v%5E%7B-0%7B,%7D6%7D%5C,dv=0%7B,%7D4%5Cint_0%5E1v%5E%7B0%7B,%7D4%7D%5C,dv=%5Cfrac%7B0%7B,%7D4%7D%7B1%7B,%7D4%7D=%5Cfrac27%5Capprox0%7B,%7D2857"></p>
+<p>Directamente con la densidad de <img src="https://latex.codecogs.com/png.latex?T">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?E%5Be%5E%7B-%5Cdelta%20T%7D%5D=%5Cint_0%5E%5Cinfty%20e%5E%7B-0%7B,%7D05%5C,t%7D%5Ccdot0%7B,%7D02%5C,e%5E%7B-0%7B,%7D02%5C,t%7D%5C,dt=0%7B,%7D02%5Cint_0%5E%5Cinfty%20e%5E%7B-0%7B,%7D07%5C,t%7D%5C,dt=%5Cfrac%7B0%7B,%7D02%7D%7B0%7B,%7D07%7D=%5Cfrac27"></p>
+<p>Coinciden. Para <img src="https://latex.codecogs.com/png.latex?%5Cmu"> y <img src="https://latex.codecogs.com/png.latex?%5Cdelta"> arbitrarios, el cálculo directo da</p>
+<p><img src="https://latex.codecogs.com/png.latex?E%5BV%5D=E%5Be%5E%7B-%5Cdelta%20T%7D%5D=%5Cint_0%5E%5Cinfty%20e%5E%7B-%5Cdelta%20t%7D%5C,%5Cmu%5C,e%5E%7B-%5Cmu%20t%7D%5C,dt=%5Cmu%5Cint_0%5E%5Cinfty%20e%5E%7B-(%5Cmu+%5Cdelta)t%7D%5C,dt=%5Cfrac%7B%5Cmu%7D%7B%5Cmu+%5Cdelta%7D"></p>
+<p>Con la densidad de <img src="https://latex.codecogs.com/png.latex?V"> se llega a lo mismo:</p>
+<p><img src="https://latex.codecogs.com/png.latex?E%5BV%5D=%5Cint_0%5E1v%5Ccdot%5Cfrac%5Cmu%5Cdelta%5C,v%5E%7B%5Cmu/%5Cdelta-1%7D%5C,dv=%5Cfrac%5Cmu%5Cdelta%5Ccdot%5Cfrac1%7B%5Cmu/%5Cdelta+1%7D=%5Cfrac%7B%5Cmu%7D%7B%5Cmu+%5Cdelta%7D"></p>
+<p>que es la media <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%20a%7Ba+1%7D"> de una <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BBeta%7D(a,1)"> con <img src="https://latex.codecogs.com/png.latex?a=%5Cmu/%5Cdelta">.</p>
+</div>
+</div>
+
+
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/probabilidad/taller-3/</guid>
+  <pubDate>Wed, 21 Oct 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Función de riesgo y distribución Weibull</title>
   <dc:creator>Arturo Sanjuán</dc:creator>
