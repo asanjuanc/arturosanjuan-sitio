@@ -14,7 +14,7 @@ format:
     code-fold: false
     smooth-scroll: true
     highlight-style: github
-order: 13
+order: 14
 ---
 
 Esta sección sigue el §21 del Simmons y la sección 13.18 del Apostol (*Calculus*, vol. 1). El plan tiene dos partes. Primero se construye la geometría: la elipse como sección de un cono, con las esferas de Dandelin, y su ecuación en coordenadas polares. Después se llega a la misma ecuación desde la física, resolviendo una ecuación diferencial: la ley de gravitación de Newton y la conservación del momento angular dan la órbita, y de ella salen las tres leyes de Kepler.

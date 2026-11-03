@@ -291,7 +291,7 @@ Hacia 1753 Daniel Bernoulli propuso que la cuerda vibra como una suma de modos s
 
 Dirichlet dio en 1829 las primeras condiciones rigurosas bajo las cuales la serie de Fourier converge, y Riemann (1854) estudió las series trigonométricas para funciones muy irregulares. Siguiendo un problema planteado por Heine, Cantor se preguntó entre 1870 y 1872 cuándo es única la representación de una función por una serie trigonométrica, y qué tan grande puede ser el conjunto de puntos excepcionales donde la serie falla. Para describir esos conjuntos de puntos introdujo los conjuntos derivados y, iterándolos, los ordinales transfinitos: una de las vías por las que nació la **teoría de conjuntos**.
 
-Se puede leer más en [este artículo de arXiv](https://arxiv.org/pdf/1803.05287) y en [estas notas de Caltech sobre la unicidad de la serie trigonométrica](https://pma.caltech.edu/documents/5627/uniqueness.pdf).
+Se puede leer más en [este artículo de arXiv](https://arxiv.org/pdf/1803.05287) y en [estas notas de Caltech sobre la unicidad de la serie trigonométrica](https://pma.caltech.edu/documents/5627/uniqueness.pdf) o [esta charla de Rudin sobre la historia de la teoría de conjuntos](https://www.youtube.com/watch?v=hBcWRZMP6xs)
 :::
 
 ## Ondas planas: frecuencia, longitud de onda y energía

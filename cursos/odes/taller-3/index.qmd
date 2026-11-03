@@ -13,7 +13,7 @@ format:
     code-fold: false
     smooth-scroll: true
     highlight-style: github
-order: 15
+order: 14
 ---
 
 Los tres problemas de este taller tienen la misma estructura: una situación del Sistema Solar que se resuelve de forma exacta, y una perturbación pequeña cuyo efecto se estudia con una ecuación lineal. El taller se trabaja en equipos de hasta tres personas y vale 50 puntos.

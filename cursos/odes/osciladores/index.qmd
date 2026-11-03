@@ -14,7 +14,7 @@ format:
     code-fold: false
     smooth-scroll: true
     highlight-style: github
-order: 14
+order: 13
 ---
 
 Esta sección sigue el §20 del Simmons (vibraciones en sistemas mecánicos y eléctricos), con el §13 para los circuitos. Empezamos con un resorte y al final vemos que el mismo modelo describe un circuito eléctrico, de modo que todo lo que aprendamos del uno vale para el otro.

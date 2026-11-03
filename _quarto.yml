@@ -64,8 +64,8 @@ website:
         - cursos/odes/parcial-1/index.qmd
         - cursos/odes/segundoorden/index.qmd
         - cursos/odes/parametros/index.qmd
-        - cursos/odes/planetario/index.qmd
         - cursos/odes/osciladores/index.qmd
+        - cursos/odes/planetario/index.qmd
         - cursos/odes/taller-3/index.qmd
         - cursos/odes/osciladorcuantico/index.qmd
     - id: numerico
