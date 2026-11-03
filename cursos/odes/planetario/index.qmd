@@ -23,11 +23,19 @@ Convenciones: un punto sobre una variable indica derivada respecto al tiempo, $\
 
 ## De esfera a planeta
 
-Las cuentas de esta sección son la última etapa de una historia larga: la Tierra pasó de ser una esfera en el centro del cielo a ser un planeta más, y las cónicas de Apolonio resultaron ser las órbitas que dibujan esos planetas. El siguiente panel recorre siete autores, de Aristarco a Newton, y para cada uno responde tres preguntas: qué aportó sobre la Tierra redonda, sobre su rotación y sobre su condición de planeta.
+Las cuentas de esta sección son la última etapa de una historia larga: la Tierra pasó de ser una esfera en el centro del cielo a ser un planeta más, y las cónicas de Apolonio resultaron ser las órbitas que dibujan los planetas. En siete nombres:
 
-```{=html}
-<iframe src="linea-tiempo.html" width="100%" height="830" style="border:1px solid #dfe3e2; border-radius:6px;" title="Línea de tiempo: de esfera a planeta"></iframe>
-```
+| Autor | Fecha | Qué hizo |
+|:--|:--|:--|
+| Aristarco de Samos | ~310 a ~230 a.C. | Propuso que la Tierra gira alrededor del Sol, con las estrellas fijas muy lejanas. Es el primer modelo heliocéntrico conocido. Su obra se perdió y lo conocemos por Arquímedes. |
+| Eratóstenes de Cirene | ~276 a ~194 a.C. | Primera medida documentada de la Tierra. Con un arco de 7,2° (1/50 de círculo) entre Siena y Alejandría y 5000 estadios de distancia, obtuvo una circunferencia de 250.000 estadios. |
+| Apolonio de Perge | ~262 a ~190 a.C. | En las *Cónicas* obtiene elipse, parábola e hipérbola cortando un cono doble con un plano. En astronomía mostró que epiciclos y excéntricas describen los mismos movimientos aparentes. |
+| Claudio Ptolomeo | ~100 a ~170 d.C. | En el *Almagesto* une la física de Aristóteles con deferentes, epiciclos y ecuante. Tierra fija y en el centro: fue la astronomía estándar por unos 1400 años. |
+| Nicolás Copérnico | 1473 a 1543 | Pone el Sol en el centro (1543), con la Tierra como tercer planeta que gira sobre su eje. Mantiene círculos y epiciclos, y explica de forma natural el movimiento retrógrado. |
+| Johannes Kepler | 1571 a 1630 | Encaja las órbitas en los sólidos platónicos (1596), modelo falso. Con los datos de Tycho llega a las órbitas elípticas (1609) y a que $T^2$ es proporcional a $a^3$ (1619). |
+| Isaac Newton | 1642 a 1727 | En los *Principia* (1687) deriva las leyes de Kepler de una fuerza proporcional a $1/r^2$. La misma fuerza explica la manzana, la Luna y los planetas. Predice el achatamiento de la Tierra por su rotación. |
+
+De Aristarco a Copérnico pasan unos 1800 años. Lo que sigue es el último paso de la lista: de las cónicas de Apolonio a la deducción de las leyes de Kepler con ecuaciones diferenciales.
 
 ## Las cónicas y las esferas de Dandelin
 

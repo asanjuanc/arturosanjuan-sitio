@@ -15,7 +15,1112 @@
 <link>https://arturosanjuan.xyz/cursos/odes/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Sun, 18 Oct 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 02 Nov 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>El Oscilador Armónico Cuántico</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/odes/osciladorcuantico/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Esta sección usa la ecuación de Hermite como destino, pero el camino es largo y vale la pena recorrerlo. Empezamos con una fila de osciladores acoplados, de ahí sale la ecuación de onda, de las ondas sale la relación entre frecuencia, energía y momento, y con eso se llega a la ecuación de Schrödinger. Al final la aplicamos al potencial de un resorte y la resolvemos por series de potencias.</p>
+<section id="osciladores-acoplados" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="osciladores-acoplados"><span class="header-section-number">1</span> Osciladores acoplados</h2>
+<p>Imaginemos un grupo de personas en fila, agarradas de la mano, jugando a la ola. Cuando el impulso llega de una persona a la otra, esta lo transmite a la vecina, pero cada persona se queda en su sitio. Lo que viaja es la perturbación, no las personas.</p>
+<p>Esto es muy similar a acoplar osciladores armónicos con resortes: una fila de bloques de masa <img src="https://latex.codecogs.com/png.latex?m">, cada uno unido a sus vecinos por un resorte.</p>
+<p>Consideremos entonces infinitos osciladores armónicos acoplados, con el mismo coeficiente de elasticidad <img src="https://latex.codecogs.com/png.latex?%5Ckappa"> en todos los resortes y la misma masa <img src="https://latex.codecogs.com/png.latex?m"> en cada bloque. (Usamos <img src="https://latex.codecogs.com/png.latex?%5Ckappa"> para la constante del resorte y reservamos <img src="https://latex.codecogs.com/png.latex?k"> para el número de onda, que aparece más abajo.) Sea <img src="https://latex.codecogs.com/png.latex?u_j"> el desplazamiento del bloque número <img src="https://latex.codecogs.com/png.latex?j"> respecto de su posición de equilibrio. La Figura&nbsp;1 muestra tres bloques consecutivos.</p>
+<div id="fig-cadena" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cadena-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/odes/osciladorcuantico/cadena.svg" class="img-fluid figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cadena-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Tres bloques consecutivos en equilibrio (arriba) y desplazados (abajo). El resorte de la derecha se estira en <img src="https://latex.codecogs.com/png.latex?u_%7Bj+1%7D-u_j"> y el de la izquierda en <img src="https://latex.codecogs.com/png.latex?u_j-u_%7Bj-1%7D"> (en el dibujo, esta última cantidad es negativa y el resorte se comprime).
+</figcaption>
+</figure>
+</div>
+<p>Si el bloque <img src="https://latex.codecogs.com/png.latex?j"> se desplaza <img src="https://latex.codecogs.com/png.latex?u_j"> y sus vecinos se desplazan <img src="https://latex.codecogs.com/png.latex?u_%7Bj-1%7D"> y <img src="https://latex.codecogs.com/png.latex?u_%7Bj+1%7D">, entonces el resorte de la derecha se estira en <img src="https://latex.codecogs.com/png.latex?u_%7Bj+1%7D-u_j"> y el de la izquierda en <img src="https://latex.codecogs.com/png.latex?u_j-u_%7Bj-1%7D">. El resorte derecho jala al bloque hacia la derecha con fuerza <img src="https://latex.codecogs.com/png.latex?%5Ckappa(u_%7Bj+1%7D-u_j)">, y el izquierdo lo jala hacia la izquierda con fuerza <img src="https://latex.codecogs.com/png.latex?%5Ckappa(u_j-u_%7Bj-1%7D)">. Por la segunda ley de Newton,</p>
+<p><span id="eq-cadena"><img src="https://latex.codecogs.com/png.latex?m%5C,%5Cddot%20u_j=%5Ckappa%5C,(u_%7Bj+1%7D-2u_j+u_%7Bj-1%7D).%20%5Ctag%7B1%7D"></span></p>
+<p>La fuerza sobre un bloque depende solo de cómo está respecto de sus dos vecinos. Esa combinación <img src="https://latex.codecogs.com/png.latex?u_%7Bj+1%7D-2u_j+u_%7Bj-1%7D"> es una segunda diferencia, y es la que nos va a convertir la cadena en una ecuación diferencial parcial.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Simulador: la cadena de osciladores">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Simulador: la cadena de osciladores
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El tablero integra Ecuación&nbsp;1 para <img src="https://latex.codecogs.com/png.latex?N"> bloques con los dos extremos fijos (método de Verlet, que conserva la energía). Con <strong>Pulso</strong> se ve cómo una perturbación local se parte en dos y viaja por la cadena. Con <strong>Modo n</strong> la cadena entera oscila con la forma de un seno, y la información de abajo compara la frecuencia exacta de la cadena con la que predice la ecuación de onda de la siguiente sección. Con <strong>Un solo bloque</strong> se ve que, si la perturbación es del tamaño del espaciado, el continuo no sirve.</p>
+<style>
+  .oq-caja{border:3px solid #ddd;border-radius:8px;padding:14px;max-width:780px;margin:1em auto;font-family:sans-serif;background:#fff;color:#222;}
+  .oq-caja canvas{display:block;width:100%;height:auto;background:#fff;border:1px solid #e3e3e3;border-radius:6px;margin-top:8px;}
+  .oq-caja button{padding:5px 11px;border:1px solid #bbb;border-radius:6px;background:#f5f5f5;color:#222;cursor:pointer;font-size:0.9em;}
+  .oq-caja button:hover{background:#e9e9e9;}
+  .oq-caja button.oq-act{background:#2563a8;border-color:#2563a8;color:#fff;}
+  .oq-fila{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .oq-insignia{padding:3px 12px;border-radius:12px;font-size:0.9em;background:#eee;color:#333;}
+  .oq-ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px 18px;margin-top:12px;}
+  .oq-ctrl label{font-size:0.92em;display:block;}
+  .oq-ctrl input[type=range]{width:100%;}
+  .oq-info{margin-top:10px;font-size:0.93em;line-height:1.5;}
+  .oq-tabla{border-collapse:collapse;width:100%;font-size:0.93em;margin-top:10px;}
+  .oq-tabla td{padding:5px 8px;border-bottom:1px solid #e3e3e3;vertical-align:baseline;}
+  .oq-tabla td:first-child{color:#555;width:46%;}
+</style>
+<div class="oq-caja" id="oqc">
+  <div class="oq-fila">
+    <b>Condición inicial:</b>
+    <button data-i="pulso" class="oq-act">Pulso</button>
+    <button data-i="modo">Modo n</button>
+    <button data-i="bloque">Un solo bloque</button>
+    <button id="oqc-play">Pausa</button>
+    <button id="oqc-reset">Reiniciar</button>
+  </div>
+  <div class="oq-ctrl">
+    <label>Bloques N = <b id="oqc-Nv">40</b><input type="range" id="oqc-N" min="8" max="80" step="1" value="40"></label>
+    <label>Modo n = <b id="oqc-nv">3</b><input type="range" id="oqc-n" min="1" max="12" step="1" value="3"></label>
+    <label>Constante del resorte κ = <b id="oqc-kv">20</b> N/m<input type="range" id="oqc-k" min="2" max="60" step="1" value="20"></label>
+    <label>Masa de cada bloque m = <b id="oqc-mv">0,5</b> kg<input type="range" id="oqc-m" min="0.1" max="2" step="0.1" value="0.5"></label>
+    <label>Espaciado h = <b id="oqc-hv">0,10</b> m<input type="range" id="oqc-h" min="0.05" max="0.5" step="0.01" value="0.10"></label>
+    <label>Velocidad de reproducción = <b id="oqc-sv">1,0</b>×<input type="range" id="oqc-s" min="0.25" max="4" step="0.25" value="1"></label>
+  </div>
+  <div class="oq-fila" style="margin-top:8px;">
+    <label><input type="checkbox" id="oqc-cont" checked=""> mostrar la solución de la ecuación de onda (curva naranja)</label>
+  </div>
+  <canvas id="oqc-c" width="760" height="250" aria-label="Cadena de bloques unidos por resortes con extremos fijos y la solución de la ecuación de onda"></canvas>
+  <div class="oq-info" id="oqc-info"></div>
+</div>
+<script>
+(function(){
+/*NUCLEO*/
+function omegaModo(N, kappa, m, n){ return 2*Math.sqrt(kappa/m)*Math.sin(n*Math.PI/(2*(N+1))); }
+function velocidadOnda(h, kappa, m){ return h*Math.sqrt(kappa/m); }
+function condicionInicial(N, tipo, n){
+  var u = new Float64Array(N+2), j;
+  if (tipo === 'modo'){ for (j = 1; j <= N; j++) u[j] = Math.sin(n*Math.PI*j/(N+1)); }
+  else if (tipo === 'bloque'){ u[Math.round((N+1)/2)] = 1; }
+  else { var s = (N+1)/14, c0 = (N+1)/2; for (j = 1; j <= N; j++) u[j] = Math.exp(-0.5*Math.pow((j-c0)/s, 2)); }
+  return u;
+}
+function aceleraciones(ch){
+  var k = ch.kappa/ch.m, u = ch.u, a = ch.a, N = ch.N;
+  for (var j = 1; j <= N; j++) a[j] = k*(u[j+1] - 2*u[j] + u[j-1]);
+}
+function crearCadena(N, kappa, m, u0){
+  var ch = {N:N, kappa:kappa, m:m, dt:0.04/Math.sqrt(kappa/m), t:0,
+            u:Float64Array.from(u0), v:new Float64Array(N+2), a:new Float64Array(N+2), b:new Float64Array(N+2)};
+  aceleraciones(ch);
+  return ch;
+}
+function paso(ch){
+  var N = ch.N, dt = ch.dt, j;
+  for (j = 1; j <= N; j++){ ch.u[j] += ch.v[j]*dt + 0.5*ch.a[j]*dt*dt; ch.b[j] = ch.a[j]; }
+  aceleraciones(ch);
+  for (j = 1; j <= N; j++) ch.v[j] += 0.5*(ch.b[j] + ch.a[j])*dt;
+  ch.t += dt;
+}
+function energia(ch){
+  var E = 0, j;
+  for (j = 1; j <= ch.N; j++) E += 0.5*ch.m*ch.v[j]*ch.v[j];
+  for (j = 0; j <= ch.N; j++){ var d = ch.u[j+1] - ch.u[j]; E += 0.5*ch.kappa*d*d; }
+  return E;
+}
+function continuoPulso(N, h, c, x, t){
+  var L = (N+1)*h, s = (N+1)/14*h, c0 = L/2;
+  function g(r){ return Math.exp(-0.5*Math.pow((r-c0)/s, 2)); }
+  function F(r){ var q = ((r % (2*L)) + 2*L) % (2*L); return q <= L ? g(q) : -g(2*L - q); }
+  return 0.5*(F(x - c*t) + F(x + c*t));
+}
+function continuoModo(N, h, c, n, x, t){
+  var L = (N+1)*h;
+  return Math.sin(n*Math.PI*x/L)*Math.cos(c*n*Math.PI/L*t);
+}
+/*FIN NUCLEO*/
+
+function $(id){ return document.getElementById(id); }
+var cv = $('oqc-c'); if (!cv) return;
+var ctx = cv.getContext('2d');
+var S = {tipo:'pulso', N:40, n:3, kappa:20, m:0.5, h:0.10, vel:1, cont:true, play:true};
+var ch = null, simT = 0, last = null, E0 = 1, lastInfo = -1;
+function fmt(x, d){ return x.toFixed(d).replace('.', ','); }
+function nEfectivo(){ return Math.min(S.n, S.N); }
+
+function reiniciar(){
+  ch = crearCadena(S.N, S.kappa, S.m, condicionInicial(S.N, S.tipo, nEfectivo()));
+  simT = 0; E0 = energia(ch) || 1;
+  dibujar(); info();
+}
+
+function info(){
+  var c = velocidadOnda(S.h, S.kappa, S.m), L = (S.N+1)*S.h;
+  var t = '<b>Velocidad de la onda:</b> c = h·√(κ/m) = ' + fmt(c, 3) + ' m/s. ' +
+          '<b>Largo de la cadena:</b> L = (N+1)·h = ' + fmt(L, 2) + ' m, y una onda tarda L/c = ' + fmt(L/c, 2) + ' s en cruzarla.';
+  if (S.tipo === 'modo'){
+    var n = nEfectivo(), wn = omegaModo(S.N, S.kappa, S.m, n), wc = c*n*Math.PI/L;
+    t += '<br><b>Modo ' + n + ':</b> la cadena oscila con ω = 2√(κ/m)·sen(nπ/(2(N+1))) = ' + fmt(wn, 3) + ' rad/s (periodo ' + fmt(2*Math.PI/wn, 3) + ' s). ' +
+         'La ecuación de onda predice ω = c·nπ/L = ' + fmt(wc, 3) + ' rad/s, es decir ' + fmt(100*(wc-wn)/wn, 2) + ' % más. ' +
+         'La aproximación mejora cuando n es pequeño frente a N.';
+  } else if (S.tipo === 'pulso'){
+    t += '<br><b>Pulso:</b> se parte en dos pulsos de altura ½ que viajan en sentidos opuestos y rebotan en las paredes (extremos fijos). ' +
+         'Con el tiempo aparece un rizado detrás de cada pulso: es la dispersión de la cadena, que la ecuación de onda no tiene.';
+  } else {
+    t += '<br><b>Un solo bloque:</b> su ancho es del tamaño del espaciado h, así que la aproximación continua no aplica y no se dibuja la curva naranja.';
+  }
+  t += '<br><b>Energía total:</b> E/E₀ = ' + fmt(energia(ch)/E0, 5) + ' (se conserva).';
+  $('oqc-info').innerHTML = t;
+}
+
+function dibujar(){
+  var W = 760, H = 250, x0 = 34, y0 = 125, A = 80, N = S.N, j, px, py;
+  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, H);
+  ctx.strokeStyle = '#ccc'; ctx.lineWidth = 1; ctx.setLineDash([4, 4]);
+  ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(W - x0, y0); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle = '#1e2327'; ctx.fillRect(x0 - 4, y0 - 62, 4, 124); ctx.fillRect(W - x0, y0 - 62, 4, 124);
+  var sp = (W - 2*x0)/(N + 1);
+  if (S.cont && S.tipo !== 'bloque'){
+    var c = velocidadOnda(S.h, S.kappa, S.m), L = (N+1)*S.h, nn = nEfectivo();
+    ctx.strokeStyle = '#c1440e'; ctx.lineWidth = 2; ctx.beginPath();
+    for (var i = 0; i <= 400; i++){
+      var x = L*i/400;
+      var y = S.tipo === 'pulso' ? continuoPulso(N, S.h, c, x, ch.t) : continuoModo(N, S.h, c, nn, x, ch.t);
+      px = x0 + (x/L)*(W - 2*x0); py = y0 - A*y;
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+  }
+  ctx.strokeStyle = '#8a949c'; ctx.lineWidth = 1.2; ctx.beginPath();
+  for (j = 0; j <= N + 1; j++){
+    px = x0 + j*sp; py = y0 - A*ch.u[j];
+    if (j === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+  var s = Math.max(4, Math.min(14, 0.6*sp));
+  ctx.fillStyle = '#2563a8';
+  for (j = 1; j <= N; j++){ px = x0 + j*sp; py = y0 - A*ch.u[j]; ctx.fillRect(px - s/2, py - s/2, s, s); }
+  ctx.fillStyle = '#555'; ctx.font = '13px sans-serif'; ctx.textAlign = 'left';
+  ctx.fillText('t = ' + fmt(ch.t, 2) + ' s', 10, 18);
+  ctx.fillStyle = '#2563a8'; ctx.fillRect(130, 9, 10, 10); ctx.fillStyle = '#555'; ctx.fillText('bloques', 146, 18);
+  if (S.cont && S.tipo !== 'bloque'){ ctx.fillStyle = '#c1440e'; ctx.fillRect(220, 12, 18, 3); ctx.fillStyle = '#555'; ctx.fillText('ecuación de onda', 244, 18); }
+}
+
+function loop(ts){
+  if (last === null) last = ts;
+  var dt = Math.min((ts - last)/1000, 0.05); last = ts;
+  if (S.play){
+    simT += dt*S.vel;
+    var guard = 4000;
+    while (ch.t < simT && guard-- > 0) paso(ch);
+    dibujar();
+    if (ts - lastInfo > 250){ info(); lastInfo = ts; }
+  }
+  requestAnimationFrame(loop);
+}
+
+function marcarBotones(){
+  var bs = document.querySelectorAll('#oqc button[data-i]');
+  for (var i = 0; i < bs.length; i++) bs[i].className = bs[i].getAttribute('data-i') === S.tipo ? 'oq-act' : '';
+}
+function ligar(id, clave, valId, dec, esEntero){
+  var el = $(id);
+  el.addEventListener('input', function(){
+    var v = parseFloat(el.value);
+    S[clave] = esEntero ? Math.round(v) : v;
+    $(valId).textContent = fmt(S[clave], dec);
+    if (clave === 'N'){ var nmax = Math.min(12, S.N); $('oqc-n').max = nmax; if (S.n > nmax){ S.n = nmax; $('oqc-n').value = nmax; $('oqc-nv').textContent = nmax; } }
+    if (clave === 'vel') return;
+    reiniciar();
+  });
+}
+ligar('oqc-N', 'N', 'oqc-Nv', 0, true);
+ligar('oqc-n', 'n', 'oqc-nv', 0, true);
+ligar('oqc-k', 'kappa', 'oqc-kv', 0, false);
+ligar('oqc-m', 'm', 'oqc-mv', 1, false);
+ligar('oqc-h', 'h', 'oqc-hv', 2, false);
+ligar('oqc-s', 'vel', 'oqc-sv', 1, false);
+$('oqc-cont').addEventListener('change', function(){ S.cont = this.checked; dibujar(); });
+var bs = document.querySelectorAll('#oqc button[data-i]');
+for (var q = 0; q < bs.length; q++) bs[q].addEventListener('click', function(){ S.tipo = this.getAttribute('data-i'); marcarBotones(); reiniciar(); });
+$('oqc-play').addEventListener('click', function(){ S.play = !S.play; this.textContent = S.play ? 'Pausa' : 'Seguir'; });
+$('oqc-reset').addEventListener('click', reiniciar);
+
+reiniciar();
+requestAnimationFrame(loop);
+})();
+</script>
+</div>
+</div>
+<section id="del-salto-discreto-a-la-derivada" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="del-salto-discreto-a-la-derivada"><span class="header-section-number">1.1</span> Del salto discreto a la derivada</h3>
+<p>Pongamos cada bloque en <img src="https://latex.codecogs.com/png.latex?x=jh">, donde <img src="https://latex.codecogs.com/png.latex?h"> es la distancia entre bloques en equilibrio, y escribamos <img src="https://latex.codecogs.com/png.latex?u(x,t)"> para el desplazamiento del bloque que está en <img src="https://latex.codecogs.com/png.latex?x">. Entonces <img src="https://latex.codecogs.com/png.latex?u_%7Bj%5Cpm1%7D=u(x%5Cpm%20h,t)"> y Ecuación&nbsp;1 queda</p>
+<p><img src="https://latex.codecogs.com/png.latex?m%5C,u_%7Btt%7D(x,t)=%5Ckappa%5C,%5Cbigl(u(x+h)-2u(x)+u(x-h)%5Cbigr)."></p>
+<p>Para entender el lado derecho cuando <img src="https://latex.codecogs.com/png.latex?h"> es pequeño, recordemos que, por el teorema fundamental del cálculo,</p>
+<p><img src="https://latex.codecogs.com/png.latex?u(x+h)-u(x)=%5Cint_0%5Eh%20u'(x+s)%5C,ds."></p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?u'(x+s)%5Capprox%20u'(x)+u''(x)%5C,s"> para <img src="https://latex.codecogs.com/png.latex?s"> pequeño (es la aproximación lineal de <img src="https://latex.codecogs.com/png.latex?u'">), obtenemos</p>
+<p><img src="https://latex.codecogs.com/png.latex?u(x+h)-u(x)%5Capprox%5Cint_0%5Eh%5Cbigl(u'(x)+u''(x)%5C,s%5Cbigr)%5C,ds=u'(x)%5C,h+%5Ctfrac12u''(x)%5C,h%5E2."></p>
+<p>Esto es el polinomio de Taylor de orden 2. Reemplazando <img src="https://latex.codecogs.com/png.latex?h"> por <img src="https://latex.codecogs.com/png.latex?-h">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?u(x-h)-u(x)%5Capprox-u'(x)%5C,h+%5Ctfrac12u''(x)%5C,h%5E2."></p>
+<p>Al sumar las dos, el término con <img src="https://latex.codecogs.com/png.latex?u'"> se cancela (por eso la fila es simétrica: lo que jala un vecino lo compensa el otro) y queda</p>
+<p><img src="https://latex.codecogs.com/png.latex?u(x+h)-2u(x)+u(x-h)%5Capprox%20u''(x)%5C,h%5E2."></p>
+<p>Entonces <img src="https://latex.codecogs.com/png.latex?m%5C,u_%7Btt%7D=%5Ckappa%20h%5E2%5C,u_%7Bxx%7D">, es decir,</p>
+<p><span id="eq-onda"><img src="https://latex.codecogs.com/png.latex?u_%7Btt%7D(x,t)=c%5E2%5C,u_%7Bxx%7D(x,t),%5Cqquad%20c%5E2=%5Cfrac%7B%5Ckappa%20h%5E2%7D%7Bm%7D.%20%5Ctag%7B2%7D"></span></p>
+<p>Esta es la <strong>ecuación de onda</strong>, nuestra primera ecuación diferencial parcial.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="¿Qué hacemos con el $h^2$?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>¿Qué hacemos con el <img src="https://latex.codecogs.com/png.latex?h%5E2">?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si dejamos que <img src="https://latex.codecogs.com/png.latex?h%5Cto0"> con <img src="https://latex.codecogs.com/png.latex?%5Ckappa"> y <img src="https://latex.codecogs.com/png.latex?m"> fijos, entonces <img src="https://latex.codecogs.com/png.latex?c%5Cto0"> y no queda ninguna onda. Hay que hacer que la cadena se parezca a un material continuo: si el material tiene masa <img src="https://latex.codecogs.com/png.latex?%5Cmu"> por unidad de longitud, cada bloque pesa <img src="https://latex.codecogs.com/png.latex?m=%5Cmu%20h">, y un pedazo de resorte de longitud <img src="https://latex.codecogs.com/png.latex?h"> es tanto más blando cuanto más largo, de modo que <img src="https://latex.codecogs.com/png.latex?%5Ckappa=Y/h">, donde <img src="https://latex.codecogs.com/png.latex?Y"> es la rigidez del material. Entonces <img src="https://latex.codecogs.com/png.latex?c%5E2=%5Ckappa%20h%5E2/m=Y/%5Cmu"> no depende de <img src="https://latex.codecogs.com/png.latex?h">, y el límite tiene sentido.</p>
+</div>
+</div>
+<p>La aproximación tiene un costo: la segunda diferencia es <img src="https://latex.codecogs.com/png.latex?h%5E2u''+%5Ctfrac1%7B12%7Dh%5E4u''''+%5Ccdots">, de modo que la ecuación de onda solo es buena cuando <img src="https://latex.codecogs.com/png.latex?u"> varía despacio frente a <img src="https://latex.codecogs.com/png.latex?h">. En el simulador se ve como un rizado que se queda detrás del pulso, y es la dispersión propia de la cadena que la ecuación de onda no tiene.</p>
+</section>
+</section>
+<section id="la-ecuación-de-onda" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="la-ecuación-de-onda"><span class="header-section-number">2</span> La ecuación de onda</h2>
+<p>Por ahora no vamos a ver cómo se resuelve en general.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre que <img src="https://latex.codecogs.com/png.latex?f(x+ct)+g(x-ct)"> resuelve la ecuación de onda Ecuación&nbsp;2 para cualesquiera funciones <img src="https://latex.codecogs.com/png.latex?f"> y <img src="https://latex.codecogs.com/png.latex?g"> dos veces derivables. Demuestre además que <img src="https://latex.codecogs.com/png.latex?%5Cvarphi(x)%5C,%5Cpsi(ct)"> la resuelve cuando <img src="https://latex.codecogs.com/png.latex?%5Cvarphi"> y <img src="https://latex.codecogs.com/png.latex?%5Cpsi"> son senos o cosenos (con el mismo argumento, por ejemplo <img src="https://latex.codecogs.com/png.latex?%5Csin%20x%5Ccos%20ct">).</p>
+</div>
+</div>
+<p>La constante <img src="https://latex.codecogs.com/png.latex?c"> es la velocidad de la onda: <img src="https://latex.codecogs.com/png.latex?f(x-ct)"> es la forma <img src="https://latex.codecogs.com/png.latex?f"> desplazada hacia la derecha a velocidad <img src="https://latex.codecogs.com/png.latex?c">. Esta ecuación modela tanto ondas unidimensionales mecánicas (una cuerda, el sonido en un tubo) como electromagnéticas (en el vacío, cada componente del campo eléctrico y del magnético la satisface con <img src="https://latex.codecogs.com/png.latex?c%5Capprox3%5Ctimes10%5E8"> m/s).</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Una nota histórica: por qué importa la ecuación de onda">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Una nota histórica: por qué importa la ecuación de onda
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Esta ecuación está en el origen de varias teorías de la matemática.</p>
+<p>D’Alembert la obtuvo en 1747 para la cuerda vibrante y encontró la solución <img src="https://latex.codecogs.com/png.latex?f(x+ct)+g(x-ct)">, pero pensaba que la forma inicial de la cuerda tenía que venir dada por una sola expresión analítica. Euler (1748) sostuvo que la solución tenía sentido para cualquier curva que se pudiera trazar, aun con picos o formada por pedazos. Esa disputa sobre qué curvas son admisibles obligó a preguntarse qué es una función, y por eso está en el origen de la <strong>teoría de funciones</strong>.</p>
+<p>Hacia 1753 Daniel Bernoulli propuso que la cuerda vibra como una suma de modos senoidales, y Euler y d’Alembert dudaron de que una suma de senos pudiera representar una curva cualquiera. Fourier (presentado en 1807, publicado en 1822) afirmó que sí, y de ahí nace el <strong>análisis de Fourier</strong>.</p>
+<p>Dirichlet dio en 1829 las primeras condiciones rigurosas bajo las cuales la serie de Fourier converge, y Riemann (1854) estudió las series trigonométricas para funciones muy irregulares. Siguiendo un problema planteado por Heine, Cantor se preguntó entre 1870 y 1872 cuándo es única la representación de una función por una serie trigonométrica, y qué tan grande puede ser el conjunto de puntos excepcionales donde la serie falla. Para describir esos conjuntos de puntos introdujo los conjuntos derivados y, iterándolos, los ordinales transfinitos: una de las vías por las que nació la <strong>teoría de conjuntos</strong>.</p>
+<p>Se puede leer más en <a href="https://arxiv.org/pdf/1803.05287">este artículo de arXiv</a> y en <a href="https://pma.caltech.edu/documents/5627/uniqueness.pdf">estas notas de Caltech sobre la unicidad de la serie trigonométrica</a>.</p>
+</div>
+</div>
+</section>
+<section id="ondas-planas-frecuencia-longitud-de-onda-y-energía" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="ondas-planas-frecuencia-longitud-de-onda-y-energía"><span class="header-section-number">3</span> Ondas planas: frecuencia, longitud de onda y energía</h2>
+<p>Una forma abstracta de describir una onda es la onda plana compleja</p>
+<p><img src="https://latex.codecogs.com/png.latex?u(x,t)=A%5C,e%5E%7Bi(kx-%5Comega%20t)%7D,"></p>
+<p>donde <img src="https://latex.codecogs.com/png.latex?A"> es la amplitud. Esta función satisface la ecuación de onda Ecuación&nbsp;2: como <img src="https://latex.codecogs.com/png.latex?u_%7Btt%7D=-%5Comega%5E2u"> y <img src="https://latex.codecogs.com/png.latex?u_%7Bxx%7D=-k%5E2u">, la ecuación se reduce a <img src="https://latex.codecogs.com/png.latex?%5Comega%5E2=c%5E2k%5E2">, es decir,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Comega=c%5C,k."></p>
+<p>Los números <img src="https://latex.codecogs.com/png.latex?k"> y <img src="https://latex.codecogs.com/png.latex?%5Comega"> tienen un significado muy concreto. Si miramos la onda en un instante fijo, se repite cada vez que <img src="https://latex.codecogs.com/png.latex?kx"> avanza <img src="https://latex.codecogs.com/png.latex?2%5Cpi">, es decir, cada</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clambda=%5Cfrac%7B2%5Cpi%7D%7Bk%7D"></p>
+<p>(la <strong>longitud de onda</strong>), de modo que <img src="https://latex.codecogs.com/png.latex?k"> es <img src="https://latex.codecogs.com/png.latex?2%5Cpi"> veces el número de ciclos por unidad de distancia. Si nos paramos en un punto fijo, la onda se repite cada vez que <img src="https://latex.codecogs.com/png.latex?%5Comega%20t"> avanza <img src="https://latex.codecogs.com/png.latex?2%5Cpi">, es decir, cada</p>
+<p><img src="https://latex.codecogs.com/png.latex?T=%5Cfrac%7B2%5Cpi%7D%7B%5Comega%7D"></p>
+<p>(el <strong>periodo</strong>), y <img src="https://latex.codecogs.com/png.latex?%5Comega=2%5Cpi/T=2%5Cpi%20f"> es la <strong>frecuencia angular</strong>, que es <img src="https://latex.codecogs.com/png.latex?2%5Cpi"> veces el número de ciclos por unidad de tiempo. La relación <img src="https://latex.codecogs.com/png.latex?%5Comega=ck"> equivale a <img src="https://latex.codecogs.com/png.latex?c=%5Clambda%20f">.</p>
+<p>Planck y Einstein se dieron cuenta de que la energía está cuantizada y viene en paquetes de tamaño</p>
+<p><img src="https://latex.codecogs.com/png.latex?E=%5Chbar%5Comega,%5Cqquad%20%5Chbar=%5Cfrac%7Bh%7D%7B2%5Cpi%7D,"></p>
+<p>donde <img src="https://latex.codecogs.com/png.latex?h%5Capprox6.626%5Ctimes10%5E%7B-34%7D"> J s es la constante de Planck y <img src="https://latex.codecogs.com/png.latex?%5Chbar"> es la constante reducida de Planck. Cada color de luz (cada fotón y cada onda) en el espectro electromagnético tiene un paquete (cuanto) de energía asociado a su frecuencia de oscilación <img src="https://latex.codecogs.com/png.latex?%5Comega">. A mayor frecuencia, más grande es el cuanto de energía, y un cuanto es lo más pequeño que se puede dar. Por ejemplo, el azul tiene más energía por fotón que el rojo. Los rayos X tienen una frecuencia muy alta (cuantos grandes), por eso son tan peligrosos y tan útiles para los humanos.</p>
+<p>Una onda que oscila más rápido en el espacio (<img src="https://latex.codecogs.com/png.latex?%5Clambda"> pequeña, <img src="https://latex.codecogs.com/png.latex?k"> grande) tiene también más momento. Técnicamente,</p>
+<p><img src="https://latex.codecogs.com/png.latex?p=%5Chbar%20k"></p>
+<p>es el momento (que ya no necesariamente está cuantizado: depende de la onda).</p>
+<p>La Tabla&nbsp;1 muestra un representante de cada banda del espectro electromagnético, con <img src="https://latex.codecogs.com/png.latex?c=299%5C,792%5C,458"> m/s, <img src="https://latex.codecogs.com/png.latex?%5Comega=2%5Cpi%20f">, <img src="https://latex.codecogs.com/png.latex?k=2%5Cpi/%5Clambda"> y <img src="https://latex.codecogs.com/png.latex?E=%5Chbar%5Comega=hf"> expresada en electronvoltios.</p>
+<div id="tbl-espectro" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-espectro-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;1: Una longitud de onda típica de cada banda y las cantidades que le corresponden.
+</figcaption>
+<div aria-describedby="tbl-espectro-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Banda</th>
+<th style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?%5Clambda"> (m)</th>
+<th style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?f"> (Hz)</th>
+<th style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?k"> (rad/m)</th>
+<th style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?%5Comega"> (rad/s)</th>
+<th style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?E"> (eV)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Radio</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.00%5Ctimes10%5E%7B3%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?3.00%5Ctimes10%5E%7B5%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?6.28%5Ctimes10%5E%7B-3%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.88%5Ctimes10%5E%7B6%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.24%5Ctimes10%5E%7B-9%7D"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Microondas</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.00%5Ctimes10%5E%7B-2%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?3.00%5Ctimes10%5E%7B10%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?6.28%5Ctimes10%5E%7B2%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.88%5Ctimes10%5E%7B11%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.24%5Ctimes10%5E%7B-4%7D"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Infrarrojo</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.00%5Ctimes10%5E%7B-5%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?3.00%5Ctimes10%5E%7B13%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?6.28%5Ctimes10%5E%7B5%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.88%5Ctimes10%5E%7B14%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.24%5Ctimes10%5E%7B-1%7D"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Visible</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?5.00%5Ctimes10%5E%7B-7%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?6.00%5Ctimes10%5E%7B14%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.26%5Ctimes10%5E%7B7%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?3.77%5Ctimes10%5E%7B15%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?2.48%5Ctimes10%5E%7B0%7D"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ultravioleta</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.00%5Ctimes10%5E%7B-8%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?3.00%5Ctimes10%5E%7B16%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?6.28%5Ctimes10%5E%7B8%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.88%5Ctimes10%5E%7B17%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.24%5Ctimes10%5E%7B2%7D"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Rayos X</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.00%5Ctimes10%5E%7B-10%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?3.00%5Ctimes10%5E%7B18%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?6.28%5Ctimes10%5E%7B10%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.88%5Ctimes10%5E%7B19%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.24%5Ctimes10%5E%7B4%7D"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Rayos gamma</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.00%5Ctimes10%5E%7B-12%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?3.00%5Ctimes10%5E%7B20%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?6.28%5Ctimes10%5E%7B12%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.88%5Ctimes10%5E%7B21%7D"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.24%5Ctimes10%5E%7B6%7D"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>La Figura&nbsp;2 es el dibujo habitual del espectro. Además de la frecuencia y la longitud de onda, el dibujo tiene un termómetro: la temperatura de un cuerpo negro cuya emisión es máxima en esa longitud de onda, dada por la ley de desplazamiento de Wien, <img src="https://latex.codecogs.com/png.latex?%5Clambda_%7B%5Cmax%7DT=b"> con <img src="https://latex.codecogs.com/png.latex?b%5Capprox2.898%5Ctimes10%5E%7B-3%7D"> m K. Por eso el Sol, a unos <img src="https://latex.codecogs.com/png.latex?5800"> K, es máximo en el visible.</p>
+<div id="fig-espectro" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-espectro-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/odes/osciladorcuantico/espectro.webp" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-espectro-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: El espectro electromagnético (imagen de Wikipedia, “Espectro electromagnético”).
+</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Simulador: el tablero del espectro">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Simulador: el tablero del espectro
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Mueva la frecuencia <img src="https://latex.codecogs.com/png.latex?f"> (en escala logarítmica, de <img src="https://latex.codecogs.com/png.latex?10%5E4"> a <img src="https://latex.codecogs.com/png.latex?10%5E%7B21%7D"> Hz) o salte a una banda con los botones. El tablero calcula la longitud de onda, el periodo, <img src="https://latex.codecogs.com/png.latex?k">, <img src="https://latex.codecogs.com/png.latex?%5Comega">, la energía <img src="https://latex.codecogs.com/png.latex?E=%5Chbar%5Comega">, el momento <img src="https://latex.codecogs.com/png.latex?p=%5Chbar%20k"> y la temperatura de Wien. La onda dibujada abajo usa una escala logarítmica fija: cada década de <img src="https://latex.codecogs.com/png.latex?%5Clambda"> cambia en el mismo factor la longitud de onda dibujada, de modo que se ve cómo se estira hacia la radio y se comprime hacia los rayos gamma (no es proporcional a la <img src="https://latex.codecogs.com/png.latex?%5Clambda"> real, que abarca 17 órdenes de magnitud). Al cambiar el medio, la frecuencia <img src="https://latex.codecogs.com/png.latex?f"> se mantiene y cambian la velocidad <img src="https://latex.codecogs.com/png.latex?c=c_0/n">, la longitud de onda y <img src="https://latex.codecogs.com/png.latex?k">. La energía y el momento se calculan siempre con <img src="https://latex.codecogs.com/png.latex?E=%5Chbar%5Comega"> y <img src="https://latex.codecogs.com/png.latex?p=%5Chbar%20k"> (el momento de un fotón dentro de un medio es un tema delicado, aquí solo usamos esta definición).</p>
+<style>
+  .oq-caja{border:3px solid #ddd;border-radius:8px;padding:14px;max-width:780px;margin:1em auto;font-family:sans-serif;background:#fff;color:#222;}
+  .oq-caja canvas{display:block;width:100%;height:auto;background:#fff;border:1px solid #e3e3e3;border-radius:6px;margin-top:8px;}
+  .oq-caja button{padding:5px 11px;border:1px solid #bbb;border-radius:6px;background:#f5f5f5;color:#222;cursor:pointer;font-size:0.9em;}
+  .oq-caja button:hover{background:#e9e9e9;}
+  .oq-caja button.oq-act{background:#2563a8;border-color:#2563a8;color:#fff;}
+  .oq-fila{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .oq-insignia{padding:3px 12px;border-radius:12px;font-size:0.95em;background:#eee;color:#333;font-weight:bold;}
+  .oq-ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px 18px;margin-top:12px;}
+  .oq-ctrl label{font-size:0.92em;display:block;}
+  .oq-ctrl input[type=range]{width:100%;}
+  .oq-info{margin-top:10px;font-size:0.93em;line-height:1.5;}
+  .oq-tabla{border-collapse:collapse;width:100%;font-size:0.93em;margin-top:10px;}
+  .oq-tabla td{padding:5px 8px;border-bottom:1px solid #e3e3e3;vertical-align:baseline;}
+  .oq-tabla td:first-child{color:#555;width:46%;}
+</style>
+<div class="oq-caja" id="oqe">
+  <div class="oq-fila" id="oqe-pre"></div>
+  <div class="oq-ctrl">
+    <label>Frecuencia f: <b id="oqe-fv"></b><input type="range" id="oqe-f" min="4" max="21" step="0.01" value="14.78"></label>
+    <label>Medio:
+      <select id="oqe-n">
+        <option value="1">Vacío (n = 1)</option>
+        <option value="1.0003">Aire (n = 1,0003)</option>
+        <option value="1.333">Agua (n = 1,333)</option>
+        <option value="1.5">Vidrio (n = 1,5)</option>
+      </select>
+    </label>
+  </div>
+  <canvas id="oqe-c" width="760" height="285" aria-label="Espectro electromagnético en escala logarítmica y onda con la longitud de onda elegida"></canvas>
+  <table class="oq-tabla" id="oqe-t"></table>
+  <div class="oq-info" id="oqe-info"></div>
+</div>
+<script>
+(function(){
+/*NUCLEO*/
+var C0 = 299792458, H = 6.62607015e-34, QE = 1.602176634e-19, HBAR = 6.62607015e-34/(2*Math.PI), WIEN = 2.897771955e-3;
+var BANDAS = [
+  {nombre:'Rayos gamma', lamMax:1e-11, color:'#7b2d8e'},
+  {nombre:'Rayos X', lamMax:5e-9, color:'#3b5bdb'},
+  {nombre:'Ultravioleta', lamMax:380e-9, color:'#7048e8'},
+  {nombre:'Visible', lamMax:700e-9, color:'#2f9e44'},
+  {nombre:'Infrarrojo', lamMax:1e-3, color:'#e8590c'},
+  {nombre:'Microondas', lamMax:1, color:'#c2255c'},
+  {nombre:'Radio', lamMax:Infinity, color:'#5c6770'}
+];
+function bandaDe(lamVacio){
+  for (var i = 0; i < BANDAS.length; i++) if (lamVacio < BANDAS[i].lamMax) return BANDAS[i].nombre;
+  return 'Radio';
+}
+function propiedades(f, n){
+  var c = C0/n, lam = c/f, k = 2*Math.PI/lam, w = 2*Math.PI*f;
+  return {f:f, n:n, c:c, lam:lam, k:k, w:w, T:1/f,
+          E_J:H*f, E_eV:H*f/QE, p:H*f/c, hbarw:HBAR*w, hbark:HBAR*k,
+          lamVacio:C0/f, Twien:WIEN/(C0/f), banda:bandaDe(C0/f)};
+}
+function colorVisible(lamNm){
+  var r = 0, g = 0, b = 0, f;
+  if (lamNm >= 380 && lamNm < 440){ r = -(lamNm-440)/60; b = 1; }
+  else if (lamNm < 490){ g = (lamNm-440)/50; b = 1; }
+  else if (lamNm < 510){ g = 1; b = -(lamNm-510)/20; }
+  else if (lamNm < 580){ r = (lamNm-510)/70; g = 1; }
+  else if (lamNm < 645){ r = 1; g = -(lamNm-645)/65; }
+  else if (lamNm <= 780){ r = 1; }
+  else return null;
+  if (lamNm < 380) return null;
+  if (lamNm < 420) f = 0.3 + 0.7*(lamNm-380)/40;
+  else if (lamNm <= 700) f = 1;
+  else f = 0.3 + 0.7*(780-lamNm)/80;
+  function q(x){ return Math.round(255*Math.pow(x*f, 0.8)); }
+  return 'rgb(' + q(r) + ',' + q(g) + ',' + q(b) + ')';
+}
+/*FIN NUCLEO*/
+
+function $(id){ return document.getElementById(id); }
+var cv = $('oqe-c'); if (!cv) return;
+var ctx = cv.getContext('2d');
+var PRE = [['Radio', 3e5], ['Microondas', 3e10], ['Infrarrojo', 3e13], ['Visible', 5.996e14], ['Ultravioleta', 3e16], ['Rayos X', 3e18], ['Rayos gamma', 3e20]];
+var logF = 14.78, nInd = 1, fase = 0, last = null;
+var FMIN = 4, FMAX = 21;
+
+function sci(x, d){
+  if (x === 0) return '0';
+  var e = Math.floor(Math.log10(Math.abs(x))), m = x/Math.pow(10, e);
+  m = Number(m.toFixed(d));
+  if (Math.abs(m) >= 10){ m /= 10; e += 1; }
+  return m.toFixed(d).replace('.', ',') + ' × 10<sup>' + e + '</sup>';
+}
+function ejeF(lf){ return 34 + (lf - FMIN)/(FMAX - FMIN)*(760 - 68); }
+
+function actualizar(){
+  var f = Math.pow(10, logF), P = propiedades(f, nInd);
+  $('oqe-fv').innerHTML = sci(f, 2) + ' Hz';
+  var filas = [
+    ['Banda (por λ en el vacío)', '<span class="oq-insignia" style="background:' + colorBanda(P.banda) + ';color:#fff">' + P.banda + '</span>'],
+    ['Frecuencia f', sci(P.f, 3) + ' Hz'],
+    ['Velocidad c = c₀/n', sci(P.c, 4) + ' m/s'],
+    ['Longitud de onda λ = c/f', sci(P.lam, 3) + ' m'],
+    ['Periodo T = 1/f', sci(P.T, 3) + ' s'],
+    ['Número de onda k = 2π/λ', sci(P.k, 3) + ' rad/m'],
+    ['Frecuencia angular ω = 2πf', sci(P.w, 3) + ' rad/s'],
+    ['Energía E = ħω', sci(P.E_eV, 3) + ' eV &nbsp;(' + sci(P.E_J, 3) + ' J)'],
+    ['Momento p = ħk', sci(P.p, 3) + ' kg·m/s'],
+    ['Temperatura de Wien (pico en λ)', sci(P.Twien, 3) + ' K']
+  ];
+  var h = '';
+  for (var i = 0; i < filas.length; i++) h += '<tr><td>' + filas[i][0] + '</td><td>' + filas[i][1] + '</td></tr>';
+  $('oqe-t').innerHTML = h;
+  var t = 'Se cumple ω = c·k (' + sci(P.w, 3) + ' = ' + sci(P.c*P.k, 3) + ') y E = ħω. ';
+  if (nInd !== 1) t += 'Al cambiar de medio la frecuencia f no cambia, cambian c, λ y k. ';
+  t += 'La temperatura de Wien es la de un cuerpo negro cuya emisión es máxima en esa longitud de onda (el Sol, a unos 5800 K, está en el visible).';
+  $('oqe-info').innerHTML = t;
+  var bs = $('oqe-pre').querySelectorAll('button');
+  for (var j = 0; j < bs.length; j++) bs[j].className = bs[j].getAttribute('data-b') === P.banda ? 'oq-act' : '';
+}
+function colorBanda(n){ for (var i = 0; i < BANDAS.length; i++) if (BANDAS[i].nombre === n) return BANDAS[i].color; return '#555'; }
+
+function dibujar(){
+  var W = 760, i, x;
+  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, 285);
+  // barra del espectro en escala log de f
+  var yb = 40, hb = 46;
+  for (i = BANDAS.length - 1; i >= 0; i--){
+    var b = BANDAS[i];
+    var hiL = i === 0 ? Infinity : BANDAS[i-1].lamMax;
+    var fLo = b.lamMax === Infinity ? Math.pow(10, FMIN) : C0/b.lamMax, fHi = hiL === Infinity ? Math.pow(10, FMAX) : C0/hiL;
+    var xa = ejeF(Math.max(FMIN, Math.min(FMAX, Math.log10(fLo)))), xb = ejeF(Math.max(FMIN, Math.min(FMAX, Math.log10(fHi))));
+    ctx.fillStyle = b.color; ctx.globalAlpha = 0.85; ctx.fillRect(xa, yb, xb - xa, hb); ctx.globalAlpha = 1;
+    if (b.nombre === 'Visible'){
+      for (x = Math.ceil(xa); x < xb; x++){
+        var lf = FMIN + (x - 34)/(760 - 68)*(FMAX - FMIN);
+        var col = colorVisible(C0/Math.pow(10, lf)*1e9);
+        if (col){ ctx.fillStyle = col; ctx.fillRect(x, yb, 1.5, hb); }
+      }
+    }
+    ctx.fillStyle = '#fff'; ctx.font = '11px sans-serif'; ctx.textAlign = 'center';
+    if (b.nombre !== 'Visible'){ var tw = ctx.measureText(b.nombre).width; if (xb - xa > tw + 8) ctx.fillText(b.nombre, (xa + xb)/2, yb + hb/2 + 4); else if (b.nombre === 'Rayos gamma') ctx.fillText('γ', (xa + xb)/2, yb + hb/2 + 4); }
+  }
+  ctx.fillStyle = '#333'; ctx.font = '11px sans-serif'; ctx.textAlign = 'center';
+  ctx.fillText('Visible', ejeF(Math.log10(C0/545e-9)), yb - 6);
+  // eje log f
+  ctx.strokeStyle = '#555'; ctx.fillStyle = '#555'; ctx.lineWidth = 1;
+  for (var e = FMIN; e <= FMAX; e++){
+    x = ejeF(e); ctx.beginPath(); ctx.moveTo(x, yb + hb); ctx.lineTo(x, yb + hb + 5); ctx.stroke();
+    if ((e - FMIN) % 2 === 0) ctx.fillText('10^' + e, x, yb + hb + 18);
+  }
+  ctx.textAlign = 'left'; ctx.fillText('f (Hz), escala logarítmica', 34, yb + hb + 36);
+  // marcador
+  var xm = ejeF(logF);
+  ctx.strokeStyle = '#1e2327'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(xm, yb - 12); ctx.lineTo(xm, yb + hb + 6); ctx.stroke();
+  ctx.fillStyle = '#1e2327'; ctx.beginPath(); ctx.moveTo(xm - 6, yb - 14); ctx.lineTo(xm + 6, yb - 14); ctx.lineTo(xm, yb - 5); ctx.fill();
+  // onda: siempre 4 longitudes de onda
+  var f = Math.pow(10, logF), P = propiedades(f, nInd);
+  var x0 = 34, x1 = 726, yc = 208, A = 36;
+  var tt = Math.max(0, Math.min(1, (Math.log10(P.lam) + 13.5)/18.1)), lamPx = 8*Math.pow(175, tt);
+  var colV = P.lamVacio >= 380e-9 && P.lamVacio <= 780e-9 ? colorVisible(P.lamVacio*1e9) : null;
+  ctx.strokeStyle = colV || colorBanda(P.banda); ctx.lineWidth = 3; ctx.beginPath();
+  for (x = x0; x <= x1; x++){
+    var y = yc - A*Math.cos(2*Math.PI*(x - x0)/lamPx - fase);
+    if (x === x0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  var lw = Math.min(lamPx, x1 - x0);
+  ctx.strokeStyle = '#555'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(x0, yc + A + 12); ctx.lineTo(x0 + lw, yc + A + 12);
+  ctx.moveTo(x0, yc + A + 7); ctx.lineTo(x0, yc + A + 17); ctx.moveTo(x0 + lw, yc + A + 7); ctx.lineTo(x0 + lw, yc + A + 17); ctx.stroke();
+  ctx.fillStyle = '#333'; ctx.textAlign = 'center'; ctx.font = '12px sans-serif';
+  ctx.fillText('λ = ' + etiquetaLong(P.lam) + (lamPx > x1 - x0 ? ' (más larga que el dibujo)' : ''), x0 + lw/2, yc + A + 30);
+  ctx.textAlign = 'left'; ctx.fillStyle = '#555';
+  ctx.fillText('Dibujo con escala fija en logaritmo: cada década de λ cambia la λ dibujada por un factor ' + Math.pow(175, 1/18.1).toFixed(2).replace('.', ',') + '.', x0, 148);
+}
+function etiquetaLong(l){
+  var u = [[1e3, 'km', 1e3], [1, 'm', 1], [1e-3, 'mm', 1e-3], [1e-6, 'μm', 1e-6], [1e-9, 'nm', 1e-9], [1e-12, 'pm', 1e-12]];
+  for (var i = 0; i < u.length; i++) if (l >= u[i][0]*0.9999) return (l/u[i][2]).toPrecision(3).replace('.', ',') + ' ' + u[i][1];
+  return (l/1e-15).toPrecision(3).replace('.', ',') + ' fm';
+}
+
+function loop(ts){
+  if (last === null) last = ts;
+  fase = (fase + (ts - last)/1000*3) % (2*Math.PI); last = ts;
+  dibujar(); requestAnimationFrame(loop);
+}
+var cont = $('oqe-pre');
+for (var i = 0; i < PRE.length; i++){
+  var bt = document.createElement('button'); bt.textContent = PRE[i][0]; bt.setAttribute('data-b', PRE[i][0]);
+  bt.addEventListener('click', (function(f){ return function(){ logF = Math.log10(f); $('oqe-f').value = logF; actualizar(); }; })(PRE[i][1]));
+  cont.appendChild(bt);
+}
+$('oqe-f').addEventListener('input', function(){ logF = parseFloat(this.value); actualizar(); });
+$('oqe-n').addEventListener('change', function(){ nInd = parseFloat(this.value); actualizar(); });
+actualizar(); requestAnimationFrame(loop);
+})();
+</script>
+</div>
+</div>
+</section>
+<section id="la-ecuación-de-schrödinger" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="la-ecuación-de-schrödinger"><span class="header-section-number">4</span> La ecuación de Schrödinger</h2>
+<p>Volvamos a la onda plana, ahora como función de onda <img src="https://latex.codecogs.com/png.latex?%5Cpsi(x,t)=A%5C,e%5E%7Bi(kx-%5Comega%20t)%7D">. El cuadrado del módulo <img src="https://latex.codecogs.com/png.latex?%7C%5Cpsi%7C%5E2=%7CA%7C%5E2"> es la amplitud al cuadrado, y lo vamos a interpretar como una densidad de probabilidad. Derivando,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cpsi_x=ik%5C,%5Cpsi%5Cquad%5CLongrightarrow%5Cquad%20-i%5Chbar%5C,%5Cpsi_x=%5Chbar%20k%5C,%5Cpsi=p%5C,%5Cpsi,"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cpsi_t=-i%5Comega%5C,%5Cpsi%5Cquad%5CLongrightarrow%5Cquad%20i%5Chbar%5C,%5Cpsi_t=%5Chbar%5Comega%5C,%5Cpsi=E%5C,%5Cpsi."></p>
+<p>Es decir, derivar respecto de <img src="https://latex.codecogs.com/png.latex?x"> equivale a multiplicar por el momento, y derivar respecto de <img src="https://latex.codecogs.com/png.latex?t"> equivale a multiplicar por la energía:</p>
+<p><img src="https://latex.codecogs.com/png.latex?p%5C%20%5Clongleftrightarrow%5C%20-i%5Chbar%5C,%5Cfrac%7B%5Cpartial%7D%7B%5Cpartial%20x%7D,%5Cqquad%20E%5C%20%5Clongleftrightarrow%5C%20i%5Chbar%5C,%5Cfrac%7B%5Cpartial%7D%7B%5Cpartial%20t%7D."></p>
+<p>Una partícula de masa <img src="https://latex.codecogs.com/png.latex?m"> en un potencial <img src="https://latex.codecogs.com/png.latex?V"> cumple</p>
+<p><img src="https://latex.codecogs.com/png.latex?E=%5Cfrac%7Bp%5E2%7D%7B2m%7D+V."></p>
+<p>Si cambiamos <img src="https://latex.codecogs.com/png.latex?E"> y <img src="https://latex.codecogs.com/png.latex?p"> por sus operadores y aplicamos el resultado a <img src="https://latex.codecogs.com/png.latex?%5Cpsi"> (como <img src="https://latex.codecogs.com/png.latex?p%5E2"> es aplicar <img src="https://latex.codecogs.com/png.latex?p"> dos veces, aparece <img src="https://latex.codecogs.com/png.latex?-%5Chbar%5E2%5Cpartial_x%5E2">), obtenemos</p>
+<p><span id="eq-schro"><img src="https://latex.codecogs.com/png.latex?i%5Chbar%5C,%5Cfrac%7B%5Cpartial%5Cpsi%7D%7B%5Cpartial%20t%7D=-%5Cfrac%7B%5Chbar%5E2%7D%7B2m%7D%5Cfrac%7B%5Cpartial%5E2%5Cpsi%7D%7B%5Cpartial%20x%5E2%7D+V(x)%5C,%5Cpsi.%20%5Ctag%7B3%7D"></span></p>
+<p>Esta es la <strong>ecuación de Schrödinger</strong>, nuestra segunda ecuación diferencial parcial. No es una deducción en sentido estricto: es una regla que reproduce el caso de la partícula libre (<img src="https://latex.codecogs.com/png.latex?V=0">, onda plana) y que se postula en general, y su validez la da el experimento.</p>
+<p>Una observación de interpretación. Como <img src="https://latex.codecogs.com/png.latex?%7C%5Cpsi(x,t)%7C%5E2%5C,dx"> es la probabilidad de encontrar la partícula entre <img src="https://latex.codecogs.com/png.latex?x"> y <img src="https://latex.codecogs.com/png.latex?x+dx">, se requiere que</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cint_%7B-%5Cinfty%7D%5E%7B%5Cinfty%7D%7C%5Cpsi(x,t)%7C%5E2%5C,dx=1,"></p>
+<p>lo que en física se llama <strong>normalización</strong>. La onda plana no cumple esto (su <img src="https://latex.codecogs.com/png.latex?%7C%5Cpsi%7C%5E2"> es constante en toda la recta), de modo que las partículas ligadas, que sí están localizadas, no son ondas planas.</p>
+<section id="estados-estacionarios" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="estados-estacionarios"><span class="header-section-number">4.1</span> Estados estacionarios</h3>
+<p>Busquemos soluciones de la forma <img src="https://latex.codecogs.com/png.latex?%5Cpsi(x,t)=%5Cvarphi(x)%5C,e%5E%7B-iEt/%5Chbar%7D">, con la frecuencia <img src="https://latex.codecogs.com/png.latex?E/%5Chbar"> que le corresponde a la energía <img src="https://latex.codecogs.com/png.latex?E">. Entonces <img src="https://latex.codecogs.com/png.latex?%5Cpsi_%7Bxx%7D=%5Cvarphi''(x)%5C,e%5E%7B-iEt/%5Chbar%7D"> y <img src="https://latex.codecogs.com/png.latex?%5Cpsi_t=-%5Ctfrac%7BiE%7D%7B%5Chbar%7D%5Cvarphi(x)%5C,e%5E%7B-iEt/%5Chbar%7D">. Al reemplazar en Ecuación&nbsp;3 y dividir por <img src="https://latex.codecogs.com/png.latex?e%5E%7B-iEt/%5Chbar%7D"> queda</p>
+<p><span id="eq-estac"><img src="https://latex.codecogs.com/png.latex?-%5Cfrac%7B%5Chbar%5E2%7D%7B2m%7D%5Cvarphi''(x)+V(x)%5C,%5Cvarphi(x)=E%5C,%5Cvarphi(x).%20%5Ctag%7B4%7D"></span></p>
+<p>Esta ecuación es un problema de autovalores: <img src="https://latex.codecogs.com/png.latex?H%5Cvarphi=E%5Cvarphi">, con <img src="https://latex.codecogs.com/png.latex?H=-%5Ctfrac%7B%5Chbar%5E2%7D%7B2m%7D%5Ctfrac%7Bd%5E2%7D%7Bdx%5E2%7D+V">. Solo para algunos valores de <img src="https://latex.codecogs.com/png.latex?E"> hay una solución <img src="https://latex.codecogs.com/png.latex?%5Cvarphi"> que sea normalizable, es decir, que tienda a cero en <img src="https://latex.codecogs.com/png.latex?%5Cpm%5Cinfty"> de modo que <img src="https://latex.codecogs.com/png.latex?%5Cint%7C%5Cvarphi%7C%5E2dx=1">. Esa condición de frontera es la que escoge los valores permitidos, y esos valores son los <strong>cuantos de energía</strong>. Es un problema espectral.</p>
+</section>
+</section>
+<section id="el-oscilador-armónico-cuántico" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="el-oscilador-armónico-cuántico"><span class="header-section-number">5</span> El oscilador armónico cuántico</h2>
+<p>Tomemos el potencial <img src="https://latex.codecogs.com/png.latex?V(x)=%5Ctfrac12m%5Comega%5E2x%5E2">. La razón es que cualquier potencial suave tiene, cerca de un punto de equilibrio <img src="https://latex.codecogs.com/png.latex?x=0"> que es un mínimo, el desarrollo</p>
+<p><img src="https://latex.codecogs.com/png.latex?V(x)%5Capprox%20V(0)+V'(0)%5C,x+%5Ctfrac12V''(0)%5C,x%5E2."></p>
+<p>Podemos tomar <img src="https://latex.codecogs.com/png.latex?V(0)=0"> (solo cambia el origen de la energía), y <img src="https://latex.codecogs.com/png.latex?V'(0)=0"> porque es un mínimo. Escribiendo <img src="https://latex.codecogs.com/png.latex?V''(0)=m%5Comega%5E2%3E0"> queda <img src="https://latex.codecogs.com/png.latex?V(x)%5Capprox%5Ctfrac12m%5Comega%5E2x%5E2">, y la fuerza es <img src="https://latex.codecogs.com/png.latex?F=-dV/dx=-m%5Comega%5E2x">, que es la ley de Hooke. Por eso este potencial aparece por todas partes: describe pequeñas oscilaciones alrededor de cualquier equilibrio (las vibraciones de una molécula, los modos de un campo electromagnético, las de una red cristalina). Aquí <img src="https://latex.codecogs.com/png.latex?%5Comega"> es la frecuencia del oscilador clásico, no la de la onda de la sección anterior.</p>
+<p>La ecuación estacionaria Ecuación&nbsp;4 es entonces</p>
+<p><span id="eq-oaq"><img src="https://latex.codecogs.com/png.latex?-%5Cfrac%7B%5Chbar%5E2%7D%7B2m%7D%5Cvarphi''(x)+%5Ctfrac12m%5Comega%5E2x%5E2%5C,%5Cvarphi(x)=E%5C,%5Cvarphi(x).%20%5Ctag%7B5%7D"></span></p>
+<section id="adimensionalizar" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="adimensionalizar"><span class="header-section-number">5.1</span> Adimensionalizar</h3>
+<p>Hacemos el cambio de variable y de parámetro</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cxi=x%5Csqrt%7B%5Cfrac%7Bm%5Comega%7D%7B%5Chbar%7D%7D,%5Cqquad%20%5Cvarepsilon=%5Cfrac%7B2E%7D%7B%5Chbar%5Comega%7D."></p>
+<p>Por la regla de la cadena, <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7Bd%5E2%7D%7Bdx%5E2%7D=%5Cdfrac%7Bm%5Comega%7D%7B%5Chbar%7D%5Cdfrac%7Bd%5E2%7D%7Bd%5Cxi%5E2%7D"> y <img src="https://latex.codecogs.com/png.latex?x%5E2=%5Cdfrac%7B%5Chbar%7D%7Bm%5Comega%7D%5Cxi%5E2">. Entonces Ecuación&nbsp;5 se convierte en</p>
+<p><img src="https://latex.codecogs.com/png.latex?-%5Cfrac%7B%5Chbar%5Comega%7D%7B2%7D%5Cvarphi''+%5Cfrac%7B%5Chbar%5Comega%7D%7B2%7D%5Cxi%5E2%5Cvarphi=E%5Cvarphi,"></p>
+<p>y dividiendo por <img src="https://latex.codecogs.com/png.latex?%5Chbar%5Comega/2">,</p>
+<p><span id="eq-adim"><img src="https://latex.codecogs.com/png.latex?%5Cvarphi''(%5Cxi)+(%5Cvarepsilon-%5Cxi%5E2)%5C,%5Cvarphi(%5Cxi)=0.%20%5Ctag%7B6%7D"></span></p>
+<p>No quedan constantes físicas: el único parámetro es <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon">, la energía medida en unidades de <img src="https://latex.codecogs.com/png.latex?%5Chbar%5Comega/2">.</p>
+</section>
+<section id="el-comportamiento-para-xi-grande" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="el-comportamiento-para-xi-grande"><span class="header-section-number">5.2</span> El comportamiento para <img src="https://latex.codecogs.com/png.latex?%5Cxi"> grande</h3>
+<p>Para <img src="https://latex.codecogs.com/png.latex?%5Cxi%5Cgg1">, el término <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon"> es despreciable frente a <img src="https://latex.codecogs.com/png.latex?%5Cxi%5E2"> y la ecuación queda <img src="https://latex.codecogs.com/png.latex?%5Cvarphi''%5Capprox%5Cxi%5E2%5Cvarphi">. Proponemos <img src="https://latex.codecogs.com/png.latex?%5Cvarphi=e%5E%7BS(%5Cxi)%7D">. Entonces <img src="https://latex.codecogs.com/png.latex?%5Cvarphi'=e%5ESS'"> y <img src="https://latex.codecogs.com/png.latex?%5Cvarphi''=e%5ES%5Cbigl(S''+S'%5E2%5Cbigr)">, y la ecuación aproximada es</p>
+<p><img src="https://latex.codecogs.com/png.latex?S''+(S')%5E2=%5Cxi%5E2."></p>
+<p>Busquemos <img src="https://latex.codecogs.com/png.latex?S%5Capprox%20c%5C,%5Cxi%5Ep">. Entonces <img src="https://latex.codecogs.com/png.latex?(S')%5E2=c%5E2p%5E2%5Cxi%5E%7B2p-2%7D"> y <img src="https://latex.codecogs.com/png.latex?S''=cp(p-1)%5Cxi%5E%7Bp-2%7D">. Para que <img src="https://latex.codecogs.com/png.latex?(S')%5E2"> pueda igualar a <img src="https://latex.codecogs.com/png.latex?%5Cxi%5E2"> necesitamos <img src="https://latex.codecogs.com/png.latex?2p-2=2">, es decir, <img src="https://latex.codecogs.com/png.latex?p=2"> y <img src="https://latex.codecogs.com/png.latex?4c%5E2=1">, de modo que <img src="https://latex.codecogs.com/png.latex?c=%5Cpm%5Ctfrac12">. Con <img src="https://latex.codecogs.com/png.latex?p=2">, <img src="https://latex.codecogs.com/png.latex?S''=%5Cpm1"> es de orden menor que <img src="https://latex.codecogs.com/png.latex?%5Cxi%5E2">, lo que confirma que se puede despreciar. Es decir, <img src="https://latex.codecogs.com/png.latex?S%5Capprox%5Cpm%5Cxi%5E2/2">, y por eso se postulan soluciones de la forma</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvarphi(%5Cxi)=h(%5Cxi)%5C,e%5E%7B%5Cpm%5Cxi%5E2/2%7D."></p>
+<p>La que lleva <img src="https://latex.codecogs.com/png.latex?e%5E%7B+%5Cxi%5E2/2%7D"> crece sin cota y no cumple <img src="https://latex.codecogs.com/png.latex?%5Cint%7C%5Cvarphi%7C%5E2d%5Cxi=1">, así que nos quedamos con la otra:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvarphi(%5Cxi)=h(%5Cxi)%5C,e%5E%7B-%5Cxi%5E2/2%7D."></p>
+<p>(Estas son soluciones aproximadas para <img src="https://latex.codecogs.com/png.latex?%5Cxi"> grande, y solo se usan para sugerir la forma. Lo que sigue es exacto.)</p>
+</section>
+<section id="la-ecuación-de-hermite" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="la-ecuación-de-hermite"><span class="header-section-number">5.3</span> La ecuación de Hermite</h3>
+<p>Reemplazamos <img src="https://latex.codecogs.com/png.latex?%5Cvarphi=h%5C,e%5E%7B-%5Cxi%5E2/2%7D"> en Ecuación&nbsp;6. Como <img src="https://latex.codecogs.com/png.latex?%5Cvarphi'=(h'-%5Cxi%20h)e%5E%7B-%5Cxi%5E2/2%7D"> y <img src="https://latex.codecogs.com/png.latex?%5Cvarphi''=(h''-2%5Cxi%20h'+(%5Cxi%5E2-1)h)e%5E%7B-%5Cxi%5E2/2%7D">, queda</p>
+<p><img src="https://latex.codecogs.com/png.latex?h''-2%5Cxi%5C,h'+(%5Cvarepsilon-1)%5C,h=0."></p>
+<p>Escribimos <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon-1=2n"> y obtenemos la <strong>ecuación de Hermite</strong> de parámetro <img src="https://latex.codecogs.com/png.latex?n">,</p>
+<p><span id="eq-hermite"><img src="https://latex.codecogs.com/png.latex?h''-2%5Cxi%5C,h'+2n%5C,h=0.%20%5Ctag%7B7%7D"></span></p>
+<p>Por ahora <img src="https://latex.codecogs.com/png.latex?n"> es un número real cualquiera, y la ecuación es una vieja conocida.</p>
+</section>
+<section id="solución-por-series-de-potencias" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="solución-por-series-de-potencias"><span class="header-section-number">5.4</span> Solución por series de potencias</h3>
+<p>Buscamos soluciones <img src="https://latex.codecogs.com/png.latex?h(%5Cxi)=%5Csum_%7Bk=0%7D%5E%7B%5Cinfty%7Da_k%5Cxi%5Ek">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?h'=%5Csum_%7Bk=1%7D%5E%7B%5Cinfty%7Dk%5C,a_k%5Cxi%5E%7Bk-1%7D,%5Cqquad%20h''=%5Csum_%7Bk=2%7D%5E%7B%5Cinfty%7Dk(k-1)%5C,a_k%5Cxi%5E%7Bk-2%7D=%5Csum_%7Bk=0%7D%5E%7B%5Cinfty%7D(k+2)(k+1)%5C,a_%7Bk+2%7D%5C,%5Cxi%5E%7Bk%7D."></p>
+<p>Al reemplazar en Ecuación&nbsp;7, el coeficiente de <img src="https://latex.codecogs.com/png.latex?%5Cxi%5Ek"> es</p>
+<p><img src="https://latex.codecogs.com/png.latex?(k+2)(k+1)%5C,a_%7Bk+2%7D+(2n-2k)%5C,a_k=0,"></p>
+<p>de donde sale la fórmula de recurrencia</p>
+<p><span id="eq-rec"><img src="https://latex.codecogs.com/png.latex?a_%7Bk+2%7D=%5Cfrac%7B2k-2n%7D%7B(k+1)(k+2)%7D%5C,a_k=%5Cfrac%7B2k+1-%5Cvarepsilon%7D%7B(k+1)(k+2)%7D%5C,a_k.%20%5Ctag%7B8%7D"></span></p>
+<p>Una solución arranca con <img src="https://latex.codecogs.com/png.latex?a_0"> (solo potencias pares) y la otra con <img src="https://latex.codecogs.com/png.latex?a_1"> (solo potencias impares):</p>
+<p><img src="https://latex.codecogs.com/png.latex?a_2=%5Cfrac%7B1-%5Cvarepsilon%7D%7B2%7D%5C,a_0,%5Cquad%20a_4=%5Cfrac%7B5-%5Cvarepsilon%7D%7B12%7D%5C,a_2,%5C%20%5Cdots%5Cqquad%20a_3=%5Cfrac%7B3-%5Cvarepsilon%7D%7B6%7D%5C,a_1,%5Cquad%20a_5=%5Cfrac%7B7-%5Cvarepsilon%7D%7B20%7D%5C,a_3,%5C%20%5Cdots"></p>
+<p>Para <img src="https://latex.codecogs.com/png.latex?k"> grande, Ecuación&nbsp;8 da <img src="https://latex.codecogs.com/png.latex?a_%7Bk+2%7D/a_k%5Capprox2/k">. Es el mismo cociente de los coeficientes de <img src="https://latex.codecogs.com/png.latex?e%5E%7B%5Cxi%5E2%7D=%5Csum%5Cxi%5E%7B2j%7D/j!"> (el coeficiente de <img src="https://latex.codecogs.com/png.latex?%5Cxi%5E%7B2j%7D"> es <img src="https://latex.codecogs.com/png.latex?1/j!">, y el cociente entre <img src="https://latex.codecogs.com/png.latex?%5Cxi%5E%7B2j+2%7D"> y <img src="https://latex.codecogs.com/png.latex?%5Cxi%5E%7B2j%7D"> es <img src="https://latex.codecogs.com/png.latex?1/(j+1)%5Capprox2/k"> con <img src="https://latex.codecogs.com/png.latex?k=2j">). Es decir, la serie crece como <img src="https://latex.codecogs.com/png.latex?e%5E%7B%5Cxi%5E2%7D"> y entonces <img src="https://latex.codecogs.com/png.latex?%5Cvarphi=h%5C,e%5E%7B-%5Cxi%5E2/2%7D"> crece como <img src="https://latex.codecogs.com/png.latex?e%5E%7B%5Cxi%5E2/2%7D">, que no es normalizable. Una serie así diverge para nuestros fines, y entonces <strong>debe terminar en algún punto</strong>: hay un <img src="https://latex.codecogs.com/png.latex?n"> con <img src="https://latex.codecogs.com/png.latex?a_%7Bn+2%7D=0">, es decir,</p>
+<p><img src="https://latex.codecogs.com/png.latex?2n+1-%5Cvarepsilon=0%5Cquad%5CLongleftrightarrow%5Cquad%20%5Cvarepsilon=2n+1,%5Cqquad%20n=0,1,2,%5Cdots"></p>
+<p>(Si <img src="https://latex.codecogs.com/png.latex?n"> es par termina la serie par y hay que anular la impar con <img src="https://latex.codecogs.com/png.latex?a_1=0">; si <img src="https://latex.codecogs.com/png.latex?n"> es impar, al revés, con <img src="https://latex.codecogs.com/png.latex?a_0=0">.) Así la serie es un polinomio de grado <img src="https://latex.codecogs.com/png.latex?n">, que es el <strong>polinomio de Hermite</strong> <img src="https://latex.codecogs.com/png.latex?H_n(%5Cxi)"> salvo una constante:</p>
+<p><img src="https://latex.codecogs.com/png.latex?H_0=1,%5Cquad%20H_1=2%5Cxi,%5Cquad%20H_2=4%5Cxi%5E2-2,%5Cquad%20H_3=8%5Cxi%5E3-12%5Cxi,%5Cquad%20H_4=16%5Cxi%5E4-48%5Cxi%5E2+12."></p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon=2E/%5Chbar%5Comega">, la condición <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon=2n+1"> dice que la energía solo puede tomar los valores</p>
+<p><img src="https://latex.codecogs.com/png.latex?E_n=%5Chbar%5Comega%5Cleft(n+%5Ctfrac12%5Cright),%5Cqquad%20n=0,1,2,%5Cdots"></p>
+<p>y las soluciones normalizadas son</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cpsi_n(x)=N_n%5C,H_n(%5Cxi)%5C,e%5E%7B-%5Cxi%5E2/2%7D,%5Cqquad%20N_n=%5Cleft(%5Cfrac%7Bm%5Comega%7D%7B%5Cpi%5Chbar%7D%5Cright)%5E%7B1/4%7D%5Cfrac1%7B%5Csqrt%7B2%5En%5C,n!%7D%7D."></p>
+<p>La cuantización de la energía no se pone a mano. Sale de exigir que la solución sea normalizable, es decir, de la condición de frontera en infinito.</p>
+<p>Algunas observaciones:</p>
+<ul>
+<li>El estado <img src="https://latex.codecogs.com/png.latex?n=0"> es <img src="https://latex.codecogs.com/png.latex?%5Cpsi_0%5Cpropto%20e%5E%7B-%5Cxi%5E2/2%7D"> (una gaussiana), no la solución trivial <img src="https://latex.codecogs.com/png.latex?%5Cpsi=0">. Es el estado de menor energía, con cero cuantos de excitación: el <strong>vacío cuántico</strong>. Su energía <img src="https://latex.codecogs.com/png.latex?E_0=%5Ctfrac12%5Chbar%5Comega"> no es cero: la partícula no puede quedarse quieta en el fondo del potencial porque eso exigiría posición y momento exactos a la vez.</li>
+<li>El estado <img src="https://latex.codecogs.com/png.latex?n"> tiene <img src="https://latex.codecogs.com/png.latex?n"> nodos (ceros de <img src="https://latex.codecogs.com/png.latex?H_n">).</li>
+<li>Los niveles están igualmente espaciados, con separación <img src="https://latex.codecogs.com/png.latex?%5Chbar%5Comega">. Es el cuanto de energía del oscilador, y es lo que hace que la luz de frecuencia <img src="https://latex.codecogs.com/png.latex?%5Comega"> se absorba o se emita en paquetes <img src="https://latex.codecogs.com/png.latex?%5Chbar%5Comega">.</li>
+<li>La partícula tiene probabilidad positiva de estar donde clásicamente no podría estar, es decir, donde <img src="https://latex.codecogs.com/png.latex?E%3CV"> (para <img src="https://latex.codecogs.com/png.latex?%7C%5Cxi%7C%3E%5Csqrt%7B2n+1%7D">). Para <img src="https://latex.codecogs.com/png.latex?n=0"> es cerca del <img src="https://latex.codecogs.com/png.latex?15.7%5C%25">, y baja lentamente al crecer <img src="https://latex.codecogs.com/png.latex?n">.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="Simulador: el oscilador armónico cuántico">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Simulador: el oscilador armónico cuántico
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El tablero dibuja el potencial <img src="https://latex.codecogs.com/png.latex?V=%5Ctfrac12%5Cxi%5E2"> (energía en unidades de <img src="https://latex.codecogs.com/png.latex?%5Chbar%5Comega">), los niveles <img src="https://latex.codecogs.com/png.latex?E_n=n+%5Ctfrac12"> como líneas horizontales y la función de onda <img src="https://latex.codecogs.com/png.latex?%5Cpsi_n"> sobre su nivel. En azul está la parte real de <img src="https://latex.codecogs.com/png.latex?%5Cpsi"> (que gira en el tiempo con <img src="https://latex.codecogs.com/png.latex?e%5E%7B-iE_nt/%5Chbar%7D">) y en naranja <img src="https://latex.codecogs.com/png.latex?%7C%5Cpsi%7C%5E2">. Las zonas sombreadas son la región clásicamente prohibida, y con la casilla “densidad clásica” se compara con la probabilidad de un péndulo clásico de la misma energía, que pasa más tiempo cerca de los extremos. Por defecto la escala es fija (ξ entre −7.2 y 7.2, E entre 0 y 22), de modo que los distintos <img src="https://latex.codecogs.com/png.latex?n"> se comparan directamente: el potencial no cambia y se ve cómo la función sube de nivel y se ensancha. Desmarcando “escala fija” el dibujo se reescala para llenar la pantalla. Con <strong>Superposición</strong> se mezclan dos niveles y la nube de probabilidad empieza a moverse, con frecuencia <img src="https://latex.codecogs.com/png.latex?%7Cn-m%7C%5C,%5Comega">. Con <strong>Estado coherente</strong> se ve cómo el oscilador cuántico “se ve” como el clásico: un paquete gaussiano que oscila de lado a lado sin deformarse.</p>
+<style>
+  .oq-caja{border:3px solid #ddd;border-radius:8px;padding:14px;max-width:780px;margin:1em auto;font-family:sans-serif;background:#fff;color:#222;}
+  .oq-caja canvas{display:block;width:100%;height:auto;background:#fff;border:1px solid #e3e3e3;border-radius:6px;margin-top:8px;}
+  .oq-caja button{padding:5px 11px;border:1px solid #bbb;border-radius:6px;background:#f5f5f5;color:#222;cursor:pointer;font-size:0.9em;}
+  .oq-caja button:hover{background:#e9e9e9;}
+  .oq-caja button.oq-act{background:#2563a8;border-color:#2563a8;color:#fff;}
+  .oq-fila{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .oq-ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px 18px;margin-top:12px;}
+  .oq-ctrl label{font-size:0.92em;display:block;}
+  .oq-ctrl input[type=range]{width:100%;}
+  .oq-info{margin-top:10px;font-size:0.93em;line-height:1.5;}
+</style>
+<div class="oq-caja" id="oqo">
+  <div class="oq-fila">
+    <b>Estado:</b>
+    <button data-m="est" class="oq-act">Estacionario ψ<sub>n</sub></button>
+    <button data-m="sup">Superposición de n y m</button>
+    <button data-m="coh">Estado coherente</button>
+    <button id="oqo-play">Pausa</button>
+  </div>
+  <div class="oq-ctrl">
+    <label id="oqo-ln">n = <b id="oqo-nv">3</b><input type="range" id="oqo-n" min="0" max="20" step="1" value="3"></label>
+    <label id="oqo-lm" style="display:none">m = <b id="oqo-mv">4</b><input type="range" id="oqo-m" min="0" max="20" step="1" value="4"></label>
+    <label id="oqo-la" style="display:none">α = <b id="oqo-av">2,0</b><input type="range" id="oqo-a" min="0" max="4" step="0.1" value="2"></label>
+    <label>Velocidad = <b id="oqo-sv">1,0</b>×<input type="range" id="oqo-s" min="0.1" max="3" step="0.1" value="1"></label>
+  </div>
+  <div class="oq-fila" style="margin-top:8px;">
+    <label><input type="checkbox" id="oqo-re" checked=""> Re ψ (azul)</label>
+    <label><input type="checkbox" id="oqo-d" checked=""> |ψ|² (naranja)</label>
+    <label><input type="checkbox" id="oqo-cl"> densidad clásica (gris, solo estacionario)</label>
+    <label><input type="checkbox" id="oqo-niv" checked=""> todos los niveles</label>
+    <label><input type="checkbox" id="oqo-fija" checked=""> escala fija</label>
+  </div>
+  <canvas id="oqo-c" width="760" height="520" aria-label="Potencial parabólico, niveles de energía y función de onda del oscilador armónico cuántico"></canvas>
+  <div class="oq-info" id="oqo-info"></div>
+</div>
+<script>
+(function(){
+/*NUCLEO*/
+// Unidades: xi = x*sqrt(m w / hbar), energía en unidades de hbar*w, tiempo en unidades de 1/w
+function psiTodos(nmax, xi){
+  var p = new Float64Array(nmax + 1);
+  p[0] = Math.pow(Math.PI, -0.25)*Math.exp(-xi*xi/2);
+  if (nmax >= 1) p[1] = Math.sqrt(2)*xi*p[0];
+  for (var n = 1; n < nmax; n++) p[n+1] = Math.sqrt(2/(n+1))*xi*p[n] - Math.sqrt(n/(n+1))*p[n-1];
+  return p;
+}
+function psiN(n, xi){ return psiTodos(n, xi)[n]; }
+function densidadClasica(n, xi){
+  var r2 = 2*n + 1 - xi*xi;
+  return r2 > 0 ? 1/(Math.PI*Math.sqrt(r2)) : 0;
+}
+function probProhibida(n){
+  var a = Math.sqrt(2*n + 1), b = a + 12, N = 40000, hh = (b - a)/N, s = 0, i, x, p;
+  for (i = 0; i <= N; i++){
+    x = a + i*hh; p = psiN(n, x);
+    s += (i === 0 || i === N ? 1 : (i % 2 ? 4 : 2))*p*p;
+  }
+  return 2*s*hh/3;
+}
+function coefCoherente(alpha, nmax){
+  var c = new Float64Array(nmax + 1);
+  c[0] = Math.exp(-alpha*alpha/2);
+  for (var n = 0; n < nmax; n++) c[n+1] = c[n]*alpha/Math.sqrt(n + 1);
+  return c;
+}
+function coefSuperposicion(n, m){
+  var c = new Float64Array(Math.max(n, m) + 1);
+  if (n === m) c[n] = 1; else { c[n] = Math.SQRT1_2; c[m] = Math.SQRT1_2; }
+  return c;
+}
+function estadoTiempo(c, xi, t){
+  var p = psiTodos(c.length - 1, xi), re = 0, im = 0;
+  for (var n = 0; n < c.length; n++){
+    if (c[n] === 0) continue;
+    var ph = -(n + 0.5)*t;
+    re += c[n]*p[n]*Math.cos(ph); im += c[n]*p[n]*Math.sin(ph);
+  }
+  return {re:re, im:im};
+}
+function energiaMedia(c){
+  var s = 0;
+  for (var n = 0; n < c.length; n++) s += (n + 0.5)*c[n]*c[n];
+  return s;
+}
+/*FIN NUCLEO*/
+
+function $(id){ return document.getElementById(id); }
+var cv = $('oqo-c'); if (!cv) return;
+var ctx = cv.getContext('2d');
+var S = {modo:'est', n:3, m:4, alpha:2, vel:1, play:true, re:true, d:true, cl:false, niv:true, fija:true};
+var t = 0, last = null;
+function fmt(x, d){ return x.toFixed(d).replace('.', ','); }
+function coefs(){
+  if (S.modo === 'est') { var c = new Float64Array(S.n + 1); c[S.n] = 1; return c; }
+  if (S.modo === 'sup') return coefSuperposicion(S.n, S.m);
+  return coefCoherente(S.alpha, Math.ceil(S.alpha*S.alpha + 6*S.alpha + 12));
+}
+
+function info(c){
+  var Em = energiaMedia(c), txt = '';
+  if (S.modo === 'est'){
+    var pf = probProhibida(S.n);
+    txt = '<b>n = ' + S.n + '</b>: E = ħω(n + ½) = ' + fmt(S.n + 0.5, 1) + ' ħω, con ' + S.n + ' nodos. ' +
+          'Punto de retorno clásico: ξ = ±√(2n+1) = ±' + fmt(Math.sqrt(2*S.n + 1), 3) + '. ' +
+          '<b>Probabilidad de encontrar la partícula en la zona clásicamente prohibida:</b> ' + fmt(100*pf, 1) + ' %. ' +
+          'Re ψ oscila con fase cos(Et/ħ), pero |ψ|² no cambia: un estado estacionario no se mueve.';
+  } else if (S.modo === 'sup'){
+    txt = 'Superposición (ψ<sub>' + S.n + '</sub> + ψ<sub>' + S.m + '</sub>)/√2 con energía media ' + fmt(Em, 2) + ' ħω. ' +
+          (S.n === S.m ? 'Con n = m es un estado estacionario. ' : '|ψ|² oscila con frecuencia |n − m|·ω: la nube de probabilidad "chapotea" de lado a lado. ') +
+          'El movimiento aparece solo al mezclar niveles distintos.';
+  } else {
+    txt = 'Estado coherente |α⟩: energía media ' + fmt(Em, 2) + ' ħω (α² + ½). El paquete conserva la forma gaussiana del estado n = 0 y su centro oscila como el péndulo clásico: ⟨ξ⟩ = √2·α·cos t. ' +
+          'Es lo más parecido a una masa en un resorte que permite la mecánica cuántica.';
+  }
+  $('oqo-info').innerHTML = txt;
+}
+
+function dibujar(){
+  var W = 760, H = 520, L = 40, R = 20, T0 = 14, B0 = 36, c = coefs(), Em = energiaMedia(c), i, x, y;
+  var top = S.fija ? 22 : S.modo === 'coh' ? Math.max(8.5, Em + 3*S.alpha + 2.5) : Math.max(8.5, Math.max(S.n, S.modo === 'sup' ? S.m : 0) + 2.5);
+  var xr = S.fija ? 7.2 : Math.sqrt(2*top) + 0.6;
+  function X(xi){ return L + (xi + xr)/(2*xr)*(W - L - R); }
+  function Y(e){ return H - B0 - e/top*(H - B0 - T0); }
+  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, H);
+  // eje
+  ctx.strokeStyle = '#999'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(L, T0); ctx.lineTo(L, H - B0); ctx.lineTo(W - R, H - B0); ctx.stroke();
+  ctx.fillStyle = '#555'; ctx.font = '12px sans-serif'; ctx.textAlign = 'center';
+  for (x = -Math.floor(xr); x <= Math.floor(xr); x++){ ctx.fillText(x, X(x), H - B0 + 15); }
+  ctx.fillText('ξ = x·√(mω/ħ)', (L + W - R)/2, H - 6);
+  ctx.save(); ctx.translate(12, (T0 + H - B0)/2); ctx.rotate(-Math.PI/2); ctx.fillText('E / ħω', 0, 0); ctx.restore();
+  ctx.textAlign = 'right'; var paso = top > 16 ? 5 : (top > 10 ? 2 : 1);
+  for (i = 0; i <= top; i += paso) ctx.fillText(i, L - 5, Y(i) + 4);
+  // zona prohibida (solo estacionario)
+  if (S.modo === 'est'){
+    var a = Math.sqrt(2*S.n + 1);
+    ctx.fillStyle = 'rgba(193,68,14,0.10)';
+    ctx.fillRect(X(-xr), Y(top), X(-a) - X(-xr), Y(0) - Y(top));
+    ctx.fillRect(X(a), Y(top), X(xr) - X(a), Y(0) - Y(top));
+    ctx.strokeStyle = 'rgba(193,68,14,0.6)'; ctx.setLineDash([5, 4]);
+    ctx.beginPath(); ctx.moveTo(X(-a), Y(top)); ctx.lineTo(X(-a), Y(0)); ctx.moveTo(X(a), Y(top)); ctx.lineTo(X(a), Y(0)); ctx.stroke(); ctx.setLineDash([]);
+  }
+  // niveles
+  if (S.niv){
+    ctx.strokeStyle = '#d4d9de'; ctx.lineWidth = 1;
+    for (i = 0; i + 0.5 < top; i++){ ctx.beginPath(); ctx.moveTo(L, Y(i + 0.5)); ctx.lineTo(W - R, Y(i + 0.5)); ctx.stroke(); }
+  }
+  // potencial
+  ctx.strokeStyle = '#1e2327'; ctx.lineWidth = 2.5; ctx.beginPath();
+  for (i = 0; i <= 300; i++){
+    var xi = -xr + 2*xr*i/300, v = xi*xi/2;
+    if (v > top) continue;
+    if (i === 0 || (xi - 2*xr/300)*(xi - 2*xr/300)/2 > top) ctx.moveTo(X(xi), Y(v)); else ctx.lineTo(X(xi), Y(v));
+  }
+  ctx.stroke();
+  ctx.fillStyle = '#1e2327'; ctx.textAlign = 'left'; ctx.fillText('V = ½ξ²', X(xr*0.8), Y(xr*xr*0.8*0.8/2) - 8);
+  // energías de los estados
+  var bases = [];
+  if (S.modo === 'est') bases = [S.n + 0.5];
+  else if (S.modo === 'sup') bases = S.n === S.m ? [S.n + 0.5] : [S.n + 0.5, S.m + 0.5];
+  else bases = [Em];
+  ctx.strokeStyle = '#2563a8'; ctx.lineWidth = 1.5; ctx.setLineDash(S.modo === 'coh' ? [6, 4] : []);
+  for (i = 0; i < bases.length; i++){ ctx.beginPath(); ctx.moveTo(L, Y(bases[i])); ctx.lineTo(W - R, Y(bases[i])); ctx.stroke(); }
+  ctx.setLineDash([]);
+  // función de onda sobre la energía media
+  var base = S.modo === 'sup' && bases.length === 2 ? (bases[0] + bases[1])/2 : bases[0];
+  var escPsi = S.fija ? 1.4 : top/9, escD = S.fija ? 1.8 : top/9*1.3, N = 400, re = [], dens = [];
+  for (i = 0; i <= N; i++){
+    var xx = -xr + 2*xr*i/N, e = estadoTiempo(c, xx, t);
+    re.push(e.re); dens.push(e.re*e.re + e.im*e.im);
+  }
+  if (S.d){
+    ctx.beginPath(); ctx.moveTo(X(-xr), Y(base));
+    for (i = 0; i <= N; i++) ctx.lineTo(X(-xr + 2*xr*i/N), Y(base + escD*dens[i]));
+    ctx.lineTo(X(xr), Y(base)); ctx.closePath();
+    ctx.fillStyle = 'rgba(232,121,30,0.35)'; ctx.fill();
+    ctx.strokeStyle = '#c1440e'; ctx.lineWidth = 1.5; ctx.beginPath();
+    for (i = 0; i <= N; i++){ x = X(-xr + 2*xr*i/N); y = Y(base + escD*dens[i]); if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); }
+    ctx.stroke();
+  }
+  if (S.cl && S.modo === 'est'){
+    ctx.strokeStyle = '#7a848c'; ctx.lineWidth = 1.5; ctx.setLineDash([5, 4]); ctx.beginPath();
+    var started = false;
+    for (i = 0; i <= N; i++){
+      var xc = -xr + 2*xr*i/N, dc = densidadClasica(S.n, xc);
+      if (dc === 0){ started = false; continue; }
+      var yy = Y(base + Math.min(escD*dc, S.fija ? 1.6 : top/9*1.95));
+      if (!started){ ctx.moveTo(X(xc), yy); started = true; } else ctx.lineTo(X(xc), yy);
+    }
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+  if (S.re){
+    ctx.strokeStyle = '#2563a8'; ctx.lineWidth = 2.2; ctx.beginPath();
+    for (i = 0; i <= N; i++){ x = X(-xr + 2*xr*i/N); y = Y(base + escPsi*re[i]); if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); }
+    ctx.stroke();
+  }
+  ctx.fillStyle = '#555'; ctx.textAlign = 'left'; ctx.font = '12px sans-serif';
+  ctx.fillText('t = ' + fmt(t, 2) + ' / ω', L + 8, T0 + 12);
+}
+
+var infoTs = -1;
+function loop(ts){
+  if (last === null) last = ts;
+  var dt = Math.min((ts - last)/1000, 0.05); last = ts;
+  if (S.play) t += dt*S.vel;
+  dibujar();
+  if (ts - infoTs > 500){ info(coefs()); infoTs = ts; }
+  requestAnimationFrame(loop);
+}
+function mostrar(){
+  $('oqo-lm').style.display = S.modo === 'sup' ? 'block' : 'none';
+  $('oqo-la').style.display = S.modo === 'coh' ? 'block' : 'none';
+  $('oqo-ln').style.display = S.modo === 'coh' ? 'none' : 'block';
+  var bs = document.querySelectorAll('#oqo button[data-m]');
+  for (var i = 0; i < bs.length; i++) bs[i].className = bs[i].getAttribute('data-m') === S.modo ? 'oq-act' : '';
+  info(coefs()); dibujar();
+}
+function ligar(id, clave, valId, dec, entero){
+  $(id).addEventListener('input', function(){
+    var v = parseFloat(this.value); S[clave] = entero ? Math.round(v) : v;
+    $(valId).textContent = fmt(S[clave], dec);
+    if (clave !== 'vel'){ if (clave === 'alpha') t = t; info(coefs()); }
+  });
+}
+ligar('oqo-n', 'n', 'oqo-nv', 0, true);
+ligar('oqo-m', 'm', 'oqo-mv', 0, true);
+ligar('oqo-a', 'alpha', 'oqo-av', 1, false);
+ligar('oqo-s', 'vel', 'oqo-sv', 1, false);
+var chk = [['oqo-re', 're'], ['oqo-d', 'd'], ['oqo-cl', 'cl'], ['oqo-niv', 'niv'], ['oqo-fija', 'fija']];
+chk.forEach(function(p){ $(p[0]).addEventListener('change', function(){ S[p[1]] = this.checked; }); });
+var bs = document.querySelectorAll('#oqo button[data-m]');
+for (var q = 0; q < bs.length; q++) bs[q].addEventListener('click', function(){ S.modo = this.getAttribute('data-m'); t = 0; mostrar(); });
+$('oqo-play').addEventListener('click', function(){ S.play = !S.play; this.textContent = S.play ? 'Pausa' : 'Seguir'; });
+mostrar(); requestAnimationFrame(loop);
+})();
+</script>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Resuelva por series de potencias las ecuaciones de Legendre, de Airy y de Chebyshev. Para cada una, encuentre la fórmula de recurrencia y diga qué condición hace que la serie termine en un polinomio, si es que alguna lo hace.</p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/odes/osciladorcuantico/</guid>
+  <pubDate>Mon, 02 Nov 2026 05:00:00 GMT</pubDate>
+  <media:content url="https://arturosanjuan.xyz/cursos/odes/osciladorcuantico/espectro.webp" medium="image" type="image/webp"/>
+</item>
+<item>
+  <title>Taller 3</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/odes/taller-3/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Los tres problemas de este taller tienen la misma estructura: una situación del Sistema Solar que se resuelve de forma exacta, y una perturbación pequeña cuyo efecto se estudia con una ecuación lineal. El taller se trabaja en equipos de hasta tres personas y vale 50 puntos.</p>
+<section id="mercurio-y-la-relatividad-general" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="mercurio-y-la-relatividad-general"><span class="header-section-number">1</span> Mercurio y la relatividad general</h2>
+<p>En la gravedad de Newton, un planeta se mueve alrededor del Sol bajo una fuerza central, que apunta siempre hacia el Sol. En coordenadas polares <img src="https://latex.codecogs.com/png.latex?(r,%5Ctheta)"> centradas en el Sol, eso hace que la cantidad</p>
+<p><img src="https://latex.codecogs.com/png.latex?h%20=%20r%5E2%5Cdot%5Ctheta%20%5Ctag%7B1%7D"></p>
+<p>el momento angular por unidad de masa, sea constante a lo largo de toda la órbita; esa es la segunda ley de Kepler. La intensidad de la gravedad del Sol está en la constante <img src="https://latex.codecogs.com/png.latex?k=GM">, el producto de la constante de gravitación <img src="https://latex.codecogs.com/png.latex?G"> por la masa del Sol <img src="https://latex.codecogs.com/png.latex?M">, que vale <img src="https://latex.codecogs.com/png.latex?k=1.327%5Ctimes10%5E%7B20%7D"> m³/s². Con la sustitución <img src="https://latex.codecogs.com/png.latex?z=1/r"> y tomando el ángulo <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> como variable independiente, la órbita cumple la ecuación lineal</p>
+<p><img src="https://latex.codecogs.com/png.latex?z''+z=%5Ckappa,%20%5Cqquad%20%5Ckappa=%5Cfrac%7Bk%7D%7Bh%5E2%7D%20%5Ctag%7B2%7D"></p>
+<p>donde las primas son derivadas respecto de <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> y <img src="https://latex.codecogs.com/png.latex?%5Ckappa"> es la letra griega kappa, distinta de la <img src="https://latex.codecogs.com/png.latex?k"> latina. Su solución es la elipse</p>
+<p><img src="https://latex.codecogs.com/png.latex?z_0=%5Ckappa%5C,(1+e%5Ccos%5Ctheta)%20%5Ctag%7B3%7D"></p>
+<p>donde <img src="https://latex.codecogs.com/png.latex?e"> es la excentricidad y el perihelio (el punto más cercano al Sol) está en <img src="https://latex.codecogs.com/png.latex?%5Ctheta=0,2%5Cpi,%5Cdots">. El número <img src="https://latex.codecogs.com/png.latex?%5Ckappa"> se relaciona con el semieje mayor <img src="https://latex.codecogs.com/png.latex?a"> de la elipse por <img src="https://latex.codecogs.com/png.latex?%5Ckappa%5C,a(1-e%5E2)=1">.</p>
+<p>La órbita de Mercurio no es exactamente una elipse fija: su perihelio gira lentamente (precesión del perihelio o precesión anómala) y la gravedad de Newton no alcanza a explicar todo ese giro. La corrección viene de la relatividad general. Según las ecuaciones de campo de Einstein, el Sol deforma el espacio-tiempo a su alrededor, y fuera del Sol esa deformación está descrita por la métrica de Schwarzschild. En esa descripción Mercurio no siente una fuerza: sigue la trayectoria más recta posible en la geometría curva del espacio-tiempo, que se llama una geodésica. La conservación del momento angular, que en la gravedad de Newton es la segunda ley de Kepler, sigue valiendo, pero en la forma</p>
+<p><img src="https://latex.codecogs.com/png.latex?h%20=%20r%5E2%5Cfrac%7Bd%5Ctheta%7D%7Bd%5Ctau%7D%20%5Ctag%7B4%7D"></p>
+<p>donde <img src="https://latex.codecogs.com/png.latex?%5Ctau"> es el tiempo propio de Mercurio, el que mide un reloj que viaja con él, y no el tiempo <img src="https://latex.codecogs.com/png.latex?t"> de un observador lejano. La diferencia entre las dos versiones es del orden de <img src="https://latex.codecogs.com/png.latex?v%5E2/c%5E2%5Capprox10%5E%7B-8%7D"> para Mercurio, y no afecta el giro del perihelio, así que seguimos usando <img src="https://latex.codecogs.com/png.latex?%5Ckappa=k/h%5E2">. Con esta <img src="https://latex.codecogs.com/png.latex?h">, las ecuaciones de Einstein dan para la órbita, en lugar de <img src="https://latex.codecogs.com/png.latex?z''+z=%5Ckappa">, la ecuación</p>
+<p><img src="https://latex.codecogs.com/png.latex?z''+z=%5Ckappa+%5Cepsilon%20z%5E2,%20%5Cqquad%20%5Cepsilon=%5Cfrac%7B3k%7D%7Bc%5E2%7D%20%5Ctag%7B5%7D"></p>
+<p>donde <img src="https://latex.codecogs.com/png.latex?c=2.998%5Ctimes10%5E8"> m/s es la velocidad de la luz. No se les pide deducir (5). Para el Sol, <img src="https://latex.codecogs.com/png.latex?%5Cepsilon%5Capprox4.43"> km, mientras que para Mercurio <img src="https://latex.codecogs.com/png.latex?1/%5Ckappa%5Capprox5.55%5Ctimes10%5E7"> km, así que el producto <img src="https://latex.codecogs.com/png.latex?%5Cepsilon%5Ckappa%5Capprox8%5Ctimes10%5E%7B-8%7D"> es diminuto. Por eso buscamos la solución como la elipse de Newton más una corrección pequeña, <img src="https://latex.codecogs.com/png.latex?z=z_0+%5Cepsilon%20z_1">. La corrección <img src="https://latex.codecogs.com/png.latex?z_1"> resulta cumplir</p>
+<p><img src="https://latex.codecogs.com/png.latex?z_1''+z_1=z_0%5E2%20%5Ctag%7B6%7D"></p>
+<p>Esta corrección es la que hace girar lentamente el perihelio de Mercurio.</p>
+<p>Verifiquen primero que (6) es correcta: sustituyan <img src="https://latex.codecogs.com/png.latex?z=z_0+%5Cepsilon%20z_1"> en (5), usen que <img src="https://latex.codecogs.com/png.latex?z_0"> cumple <img src="https://latex.codecogs.com/png.latex?z_0''+z_0=%5Ckappa">, y descarten los términos que llevan <img src="https://latex.codecogs.com/png.latex?%5Cepsilon%5E2">. Después escriban <img src="https://latex.codecogs.com/png.latex?z_0%5E2"> como una combinación lineal de <img src="https://latex.codecogs.com/png.latex?%5Ccos%5Ctheta"> y <img src="https://latex.codecogs.com/png.latex?%5Ccos2%5Ctheta">, usando <img src="https://latex.codecogs.com/png.latex?%5Ccos%5E2%5Ctheta=(1+%5Ccos2%5Ctheta)/2">. Resuelvan (6) por coeficientes indeterminados. <em>(15 pts)</em></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Al sustituir,</p>
+<p><img src="https://latex.codecogs.com/png.latex?(z_0''+z_0)+%5Cepsilon(z_1''+z_1)=%5Ckappa+%5Cepsilon(z_0+%5Cepsilon%20z_1)%5E2"></p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?z_0''+z_0=%5Ckappa">, esos términos se cancelan; dividiendo por <img src="https://latex.codecogs.com/png.latex?%5Cepsilon"> queda <img src="https://latex.codecogs.com/png.latex?z_1''+z_1=(z_0+%5Cepsilon%20z_1)%5E2=z_0%5E2+%5Cepsilon(%5Cdots)">, y al descartar lo que lleva <img src="https://latex.codecogs.com/png.latex?%5Cepsilon"> se obtiene (6).</p>
+<p>Desarrollando,</p>
+<p><img src="https://latex.codecogs.com/png.latex?z_0%5E2=%5Ckappa%5E2%5Cleft%5B1+%5Cfrac%7Be%5E2%7D%7B2%7D+2e%5Ccos%5Ctheta+%5Cfrac%7Be%5E2%7D%7B2%7D%5Ccos2%5Ctheta%5Cright%5D"></p>
+<p>Cada parte del lado derecho se resuelve por separado. Para la constante, <img src="https://latex.codecogs.com/png.latex?z_1=%5Ckappa%5E2%5Cleft(1+%5Cdfrac%7Be%5E2%7D%7B2%7D%5Cright)">. Para <img src="https://latex.codecogs.com/png.latex?%5Ccos2%5Ctheta">, con <img src="https://latex.codecogs.com/png.latex?z_1=A%5Ccos2%5Ctheta"> se tiene <img src="https://latex.codecogs.com/png.latex?z_1''+z_1=-3A%5Ccos2%5Ctheta">, así que <img src="https://latex.codecogs.com/png.latex?A=-%5Ckappa%5E2e%5E2/6">; no hay resonancia porque <img src="https://latex.codecogs.com/png.latex?2i"> no es raíz de <img src="https://latex.codecogs.com/png.latex?%5Clambda%5E2+1">.</p>
+<p>Para <img src="https://latex.codecogs.com/png.latex?%5Ccos%5Ctheta"> (el término <img src="https://latex.codecogs.com/png.latex?2%5Ckappa%5E2e%5Ccos%5Ctheta">), como <img src="https://latex.codecogs.com/png.latex?%5Ccos%5Ctheta"> y <img src="https://latex.codecogs.com/png.latex?%5Csin%5Ctheta"> resuelven la ecuación reducida, <img src="https://latex.codecogs.com/png.latex?A%5Ccos%5Ctheta+B%5Csin%5Ctheta"> da cero al sustituir y nunca produce <img src="https://latex.codecogs.com/png.latex?2%5Ckappa%5E2e%5Ccos%5Ctheta">: es la resonancia, y se multiplica por <img src="https://latex.codecogs.com/png.latex?%5Ctheta">. Con <img src="https://latex.codecogs.com/png.latex?z_1=C%5Ctheta%5Csin%5Ctheta">, <img src="https://latex.codecogs.com/png.latex?z_1''+z_1=2C%5Ccos%5Ctheta">, así que <img src="https://latex.codecogs.com/png.latex?C=%5Ckappa%5E2e">. En total,</p>
+<p><img src="https://latex.codecogs.com/png.latex?z_1=%5Ckappa%5E2%5Cleft%5B1+%5Cfrac%7Be%5E2%7D%7B2%7D-%5Cfrac%7Be%5E2%7D%7B6%7D%5Ccos2%5Ctheta+e%5C,%5Ctheta%5Csin%5Ctheta%5Cright%5D"></p>
+<p>más una solución homogénea que solo ajusta condiciones iniciales. El factor <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> del último término crece sin parar y es el que, órbita tras órbita, hace girar el perihelio: llamando <img src="https://latex.codecogs.com/png.latex?%5Cdelta=%5Cepsilon%5Ckappa">, la parte con <img src="https://latex.codecogs.com/png.latex?%5Ccos%5Ctheta"> de <img src="https://latex.codecogs.com/png.latex?z"> es <img src="https://latex.codecogs.com/png.latex?e%5Ckappa(%5Ccos%5Ctheta+%5Cdelta%5Ctheta%5Csin%5Ctheta)%5Capprox%20e%5Ckappa%5Ccos((1-%5Cdelta)%5Ctheta)">, y el perihelio avanza <img src="https://latex.codecogs.com/png.latex?%5CDelta%5Cvarphi=2%5Cpi%5Cdelta=%5Cdfrac%7B6%5Cpi%20k%7D%7Bc%5E2a(1-e%5E2)%7D"> por órbita, unos 43 segundos de arco por siglo para Mercurio.</p>
+</div>
+</div>
+</section>
+<section id="los-troyanos-de-júpiter" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="los-troyanos-de-júpiter"><span class="header-section-number">2</span> Los troyanos de Júpiter</h2>
+<p>Los asteroides troyanos comparten la órbita de Júpiter, unos 60° adelante o atrás de él. Realmente, Júpiter es tan pesado que no orbita alrededor del Sol. El Sol y Júpiter giran en círculos alrededor de su centro de masa, y sea <img src="https://latex.codecogs.com/png.latex?%5Cmu=m_J/(m_S+m_J)%5Capprox9.54%5Ctimes10%5E%7B-4%7D"> la fracción de la masa total que corresponde a Júpiter. Usamos un sistema de coordenadas que gira con ellos, tomamos como unidad de longitud la distancia entre el Sol y Júpiter, y como unidad de tiempo <img src="https://latex.codecogs.com/png.latex?1/n">, donde <img src="https://latex.codecogs.com/png.latex?n"> es la velocidad angular de Júpiter. Júpiter tarda 11.86 años en dar una vuelta, de modo que <img src="https://latex.codecogs.com/png.latex?2%5Cpi"> unidades de tiempo son 11.86 años. El punto de Lagrange <img src="https://latex.codecogs.com/png.latex?L_4"> es el tercer vértice del triángulo equilátero que forman el Sol y Júpiter. Un asteroide ligeramente desplazado de <img src="https://latex.codecogs.com/png.latex?L_4">, con desplazamientos pequeños <img src="https://latex.codecogs.com/png.latex?(x,y)">, cumple aproximadamente, para <img src="https://latex.codecogs.com/png.latex?x"> la ecuación de cuarto orden</p>
+<p><img src="https://latex.codecogs.com/png.latex?x%5E%7B(4)%7D+%5Cddot%20x+%5Cfrac%7B27%7D%7B4%7D%5Cmu(1-%5Cmu)%5C,x=0%20%5Ctag%7B7%7D"></p>
+<p>Escriban su polinomio característico, resuélvanlo para <img src="https://latex.codecogs.com/png.latex?%5Clambda%5E2">, y muestren que si <img src="https://latex.codecogs.com/png.latex?27%5Cmu(1-%5Cmu)%5Cle1"> las cuatro raíces son imaginarias puras, de modo que el asteroide oscila cerca de <img src="https://latex.codecogs.com/png.latex?L_4">, mientras que si <img src="https://latex.codecogs.com/png.latex?27%5Cmu(1-%5Cmu)%3E1"> hay una raíz con parte real positiva y el asteroide se aleja. Hallen el valor crítico <img src="https://latex.codecogs.com/png.latex?%5Cmu_c"> que separa los dos casos. <em>(10 pts)</em></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El polinomio característico <img src="https://latex.codecogs.com/png.latex?%5Clambda%5E4+%5Clambda%5E2+%5Cfrac%7B27%7D%7B4%7D%5Cmu(1-%5Cmu)"> es cuadrático en <img src="https://latex.codecogs.com/png.latex?%5Clambda%5E2">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clambda%5E2=%5Cfrac%7B-1%5Cpm%5Csqrt%7B1-27%5Cmu(1-%5Cmu)%7D%7D%7B2%7D"></p>
+<p>Si <img src="https://latex.codecogs.com/png.latex?27%5Cmu(1-%5Cmu)%5Cle1">, la raíz cuadrada es real y menor o igual que 1, las dos raíces <img src="https://latex.codecogs.com/png.latex?%5Clambda%5E2"> son negativas o cero y <img src="https://latex.codecogs.com/png.latex?%5Clambda=%5Cpm%20i%5Comega_1,%5Cpm%20i%5Comega_2">: oscilaciones acotadas. Si <img src="https://latex.codecogs.com/png.latex?27%5Cmu(1-%5Cmu)%3E1">, <img src="https://latex.codecogs.com/png.latex?%5Clambda%5E2"> es complejo no real, y entre sus cuatro raíces cuadradas hay dos con parte real positiva, de modo que hay soluciones que crecen exponencialmente.</p>
+<p>La condición <img src="https://latex.codecogs.com/png.latex?27%5Cmu(1-%5Cmu)=1"> da <img src="https://latex.codecogs.com/png.latex?%5Cmu%5E2-%5Cmu+%5Cfrac%7B1%7D%7B27%7D=0">, es decir,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cmu_c=%5Cfrac12-%5Cfrac%7B%5Csqrt%7B69%7D%7D%7B18%7D%5Capprox0.0385"></p>
+<p>Para el Sol y Júpiter, <img src="https://latex.codecogs.com/png.latex?27%5Cmu(1-%5Cmu)%5Capprox0.0257%3C1">, así que <img src="https://latex.codecogs.com/png.latex?L_4"> es estable.</p>
+</div>
+</div>
+</section>
+<section id="un-cometa-que-se-estira" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="un-cometa-que-se-estira"><span class="header-section-number">3</span> Un cometa que se estira</h2>
+<p>Un cometa cae hacia el Sol en línea recta, partiendo del reposo desde muy lejos. Su distancia <img src="https://latex.codecogs.com/png.latex?r"> al Sol cumple <img src="https://latex.codecogs.com/png.latex?%5Cddot%20r=-k/r%5E2">, con el mismo <img src="https://latex.codecogs.com/png.latex?k=1.327%5Ctimes10%5E%7B20%7D"> m³/s², y como parte del reposo, su energía es cero, es decir, <img src="https://latex.codecogs.com/png.latex?%5Cdot%20r%5E2=2k/r">. Sea <img src="https://latex.codecogs.com/png.latex?t_0"> el instante en que <img src="https://latex.codecogs.com/png.latex?r"> llegaría a cero y <img src="https://latex.codecogs.com/png.latex?%5Ctau=t_0-t"> el tiempo que falta para ese instante. Integrando <img src="https://latex.codecogs.com/png.latex?%5Cdot%20r%5E2=2k/r"> se obtiene</p>
+<p><img src="https://latex.codecogs.com/png.latex?r=%5Cleft(%5Cfrac%7B9k%7D%7B2%7D%5Cright)%5E%7B1/3%7D%5Ctau%5E%7B2/3%7D%20%5Ctag%7B8%7D"></p>
+<p>Pensemos ahora en dos fragmentos del cometa, uno en <img src="https://latex.codecogs.com/png.latex?r"> y otro en <img src="https://latex.codecogs.com/png.latex?r+%5Cdelta">, y preguntémonos cómo cambia con el tiempo la separación <img src="https://latex.codecogs.com/png.latex?%5Cdelta">. Supongan que las fuerzas internas del cometa son despreciables frente a la gravedad del Sol, de modo que cada fragmento cae como una partícula libre. En lo que sigue las primas son derivadas respecto de <img src="https://latex.codecogs.com/png.latex?%5Ctau">; como <img src="https://latex.codecogs.com/png.latex?%5Ctau=t_0-t">, la segunda derivada respecto de <img src="https://latex.codecogs.com/png.latex?%5Ctau"> es igual a la segunda derivada respecto de <img src="https://latex.codecogs.com/png.latex?t">.</p>
+<p>Cada fragmento cumple la ecuación <img src="https://latex.codecogs.com/png.latex?%5Cddot%20r=-k/r%5E2">. Si se escribe la ecuación del fragmento que está en <img src="https://latex.codecogs.com/png.latex?r+%5Cdelta">, se le resta la del que está en <img src="https://latex.codecogs.com/png.latex?r">, y se usa la aproximación <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7B1%7D%7B(r+%5Cdelta)%5E2%7D%5Capprox%5Cdfrac%7B1%7D%7Br%5E2%7D%5Cleft(1-%5Cdfrac%7B2%5Cdelta%7D%7Br%7D%5Cright)">, válida para <img src="https://latex.codecogs.com/png.latex?%5Cdelta"> pequeño, se obtiene <img src="https://latex.codecogs.com/png.latex?%5Cdelta''=%5Cdfrac%7B2k%7D%7Br%5E3%7D%5Cdelta">. Al reemplazar <img src="https://latex.codecogs.com/png.latex?r(%5Ctau)"> de (8) queda la ecuación</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cdelta''=%5Cfrac%7B4%7D%7B9%5Ctau%5E2%7D%5C,%5Cdelta%20%5Ctag%7B9%7D"></p>
+<p>Esta ecuación tiene coeficientes variables. Comprueben que <img src="https://latex.codecogs.com/png.latex?%5Cdelta=%5Ctau%5E%7B4/3%7D"> es una solución y, a partir de ella, hallen una segunda solución por reducción de orden. Calculen el wronskiano de las dos soluciones y comparen con lo que predice la fórmula de Abel. <em>(15 pts)</em></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Restando, <img src="https://latex.codecogs.com/png.latex?%5Cdelta''=-%5Cdfrac%7Bk%7D%7B(r+%5Cdelta)%5E2%7D+%5Cdfrac%7Bk%7D%7Br%5E2%7D%5Capprox%5Cdfrac%7B2k%7D%7Br%5E3%7D%5Cdelta">. De <img src="https://latex.codecogs.com/png.latex?r%5E3=%5Cfrac%7B9k%7D%7B2%7D%5Ctau%5E2"> sale <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7B2k%7D%7Br%5E3%7D=%5Cdfrac%7B4%7D%7B9%5Ctau%5E2%7D">.</p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?%5Cdelta=%5Ctau%5E%7B4/3%7D">, <img src="https://latex.codecogs.com/png.latex?%5Cdelta''=%5Cfrac43%5Ccdot%5Cfrac13%5C,%5Ctau%5E%7B-2/3%7D=%5Cfrac49%5C,%5Ctau%5E%7B-2/3%7D=%5Cdfrac%7B4%7D%7B9%5Ctau%5E2%7D%5C,%5Ctau%5E%7B4/3%7D">. La ecuación no tiene término en <img src="https://latex.codecogs.com/png.latex?%5Cdelta'">, así que <img src="https://latex.codecogs.com/png.latex?P=0"> y <img src="https://latex.codecogs.com/png.latex?y_2=v%5C,y_1"> con <img src="https://latex.codecogs.com/png.latex?v'=1/y_1%5E2=%5Ctau%5E%7B-8/3%7D">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?v=-%5Cfrac35%5C,%5Ctau%5E%7B-5/3%7D,%20%5Cqquad%20y_2=v%5C,y_1=-%5Cfrac35%5C,%5Ctau%5E%7B-1/3%7D"></p>
+<p>Se toma <img src="https://latex.codecogs.com/png.latex?y_2=%5Ctau%5E%7B-1/3%7D">. El wronskiano de <img src="https://latex.codecogs.com/png.latex?%5Ctau%5E%7B4/3%7D"> y <img src="https://latex.codecogs.com/png.latex?%5Ctau%5E%7B-1/3%7D"> es <img src="https://latex.codecogs.com/png.latex?-%5Cfrac13-%5Cfrac43=-%5Cfrac53">, constante, como dice la fórmula de Abel con <img src="https://latex.codecogs.com/png.latex?P=0">.</p>
+</div>
+</div>
+<p>Escriban la solución general <img src="https://latex.codecogs.com/png.latex?%5Cdelta(%5Ctau)"> y digan cuál de las dos soluciones domina cuando el cometa se acerca al Sol, es decir, cuando <img src="https://latex.codecogs.com/png.latex?%5Ctau%5Cto0">, y qué le pasa entonces a la separación. Supongan que cuando el cometa está a <img src="https://latex.codecogs.com/png.latex?r_0=1"> UA <img src="https://latex.codecogs.com/png.latex?=1.496%5Ctimes10%5E%7B11%7D"> m del Sol, los dos fragmentos están separados <img src="https://latex.codecogs.com/png.latex?%5Cdelta_0=100"> m y tienen la misma velocidad. Calculen el tiempo <img src="https://latex.codecogs.com/png.latex?%5Ctau_0"> que le falta en ese momento, en días. Usen las condiciones <img src="https://latex.codecogs.com/png.latex?%5Cdelta(%5Ctau_0)=%5Cdelta_0"> y <img src="https://latex.codecogs.com/png.latex?%5Cdelta'(%5Ctau_0)=0"> para hallar <img src="https://latex.codecogs.com/png.latex?%5Cdelta(%5Ctau)">. <em>(10 pts)</em></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La solución general es <img src="https://latex.codecogs.com/png.latex?%5Cdelta=A%5Ctau%5E%7B4/3%7D+B%5Ctau%5E%7B-1/3%7D">. Cuando <img src="https://latex.codecogs.com/png.latex?%5Ctau%5Cto0">, <img src="https://latex.codecogs.com/png.latex?%5Ctau%5E%7B4/3%7D%5Cto0"> y <img src="https://latex.codecogs.com/png.latex?%5Ctau%5E%7B-1/3%7D%5Cto%5Cinfty">: domina la segunda, y la separación crece sin límite cerca del Sol (el modelo deja de valer antes, cuando <img src="https://latex.codecogs.com/png.latex?%5Cdelta"> ya no es pequeño frente a <img src="https://latex.codecogs.com/png.latex?r">). Es el efecto de marea, que estira el cometa.</p>
+<p>De (8), <img src="https://latex.codecogs.com/png.latex?%5Ctau=%5Cdfrac23%5Cdfrac%7Br%5E%7B3/2%7D%7D%7B%5Csqrt%7B2k%7D%7D">. Con <img src="https://latex.codecogs.com/png.latex?r_0=1"> UA, <img src="https://latex.codecogs.com/png.latex?%5Ctau_0%5Capprox2.37%5Ctimes10%5E6"> s, cerca de 27.4 días.</p>
+<p>Las condiciones <img src="https://latex.codecogs.com/png.latex?%5Cdelta(%5Ctau_0)=%5Cdelta_0"> y <img src="https://latex.codecogs.com/png.latex?%5Cdelta'(%5Ctau_0)=0"> dan <img src="https://latex.codecogs.com/png.latex?B=4A%5Ctau_0%5E%7B5/3%7D"> y <img src="https://latex.codecogs.com/png.latex?5A%5Ctau_0%5E%7B4/3%7D=%5Cdelta_0">, de donde</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cdelta(%5Ctau)=%5Cfrac%7B%5Cdelta_0%7D%7B5%7D%5Cleft%5B%5Cleft(%5Cfrac%7B%5Ctau%7D%7B%5Ctau_0%7D%5Cright)%5E%7B4/3%7D+4%5Cleft(%5Cfrac%7B%5Ctau_0%7D%7B%5Ctau%7D%5Cright)%5E%7B1/3%7D%5Cright%5D"></p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/odes/taller-3/</guid>
+  <pubDate>Fri, 30 Oct 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Movimiento Planetario</title>
   <dc:creator>Arturo Sanjuán</dc:creator>
@@ -30,8 +1135,59 @@
 <p>Convenciones: un punto sobre una variable indica derivada respecto al tiempo, <img src="https://latex.codecogs.com/png.latex?%5Cdot%20r=dr/dt">, y una prima indica derivada respecto al ángulo, <img src="https://latex.codecogs.com/png.latex?z'=dz/d%5Ctheta">. Cuando haga falta se escribe <img src="https://latex.codecogs.com/png.latex?dt"> o <img src="https://latex.codecogs.com/png.latex?d%5Ctheta"> de forma explícita.</p>
 <section id="de-esfera-a-planeta" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="de-esfera-a-planeta"><span class="header-section-number">1</span> De esfera a planeta</h2>
-<p>Las cuentas de esta sección son la última etapa de una historia larga: la Tierra pasó de ser una esfera en el centro del cielo a ser un planeta más, y las cónicas de Apolonio resultaron ser las órbitas que dibujan esos planetas. El siguiente panel recorre siete autores, de Aristarco a Newton, y para cada uno responde tres preguntas: qué aportó sobre la Tierra redonda, sobre su rotación y sobre su condición de planeta.</p>
-<iframe src="linea-tiempo.html" width="100%" height="830" style="border:1px solid #dfe3e2; border-radius:6px;" title="Línea de tiempo: de esfera a planeta"></iframe>
+<p>Las cuentas de esta sección son la última etapa de una historia larga: la Tierra pasó de ser una esfera en el centro del cielo a ser un planeta más, y las cónicas de Apolonio resultaron ser las órbitas que dibujan los planetas. En siete nombres:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Autor</th>
+<th style="text-align: left;">Fecha</th>
+<th style="text-align: left;">Qué hizo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Aristarco de Samos</td>
+<td style="text-align: left;">~310 a ~230 a.C.</td>
+<td style="text-align: left;">Propuso que la Tierra gira alrededor del Sol, con las estrellas fijas muy lejanas. Es el primer modelo heliocéntrico conocido. Su obra se perdió y lo conocemos por Arquímedes.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Eratóstenes de Cirene</td>
+<td style="text-align: left;">~276 a ~194 a.C.</td>
+<td style="text-align: left;">Primera medida documentada de la Tierra. Con un arco de 7,2° (1/50 de círculo) entre Siena y Alejandría y 5000 estadios de distancia, obtuvo una circunferencia de 250.000 estadios.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Apolonio de Perge</td>
+<td style="text-align: left;">~262 a ~190 a.C.</td>
+<td style="text-align: left;">En las <em>Cónicas</em> obtiene elipse, parábola e hipérbola cortando un cono doble con un plano. En astronomía mostró que epiciclos y excéntricas describen los mismos movimientos aparentes.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Claudio Ptolomeo</td>
+<td style="text-align: left;">~100 a ~170 d.C.</td>
+<td style="text-align: left;">En el <em>Almagesto</em> une la física de Aristóteles con deferentes, epiciclos y ecuante. Tierra fija y en el centro: fue la astronomía estándar por unos 1400 años.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Nicolás Copérnico</td>
+<td style="text-align: left;">1473 a 1543</td>
+<td style="text-align: left;">Pone el Sol en el centro (1543), con la Tierra como tercer planeta que gira sobre su eje. Mantiene círculos y epiciclos, y explica de forma natural el movimiento retrógrado.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Johannes Kepler</td>
+<td style="text-align: left;">1571 a 1630</td>
+<td style="text-align: left;">Encaja las órbitas en los sólidos platónicos (1596), modelo falso. Con los datos de Tycho llega a las órbitas elípticas (1609) y a que <img src="https://latex.codecogs.com/png.latex?T%5E2"> es proporcional a <img src="https://latex.codecogs.com/png.latex?a%5E3"> (1619).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Isaac Newton</td>
+<td style="text-align: left;">1642 a 1727</td>
+<td style="text-align: left;">En los <em>Principia</em> (1687) deriva las leyes de Kepler de una fuerza proporcional a <img src="https://latex.codecogs.com/png.latex?1/r%5E2">. La misma fuerza explica la manzana, la Luna y los planetas. Predice el achatamiento de la Tierra por su rotación.</td>
+</tr>
+</tbody>
+</table>
+<p>De Aristarco a Copérnico pasan unos 1800 años. Lo que sigue es el último paso de la lista: de las cónicas de Apolonio a la deducción de las leyes de Kepler con ecuaciones diferenciales.</p>
 </section>
 <section id="las-cónicas-y-las-esferas-de-dandelin" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="las-cónicas-y-las-esferas-de-dandelin"><span class="header-section-number">2</span> Las cónicas y las esferas de Dandelin</h2>

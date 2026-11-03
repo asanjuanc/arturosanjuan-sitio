@@ -484,6 +484,18 @@ window.Quarto = {
  <span class="menu-text">Oscilaciones Mecánicas y Circuitos</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/taller-3/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Taller 3</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/osciladorcuantico/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El Oscilador Armónico Cuántico</span></a>
+  </div>
+</li>
     </ul>
     </div>
     <nav id="TOC" role="doc-toc" class="toc-active">
@@ -557,8 +569,59 @@ window.Quarto = {
 <p>Convenciones: un punto sobre una variable indica derivada respecto al tiempo, <span class="math inline">\(\dot r=dr/dt\)</span>, y una prima indica derivada respecto al ángulo, <span class="math inline">\(z'=dz/d\theta\)</span>. Cuando haga falta se escribe <span class="math inline">\(dt\)</span> o <span class="math inline">\(d\theta\)</span> de forma explícita.</p>
 <section id="de-esfera-a-planeta" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="de-esfera-a-planeta"><span class="header-section-number">1</span> De esfera a planeta</h2>
-<p>Las cuentas de esta sección son la última etapa de una historia larga: la Tierra pasó de ser una esfera en el centro del cielo a ser un planeta más, y las cónicas de Apolonio resultaron ser las órbitas que dibujan esos planetas. El siguiente panel recorre siete autores, de Aristarco a Newton, y para cada uno responde tres preguntas: qué aportó sobre la Tierra redonda, sobre su rotación y sobre su condición de planeta.</p>
-<iframe src="linea-tiempo.html" width="100%" height="830" style="border:1px solid #dfe3e2; border-radius:6px;" title="Línea de tiempo: de esfera a planeta"></iframe>
+<p>Las cuentas de esta sección son la última etapa de una historia larga: la Tierra pasó de ser una esfera en el centro del cielo a ser un planeta más, y las cónicas de Apolonio resultaron ser las órbitas que dibujan los planetas. En siete nombres:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Autor</th>
+<th style="text-align: left;">Fecha</th>
+<th style="text-align: left;">Qué hizo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Aristarco de Samos</td>
+<td style="text-align: left;">~310 a ~230 a.C.</td>
+<td style="text-align: left;">Propuso que la Tierra gira alrededor del Sol, con las estrellas fijas muy lejanas. Es el primer modelo heliocéntrico conocido. Su obra se perdió y lo conocemos por Arquímedes.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Eratóstenes de Cirene</td>
+<td style="text-align: left;">~276 a ~194 a.C.</td>
+<td style="text-align: left;">Primera medida documentada de la Tierra. Con un arco de 7,2° (1/50 de círculo) entre Siena y Alejandría y 5000 estadios de distancia, obtuvo una circunferencia de 250.000 estadios.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Apolonio de Perge</td>
+<td style="text-align: left;">~262 a ~190 a.C.</td>
+<td style="text-align: left;">En las <em>Cónicas</em> obtiene elipse, parábola e hipérbola cortando un cono doble con un plano. En astronomía mostró que epiciclos y excéntricas describen los mismos movimientos aparentes.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Claudio Ptolomeo</td>
+<td style="text-align: left;">~100 a ~170 d.C.</td>
+<td style="text-align: left;">En el <em>Almagesto</em> une la física de Aristóteles con deferentes, epiciclos y ecuante. Tierra fija y en el centro: fue la astronomía estándar por unos 1400 años.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Nicolás Copérnico</td>
+<td style="text-align: left;">1473 a 1543</td>
+<td style="text-align: left;">Pone el Sol en el centro (1543), con la Tierra como tercer planeta que gira sobre su eje. Mantiene círculos y epiciclos, y explica de forma natural el movimiento retrógrado.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Johannes Kepler</td>
+<td style="text-align: left;">1571 a 1630</td>
+<td style="text-align: left;">Encaja las órbitas en los sólidos platónicos (1596), modelo falso. Con los datos de Tycho llega a las órbitas elípticas (1609) y a que <span class="math inline">\(T^2\)</span> es proporcional a <span class="math inline">\(a^3\)</span> (1619).</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Isaac Newton</td>
+<td style="text-align: left;">1642 a 1727</td>
+<td style="text-align: left;">En los <em>Principia</em> (1687) deriva las leyes de Kepler de una fuerza proporcional a <span class="math inline">\(1/r^2\)</span>. La misma fuerza explica la manzana, la Luna y los planetas. Predice el achatamiento de la Tierra por su rotación.</td>
+</tr>
+</tbody>
+</table>
+<p>De Aristarco a Copérnico pasan unos 1800 años. Lo que sigue es el último paso de la lista: de las cónicas de Apolonio a la deducción de las leyes de Kepler con ecuaciones diferenciales.</p>
 </section>
 <section id="las-cónicas-y-las-esferas-de-dandelin" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="las-cónicas-y-las-esferas-de-dandelin"><span class="header-section-number">2</span> Las cónicas y las esferas de Dandelin</h2>

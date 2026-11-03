@@ -1,0 +1,129 @@
+---
+title: "Taller 3"
+subtitle: "Perturbaciones en el Sistema Solar: Mercurio, los troyanos de Júpiter y un cometa que se estira"
+description: ""
+author: "Arturo Sanjuán"
+date: 2026-10-30
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 15
+---
+
+Los tres problemas de este taller tienen la misma estructura: una situación del Sistema Solar que se resuelve de forma exacta, y una perturbación pequeña cuyo efecto se estudia con una ecuación lineal. El taller se trabaja en equipos de hasta tres personas y vale 50 puntos.
+
+## Mercurio y la relatividad general
+
+En la gravedad de Newton, un planeta se mueve alrededor del Sol bajo una fuerza central, que apunta siempre hacia el Sol. En coordenadas polares $(r,\theta)$ centradas en el Sol, eso hace que la cantidad
+
+$$h = r^2\dot\theta \tag{1}$$
+
+el momento angular por unidad de masa, sea constante a lo largo de toda la órbita; esa es la segunda ley de Kepler. La intensidad de la gravedad del Sol está en la constante $k=GM$, el producto de la constante de gravitación $G$ por la masa del Sol $M$, que vale $k=1.327\times10^{20}$ m³/s². Con la sustitución $z=1/r$ y tomando el ángulo $\theta$ como variable independiente, la órbita cumple la ecuación lineal
+
+$$z''+z=\kappa, \qquad \kappa=\frac{k}{h^2} \tag{2}$$
+
+donde las primas son derivadas respecto de $\theta$ y $\kappa$ es la letra griega kappa, distinta de la $k$ latina. Su solución es la elipse
+
+$$z_0=\kappa\,(1+e\cos\theta) \tag{3}$$
+
+donde $e$ es la excentricidad y el perihelio (el punto más cercano al Sol) está en $\theta=0,2\pi,\dots$. El número $\kappa$ se relaciona con el semieje mayor $a$ de la elipse por $\kappa\,a(1-e^2)=1$.
+
+La órbita de Mercurio no es exactamente una elipse fija: su perihelio gira lentamente (precesión del perihelio o precesión anómala) y la gravedad de Newton no alcanza a explicar todo ese giro. La corrección viene de la relatividad general. Según las ecuaciones de campo de Einstein, el Sol deforma el espacio-tiempo a su alrededor, y fuera del Sol esa deformación está descrita por la métrica de Schwarzschild. En esa descripción Mercurio no siente una fuerza: sigue la trayectoria más recta posible en la geometría curva del espacio-tiempo, que se llama una geodésica. La conservación del momento angular, que en la gravedad de Newton es la segunda ley de Kepler, sigue valiendo, pero en la forma
+
+$$h = r^2\frac{d\theta}{d\tau} \tag{4}$$
+
+donde $\tau$ es el tiempo propio de Mercurio, el que mide un reloj que viaja con él, y no el tiempo $t$ de un observador lejano. La diferencia entre las dos versiones es del orden de $v^2/c^2\approx10^{-8}$ para Mercurio, y no afecta el giro del perihelio, así que seguimos usando $\kappa=k/h^2$. Con esta $h$, las ecuaciones de Einstein dan para la órbita, en lugar de $z''+z=\kappa$, la ecuación
+
+$$z''+z=\kappa+\epsilon z^2, \qquad \epsilon=\frac{3k}{c^2} \tag{5}$$
+
+donde $c=2.998\times10^8$ m/s es la velocidad de la luz. No se les pide deducir (5). Para el Sol, $\epsilon\approx4.43$ km, mientras que para Mercurio $1/\kappa\approx5.55\times10^7$ km, así que el producto $\epsilon\kappa\approx8\times10^{-8}$ es diminuto. Por eso buscamos la solución como la elipse de Newton más una corrección pequeña, $z=z_0+\epsilon z_1$. La corrección $z_1$ resulta cumplir
+
+$$z_1''+z_1=z_0^2 \tag{6}$$
+
+Esta corrección es la que hace girar lentamente el perihelio de Mercurio.
+
+Verifiquen primero que (6) es correcta: sustituyan $z=z_0+\epsilon z_1$ en (5), usen que $z_0$ cumple $z_0''+z_0=\kappa$, y descarten los términos que llevan $\epsilon^2$. Después escriban $z_0^2$ como una combinación lineal de $\cos\theta$ y $\cos2\theta$, usando $\cos^2\theta=(1+\cos2\theta)/2$. Resuelvan (6) por coeficientes indeterminados. *(15 pts)*
+
+::: {.callout-tip title="Solución"}
+Al sustituir,
+
+$$(z_0''+z_0)+\epsilon(z_1''+z_1)=\kappa+\epsilon(z_0+\epsilon z_1)^2$$
+
+Como $z_0''+z_0=\kappa$, esos términos se cancelan; dividiendo por $\epsilon$ queda $z_1''+z_1=(z_0+\epsilon z_1)^2=z_0^2+\epsilon(\dots)$, y al descartar lo que lleva $\epsilon$ se obtiene (6).
+
+Desarrollando,
+
+$$z_0^2=\kappa^2\left[1+\frac{e^2}{2}+2e\cos\theta+\frac{e^2}{2}\cos2\theta\right]$$
+
+Cada parte del lado derecho se resuelve por separado. Para la constante, $z_1=\kappa^2\left(1+\dfrac{e^2}{2}\right)$. Para $\cos2\theta$, con $z_1=A\cos2\theta$ se tiene $z_1''+z_1=-3A\cos2\theta$, así que $A=-\kappa^2e^2/6$; no hay resonancia porque $2i$ no es raíz de $\lambda^2+1$.
+
+Para $\cos\theta$ (el término $2\kappa^2e\cos\theta$), como $\cos\theta$ y $\sin\theta$ resuelven la ecuación reducida, $A\cos\theta+B\sin\theta$ da cero al sustituir y nunca produce $2\kappa^2e\cos\theta$: es la resonancia, y se multiplica por $\theta$. Con $z_1=C\theta\sin\theta$, $z_1''+z_1=2C\cos\theta$, así que $C=\kappa^2e$. En total,
+
+$$z_1=\kappa^2\left[1+\frac{e^2}{2}-\frac{e^2}{6}\cos2\theta+e\,\theta\sin\theta\right]$$
+
+más una solución homogénea que solo ajusta condiciones iniciales. El factor $\theta$ del último término crece sin parar y es el que, órbita tras órbita, hace girar el perihelio: llamando $\delta=\epsilon\kappa$, la parte con $\cos\theta$ de $z$ es $e\kappa(\cos\theta+\delta\theta\sin\theta)\approx e\kappa\cos((1-\delta)\theta)$, y el perihelio avanza $\Delta\varphi=2\pi\delta=\dfrac{6\pi k}{c^2a(1-e^2)}$ por órbita, unos 43 segundos de arco por siglo para Mercurio.
+:::
+
+## Los troyanos de Júpiter
+
+Los asteroides troyanos comparten la órbita de Júpiter, unos 60° adelante o atrás de él. Realmente, Júpiter es tan pesado que no orbita alrededor del Sol. El Sol y Júpiter giran en círculos alrededor de su centro de masa, y sea $\mu=m_J/(m_S+m_J)\approx9.54\times10^{-4}$ la fracción de la masa total que corresponde a Júpiter. Usamos un sistema de coordenadas que gira con ellos, tomamos como unidad de longitud la distancia entre el Sol y Júpiter, y como unidad de tiempo $1/n$, donde $n$ es la velocidad angular de Júpiter. Júpiter tarda 11.86 años en dar una vuelta, de modo que $2\pi$ unidades de tiempo son 11.86 años. El punto de Lagrange $L_4$ es el tercer vértice del triángulo equilátero que forman el Sol y Júpiter. Un asteroide ligeramente desplazado de $L_4$, con desplazamientos pequeños $(x,y)$, cumple aproximadamente, para $x$ la ecuación de cuarto orden
+
+$$x^{(4)}+\ddot x+\frac{27}{4}\mu(1-\mu)\,x=0 \tag{7}$$
+
+Escriban su polinomio característico, resuélvanlo para $\lambda^2$, y muestren que si $27\mu(1-\mu)\le1$ las cuatro raíces son imaginarias puras, de modo que el asteroide oscila cerca de $L_4$, mientras que si $27\mu(1-\mu)>1$ hay una raíz con parte real positiva y el asteroide se aleja. Hallen el valor crítico $\mu_c$ que separa los dos casos. *(10 pts)*
+
+::: {.callout-tip title="Solución"}
+El polinomio característico $\lambda^4+\lambda^2+\frac{27}{4}\mu(1-\mu)$ es cuadrático en $\lambda^2$:
+
+$$\lambda^2=\frac{-1\pm\sqrt{1-27\mu(1-\mu)}}{2}$$
+
+Si $27\mu(1-\mu)\le1$, la raíz cuadrada es real y menor o igual que 1, las dos raíces $\lambda^2$ son negativas o cero y $\lambda=\pm i\omega_1,\pm i\omega_2$: oscilaciones acotadas. Si $27\mu(1-\mu)>1$, $\lambda^2$ es complejo no real, y entre sus cuatro raíces cuadradas hay dos con parte real positiva, de modo que hay soluciones que crecen exponencialmente.
+
+La condición $27\mu(1-\mu)=1$ da $\mu^2-\mu+\frac{1}{27}=0$, es decir,
+
+$$\mu_c=\frac12-\frac{\sqrt{69}}{18}\approx0.0385$$
+
+Para el Sol y Júpiter, $27\mu(1-\mu)\approx0.0257<1$, así que $L_4$ es estable.
+:::
+
+## Un cometa que se estira
+
+Un cometa cae hacia el Sol en línea recta, partiendo del reposo desde muy lejos. Su distancia $r$ al Sol cumple $\ddot r=-k/r^2$, con el mismo $k=1.327\times10^{20}$ m³/s², y como parte del reposo, su energía es cero, es decir, $\dot r^2=2k/r$. Sea $t_0$ el instante en que $r$ llegaría a cero y $\tau=t_0-t$ el tiempo que falta para ese instante. Integrando $\dot r^2=2k/r$ se obtiene
+
+$$r=\left(\frac{9k}{2}\right)^{1/3}\tau^{2/3} \tag{8}$$
+
+Pensemos ahora en dos fragmentos del cometa, uno en $r$ y otro en $r+\delta$, y preguntémonos cómo cambia con el tiempo la separación $\delta$. Supongan que las fuerzas internas del cometa son despreciables frente a la gravedad del Sol, de modo que cada fragmento cae como una partícula libre. En lo que sigue las primas son derivadas respecto de $\tau$; como $\tau=t_0-t$, la segunda derivada respecto de $\tau$ es igual a la segunda derivada respecto de $t$.
+
+Cada fragmento cumple la ecuación $\ddot r=-k/r^2$. Si se escribe la ecuación del fragmento que está en $r+\delta$, se le resta la del que está en $r$, y se usa la aproximación $\dfrac{1}{(r+\delta)^2}\approx\dfrac{1}{r^2}\left(1-\dfrac{2\delta}{r}\right)$, válida para $\delta$ pequeño, se obtiene $\delta''=\dfrac{2k}{r^3}\delta$. Al reemplazar $r(\tau)$ de (8) queda la ecuación
+
+$$\delta''=\frac{4}{9\tau^2}\,\delta \tag{9}$$
+
+Esta ecuación tiene coeficientes variables. Comprueben que $\delta=\tau^{4/3}$ es una solución y, a partir de ella, hallen una segunda solución por reducción de orden. Calculen el wronskiano de las dos soluciones y comparen con lo que predice la fórmula de Abel. *(15 pts)*
+
+::: {.callout-tip title="Solución"}
+Restando, $\delta''=-\dfrac{k}{(r+\delta)^2}+\dfrac{k}{r^2}\approx\dfrac{2k}{r^3}\delta$. De $r^3=\frac{9k}{2}\tau^2$ sale $\dfrac{2k}{r^3}=\dfrac{4}{9\tau^2}$.
+
+Con $\delta=\tau^{4/3}$, $\delta''=\frac43\cdot\frac13\,\tau^{-2/3}=\frac49\,\tau^{-2/3}=\dfrac{4}{9\tau^2}\,\tau^{4/3}$. La ecuación no tiene término en $\delta'$, así que $P=0$ y $y_2=v\,y_1$ con $v'=1/y_1^2=\tau^{-8/3}$:
+
+$$v=-\frac35\,\tau^{-5/3}, \qquad y_2=v\,y_1=-\frac35\,\tau^{-1/3}$$
+
+Se toma $y_2=\tau^{-1/3}$. El wronskiano de $\tau^{4/3}$ y $\tau^{-1/3}$ es $-\frac13-\frac43=-\frac53$, constante, como dice la fórmula de Abel con $P=0$.
+:::
+
+Escriban la solución general $\delta(\tau)$ y digan cuál de las dos soluciones domina cuando el cometa se acerca al Sol, es decir, cuando $\tau\to0$, y qué le pasa entonces a la separación. Supongan que cuando el cometa está a $r_0=1$ UA $=1.496\times10^{11}$ m del Sol, los dos fragmentos están separados $\delta_0=100$ m y tienen la misma velocidad. Calculen el tiempo $\tau_0$ que le falta en ese momento, en días. Usen las condiciones $\delta(\tau_0)=\delta_0$ y $\delta'(\tau_0)=0$ para hallar $\delta(\tau)$. *(10 pts)*
+
+::: {.callout-tip title="Solución"}
+La solución general es $\delta=A\tau^{4/3}+B\tau^{-1/3}$. Cuando $\tau\to0$, $\tau^{4/3}\to0$ y $\tau^{-1/3}\to\infty$: domina la segunda, y la separación crece sin límite cerca del Sol (el modelo deja de valer antes, cuando $\delta$ ya no es pequeño frente a $r$). Es el efecto de marea, que estira el cometa.
+
+De (8), $\tau=\dfrac23\dfrac{r^{3/2}}{\sqrt{2k}}$. Con $r_0=1$ UA, $\tau_0\approx2.37\times10^6$ s, cerca de 27.4 días.
+
+Las condiciones $\delta(\tau_0)=\delta_0$ y $\delta'(\tau_0)=0$ dan $B=4A\tau_0^{5/3}$ y $5A\tau_0^{4/3}=\delta_0$, de donde
+
+$$\delta(\tau)=\frac{\delta_0}{5}\left[\left(\frac{\tau}{\tau_0}\right)^{4/3}+4\left(\frac{\tau_0}{\tau}\right)^{1/3}\right]$$
+:::
