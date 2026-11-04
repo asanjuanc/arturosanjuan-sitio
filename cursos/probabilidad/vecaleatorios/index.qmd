@@ -1,0 +1,559 @@
+---
+title: "Vectores aleatorios"
+subtitle: "Distribución conjunta, marginales, independencia, covarianza y correlación"
+description: ""
+author: "Arturo Sanjuán"
+date: 2026-11-03
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 14
+---
+
+Hasta ahora estudiamos una variable aleatoria a la vez. Para lo que sigue necesitamos describir varias variables definidas sobre el mismo experimento y medir cuánto se relacionan entre sí. Esta es la herramienta del capítulo 5 del texto de Blanco.
+
+## Un ejemplo: dos dados tetraédricos
+
+Se lanzan dos dados tetraédricos, cada uno con caras $1,2,3,4$. El espacio muestral tiene 16 resultados equiprobables:
+
+$$
+\Omega=\{(i,j): i,j\in\{1,2,3,4\}\},\qquad P(\{(i,j)\})=\frac1{16}.
+$$
+
+Sobre este mismo $\Omega$ definimos dos variables aleatorias:
+
+$$
+Y(i,j)=i+j \quad(\text{la suma de los lados}),\qquad
+X(i,j)=\begin{cases}1 & \text{si } i=j \ (\text{sale un par}),\\ 0 & \text{si } i\neq j.\end{cases}
+$$
+
+La variable $Y$ toma los valores $2,3,\dots,8$ y $X$ toma los valores $0$ y $1$. Cada resultado del experimento produce una pareja $(x,y)$, y la probabilidad de la pareja es el número de resultados que la producen dividido entre $16$. Por ejemplo, para $y=4$ los resultados $(1,3)$ y $(3,1)$ dan $x=0$, mientras que $(2,2)$ da $x=1$; entonces $P(X=0,Y=4)=2/16$ y $P(X=1,Y=4)=1/16$.
+
+```{r}
+#| label: tabla-dados
+caras <- expand.grid(d1 = 1:4, d2 = 1:4)   # los 16 resultados equiprobables
+Y <- caras$d1 + caras$d2                   # suma de los lados
+X <- as.integer(caras$d1 == caras$d2)      # 1 si salen caras iguales
+addmargins(table(Y, X))                    # conteos sobre 16, con totales
+```
+
+Dividiendo estos conteos entre $16$ se obtiene la **función de masa conjunta** de $(X,Y)$. Las sumas por filas y por columnas (los márgenes de la tabla) son las probabilidades de $Y$ y de $X$ por separado.
+
+| $y \backslash x$ | $0$ | $1$ | $f_Y(y)$ |
+|:---:|:---:|:---:|:---:|
+| $2$ | $0$ | $1/16$ | $1/16$ |
+| $3$ | $2/16$ | $0$ | $2/16$ |
+| $4$ | $2/16$ | $1/16$ | $3/16$ |
+| $5$ | $4/16$ | $0$ | $4/16$ |
+| $6$ | $2/16$ | $1/16$ | $3/16$ |
+| $7$ | $2/16$ | $0$ | $2/16$ |
+| $8$ | $0$ | $1/16$ | $1/16$ |
+| $f_X(x)$ | $12/16$ | $4/16$ | $1$ |
+
+```{r}
+#| label: fig-masa3d
+#| echo: false
+#| fig-width: 7
+#| fig-height: 5
+#| fig-align: center
+#| fig-cap: "Función de masa conjunta de (X, Y) para dos dados tetraédricos. La altura de cada tallo es f(x, y). Los círculos vacíos marcan parejas posibles en la cuadrícula que tienen probabilidad cero."
+tab <- table(Y, X) / 16
+ys <- as.numeric(rownames(tab))
+xs <- as.numeric(colnames(tab))
+
+# escalas para que la caja tenga proporciones razonables
+su <- function(y) (y - 5) * 0.62     # eje y (suma) a lo ancho
+sv <- function(x) (x - 0.5) * 2.4    # eje x (0 o 1) en profundidad
+sw <- function(p) p * 9              # altura (probabilidad)
+
+ul <- su(c(1.5, 8.5)); vl <- sv(c(-0.6, 1.6)); wmax <- sw(0.30)
+
+# persp solo se usa para obtener la matriz de proyección
+par(mar = c(3, 1, 1, 1), xpd = NA)
+pm <- persp(ul, vl, matrix(0, 2, 2), zlim = c(0, wmax), theta = -30, phi = 28, d = 4,
+            scale = FALSE, expand = 1, box = FALSE, axes = FALSE, border = NA,
+            xlab = "", ylab = "", zlab = "")
+P3 <- function(u, v, w) trans3d(u, v, w, pm)
+
+# piso con cuadrícula suave
+for (y in ys) lines(P3(rep(su(y), 2), vl, c(0, 0)), col = "gray88")
+for (x in xs) lines(P3(ul, rep(sv(x), 2), c(0, 0)), col = "gray88")
+lines(P3(c(ul[1], ul[2], ul[2], ul[1], ul[1]),
+         c(vl[1], vl[1], vl[2], vl[2], vl[1]), rep(0, 5)), col = "gray55")
+
+# eje vertical con marcas en k/16
+v0 <- vl[2]; u0 <- ul[1]
+lines(P3(c(u0, u0), c(v0, v0), c(0, sw(0.27))), col = "gray30")
+for (k in 0:4) {
+  lines(P3(c(u0, u0 + 0.08), c(v0, v0), rep(sw(k / 16), 2)), col = "gray30")
+  text(P3(u0 - 0.1, v0, sw(k / 16)), labels = paste0(k, "/16"), cex = 0.7, adj = 1)
+}
+text(P3(u0, v0, sw(0.29)), labels = "f(x, y)", cex = 0.95)
+
+# rótulos de los ejes del piso
+text(P3(su(ys), vl[1] - 0.4, 0), labels = ys, cex = 0.85)
+text(P3(su(6.2), vl[1] - 1.35, 0), labels = "y (suma de los lados)", cex = 0.95)
+text(P3(ul[2] + 0.25, sv(xs), 0), labels = xs, cex = 0.85)
+text(P3(ul[2] + 0.55, sv(0.5), 0), labels = "x", cex = 0.95)
+
+# tallos, puntos y valores
+cols <- c("steelblue", "firebrick")
+for (i in seq_along(ys)) for (j in seq_along(xs)) {
+  p <- tab[i, j]
+  u <- su(ys[i]); v <- sv(xs[j])
+  if (p > 0) {
+    lines(P3(c(u, u), c(v, v), c(0, sw(p))), col = cols[j], lwd = 3)
+    points(P3(u, v, sw(p)), pch = 19, col = cols[j], cex = 1.3)
+    text(P3(u, v, sw(p) + 0.32), labels = paste0(round(p * 16), "/16"),
+         cex = 0.75, col = cols[j], font = 2)
+  } else {
+    points(P3(u, v, 0), pch = 1, col = "gray45", cex = 0.9)
+  }
+}
+legend("topright", legend = c("x = 0: no es un par", "x = 1: es un par"),
+       col = cols, pch = 19, bty = "n", cex = 0.9)
+```
+
+## Vector aleatorio y distribución conjunta
+
+Sean $X_1,X_2$ variables aleatorias definidas sobre el mismo espacio de probabilidad $(\Omega,\mathfrak F,P)$. La función
+
+$$
+\vec X(\omega)=\big(X_1(\omega),X_2(\omega)\big)
+$$
+
+es un **vector aleatorio** con valores en $\mathbb R^2$. Es medible porque, para borelianos $B_1,B_2$, se cumple $\vec X^{-1}(B_1\times B_2)=X_1^{-1}(B_1)\cap X_2^{-1}(B_2)\in\mathfrak F$, y los rectángulos generan los borelianos de $\mathbb R^2$. Todo lo que sigue se generaliza a $n$ variables, $\vec X=(X_1,\dots,X_n)$.
+
+La **distribución** de $\vec X$ es la medida
+
+$$
+P_{\vec X}(B)=P(\vec X\in B),\qquad B \text{ boreliano de } \mathbb R^2.
+$$
+
+En el caso discreto, la **función de masa conjunta** es
+
+$$
+f_{X_1,X_2}(x_1,x_2)=P(X_1=x_1,\,X_2=x_2),
+$$
+
+que vale cero fuera del rango de $\vec X$ y suma $1$. La tabla del ejemplo de los dados es exactamente esta función.
+
+## Distribuciones marginales
+
+La distribución de cada coordenada por separado se llama **marginal**. Supongamos que $X_2$ es discreta. Los eventos $\{X_2=y\}$, con $y$ en el rango de $X_2$ (un conjunto contable), forman una partición de $\Omega$. Entonces, para cualquier valor $a$,
+
+$$
+P(X_1=a)=P\Big(\{X_1=a\}\cap\bigcup_y\{X_2=y\}\Big)=P\Big(\bigcup_y\{X_1=a,\,X_2=y\}\Big)=\sum_y P(X_1=a,\,X_2=y),
+$$
+
+donde la última igualdad usa que los eventos $\{X_1=a,X_2=y\}$ son disyuntos y la σ-aditividad de $P$. Es decir,
+
+$$
+f_{X_1}(a)=\sum_y f_{X_1,X_2}(a,y).
+$$
+
+En el caso continuo la suma se convierte en integral,
+
+$$
+f_{X_1}(a)=\int_{-\infty}^{\infty} f_{X_1,X_2}(a,y)\,dy,
+$$
+
+y la justificación aparece en la sección siguiente.
+
+**En nuestro ejemplo**, las marginales son los márgenes de la tabla. Con ellas calculamos las medias:
+
+$$
+\mu_Y=\sum_y y\,f_Y(y)=\frac{2\cdot1+3\cdot2+4\cdot3+5\cdot4+6\cdot3+7\cdot2+8\cdot1}{16}=\frac{80}{16}=5,
+\qquad
+\mu_X=0\cdot\frac{12}{16}+1\cdot\frac{4}{16}=\frac14.
+$$
+
+```{r}
+#| label: medias-dados
+sum(ys * rowSums(tab))   # media de Y
+sum(xs * colSums(tab))   # media de X
+```
+
+## Función de distribución conjunta y densidad conjunta
+
+La **función de distribución conjunta** de $(X,Y)$ es
+
+$$
+F_{X,Y}(x,y)=P(X\le x,\,Y\le y)
+=\sum_{k\le x}\sum_{j\le y} f_{X,Y}(k,j)
+=\int_{-\infty}^{x}\!\int_{-\infty}^{y} f_{X,Y}(\xi,\eta)\,d\eta\,d\xi,
+$$
+
+donde la suma corresponde al caso discreto y la integral al caso continuo. En el caso continuo, $f_{X,Y}\ge0$ es la **densidad conjunta** y, para cualquier boreliano $C\subseteq\mathbb R^n$,
+
+$$
+P\big((X_1,\dots,X_n)\in C\big)=\int\!\!\int\!\cdots\!\int_C f(x_1,\dots,x_n)\,dx_1\cdots dx_n.
+$$
+
+La densidad se recupera de la distribución derivando, en los puntos donde $f$ es continua:
+
+$$
+f_{X,Y}(x,y)=\frac{\partial^2 F_{X,Y}(x,y)}{\partial x\,\partial y}=\frac{\partial^2 F_{X,Y}(x,y)}{\partial y\,\partial x}.
+$$
+
+::: {.callout-note title="Por qué la marginal continua es una integral"}
+Tomando $C=(-\infty,a]\times\mathbb R$ en la fórmula anterior,
+
+$$
+F_{X_1}(a)=P(X_1\le a)=\int_{-\infty}^{a}\Big(\int_{-\infty}^{\infty} f_{X_1,X_2}(s,y)\,dy\Big)ds.
+$$
+
+Derivando respecto a $a$ se obtiene $f_{X_1}(a)=\int f_{X_1,X_2}(a,y)\,dy$.
+:::
+
+**Ejemplo.** Sea $f_{X,Y}(x,y)=6xy^2\,\mathbf 1_{(0,1)^2}(x,y)$. Es una densidad, pues
+$\int_0^1\!\int_0^1 6xy^2\,dy\,dx=6\cdot\tfrac12\cdot\tfrac13=1$. Entonces
+
+$$
+P\Big(\tfrac12\le X\le\tfrac34,\ 0<Y\le\tfrac13\Big)=\int_{1/2}^{3/4}\!\int_0^{1/3}6xy^2\,dy\,dx
+=\int_{1/2}^{3/4}2x\,y^3\Big|_{y=0}^{y=1/3}dx
+=\int_{1/2}^{3/4}\frac{2x}{27}\,dx
+=\frac{1}{27}\,x^2\Big|_{1/2}^{3/4}
+=\frac{1}{27}\Big(\frac{9}{16}-\frac{4}{16}\Big)=\frac{5}{432}\approx1{,}157\times10^{-2}.
+$$
+
+```{r}
+#| label: integral-ejemplo
+interna <- function(x) sapply(x, function(x0) integrate(function(y) 6 * x0 * y^2, 0, 1/3)$value)
+integrate(interna, 1/2, 3/4)$value
+5/432
+```
+
+## Independencia
+
+Dos variables aleatorias $X,Y$ son **independientes** si para todos los borelianos $A,B$,
+
+$$
+P(X\in A,\ Y\in B)=P(X\in A)\,P(Y\in B).
+$$
+
+Esto es equivalente a que la distribución y la densidad (o la masa) conjuntas se factoricen en las marginales:
+
+$$
+F_{X,Y}(x,y)=F_X(x)\,F_Y(y),\qquad f_{X,Y}(x,y)=f_X(x)\,f_Y(y).
+$$
+
+**Los dados no son independientes.** Si $X$ y $Y$ fueran independientes se tendría $f_{X,Y}(0,2)=f_X(0)f_Y(2)=\frac{12}{16}\cdot\frac1{16}>0$, pero en la tabla $f_{X,Y}(0,2)=0$: la suma $2$ solo se obtiene con el par $(1,1)$.
+
+**El ejemplo de la sección anterior sí lo es.** Las marginales de $f(x,y)=6xy^2\,\mathbf 1_{(0,1)^2}$ son
+
+$$
+f_X(x)=\int_0^1 6xy^2\,dy=2x,\qquad f_Y(y)=\int_0^1 6xy^2\,dx=3y^2,\qquad 0<x,y<1,
+$$
+
+y su producto es $6xy^2=f_{X,Y}(x,y)$. Por eso la probabilidad calculada arriba es un producto: $P(\tfrac12\le X\le\tfrac34)\,P(Y\le\tfrac13)=\tfrac5{16}\cdot\tfrac1{27}=\tfrac5{432}$.
+
+### La suma de dos variables independientes
+
+Sean $X,Y$ independientes con densidades $f_X,f_Y$ (no es necesario que tengan la misma distribución) y sea $Z=X+Y$. Entonces
+
+$$
+F_Z(z)=P(X+Y\le z)=\iint_{\{x+y\le z\}} f_X(x)\,f_Y(y)\,dx\,dy .
+$$
+
+```{r}
+#| label: fig-region
+#| echo: false
+#| fig-width: 5
+#| fig-height: 5
+#| fig-align: center
+#| fig-cap: "La región {x + y ≤ z} es el semiplano que queda debajo de la recta y = z − x. Para cada valor fijo de y, la variable x recorre desde menos infinito hasta z − y."
+z0 <- 2
+lim <- c(-1.6, 3.4)
+par(mar = c(1, 1, 1, 1))
+plot(NA, xlim = lim, ylim = lim, asp = 1, axes = FALSE, xlab = "", ylab = "")
+
+# región sombreada: debajo de la recta y = z - x
+px <- c(lim[1], lim[2], lim[1])
+py <- c(z0 - lim[1], z0 - lim[2], z0 - lim[2])
+polygon(px, py, col = adjustcolor("steelblue", 0.10), border = NA)
+polygon(px, py, density = 10, angle = 45, col = adjustcolor("steelblue", 0.7), border = NA)
+
+# ejes con flechas
+arrows(lim[1], 0, lim[2], 0, length = 0.1)
+arrows(0, lim[1], 0, lim[2], length = 0.1)
+text(lim[2], -0.18, "x", adj = 1)
+text(0.15, lim[2], "y", adj = 0)
+segments(z0, -0.06, z0, 0.06); text(z0, -0.22, "z")
+segments(-0.06, z0, 0.06, z0); text(-0.2, z0, "z")
+text(-0.12, -0.2, "0", cex = 0.8)
+
+# la recta frontera y = z - x
+abline(a = z0, b = -1, lwd = 2.2, col = "firebrick")
+text(0.1, z0 + 0.55, expression(y == z - x), col = "firebrick", srt = -45)
+
+# para y fijo, x recorre desde -infinito hasta z - y
+for (y0 in c(-0.9, 0.8, 1.55)) {
+  arrows(lim[1] + 0.08, y0, z0 - y0 - 0.03, y0, length = 0.1, lwd = 1.7, col = "gray15")
+  points(z0 - y0, y0, pch = 19, cex = 0.8)
+}
+text(z0 - 0.8 + 0.15, 0.8 + 0.28, expression(x == z - y), adj = 0, cex = 0.95)
+text(-1.45, -1.05, expression(x + y <= z), cex = 1.2, col = "steelblue4", adj = 0)
+```
+
+Integrando primero en $x$ (para cada $y$ fijo, $x$ va de $-\infty$ a $z-y$, como muestra la @fig-region):
+
+$$
+F_Z(z)=\int_{-\infty}^{\infty}\Big(\int_{-\infty}^{z-y} f_X(x)\,dx\Big) f_Y(y)\,dy=\int_{-\infty}^{\infty}F_X(z-y)\,f_Y(y)\,dy .
+$$
+
+Derivando respecto a $z$ bajo el signo integral (lo cual se justifica, por ejemplo, cuando $f_X$ es continua y acotada) se obtiene la densidad de la suma:
+
+$$
+f_Z(z)=\int_{-\infty}^{\infty}f_X(z-y)\,f_Y(y)\,dy=(f_X*f_Y)(z),
+$$
+
+que se llama la **convolución** de $f_X$ y $f_Y$.
+
+**Ejemplo.** Sean $X,Y$ independientes, ambas exponenciales de parámetro $\lambda$, es decir $f(t)=\lambda e^{-\lambda t}\mathbf 1_{(0,\infty)}(t)$. Entonces
+
+$$
+f_Z(z)=\int_{-\infty}^{\infty}\lambda e^{-\lambda(z-y)}\mathbf 1_{(0,\infty)}(z-y)\;\lambda e^{-\lambda y}\mathbf 1_{(0,\infty)}(y)\,dy
+=\lambda^2e^{-\lambda z}\int_{-\infty}^{\infty}\mathbf 1_{(0,\infty)}(z-y)\,\mathbf 1_{(0,\infty)}(y)\,dy .
+$$
+
+El producto de indicadoras vale $1$ exactamente cuando $0<y<z$, así que la integral es $z$ si $z>0$ y es $0$ si $z\le0$. Por lo tanto
+
+$$
+f_Z(z)=\lambda^2\,z\,e^{-\lambda z}\,\mathbf 1_{(0,\infty)}(z)=\frac{\lambda(\lambda z)^{2-1}e^{-\lambda z}}{\Gamma(2)}\,\mathbf 1_{(0,\infty)}(z),
+$$
+
+es decir, $Z\sim\text{Gamma}(2,\lambda)$. Es el mismo resultado que obtuvimos con el proceso de Poisson: el tiempo hasta el segundo evento es la suma de dos tiempos de espera exponenciales independientes.
+
+::: {.callout-note title="Tarea"}
+Encuentre la distribución de $Z=X+Y$ si $X,Y\sim N(0,1)$ son i.i.d.
+:::
+
+## Esperanza de una combinación lineal y de un producto
+
+Para una función $g$ de dos variables, el valor esperado de $g(X,Y)$ se calcula directamente con la distribución conjunta,
+
+$$
+E[g(X,Y)]=\sum_x\sum_y g(x,y)\,f_{X,Y}(x,y)\qquad\text{o}\qquad E[g(X,Y)]=\iint g(x,y)\,f_{X,Y}(x,y)\,dx\,dy,
+$$
+
+según el caso, siempre que la suma o la integral converja absolutamente. Con $g(x,y)=\alpha x+\beta y$ se obtiene, para constantes $\alpha,\beta$ y $Z=\alpha X+\beta Y$,
+
+$$
+E[Z]=\alpha E[X]+\beta E[Y],\qquad\text{es decir}\qquad \mu_Z=\alpha\mu_X+\beta\mu_Y .
+$$
+
+Esto dice que $E$ es **lineal**.
+
+::: {.callout-note title="Tarea"}
+Demuestre la linealidad de $E$ (en el caso continuo, escribiendo $E[\alpha X+\beta Y]$ como integral doble y usando las marginales). Observe que no se necesita que $X$ y $Y$ sean independientes ni idénticamente distribuidas.
+:::
+
+Por inducción, $E\big[\sum_{i=1}^n X_i\big]=\sum_{i=1}^n E[X_i]$. En el ejemplo de los dados, $Y=D_1+D_2$ con $D_1,D_2$ los dos lados, y como $E[D_i]=\frac{1+2+3+4}{4}=\frac52$ se obtiene $\mu_Y=5$, el mismo valor que calculamos con la tabla.
+
+Para el **producto**, la independencia sí es necesaria. Si $X,Y$ son independientes,
+
+$$
+E[XY]=\iint xy\,f_{X,Y}(x,y)\,dx\,dy=\iint xy\,f_X(x)f_Y(y)\,dx\,dy=\int x f_X(x)\,dx\int y f_Y(y)\,dy=E[X]\,E[Y].
+$$
+
+De nuevo basta con independencia; no hace falta que sean idénticamente distribuidas (la demostración en el caso discreto es igual, con sumas).
+
+**Ejemplo: la media de la binomial.** Sean $X_1,\dots,X_n$ i.i.d. Bernoulli de parámetro $p$. Por definición de la binomial, $Z=\sum_{i=1}^nX_i\sim B(n,p)$. Entonces
+
+$$
+E[Z]=E\Big[\sum_{i=1}^nX_i\Big]=\sum_{i=1}^nE[X_i]=\sum_{i=1}^np=np,
+$$
+
+que es el valor que ya conocíamos, pero ahora lo obtuvimos sin sumar sobre la función de masa de la binomial.
+
+## Covarianza
+
+Si queremos medir cómo varían juntas dos variables, definimos la **covarianza** de $X$ y $Y$ como
+
+$$
+\operatorname{Cov}(X,Y)=E\big[(X-\mu_X)(Y-\mu_Y)\big]=:\sigma_{X,Y}.
+$$
+
+::: {.callout-note title="Tarea"}
+Demuestre las siguientes propiedades, para constantes $a,b$:
+
+1. $\sigma_{X,Y}=\operatorname{Cov}(X,Y)=E[XY]-E[X]\,E[Y]=\mu_{XY}-\mu_X\mu_Y$.
+2. $\operatorname{Var}(X)=\operatorname{Cov}(X,X)$.
+3. $\operatorname{Cov}(aX+b,\,Y)=a\operatorname{Cov}(X,Y)$.
+:::
+
+::: {.callout-note title="Tarea"}
+Demuestre que si $X$ y $Y$ son independientes, entonces $\operatorname{Cov}(X,Y)=0$.
+:::
+
+**El recíproco es falso.** Que la covarianza sea cero no implica independencia. Sea $\Omega=\{a,b,c\}$ con los tres puntos equiprobables y definamos $X(a)=-1,\ X(b)=0,\ X(c)=1$ y $Y(a)=1,\ Y(b)=-2,\ Y(c)=1$. La masa conjunta es
+
+| $x \backslash y$ | $1$ | $-2$ | $f_X(x)$ |
+|:---:|:---:|:---:|:---:|
+| $-1$ | $1/3$ | $0$ | $1/3$ |
+| $0$ | $0$ | $1/3$ | $1/3$ |
+| $1$ | $1/3$ | $0$ | $1/3$ |
+| $f_Y(y)$ | $2/3$ | $1/3$ | $1$ |
+
+Las medias son $\mu_X=-\frac13+0+\frac13=0$ y $\mu_Y=\frac23-\frac23=0$, y
+$E[XY]=(-1)(1)\frac13+(0)(-2)\frac13+(1)(1)\frac13=0$. Entonces $\operatorname{Cov}(X,Y)=0-0\cdot0=0$.
+
+Pero no son independientes: $f_{X,Y}(0,-2)=\frac13$, mientras que $f_X(0)\,f_Y(-2)=\frac13\cdot\frac13=\frac19$. De hecho $Y=3X^2-2$ está completamente determinada por $X$. La covarianza detecta únicamente asociación lineal, y esta relación es cuadrática.
+
+## Varianza de una suma
+
+Supongamos que $X$ y $Y$ tienen varianzas finitas. Entonces
+
+$$
+\operatorname{Var}(X+Y)=\operatorname{Var}(X)+2\operatorname{Cov}(X,Y)+\operatorname{Var}(Y),
+\qquad\text{es decir}\qquad
+\sigma_{X+Y}^2=\sigma_X^2+2\sigma_{X,Y}+\sigma_Y^2 .
+$$
+
+**Demostración.** Usamos $\operatorname{Var}(W)=E[W^2]-(E[W])^2$ y la linealidad de $E$:
+
+$$
+\begin{aligned}
+\operatorname{Var}(X+Y)&=E\big[(X+Y)^2\big]-\big(E[X+Y]\big)^2\\
+&=E[X^2]+2E[XY]+E[Y^2]-\big(\mu_X^2+2\mu_X\mu_Y+\mu_Y^2\big)\\
+&=\big(E[X^2]-\mu_X^2\big)+\big(E[Y^2]-\mu_Y^2\big)+2\big(E[XY]-\mu_X\mu_Y\big)\\
+&=\sigma_X^2+\sigma_Y^2+2\sigma_{X,Y}.\qquad\blacksquare
+\end{aligned}
+$$
+
+Si $X$ y $Y$ son independientes, $\sigma_{X,Y}=0$ y la varianza de la suma es la suma de las varianzas.
+
+El mismo desarrollo con $n$ sumandos da
+
+$$
+\operatorname{Var}\Big(\sum_{i=1}^nX_i\Big)=\sum_{i=1}^n\operatorname{Var}(X_i)+2\sum_{i<j}\operatorname{Cov}(X_i,X_j),
+$$
+
+de modo que si las $X_i$ son independientes dos a dos, los términos de covarianza desaparecen.
+
+**Ejemplo: la varianza de la binomial.** Con $X_i$ i.i.d. Bernoulli de parámetro $p$ y $q=1-p$, como $X_i^2=X_i$ se tiene $\operatorname{Var}(X_i)=E[X_i^2]-p^2=p-p^2=pq$. Entonces
+
+$$
+\operatorname{Var}(Z)=\operatorname{Var}\Big(\sum_{i=1}^nX_i\Big)=\sum_{i=1}^n\operatorname{Var}(X_i)=\sum_{i=1}^npq=npq,
+$$
+
+nuevamente un resultado conocido, pero al que llegamos con mucho menos trabajo.
+
+## Coeficiente de correlación
+
+La covarianza depende de las unidades en que se mida cada variable. Para tener una medida sin unidades, cuando $0<\sigma_X<\infty$ y $0<\sigma_Y<\infty$ definimos el **coeficiente de correlación**
+
+$$
+\rho(X,Y)=\frac{\operatorname{Cov}(X,Y)}{\sqrt{\operatorname{Var}(X)}\sqrt{\operatorname{Var}(Y)}}=\frac{\sigma_{X,Y}}{\sigma_X\,\sigma_Y}.
+$$
+
+Sean $X^*$ y $Y^*$ las variables **normalizadas**,
+
+$$
+X^*=\frac{X-\mu_X}{\sigma_X},\qquad Y^*=\frac{Y-\mu_Y}{\sigma_Y}.
+$$
+
+::: {.callout-tip title="Lema"}
+$E[X^*]=0$ y $\operatorname{Var}(X^*)=1$ (igual para $Y^*$). Además $E[X^*Y^*]=\rho(X,Y)$ y $\rho(X^*,Y^*)=\rho(X,Y)$.
+:::
+
+**Demostración.** Por linealidad, $E[X^*]=\dfrac{E[X]-\mu_X}{\sigma_X}=0$. Como la media es cero,
+
+$$
+\operatorname{Var}(X^*)=E\big[(X^*)^2\big]=\frac{E\big[(X-\mu_X)^2\big]}{\sigma_X^2}=\frac{\sigma_X^2}{\sigma_X^2}=1.
+$$
+
+Para la covarianza,
+
+$$
+E[X^*Y^*]=\frac{E\big[(X-\mu_X)(Y-\mu_Y)\big]}{\sigma_X\sigma_Y}=\frac{\sigma_{X,Y}}{\sigma_X\sigma_Y}=\rho(X,Y).
+$$
+
+Como $X^*,Y^*$ tienen media $0$ y desviación estándar $1$, $\operatorname{Cov}(X^*,Y^*)=E[X^*Y^*]-0\cdot0=\rho(X,Y)$ y el denominador de $\rho(X^*,Y^*)$ vale $1$. $\blacksquare$
+
+Es decir, la correlación entre dos variables es la misma correlación entre sus variables normalizadas.
+
+### La correlación está entre menos uno y uno
+
+Como un cuadrado tiene esperanza no negativa, y usando el lema,
+
+$$
+0\le E\big[(X^*\mp Y^*)^2\big]=E\big[(X^*)^2\big]\mp2E[X^*Y^*]+E\big[(Y^*)^2\big]=2\mp2\rho(X,Y).
+$$
+
+De $0\le2-2\rho$ y $0\le2+2\rho$ se concluye que $-1\le\rho(X,Y)\le1$. Esto es lo mismo que $|\sigma_{X,Y}|\le\sigma_X\sigma_Y$, la desigualdad de Cauchy y Schwarz para la covarianza (Teorema 5.58 y Nota 5.59 del texto). El mismo argumento, aplicado a $U/\sqrt{E[U^2]}$ y $V/\sqrt{E[V^2]}$, prueba $|E[UV]|\le\sqrt{E[U^2]\,E[V^2]}$ para variables $U,V$ cualesquiera con segundo momento finito (si alguno de los dos segundos momentos es cero, esa variable es cero casi seguramente por el resultado sobre variables no negativas que se enuncia más abajo, y la desigualdad es trivial).
+
+::: {.callout-note title="Tarea"}
+Demuestre las siguientes propiedades del coeficiente de correlación:
+
+1. $\rho(X,X)=1$ y $\rho(X,-X)=-1$.
+2. $\rho(X,Y)=\rho(Y,X)$.
+3. $\rho(aX+b,\,Y)=\rho(X,Y)$ si $a>0$, para constantes $a,b$. ¿Qué ocurre si $a<0$?
+:::
+
+### Un resultado que usaremos y demostraremos más adelante
+
+Para caracterizar cuándo $|\rho|=1$ usaremos el siguiente hecho sobre variables no negativas. Su demostración se hace con la desigualdad de Markov, que veremos más adelante; por ahora lo tomamos como un resultado conocido.
+
+::: {.callout-important title="Variables no negativas con esperanza cero"}
+Si $Z\ge0$ es una variable aleatoria, entonces
+$$
+E[Z]=0\quad\Longleftrightarrow\quad P(Z=0)=1 .
+$$
+:::
+
+### Correlación igual a uno en valor absoluto
+
+::: {.callout-tip title="Teorema"}
+Sean $X,Y$ con $0<\sigma_X,\sigma_Y<\infty$. Entonces $|\rho(X,Y)|=1$ si y solo si existen constantes $a\ne0$ y $b$ tales que
+
+$$
+P(Y=aX+b)=1.
+$$
+
+En tal caso $\rho(X,Y)=1$ si $a>0$ y $\rho(X,Y)=-1$ si $a<0$.
+:::
+
+**Demostración.** ($\Rightarrow$) Supongamos $\rho(X,Y)=1$. Por el cálculo de la sección anterior, $E\big[(X^*-Y^*)^2\big]=2-2\rho=0$. Como $(X^*-Y^*)^2\ge0$, el resultado anterior sobre variables no negativas da $P\big((X^*-Y^*)^2=0\big)=1$, es decir $P(X^*=Y^*)=1$. Escribiendo $P(\alpha X^*+\beta Y^*=0)=1$, esto corresponde a $\alpha=1,\ \beta=-1$. Con probabilidad $1$,
+
+$$
+\frac{X-\mu_X}{\sigma_X}=\frac{Y-\mu_Y}{\sigma_Y}\quad\Longleftrightarrow\quad Y=aX+b,\qquad a=\frac{\sigma_Y}{\sigma_X}>0,\quad b=\mu_Y-a\mu_X .
+$$
+
+Si $\rho(X,Y)=-1$, se usa $E\big[(X^*+Y^*)^2\big]=2+2\rho=0$, que da $P(X^*=-Y^*)=1$ (ahora $\alpha=\beta=1$) y por lo tanto $a=-\sigma_Y/\sigma_X<0$.
+
+($\Leftarrow$) Supongamos $P(Y=aX+b)=1$ con $a\ne0$. Entonces $\mu_Y=a\mu_X+b$ y $Y-\mu_Y=a(X-\mu_X)$ con probabilidad $1$, de donde $\sigma_{X,Y}=a\sigma_X^2$ y $\sigma_Y=|a|\sigma_X$. Así
+
+$$
+\rho(X,Y)=\frac{a\,\sigma_X^2}{|a|\,\sigma_X^2}=\frac{a}{|a|}=\pm1 .\qquad\blacksquare
+$$
+
+Por lo tanto, $\rho$ mide qué tanto se parece la relación entre $X$ y $Y$ a una relación lineal: $|\rho|=1$ significa que, con probabilidad $1$, una variable es una función lineal de la otra. Un valor $\rho=0$ solo dice que no hay tendencia lineal, y no implica independencia (el ejemplo con $Y=3X^2-2$ tiene $\rho=0$).
+
+::: {.callout-important title="Por qué no una integral doble"}
+Cuando $\rho=1$ el vector $(X^*,Y^*)$ está concentrado sobre la recta $y=x$, que tiene área cero en $\mathbb R^2$; por eso no tiene densidad conjunta y $E\big[(X^*-Y^*)^2\big]$ no se puede escribir como una integral doble contra una densidad. No hace falta: el valor esperado de la variable no negativa $(X^*-Y^*)^2$ ya se calculó con linealidad, y el resultado sobre variables no negativas hace el resto.
+:::
+
+::: {.callout-note title="Tarea"}
+En la demostración del numeral 5 del Teorema 5.65 del texto de Blanco (página 203) hay un error. Encuéntrelo y corríjalo usando la demostración anterior.
+:::
+
+## Ejercicios del texto de Blanco
+
+Ejercicios de la sección 5.8 del texto (páginas 232 a 243), agrupados por tema. Los números son los del libro.
+
+* **Tablas de masa conjunta y marginales:** 1, 2, 3, 4, 5, 10, 13.
+* **Densidad conjunta y regiones del plano:** 26, 28 (partes b y c), 29, 30, 31, 32, 34, 35, 38, 40, 43 (parte b).
+* **Independencia:** 8, 9 (parte b), 14, 15, 18, 27, 33 (parte a), 56.
+* **Suma de variables independientes:** 9 (parte a), 28 (parte a), 36, 37, 39 (parte a), 42.
+* **Esperanza, linealidad e indicadoras:** 3, 4, 5, 7 (parte b), 19, 20, 21, 27 (parte c).
+* **Covarianza, varianza de sumas y correlación:** 11, 16, 17, 23, 25, 33 (partes b, c y d), 39 (parte b).
+* **Normalizadas y desigualdad de Cauchy y Schwarz:** 22, 24.
+* **Opcional:** 58.

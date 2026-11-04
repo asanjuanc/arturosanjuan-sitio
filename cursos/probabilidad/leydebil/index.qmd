@@ -1,0 +1,190 @@
+---
+title: "La ley débil de los grandes números"
+subtitle: "De las desigualdades de Markov y Chebyshev a la ley de Bernoulli"
+description: ""
+author: "Arturo Sanjuán"
+date: 2026-11-03
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 15
+---
+
+Ya vimos en la sección de [la normal como límite](../limitenormal/index.qmd) que la binomial y la Poisson se parecen a una campana, y que la media y la varianza son los dos números que organizan esa campana. Aquí nos preguntamos cuánto se puede decir usando únicamente esos dos números, sin conocer la distribución: si sabemos la media y la varianza de una variable aleatoria, ¿qué tanto puede alejarse de su media? La respuesta son dos desigualdades, la de Markov y la de Chebyshev, y de ellas se deduce casi sin esfuerzo la **ley débil de los grandes números**, la primera respuesta rigurosa a la pregunta que recorre todo el curso: ¿por qué el azar produce regularidad?
+
+## La desigualdad de Markov
+
+Empezamos por la desigualdad más simple, que solo usa la media y exige que la variable no sea negativa.
+
+::: {.callout-tip title="Teorema (desigualdad de Markov)"}
+Sea $X$ una variable aleatoria no negativa cuyo valor esperado existe. Entonces, para todo $a>0$,
+
+$$P(X\ge a)\le\frac{E(X)}{a}$$
+:::
+
+**Demostración.** Consideremos la variable aleatoria indicadora
+
+$$I=\begin{cases}1 & \text{si } X\ge a\\[2pt] 0 & \text{en otro caso}\end{cases}$$
+
+Afirmamos que $I\le X/a$. Si $X\ge a$, entonces $X/a\ge1=I$. Si $X<a$, entonces $I=0\le X/a$, porque $X\ge0$. (Dicho con una gráfica: como función del valor $x\ge0$, el escalón que vale $0$ antes de $a$ y $1$ desde $a$ queda siempre por debajo de la recta $x/a$, que parte de $0$ y llega a $1$ justo en $x=a$.) Tomando valor esperado a ambos lados, y como $E(I)=P(X\ge a)$,
+
+$$P(X\ge a)=E(I)\le\frac{E(X)}{a}\qquad\blacksquare$$
+
+Cuando $X$ tiene densidad $f$, el mismo argumento se lee directamente en la integral: descartamos la parte de $(0,a)$, que es no negativa, y en $[a,\infty)$ usamos que $x/a\ge1$,
+
+$$\frac{E(X)}{a}=\int_0^\infty\frac xa\,f(x)\,dx\ \ge\ \int_a^\infty\frac xa\,f(x)\,dx\ \ge\ \int_a^\infty f(x)\,dx=P(X\ge a)$$
+
+::: {.callout-tip title="Ejemplo"}
+El puntaje $X$ de un estudiante en un examen de un profesor tiene media $75$. Como $X\ge0$, la probabilidad de que un estudiante saque $85$ o más es a lo sumo
+
+$$P(X\ge85)\le\frac{75}{85}\approx0{,}882$$
+
+Ahora sea $X\sim\text{Binomial}(5,1/3)$, de modo que $E(X)=5/3$. Markov dice
+
+$$P(X\ge2)\le\frac{5/3}{2}=\frac56\approx0{,}833$$
+
+mientras que el valor exacto es
+
+$$P(X\ge2)=1-P(X=0)-P(X=1)=1-\Big(\frac23\Big)^5-5\Big(\frac23\Big)^4\Big(\frac13\Big)=\frac{131}{243}\approx0{,}539$$
+
+La cota es correcta pero gruesa, como era de esperar de una desigualdad que solo mira la media.
+:::
+
+## La desigualdad de Chebyshev
+
+Markov usa solo la media. Si además conocemos la varianza, aplicamos Markov a la distancia entre $X$ y su media y obtenemos algo mucho más útil.
+
+::: {.callout-tip title="Teorema (desigualdad de Chebyshev)"}
+Sea $X$ una variable aleatoria con $\text{Var}(X)<\infty$, con media $\mu=E(X)$ y varianza $\sigma^2=\text{Var}(X)$. Entonces, para todo $\varepsilon>0$,
+
+$$P\big(|X-\mu|\ge\varepsilon\big)\le\frac{\sigma^2}{\varepsilon^2}$$
+:::
+
+**Demostración.** Sea $Y=|X-\mu|^2\ge0$ y $a=\varepsilon^2$. Los eventos $\{|X-\mu|\ge\varepsilon\}$ y $\{|X-\mu|^2\ge\varepsilon^2\}$ son el mismo, así que por Markov,
+
+$$P\big(|X-\mu|\ge\varepsilon\big)=P\big(|X-\mu|^2\ge\varepsilon^2\big)\le\frac{E\big(|X-\mu|^2\big)}{\varepsilon^2}=\frac{\sigma^2}{\varepsilon^2}\qquad\blacksquare$$
+
+Pasando al evento complementario, y tomando $\varepsilon=k\sigma$ con $k>0$ y $\sigma>0$, la desigualdad se reescribe de dos maneras equivalentes,
+
+$$P\big(|X-\mu|<\varepsilon\big)\ge1-\frac{\sigma^2}{\varepsilon^2}\qquad\qquad P\big(|X-\mu|\ge k\sigma\big)\le\frac1{k^2}$$
+
+En palabras: sin importar cómo se distribuya $X$, al menos $3/4$ de la probabilidad queda a menos de $2\sigma$ de la media, y al menos $8/9$ a menos de $3\sigma$.
+
+::: {.callout-tip title="Ejemplo"}
+¿Existe una variable aleatoria $X$, con media $\mu$ y desviación estándar $\sigma>0$, tal que
+
+$$P\big(|X-\mu|\le2\sigma\big)=0{,}6\ ?$$
+
+Chebyshev con $k=2$ da $P(|X-\mu|<2\sigma)\ge1-\tfrac14=\tfrac34$, y como el evento $\{|X-\mu|\le2\sigma\}$ contiene a $\{|X-\mu|<2\sigma\}$,
+
+$$P\big(|X-\mu|\le2\sigma\big)\ge\frac34=0{,}75>0{,}6$$
+
+Por lo tanto no puede existir una variable aleatoria así.
+:::
+
+Hay una consecuencia que vale la pena anotar, porque dice qué significa que la varianza sea cero.
+
+::: {.callout-tip title="Corolario"}
+Si $\text{Var}(X)=0$, entonces $P(X=\mu)=1$.
+:::
+
+**Demostración.** Para cada $n\ge1$, Chebyshev con $\varepsilon=1/n$ da
+
+$$P\Big(|X-\mu|\ge\frac1n\Big)\le\frac{\sigma^2}{(1/n)^2}=0$$
+
+Los eventos $A_n=\{|X-\mu|\ge1/n\}$ crecen con $n$ y su unión es $\{|X-\mu|>0\}=\{X\ne\mu\}$. Por la continuidad de la probabilidad (la vimos en la [primera sección](../introduccion/index.qmd)),
+
+$$P(X\ne\mu)=\lim_{n\to\infty}P(A_n)=0\qquad\text{y así}\qquad P(X=\mu)=1\qquad\blacksquare$$
+
+::: {.callout-important title="Nota histórica"}
+**Jacob Bernoulli** demostró el primer caso de la ley de los grandes números, el de ensayos con probabilidad de éxito $p$, y dice haberle dado vueltas durante veinte años antes de publicarlo; el resultado apareció en su *Ars conjectandi* de 1713, ocho años después de su muerte. No usó ninguna desigualdad de Markov ni de Chebyshev, que todavía no existían, sino una estimación directa de las colas de la binomial, y con ella obtuvo un número concreto: con $p=3/5$ bastan $25\,550$ ensayos para que la proporción de éxitos quede a menos de $1/50$ de $p$ con una certeza "moral" de mil contra uno. El nombre *ley de los grandes números* se lo dio **Siméon Denis Poisson** en 1837. El argumento que vamos a usar, con la desigualdad que lleva su nombre, es el de **Pafnuti Chebyshev** (1867), quien lo probó para variables independientes con varianzas acotadas. Más de sesenta años después, **Aleksandr Khinchin** (1929) mostró que ni siquiera hace falta la varianza finita, basta con que exista la media. Por esa herencia, al caso en que las variables son Bernoulli se le llama *ley de Bernoulli*.
+:::
+
+## La ley débil de los grandes números
+
+Recordemos que $X_1,X_2,\dots$ son independientes e idénticamente distribuidas (i.i.d.) si son independientes y todas tienen la misma distribución. Escribimos
+
+$$\bar X_n=\frac1n\sum_{i=1}^nX_i$$
+
+para el promedio de las primeras $n$.
+
+::: {.callout-tip title="Teorema (ley débil de los grandes números)"}
+Sean $X_1,X_2,\dots$ variables aleatorias i.i.d. con media $\mu$ y varianza finita $\sigma^2$. Entonces, para todo $\varepsilon>0$ y todo $n\ge1$,
+
+$$P\big(|\bar X_n-\mu|>\varepsilon\big)\le\frac{\sigma^2}{n\varepsilon^2}$$
+
+y en consecuencia, para todo $\varepsilon>0$,
+
+$$\lim_{n\to\infty}P\big(|\bar X_n-\mu|>\varepsilon\big)=0$$
+:::
+
+Lo segundo se dice así: la media de la muestra converge a la media de la población **en probabilidad** (en teoría de la medida esto se llama convergencia en medida). En general, una sucesión $Y_n$ converge en probabilidad a $Y$ si $\lim_{n\to\infty}P(|Y_n-Y|>\varepsilon)=0$ para todo $\varepsilon>0$.
+
+**Demostración.** Es directa. Por linealidad del valor esperado, y porque la varianza de una suma de variables independientes es la suma de las varianzas,
+
+$$E(\bar X_n)=\frac1n\sum_{i=1}^nE(X_i)=\mu\qquad\qquad\text{Var}(\bar X_n)=\frac1{n^2}\sum_{i=1}^n\text{Var}(X_i)=\frac{\sigma^2}{n}$$
+
+Aplicando Chebyshev a $\bar X_n$,
+
+$$P\big(|\bar X_n-\mu|>\varepsilon\big)\le P\big(|\bar X_n-\mu|\ge\varepsilon\big)\le\frac{\text{Var}(\bar X_n)}{\varepsilon^2}=\frac{\sigma^2}{n\varepsilon^2}$$
+
+que tiende a $0$ cuando $n\to\infty$. $\blacksquare$
+
+Observe quién hace el trabajo: promediar divide la varianza entre $n$, y Chebyshev traduce una varianza pequeña en una probabilidad pequeña de desviarse de la media.
+
+::: {.callout-tip title="Corolario (ley de Bernoulli)"}
+Si cada $X_i\sim\text{Bernoulli}(p)$, entonces $\bar X_n$ es la proporción de éxitos en $n$ ensayos, con $\mu=p$ y $\sigma^2=p(1-p)\le\tfrac14$ (el máximo se alcanza en $p=\tfrac12$). Por lo tanto, para todo $\varepsilon>0$,
+
+$$P\big(|\bar X_n-p|>\varepsilon\big)\le\frac1{4n\varepsilon^2}$$
+:::
+
+Para sentir el tamaño de la cota, volvamos al ejemplo de Bernoulli, $p=3/5$ y $\varepsilon=1/50$. Pedir que la probabilidad de equivocarse sea a lo sumo $1/1001$ (mil contra uno) exige, por Chebyshev,
+
+$$n\ge\frac{1001\,p(1-p)}{\varepsilon^2}=\frac{1001\cdot0{,}24}{0{,}0004}=600\,600$$
+
+ensayos. La aproximación normal de la sección anterior sugiere que bastan unos $6\,500$, y la cota de Bernoulli, $25\,550$, queda en el medio. La ley débil dice que el promedio converge, no qué tan rápido, y la cota de Chebyshev es generosa porque solo usa la varianza.
+
+::: {.callout-important title="Qué dice y qué no dice"}
+La ley de Bernoulli no afirma que, lanzando la moneda una vez tras otra, la sucesión de proporciones $\bar X_n$ se acerque a $p$ y se quede cerca. Afirma algo sobre cada $n$ por separado: la probabilidad de que $\bar X_n$ esté lejos de $p$ se vuelve pequeña. Lo primero también es cierto, pero es la ley *fuerte* de los grandes números (para el caso de Bernoulli, debida a Borel en 1909) y no se deduce de lo que probamos aquí. Es el mismo cuidado que ya tuvimos con las frecuencias relativas y la probabilidad en la [primera sección](../introduccion/index.qmd).
+:::
+
+## Lo que quedó pendiente
+
+Antes dejamos pendiente la versión general del corolario de Chebyshev: una variable no negativa con esperanza cero es cero con probabilidad uno, y recíprocamente.
+
+::: {.callout-tip title="Teorema"}
+Sea $Z\ge0$ una variable aleatoria. Entonces $E(Z)=0$ si y solo si $P(Z=0)=1$.
+:::
+
+**Demostración.** Supongamos que $E(Z)=0$. Por Markov, para cada $n\ge1$,
+
+$$P\Big(Z\ge\frac1n\Big)\le\frac{E(Z)}{1/n}=n\,E(Z)=0$$
+
+Como $Z\ge0$, el evento $\{Z>0\}$ es la unión de los eventos $\{Z\ge1/n\}$ con $n\ge1$, y por la subaditividad,
+
+$$P(Z>0)=P\Big(\bigcup_{n=1}^\infty\Big\{Z\ge\frac1n\Big\}\Big)\le\sum_{n=1}^\infty P\Big(Z\ge\frac1n\Big)=0$$
+
+Entonces $P(Z=0)=1-P(Z>0)=1$.
+
+Al revés es más fácil. Si $P(Z=0)=1$, separamos el valor esperado según $Z$ sea cero o positiva,
+
+$$E(Z)=E\big(Z\,I_{\{Z=0\}}\big)+E\big(Z\,I_{\{Z>0\}}\big)=0+0$$
+
+El primer sumando es $0$ porque allí $Z$ vale $0$, y el segundo es $0$ porque se integra sobre un evento de probabilidad cero. $\blacksquare$
+
+Aplicado a $Z=(X-\mu)^2$, que es no negativa y cumple $E(Z)=\text{Var}(X)$, el teorema dice que $\text{Var}(X)=0$ si y solo si $P(X=\mu)=1$: una variable aleatoria tiene varianza cero exactamente cuando es constante con probabilidad uno. El corolario de Chebyshev era la mitad de esta afirmación.
+
+::: {.callout-note title="Ejercicios del libro"}
+Del libro de Blanco Castañeda:
+
+* Capítulo 2: ejercicios 41, 42 y 43.
+* Sección 7.4: ejercicios 1, 18 y 19.
+* Sección 7.4, para ir más lejos: ejercicios 6 y 21.
+* Sección 7.4, con la aproximación normal: ejercicios 10 y 11.
+:::

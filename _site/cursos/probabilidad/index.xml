@@ -15,7 +15,856 @@
 <link>https://arturosanjuan.xyz/cursos/probabilidad/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Wed, 21 Oct 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 03 Nov 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Vectores aleatorios</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/probabilidad/vecaleatorios/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Hasta ahora estudiamos una variable aleatoria a la vez. Para lo que sigue necesitamos describir varias variables definidas sobre el mismo experimento y medir cuánto se relacionan entre sí. Esta es la herramienta del capítulo 5 del texto de Blanco.</p>
+<section id="un-ejemplo-dos-dados-tetraédricos" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="un-ejemplo-dos-dados-tetraédricos"><span class="header-section-number">1</span> Un ejemplo: dos dados tetraédricos</h2>
+<p>Se lanzan dos dados tetraédricos, cada uno con caras <img src="https://latex.codecogs.com/png.latex?1,2,3,4">. El espacio muestral tiene 16 resultados equiprobables:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5COmega=%5C%7B(i,j):%20i,j%5Cin%5C%7B1,2,3,4%5C%7D%5C%7D,%5Cqquad%20P(%5C%7B(i,j)%5C%7D)=%5Cfrac1%7B16%7D.%0A"></p>
+<p>Sobre este mismo <img src="https://latex.codecogs.com/png.latex?%5COmega"> definimos dos variables aleatorias:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AY(i,j)=i+j%20%5Cquad(%5Ctext%7Bla%20suma%20de%20los%20lados%7D),%5Cqquad%0AX(i,j)=%5Cbegin%7Bcases%7D1%20&amp;%20%5Ctext%7Bsi%20%7D%20i=j%20%5C%20(%5Ctext%7Bsale%20un%20par%7D),%5C%5C%200%20&amp;%20%5Ctext%7Bsi%20%7D%20i%5Cneq%20j.%5Cend%7Bcases%7D%0A"></p>
+<p>La variable <img src="https://latex.codecogs.com/png.latex?Y"> toma los valores <img src="https://latex.codecogs.com/png.latex?2,3,%5Cdots,8"> y <img src="https://latex.codecogs.com/png.latex?X"> toma los valores <img src="https://latex.codecogs.com/png.latex?0"> y <img src="https://latex.codecogs.com/png.latex?1">. Cada resultado del experimento produce una pareja <img src="https://latex.codecogs.com/png.latex?(x,y)">, y la probabilidad de la pareja es el número de resultados que la producen dividido entre <img src="https://latex.codecogs.com/png.latex?16">. Por ejemplo, para <img src="https://latex.codecogs.com/png.latex?y=4"> los resultados <img src="https://latex.codecogs.com/png.latex?(1,3)"> y <img src="https://latex.codecogs.com/png.latex?(3,1)"> dan <img src="https://latex.codecogs.com/png.latex?x=0">, mientras que <img src="https://latex.codecogs.com/png.latex?(2,2)"> da <img src="https://latex.codecogs.com/png.latex?x=1">; entonces <img src="https://latex.codecogs.com/png.latex?P(X=0,Y=4)=2/16"> y <img src="https://latex.codecogs.com/png.latex?P(X=1,Y=4)=1/16">.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1">caras <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expand.grid</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">d1 =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">d2 =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>)   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># los 16 resultados equiprobables</span></span>
+<span id="cb1-2">Y <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> caras<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>d1 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> caras<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>d2                   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># suma de los lados</span></span>
+<span id="cb1-3">X <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">as.integer</span>(caras<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>d1 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> caras<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>d2)      <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># 1 si salen caras iguales</span></span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">addmargins</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">table</span>(Y, X))                    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># conteos sobre 16, con totales</span></span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     X
+Y      0  1 Sum
+  2    0  1   1
+  3    2  0   2
+  4    2  1   3
+  5    4  0   4
+  6    2  1   3
+  7    2  0   2
+  8    0  1   1
+  Sum 12  4  16</code></pre>
+</div>
+</div>
+<p>Dividiendo estos conteos entre <img src="https://latex.codecogs.com/png.latex?16"> se obtiene la <strong>función de masa conjunta</strong> de <img src="https://latex.codecogs.com/png.latex?(X,Y)">. Las sumas por filas y por columnas (los márgenes de la tabla) son las probabilidades de <img src="https://latex.codecogs.com/png.latex?Y"> y de <img src="https://latex.codecogs.com/png.latex?X"> por separado.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?y%20%5Cbackslash%20x"></th>
+<th style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0"></th>
+<th style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1"></th>
+<th style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?f_Y(y)"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?2"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1/16"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1/16"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?3"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?2/16"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?2/16"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?4"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?2/16"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1/16"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?3/16"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?5"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?4/16"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?4/16"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?6"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?2/16"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1/16"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?3/16"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?7"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?2/16"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?2/16"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?8"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1/16"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1/16"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?f_X(x)"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?12/16"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?4/16"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1"></td>
+</tr>
+</tbody>
+</table>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-masa3d" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-masa3d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/probabilidad/vecaleatorios/index_files/figure-html/fig-masa3d-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-masa3d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Función de masa conjunta de (X, Y) para dos dados tetraédricos. La altura de cada tallo es f(x, y). Los círculos vacíos marcan parejas posibles en la cuadrícula que tienen probabilidad cero.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="vector-aleatorio-y-distribución-conjunta" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="vector-aleatorio-y-distribución-conjunta"><span class="header-section-number">2</span> Vector aleatorio y distribución conjunta</h2>
+<p>Sean <img src="https://latex.codecogs.com/png.latex?X_1,X_2"> variables aleatorias definidas sobre el mismo espacio de probabilidad <img src="https://latex.codecogs.com/png.latex?(%5COmega,%5Cmathfrak%20F,P)">. La función</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cvec%20X(%5Comega)=%5Cbig(X_1(%5Comega),X_2(%5Comega)%5Cbig)%0A"></p>
+<p>es un <strong>vector aleatorio</strong> con valores en <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%20R%5E2">. Es medible porque, para borelianos <img src="https://latex.codecogs.com/png.latex?B_1,B_2">, se cumple <img src="https://latex.codecogs.com/png.latex?%5Cvec%20X%5E%7B-1%7D(B_1%5Ctimes%20B_2)=X_1%5E%7B-1%7D(B_1)%5Ccap%20X_2%5E%7B-1%7D(B_2)%5Cin%5Cmathfrak%20F">, y los rectángulos generan los borelianos de <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%20R%5E2">. Todo lo que sigue se generaliza a <img src="https://latex.codecogs.com/png.latex?n"> variables, <img src="https://latex.codecogs.com/png.latex?%5Cvec%20X=(X_1,%5Cdots,X_n)">.</p>
+<p>La <strong>distribución</strong> de <img src="https://latex.codecogs.com/png.latex?%5Cvec%20X"> es la medida</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AP_%7B%5Cvec%20X%7D(B)=P(%5Cvec%20X%5Cin%20B),%5Cqquad%20B%20%5Ctext%7B%20boreliano%20de%20%7D%20%5Cmathbb%20R%5E2.%0A"></p>
+<p>En el caso discreto, la <strong>función de masa conjunta</strong> es</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Af_%7BX_1,X_2%7D(x_1,x_2)=P(X_1=x_1,%5C,X_2=x_2),%0A"></p>
+<p>que vale cero fuera del rango de <img src="https://latex.codecogs.com/png.latex?%5Cvec%20X"> y suma <img src="https://latex.codecogs.com/png.latex?1">. La tabla del ejemplo de los dados es exactamente esta función.</p>
+</section>
+<section id="distribuciones-marginales" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="distribuciones-marginales"><span class="header-section-number">3</span> Distribuciones marginales</h2>
+<p>La distribución de cada coordenada por separado se llama <strong>marginal</strong>. Supongamos que <img src="https://latex.codecogs.com/png.latex?X_2"> es discreta. Los eventos <img src="https://latex.codecogs.com/png.latex?%5C%7BX_2=y%5C%7D">, con <img src="https://latex.codecogs.com/png.latex?y"> en el rango de <img src="https://latex.codecogs.com/png.latex?X_2"> (un conjunto contable), forman una partición de <img src="https://latex.codecogs.com/png.latex?%5COmega">. Entonces, para cualquier valor <img src="https://latex.codecogs.com/png.latex?a">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AP(X_1=a)=P%5CBig(%5C%7BX_1=a%5C%7D%5Ccap%5Cbigcup_y%5C%7BX_2=y%5C%7D%5CBig)=P%5CBig(%5Cbigcup_y%5C%7BX_1=a,%5C,X_2=y%5C%7D%5CBig)=%5Csum_y%20P(X_1=a,%5C,X_2=y),%0A"></p>
+<p>donde la última igualdad usa que los eventos <img src="https://latex.codecogs.com/png.latex?%5C%7BX_1=a,X_2=y%5C%7D"> son disyuntos y la σ-aditividad de <img src="https://latex.codecogs.com/png.latex?P">. Es decir,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Af_%7BX_1%7D(a)=%5Csum_y%20f_%7BX_1,X_2%7D(a,y).%0A"></p>
+<p>En el caso continuo la suma se convierte en integral,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Af_%7BX_1%7D(a)=%5Cint_%7B-%5Cinfty%7D%5E%7B%5Cinfty%7D%20f_%7BX_1,X_2%7D(a,y)%5C,dy,%0A"></p>
+<p>y la justificación aparece en la sección siguiente.</p>
+<p><strong>En nuestro ejemplo</strong>, las marginales son los márgenes de la tabla. Con ellas calculamos las medias:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cmu_Y=%5Csum_y%20y%5C,f_Y(y)=%5Cfrac%7B2%5Ccdot1+3%5Ccdot2+4%5Ccdot3+5%5Ccdot4+6%5Ccdot3+7%5Ccdot2+8%5Ccdot1%7D%7B16%7D=%5Cfrac%7B80%7D%7B16%7D=5,%0A%5Cqquad%0A%5Cmu_X=0%5Ccdot%5Cfrac%7B12%7D%7B16%7D+1%5Ccdot%5Cfrac%7B4%7D%7B16%7D=%5Cfrac14.%0A"></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sum</span>(ys <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rowSums</span>(tab))   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># media de Y</span></span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sum</span>(xs <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">colSums</span>(tab))   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># media de X</span></span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.25</code></pre>
+</div>
+</div>
+</section>
+<section id="función-de-distribución-conjunta-y-densidad-conjunta" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="función-de-distribución-conjunta-y-densidad-conjunta"><span class="header-section-number">4</span> Función de distribución conjunta y densidad conjunta</h2>
+<p>La <strong>función de distribución conjunta</strong> de <img src="https://latex.codecogs.com/png.latex?(X,Y)"> es</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AF_%7BX,Y%7D(x,y)=P(X%5Cle%20x,%5C,Y%5Cle%20y)%0A=%5Csum_%7Bk%5Cle%20x%7D%5Csum_%7Bj%5Cle%20y%7D%20f_%7BX,Y%7D(k,j)%0A=%5Cint_%7B-%5Cinfty%7D%5E%7Bx%7D%5C!%5Cint_%7B-%5Cinfty%7D%5E%7By%7D%20f_%7BX,Y%7D(%5Cxi,%5Ceta)%5C,d%5Ceta%5C,d%5Cxi,%0A"></p>
+<p>donde la suma corresponde al caso discreto y la integral al caso continuo. En el caso continuo, <img src="https://latex.codecogs.com/png.latex?f_%7BX,Y%7D%5Cge0"> es la <strong>densidad conjunta</strong> y, para cualquier boreliano <img src="https://latex.codecogs.com/png.latex?C%5Csubseteq%5Cmathbb%20R%5En">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AP%5Cbig((X_1,%5Cdots,X_n)%5Cin%20C%5Cbig)=%5Cint%5C!%5C!%5Cint%5C!%5Ccdots%5C!%5Cint_C%20f(x_1,%5Cdots,x_n)%5C,dx_1%5Ccdots%20dx_n.%0A"></p>
+<p>La densidad se recupera de la distribución derivando, en los puntos donde <img src="https://latex.codecogs.com/png.latex?f"> es continua:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Af_%7BX,Y%7D(x,y)=%5Cfrac%7B%5Cpartial%5E2%20F_%7BX,Y%7D(x,y)%7D%7B%5Cpartial%20x%5C,%5Cpartial%20y%7D=%5Cfrac%7B%5Cpartial%5E2%20F_%7BX,Y%7D(x,y)%7D%7B%5Cpartial%20y%5C,%5Cpartial%20x%7D.%0A"></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Por qué la marginal continua es una integral">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Por qué la marginal continua es una integral
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Tomando <img src="https://latex.codecogs.com/png.latex?C=(-%5Cinfty,a%5D%5Ctimes%5Cmathbb%20R"> en la fórmula anterior,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AF_%7BX_1%7D(a)=P(X_1%5Cle%20a)=%5Cint_%7B-%5Cinfty%7D%5E%7Ba%7D%5CBig(%5Cint_%7B-%5Cinfty%7D%5E%7B%5Cinfty%7D%20f_%7BX_1,X_2%7D(s,y)%5C,dy%5CBig)ds.%0A"></p>
+<p>Derivando respecto a <img src="https://latex.codecogs.com/png.latex?a"> se obtiene <img src="https://latex.codecogs.com/png.latex?f_%7BX_1%7D(a)=%5Cint%20f_%7BX_1,X_2%7D(a,y)%5C,dy">.</p>
+</div>
+</div>
+<p><strong>Ejemplo.</strong> Sea <img src="https://latex.codecogs.com/png.latex?f_%7BX,Y%7D(x,y)=6xy%5E2%5C,%5Cmathbf%201_%7B(0,1)%5E2%7D(x,y)">. Es una densidad, pues <img src="https://latex.codecogs.com/png.latex?%5Cint_0%5E1%5C!%5Cint_0%5E1%206xy%5E2%5C,dy%5C,dx=6%5Ccdot%5Ctfrac12%5Ccdot%5Ctfrac13=1">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AP%5CBig(%5Ctfrac12%5Cle%20X%5Cle%5Ctfrac34,%5C%200%3CY%5Cle%5Ctfrac13%5CBig)=%5Cint_%7B1/2%7D%5E%7B3/4%7D%5C!%5Cint_0%5E%7B1/3%7D6xy%5E2%5C,dy%5C,dx%0A=%5Cint_%7B1/2%7D%5E%7B3/4%7D2x%5C,y%5E3%5CBig%7C_%7By=0%7D%5E%7By=1/3%7Ddx%0A=%5Cint_%7B1/2%7D%5E%7B3/4%7D%5Cfrac%7B2x%7D%7B27%7D%5C,dx%0A=%5Cfrac%7B1%7D%7B27%7D%5C,x%5E2%5CBig%7C_%7B1/2%7D%5E%7B3/4%7D%0A=%5Cfrac%7B1%7D%7B27%7D%5CBig(%5Cfrac%7B9%7D%7B16%7D-%5Cfrac%7B4%7D%7B16%7D%5CBig)=%5Cfrac%7B5%7D%7B432%7D%5Capprox1%7B,%7D157%5Ctimes10%5E%7B-2%7D.%0A"></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">interna <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(x) <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sapply</span>(x, <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(x0) <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">integrate</span>(<span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(y) <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x0 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> y<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">^</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>value)</span>
+<span id="cb7-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">integrate</span>(interna, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>)<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>value</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.01157407</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">432</span></span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.01157407</code></pre>
+</div>
+</div>
+</section>
+<section id="independencia" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="independencia"><span class="header-section-number">5</span> Independencia</h2>
+<p>Dos variables aleatorias <img src="https://latex.codecogs.com/png.latex?X,Y"> son <strong>independientes</strong> si para todos los borelianos <img src="https://latex.codecogs.com/png.latex?A,B">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AP(X%5Cin%20A,%5C%20Y%5Cin%20B)=P(X%5Cin%20A)%5C,P(Y%5Cin%20B).%0A"></p>
+<p>Esto es equivalente a que la distribución y la densidad (o la masa) conjuntas se factoricen en las marginales:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AF_%7BX,Y%7D(x,y)=F_X(x)%5C,F_Y(y),%5Cqquad%20f_%7BX,Y%7D(x,y)=f_X(x)%5C,f_Y(y).%0A"></p>
+<p><strong>Los dados no son independientes.</strong> Si <img src="https://latex.codecogs.com/png.latex?X"> y <img src="https://latex.codecogs.com/png.latex?Y"> fueran independientes se tendría <img src="https://latex.codecogs.com/png.latex?f_%7BX,Y%7D(0,2)=f_X(0)f_Y(2)=%5Cfrac%7B12%7D%7B16%7D%5Ccdot%5Cfrac1%7B16%7D%3E0">, pero en la tabla <img src="https://latex.codecogs.com/png.latex?f_%7BX,Y%7D(0,2)=0">: la suma <img src="https://latex.codecogs.com/png.latex?2"> solo se obtiene con el par <img src="https://latex.codecogs.com/png.latex?(1,1)">.</p>
+<p><strong>El ejemplo de la sección anterior sí lo es.</strong> Las marginales de <img src="https://latex.codecogs.com/png.latex?f(x,y)=6xy%5E2%5C,%5Cmathbf%201_%7B(0,1)%5E2%7D"> son</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Af_X(x)=%5Cint_0%5E1%206xy%5E2%5C,dy=2x,%5Cqquad%20f_Y(y)=%5Cint_0%5E1%206xy%5E2%5C,dx=3y%5E2,%5Cqquad%200%3Cx,y%3C1,%0A"></p>
+<p>y su producto es <img src="https://latex.codecogs.com/png.latex?6xy%5E2=f_%7BX,Y%7D(x,y)">. Por eso la probabilidad calculada arriba es un producto: <img src="https://latex.codecogs.com/png.latex?P(%5Ctfrac12%5Cle%20X%5Cle%5Ctfrac34)%5C,P(Y%5Cle%5Ctfrac13)=%5Ctfrac5%7B16%7D%5Ccdot%5Ctfrac1%7B27%7D=%5Ctfrac5%7B432%7D">.</p>
+<section id="la-suma-de-dos-variables-independientes" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="la-suma-de-dos-variables-independientes"><span class="header-section-number">5.1</span> La suma de dos variables independientes</h3>
+<p>Sean <img src="https://latex.codecogs.com/png.latex?X,Y"> independientes con densidades <img src="https://latex.codecogs.com/png.latex?f_X,f_Y"> (no es necesario que tengan la misma distribución) y sea <img src="https://latex.codecogs.com/png.latex?Z=X+Y">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AF_Z(z)=P(X+Y%5Cle%20z)=%5Ciint_%7B%5C%7Bx+y%5Cle%20z%5C%7D%7D%20f_X(x)%5C,f_Y(y)%5C,dx%5C,dy%20.%0A"></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-region" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-region-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://arturosanjuan.xyz/cursos/probabilidad/vecaleatorios/index_files/figure-html/fig-region-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="480">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-region-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: La región {x + y ≤ z} es el semiplano que queda debajo de la recta y = z − x. Para cada valor fijo de y, la variable x recorre desde menos infinito hasta z − y.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Integrando primero en <img src="https://latex.codecogs.com/png.latex?x"> (para cada <img src="https://latex.codecogs.com/png.latex?y"> fijo, <img src="https://latex.codecogs.com/png.latex?x"> va de <img src="https://latex.codecogs.com/png.latex?-%5Cinfty"> a <img src="https://latex.codecogs.com/png.latex?z-y">, como muestra la Figura&nbsp;2):</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AF_Z(z)=%5Cint_%7B-%5Cinfty%7D%5E%7B%5Cinfty%7D%5CBig(%5Cint_%7B-%5Cinfty%7D%5E%7Bz-y%7D%20f_X(x)%5C,dx%5CBig)%20f_Y(y)%5C,dy=%5Cint_%7B-%5Cinfty%7D%5E%7B%5Cinfty%7DF_X(z-y)%5C,f_Y(y)%5C,dy%20.%0A"></p>
+<p>Derivando respecto a <img src="https://latex.codecogs.com/png.latex?z"> bajo el signo integral (lo cual se justifica, por ejemplo, cuando <img src="https://latex.codecogs.com/png.latex?f_X"> es continua y acotada) se obtiene la densidad de la suma:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Af_Z(z)=%5Cint_%7B-%5Cinfty%7D%5E%7B%5Cinfty%7Df_X(z-y)%5C,f_Y(y)%5C,dy=(f_X*f_Y)(z),%0A"></p>
+<p>que se llama la <strong>convolución</strong> de <img src="https://latex.codecogs.com/png.latex?f_X"> y <img src="https://latex.codecogs.com/png.latex?f_Y">.</p>
+<p><strong>Ejemplo.</strong> Sean <img src="https://latex.codecogs.com/png.latex?X,Y"> independientes, ambas exponenciales de parámetro <img src="https://latex.codecogs.com/png.latex?%5Clambda">, es decir <img src="https://latex.codecogs.com/png.latex?f(t)=%5Clambda%20e%5E%7B-%5Clambda%20t%7D%5Cmathbf%201_%7B(0,%5Cinfty)%7D(t)">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Af_Z(z)=%5Cint_%7B-%5Cinfty%7D%5E%7B%5Cinfty%7D%5Clambda%20e%5E%7B-%5Clambda(z-y)%7D%5Cmathbf%201_%7B(0,%5Cinfty)%7D(z-y)%5C;%5Clambda%20e%5E%7B-%5Clambda%20y%7D%5Cmathbf%201_%7B(0,%5Cinfty)%7D(y)%5C,dy%0A=%5Clambda%5E2e%5E%7B-%5Clambda%20z%7D%5Cint_%7B-%5Cinfty%7D%5E%7B%5Cinfty%7D%5Cmathbf%201_%7B(0,%5Cinfty)%7D(z-y)%5C,%5Cmathbf%201_%7B(0,%5Cinfty)%7D(y)%5C,dy%20.%0A"></p>
+<p>El producto de indicadoras vale <img src="https://latex.codecogs.com/png.latex?1"> exactamente cuando <img src="https://latex.codecogs.com/png.latex?0%3Cy%3Cz">, así que la integral es <img src="https://latex.codecogs.com/png.latex?z"> si <img src="https://latex.codecogs.com/png.latex?z%3E0"> y es <img src="https://latex.codecogs.com/png.latex?0"> si <img src="https://latex.codecogs.com/png.latex?z%5Cle0">. Por lo tanto</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0Af_Z(z)=%5Clambda%5E2%5C,z%5C,e%5E%7B-%5Clambda%20z%7D%5C,%5Cmathbf%201_%7B(0,%5Cinfty)%7D(z)=%5Cfrac%7B%5Clambda(%5Clambda%20z)%5E%7B2-1%7De%5E%7B-%5Clambda%20z%7D%7D%7B%5CGamma(2)%7D%5C,%5Cmathbf%201_%7B(0,%5Cinfty)%7D(z),%0A"></p>
+<p>es decir, <img src="https://latex.codecogs.com/png.latex?Z%5Csim%5Ctext%7BGamma%7D(2,%5Clambda)">. Es el mismo resultado que obtuvimos con el proceso de Poisson: el tiempo hasta el segundo evento es la suma de dos tiempos de espera exponenciales independientes.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Encuentre la distribución de <img src="https://latex.codecogs.com/png.latex?Z=X+Y"> si <img src="https://latex.codecogs.com/png.latex?X,Y%5Csim%20N(0,1)"> son i.i.d.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="esperanza-de-una-combinación-lineal-y-de-un-producto" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="esperanza-de-una-combinación-lineal-y-de-un-producto"><span class="header-section-number">6</span> Esperanza de una combinación lineal y de un producto</h2>
+<p>Para una función <img src="https://latex.codecogs.com/png.latex?g"> de dos variables, el valor esperado de <img src="https://latex.codecogs.com/png.latex?g(X,Y)"> se calcula directamente con la distribución conjunta,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AE%5Bg(X,Y)%5D=%5Csum_x%5Csum_y%20g(x,y)%5C,f_%7BX,Y%7D(x,y)%5Cqquad%5Ctext%7Bo%7D%5Cqquad%20E%5Bg(X,Y)%5D=%5Ciint%20g(x,y)%5C,f_%7BX,Y%7D(x,y)%5C,dx%5C,dy,%0A"></p>
+<p>según el caso, siempre que la suma o la integral converja absolutamente. Con <img src="https://latex.codecogs.com/png.latex?g(x,y)=%5Calpha%20x+%5Cbeta%20y"> se obtiene, para constantes <img src="https://latex.codecogs.com/png.latex?%5Calpha,%5Cbeta"> y <img src="https://latex.codecogs.com/png.latex?Z=%5Calpha%20X+%5Cbeta%20Y">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AE%5BZ%5D=%5Calpha%20E%5BX%5D+%5Cbeta%20E%5BY%5D,%5Cqquad%5Ctext%7Bes%20decir%7D%5Cqquad%20%5Cmu_Z=%5Calpha%5Cmu_X+%5Cbeta%5Cmu_Y%20.%0A"></p>
+<p>Esto dice que <img src="https://latex.codecogs.com/png.latex?E"> es <strong>lineal</strong>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre la linealidad de <img src="https://latex.codecogs.com/png.latex?E"> (en el caso continuo, escribiendo <img src="https://latex.codecogs.com/png.latex?E%5B%5Calpha%20X+%5Cbeta%20Y%5D"> como integral doble y usando las marginales). Observe que no se necesita que <img src="https://latex.codecogs.com/png.latex?X"> y <img src="https://latex.codecogs.com/png.latex?Y"> sean independientes ni idénticamente distribuidas.</p>
+</div>
+</div>
+<p>Por inducción, <img src="https://latex.codecogs.com/png.latex?E%5Cbig%5B%5Csum_%7Bi=1%7D%5En%20X_i%5Cbig%5D=%5Csum_%7Bi=1%7D%5En%20E%5BX_i%5D">. En el ejemplo de los dados, <img src="https://latex.codecogs.com/png.latex?Y=D_1+D_2"> con <img src="https://latex.codecogs.com/png.latex?D_1,D_2"> los dos lados, y como <img src="https://latex.codecogs.com/png.latex?E%5BD_i%5D=%5Cfrac%7B1+2+3+4%7D%7B4%7D=%5Cfrac52"> se obtiene <img src="https://latex.codecogs.com/png.latex?%5Cmu_Y=5">, el mismo valor que calculamos con la tabla.</p>
+<p>Para el <strong>producto</strong>, la independencia sí es necesaria. Si <img src="https://latex.codecogs.com/png.latex?X,Y"> son independientes,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AE%5BXY%5D=%5Ciint%20xy%5C,f_%7BX,Y%7D(x,y)%5C,dx%5C,dy=%5Ciint%20xy%5C,f_X(x)f_Y(y)%5C,dx%5C,dy=%5Cint%20x%20f_X(x)%5C,dx%5Cint%20y%20f_Y(y)%5C,dy=E%5BX%5D%5C,E%5BY%5D.%0A"></p>
+<p>De nuevo basta con independencia; no hace falta que sean idénticamente distribuidas (la demostración en el caso discreto es igual, con sumas).</p>
+<p><strong>Ejemplo: la media de la binomial.</strong> Sean <img src="https://latex.codecogs.com/png.latex?X_1,%5Cdots,X_n"> i.i.d. Bernoulli de parámetro <img src="https://latex.codecogs.com/png.latex?p">. Por definición de la binomial, <img src="https://latex.codecogs.com/png.latex?Z=%5Csum_%7Bi=1%7D%5EnX_i%5Csim%20B(n,p)">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AE%5BZ%5D=E%5CBig%5B%5Csum_%7Bi=1%7D%5EnX_i%5CBig%5D=%5Csum_%7Bi=1%7D%5EnE%5BX_i%5D=%5Csum_%7Bi=1%7D%5Enp=np,%0A"></p>
+<p>que es el valor que ya conocíamos, pero ahora lo obtuvimos sin sumar sobre la función de masa de la binomial.</p>
+</section>
+<section id="covarianza" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="covarianza"><span class="header-section-number">7</span> Covarianza</h2>
+<p>Si queremos medir cómo varían juntas dos variables, definimos la <strong>covarianza</strong> de <img src="https://latex.codecogs.com/png.latex?X"> y <img src="https://latex.codecogs.com/png.latex?Y"> como</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Coperatorname%7BCov%7D(X,Y)=E%5Cbig%5B(X-%5Cmu_X)(Y-%5Cmu_Y)%5Cbig%5D=:%5Csigma_%7BX,Y%7D.%0A"></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre las siguientes propiedades, para constantes <img src="https://latex.codecogs.com/png.latex?a,b">:</p>
+<ol type="1">
+<li><img src="https://latex.codecogs.com/png.latex?%5Csigma_%7BX,Y%7D=%5Coperatorname%7BCov%7D(X,Y)=E%5BXY%5D-E%5BX%5D%5C,E%5BY%5D=%5Cmu_%7BXY%7D-%5Cmu_X%5Cmu_Y">.</li>
+<li><img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7BVar%7D(X)=%5Coperatorname%7BCov%7D(X,X)">.</li>
+<li><img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7BCov%7D(aX+b,%5C,Y)=a%5Coperatorname%7BCov%7D(X,Y)">.</li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre que si <img src="https://latex.codecogs.com/png.latex?X"> y <img src="https://latex.codecogs.com/png.latex?Y"> son independientes, entonces <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7BCov%7D(X,Y)=0">.</p>
+</div>
+</div>
+<p><strong>El recíproco es falso.</strong> Que la covarianza sea cero no implica independencia. Sea <img src="https://latex.codecogs.com/png.latex?%5COmega=%5C%7Ba,b,c%5C%7D"> con los tres puntos equiprobables y definamos <img src="https://latex.codecogs.com/png.latex?X(a)=-1,%5C%20X(b)=0,%5C%20X(c)=1"> y <img src="https://latex.codecogs.com/png.latex?Y(a)=1,%5C%20Y(b)=-2,%5C%20Y(c)=1">. La masa conjunta es</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?x%20%5Cbackslash%20y"></th>
+<th style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1"></th>
+<th style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?-2"></th>
+<th style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?f_X(x)"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?-1"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1/3"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1/3"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1/3"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1/3"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1/3"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1/3"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?f_Y(y)"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?2/3"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1/3"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1"></td>
+</tr>
+</tbody>
+</table>
+<p>Las medias son <img src="https://latex.codecogs.com/png.latex?%5Cmu_X=-%5Cfrac13+0+%5Cfrac13=0"> y <img src="https://latex.codecogs.com/png.latex?%5Cmu_Y=%5Cfrac23-%5Cfrac23=0">, y <img src="https://latex.codecogs.com/png.latex?E%5BXY%5D=(-1)(1)%5Cfrac13+(0)(-2)%5Cfrac13+(1)(1)%5Cfrac13=0">. Entonces <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7BCov%7D(X,Y)=0-0%5Ccdot0=0">.</p>
+<p>Pero no son independientes: <img src="https://latex.codecogs.com/png.latex?f_%7BX,Y%7D(0,-2)=%5Cfrac13">, mientras que <img src="https://latex.codecogs.com/png.latex?f_X(0)%5C,f_Y(-2)=%5Cfrac13%5Ccdot%5Cfrac13=%5Cfrac19">. De hecho <img src="https://latex.codecogs.com/png.latex?Y=3X%5E2-2"> está completamente determinada por <img src="https://latex.codecogs.com/png.latex?X">. La covarianza detecta únicamente asociación lineal, y esta relación es cuadrática.</p>
+</section>
+<section id="varianza-de-una-suma" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="varianza-de-una-suma"><span class="header-section-number">8</span> Varianza de una suma</h2>
+<p>Supongamos que <img src="https://latex.codecogs.com/png.latex?X"> y <img src="https://latex.codecogs.com/png.latex?Y"> tienen varianzas finitas. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Coperatorname%7BVar%7D(X+Y)=%5Coperatorname%7BVar%7D(X)+2%5Coperatorname%7BCov%7D(X,Y)+%5Coperatorname%7BVar%7D(Y),%0A%5Cqquad%5Ctext%7Bes%20decir%7D%5Cqquad%0A%5Csigma_%7BX+Y%7D%5E2=%5Csigma_X%5E2+2%5Csigma_%7BX,Y%7D+%5Csigma_Y%5E2%20.%0A"></p>
+<p><strong>Demostración.</strong> Usamos <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7BVar%7D(W)=E%5BW%5E2%5D-(E%5BW%5D)%5E2"> y la linealidad de <img src="https://latex.codecogs.com/png.latex?E">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Baligned%7D%0A%5Coperatorname%7BVar%7D(X+Y)&amp;=E%5Cbig%5B(X+Y)%5E2%5Cbig%5D-%5Cbig(E%5BX+Y%5D%5Cbig)%5E2%5C%5C%0A&amp;=E%5BX%5E2%5D+2E%5BXY%5D+E%5BY%5E2%5D-%5Cbig(%5Cmu_X%5E2+2%5Cmu_X%5Cmu_Y+%5Cmu_Y%5E2%5Cbig)%5C%5C%0A&amp;=%5Cbig(E%5BX%5E2%5D-%5Cmu_X%5E2%5Cbig)+%5Cbig(E%5BY%5E2%5D-%5Cmu_Y%5E2%5Cbig)+2%5Cbig(E%5BXY%5D-%5Cmu_X%5Cmu_Y%5Cbig)%5C%5C%0A&amp;=%5Csigma_X%5E2+%5Csigma_Y%5E2+2%5Csigma_%7BX,Y%7D.%5Cqquad%5Cblacksquare%0A%5Cend%7Baligned%7D%0A"></p>
+<p>Si <img src="https://latex.codecogs.com/png.latex?X"> y <img src="https://latex.codecogs.com/png.latex?Y"> son independientes, <img src="https://latex.codecogs.com/png.latex?%5Csigma_%7BX,Y%7D=0"> y la varianza de la suma es la suma de las varianzas.</p>
+<p>El mismo desarrollo con <img src="https://latex.codecogs.com/png.latex?n"> sumandos da</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Coperatorname%7BVar%7D%5CBig(%5Csum_%7Bi=1%7D%5EnX_i%5CBig)=%5Csum_%7Bi=1%7D%5En%5Coperatorname%7BVar%7D(X_i)+2%5Csum_%7Bi%3Cj%7D%5Coperatorname%7BCov%7D(X_i,X_j),%0A"></p>
+<p>de modo que si las <img src="https://latex.codecogs.com/png.latex?X_i"> son independientes dos a dos, los términos de covarianza desaparecen.</p>
+<p><strong>Ejemplo: la varianza de la binomial.</strong> Con <img src="https://latex.codecogs.com/png.latex?X_i"> i.i.d. Bernoulli de parámetro <img src="https://latex.codecogs.com/png.latex?p"> y <img src="https://latex.codecogs.com/png.latex?q=1-p">, como <img src="https://latex.codecogs.com/png.latex?X_i%5E2=X_i"> se tiene <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7BVar%7D(X_i)=E%5BX_i%5E2%5D-p%5E2=p-p%5E2=pq">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Coperatorname%7BVar%7D(Z)=%5Coperatorname%7BVar%7D%5CBig(%5Csum_%7Bi=1%7D%5EnX_i%5CBig)=%5Csum_%7Bi=1%7D%5En%5Coperatorname%7BVar%7D(X_i)=%5Csum_%7Bi=1%7D%5Enpq=npq,%0A"></p>
+<p>nuevamente un resultado conocido, pero al que llegamos con mucho menos trabajo.</p>
+</section>
+<section id="coeficiente-de-correlación" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="coeficiente-de-correlación"><span class="header-section-number">9</span> Coeficiente de correlación</h2>
+<p>La covarianza depende de las unidades en que se mida cada variable. Para tener una medida sin unidades, cuando <img src="https://latex.codecogs.com/png.latex?0%3C%5Csigma_X%3C%5Cinfty"> y <img src="https://latex.codecogs.com/png.latex?0%3C%5Csigma_Y%3C%5Cinfty"> definimos el <strong>coeficiente de correlación</strong></p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Crho(X,Y)=%5Cfrac%7B%5Coperatorname%7BCov%7D(X,Y)%7D%7B%5Csqrt%7B%5Coperatorname%7BVar%7D(X)%7D%5Csqrt%7B%5Coperatorname%7BVar%7D(Y)%7D%7D=%5Cfrac%7B%5Csigma_%7BX,Y%7D%7D%7B%5Csigma_X%5C,%5Csigma_Y%7D.%0A"></p>
+<p>Sean <img src="https://latex.codecogs.com/png.latex?X%5E*"> y <img src="https://latex.codecogs.com/png.latex?Y%5E*"> las variables <strong>normalizadas</strong>,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AX%5E*=%5Cfrac%7BX-%5Cmu_X%7D%7B%5Csigma_X%7D,%5Cqquad%20Y%5E*=%5Cfrac%7BY-%5Cmu_Y%7D%7B%5Csigma_Y%7D.%0A"></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Lema">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Lema
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><img src="https://latex.codecogs.com/png.latex?E%5BX%5E*%5D=0"> y <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7BVar%7D(X%5E*)=1"> (igual para <img src="https://latex.codecogs.com/png.latex?Y%5E*">). Además <img src="https://latex.codecogs.com/png.latex?E%5BX%5E*Y%5E*%5D=%5Crho(X,Y)"> y <img src="https://latex.codecogs.com/png.latex?%5Crho(X%5E*,Y%5E*)=%5Crho(X,Y)">.</p>
+</div>
+</div>
+<p><strong>Demostración.</strong> Por linealidad, <img src="https://latex.codecogs.com/png.latex?E%5BX%5E*%5D=%5Cdfrac%7BE%5BX%5D-%5Cmu_X%7D%7B%5Csigma_X%7D=0">. Como la media es cero,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Coperatorname%7BVar%7D(X%5E*)=E%5Cbig%5B(X%5E*)%5E2%5Cbig%5D=%5Cfrac%7BE%5Cbig%5B(X-%5Cmu_X)%5E2%5Cbig%5D%7D%7B%5Csigma_X%5E2%7D=%5Cfrac%7B%5Csigma_X%5E2%7D%7B%5Csigma_X%5E2%7D=1.%0A"></p>
+<p>Para la covarianza,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AE%5BX%5E*Y%5E*%5D=%5Cfrac%7BE%5Cbig%5B(X-%5Cmu_X)(Y-%5Cmu_Y)%5Cbig%5D%7D%7B%5Csigma_X%5Csigma_Y%7D=%5Cfrac%7B%5Csigma_%7BX,Y%7D%7D%7B%5Csigma_X%5Csigma_Y%7D=%5Crho(X,Y).%0A"></p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?X%5E*,Y%5E*"> tienen media <img src="https://latex.codecogs.com/png.latex?0"> y desviación estándar <img src="https://latex.codecogs.com/png.latex?1">, <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7BCov%7D(X%5E*,Y%5E*)=E%5BX%5E*Y%5E*%5D-0%5Ccdot0=%5Crho(X,Y)"> y el denominador de <img src="https://latex.codecogs.com/png.latex?%5Crho(X%5E*,Y%5E*)"> vale <img src="https://latex.codecogs.com/png.latex?1">. <img src="https://latex.codecogs.com/png.latex?%5Cblacksquare"></p>
+<p>Es decir, la correlación entre dos variables es la misma correlación entre sus variables normalizadas.</p>
+<section id="la-correlación-está-entre-menos-uno-y-uno" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="la-correlación-está-entre-menos-uno-y-uno"><span class="header-section-number">9.1</span> La correlación está entre menos uno y uno</h3>
+<p>Como un cuadrado tiene esperanza no negativa, y usando el lema,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A0%5Cle%20E%5Cbig%5B(X%5E*%5Cmp%20Y%5E*)%5E2%5Cbig%5D=E%5Cbig%5B(X%5E*)%5E2%5Cbig%5D%5Cmp2E%5BX%5E*Y%5E*%5D+E%5Cbig%5B(Y%5E*)%5E2%5Cbig%5D=2%5Cmp2%5Crho(X,Y).%0A"></p>
+<p>De <img src="https://latex.codecogs.com/png.latex?0%5Cle2-2%5Crho"> y <img src="https://latex.codecogs.com/png.latex?0%5Cle2+2%5Crho"> se concluye que <img src="https://latex.codecogs.com/png.latex?-1%5Cle%5Crho(X,Y)%5Cle1">. Esto es lo mismo que <img src="https://latex.codecogs.com/png.latex?%7C%5Csigma_%7BX,Y%7D%7C%5Cle%5Csigma_X%5Csigma_Y">, la desigualdad de Cauchy y Schwarz para la covarianza (Teorema 5.58 y Nota 5.59 del texto). El mismo argumento, aplicado a <img src="https://latex.codecogs.com/png.latex?U/%5Csqrt%7BE%5BU%5E2%5D%7D"> y <img src="https://latex.codecogs.com/png.latex?V/%5Csqrt%7BE%5BV%5E2%5D%7D">, prueba <img src="https://latex.codecogs.com/png.latex?%7CE%5BUV%5D%7C%5Cle%5Csqrt%7BE%5BU%5E2%5D%5C,E%5BV%5E2%5D%7D"> para variables <img src="https://latex.codecogs.com/png.latex?U,V"> cualesquiera con segundo momento finito (si alguno de los dos segundos momentos es cero, esa variable es cero casi seguramente por el resultado sobre variables no negativas que se enuncia más abajo, y la desigualdad es trivial).</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre las siguientes propiedades del coeficiente de correlación:</p>
+<ol type="1">
+<li><img src="https://latex.codecogs.com/png.latex?%5Crho(X,X)=1"> y <img src="https://latex.codecogs.com/png.latex?%5Crho(X,-X)=-1">.</li>
+<li><img src="https://latex.codecogs.com/png.latex?%5Crho(X,Y)=%5Crho(Y,X)">.</li>
+<li><img src="https://latex.codecogs.com/png.latex?%5Crho(aX+b,%5C,Y)=%5Crho(X,Y)"> si <img src="https://latex.codecogs.com/png.latex?a%3E0">, para constantes <img src="https://latex.codecogs.com/png.latex?a,b">. ¿Qué ocurre si <img src="https://latex.codecogs.com/png.latex?a%3C0">?</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="un-resultado-que-usaremos-y-demostraremos-más-adelante" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="un-resultado-que-usaremos-y-demostraremos-más-adelante"><span class="header-section-number">9.2</span> Un resultado que usaremos y demostraremos más adelante</h3>
+<p>Para caracterizar cuándo <img src="https://latex.codecogs.com/png.latex?%7C%5Crho%7C=1"> usaremos el siguiente hecho sobre variables no negativas. Su demostración se hace con la desigualdad de Markov, que veremos más adelante; por ahora lo tomamos como un resultado conocido.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Variables no negativas con esperanza cero">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Variables no negativas con esperanza cero
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si <img src="https://latex.codecogs.com/png.latex?Z%5Cge0"> es una variable aleatoria, entonces <img src="https://latex.codecogs.com/png.latex?%0AE%5BZ%5D=0%5Cquad%5CLongleftrightarrow%5Cquad%20P(Z=0)=1%20.%0A"></p>
+</div>
+</div>
+</section>
+<section id="correlación-igual-a-uno-en-valor-absoluto" class="level3" data-number="9.3">
+<h3 data-number="9.3" class="anchored" data-anchor-id="correlación-igual-a-uno-en-valor-absoluto"><span class="header-section-number">9.3</span> Correlación igual a uno en valor absoluto</h3>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Teorema
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sean <img src="https://latex.codecogs.com/png.latex?X,Y"> con <img src="https://latex.codecogs.com/png.latex?0%3C%5Csigma_X,%5Csigma_Y%3C%5Cinfty">. Entonces <img src="https://latex.codecogs.com/png.latex?%7C%5Crho(X,Y)%7C=1"> si y solo si existen constantes <img src="https://latex.codecogs.com/png.latex?a%5Cne0"> y <img src="https://latex.codecogs.com/png.latex?b"> tales que</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0AP(Y=aX+b)=1.%0A"></p>
+<p>En tal caso <img src="https://latex.codecogs.com/png.latex?%5Crho(X,Y)=1"> si <img src="https://latex.codecogs.com/png.latex?a%3E0"> y <img src="https://latex.codecogs.com/png.latex?%5Crho(X,Y)=-1"> si <img src="https://latex.codecogs.com/png.latex?a%3C0">.</p>
+</div>
+</div>
+<p><strong>Demostración.</strong> (<img src="https://latex.codecogs.com/png.latex?%5CRightarrow">) Supongamos <img src="https://latex.codecogs.com/png.latex?%5Crho(X,Y)=1">. Por el cálculo de la sección anterior, <img src="https://latex.codecogs.com/png.latex?E%5Cbig%5B(X%5E*-Y%5E*)%5E2%5Cbig%5D=2-2%5Crho=0">. Como <img src="https://latex.codecogs.com/png.latex?(X%5E*-Y%5E*)%5E2%5Cge0">, el resultado anterior sobre variables no negativas da <img src="https://latex.codecogs.com/png.latex?P%5Cbig((X%5E*-Y%5E*)%5E2=0%5Cbig)=1">, es decir <img src="https://latex.codecogs.com/png.latex?P(X%5E*=Y%5E*)=1">. Escribiendo <img src="https://latex.codecogs.com/png.latex?P(%5Calpha%20X%5E*+%5Cbeta%20Y%5E*=0)=1">, esto corresponde a <img src="https://latex.codecogs.com/png.latex?%5Calpha=1,%5C%20%5Cbeta=-1">. Con probabilidad <img src="https://latex.codecogs.com/png.latex?1">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cfrac%7BX-%5Cmu_X%7D%7B%5Csigma_X%7D=%5Cfrac%7BY-%5Cmu_Y%7D%7B%5Csigma_Y%7D%5Cquad%5CLongleftrightarrow%5Cquad%20Y=aX+b,%5Cqquad%20a=%5Cfrac%7B%5Csigma_Y%7D%7B%5Csigma_X%7D%3E0,%5Cquad%20b=%5Cmu_Y-a%5Cmu_X%20.%0A"></p>
+<p>Si <img src="https://latex.codecogs.com/png.latex?%5Crho(X,Y)=-1">, se usa <img src="https://latex.codecogs.com/png.latex?E%5Cbig%5B(X%5E*+Y%5E*)%5E2%5Cbig%5D=2+2%5Crho=0">, que da <img src="https://latex.codecogs.com/png.latex?P(X%5E*=-Y%5E*)=1"> (ahora <img src="https://latex.codecogs.com/png.latex?%5Calpha=%5Cbeta=1">) y por lo tanto <img src="https://latex.codecogs.com/png.latex?a=-%5Csigma_Y/%5Csigma_X%3C0">.</p>
+<p>(<img src="https://latex.codecogs.com/png.latex?%5CLeftarrow">) Supongamos <img src="https://latex.codecogs.com/png.latex?P(Y=aX+b)=1"> con <img src="https://latex.codecogs.com/png.latex?a%5Cne0">. Entonces <img src="https://latex.codecogs.com/png.latex?%5Cmu_Y=a%5Cmu_X+b"> y <img src="https://latex.codecogs.com/png.latex?Y-%5Cmu_Y=a(X-%5Cmu_X)"> con probabilidad <img src="https://latex.codecogs.com/png.latex?1">, de donde <img src="https://latex.codecogs.com/png.latex?%5Csigma_%7BX,Y%7D=a%5Csigma_X%5E2"> y <img src="https://latex.codecogs.com/png.latex?%5Csigma_Y=%7Ca%7C%5Csigma_X">. Así</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Crho(X,Y)=%5Cfrac%7Ba%5C,%5Csigma_X%5E2%7D%7B%7Ca%7C%5C,%5Csigma_X%5E2%7D=%5Cfrac%7Ba%7D%7B%7Ca%7C%7D=%5Cpm1%20.%5Cqquad%5Cblacksquare%0A"></p>
+<p>Por lo tanto, <img src="https://latex.codecogs.com/png.latex?%5Crho"> mide qué tanto se parece la relación entre <img src="https://latex.codecogs.com/png.latex?X"> y <img src="https://latex.codecogs.com/png.latex?Y"> a una relación lineal: <img src="https://latex.codecogs.com/png.latex?%7C%5Crho%7C=1"> significa que, con probabilidad <img src="https://latex.codecogs.com/png.latex?1">, una variable es una función lineal de la otra. Un valor <img src="https://latex.codecogs.com/png.latex?%5Crho=0"> solo dice que no hay tendencia lineal, y no implica independencia (el ejemplo con <img src="https://latex.codecogs.com/png.latex?Y=3X%5E2-2"> tiene <img src="https://latex.codecogs.com/png.latex?%5Crho=0">).</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Por qué no una integral doble">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Por qué no una integral doble
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cuando <img src="https://latex.codecogs.com/png.latex?%5Crho=1"> el vector <img src="https://latex.codecogs.com/png.latex?(X%5E*,Y%5E*)"> está concentrado sobre la recta <img src="https://latex.codecogs.com/png.latex?y=x">, que tiene área cero en <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%20R%5E2">; por eso no tiene densidad conjunta y <img src="https://latex.codecogs.com/png.latex?E%5Cbig%5B(X%5E*-Y%5E*)%5E2%5Cbig%5D"> no se puede escribir como una integral doble contra una densidad. No hace falta: el valor esperado de la variable no negativa <img src="https://latex.codecogs.com/png.latex?(X%5E*-Y%5E*)%5E2"> ya se calculó con linealidad, y el resultado sobre variables no negativas hace el resto.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En la demostración del numeral 5 del Teorema 5.65 del texto de Blanco (página 203) hay un error. Encuéntrelo y corríjalo usando la demostración anterior.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="ejercicios-del-texto-de-blanco" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="ejercicios-del-texto-de-blanco"><span class="header-section-number">10</span> Ejercicios del texto de Blanco</h2>
+<p>Ejercicios de la sección 5.8 del texto (páginas 232 a 243), agrupados por tema. Los números son los del libro.</p>
+<ul>
+<li><strong>Tablas de masa conjunta y marginales:</strong> 1, 2, 3, 4, 5, 10, 13.</li>
+<li><strong>Densidad conjunta y regiones del plano:</strong> 26, 28 (partes b y c), 29, 30, 31, 32, 34, 35, 38, 40, 43 (parte b).</li>
+<li><strong>Independencia:</strong> 8, 9 (parte b), 14, 15, 18, 27, 33 (parte a), 56.</li>
+<li><strong>Suma de variables independientes:</strong> 9 (parte a), 28 (parte a), 36, 37, 39 (parte a), 42.</li>
+<li><strong>Esperanza, linealidad e indicadoras:</strong> 3, 4, 5, 7 (parte b), 19, 20, 21, 27 (parte c).</li>
+<li><strong>Covarianza, varianza de sumas y correlación:</strong> 11, 16, 17, 23, 25, 33 (partes b, c y d), 39 (parte b).</li>
+<li><strong>Normalizadas y desigualdad de Cauchy y Schwarz:</strong> 22, 24.</li>
+<li><strong>Opcional:</strong> 58.</li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/probabilidad/vecaleatorios/</guid>
+  <pubDate>Tue, 03 Nov 2026 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>La ley débil de los grandes números</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/probabilidad/leydebil/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Ya vimos en la sección de <a href="../../../cursos/probabilidad/limitenormal/index.html">la normal como límite</a> que la binomial y la Poisson se parecen a una campana, y que la media y la varianza son los dos números que organizan esa campana. Aquí nos preguntamos cuánto se puede decir usando únicamente esos dos números, sin conocer la distribución: si sabemos la media y la varianza de una variable aleatoria, ¿qué tanto puede alejarse de su media? La respuesta son dos desigualdades, la de Markov y la de Chebyshev, y de ellas se deduce casi sin esfuerzo la <strong>ley débil de los grandes números</strong>, la primera respuesta rigurosa a la pregunta que recorre todo el curso: ¿por qué el azar produce regularidad?</p>
+<section id="la-desigualdad-de-markov" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="la-desigualdad-de-markov"><span class="header-section-number">1</span> La desigualdad de Markov</h2>
+<p>Empezamos por la desigualdad más simple, que solo usa la media y exige que la variable no sea negativa.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema (desigualdad de Markov)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Teorema (desigualdad de Markov)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sea <img src="https://latex.codecogs.com/png.latex?X"> una variable aleatoria no negativa cuyo valor esperado existe. Entonces, para todo <img src="https://latex.codecogs.com/png.latex?a%3E0">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X%5Cge%20a)%5Cle%5Cfrac%7BE(X)%7D%7Ba%7D"></p>
+</div>
+</div>
+<p><strong>Demostración.</strong> Consideremos la variable aleatoria indicadora</p>
+<p><img src="https://latex.codecogs.com/png.latex?I=%5Cbegin%7Bcases%7D1%20&amp;%20%5Ctext%7Bsi%20%7D%20X%5Cge%20a%5C%5C%5B2pt%5D%200%20&amp;%20%5Ctext%7Ben%20otro%20caso%7D%5Cend%7Bcases%7D"></p>
+<p>Afirmamos que <img src="https://latex.codecogs.com/png.latex?I%5Cle%20X/a">. Si <img src="https://latex.codecogs.com/png.latex?X%5Cge%20a">, entonces <img src="https://latex.codecogs.com/png.latex?X/a%5Cge1=I">. Si <img src="https://latex.codecogs.com/png.latex?X%3Ca">, entonces <img src="https://latex.codecogs.com/png.latex?I=0%5Cle%20X/a">, porque <img src="https://latex.codecogs.com/png.latex?X%5Cge0">. (Dicho con una gráfica: como función del valor <img src="https://latex.codecogs.com/png.latex?x%5Cge0">, el escalón que vale <img src="https://latex.codecogs.com/png.latex?0"> antes de <img src="https://latex.codecogs.com/png.latex?a"> y <img src="https://latex.codecogs.com/png.latex?1"> desde <img src="https://latex.codecogs.com/png.latex?a"> queda siempre por debajo de la recta <img src="https://latex.codecogs.com/png.latex?x/a">, que parte de <img src="https://latex.codecogs.com/png.latex?0"> y llega a <img src="https://latex.codecogs.com/png.latex?1"> justo en <img src="https://latex.codecogs.com/png.latex?x=a">.) Tomando valor esperado a ambos lados, y como <img src="https://latex.codecogs.com/png.latex?E(I)=P(X%5Cge%20a)">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X%5Cge%20a)=E(I)%5Cle%5Cfrac%7BE(X)%7D%7Ba%7D%5Cqquad%5Cblacksquare"></p>
+<p>Cuando <img src="https://latex.codecogs.com/png.latex?X"> tiene densidad <img src="https://latex.codecogs.com/png.latex?f">, el mismo argumento se lee directamente en la integral: descartamos la parte de <img src="https://latex.codecogs.com/png.latex?(0,a)">, que es no negativa, y en <img src="https://latex.codecogs.com/png.latex?%5Ba,%5Cinfty)"> usamos que <img src="https://latex.codecogs.com/png.latex?x/a%5Cge1">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7BE(X)%7D%7Ba%7D=%5Cint_0%5E%5Cinfty%5Cfrac%20xa%5C,f(x)%5C,dx%5C%20%5Cge%5C%20%5Cint_a%5E%5Cinfty%5Cfrac%20xa%5C,f(x)%5C,dx%5C%20%5Cge%5C%20%5Cint_a%5E%5Cinfty%20f(x)%5C,dx=P(X%5Cge%20a)"></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El puntaje <img src="https://latex.codecogs.com/png.latex?X"> de un estudiante en un examen de un profesor tiene media <img src="https://latex.codecogs.com/png.latex?75">. Como <img src="https://latex.codecogs.com/png.latex?X%5Cge0">, la probabilidad de que un estudiante saque <img src="https://latex.codecogs.com/png.latex?85"> o más es a lo sumo</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X%5Cge85)%5Cle%5Cfrac%7B75%7D%7B85%7D%5Capprox0%7B,%7D882"></p>
+<p>Ahora sea <img src="https://latex.codecogs.com/png.latex?X%5Csim%5Ctext%7BBinomial%7D(5,1/3)">, de modo que <img src="https://latex.codecogs.com/png.latex?E(X)=5/3">. Markov dice</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X%5Cge2)%5Cle%5Cfrac%7B5/3%7D%7B2%7D=%5Cfrac56%5Capprox0%7B,%7D833"></p>
+<p>mientras que el valor exacto es</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X%5Cge2)=1-P(X=0)-P(X=1)=1-%5CBig(%5Cfrac23%5CBig)%5E5-5%5CBig(%5Cfrac23%5CBig)%5E4%5CBig(%5Cfrac13%5CBig)=%5Cfrac%7B131%7D%7B243%7D%5Capprox0%7B,%7D539"></p>
+<p>La cota es correcta pero gruesa, como era de esperar de una desigualdad que solo mira la media.</p>
+</div>
+</div>
+</section>
+<section id="la-desigualdad-de-chebyshev" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="la-desigualdad-de-chebyshev"><span class="header-section-number">2</span> La desigualdad de Chebyshev</h2>
+<p>Markov usa solo la media. Si además conocemos la varianza, aplicamos Markov a la distancia entre <img src="https://latex.codecogs.com/png.latex?X"> y su media y obtenemos algo mucho más útil.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema (desigualdad de Chebyshev)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Teorema (desigualdad de Chebyshev)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sea <img src="https://latex.codecogs.com/png.latex?X"> una variable aleatoria con <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BVar%7D(X)%3C%5Cinfty">, con media <img src="https://latex.codecogs.com/png.latex?%5Cmu=E(X)"> y varianza <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2=%5Ctext%7BVar%7D(X)">. Entonces, para todo <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon%3E0">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?P%5Cbig(%7CX-%5Cmu%7C%5Cge%5Cvarepsilon%5Cbig)%5Cle%5Cfrac%7B%5Csigma%5E2%7D%7B%5Cvarepsilon%5E2%7D"></p>
+</div>
+</div>
+<p><strong>Demostración.</strong> Sea <img src="https://latex.codecogs.com/png.latex?Y=%7CX-%5Cmu%7C%5E2%5Cge0"> y <img src="https://latex.codecogs.com/png.latex?a=%5Cvarepsilon%5E2">. Los eventos <img src="https://latex.codecogs.com/png.latex?%5C%7B%7CX-%5Cmu%7C%5Cge%5Cvarepsilon%5C%7D"> y <img src="https://latex.codecogs.com/png.latex?%5C%7B%7CX-%5Cmu%7C%5E2%5Cge%5Cvarepsilon%5E2%5C%7D"> son el mismo, así que por Markov,</p>
+<p><img src="https://latex.codecogs.com/png.latex?P%5Cbig(%7CX-%5Cmu%7C%5Cge%5Cvarepsilon%5Cbig)=P%5Cbig(%7CX-%5Cmu%7C%5E2%5Cge%5Cvarepsilon%5E2%5Cbig)%5Cle%5Cfrac%7BE%5Cbig(%7CX-%5Cmu%7C%5E2%5Cbig)%7D%7B%5Cvarepsilon%5E2%7D=%5Cfrac%7B%5Csigma%5E2%7D%7B%5Cvarepsilon%5E2%7D%5Cqquad%5Cblacksquare"></p>
+<p>Pasando al evento complementario, y tomando <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon=k%5Csigma"> con <img src="https://latex.codecogs.com/png.latex?k%3E0"> y <img src="https://latex.codecogs.com/png.latex?%5Csigma%3E0">, la desigualdad se reescribe de dos maneras equivalentes,</p>
+<p><img src="https://latex.codecogs.com/png.latex?P%5Cbig(%7CX-%5Cmu%7C%3C%5Cvarepsilon%5Cbig)%5Cge1-%5Cfrac%7B%5Csigma%5E2%7D%7B%5Cvarepsilon%5E2%7D%5Cqquad%5Cqquad%20P%5Cbig(%7CX-%5Cmu%7C%5Cge%20k%5Csigma%5Cbig)%5Cle%5Cfrac1%7Bk%5E2%7D"></p>
+<p>En palabras: sin importar cómo se distribuya <img src="https://latex.codecogs.com/png.latex?X">, al menos <img src="https://latex.codecogs.com/png.latex?3/4"> de la probabilidad queda a menos de <img src="https://latex.codecogs.com/png.latex?2%5Csigma"> de la media, y al menos <img src="https://latex.codecogs.com/png.latex?8/9"> a menos de <img src="https://latex.codecogs.com/png.latex?3%5Csigma">.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Existe una variable aleatoria <img src="https://latex.codecogs.com/png.latex?X">, con media <img src="https://latex.codecogs.com/png.latex?%5Cmu"> y desviación estándar <img src="https://latex.codecogs.com/png.latex?%5Csigma%3E0">, tal que</p>
+<p><img src="https://latex.codecogs.com/png.latex?P%5Cbig(%7CX-%5Cmu%7C%5Cle2%5Csigma%5Cbig)=0%7B,%7D6%5C%20?"></p>
+<p>Chebyshev con <img src="https://latex.codecogs.com/png.latex?k=2"> da <img src="https://latex.codecogs.com/png.latex?P(%7CX-%5Cmu%7C%3C2%5Csigma)%5Cge1-%5Ctfrac14=%5Ctfrac34">, y como el evento <img src="https://latex.codecogs.com/png.latex?%5C%7B%7CX-%5Cmu%7C%5Cle2%5Csigma%5C%7D"> contiene a <img src="https://latex.codecogs.com/png.latex?%5C%7B%7CX-%5Cmu%7C%3C2%5Csigma%5C%7D">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?P%5Cbig(%7CX-%5Cmu%7C%5Cle2%5Csigma%5Cbig)%5Cge%5Cfrac34=0%7B,%7D75%3E0%7B,%7D6"></p>
+<p>Por lo tanto no puede existir una variable aleatoria así.</p>
+</div>
+</div>
+<p>Hay una consecuencia que vale la pena anotar, porque dice qué significa que la varianza sea cero.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Corolario">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Corolario
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BVar%7D(X)=0">, entonces <img src="https://latex.codecogs.com/png.latex?P(X=%5Cmu)=1">.</p>
+</div>
+</div>
+<p><strong>Demostración.</strong> Para cada <img src="https://latex.codecogs.com/png.latex?n%5Cge1">, Chebyshev con <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon=1/n"> da</p>
+<p><img src="https://latex.codecogs.com/png.latex?P%5CBig(%7CX-%5Cmu%7C%5Cge%5Cfrac1n%5CBig)%5Cle%5Cfrac%7B%5Csigma%5E2%7D%7B(1/n)%5E2%7D=0"></p>
+<p>Los eventos <img src="https://latex.codecogs.com/png.latex?A_n=%5C%7B%7CX-%5Cmu%7C%5Cge1/n%5C%7D"> crecen con <img src="https://latex.codecogs.com/png.latex?n"> y su unión es <img src="https://latex.codecogs.com/png.latex?%5C%7B%7CX-%5Cmu%7C%3E0%5C%7D=%5C%7BX%5Cne%5Cmu%5C%7D">. Por la continuidad de la probabilidad (la vimos en la <a href="../../../cursos/probabilidad/introduccion/index.html">primera sección</a>),</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(X%5Cne%5Cmu)=%5Clim_%7Bn%5Cto%5Cinfty%7DP(A_n)=0%5Cqquad%5Ctext%7By%20as%C3%AD%7D%5Cqquad%20P(X=%5Cmu)=1%5Cqquad%5Cblacksquare"></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Nota histórica">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Nota histórica
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Jacob Bernoulli</strong> demostró el primer caso de la ley de los grandes números, el de ensayos con probabilidad de éxito <img src="https://latex.codecogs.com/png.latex?p">, y dice haberle dado vueltas durante veinte años antes de publicarlo; el resultado apareció en su <em>Ars conjectandi</em> de 1713, ocho años después de su muerte. No usó ninguna desigualdad de Markov ni de Chebyshev, que todavía no existían, sino una estimación directa de las colas de la binomial, y con ella obtuvo un número concreto: con <img src="https://latex.codecogs.com/png.latex?p=3/5"> bastan <img src="https://latex.codecogs.com/png.latex?25%5C,550"> ensayos para que la proporción de éxitos quede a menos de <img src="https://latex.codecogs.com/png.latex?1/50"> de <img src="https://latex.codecogs.com/png.latex?p"> con una certeza “moral” de mil contra uno. El nombre <em>ley de los grandes números</em> se lo dio <strong>Siméon Denis Poisson</strong> en 1837. El argumento que vamos a usar, con la desigualdad que lleva su nombre, es el de <strong>Pafnuti Chebyshev</strong> (1867), quien lo probó para variables independientes con varianzas acotadas. Más de sesenta años después, <strong>Aleksandr Khinchin</strong> (1929) mostró que ni siquiera hace falta la varianza finita, basta con que exista la media. Por esa herencia, al caso en que las variables son Bernoulli se le llama <em>ley de Bernoulli</em>.</p>
+</div>
+</div>
+</section>
+<section id="la-ley-débil-de-los-grandes-números" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="la-ley-débil-de-los-grandes-números"><span class="header-section-number">3</span> La ley débil de los grandes números</h2>
+<p>Recordemos que <img src="https://latex.codecogs.com/png.latex?X_1,X_2,%5Cdots"> son independientes e idénticamente distribuidas (i.i.d.) si son independientes y todas tienen la misma distribución. Escribimos</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbar%20X_n=%5Cfrac1n%5Csum_%7Bi=1%7D%5EnX_i"></p>
+<p>para el promedio de las primeras <img src="https://latex.codecogs.com/png.latex?n">.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema (ley débil de los grandes números)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Teorema (ley débil de los grandes números)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sean <img src="https://latex.codecogs.com/png.latex?X_1,X_2,%5Cdots"> variables aleatorias i.i.d. con media <img src="https://latex.codecogs.com/png.latex?%5Cmu"> y varianza finita <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2">. Entonces, para todo <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon%3E0"> y todo <img src="https://latex.codecogs.com/png.latex?n%5Cge1">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?P%5Cbig(%7C%5Cbar%20X_n-%5Cmu%7C%3E%5Cvarepsilon%5Cbig)%5Cle%5Cfrac%7B%5Csigma%5E2%7D%7Bn%5Cvarepsilon%5E2%7D"></p>
+<p>y en consecuencia, para todo <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon%3E0">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bn%5Cto%5Cinfty%7DP%5Cbig(%7C%5Cbar%20X_n-%5Cmu%7C%3E%5Cvarepsilon%5Cbig)=0"></p>
+</div>
+</div>
+<p>Lo segundo se dice así: la media de la muestra converge a la media de la población <strong>en probabilidad</strong> (en teoría de la medida esto se llama convergencia en medida). En general, una sucesión <img src="https://latex.codecogs.com/png.latex?Y_n"> converge en probabilidad a <img src="https://latex.codecogs.com/png.latex?Y"> si <img src="https://latex.codecogs.com/png.latex?%5Clim_%7Bn%5Cto%5Cinfty%7DP(%7CY_n-Y%7C%3E%5Cvarepsilon)=0"> para todo <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon%3E0">.</p>
+<p><strong>Demostración.</strong> Es directa. Por linealidad del valor esperado, y porque la varianza de una suma de variables independientes es la suma de las varianzas,</p>
+<p><img src="https://latex.codecogs.com/png.latex?E(%5Cbar%20X_n)=%5Cfrac1n%5Csum_%7Bi=1%7D%5EnE(X_i)=%5Cmu%5Cqquad%5Cqquad%5Ctext%7BVar%7D(%5Cbar%20X_n)=%5Cfrac1%7Bn%5E2%7D%5Csum_%7Bi=1%7D%5En%5Ctext%7BVar%7D(X_i)=%5Cfrac%7B%5Csigma%5E2%7D%7Bn%7D"></p>
+<p>Aplicando Chebyshev a <img src="https://latex.codecogs.com/png.latex?%5Cbar%20X_n">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?P%5Cbig(%7C%5Cbar%20X_n-%5Cmu%7C%3E%5Cvarepsilon%5Cbig)%5Cle%20P%5Cbig(%7C%5Cbar%20X_n-%5Cmu%7C%5Cge%5Cvarepsilon%5Cbig)%5Cle%5Cfrac%7B%5Ctext%7BVar%7D(%5Cbar%20X_n)%7D%7B%5Cvarepsilon%5E2%7D=%5Cfrac%7B%5Csigma%5E2%7D%7Bn%5Cvarepsilon%5E2%7D"></p>
+<p>que tiende a <img src="https://latex.codecogs.com/png.latex?0"> cuando <img src="https://latex.codecogs.com/png.latex?n%5Cto%5Cinfty">. <img src="https://latex.codecogs.com/png.latex?%5Cblacksquare"></p>
+<p>Observe quién hace el trabajo: promediar divide la varianza entre <img src="https://latex.codecogs.com/png.latex?n">, y Chebyshev traduce una varianza pequeña en una probabilidad pequeña de desviarse de la media.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Corolario (ley de Bernoulli)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Corolario (ley de Bernoulli)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si cada <img src="https://latex.codecogs.com/png.latex?X_i%5Csim%5Ctext%7BBernoulli%7D(p)">, entonces <img src="https://latex.codecogs.com/png.latex?%5Cbar%20X_n"> es la proporción de éxitos en <img src="https://latex.codecogs.com/png.latex?n"> ensayos, con <img src="https://latex.codecogs.com/png.latex?%5Cmu=p"> y <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2=p(1-p)%5Cle%5Ctfrac14"> (el máximo se alcanza en <img src="https://latex.codecogs.com/png.latex?p=%5Ctfrac12">). Por lo tanto, para todo <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon%3E0">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?P%5Cbig(%7C%5Cbar%20X_n-p%7C%3E%5Cvarepsilon%5Cbig)%5Cle%5Cfrac1%7B4n%5Cvarepsilon%5E2%7D"></p>
+</div>
+</div>
+<p>Para sentir el tamaño de la cota, volvamos al ejemplo de Bernoulli, <img src="https://latex.codecogs.com/png.latex?p=3/5"> y <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon=1/50">. Pedir que la probabilidad de equivocarse sea a lo sumo <img src="https://latex.codecogs.com/png.latex?1/1001"> (mil contra uno) exige, por Chebyshev,</p>
+<p><img src="https://latex.codecogs.com/png.latex?n%5Cge%5Cfrac%7B1001%5C,p(1-p)%7D%7B%5Cvarepsilon%5E2%7D=%5Cfrac%7B1001%5Ccdot0%7B,%7D24%7D%7B0%7B,%7D0004%7D=600%5C,600"></p>
+<p>ensayos. La aproximación normal de la sección anterior sugiere que bastan unos <img src="https://latex.codecogs.com/png.latex?6%5C,500">, y la cota de Bernoulli, <img src="https://latex.codecogs.com/png.latex?25%5C,550">, queda en el medio. La ley débil dice que el promedio converge, no qué tan rápido, y la cota de Chebyshev es generosa porque solo usa la varianza.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Qué dice y qué no dice">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Qué dice y qué no dice
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La ley de Bernoulli no afirma que, lanzando la moneda una vez tras otra, la sucesión de proporciones <img src="https://latex.codecogs.com/png.latex?%5Cbar%20X_n"> se acerque a <img src="https://latex.codecogs.com/png.latex?p"> y se quede cerca. Afirma algo sobre cada <img src="https://latex.codecogs.com/png.latex?n"> por separado: la probabilidad de que <img src="https://latex.codecogs.com/png.latex?%5Cbar%20X_n"> esté lejos de <img src="https://latex.codecogs.com/png.latex?p"> se vuelve pequeña. Lo primero también es cierto, pero es la ley <em>fuerte</em> de los grandes números (para el caso de Bernoulli, debida a Borel en 1909) y no se deduce de lo que probamos aquí. Es el mismo cuidado que ya tuvimos con las frecuencias relativas y la probabilidad en la <a href="../../../cursos/probabilidad/introduccion/index.html">primera sección</a>.</p>
+</div>
+</div>
+</section>
+<section id="lo-que-quedó-pendiente" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="lo-que-quedó-pendiente"><span class="header-section-number">4</span> Lo que quedó pendiente</h2>
+<p>Antes dejamos pendiente la versión general del corolario de Chebyshev: una variable no negativa con esperanza cero es cero con probabilidad uno, y recíprocamente.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Teorema
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sea <img src="https://latex.codecogs.com/png.latex?Z%5Cge0"> una variable aleatoria. Entonces <img src="https://latex.codecogs.com/png.latex?E(Z)=0"> si y solo si <img src="https://latex.codecogs.com/png.latex?P(Z=0)=1">.</p>
+</div>
+</div>
+<p><strong>Demostración.</strong> Supongamos que <img src="https://latex.codecogs.com/png.latex?E(Z)=0">. Por Markov, para cada <img src="https://latex.codecogs.com/png.latex?n%5Cge1">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?P%5CBig(Z%5Cge%5Cfrac1n%5CBig)%5Cle%5Cfrac%7BE(Z)%7D%7B1/n%7D=n%5C,E(Z)=0"></p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?Z%5Cge0">, el evento <img src="https://latex.codecogs.com/png.latex?%5C%7BZ%3E0%5C%7D"> es la unión de los eventos <img src="https://latex.codecogs.com/png.latex?%5C%7BZ%5Cge1/n%5C%7D"> con <img src="https://latex.codecogs.com/png.latex?n%5Cge1">, y por la subaditividad,</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(Z%3E0)=P%5CBig(%5Cbigcup_%7Bn=1%7D%5E%5Cinfty%5CBig%5C%7BZ%5Cge%5Cfrac1n%5CBig%5C%7D%5CBig)%5Cle%5Csum_%7Bn=1%7D%5E%5Cinfty%20P%5CBig(Z%5Cge%5Cfrac1n%5CBig)=0"></p>
+<p>Entonces <img src="https://latex.codecogs.com/png.latex?P(Z=0)=1-P(Z%3E0)=1">.</p>
+<p>Al revés es más fácil. Si <img src="https://latex.codecogs.com/png.latex?P(Z=0)=1">, separamos el valor esperado según <img src="https://latex.codecogs.com/png.latex?Z"> sea cero o positiva,</p>
+<p><img src="https://latex.codecogs.com/png.latex?E(Z)=E%5Cbig(Z%5C,I_%7B%5C%7BZ=0%5C%7D%7D%5Cbig)+E%5Cbig(Z%5C,I_%7B%5C%7BZ%3E0%5C%7D%7D%5Cbig)=0+0"></p>
+<p>El primer sumando es <img src="https://latex.codecogs.com/png.latex?0"> porque allí <img src="https://latex.codecogs.com/png.latex?Z"> vale <img src="https://latex.codecogs.com/png.latex?0">, y el segundo es <img src="https://latex.codecogs.com/png.latex?0"> porque se integra sobre un evento de probabilidad cero. <img src="https://latex.codecogs.com/png.latex?%5Cblacksquare"></p>
+<p>Aplicado a <img src="https://latex.codecogs.com/png.latex?Z=(X-%5Cmu)%5E2">, que es no negativa y cumple <img src="https://latex.codecogs.com/png.latex?E(Z)=%5Ctext%7BVar%7D(X)">, el teorema dice que <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BVar%7D(X)=0"> si y solo si <img src="https://latex.codecogs.com/png.latex?P(X=%5Cmu)=1">: una variable aleatoria tiene varianza cero exactamente cuando es constante con probabilidad uno. El corolario de Chebyshev era la mitad de esta afirmación.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicios del libro">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicios del libro
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Del libro de Blanco Castañeda:</p>
+<ul>
+<li>Capítulo 2: ejercicios 41, 42 y 43.</li>
+<li>Sección 7.4: ejercicios 1, 18 y 19.</li>
+<li>Sección 7.4, para ir más lejos: ejercicios 6 y 21.</li>
+<li>Sección 7.4, con la aproximación normal: ejercicios 10 y 11.</li>
+</ul>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/probabilidad/leydebil/</guid>
+  <pubDate>Tue, 03 Nov 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Taller 3</title>
   <link>https://arturosanjuan.xyz/cursos/probabilidad/taller-3/</link>

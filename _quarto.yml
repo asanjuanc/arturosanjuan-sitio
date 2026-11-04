@@ -111,7 +111,8 @@ website:
         - cursos/probabilidad/continuasespeciales/index.qmd
         - cursos/probabilidad/limitenormal/index.qmd
         - cursos/probabilidad/taller-3/index.qmd
-
+        - cursos/probabilidad/vecaleatorios/index.qmd
+        - cursos/probabilidad/leydebil/index.qmd
         
 
 format:
