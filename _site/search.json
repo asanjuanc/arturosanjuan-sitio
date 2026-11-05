@@ -1101,7 +1101,7 @@
     "href": "cursos/numerico/index.html",
     "title": "Análisis Numérico",
     "section": "",
-    "text": "Ordenar por\n      Por defecto\n      \n        Título\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTítulo\n\n\n\nSubtítulo\n\n\n\n\n\n\n\n\nIntroducción\n\n\nSistemas de numeración y punto flotante\n\n\n\n\n\n\nCondicionamiento\n\n\nCancelación catastrófica, pérdida de significancia y número de condición\n\n\n\n\n\n\nEstabilidad\n\n\nAlgoritmos y estabilidad ejemplo con f(x)=(e^x-1)/x).\n\n\n\n\n\n\nTaller 1\n\n\nAutopsia numérica: máquina de punto flotante, condicionamiento y estabilidad\n\n\n\n\n\n\nSistemas lineales e interpolación\n\n\nMatrices de Vandermonde y sustitución hacia adelante y hacia atrás\n\n\n\n\n\n\nNormas matriciales y condicionamiento\n\n\nNormas inducidas y número de condición de matrices\n\n\n\n\n\n\nFactorización LU\n\n\nProductos exteriores, eliminación gaussiana y pivoteo parcial\n\n\n\n\n\n\nComplejidad\n\n\nNotación de Landau y conteo de flops\n\n\n\n\n\n\nTaller 2\n\n\nAutopsia numérica: normas matriciales, condicionamiento y pivoteo\n\n\n\n\n\n\nParcial 1\n\n\nCancelación catastrófica y condicionamiento, autopsia forense de un algoritmo, y sistemas lineales triangulares\n\n\n\n\n\n\nRaíces y puntos fijos\n\n\nCondicionamiento del problema de la raíz y el análisis de la serie de errores.\n\n\n\n\n\n\nEl método de Newton\n\n\nDe las perturbaciones de Newton en 1669 a la iteración con derivada, y lo que puede salir mal.\n\n\n\n\n\n\nOrden de convergencia\n\n\nConvergencia lineal, cuadrática y superlineal, y cómo leer el orden en la sucesión de errores.\n\n\n\n\n\n\nTaller 3\n\n\nFluidos supercríticos y la ecuación de van der Waals\n\n\n\n\n\n\nNo hay resultados",
+    "text": "Ordenar por\n      Por defecto\n      \n        Título\n      \n    \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTítulo\n\n\n\nSubtítulo\n\n\n\n\n\n\n\n\nIntroducción\n\n\nSistemas de numeración y punto flotante\n\n\n\n\n\n\nCondicionamiento\n\n\nCancelación catastrófica, pérdida de significancia y número de condición\n\n\n\n\n\n\nEstabilidad\n\n\nAlgoritmos y estabilidad ejemplo con f(x)=(e^x-1)/x).\n\n\n\n\n\n\nTaller 1\n\n\nAutopsia numérica: máquina de punto flotante, condicionamiento y estabilidad\n\n\n\n\n\n\nSistemas lineales e interpolación\n\n\nMatrices de Vandermonde y sustitución hacia adelante y hacia atrás\n\n\n\n\n\n\nNormas matriciales y condicionamiento\n\n\nNormas inducidas y número de condición de matrices\n\n\n\n\n\n\nFactorización LU\n\n\nProductos exteriores, eliminación gaussiana y pivoteo parcial\n\n\n\n\n\n\nComplejidad\n\n\nNotación de Landau y conteo de flops\n\n\n\n\n\n\nTaller 2\n\n\nAutopsia numérica: normas matriciales, condicionamiento y pivoteo\n\n\n\n\n\n\nParcial 1\n\n\nCancelación catastrófica y condicionamiento, autopsia forense de un algoritmo, y sistemas lineales triangulares\n\n\n\n\n\n\nRaíces y puntos fijos\n\n\nCondicionamiento del problema de la raíz y el análisis de la serie de errores.\n\n\n\n\n\n\nEl método de Newton\n\n\nDe las perturbaciones de Newton en 1669 a la iteración con derivada, y lo que puede salir mal.\n\n\n\n\n\n\nOrden de convergencia\n\n\nConvergencia lineal, cuadrática y superlineal, y cómo leer el orden en la sucesión de errores.\n\n\n\n\n\n\nTaller 3\n\n\nFluidos supercríticos y la ecuación de van der Waals\n\n\n\n\n\n\nInterpolación\n\n\nEl problema de interpolación, el condicionamiento de la prescripción que produce el interpolante y la interpolación lineal a trozos.\n\n\n\n\n\n\nNo hay resultados",
     "crumbs": [
       "Análisis Numérico"
     ]
@@ -1297,6 +1297,248 @@
     ]
   },
   {
+    "objectID": "cursos/numerico/interpolacion/index.html",
+    "href": "cursos/numerico/interpolacion/index.html",
+    "title": "Interpolación",
+    "section": "",
+    "text": "Pasamos ahora al capítulo 5 del libro de Driscoll y Braun, dedicado a la interpolación. Seguimos las secciones 5.1 y 5.2."
+  },
+  {
+    "objectID": "cursos/numerico/interpolacion/index.html#el-problema-de-interpolación",
+    "href": "cursos/numerico/interpolacion/index.html#el-problema-de-interpolación",
+    "title": "Interpolación",
+    "section": "1 El problema de interpolación",
+    "text": "1 El problema de interpolación\n\n\n\n\n\n\nImportanteDefinición: problema de interpolación\n\n\n\nDados \\(n+1\\) puntos \\((t_0,y_0),\\dots,(t_n,y_n)\\) con los \\(t_k\\) distintos, llamados nodos, el problema de interpolación consiste en encontrar una función \\(p\\), llamada interpolante, tal que\n\\[p(t_k)=y_k,\\qquad k=0,\\dots,n.\\]\n\n\nTomemos los tres puntos \\((0,1)\\), \\((1,3)\\) y \\((2,2)\\). Hay muchas funciones que pasan por ellos, y vemos tres.\n\n\n\n  Interpolante lineal a trozos por los puntos (0,1), (1,3), (2,2)\n  \n  \n  \n  \n  0\n  1\n  2\n  \n  \n  \n  \n  \n  p₁\n  p₂\n\nLineal a trozos\n\n\n\n  Interpolante cuadrático a trozos de clase C1 por los puntos (0,1), (1,3), (2,2)\n  \n  \n  \n  \n  0\n  1\n  2\n  \n  \n  \n  \n  \n  p₁\n  p₂\n\nCuadrática a trozos\n\n\n\n  Parábola única por los puntos (0,1), (1,3), (2,2)\n  \n  \n  \n  \n  0\n  1\n  2\n  \n  \n  \n  \n  p\n\nUna sola cuadrática\n\n\nLineal a trozos. En cada subintervalo usamos una recta que une sus dos extremos:\n\\[p_1(x)=1+2x\\ \\text{ en }[0,1],\\qquad p_2(x)=4-x\\ \\text{ en }[1,2].\\]\nCuadrática a trozos. Usamos ahora un polinomio de grado a lo más \\(2\\) en cada subintervalo,\n\\[p_1(x)=a_0+a_1x+a_2x^2\\ \\text{ en }[0,1],\\qquad p_2(x)=b_0+b_1x+b_2x^2\\ \\text{ en }[1,2].\\]\nPasar por los cuatro extremos impone cuatro condiciones sobre seis coeficientes, así que quedan dos grados de libertad. Los podemos usar para que el empalme en \\(x=1\\) sea suave, \\(p_1'(1)=p_2'(1)\\), y para fijar, por ejemplo, \\(p_1'(0)=0\\). De \\(p_1(0)=1\\), \\(p_1'(0)=0\\) y \\(p_1(1)=3\\) sale \\(p_1(x)=1+2x^2\\), con \\(p_1'(1)=4\\). Escribiendo \\(p_2\\) alrededor de \\(x=1\\) con esa misma pendiente, \\(p_2(x)=3+4(x-1)+b_2(x-1)^2\\), y la condición \\(p_2(2)=2\\) da \\(b_2=-5\\):\n\\[p_1(x)=1+2x^2,\\qquad p_2(x)=3+4(x-1)-5(x-1)^2.\\]\nLa condición \\(p_1'(0)=0\\) es solo una elección posible, otra elección da otra cuadrática a trozos.\nUna sola cuadrática. También podemos usar un único polinomio de grado \\(2\\) para todo el intervalo, el único que pasa por los tres puntos:\n\\[p(x)=1+\\frac72\\,x-\\frac32\\,x^2.\\]\nEn general, \\(n+1\\) puntos se pueden interpolar con un único polinomio de grado \\(n\\). Sin embargo, esto puede generar oscilaciones muy grandes en los extremos del intervalo, con errores y sensibilidad altos a los datos (fenómeno de Runge). Por eso es preferible interpolar con polinomios de grado pequeño en cada subintervalo. Los ejemplos de la sección 5.1 del libro lo muestran."
+  },
+  {
+    "objectID": "cursos/numerico/interpolacion/index.html#condicionamiento-de-la-interpolación",
+    "href": "cursos/numerico/interpolacion/index.html#condicionamiento-de-la-interpolación",
+    "title": "Interpolación",
+    "section": "2 Condicionamiento de la interpolación",
+    "text": "2 Condicionamiento de la interpolación\nFijados los nodos, una prescripción de interpolación es una función \\(I\\) que a cada vector de datos \\(y=(y_0,\\dots,y_n)\\) le asigna su interpolante \\(p=I(y)\\), es decir, \\(p(t_k)=y_k\\). Solo consideraremos prescripciones lineales:\n\\[I(\\alpha y+\\beta z)=\\alpha\\,I(y)+\\beta\\,I(z)\\]\npara todo par de vectores \\(y,z\\) y todo par de escalares \\(\\alpha,\\beta\\).\nCon un ejemplo se ve más claro. Sean \\(t_0=0\\), \\(t_1=1\\), \\(t_2=2\\), e \\(I\\) la prescripción que a los datos \\((0,y_0)\\), \\((1,y_1)\\), \\((2,y_2)\\) les asigna la función que une \\((0,y_0)\\) con \\((1,y_1)\\) mediante una recta y \\((1,y_1)\\) con \\((2,y_2)\\) mediante una cuadrática, de modo que en total \\(p\\) sea de clase \\(C^1\\). La recta tiene pendiente \\(y_1-y_0\\), así que la cuadrática debe salir de \\((1,y_1)\\) con esa pendiente y pasar por \\((2,y_2)\\). El resultado es\n\\[p(x)=I(y)(x)=\\begin{cases}\ny_0+(y_1-y_0)\\,x, & 0\\le x\\le 1,\\\\[2mm]\ny_1+(y_1-y_0)(x-1)+(y_0-2y_1+y_2)(x-1)^2, & 1\\le x\\le 2.\n\\end{cases}\\]\n¿Qué pasa si calculamos \\(I(\\alpha y+\\beta z)(x)\\)? Para \\(x\\in[0,1]\\),\n\\[\\begin{aligned}\nI(\\alpha y+\\beta z)(x)&=(\\alpha y_0+\\beta z_0)+\\big[(\\alpha y_1+\\beta z_1)-(\\alpha y_0+\\beta z_0)\\big]\\,x\\\\\n&=\\alpha\\big[y_0+(y_1-y_0)x\\big]+\\beta\\big[z_0+(z_1-z_0)x\\big]\\\\\n&=\\alpha\\,I(y)(x)+\\beta\\,I(z)(x),\n\\end{aligned}\\]\ny de manera similar si \\(x\\in[1,2]\\).\nComo \\(I\\) es lineal en \\(y\\), podemos escribir el vector de datos como combinación lineal de los vectores canónicos, \\(y=\\sum_{k=0}^n y_k\\,e_k\\), donde \\(e_k\\) es la columna \\(k\\) de la matriz identidad (numerada desde \\(0\\)). Por linealidad,\n\\[I(y)=\\sum_{k=0}^{n}y_k\\,I(e_k).\\]\nLas funciones \\(\\varphi_k=I(e_k)\\) son las que se llaman funciones cardinales: \\(\\varphi_k\\) es el interpolante de los datos que valen \\(1\\) en el nodo \\(t_k\\) y \\(0\\) en los demás, es decir, \\(\\varphi_k(t_j)=1\\) si \\(j=k\\) y \\(0\\) si \\(j\\neq k\\). En el ejemplo, evaluando la fórmula de \\(I\\) en \\(e_0=(1,0,0)\\), \\(e_1=(0,1,0)\\) y \\(e_2=(0,0,1)\\) se obtiene\n\\[I(e_0)(x)=\\begin{cases}1-x, & x\\in[0,1],\\\\ -(x-1)+(x-1)^2, & x\\in[1,2],\\end{cases}\\qquad\nI(e_1)(x)=\\begin{cases}x, & x\\in[0,1],\\\\ 1+(x-1)-2(x-1)^2, & x\\in[1,2],\\end{cases}\\]\n\\[I(e_2)(x)=\\begin{cases}0, & x\\in[0,1],\\\\ (x-1)^2, & x\\in[1,2],\\end{cases}\\]\ny por lo tanto \\(I(y)=y_0\\,I(e_0)+y_1\\,I(e_1)+y_2\\,I(e_2)\\).\nMedimos los datos con la norma \\(\\|d\\|_\\infty=\\max_k|d_k|\\) y las funciones con \\(\\|p\\|_\\infty=\\max_{t_0\\le x\\le t_n}|p(x)|\\).\n\n\n\n\n\n\nImportanteDefinición: condicionamiento absoluto de la interpolación\n\n\n\nEl número de condicionamiento absoluto de \\(I\\) es\n\\[\\kappa(I)=\\max_{d\\neq0}\\frac{\\|I(y+d)-I(y)\\|_\\infty}{\\|d\\|_\\infty},\\]\nes decir, el máximo del cociente entre el error (absoluto) en el resultado y el error (absoluto) en el dato.\n\n\n\n\n\n\n\n\nNotaTeorema\n\n\n\nEl número de condicionamiento absoluto de \\(I\\) satisface\n\\[\\max_{k}\\|\\varphi_k\\|_\\infty\\;\\le\\;\\kappa(I)\\;\\le\\;\\sum_{k=0}^{n}\\|\\varphi_k\\|_\\infty.\\tag{1}\\]\n\n\nDemostración. Por linealidad, \\(I(y+d)-I(y)=I(d)\\), y entonces\n\\[\\frac{\\|I(y+d)-I(y)\\|_\\infty}{\\|d\\|_\\infty}=\\frac{\\|I(d)\\|_\\infty}{\\|d\\|_\\infty}=\\left\\|I\\!\\left(\\frac{d}{\\|d\\|_\\infty}\\right)\\right\\|_\\infty .\\]\nEl número de condicionamiento es el máximo de esta cantidad sobre todos los \\(d\\neq0\\) posibles, y no depende de \\(y\\). Sea \\(k^*\\) un índice en el que \\(\\max_k\\|\\varphi_k\\|_\\infty\\) se alcanza, es decir, \\(\\|\\varphi_{k^*}\\|_\\infty=\\max_k\\|\\varphi_k\\|_\\infty\\). Tomando \\(d=e_{k^*}\\) se tiene \\(\\|d\\|_\\infty=1\\) e \\(I(d)=\\varphi_{k^*}\\), de modo que el cociente vale \\(\\|\\varphi_{k^*}\\|_\\infty\\). Como \\(\\kappa(I)\\) es el máximo sobre todos los \\(d\\), resulta \\(\\kappa(I)\\ge\\|\\varphi_{k^*}\\|_\\infty\\), que es la desigualdad de la izquierda en (1). La otra desigualdad es consecuencia directa de la desigualdad triangular y se deja como ejercicio. \\(\\blacksquare\\)\n\n\n\n\n\n\nNotaTarea\n\n\n\nDemuestre la desigualdad de la derecha en (1) y resuelva los ejercicios 5.1.4 y 5.1.5 de Fundamentals of Numerical Computation, disponibles en https://fncbook.com/julia/interpolation/#exercises."
+  },
+  {
+    "objectID": "cursos/numerico/interpolacion/index.html#interpolación-lineal-a-trozos",
+    "href": "cursos/numerico/interpolacion/index.html#interpolación-lineal-a-trozos",
+    "title": "Interpolación",
+    "section": "3 Interpolación lineal a trozos",
+    "text": "3 Interpolación lineal a trozos\nConsideremos ahora los nodos ordenados, \\(t_0&lt;t_1&lt;\\dots&lt;t_n\\), y la interpolación lineal a trozos (PL, por piecewise linear): en cada subintervalo \\([t_k,t_{k+1}]\\) el interpolante es el segmento que une \\((t_k,y_k)\\) con \\((t_{k+1},y_{k+1})\\),\n\\[p(x)=y_k+\\frac{y_{k+1}-y_k}{t_{k+1}-t_k}\\,(x-t_k),\\qquad x\\in[t_k,t_{k+1}],\\quad k=0,\\dots,n-1.\\]\nLas funciones cardinales de PL se llaman funciones sombrero, por su forma:\n\\[H_k(x)=\\begin{cases}\n\\dfrac{x-t_{k-1}}{t_k-t_{k-1}}, & x\\in[t_{k-1},t_k],\\\\[3mm]\n\\dfrac{t_{k+1}-x}{t_{k+1}-t_k}, & x\\in[t_k,t_{k+1}],\\\\[3mm]\n0, & \\text{en otro caso.}\n\\end{cases}\\]\nPara \\(H_0\\) no hay rama izquierda y para \\(H_n\\) no hay rama derecha, porque no existen \\(t_{-1}\\) ni \\(t_{n+1}\\).\n\n  Función sombrero Hₖ asociada al nodo tₖ\n  \n  \n  \n  1\n  \n  \n  \n  tₖ₋₁\n  \n  tₖ\n  \n  tₖ₊₁\n  \n  Hₖ\n\nEstas funciones son continuas en \\(\\mathbb{R}\\) y lineales a trozos, y son cardinales para PL: \\(H_k(t_j)=1\\) si \\(j=k\\) y \\(0\\) si \\(j\\neq k\\). Entonces\n\\[p(x)=\\sum_{k=0}^{n}y_k\\,H_k(x).\\]\nEl siguiente tablero dibuja los sombreros, los sombreros multiplicados por los datos y el interpolante que resulta de sumarlos. Se pueden arrastrar los puntos para cambiar los datos, cambiar el número de subintervalos y perturbar los nodos para que no sean equiespaciados, y leer en una tabla el valor de cada sombrero en un punto.\n\n\n\n\n\n\n\n\nNotaTarea\n\n\n\nDemuestre que el número de condicionamiento absoluto de la interpolación lineal a trozos es \\(\\kappa(\\mathrm{PL})=1\\).\n\n\n\n3.1 Por qué condicionamiento absoluto\nEl adjetivo absoluto significa que el error en el dato y el error en el resultado se miden tal cual, sin dividir por el tamaño de \\(y\\) ni por el de \\(I(y)\\). Entonces \\(\\kappa(I)\\) dice cuánto se amplifica, a lo sumo, un error absoluto: si cada \\(y_k\\) cambia en no más de \\(\\delta\\), el interpolante cambia, en la norma del máximo, en no más de \\(\\kappa(I)\\,\\delta\\). Lo usamos por dos razones.\nLa primera es que, por ser \\(I\\) lineal, la diferencia \\(I(y+d)-I(y)=I(d)\\) no depende de \\(y\\), así que \\(\\kappa(I)\\) es un único número que depende solo de los nodos y del método de interpolación, y vale como garantía para todos los datos a la vez. La segunda es que el condicionamiento relativo en un dato \\(y\\neq0\\) sí depende de \\(y\\),\n\\[\\kappa_{\\text{rel}}(y)=\\kappa(I)\\,\\frac{\\|y\\|_\\infty}{\\|I(y)\\|_\\infty},\\]\npero como el interpolante pasa por los nodos se tiene \\(\\|I(y)\\|_\\infty\\ge\\|y\\|_\\infty\\), y por lo tanto \\(\\kappa_{\\text{rel}}(y)\\le\\kappa(I)\\) para todo \\(y\\). Acotar el condicionamiento absoluto controla también el relativo."
+  },
+  {
+    "objectID": "cursos/numerico/interpolacion/index.html#convergencia-de-la-interpolación-lineal-a-trozos",
+    "href": "cursos/numerico/interpolacion/index.html#convergencia-de-la-interpolación-lineal-a-trozos",
+    "title": "Interpolación",
+    "section": "4 Convergencia de la interpolación lineal a trozos",
+    "text": "4 Convergencia de la interpolación lineal a trozos\n\n\n\n\n\n\nNotaTeorema\n\n\n\nSea \\(f\\) con segunda derivada continua en \\([a,b]\\), sea \\(h=\\dfrac{b-a}{n}\\) y sea \\(p_n\\) el interpolante PL de los datos \\((t_i,f(t_i))\\), con nodos equiespaciados \\(t_i=a+ih\\). Entonces\n\\[\\|f-p_n\\|_\\infty\\le\\|f''\\|_\\infty\\,h^2.\\]\n\n\nComo \\(h=(b-a)/n\\), esto dice que la convergencia es algebraica, \\(\\|f-p_n\\|_\\infty=O(h^2)=O(n^{-2})\\), y si el error no es \\(O(h^3)\\), entonces \\(2\\) es el orden de precisión.\n\n4.1 El orden aquí y en los métodos iterativos\nLa palabra orden aparece en los dos contextos, pero mide cosas distintas. En los métodos iterativos (punto fijo, Newton, secante) hay una sola sucesión de errores \\(\\varepsilon_k=x_k-x^*\\), uno por cada iteración, y el orden \\(\\alpha\\) relaciona cada error con el anterior:\n\\[\\lim_{k\\to\\infty}\\frac{|\\varepsilon_{k+1}|}{|\\varepsilon_k|^\\alpha}=L&gt;0.\\]\nCon \\(\\alpha=1\\) la convergencia es lineal, con \\(\\alpha=2\\) es cuadrática. Lo que va cambiando es el número de pasos \\(k\\), y el error baja de forma geométrica o más rápido: la convergencia lineal es una recta en una gráfica con el error en escala logarítmica contra \\(k\\).\nEn la interpolación no hay iteración ni error anterior. Para cada \\(n\\) hay un interpolante distinto \\(p_n\\), y el error \\(E(h)=\\|f-p_n\\|_\\infty\\) depende del tamaño de la malla. El orden \\(q\\) es el exponente de \\(h\\):\n\\[E(h)\\approx C\\,h^{q}.\\]\nPara estimarlo se comparan dos mallas, \\(E(h_1)/E(h_2)\\approx(h_1/h_2)^q\\), y al duplicar \\(n\\) queda \\(q\\approx\\log_2\\big(E(h)/E(h/2)\\big)\\). Equivale a la pendiente de la recta que se ve al graficar \\(E\\) contra \\(h\\) con ambos ejes en escala logarítmica. Para PL, \\(q=2\\): al dividir \\(h\\) entre \\(2\\), el error se divide aproximadamente entre \\(4\\). Con \\(f(x)=\\operatorname{sen}x\\) en \\([0,\\pi]\\):\n\n\n\n\n\n\n\n\n\n\n\\(n\\)\n\\(h\\)\n\\(\\lVert f-p_n\\rVert_\\infty\\)\n\\(E(2h)/E(h)\\)\n\\(\\log_2\\) del cociente\n\n\n\n\n\\(4\\)\n\\(0{,}78540\\)\n\\(7{,}0378\\times10^{-2}\\)\n\n\n\n\n\\(8\\)\n\\(0{,}39270\\)\n\\(1{,}8846\\times10^{-2}\\)\n\\(3{,}734\\)\n\\(1{,}901\\)\n\n\n\\(16\\)\n\\(0{,}19635\\)\n\\(4{,}7921\\times10^{-3}\\)\n\\(3{,}933\\)\n\\(1{,}976\\)\n\n\n\\(32\\)\n\\(0{,}09817\\)\n\\(1{,}2031\\times10^{-3}\\)\n\\(3{,}983\\)\n\\(1{,}994\\)\n\n\n\\(64\\)\n\\(0{,}04909\\)\n\\(3{,}0109\\times10^{-4}\\)\n\\(3{,}996\\)\n\\(1{,}998\\)\n\n\n\\(128\\)\n\\(0{,}02454\\)\n\\(7{,}5292\\times10^{-5}\\)\n\\(3{,}999\\)\n\\(2{,}000\\)\n\n\n\nEl cociente de errores tiende a \\(4\\) y el logaritmo en base \\(2\\) del cociente tiende a \\(2\\), que es el orden de precisión.\nConviene notar la diferencia de velocidad. Un orden \\(2\\) de este tipo es mucho más lento que la convergencia cuadrática de Newton, que duplica las cifras correctas en cada paso. Aquí cada vez que duplicamos \\(n\\), y con ello el costo, el error se divide entre \\(4\\), es decir, ganamos solo unas \\(0{,}6\\) cifras decimales. El error decae como una potencia de \\(n\\) y no como una geométrica en \\(k\\), y de ahí el nombre de convergencia algebraica.\n\n\n\n\n\n\nNotaTarea\n\n\n\nResuelva los ejercicios 5.2.2 a 5.2.4 de Fundamentals of Numerical Computation, disponibles en https://fncbook.com/julia/pwlin/#exercises."
+  },
+  {
+    "objectID": "cursos/numerico/convergencia/index.html",
+    "href": "cursos/numerico/convergencia/index.html",
+    "title": "Orden de convergencia",
+    "section": "",
+    "text": "Recordemos el análisis de la serie de errores del método de punto fijo, que vimos en la nota de raíces y puntos fijos, y usémoslo para darle nombre a la velocidad con que converge un método. Después lo aplicamos a Newton, que vimos en la nota anterior, y a la secante. Seguimos las secciones 4.2, 4.3 y 4.4 del libro de Driscoll y Braun.",
+    "crumbs": [
+      "Orden de convergencia"
+    ]
+  },
+  {
+    "objectID": "cursos/numerico/convergencia/index.html#el-error-en-la-iteración-de-punto-fijo",
+    "href": "cursos/numerico/convergencia/index.html#el-error-en-la-iteración-de-punto-fijo",
+    "title": "Orden de convergencia",
+    "section": "1 El error en la iteración de punto fijo",
+    "text": "1 El error en la iteración de punto fijo\nSea \\(p\\) la solución exacta, es decir, \\(g(p)=p\\) o, de forma equivalente, \\(f(p)=g(p)-p=0\\). El error absoluto en el paso \\(k\\) es \\(\\varepsilon_k=x_k-p\\). Como \\(x_{k+1}=g(x_k)\\), expandiendo \\(g\\) en Taylor alrededor de \\(p\\) y usando \\(g(p)=p\\),\n\\[\\varepsilon_{k+1}+p=g(p+\\varepsilon_k)=g(p)+g'(p)\\,\\varepsilon_k+o(\\varepsilon_k)=p+g'(p)\\,\\varepsilon_k+o(\\varepsilon_k).\\]\nPara \\(\\varepsilon_k\\) pequeño el resto \\(o(\\varepsilon_k)\\) se puede despreciar, y queda\n\\[\\boxed{\\varepsilon_{k+1}\\approx g'(p)\\,\\varepsilon_k.}\\]\nYa vimos que para que el método funcione cerca de una semilla se requiere \\(|g'(p)|&lt;1\\), y que entonces el error decrece como un múltiplo escalar del error anterior. Esto motiva la definición.",
+    "crumbs": [
+      "Orden de convergencia"
+    ]
+  },
+  {
+    "objectID": "cursos/numerico/convergencia/index.html#convergencia-lineal",
+    "href": "cursos/numerico/convergencia/index.html#convergencia-lineal",
+    "title": "Orden de convergencia",
+    "section": "2 Convergencia lineal",
+    "text": "2 Convergencia lineal\n\n\n\n\n\n\nImportanteDefinición: convergencia lineal\n\n\n\nSi \\(x_k\\to x^*\\) y el error \\(\\varepsilon_k=x_k-x^*\\) satisface\n\\[\\lim_{k\\to\\infty}\\frac{|\\varepsilon_{k+1}|}{|\\varepsilon_k|}=\\sigma&lt;1,\\]\nse dice que la convergencia es lineal.\n\n\nEn el punto fijo, \\(\\sigma=|g'(p)|\\). Supongamos que la razón es exactamente \\(\\sigma\\) en cada paso. Entonces\n\\[|\\varepsilon_k|=\\sigma\\,|\\varepsilon_{k-1}|=\\sigma^2\\,|\\varepsilon_{k-2}|=\\cdots=\\sigma^k\\,|\\varepsilon_0|=\\sigma^k c,\\qquad c=|\\varepsilon_0|,\\]\nde donde, al tomar logaritmos,\n\\[\\log|\\varepsilon_k|=k\\log\\sigma+\\log c.\\]\nEs una relación lineal entre \\(\\log|\\varepsilon_k|\\) y \\(k\\), con pendiente \\(\\log\\sigma&lt;0\\): si graficamos los errores en escala logarítmica contra \\(k\\), aparece una recta. De ahí el nombre.\nPor ejemplo, para \\(g(x)=\\cos x\\) y \\(x_0=1\\), el punto fijo es \\(p\\approx0{,}7390851\\) y \\(g'(p)=-\\operatorname{sen}(p)\\approx-0{,}67361\\). Los cocientes \\(\\varepsilon_{k+1}/\\varepsilon_k\\) se acercan a ese valor, alternando de signo porque \\(g'(p)&lt;0\\), de modo que \\(\\sigma\\approx0{,}6736\\):\n\n\n\n\\(k\\)\n\\(\\varepsilon_k\\)\n\\(\\varepsilon_{k+1}/\\varepsilon_k\\)\n\n\n\n\n\\(0\\)\n\\(0{,}26091\\)\n\\(-0{,}76187\\)\n\n\n\\(5\\)\n\\(-0{,}037716\\)\n\\(-0{,}65952\\)\n\n\n\\(10\\)\n\\(0{,}0051522\\)\n\\(-0{,}67551\\)\n\n\n\\(20\\)\n\\(9{,}9267\\times10^{-5}\\)\n\\(-0{,}67365\\)\n\n\n\\(30\\)\n\\(1{,}9095\\times10^{-6}\\)\n\\(-0{,}67361\\)",
+    "crumbs": [
+      "Orden de convergencia"
+    ]
+  },
+  {
+    "objectID": "cursos/numerico/convergencia/index.html#convergencia-cuadrática-el-método-de-newton",
+    "href": "cursos/numerico/convergencia/index.html#convergencia-cuadrática-el-método-de-newton",
+    "title": "Orden de convergencia",
+    "section": "3 Convergencia cuadrática: el método de Newton",
+    "text": "3 Convergencia cuadrática: el método de Newton\nVeamos ahora la convergencia del método de Newton con este lenguaje del error; en la nota anterior vimos que era cuadrática. Sea \\(r\\) una raíz de \\(f\\) con \\(f'(r)\\ne0\\), y \\(f\\) dos veces diferenciable cerca de \\(r\\). Con \\(\\varepsilon_k=x_k-r\\), restando \\(r\\) a ambos lados de \\(x_{k+1}=x_k-f(x_k)/f'(x_k)\\) se obtiene\n\\[\\varepsilon_{k+1}=\\varepsilon_k-\\frac{f(r+\\varepsilon_k)}{f'(r+\\varepsilon_k)}.\\]\nHacemos una expansión de Taylor de orden 2 en \\(f\\) y de orden 1 en \\(f'\\). Como \\(f(r)=0\\),\n\\[\\varepsilon_{k+1}=\\varepsilon_k-\\frac{f'(r)\\,\\varepsilon_k+\\tfrac12f''(r)\\,\\varepsilon_k^2+o(\\varepsilon_k^2)}{f'(r)+f''(r)\\,\\varepsilon_k+o(\\varepsilon_k)}=\\varepsilon_k-\\varepsilon_k\\,\\frac{1+\\dfrac{f''(r)}{2f'(r)}\\,\\varepsilon_k+o(\\varepsilon_k)}{1+\\dfrac{f''(r)}{f'(r)}\\,\\varepsilon_k+o(\\varepsilon_k)}.\\]\nEl denominador es \\(1+\\dfrac{f''(r)}{f'(r)}\\varepsilon_k+o(\\varepsilon_k)\\), con \\(\\left|\\dfrac{f''(r)}{f'(r)}\\varepsilon_k\\right|&lt;1\\) porque \\(\\varepsilon_k\\) es pequeño. Por la serie geométrica,\n\\[\\frac{1}{1+\\dfrac{f''(r)}{f'(r)}\\,\\varepsilon_k+o(\\varepsilon_k)}=1-\\frac{f''(r)}{f'(r)}\\,\\varepsilon_k+o(\\varepsilon_k),\\]\nde donde\n\\[\\begin{aligned}\n\\varepsilon_{k+1}&=\\varepsilon_k-\\varepsilon_k\\left(1+\\frac{f''(r)}{2f'(r)}\\,\\varepsilon_k+o(\\varepsilon_k)\\right)\\left(1-\\frac{f''(r)}{f'(r)}\\,\\varepsilon_k+o(\\varepsilon_k)\\right)\\\\\n&=\\varepsilon_k-\\varepsilon_k\\left(1-\\frac{f''(r)}{2f'(r)}\\,\\varepsilon_k+o(\\varepsilon_k)\\right)\\\\\n&=\\frac12\\,\\frac{f''(r)}{f'(r)}\\,\\varepsilon_k^2+o(\\varepsilon_k^2).\n\\end{aligned}\\]\n\n\n\n\n\n\nImportanteDefinición: convergencia cuadrática\n\n\n\nSi \\(x_k\\to x^*\\) y el error \\(\\varepsilon_k=x_k-x^*\\) satisface\n\\[\\lim_{k\\to\\infty}\\frac{|\\varepsilon_{k+1}|}{|\\varepsilon_k|^2}=L&gt;0,\\]\nse dice que la convergencia es cuadrática.\n\n\nEs el caso de Newton: dividiendo el resultado anterior por \\(\\varepsilon_k^2\\),\n\\[\\frac{|\\varepsilon_{k+1}|}{|\\varepsilon_k|^2}=\\frac12\\left|\\frac{f''(r)}{f'(r)}\\right|+o(1),\\]\ny tomando \\(k\\to\\infty\\) a ambos lados, \\(L=\\dfrac12\\dfrac{|f''(r)|}{|f'(r)|}\\), que es positivo siempre que \\(f''(r)\\ne0\\). Tomando logaritmos en \\(|\\varepsilon_{k+1}|\\approx L\\,|\\varepsilon_k|^2\\),\n\\[\\log|\\varepsilon_{k+1}|\\approx2\\log|\\varepsilon_k|+\\log L,\\qquad\\frac{\\log|\\varepsilon_{k+1}|}{\\log|\\varepsilon_k|}\\approx2+\\frac{\\log L}{\\log|\\varepsilon_k|}\\longrightarrow2\\quad(k\\to\\infty),\\]\nporque \\(\\log|\\varepsilon_k|\\to-\\infty\\). En palabras, cada paso de Newton duplica aproximadamente el número de cifras correctas.\n\n\n\n\n\n\nImportanteDefinición: convergencia superlineal\n\n\n\nSi \\(x_k\\to x^*\\) y existen constantes \\(\\alpha&gt;1\\) y \\(L&gt;0\\) tales que\n\\[\\lim_{k\\to\\infty}\\frac{|\\varepsilon_{k+1}|}{|\\varepsilon_k|^\\alpha}=L,\\]\nse dice que la convergencia es superlineal de orden \\(\\alpha\\). Con \\(\\alpha=2\\) es cuadrática, y con \\(\\alpha&gt;2\\) se llama supercuadrática.",
+    "crumbs": [
+      "Orden de convergencia"
+    ]
+  },
+  {
+    "objectID": "cursos/numerico/convergencia/index.html#la-secante-superlineal-pero-no-cuadrática",
+    "href": "cursos/numerico/convergencia/index.html#la-secante-superlineal-pero-no-cuadrática",
+    "title": "Orden de convergencia",
+    "section": "4 La secante: superlineal, pero no cuadrática",
+    "text": "4 La secante: superlineal, pero no cuadrática\nEn el método de Newton reemplacemos \\(f'(x_k)\\) por una pendiente \\(m\\) que aproxime la tangente: la de la recta secante por los dos últimos puntos de la gráfica,\n\\[m=\\frac{f(x_k)-f(x_{k-1})}{x_k-x_{k-1}}.\\]\nEl método de la secante es entonces\n\\[x_{k+1}=x_k-\\frac{f(x_k)}{m}=x_k-f(x_k)\\,\\frac{x_k-x_{k-1}}{f(x_k)-f(x_{k-1})},\\]\ny necesita dos iterados iniciales. Geométricamente, \\(x_{k+1}\\) es el punto donde la recta secante corta el eje horizontal.\n\n  Interpretación gráfica del método de la secante: el siguiente iterado es donde la recta por los dos últimos puntos corta el eje\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  xₖ₋₁\n  xₖ\n  xₖ₊₁\n  r\n  pendiente m\n\n\n4.1 El error de la secante\nCon \\(\\varepsilon_j=x_j-r\\) se tiene \\(x_k-x_{k-1}=\\varepsilon_k-\\varepsilon_{k-1}\\), y restando \\(r\\) en la fórmula anterior,\n\\[\\varepsilon_{k+1}=\\varepsilon_k-f(x_k)\\,\\frac{\\varepsilon_k-\\varepsilon_{k-1}}{f(x_k)-f(x_{k-1})}.\\]\nLlevando todo al denominador común \\(f(x_k)-f(x_{k-1})\\), los términos \\(\\varepsilon_k f(x_k)\\) se cancelan:\n\\[\\varepsilon_{k+1}=\\frac{\\varepsilon_k\\,[f(x_k)-f(x_{k-1})]-f(x_k)\\,(\\varepsilon_k-\\varepsilon_{k-1})}{f(x_k)-f(x_{k-1})}=\\frac{f(x_k)\\,\\varepsilon_{k-1}-f(x_{k-1})\\,\\varepsilon_k}{f(x_k)-f(x_{k-1})}.\\]\nExpandimos ahora con Taylor de orden 2 alrededor de \\(r\\): \\(f(x_j)=f'(r)\\,\\varepsilon_j+\\tfrac12f''(r)\\,\\varepsilon_j^2+o(\\varepsilon_j^2)\\) para \\(j=k,k-1\\). En el numerador, los términos con \\(f'(r)\\) se cancelan entre sí y queda\n\\[f(x_k)\\,\\varepsilon_{k-1}-f(x_{k-1})\\,\\varepsilon_k=\\tfrac12f''(r)\\,\\varepsilon_k^2\\varepsilon_{k-1}-\\tfrac12f''(r)\\,\\varepsilon_{k-1}^2\\varepsilon_k+\\cdots=\\tfrac12f''(r)\\,\\varepsilon_k\\varepsilon_{k-1}\\,(\\varepsilon_k-\\varepsilon_{k-1})+\\cdots,\\]\nmientras que el denominador es \\(f'(r)\\,(\\varepsilon_k-\\varepsilon_{k-1})+\\cdots\\). Por lo tanto\n\\[\\varepsilon_{k+1}\\approx\\frac{\\tfrac12f''(r)\\,\\varepsilon_k\\varepsilon_{k-1}\\,(\\varepsilon_k-\\varepsilon_{k-1})}{f'(r)\\,(\\varepsilon_k-\\varepsilon_{k-1})}=\\frac12\\,\\frac{f''(r)}{f'(r)}\\,\\varepsilon_k\\varepsilon_{k-1}.\\]\nLos puntos suspensivos también llevan el factor \\(\\varepsilon_k-\\varepsilon_{k-1}\\): un término \\(c_i\\varepsilon^i\\) del desarrollo de \\(f\\), con \\(i\\ge2\\), aporta \\(c_i\\,\\varepsilon_k\\varepsilon_{k-1}\\,(\\varepsilon_k^{\\,i-1}-\\varepsilon_{k-1}^{\\,i-1})\\) al numerador, y con \\(i\\ge1\\) aporta \\(c_i\\,(\\varepsilon_k^{\\,i}-\\varepsilon_{k-1}^{\\,i})\\) al denominador. Ambos son divisibles por \\(\\varepsilon_k-\\varepsilon_{k-1}\\), y por eso la cancelación es legítima.\n\\[\\boxed{\\varepsilon_{k+1}\\approx\\frac12\\,\\frac{f''(r)}{f'(r)}\\,\\varepsilon_k\\varepsilon_{k-1}}\\]\nSi \\(\\varepsilon_{k-1}\\) fuera igual a \\(\\varepsilon_k\\), la secante sería la tangente y recuperaríamos la fórmula de Newton, \\(\\varepsilon_{k+1}\\approx\\frac12\\frac{f''(r)}{f'(r)}\\varepsilon_k^2\\).\n\n\n4.2 El orden de la secante\nComo \\(\\varepsilon_{k+1}\\) depende de los dos errores anteriores, no sabemos de antemano a qué potencia de \\(\\varepsilon_k\\) es proporcional. Supongamos que los errores tienen esta forma, con \\(c&gt;0\\) y \\(\\alpha&gt;0\\):\n\\[|\\varepsilon_{k+1}|=c\\,|\\varepsilon_k|^\\alpha,\\qquad|\\varepsilon_k|=c\\,|\\varepsilon_{k-1}|^\\alpha.\\]\nSea \\(C=\\left|\\dfrac{f''(r)}{2f'(r)}\\right|\\). Por la fórmula del error de la secante,\n\\[|\\varepsilon_{k+1}|\\approx C\\,|\\varepsilon_k|\\,|\\varepsilon_{k-1}|=C\\,c\\,|\\varepsilon_{k-1}|^{\\alpha+1},\\]\ny por otro lado\n\\[|\\varepsilon_{k+1}|=c\\,|\\varepsilon_k|^\\alpha=c\\,\\big(c\\,|\\varepsilon_{k-1}|^\\alpha\\big)^\\alpha=c^{1+\\alpha}\\,|\\varepsilon_{k-1}|^{\\alpha^2}.\\]\nIgualando ambas expresiones,\n\\[|\\varepsilon_{k-1}|^{\\alpha^2-\\alpha-1}\\approx C\\,c^{-\\alpha}.\\]\nEl lado derecho es una constante positiva, mientras que \\(|\\varepsilon_{k-1}|\\to0\\). Esto solo es posible si el exponente es cero, es decir, si\n\\[\\alpha^2=\\alpha+1\\qquad\\Longrightarrow\\qquad\\alpha=\\frac{1+\\sqrt5}{2}=\\phi\\approx1{,}618,\\]\nla razón áurea, que es la única raíz positiva. De paso, la constante queda determinada por \\(c^\\alpha=C\\), o sea \\(c=\\left|\\dfrac{f''(r)}{2f'(r)}\\right|^{\\alpha-1}\\), porque \\(1/\\phi=\\phi-1\\).\nEntonces los errores de la secante satisfacen\n\\[\\lim_{k\\to\\infty}\\frac{|\\varepsilon_{k+1}|}{|\\varepsilon_k|^\\alpha}=L&gt;0,\\qquad\\alpha=\\frac{1+\\sqrt5}{2}\\in(1,2),\\]\nes decir, la convergencia es superlineal pero no cuadrática. Tomando logaritmos a ambos lados, \\(\\log|\\varepsilon_{k+1}|\\approx\\alpha\\log|\\varepsilon_k|+\\log L\\), de donde\n\\[\\frac{\\log|\\varepsilon_{k+1}|}{\\log|\\varepsilon_k|}\\longrightarrow\\alpha.\\]",
+    "crumbs": [
+      "Orden de convergencia"
+    ]
+  },
+  {
+    "objectID": "cursos/numerico/convergencia/index.html#leer-el-orden-en-la-práctica",
+    "href": "cursos/numerico/convergencia/index.html#leer-el-orden-en-la-práctica",
+    "title": "Orden de convergencia",
+    "section": "5 Leer el orden en la práctica",
+    "text": "5 Leer el orden en la práctica\nLa sucesión de cocientes \\(\\log|\\varepsilon_{k+1}|/\\log|\\varepsilon_k|\\) sirve en general: su límite \\(\\alpha\\) es el orden de convergencia del algoritmo que estemos probando. Para calcularla necesitamos errores, así que usamos aritmética de precisión extendida (200 dígitos) y una raíz de referencia calculada con mucha más precisión que los iterados. En doble precisión el error llega a \\(10^{-16}\\) en pocos pasos y la sucesión se estanca antes de mostrar la tendencia.\nTomamos \\(f(x)=xe^x-2\\), cuya raíz es \\(r\\approx0{,}8526055020137255\\). Con Newton desde \\(x_0=1\\):\n\n\n\n\n\n\n\n\n\n\\(k\\)\n\\(\\lvert\\varepsilon_k\\rvert\\)\n\\(\\log\\lvert\\varepsilon_{k+1}\\rvert\\big/\\log\\lvert\\varepsilon_k\\rvert\\)\n\\(\\lvert\\varepsilon_{k+1}\\rvert\\big/\\lvert\\varepsilon_k\\rvert^2\\)\n\n\n\n\n\\(0\\)\n\\(0{,}1474\\)\n\\(2{,}184\\)\n\\(0{,}70305\\)\n\n\n\\(1\\)\n\\(0{,}01527\\)\n\\(2{,}065\\)\n\\(0{,}76244\\)\n\n\n\\(2\\)\n\\(1{,}779\\times10^{-4}\\)\n\\(2{,}030\\)\n\\(0{,}76980\\)\n\n\n\\(3\\)\n\\(2{,}436\\times10^{-8}\\)\n\\(2{,}015\\)\n\\(0{,}76989\\)\n\n\n\\(4\\)\n\\(4{,}567\\times10^{-16}\\)\n\\(2{,}007\\)\n\\(0{,}76989\\)\n\n\n\\(5\\)\n\\(1{,}606\\times10^{-31}\\)\n\\(2{,}004\\)\n\\(0{,}76989\\)\n\n\n\nEl cociente de logaritmos tiende a \\(2\\), y el cociente \\(|\\varepsilon_{k+1}|/|\\varepsilon_k|^2\\) se estabiliza en \\(0{,}76989\\), que es justamente \\(\\frac12|f''(r)/f'(r)|\\). Con la secante, partiendo de \\(x_1=1\\) y \\(x_2=0{,}5\\):\n\n\n\n\n\n\n\n\n\\(k\\)\n\\(\\lvert\\varepsilon_k\\rvert\\)\n\\(\\log\\lvert\\varepsilon_{k+1}\\rvert\\big/\\log\\lvert\\varepsilon_k\\rvert\\)\n\n\n\n\n\\(4\\)\n\\(0{,}01303\\)\n\\(1{,}787\\)\n\n\n\\(5\\)\n\\(4{,}275\\times10^{-4}\\)\n\\(1{,}594\\)\n\n\n\\(6\\)\n\\(4{,}270\\times10^{-6}\\)\n\\(1{,}649\\)\n\n\n\\(7\\)\n\\(1{,}405\\times10^{-9}\\)\n\\(1{,}619\\)\n\n\n\\(8\\)\n\\(4{,}620\\times10^{-15}\\)\n\\(1{,}625\\)\n\n\n\\(9\\)\n\\(4{,}999\\times10^{-24}\\)\n\\(1{,}620\\)\n\n\n\\(10\\)\n\\(1{,}778\\times10^{-38}\\)\n\\(1{,}620\\)\n\n\n\\(11\\)\n\\(6{,}845\\times10^{-62}\\)\n\\(1{,}619\\)\n\n\n\nEl cociente de logaritmos se acerca a \\(\\phi\\approx1{,}618\\). El cociente \\(|\\varepsilon_{k+1}|/|\\varepsilon_k|^\\alpha\\) oscila alrededor de \\(0{,}85\\) y se acerca lentamente al valor que predice la deducción, \\(\\left|\\frac{f''(r)}{2f'(r)}\\right|^{\\alpha-1}\\approx0{,}8508\\).\nPara convergencia lineal el cociente de logaritmos también tiende a \\(\\alpha=1\\), pero muy despacio: con \\(|\\varepsilon_k|=\\sigma^kc\\) vale \\(1+\\dfrac{\\log\\sigma}{k\\log\\sigma+\\log c}\\), que decrece como \\(1/k\\). En la iteración \\(x_{k+1}=\\cos x_k\\) de arriba vale \\(1{,}20\\) en \\(k=0\\) y todavía \\(1{,}02\\) en \\(k=39\\). Para detectar una convergencia lineal conviene mirar directamente el cociente \\(\\varepsilon_{k+1}/\\varepsilon_k\\).\n\n\n\n\n\n\nNotaTarea\n\n\n\nResuelva todos los ejercicios de las secciones 4.2, 4.3 y 4.4 de Fundamentals of Numerical Computation (iteración de punto fijo, método de Newton y métodos basados en interpolación), disponibles en https://fncbook.com/julia/fixed-point/#exercises, https://fncbook.com/julia/newton/#exercises y https://fncbook.com/julia/secant/#exercises.",
+    "crumbs": [
+      "Orden de convergencia"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Arturo Sanjuán",
+    "section": "",
+    "text": "🇺🇸 english\n\n\n\nLaguna Negra Mongua, Boyacá Colombia\n\n\nSoy profesor titular en la Universidad Distrital Francisco José de Caldas y hago parte de los grupos de investigación MESCUD y CMyT. Realicé mis estudios de pregrado, maestría y doctorado en Matemáticas en la Universidad Nacional de Colombia, bajo la dirección de los profesores Alfonso Castro (Harvey Mudd College) y Francisco Caicedo (Universidad Nacional de Colombia). Anteriormente, fui docente de planta en la Universidad de los Andes en Bogotá.\nMi investigación se centra en ecuaciones diferenciales parciales y funcional-diferenciales mediante métodos topológicos, con especial énfasis en la ecuación de onda semilineal con condiciones Dirichlet-periódicas."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Acerca de",
+    "section": "",
+    "text": "🇺🇸 English version\nSoy profesor titular en el área de matemáticas de la Universidad Distrital Francisco José de Caldas, en Bogotá, y hago parte de los grupos de investigación MESCUD y CMyT. Estudié pregrado, maestría y doctorado en Matemáticas en la Universidad Nacional de Colombia, bajo la dirección de los profesores Alfonso Castro (Harvey Mudd College) y Francisco Caicedo (Universidad Nacional de Colombia). Antes de llegar a la Universidad Distrital fui profesor en la Universidad de los Andes.\nMi trabajo está en el análisis no lineal aplicado a ecuaciones diferenciales parciales, con énfasis en la ecuación de onda semilineal con condiciones Dirichlet periódicas, problemas elípticos de frontera, ecuaciones diferenciales ordinarias singulares de cuarto orden (modelos de nanovigas y MEMS) y ecuaciones funcional diferenciales con retardo. Combino métodos topológicos, como el grado de Leray Schauder, con métodos numéricos como disparo, elementos finitos y técnicas espectrales o FFT."
+  },
+  {
+    "objectID": "about.html#estancias-de-investigación",
+    "href": "about.html#estancias-de-investigación",
+    "title": "Acerca de",
+    "section": "Estancias de investigación",
+    "text": "Estancias de investigación\nEntre febrero y mayo de 2018 estuve en la Universidad de Buenos Aires y el Centro Latinoamericano de Formación Interdisciplinaria (CELFI), trabajando en ecuaciones funcional diferenciales aplicadas a biología bajo la dirección de Pablo Amster. Entre mayo y agosto del mismo año estuve en la Universidad Complutense de Madrid, trabajando en soluciones a problemas elípticos superlineales bajo la dirección de Rosa Pardo."
+  },
+  {
+    "objectID": "about.html#distinciones-y-servicio-académico",
+    "href": "about.html#distinciones-y-servicio-académico",
+    "title": "Acerca de",
+    "section": "Distinciones y servicio académico",
+    "text": "Distinciones y servicio académico\nEn 2016 recibí una mención de honor con la medalla Yu Takeuchi, otorgada por la Academia Colombiana de Ciencias Exactas, Físicas y Naturales a los mejores trabajos en ciencias matemáticas.\nSoy revisor de la American Mathematical Society (AMS) y secretario de la Sociedad Colombiana de Matemáticas (SCM). Dirijo el Semillero en Análisis Matemático (SAMAT) de la Universidad Distrital, un espacio de formación en investigación para estudiantes de pregrado, con el que organizamos el I Encuentro Juvenil en Ecuaciones Diferenciales en abril de 2026."
+  },
+  {
+    "objectID": "about.html#un-pedacito-de-linaje",
+    "href": "about.html#un-pedacito-de-linaje",
+    "title": "Acerca de",
+    "section": "Un pedacito de linaje",
+    "text": "Un pedacito de linaje\nHe dirigido tesis de pregrado y maestría, pero todavía ninguna de doctorado, que es lo único que registra el Mathematics Genealogy Project; así que por ahora mi rama del árbol solo crece hacia arriba. Se remonta a Alfonso Castro y José Francisco Caicedo, y desde ahí a Poisson, los Bernoulli y, finalmente, a Leibniz, que no por casualidad es también el nombre de mi portátil principal. Como anécdota, d’Alembert llegó a solución de la ecuación de onda continua con la que sigo trabajando hoy llevando al límite un modelo discreto, en diferencias finitas, que Johann Bernoulli ya había estudiado dos décadas antes. Ver el árbol completo →"
+  },
+  {
+    "objectID": "about.html#contacto",
+    "href": "about.html#contacto",
+    "title": "Acerca de",
+    "section": "Contacto",
+    "text": "Contacto\nCorreo: aasanjuanc@udistrital.edu.co\nPara la lista completa de publicaciones, el CV en PDF y mis perfiles académicos, ve a la página de Research. Los trabajos y notas más antiguos, casi todos en español, están en Trabajos."
+  },
+  {
+    "objectID": "trabajos/index.html",
+    "href": "trabajos/index.html",
+    "title": "Trabajos",
+    "section": "",
+    "text": "Documentos de trabajo, tesis y notas de clase de distintas etapas de mi formación y carrera. En español.\n\nSanjuán, A. (1999). El Dual de \\(L^\\infty\\). Trabajo final para el curso de Análisis Funcional con la profesora Myriam Muñoz de Özak. PDF\nSanjuán, A. (2002). Algunos Aspectos Geométricos de las Ecuaciones Diferenciales Ordinarias. Trabajo de grado, Universidad Nacional de Colombia. PDF\nSanjuán, A. (2005). Soluciones Débiles para la Ecuación de Onda Semilineal. Trabajo de grado de maestría, Universidad Nacional de Colombia. PDF\nSanjuán, A. (2009). Notas en Problemas Elípticos Superlineales. Notas de estudio, Doctorado en Ciencias Matemáticas, Universidad Nacional de Colombia. PDF\nSanjuán, A. (2012). Una Aplicación del Teorema del Paso de la Montaña a un Problema Elíptico Superlineal. Documento preparado para el Segundo Taller de Análisis No Lineal y Ecuaciones Diferenciales Parciales, Universidad Nacional de Colombia. PDF\nSanjuán, A. (2012b). Existencia de Soluciones Doble Periódicas de una Ecuación de Onda Semilineal con No Linealidad No Monótona y Forzamiento en \\(L^p\\). Detalles para el caso doble periódico del artículo publicado en Discrete and Continuous Dynamical Systems, Series S. PDF\nSanjuán, A. (2015). Membranas Vibrantes. Tesis de doctorado en Ciencias Matemáticas, Universidad Nacional de Colombia. PDF\nSanjuán, A. (2015). El Operador de D’Alembert bajo las Condiciones de Frontera Dirichlet Periódicas Unidimensionales. Trabajo de ascenso para la categoría Profesor Asociado, Universidad Distrital Francisco José de Caldas. PDF\nSanjuán, A. (2015). Pequeños Planetas Fantásticos: Una Mirada desde el Cálculo. Trabajo para la IX Jornada de Matemáticas del Proyecto Curricular de Matemáticas, Universidad Distrital Francisco José de Caldas. PDF\nSanjuán, A. (2017). Bifurcación, Caos y Catástrofes. Presentación, X Jornada de las Matemáticas. PDF\nSanjuán, A. (2019). La Ecuación de Onda Semilineal con Condiciones de Periodicidad Doble. Trabajo de ascenso para la categoría Profesor Titular. PDF\nSanjuán, A. (2019). Pequeños Universos y el Método de Cuadratura. Cursillo para el V Taller de Análisis No Lineal y Ecuaciones Diferenciales Parciales. PDF\nSanjuán, A. (2023). Una Aplicación del Análisis Complejo al Álgebra Lineal Presentación para la I Semana de la Ciencia Universidad Distrital Francisco José de Caldas PDF\nSanjuán, A. (2025). Una introducción a las ecuaciones con retardo y algunas aplicaciones a la biología Curso para La XVIII Jornada de la Ciencia y el Seminario de Análisis Matemático de la Unviersidad Nacional – Sede Manizales PDF"
+  },
+  {
+    "objectID": "research/index.html",
+    "href": "research/index.html",
+    "title": "Research",
+    "section": "",
+    "text": "I work in nonlinear analysis applied to partial differential equations. My main focus is the semilinear wave equation under Dirichlet periodic conditions, together with elliptic boundary value problems, singular fourth order ordinary differential equations arising in nanobeam and MEMS models, and delay functional differential equations. I combine topological methods, in particular Leray-Schauder degree theory, with numerical methods such as shooting methods, finite elements, and spectral or FFT techniques.\nOlder working papers, theses, and course notes, mostly in Spanish, are collected separately on the Trabajos page."
+  },
+  {
+    "objectID": "research/index.html#research-interests",
+    "href": "research/index.html#research-interests",
+    "title": "Research",
+    "section": "",
+    "text": "I work in nonlinear analysis applied to partial differential equations. My main focus is the semilinear wave equation under Dirichlet periodic conditions, together with elliptic boundary value problems, singular fourth order ordinary differential equations arising in nanobeam and MEMS models, and delay functional differential equations. I combine topological methods, in particular Leray-Schauder degree theory, with numerical methods such as shooting methods, finite elements, and spectral or FFT techniques.\nOlder working papers, theses, and course notes, mostly in Spanish, are collected separately on the Trabajos page."
+  },
+  {
+    "objectID": "research/index.html#selected-publications",
+    "href": "research/index.html#selected-publications",
+    "title": "Research",
+    "section": "Selected publications",
+    "text": "Selected publications\n\nCaicedo, J. F., Castro, A., Duque, R., and Sanjuán, A. (2014). Existence of solutions for a semilinear wave equation with non-monotone nonlinearity. Discrete and Continuous Dynamical Systems, Series S, 7(69), pp. 1193 to 1202. Journal link\nCaicedo, J. F., Castro, A., and Sanjuán, A. (2017). Bifurcation at infinity for a semilinear wave equation. Discrete and Continuous Dynamical Systems, Series A, 37(4), pp. 1857 to 1865. Journal link\nCaicedo, J. F., Castro, A., Duque, R., and Sanjuán, A. (2017). The semilinear wave equation with non-monotone nonlinearity: a survey. Rendiconti dell’Istituto di Matematica dell’Università di Trieste, 49, pp. 207 to 214. Journal link\nPardo, R., and Sanjuán, A. (2020). Asymptotic behavior of positive radial solutions to elliptic equations approaching critical growth. Electronic Journal of Differential Equations, 114, pp. 1 to 17. Journal link\nAmster, P., Epstein, J., and Sanjuán, A. (2021). Periodic solutions for systems of functional differential semilinear equations at resonance. Topological Methods in Nonlinear Analysis, 58(2), pp. 591 to 607. Journal link\nCaicedo, J. F., Castro, A., Duque, R., and Sanjuán, A. (2023). A semilinear wave equation with non-monotone nonlinearity. Electronic Journal of Differential Equations, Special Issue in Honor of John W. Neuberger, 02, pp. 81 to 86. Journal link\nSanjuán, A. (2026). Existence and computation of periodic solutions for the semilinear Gompertz equation with discrete delay. In Proceedings of the Fourth Colombian Conference on Applied and Industrial Mathematics (MAPI 4). Springer. Accepted.\nRodriguez, F., and Sanjuán, A. (2026). A system of semilinear wave equations with non-monotone nonlinearity. Dedicated to Professor Alfonso Castro. Submitted to the Electronic Journal of Differential Equations, Special Issue in Honor of Alfonso Castro."
+  },
+  {
+    "objectID": "research/index.html#curriculum-vitae",
+    "href": "research/index.html#curriculum-vitae",
+    "title": "Research",
+    "section": "Curriculum vitae",
+    "text": "Curriculum vitae\nFull CV: download the PDF"
+  },
+  {
+    "objectID": "research/index.html#elsewhere",
+    "href": "research/index.html#elsewhere",
+    "title": "Research",
+    "section": "Elsewhere",
+    "text": "Elsewhere\n\nORCID\nGoogle Scholar\nMathSciNet\nScopus\nMathematics Genealogy Project\nCvLAC\nGitHub"
+  },
+  {
+    "objectID": "research/genealogy/index.html",
+    "href": "research/genealogy/index.html",
+    "title": "Mathematical genealogy",
+    "section": "",
+    "text": "Mathematicians keep an unusual kind of record: not who taught them a subject, but who supervised their doctoral thesis, and who supervised that person’s, and so on. The Mathematics Genealogy Project has been collecting these advisor-student links since 1997. My own entry is id 191294.\nMy dissertation, Membranas Vibrantes (Universidad Nacional de Colombia, 2015), was co-advised by Alfonso Castro and José Francisco Caicedo. Caicedo himself was a student of Castro, so the line briefly closes on itself before continuing upward.\nFrom there the tree splits into two branches that meet again at Siméon Denis Poisson: one through Alan Lazer, Robert Alonzo Moore, George Whaples, Mark Ingraham and E. H. Moore up to Hubert Anson Newton; the other through d’Alembert, Léonor Caron and Pierre Varignon up to Malebranche and, by attribution rather than formal supervision, Leibniz.\nIt’s a fitting ancestry for my own field. The wave equation I work on today has its roots in exactly this branch: in 1727, Johann Bernoulli modeled a vibrating string as a finite chain of discrete masses connected by springs, deriving a difference equation for each mass’s displacement. Two decades later, d’Alembert took that discrete model to its continuous limit, arriving at the wave equation itself and solving it in the same stroke — only for Daniel Bernoulli to propose a rival solution in trigonometric series, sparking a three-way, decades-long dispute with d’Alembert and Euler over which one was actually general. Lagrange revisited the problem in 1759 and came close to a resolution without quite reaching one; it would take Fourier, half a century later, to show both solutions were really the same thing, forcing mathematicians to rethink what a “function” was allowed to be in the first place."
+  },
+  {
+    "objectID": "research/genealogy/index.html#the-chain",
+    "href": "research/genealogy/index.html#the-chain",
+    "title": "Mathematical genealogy",
+    "section": "The chain",
+    "text": "The chain\n\n\n\n\n\n\n\n\nMathematician\nInstitution\nYear\n\n\n\n\nArturo Sanjuán\nUniversidad Nacional de Colombia\n2015\n\n\nJosé Francisco Caicedo\nUniversidad Nacional de Colombia\n1998\n\n\nAlfonso Castro\nUniversity of Cincinnati\n1977\n\n\nAlan C. Lazer\nCarnegie Mellon University\n1964\n\n\nRobert Alonzo Moore\nIndiana University\n1962\n\n\nGeorge W. Whaples\nUniversity of Wisconsin\n—\n\n\nMark Hoyt Ingraham\nUniversity of Chicago\n1924\n\n\nE. H. Moore\nYale University\n1885\n\n\nHubert Anson Newton\nYale University\n1850\n\n\nMichel Chasles\nÉcole Polytechnique\n1814\n\n\nSiméon Denis Poisson\nÉcole Polytechnique\n1800\n\n\nJoseph-Louis Lagrange / Pierre-Simon Laplace\n—\n—\n\n\n(Lagrange branch) Leonhard Euler\nUniversity of Basel\n1726\n\n\n(Lagrange branch) Johann Bernoulli\nUniversity of Basel\n1694\n\n\n(Lagrange branch) Jacob Bernoulli\nUniversity of Basel\n1684\n\n\n(Laplace branch) Jean le Rond d’Alembert\nCollège Mazarin\n1735\n\n\n(Laplace branch) Léonor Caron\nCollège Mazarin\n1710\n\n\n(Laplace branch) Pierre Varignon\nAcadémie royale des sciences\n1687\n\n\nNicolas Malebranche\n—\n—\n\n\nGottfried Wilhelm Leibniz\nLeipzig\n1666\n\n\n\nA couple of caveats worth stating plainly. Advisor-student links before roughly 1800 rarely mean a doctoral supervision in the modern sense; several of these are informal mentorships or attributions the project itself flags as uncertain (this is explicitly the case for Malebranche and Leibniz, and for Lagrange as advisor to Poisson). I’ve kept the chain as the Mathematics Genealogy Project records it, rather than editing it toward what a stricter modern reading might prefer.\nAs for my own branch I’ve directed undergraduate and master’s students, but nothing yet at the doctoral level that the Mathematics Genealogy Project would register, so for now the tree only grows upward from here."
+  },
+  {
+    "objectID": "index.en.html",
+    "href": "index.en.html",
+    "title": "Arturo Sanjuán",
+    "section": "",
+    "text": "🇨🇴 español\n\n\n\nLaguna Negra Mongua, Boyacá Colombia\n\n\nI am a professor at Universidad Distrital Francisco José de Caldas and belong to the research groups MESCUD and CMyT. I completed my undergraduate, master’s, and doctoral studies in mathematics at Universidad Nacional de Colombia, under the supervision of professors Alfonso Castro (Harvey Mudd College) and Francisco Caicedo (Universidad Nacional de Colombia). Before that, I was a faculty member at Universidad de los Andes in Bogotá.\nMy research focuses on partial and functional differential equations using topological methods, with particular emphasis on the semilinear wave equation under Dirichlet periodic conditions."
+  },
+  {
+    "objectID": "about.en.html",
+    "href": "about.en.html",
+    "title": "About",
+    "section": "",
+    "text": "🇨🇴 Versión en español\nI am a professor in the mathematics department at Universidad Distrital Francisco José de Caldas, in Bogotá, and I belong to the research groups MESCUD and CMyT. I studied for my undergraduate, master’s, and doctoral degrees in mathematics at Universidad Nacional de Colombia, under the supervision of professors Alfonso Castro (Harvey Mudd College) and Francisco Caicedo (Universidad Nacional de Colombia). Before joining Universidad Distrital I was a professor at Universidad de los Andes.\nMy work is in nonlinear analysis applied to partial differential equations, with an emphasis on the semilinear wave equation under Dirichlet periodic conditions, elliptic boundary value problems, singular fourth order ordinary differential equations arising in nanobeam and MEMS models, and delay functional differential equations. I combine topological methods, such as Leray Schauder degree theory, with numerical methods such as shooting methods, finite elements, and spectral or FFT techniques."
+  },
+  {
+    "objectID": "about.en.html#research-stays",
+    "href": "about.en.html#research-stays",
+    "title": "About",
+    "section": "Research stays",
+    "text": "Research stays\nBetween February and May 2018 I was at Universidad de Buenos Aires and the Centro Latinoamericano de Formación Interdisciplinaria (CELFI), working on functional differential equations applied to biology under the supervision of Pablo Amster. Between May and August of the same year I was at Universidad Complutense de Madrid, working on solutions to superlinear elliptic problems under the supervision of Rosa Pardo."
+  },
+  {
+    "objectID": "about.en.html#distinctions-and-academic-service",
+    "href": "about.en.html#distinctions-and-academic-service",
+    "title": "About",
+    "section": "Distinctions and academic service",
+    "text": "Distinctions and academic service\nIn 2016 I received an honorable mention with the Yu Takeuchi medal, awarded by the Colombian Academy of Exact, Physical, and Natural Sciences for the best work in mathematical sciences.\nI am a reviewer for the American Mathematical Society (AMS) and secretary of the Sociedad Colombiana de Matemáticas (SCM). I direct the Semillero en Análisis Matemático (SAMAT) at Universidad Distrital, an undergraduate research training group, through which we organized the I Encuentro Juvenil en Ecuaciones Diferenciales in April 2026."
+  },
+  {
+    "objectID": "about.en.html#a-small-piece-of-lineage",
+    "href": "about.en.html#a-small-piece-of-lineage",
+    "title": "About",
+    "section": "A small piece of lineage",
+    "text": "A small piece of lineage\nI’ve directed undergraduate and master’s students, but nothing yet at the doctoral level that the Mathematics Genealogy Project would register — so for now my branch of the tree only grows upward. It runs back through Alfonso Castro and José Francisco Caicedo, and from there through Poisson, the Bernoullis, and eventually Leibniz — which is also, not coincidentally, the name of my main laptop. Fittingly, d’Alembert solved the continuous wave equation I still work on today by taking to the limit a discrete, finite-difference model that Johann Bernoulli had studied two decades earlier. See the full tree →"
+  },
+  {
+    "objectID": "about.en.html#contact",
+    "href": "about.en.html#contact",
+    "title": "About",
+    "section": "Contact",
+    "text": "Contact\nEmail: aasanjuanc@udistrital.edu.co\nFor the full list of publications, the CV in PDF, and my academic profiles, see the Research page. Older working papers and notes, mostly in Spanish, are on the Papers page."
+  },
+  {
+    "objectID": "links.html",
+    "href": "links.html",
+    "title": "Links y contacto",
+    "section": "",
+    "text": "aasanjuanc@udistrital.edu.co\nORCID\nGoogle Scholar\nMathSciNet\nScopus\nMathematics Genealogy Project\nCvLAC\nGitHub\nMath Overflow"
+  },
+  {
     "objectID": "cursos/numerico/introduccion/index.html",
     "href": "cursos/numerico/introduccion/index.html",
     "title": "Introducción",
@@ -1414,213 +1656,6 @@
     "text": "11 Tarea\nResolver todos los ejercicios de la sección 1.1.4 (“Exercises”) de Fundamentals of Numerical Computation, disponibles en https://fncbook.com/julia/floating-point/#exercises: los ejercicios 1.1.1 a 1.1.5, sobre el conjunto \\(\\mathbb{F}\\), la equivalencia de las cotas de error, aproximaciones racionales a \\(\\pi\\), precisión sencilla IEEE 754, y nextfloat.",
     "crumbs": [
       "Introducción"
-    ]
-  },
-  {
-    "objectID": "links.html",
-    "href": "links.html",
-    "title": "Links y contacto",
-    "section": "",
-    "text": "aasanjuanc@udistrital.edu.co\nORCID\nGoogle Scholar\nMathSciNet\nScopus\nMathematics Genealogy Project\nCvLAC\nGitHub\nMath Overflow"
-  },
-  {
-    "objectID": "about.en.html",
-    "href": "about.en.html",
-    "title": "About",
-    "section": "",
-    "text": "🇨🇴 Versión en español\nI am a professor in the mathematics department at Universidad Distrital Francisco José de Caldas, in Bogotá, and I belong to the research groups MESCUD and CMyT. I studied for my undergraduate, master’s, and doctoral degrees in mathematics at Universidad Nacional de Colombia, under the supervision of professors Alfonso Castro (Harvey Mudd College) and Francisco Caicedo (Universidad Nacional de Colombia). Before joining Universidad Distrital I was a professor at Universidad de los Andes.\nMy work is in nonlinear analysis applied to partial differential equations, with an emphasis on the semilinear wave equation under Dirichlet periodic conditions, elliptic boundary value problems, singular fourth order ordinary differential equations arising in nanobeam and MEMS models, and delay functional differential equations. I combine topological methods, such as Leray Schauder degree theory, with numerical methods such as shooting methods, finite elements, and spectral or FFT techniques."
-  },
-  {
-    "objectID": "about.en.html#research-stays",
-    "href": "about.en.html#research-stays",
-    "title": "About",
-    "section": "Research stays",
-    "text": "Research stays\nBetween February and May 2018 I was at Universidad de Buenos Aires and the Centro Latinoamericano de Formación Interdisciplinaria (CELFI), working on functional differential equations applied to biology under the supervision of Pablo Amster. Between May and August of the same year I was at Universidad Complutense de Madrid, working on solutions to superlinear elliptic problems under the supervision of Rosa Pardo."
-  },
-  {
-    "objectID": "about.en.html#distinctions-and-academic-service",
-    "href": "about.en.html#distinctions-and-academic-service",
-    "title": "About",
-    "section": "Distinctions and academic service",
-    "text": "Distinctions and academic service\nIn 2016 I received an honorable mention with the Yu Takeuchi medal, awarded by the Colombian Academy of Exact, Physical, and Natural Sciences for the best work in mathematical sciences.\nI am a reviewer for the American Mathematical Society (AMS) and secretary of the Sociedad Colombiana de Matemáticas (SCM). I direct the Semillero en Análisis Matemático (SAMAT) at Universidad Distrital, an undergraduate research training group, through which we organized the I Encuentro Juvenil en Ecuaciones Diferenciales in April 2026."
-  },
-  {
-    "objectID": "about.en.html#a-small-piece-of-lineage",
-    "href": "about.en.html#a-small-piece-of-lineage",
-    "title": "About",
-    "section": "A small piece of lineage",
-    "text": "A small piece of lineage\nI’ve directed undergraduate and master’s students, but nothing yet at the doctoral level that the Mathematics Genealogy Project would register — so for now my branch of the tree only grows upward. It runs back through Alfonso Castro and José Francisco Caicedo, and from there through Poisson, the Bernoullis, and eventually Leibniz — which is also, not coincidentally, the name of my main laptop. Fittingly, d’Alembert solved the continuous wave equation I still work on today by taking to the limit a discrete, finite-difference model that Johann Bernoulli had studied two decades earlier. See the full tree →"
-  },
-  {
-    "objectID": "about.en.html#contact",
-    "href": "about.en.html#contact",
-    "title": "About",
-    "section": "Contact",
-    "text": "Contact\nEmail: aasanjuanc@udistrital.edu.co\nFor the full list of publications, the CV in PDF, and my academic profiles, see the Research page. Older working papers and notes, mostly in Spanish, are on the Papers page."
-  },
-  {
-    "objectID": "index.en.html",
-    "href": "index.en.html",
-    "title": "Arturo Sanjuán",
-    "section": "",
-    "text": "🇨🇴 español\n\n\n\nLaguna Negra Mongua, Boyacá Colombia\n\n\nI am a professor at Universidad Distrital Francisco José de Caldas and belong to the research groups MESCUD and CMyT. I completed my undergraduate, master’s, and doctoral studies in mathematics at Universidad Nacional de Colombia, under the supervision of professors Alfonso Castro (Harvey Mudd College) and Francisco Caicedo (Universidad Nacional de Colombia). Before that, I was a faculty member at Universidad de los Andes in Bogotá.\nMy research focuses on partial and functional differential equations using topological methods, with particular emphasis on the semilinear wave equation under Dirichlet periodic conditions."
-  },
-  {
-    "objectID": "research/genealogy/index.html",
-    "href": "research/genealogy/index.html",
-    "title": "Mathematical genealogy",
-    "section": "",
-    "text": "Mathematicians keep an unusual kind of record: not who taught them a subject, but who supervised their doctoral thesis, and who supervised that person’s, and so on. The Mathematics Genealogy Project has been collecting these advisor-student links since 1997. My own entry is id 191294.\nMy dissertation, Membranas Vibrantes (Universidad Nacional de Colombia, 2015), was co-advised by Alfonso Castro and José Francisco Caicedo. Caicedo himself was a student of Castro, so the line briefly closes on itself before continuing upward.\nFrom there the tree splits into two branches that meet again at Siméon Denis Poisson: one through Alan Lazer, Robert Alonzo Moore, George Whaples, Mark Ingraham and E. H. Moore up to Hubert Anson Newton; the other through d’Alembert, Léonor Caron and Pierre Varignon up to Malebranche and, by attribution rather than formal supervision, Leibniz.\nIt’s a fitting ancestry for my own field. The wave equation I work on today has its roots in exactly this branch: in 1727, Johann Bernoulli modeled a vibrating string as a finite chain of discrete masses connected by springs, deriving a difference equation for each mass’s displacement. Two decades later, d’Alembert took that discrete model to its continuous limit, arriving at the wave equation itself and solving it in the same stroke — only for Daniel Bernoulli to propose a rival solution in trigonometric series, sparking a three-way, decades-long dispute with d’Alembert and Euler over which one was actually general. Lagrange revisited the problem in 1759 and came close to a resolution without quite reaching one; it would take Fourier, half a century later, to show both solutions were really the same thing, forcing mathematicians to rethink what a “function” was allowed to be in the first place."
-  },
-  {
-    "objectID": "research/genealogy/index.html#the-chain",
-    "href": "research/genealogy/index.html#the-chain",
-    "title": "Mathematical genealogy",
-    "section": "The chain",
-    "text": "The chain\n\n\n\n\n\n\n\n\nMathematician\nInstitution\nYear\n\n\n\n\nArturo Sanjuán\nUniversidad Nacional de Colombia\n2015\n\n\nJosé Francisco Caicedo\nUniversidad Nacional de Colombia\n1998\n\n\nAlfonso Castro\nUniversity of Cincinnati\n1977\n\n\nAlan C. Lazer\nCarnegie Mellon University\n1964\n\n\nRobert Alonzo Moore\nIndiana University\n1962\n\n\nGeorge W. Whaples\nUniversity of Wisconsin\n—\n\n\nMark Hoyt Ingraham\nUniversity of Chicago\n1924\n\n\nE. H. Moore\nYale University\n1885\n\n\nHubert Anson Newton\nYale University\n1850\n\n\nMichel Chasles\nÉcole Polytechnique\n1814\n\n\nSiméon Denis Poisson\nÉcole Polytechnique\n1800\n\n\nJoseph-Louis Lagrange / Pierre-Simon Laplace\n—\n—\n\n\n(Lagrange branch) Leonhard Euler\nUniversity of Basel\n1726\n\n\n(Lagrange branch) Johann Bernoulli\nUniversity of Basel\n1694\n\n\n(Lagrange branch) Jacob Bernoulli\nUniversity of Basel\n1684\n\n\n(Laplace branch) Jean le Rond d’Alembert\nCollège Mazarin\n1735\n\n\n(Laplace branch) Léonor Caron\nCollège Mazarin\n1710\n\n\n(Laplace branch) Pierre Varignon\nAcadémie royale des sciences\n1687\n\n\nNicolas Malebranche\n—\n—\n\n\nGottfried Wilhelm Leibniz\nLeipzig\n1666\n\n\n\nA couple of caveats worth stating plainly. Advisor-student links before roughly 1800 rarely mean a doctoral supervision in the modern sense; several of these are informal mentorships or attributions the project itself flags as uncertain (this is explicitly the case for Malebranche and Leibniz, and for Lagrange as advisor to Poisson). I’ve kept the chain as the Mathematics Genealogy Project records it, rather than editing it toward what a stricter modern reading might prefer.\nAs for my own branch I’ve directed undergraduate and master’s students, but nothing yet at the doctoral level that the Mathematics Genealogy Project would register, so for now the tree only grows upward from here."
-  },
-  {
-    "objectID": "research/index.html",
-    "href": "research/index.html",
-    "title": "Research",
-    "section": "",
-    "text": "I work in nonlinear analysis applied to partial differential equations. My main focus is the semilinear wave equation under Dirichlet periodic conditions, together with elliptic boundary value problems, singular fourth order ordinary differential equations arising in nanobeam and MEMS models, and delay functional differential equations. I combine topological methods, in particular Leray-Schauder degree theory, with numerical methods such as shooting methods, finite elements, and spectral or FFT techniques.\nOlder working papers, theses, and course notes, mostly in Spanish, are collected separately on the Trabajos page."
-  },
-  {
-    "objectID": "research/index.html#research-interests",
-    "href": "research/index.html#research-interests",
-    "title": "Research",
-    "section": "",
-    "text": "I work in nonlinear analysis applied to partial differential equations. My main focus is the semilinear wave equation under Dirichlet periodic conditions, together with elliptic boundary value problems, singular fourth order ordinary differential equations arising in nanobeam and MEMS models, and delay functional differential equations. I combine topological methods, in particular Leray-Schauder degree theory, with numerical methods such as shooting methods, finite elements, and spectral or FFT techniques.\nOlder working papers, theses, and course notes, mostly in Spanish, are collected separately on the Trabajos page."
-  },
-  {
-    "objectID": "research/index.html#selected-publications",
-    "href": "research/index.html#selected-publications",
-    "title": "Research",
-    "section": "Selected publications",
-    "text": "Selected publications\n\nCaicedo, J. F., Castro, A., Duque, R., and Sanjuán, A. (2014). Existence of solutions for a semilinear wave equation with non-monotone nonlinearity. Discrete and Continuous Dynamical Systems, Series S, 7(69), pp. 1193 to 1202. Journal link\nCaicedo, J. F., Castro, A., and Sanjuán, A. (2017). Bifurcation at infinity for a semilinear wave equation. Discrete and Continuous Dynamical Systems, Series A, 37(4), pp. 1857 to 1865. Journal link\nCaicedo, J. F., Castro, A., Duque, R., and Sanjuán, A. (2017). The semilinear wave equation with non-monotone nonlinearity: a survey. Rendiconti dell’Istituto di Matematica dell’Università di Trieste, 49, pp. 207 to 214. Journal link\nPardo, R., and Sanjuán, A. (2020). Asymptotic behavior of positive radial solutions to elliptic equations approaching critical growth. Electronic Journal of Differential Equations, 114, pp. 1 to 17. Journal link\nAmster, P., Epstein, J., and Sanjuán, A. (2021). Periodic solutions for systems of functional differential semilinear equations at resonance. Topological Methods in Nonlinear Analysis, 58(2), pp. 591 to 607. Journal link\nCaicedo, J. F., Castro, A., Duque, R., and Sanjuán, A. (2023). A semilinear wave equation with non-monotone nonlinearity. Electronic Journal of Differential Equations, Special Issue in Honor of John W. Neuberger, 02, pp. 81 to 86. Journal link\nSanjuán, A. (2026). Existence and computation of periodic solutions for the semilinear Gompertz equation with discrete delay. In Proceedings of the Fourth Colombian Conference on Applied and Industrial Mathematics (MAPI 4). Springer. Accepted.\nRodriguez, F., and Sanjuán, A. (2026). A system of semilinear wave equations with non-monotone nonlinearity. Dedicated to Professor Alfonso Castro. Submitted to the Electronic Journal of Differential Equations, Special Issue in Honor of Alfonso Castro."
-  },
-  {
-    "objectID": "research/index.html#curriculum-vitae",
-    "href": "research/index.html#curriculum-vitae",
-    "title": "Research",
-    "section": "Curriculum vitae",
-    "text": "Curriculum vitae\nFull CV: download the PDF"
-  },
-  {
-    "objectID": "research/index.html#elsewhere",
-    "href": "research/index.html#elsewhere",
-    "title": "Research",
-    "section": "Elsewhere",
-    "text": "Elsewhere\n\nORCID\nGoogle Scholar\nMathSciNet\nScopus\nMathematics Genealogy Project\nCvLAC\nGitHub"
-  },
-  {
-    "objectID": "trabajos/index.html",
-    "href": "trabajos/index.html",
-    "title": "Trabajos",
-    "section": "",
-    "text": "Documentos de trabajo, tesis y notas de clase de distintas etapas de mi formación y carrera. En español.\n\nSanjuán, A. (1999). El Dual de \\(L^\\infty\\). Trabajo final para el curso de Análisis Funcional con la profesora Myriam Muñoz de Özak. PDF\nSanjuán, A. (2002). Algunos Aspectos Geométricos de las Ecuaciones Diferenciales Ordinarias. Trabajo de grado, Universidad Nacional de Colombia. PDF\nSanjuán, A. (2005). Soluciones Débiles para la Ecuación de Onda Semilineal. Trabajo de grado de maestría, Universidad Nacional de Colombia. PDF\nSanjuán, A. (2009). Notas en Problemas Elípticos Superlineales. Notas de estudio, Doctorado en Ciencias Matemáticas, Universidad Nacional de Colombia. PDF\nSanjuán, A. (2012). Una Aplicación del Teorema del Paso de la Montaña a un Problema Elíptico Superlineal. Documento preparado para el Segundo Taller de Análisis No Lineal y Ecuaciones Diferenciales Parciales, Universidad Nacional de Colombia. PDF\nSanjuán, A. (2012b). Existencia de Soluciones Doble Periódicas de una Ecuación de Onda Semilineal con No Linealidad No Monótona y Forzamiento en \\(L^p\\). Detalles para el caso doble periódico del artículo publicado en Discrete and Continuous Dynamical Systems, Series S. PDF\nSanjuán, A. (2015). Membranas Vibrantes. Tesis de doctorado en Ciencias Matemáticas, Universidad Nacional de Colombia. PDF\nSanjuán, A. (2015). El Operador de D’Alembert bajo las Condiciones de Frontera Dirichlet Periódicas Unidimensionales. Trabajo de ascenso para la categoría Profesor Asociado, Universidad Distrital Francisco José de Caldas. PDF\nSanjuán, A. (2015). Pequeños Planetas Fantásticos: Una Mirada desde el Cálculo. Trabajo para la IX Jornada de Matemáticas del Proyecto Curricular de Matemáticas, Universidad Distrital Francisco José de Caldas. PDF\nSanjuán, A. (2017). Bifurcación, Caos y Catástrofes. Presentación, X Jornada de las Matemáticas. PDF\nSanjuán, A. (2019). La Ecuación de Onda Semilineal con Condiciones de Periodicidad Doble. Trabajo de ascenso para la categoría Profesor Titular. PDF\nSanjuán, A. (2019). Pequeños Universos y el Método de Cuadratura. Cursillo para el V Taller de Análisis No Lineal y Ecuaciones Diferenciales Parciales. PDF\nSanjuán, A. (2023). Una Aplicación del Análisis Complejo al Álgebra Lineal Presentación para la I Semana de la Ciencia Universidad Distrital Francisco José de Caldas PDF\nSanjuán, A. (2025). Una introducción a las ecuaciones con retardo y algunas aplicaciones a la biología Curso para La XVIII Jornada de la Ciencia y el Seminario de Análisis Matemático de la Unviersidad Nacional – Sede Manizales PDF"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "Acerca de",
-    "section": "",
-    "text": "🇺🇸 English version\nSoy profesor titular en el área de matemáticas de la Universidad Distrital Francisco José de Caldas, en Bogotá, y hago parte de los grupos de investigación MESCUD y CMyT. Estudié pregrado, maestría y doctorado en Matemáticas en la Universidad Nacional de Colombia, bajo la dirección de los profesores Alfonso Castro (Harvey Mudd College) y Francisco Caicedo (Universidad Nacional de Colombia). Antes de llegar a la Universidad Distrital fui profesor en la Universidad de los Andes.\nMi trabajo está en el análisis no lineal aplicado a ecuaciones diferenciales parciales, con énfasis en la ecuación de onda semilineal con condiciones Dirichlet periódicas, problemas elípticos de frontera, ecuaciones diferenciales ordinarias singulares de cuarto orden (modelos de nanovigas y MEMS) y ecuaciones funcional diferenciales con retardo. Combino métodos topológicos, como el grado de Leray Schauder, con métodos numéricos como disparo, elementos finitos y técnicas espectrales o FFT."
-  },
-  {
-    "objectID": "about.html#estancias-de-investigación",
-    "href": "about.html#estancias-de-investigación",
-    "title": "Acerca de",
-    "section": "Estancias de investigación",
-    "text": "Estancias de investigación\nEntre febrero y mayo de 2018 estuve en la Universidad de Buenos Aires y el Centro Latinoamericano de Formación Interdisciplinaria (CELFI), trabajando en ecuaciones funcional diferenciales aplicadas a biología bajo la dirección de Pablo Amster. Entre mayo y agosto del mismo año estuve en la Universidad Complutense de Madrid, trabajando en soluciones a problemas elípticos superlineales bajo la dirección de Rosa Pardo."
-  },
-  {
-    "objectID": "about.html#distinciones-y-servicio-académico",
-    "href": "about.html#distinciones-y-servicio-académico",
-    "title": "Acerca de",
-    "section": "Distinciones y servicio académico",
-    "text": "Distinciones y servicio académico\nEn 2016 recibí una mención de honor con la medalla Yu Takeuchi, otorgada por la Academia Colombiana de Ciencias Exactas, Físicas y Naturales a los mejores trabajos en ciencias matemáticas.\nSoy revisor de la American Mathematical Society (AMS) y secretario de la Sociedad Colombiana de Matemáticas (SCM). Dirijo el Semillero en Análisis Matemático (SAMAT) de la Universidad Distrital, un espacio de formación en investigación para estudiantes de pregrado, con el que organizamos el I Encuentro Juvenil en Ecuaciones Diferenciales en abril de 2026."
-  },
-  {
-    "objectID": "about.html#un-pedacito-de-linaje",
-    "href": "about.html#un-pedacito-de-linaje",
-    "title": "Acerca de",
-    "section": "Un pedacito de linaje",
-    "text": "Un pedacito de linaje\nHe dirigido tesis de pregrado y maestría, pero todavía ninguna de doctorado, que es lo único que registra el Mathematics Genealogy Project; así que por ahora mi rama del árbol solo crece hacia arriba. Se remonta a Alfonso Castro y José Francisco Caicedo, y desde ahí a Poisson, los Bernoulli y, finalmente, a Leibniz, que no por casualidad es también el nombre de mi portátil principal. Como anécdota, d’Alembert llegó a solución de la ecuación de onda continua con la que sigo trabajando hoy llevando al límite un modelo discreto, en diferencias finitas, que Johann Bernoulli ya había estudiado dos décadas antes. Ver el árbol completo →"
-  },
-  {
-    "objectID": "about.html#contacto",
-    "href": "about.html#contacto",
-    "title": "Acerca de",
-    "section": "Contacto",
-    "text": "Contacto\nCorreo: aasanjuanc@udistrital.edu.co\nPara la lista completa de publicaciones, el CV en PDF y mis perfiles académicos, ve a la página de Research. Los trabajos y notas más antiguos, casi todos en español, están en Trabajos."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Arturo Sanjuán",
-    "section": "",
-    "text": "🇺🇸 english\n\n\n\nLaguna Negra Mongua, Boyacá Colombia\n\n\nSoy profesor titular en la Universidad Distrital Francisco José de Caldas y hago parte de los grupos de investigación MESCUD y CMyT. Realicé mis estudios de pregrado, maestría y doctorado en Matemáticas en la Universidad Nacional de Colombia, bajo la dirección de los profesores Alfonso Castro (Harvey Mudd College) y Francisco Caicedo (Universidad Nacional de Colombia). Anteriormente, fui docente de planta en la Universidad de los Andes en Bogotá.\nMi investigación se centra en ecuaciones diferenciales parciales y funcional-diferenciales mediante métodos topológicos, con especial énfasis en la ecuación de onda semilineal con condiciones Dirichlet-periódicas."
-  },
-  {
-    "objectID": "cursos/numerico/convergencia/index.html",
-    "href": "cursos/numerico/convergencia/index.html",
-    "title": "Orden de convergencia",
-    "section": "",
-    "text": "Recordemos el análisis de la serie de errores del método de punto fijo, que vimos en la nota de raíces y puntos fijos, y usémoslo para darle nombre a la velocidad con que converge un método. Después lo aplicamos a Newton, que vimos en la nota anterior, y a la secante. Seguimos las secciones 4.2, 4.3 y 4.4 del libro de Driscoll y Braun.",
-    "crumbs": [
-      "Orden de convergencia"
-    ]
-  },
-  {
-    "objectID": "cursos/numerico/convergencia/index.html#el-error-en-la-iteración-de-punto-fijo",
-    "href": "cursos/numerico/convergencia/index.html#el-error-en-la-iteración-de-punto-fijo",
-    "title": "Orden de convergencia",
-    "section": "1 El error en la iteración de punto fijo",
-    "text": "1 El error en la iteración de punto fijo\nSea \\(p\\) la solución exacta, es decir, \\(g(p)=p\\) o, de forma equivalente, \\(f(p)=g(p)-p=0\\). El error absoluto en el paso \\(k\\) es \\(\\varepsilon_k=x_k-p\\). Como \\(x_{k+1}=g(x_k)\\), expandiendo \\(g\\) en Taylor alrededor de \\(p\\) y usando \\(g(p)=p\\),\n\\[\\varepsilon_{k+1}+p=g(p+\\varepsilon_k)=g(p)+g'(p)\\,\\varepsilon_k+o(\\varepsilon_k)=p+g'(p)\\,\\varepsilon_k+o(\\varepsilon_k).\\]\nPara \\(\\varepsilon_k\\) pequeño el resto \\(o(\\varepsilon_k)\\) se puede despreciar, y queda\n\\[\\boxed{\\varepsilon_{k+1}\\approx g'(p)\\,\\varepsilon_k.}\\]\nYa vimos que para que el método funcione cerca de una semilla se requiere \\(|g'(p)|&lt;1\\), y que entonces el error decrece como un múltiplo escalar del error anterior. Esto motiva la definición.",
-    "crumbs": [
-      "Orden de convergencia"
-    ]
-  },
-  {
-    "objectID": "cursos/numerico/convergencia/index.html#convergencia-lineal",
-    "href": "cursos/numerico/convergencia/index.html#convergencia-lineal",
-    "title": "Orden de convergencia",
-    "section": "2 Convergencia lineal",
-    "text": "2 Convergencia lineal\n\n\n\n\n\n\nImportanteDefinición: convergencia lineal\n\n\n\nSi \\(x_k\\to x^*\\) y el error \\(\\varepsilon_k=x_k-x^*\\) satisface\n\\[\\lim_{k\\to\\infty}\\frac{|\\varepsilon_{k+1}|}{|\\varepsilon_k|}=\\sigma&lt;1,\\]\nse dice que la convergencia es lineal.\n\n\nEn el punto fijo, \\(\\sigma=|g'(p)|\\). Supongamos que la razón es exactamente \\(\\sigma\\) en cada paso. Entonces\n\\[|\\varepsilon_k|=\\sigma\\,|\\varepsilon_{k-1}|=\\sigma^2\\,|\\varepsilon_{k-2}|=\\cdots=\\sigma^k\\,|\\varepsilon_0|=\\sigma^k c,\\qquad c=|\\varepsilon_0|,\\]\nde donde, al tomar logaritmos,\n\\[\\log|\\varepsilon_k|=k\\log\\sigma+\\log c.\\]\nEs una relación lineal entre \\(\\log|\\varepsilon_k|\\) y \\(k\\), con pendiente \\(\\log\\sigma&lt;0\\): si graficamos los errores en escala logarítmica contra \\(k\\), aparece una recta. De ahí el nombre.\nPor ejemplo, para \\(g(x)=\\cos x\\) y \\(x_0=1\\), el punto fijo es \\(p\\approx0{,}7390851\\) y \\(g'(p)=-\\operatorname{sen}(p)\\approx-0{,}67361\\). Los cocientes \\(\\varepsilon_{k+1}/\\varepsilon_k\\) se acercan a ese valor, alternando de signo porque \\(g'(p)&lt;0\\), de modo que \\(\\sigma\\approx0{,}6736\\):\n\n\n\n\\(k\\)\n\\(\\varepsilon_k\\)\n\\(\\varepsilon_{k+1}/\\varepsilon_k\\)\n\n\n\n\n\\(0\\)\n\\(0{,}26091\\)\n\\(-0{,}76187\\)\n\n\n\\(5\\)\n\\(-0{,}037716\\)\n\\(-0{,}65952\\)\n\n\n\\(10\\)\n\\(0{,}0051522\\)\n\\(-0{,}67551\\)\n\n\n\\(20\\)\n\\(9{,}9267\\times10^{-5}\\)\n\\(-0{,}67365\\)\n\n\n\\(30\\)\n\\(1{,}9095\\times10^{-6}\\)\n\\(-0{,}67361\\)",
-    "crumbs": [
-      "Orden de convergencia"
-    ]
-  },
-  {
-    "objectID": "cursos/numerico/convergencia/index.html#convergencia-cuadrática-el-método-de-newton",
-    "href": "cursos/numerico/convergencia/index.html#convergencia-cuadrática-el-método-de-newton",
-    "title": "Orden de convergencia",
-    "section": "3 Convergencia cuadrática: el método de Newton",
-    "text": "3 Convergencia cuadrática: el método de Newton\nVeamos ahora la convergencia del método de Newton con este lenguaje del error; en la nota anterior vimos que era cuadrática. Sea \\(r\\) una raíz de \\(f\\) con \\(f'(r)\\ne0\\), y \\(f\\) dos veces diferenciable cerca de \\(r\\). Con \\(\\varepsilon_k=x_k-r\\), restando \\(r\\) a ambos lados de \\(x_{k+1}=x_k-f(x_k)/f'(x_k)\\) se obtiene\n\\[\\varepsilon_{k+1}=\\varepsilon_k-\\frac{f(r+\\varepsilon_k)}{f'(r+\\varepsilon_k)}.\\]\nHacemos una expansión de Taylor de orden 2 en \\(f\\) y de orden 1 en \\(f'\\). Como \\(f(r)=0\\),\n\\[\\varepsilon_{k+1}=\\varepsilon_k-\\frac{f'(r)\\,\\varepsilon_k+\\tfrac12f''(r)\\,\\varepsilon_k^2+o(\\varepsilon_k^2)}{f'(r)+f''(r)\\,\\varepsilon_k+o(\\varepsilon_k)}=\\varepsilon_k-\\varepsilon_k\\,\\frac{1+\\dfrac{f''(r)}{2f'(r)}\\,\\varepsilon_k+o(\\varepsilon_k)}{1+\\dfrac{f''(r)}{f'(r)}\\,\\varepsilon_k+o(\\varepsilon_k)}.\\]\nEl denominador es \\(1+\\dfrac{f''(r)}{f'(r)}\\varepsilon_k+o(\\varepsilon_k)\\), con \\(\\left|\\dfrac{f''(r)}{f'(r)}\\varepsilon_k\\right|&lt;1\\) porque \\(\\varepsilon_k\\) es pequeño. Por la serie geométrica,\n\\[\\frac{1}{1+\\dfrac{f''(r)}{f'(r)}\\,\\varepsilon_k+o(\\varepsilon_k)}=1-\\frac{f''(r)}{f'(r)}\\,\\varepsilon_k+o(\\varepsilon_k),\\]\nde donde\n\\[\\begin{aligned}\n\\varepsilon_{k+1}&=\\varepsilon_k-\\varepsilon_k\\left(1+\\frac{f''(r)}{2f'(r)}\\,\\varepsilon_k+o(\\varepsilon_k)\\right)\\left(1-\\frac{f''(r)}{f'(r)}\\,\\varepsilon_k+o(\\varepsilon_k)\\right)\\\\\n&=\\varepsilon_k-\\varepsilon_k\\left(1-\\frac{f''(r)}{2f'(r)}\\,\\varepsilon_k+o(\\varepsilon_k)\\right)\\\\\n&=\\frac12\\,\\frac{f''(r)}{f'(r)}\\,\\varepsilon_k^2+o(\\varepsilon_k^2).\n\\end{aligned}\\]\n\n\n\n\n\n\nImportanteDefinición: convergencia cuadrática\n\n\n\nSi \\(x_k\\to x^*\\) y el error \\(\\varepsilon_k=x_k-x^*\\) satisface\n\\[\\lim_{k\\to\\infty}\\frac{|\\varepsilon_{k+1}|}{|\\varepsilon_k|^2}=L&gt;0,\\]\nse dice que la convergencia es cuadrática.\n\n\nEs el caso de Newton: dividiendo el resultado anterior por \\(\\varepsilon_k^2\\),\n\\[\\frac{|\\varepsilon_{k+1}|}{|\\varepsilon_k|^2}=\\frac12\\left|\\frac{f''(r)}{f'(r)}\\right|+o(1),\\]\ny tomando \\(k\\to\\infty\\) a ambos lados, \\(L=\\dfrac12\\dfrac{|f''(r)|}{|f'(r)|}\\), que es positivo siempre que \\(f''(r)\\ne0\\). Tomando logaritmos en \\(|\\varepsilon_{k+1}|\\approx L\\,|\\varepsilon_k|^2\\),\n\\[\\log|\\varepsilon_{k+1}|\\approx2\\log|\\varepsilon_k|+\\log L,\\qquad\\frac{\\log|\\varepsilon_{k+1}|}{\\log|\\varepsilon_k|}\\approx2+\\frac{\\log L}{\\log|\\varepsilon_k|}\\longrightarrow2\\quad(k\\to\\infty),\\]\nporque \\(\\log|\\varepsilon_k|\\to-\\infty\\). En palabras, cada paso de Newton duplica aproximadamente el número de cifras correctas.\n\n\n\n\n\n\nImportanteDefinición: convergencia superlineal\n\n\n\nSi \\(x_k\\to x^*\\) y existen constantes \\(\\alpha&gt;1\\) y \\(L&gt;0\\) tales que\n\\[\\lim_{k\\to\\infty}\\frac{|\\varepsilon_{k+1}|}{|\\varepsilon_k|^\\alpha}=L,\\]\nse dice que la convergencia es superlineal de orden \\(\\alpha\\). Con \\(\\alpha=2\\) es cuadrática, y con \\(\\alpha&gt;2\\) se llama supercuadrática.",
-    "crumbs": [
-      "Orden de convergencia"
-    ]
-  },
-  {
-    "objectID": "cursos/numerico/convergencia/index.html#la-secante-superlineal-pero-no-cuadrática",
-    "href": "cursos/numerico/convergencia/index.html#la-secante-superlineal-pero-no-cuadrática",
-    "title": "Orden de convergencia",
-    "section": "4 La secante: superlineal, pero no cuadrática",
-    "text": "4 La secante: superlineal, pero no cuadrática\nEn el método de Newton reemplacemos \\(f'(x_k)\\) por una pendiente \\(m\\) que aproxime la tangente: la de la recta secante por los dos últimos puntos de la gráfica,\n\\[m=\\frac{f(x_k)-f(x_{k-1})}{x_k-x_{k-1}}.\\]\nEl método de la secante es entonces\n\\[x_{k+1}=x_k-\\frac{f(x_k)}{m}=x_k-f(x_k)\\,\\frac{x_k-x_{k-1}}{f(x_k)-f(x_{k-1})},\\]\ny necesita dos iterados iniciales. Geométricamente, \\(x_{k+1}\\) es el punto donde la recta secante corta el eje horizontal.\n\n  Interpretación gráfica del método de la secante: el siguiente iterado es donde la recta por los dos últimos puntos corta el eje\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  xₖ₋₁\n  xₖ\n  xₖ₊₁\n  r\n  pendiente m\n\n\n4.1 El error de la secante\nCon \\(\\varepsilon_j=x_j-r\\) se tiene \\(x_k-x_{k-1}=\\varepsilon_k-\\varepsilon_{k-1}\\), y restando \\(r\\) en la fórmula anterior,\n\\[\\varepsilon_{k+1}=\\varepsilon_k-f(x_k)\\,\\frac{\\varepsilon_k-\\varepsilon_{k-1}}{f(x_k)-f(x_{k-1})}.\\]\nLlevando todo al denominador común \\(f(x_k)-f(x_{k-1})\\), los términos \\(\\varepsilon_k f(x_k)\\) se cancelan:\n\\[\\varepsilon_{k+1}=\\frac{\\varepsilon_k\\,[f(x_k)-f(x_{k-1})]-f(x_k)\\,(\\varepsilon_k-\\varepsilon_{k-1})}{f(x_k)-f(x_{k-1})}=\\frac{f(x_k)\\,\\varepsilon_{k-1}-f(x_{k-1})\\,\\varepsilon_k}{f(x_k)-f(x_{k-1})}.\\]\nExpandimos ahora con Taylor de orden 2 alrededor de \\(r\\): \\(f(x_j)=f'(r)\\,\\varepsilon_j+\\tfrac12f''(r)\\,\\varepsilon_j^2+o(\\varepsilon_j^2)\\) para \\(j=k,k-1\\). En el numerador, los términos con \\(f'(r)\\) se cancelan entre sí y queda\n\\[f(x_k)\\,\\varepsilon_{k-1}-f(x_{k-1})\\,\\varepsilon_k=\\tfrac12f''(r)\\,\\varepsilon_k^2\\varepsilon_{k-1}-\\tfrac12f''(r)\\,\\varepsilon_{k-1}^2\\varepsilon_k+\\cdots=\\tfrac12f''(r)\\,\\varepsilon_k\\varepsilon_{k-1}\\,(\\varepsilon_k-\\varepsilon_{k-1})+\\cdots,\\]\nmientras que el denominador es \\(f'(r)\\,(\\varepsilon_k-\\varepsilon_{k-1})+\\cdots\\). Por lo tanto\n\\[\\varepsilon_{k+1}\\approx\\frac{\\tfrac12f''(r)\\,\\varepsilon_k\\varepsilon_{k-1}\\,(\\varepsilon_k-\\varepsilon_{k-1})}{f'(r)\\,(\\varepsilon_k-\\varepsilon_{k-1})}=\\frac12\\,\\frac{f''(r)}{f'(r)}\\,\\varepsilon_k\\varepsilon_{k-1}.\\]\nLos puntos suspensivos también llevan el factor \\(\\varepsilon_k-\\varepsilon_{k-1}\\): un término \\(c_i\\varepsilon^i\\) del desarrollo de \\(f\\), con \\(i\\ge2\\), aporta \\(c_i\\,\\varepsilon_k\\varepsilon_{k-1}\\,(\\varepsilon_k^{\\,i-1}-\\varepsilon_{k-1}^{\\,i-1})\\) al numerador, y con \\(i\\ge1\\) aporta \\(c_i\\,(\\varepsilon_k^{\\,i}-\\varepsilon_{k-1}^{\\,i})\\) al denominador. Ambos son divisibles por \\(\\varepsilon_k-\\varepsilon_{k-1}\\), y por eso la cancelación es legítima.\n\\[\\boxed{\\varepsilon_{k+1}\\approx\\frac12\\,\\frac{f''(r)}{f'(r)}\\,\\varepsilon_k\\varepsilon_{k-1}}\\]\nSi \\(\\varepsilon_{k-1}\\) fuera igual a \\(\\varepsilon_k\\), la secante sería la tangente y recuperaríamos la fórmula de Newton, \\(\\varepsilon_{k+1}\\approx\\frac12\\frac{f''(r)}{f'(r)}\\varepsilon_k^2\\).\n\n\n4.2 El orden de la secante\nComo \\(\\varepsilon_{k+1}\\) depende de los dos errores anteriores, no sabemos de antemano a qué potencia de \\(\\varepsilon_k\\) es proporcional. Supongamos que los errores tienen esta forma, con \\(c&gt;0\\) y \\(\\alpha&gt;0\\):\n\\[|\\varepsilon_{k+1}|=c\\,|\\varepsilon_k|^\\alpha,\\qquad|\\varepsilon_k|=c\\,|\\varepsilon_{k-1}|^\\alpha.\\]\nSea \\(C=\\left|\\dfrac{f''(r)}{2f'(r)}\\right|\\). Por la fórmula del error de la secante,\n\\[|\\varepsilon_{k+1}|\\approx C\\,|\\varepsilon_k|\\,|\\varepsilon_{k-1}|=C\\,c\\,|\\varepsilon_{k-1}|^{\\alpha+1},\\]\ny por otro lado\n\\[|\\varepsilon_{k+1}|=c\\,|\\varepsilon_k|^\\alpha=c\\,\\big(c\\,|\\varepsilon_{k-1}|^\\alpha\\big)^\\alpha=c^{1+\\alpha}\\,|\\varepsilon_{k-1}|^{\\alpha^2}.\\]\nIgualando ambas expresiones,\n\\[|\\varepsilon_{k-1}|^{\\alpha^2-\\alpha-1}\\approx C\\,c^{-\\alpha}.\\]\nEl lado derecho es una constante positiva, mientras que \\(|\\varepsilon_{k-1}|\\to0\\). Esto solo es posible si el exponente es cero, es decir, si\n\\[\\alpha^2=\\alpha+1\\qquad\\Longrightarrow\\qquad\\alpha=\\frac{1+\\sqrt5}{2}=\\phi\\approx1{,}618,\\]\nla razón áurea, que es la única raíz positiva. De paso, la constante queda determinada por \\(c^\\alpha=C\\), o sea \\(c=\\left|\\dfrac{f''(r)}{2f'(r)}\\right|^{\\alpha-1}\\), porque \\(1/\\phi=\\phi-1\\).\nEntonces los errores de la secante satisfacen\n\\[\\lim_{k\\to\\infty}\\frac{|\\varepsilon_{k+1}|}{|\\varepsilon_k|^\\alpha}=L&gt;0,\\qquad\\alpha=\\frac{1+\\sqrt5}{2}\\in(1,2),\\]\nes decir, la convergencia es superlineal pero no cuadrática. Tomando logaritmos a ambos lados, \\(\\log|\\varepsilon_{k+1}|\\approx\\alpha\\log|\\varepsilon_k|+\\log L\\), de donde\n\\[\\frac{\\log|\\varepsilon_{k+1}|}{\\log|\\varepsilon_k|}\\longrightarrow\\alpha.\\]",
-    "crumbs": [
-      "Orden de convergencia"
-    ]
-  },
-  {
-    "objectID": "cursos/numerico/convergencia/index.html#leer-el-orden-en-la-práctica",
-    "href": "cursos/numerico/convergencia/index.html#leer-el-orden-en-la-práctica",
-    "title": "Orden de convergencia",
-    "section": "5 Leer el orden en la práctica",
-    "text": "5 Leer el orden en la práctica\nLa sucesión de cocientes \\(\\log|\\varepsilon_{k+1}|/\\log|\\varepsilon_k|\\) sirve en general: su límite \\(\\alpha\\) es el orden de convergencia del algoritmo que estemos probando. Para calcularla necesitamos errores, así que usamos aritmética de precisión extendida (200 dígitos) y una raíz de referencia calculada con mucha más precisión que los iterados. En doble precisión el error llega a \\(10^{-16}\\) en pocos pasos y la sucesión se estanca antes de mostrar la tendencia.\nTomamos \\(f(x)=xe^x-2\\), cuya raíz es \\(r\\approx0{,}8526055020137255\\). Con Newton desde \\(x_0=1\\):\n\n\n\n\n\n\n\n\n\n\\(k\\)\n\\(\\lvert\\varepsilon_k\\rvert\\)\n\\(\\log\\lvert\\varepsilon_{k+1}\\rvert\\big/\\log\\lvert\\varepsilon_k\\rvert\\)\n\\(\\lvert\\varepsilon_{k+1}\\rvert\\big/\\lvert\\varepsilon_k\\rvert^2\\)\n\n\n\n\n\\(0\\)\n\\(0{,}1474\\)\n\\(2{,}184\\)\n\\(0{,}70305\\)\n\n\n\\(1\\)\n\\(0{,}01527\\)\n\\(2{,}065\\)\n\\(0{,}76244\\)\n\n\n\\(2\\)\n\\(1{,}779\\times10^{-4}\\)\n\\(2{,}030\\)\n\\(0{,}76980\\)\n\n\n\\(3\\)\n\\(2{,}436\\times10^{-8}\\)\n\\(2{,}015\\)\n\\(0{,}76989\\)\n\n\n\\(4\\)\n\\(4{,}567\\times10^{-16}\\)\n\\(2{,}007\\)\n\\(0{,}76989\\)\n\n\n\\(5\\)\n\\(1{,}606\\times10^{-31}\\)\n\\(2{,}004\\)\n\\(0{,}76989\\)\n\n\n\nEl cociente de logaritmos tiende a \\(2\\), y el cociente \\(|\\varepsilon_{k+1}|/|\\varepsilon_k|^2\\) se estabiliza en \\(0{,}76989\\), que es justamente \\(\\frac12|f''(r)/f'(r)|\\). Con la secante, partiendo de \\(x_1=1\\) y \\(x_2=0{,}5\\):\n\n\n\n\n\n\n\n\n\\(k\\)\n\\(\\lvert\\varepsilon_k\\rvert\\)\n\\(\\log\\lvert\\varepsilon_{k+1}\\rvert\\big/\\log\\lvert\\varepsilon_k\\rvert\\)\n\n\n\n\n\\(4\\)\n\\(0{,}01303\\)\n\\(1{,}787\\)\n\n\n\\(5\\)\n\\(4{,}275\\times10^{-4}\\)\n\\(1{,}594\\)\n\n\n\\(6\\)\n\\(4{,}270\\times10^{-6}\\)\n\\(1{,}649\\)\n\n\n\\(7\\)\n\\(1{,}405\\times10^{-9}\\)\n\\(1{,}619\\)\n\n\n\\(8\\)\n\\(4{,}620\\times10^{-15}\\)\n\\(1{,}625\\)\n\n\n\\(9\\)\n\\(4{,}999\\times10^{-24}\\)\n\\(1{,}620\\)\n\n\n\\(10\\)\n\\(1{,}778\\times10^{-38}\\)\n\\(1{,}620\\)\n\n\n\\(11\\)\n\\(6{,}845\\times10^{-62}\\)\n\\(1{,}619\\)\n\n\n\nEl cociente de logaritmos se acerca a \\(\\phi\\approx1{,}618\\). El cociente \\(|\\varepsilon_{k+1}|/|\\varepsilon_k|^\\alpha\\) oscila alrededor de \\(0{,}85\\) y se acerca lentamente al valor que predice la deducción, \\(\\left|\\frac{f''(r)}{2f'(r)}\\right|^{\\alpha-1}\\approx0{,}8508\\).\nPara convergencia lineal el cociente de logaritmos también tiende a \\(\\alpha=1\\), pero muy despacio: con \\(|\\varepsilon_k|=\\sigma^kc\\) vale \\(1+\\dfrac{\\log\\sigma}{k\\log\\sigma+\\log c}\\), que decrece como \\(1/k\\). En la iteración \\(x_{k+1}=\\cos x_k\\) de arriba vale \\(1{,}20\\) en \\(k=0\\) y todavía \\(1{,}02\\) en \\(k=39\\). Para detectar una convergencia lineal conviene mirar directamente el cociente \\(\\varepsilon_{k+1}/\\varepsilon_k\\).\n\n\n\n\n\n\nNotaTarea\n\n\n\nResuelva todos los ejercicios de las secciones 4.2, 4.3 y 4.4 de Fundamentals of Numerical Computation (iteración de punto fijo, método de Newton y métodos basados en interpolación), disponibles en https://fncbook.com/julia/fixed-point/#exercises, https://fncbook.com/julia/newton/#exercises y https://fncbook.com/julia/secant/#exercises.",
-    "crumbs": [
-      "Orden de convergencia"
     ]
   },
   {

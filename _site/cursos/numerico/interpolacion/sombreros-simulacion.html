@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tablero de las funciones sombrero</title>
+<style>
+  :root{
+    --ink:#1e2327; --muted:#5a6570; --line:#dde3e8; --bg:#fbfcfd;
+    --accent:#2563a8; --accent2:#c1440e; --good:#1a7f5a;
+    --panel:#ffffff;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; padding:18px 20px 26px; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:14.5px; line-height:1.45;
+  }
+  h2{font-size:16px; margin:0 0 4px;}
+  .sub{color:var(--muted); margin:0 0 16px; font-size:13px;}
+
+  .sb-eq{
+    background:#f2f5f7; border:1px solid var(--line); border-radius:10px;
+    padding:10px 14px; margin-bottom:14px; font-size:13.5px;
+  }
+  .sb-eq div{margin:2px 0;}
+  .sb-eq .sb-lbl{color:var(--muted); display:inline-block; min-width:8.4em;}
+
+  .sb-grid{display:flex; gap:18px; flex-wrap:wrap; align-items:flex-start;}
+  .sb-panel{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 16px;}
+  .sb-ctrl{flex:1 1 240px; max-width:320px;}
+  .sb-plot{flex:2 1 380px; min-width:0;}
+  .sb-plot canvas{width:100%; height:340px; display:block; background:#fff; border-radius:6px; touch-action:none; cursor:default;}
+  .sb-lab{display:block; font-size:13px; margin:2px 0 4px;}
+  .sb-val{font-variant-numeric:tabular-nums; color:var(--accent); font-weight:600;}
+  .sb-ctrl input[type=range]{width:100%; margin:0 0 12px; accent-color:var(--accent);}
+  .sb-btns{display:flex; flex-wrap:wrap; gap:6px; margin:0 0 14px;}
+  .sb-btn{
+    border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:6px;
+    padding:3px 9px; font:inherit; font-size:12.5px; cursor:pointer;
+  }
+  .sb-btn:hover{background:#f2f5f7;}
+  .sb-btn[aria-pressed="true"]{border-color:var(--accent); background:#e6eef8;}
+  .sb-chk{display:block; font-size:13px; margin:0 0 5px;}
+  .sb-chk input{accent-color:var(--accent); margin-right:6px;}
+  .sb-sec{font-size:12.5px; color:var(--muted); font-weight:600; margin:12px 0 6px; text-transform:none;}
+  .sb-pie{margin:8px 0 0; font-size:12px; color:var(--muted);}
+
+  .sb-tabla{width:100%; border-collapse:collapse; font-size:13px; margin-top:10px;}
+  .sb-tabla th,.sb-tabla td{padding:4px 8px; text-align:right; border-bottom:1px solid var(--line);}
+  .sb-tabla th:first-child,.sb-tabla td:first-child{text-align:left;}
+  .sb-tabla th{color:var(--muted); font-weight:600; font-size:12.5px;}
+  .sb-tabla td{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-variant-numeric:tabular-nums;}
+  .sb-tabla tr.sb-total td{font-weight:700; border-top:2px solid var(--line); color:var(--accent);}
+  .sb-sw{display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:6px; vertical-align:middle;}
+</style>
+</head>
+<body>
+
+<h2>Funciones sombrero e interpolante lineal a trozos</h2>
+<p class="sub">Cada sombrero <i>H<sub>k</sub></i> vale 1 en su nodo y 0 en los demás. Arrastre los puntos naranja hacia arriba o hacia abajo para cambiar los datos <i>y<sub>k</sub></i>, y observe cómo el interpolante <i>p</i> es la suma de los sombreros multiplicados por esos datos.</p>
+
+<div class="sb-eq">
+  <div><span class="sb-lbl">Interpolante</span> <i>p</i>(<i>x</i>) = &Sigma;<sub><i>k</i>=0</sub><sup><i>n</i></sup> <i>y<sub>k</sub></i> <i>H<sub>k</sub></i>(<i>x</i>)</div>
+  <div><span class="sb-lbl">Sombrero</span> <i>H<sub>k</sub></i>(<i>t<sub>j</sub></i>) = 1 si <i>j</i> = <i>k</i>, y 0 si <i>j</i> &ne; <i>k</i></div>
+</div>
+
+<div class="sb-grid">
+  <div class="sb-panel sb-ctrl">
+    <label class="sb-lab" for="sb-n">Subintervalos: <i>n</i> = <span class="sb-val" id="sb-nv"></span></label>
+    <input type="range" id="sb-n" min="2" max="8" step="1" value="2">
+
+    <label class="sb-lab" for="sb-x0">Punto de lectura: <i>x</i> = <span class="sb-val" id="sb-x0v"></span></label>
+    <input type="range" id="sb-x0" min="0" max="2" step="0.01" value="0.5">
+
+    <div class="sb-sec">Datos</div>
+    <div class="sb-btns" id="sb-datos">
+      <button class="sb-btn" data-d="ejemplo">Ejemplo de la nota</button>
+      <button class="sb-btn" data-d="seno">Seno</button>
+      <button class="sb-btn" data-d="azar">Al azar</button>
+      <button class="sb-btn" data-d="delta">Un solo 1</button>
+    </div>
+
+    <div class="sb-sec">Nodos</div>
+    <div class="sb-btns">
+      <button class="sb-btn" id="sb-equi">Equiespaciados</button>
+      <button class="sb-btn" id="sb-pert">Perturbar nodos</button>
+    </div>
+
+    <div class="sb-sec">Mostrar</div>
+    <label class="sb-chk"><input type="checkbox" id="sb-ver-h" checked>Sombreros <i>H<sub>k</sub></i></label>
+    <label class="sb-chk"><input type="checkbox" id="sb-ver-yh" checked>Sombreros escalados <i>y<sub>k</sub> H<sub>k</sub></i></label>
+    <label class="sb-chk"><input type="checkbox" id="sb-ver-p" checked>Interpolante <i>p</i></label>
+  </div>
+
+  <div class="sb-panel sb-plot">
+    <canvas id="sb-canvas" role="img" aria-label="Funciones sombrero, sombreros escalados por los datos e interpolante lineal a trozos; los puntos naranja se pueden arrastrar verticalmente"></canvas>
+    <p class="sb-pie">Sombreros en trazo fino de color, sombreros escalados en trazo discontinuo del mismo color, interpolante en azul oscuro. La línea vertical punteada marca el punto de lectura.</p>
+    <table class="sb-tabla" id="sb-tabla"></table>
+  </div>
+</div>
+
+<script>
+(function(){
+  var COLORS=["#2563a8","#c1440e","#1a7f5a","#8a5a00","#7b3fa0","#007c91","#b0356b","#5b6b00","#3a4a9f"];
+  var A=0, Bnd=2;
+  var YMIN=-2.5, YMAX=4.5;
+  var n=2, t=[0,1,2], y=[1,3,2], x0=0.5, deltaK=1;
+  var dragK=-1;
+
+  var cv=document.getElementById("sb-canvas"), ctx=cv.getContext("2d");
+  var nv=document.getElementById("sb-nv"), x0v=document.getElementById("sb-x0v");
+  var sn=document.getElementById("sb-n"), sx0=document.getElementById("sb-x0");
+  var verH=document.getElementById("sb-ver-h"), verYH=document.getElementById("sb-ver-yh"), verP=document.getElementById("sb-ver-p");
+  var tabla=document.getElementById("sb-tabla");
+
+  function fmt(v,d){ d=(d===undefined)?3:d; var s=(Math.abs(v)<5e-13?0:v).toFixed(d); return s.replace(".",","); }
+
+  function hat(k,x){
+    if(k>0 && x>=t[k-1] && x<=t[k]) return (x-t[k-1])/(t[k]-t[k-1]);
+    if(k<n && x>=t[k] && x<=t[k+1]) return (t[k+1]-x)/(t[k+1]-t[k]);
+    return 0;
+  }
+  function pval(x){
+    var s=0; for(var k=0;k<=n;k++) s+=y[k]*hat(k,x); return s;
+  }
+  function equi(m){ var a=[]; for(var j=0;j<=m;j++) a.push(A+(Bnd-A)*j/m); return a; }
+
+  function setN(m){
+    // conserva la forma del interpolante actual evaluándolo en los nuevos nodos
+    var newT=equi(m), newY=newT.map(function(x){ return pval(x); });
+    n=m; t=newT; y=newY;
+  }
+
+  // ---- geometría del lienzo
+  var W=0,H=0,dpr=1, padL=44, padR=16, padT=14, padB=30;
+  function resize(){
+    dpr=window.devicePixelRatio||1;
+    var r=cv.getBoundingClientRect(); W=r.width; H=r.height;
+    cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    draw();
+  }
+  var XMIN=-0.12, XMAX=2.12;
+  function px(x){ return padL+(x-XMIN)/(XMAX-XMIN)*(W-padL-padR); }
+  function py(v){ return padT+(YMAX-v)/(YMAX-YMIN)*(H-padT-padB); }
+  function ix(p){ return XMIN+(p-padL)/(W-padL-padR)*(XMAX-XMIN); }
+  function iy(p){ return YMAX-(p-padT)/(H-padT-padB)*(YMAX-YMIN); }
+
+  function line(pts,color,w,dash){
+    ctx.beginPath();
+    ctx.setLineDash(dash||[]);
+    ctx.strokeStyle=color; ctx.lineWidth=w; ctx.lineJoin="round";
+    for(var i=0;i<pts.length;i++){ var X=px(pts[i][0]), Y=py(pts[i][1]); if(i===0) ctx.moveTo(X,Y); else ctx.lineTo(X,Y); }
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+
+  function draw(){
+    if(!W) return;
+    ctx.clearRect(0,0,W,H);
+    // rejilla suave y ejes
+    ctx.font="12px -apple-system,Segoe UI,Helvetica,Arial,sans-serif";
+    ctx.fillStyle="#5a6570"; ctx.textAlign="right"; ctx.textBaseline="middle";
+    for(var v=-2; v<=4; v++){
+      ctx.beginPath(); ctx.strokeStyle=(v===0)?"#7b858e":"#edf0f3"; ctx.lineWidth=(v===0)?1.3:1;
+      ctx.moveTo(padL,py(v)); ctx.lineTo(W-padR,py(v)); ctx.stroke();
+      ctx.fillText(String(v),padL-8,py(v));
+    }
+    ctx.textAlign="center"; ctx.textBaseline="top";
+    for(var j=0;j<=n;j++){
+      ctx.beginPath(); ctx.strokeStyle="#edf0f3"; ctx.lineWidth=1;
+      ctx.moveTo(px(t[j]),padT); ctx.lineTo(px(t[j]),H-padB); ctx.stroke();
+      ctx.beginPath(); ctx.strokeStyle="#7b858e"; ctx.lineWidth=1.2;
+      ctx.moveTo(px(t[j]),py(0)-3); ctx.lineTo(px(t[j]),py(0)+3); ctx.stroke();
+    }
+    ctx.fillStyle="#5a6570";
+    for(var j2=0;j2<=n;j2++){
+      var lab=(n<=4)? ("t"+sub(j2)) : String(j2);
+      ctx.fillText(lab, px(t[j2]), H-padB+8);
+    }
+
+    // sombreros
+    if(verH.checked){
+      for(var k=0;k<=n;k++){
+        var pts=[]; for(var j3=0;j3<=n;j3++) pts.push([t[j3], j3===k?1:0]);
+        line(pts, COLORS[k%COLORS.length], 1.5);
+      }
+    }
+    // sombreros escalados
+    if(verYH.checked){
+      for(var k2=0;k2<=n;k2++){
+        var pts2=[]; for(var j4=0;j4<=n;j4++) pts2.push([t[j4], j4===k2?y[k2]:0]);
+        line(pts2, COLORS[k2%COLORS.length], 1.8, [6,4]);
+      }
+    }
+    // interpolante
+    if(verP.checked){
+      var pp=[]; for(var j5=0;j5<=n;j5++) pp.push([t[j5],y[j5]]);
+      line(pp,"#14365e",3);
+    }
+    // punto de lectura
+    ctx.beginPath(); ctx.setLineDash([2,4]); ctx.strokeStyle="#7b858e"; ctx.lineWidth=1.2;
+    ctx.moveTo(px(x0),padT); ctx.lineTo(px(x0),H-padB); ctx.stroke(); ctx.setLineDash([]);
+    if(verP.checked){
+      ctx.beginPath(); ctx.fillStyle="#14365e"; ctx.arc(px(x0),py(pval(x0)),4,0,6.2832); ctx.fill();
+    }
+    // datos (arrastrables)
+    for(var k3=0;k3<=n;k3++){
+      ctx.beginPath(); ctx.fillStyle="#c1440e"; ctx.arc(px(t[k3]),py(y[k3]),(k3===dragK)?7:5.5,0,6.2832); ctx.fill();
+      ctx.lineWidth=2; ctx.strokeStyle="#fff"; ctx.stroke();
+    }
+  }
+  function sub(j){ var d="₀₁₂₃₄₅₆₇₈₉"; return String(j).split("").map(function(c){return d[+c];}).join(""); }
+
+  function renderTabla(){
+    var h="<tr><th>nodo</th><th><i>t<sub>k</sub></i></th><th><i>y<sub>k</sub></i></th><th><i>H<sub>k</sub></i>(<i>x</i>)</th><th><i>y<sub>k</sub> H<sub>k</sub></i>(<i>x</i>)</th></tr>";
+    var tot=0;
+    for(var k=0;k<=n;k++){
+      var hv=hat(k,x0), c=y[k]*hv; tot+=c;
+      h+="<tr><td><span class='sb-sw' style='background:"+COLORS[k%COLORS.length]+"'></span>"+k+"</td><td>"+fmt(t[k],3)+"</td><td>"+fmt(y[k],2)+"</td><td>"+fmt(hv,3)+"</td><td>"+fmt(c,3)+"</td></tr>";
+    }
+    h+="<tr class='sb-total'><td colspan='4'><i>p</i>("+fmt(x0,2)+") = &Sigma; <i>y<sub>k</sub> H<sub>k</sub></i>("+fmt(x0,2)+")</td><td>"+fmt(tot,3)+"</td></tr>";
+    tabla.innerHTML=h;
+  }
+
+  function refresh(){
+    nv.textContent=String(n); x0v.textContent=fmt(x0,2);
+    sn.value=n; sx0.value=x0;
+    draw(); renderTabla();
+  }
+
+  // ---- controles
+  sn.addEventListener("input",function(){ setN(+sn.value); clearPressed(); refresh(); });
+  sx0.addEventListener("input",function(){ x0=+sx0.value; refresh(); });
+  [verH,verYH,verP].forEach(function(c){ c.addEventListener("change",draw); });
+
+  function clearPressed(){ var bs=document.querySelectorAll("#sb-datos .sb-btn"); for(var i=0;i<bs.length;i++) bs[i].setAttribute("aria-pressed","false"); }
+  document.getElementById("sb-equi").addEventListener("click",function(){
+    var yy=y.slice(); t=equi(n); y=yy; refresh();
+  });
+  document.getElementById("sb-pert").addEventListener("click",function(){
+    var m=n, base=equi(m), h=(Bnd-A)/m, nt=[];
+    for(var j=0;j<=m;j++){
+      if(j===0||j===m) nt.push(base[j]);
+      else nt.push(base[j]+(Math.random()-0.5)*0.7*h);
+    }
+    t=nt; refresh();
+  });
+  document.getElementById("sb-datos").addEventListener("click",function(e){
+    var b=e.target.closest("button"); if(!b) return;
+    var d=b.getAttribute("data-d");
+    clearPressed(); b.setAttribute("aria-pressed","true");
+    if(d==="ejemplo"){ n=2; t=[0,1,2]; y=[1,3,2]; }
+    else if(d==="seno"){ y=t.map(function(x){ return 1.5*Math.sin(Math.PI*x)+0.5*x; }); }
+    else if(d==="azar"){ y=t.map(function(){ return Math.round((Math.random()*5-1.2)*10)/10; }); }
+    else if(d==="delta"){ deltaK=(deltaK+1)%(n+1); y=t.map(function(x,j){ return j===deltaK?1:0; }); }
+    refresh();
+  });
+
+  // ---- arrastre vertical de los datos
+  function pos(e){ var r=cv.getBoundingClientRect(); return [e.clientX-r.left, e.clientY-r.top]; }
+  function hit(p){
+    var best=-1, bd=14*14;
+    for(var k=0;k<=n;k++){ var dx=px(t[k])-p[0], dy=py(y[k])-p[1], d=dx*dx+dy*dy; if(d<bd){bd=d; best=k;} }
+    return best;
+  }
+  cv.addEventListener("pointerdown",function(e){
+    var p=pos(e), k=hit(p);
+    if(k>=0){ dragK=k; cv.setPointerCapture(e.pointerId); cv.style.cursor="ns-resize"; clearPressed(); draw(); e.preventDefault(); }
+  });
+  cv.addEventListener("pointermove",function(e){
+    var p=pos(e);
+    if(dragK>=0){
+      var v=Math.max(YMIN+0.15,Math.min(YMAX-0.15,iy(p[1])));
+      y[dragK]=Math.round(v*20)/20;
+      draw(); renderTabla();
+    } else {
+      cv.style.cursor = (hit(p)>=0) ? "ns-resize" : "default";
+    }
+  });
+  function endDrag(e){ if(dragK>=0){ dragK=-1; try{cv.releasePointerCapture(e.pointerId);}catch(_){} draw(); } }
+  cv.addEventListener("pointerup",endDrag);
+  cv.addEventListener("pointercancel",endDrag);
+
+  window.addEventListener("resize",resize);
+  document.querySelector("#sb-datos .sb-btn[data-d=ejemplo]").setAttribute("aria-pressed","true");
+  refresh(); resize();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Arturo Sanjuán">
+
+<title>Interpolación – Arturo Sanjuán</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-5a1953863e1f72ef3b996ef827f01ca7.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-06ef128ffaab2aaffa18b1038abc86f3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-979bd06565eab1ad32ed49e916b209dc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/bootstrap/bootstrap-06ef128ffaab2aaffa18b1038abc86f3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Arturo Sanjuán</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../research/index.html"> 
+<span class="menu-text">research</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../cursos/index.html"> 
+<span class="menu-text">cursos</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../trabajos/index.html"> 
+<span class="menu-text">trabajos</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../research/genealogy/index.html"> 
+<span class="menu-text">genealogy</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../links.html"> 
+<span class="menu-text">contacto</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../files/cv_sanjuan.pdf"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo oscuro"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#el-problema-de-interpolación" id="toc-el-problema-de-interpolación" class="nav-link active" data-scroll-target="#el-problema-de-interpolación"><span class="header-section-number">1</span> El problema de interpolación</a></li>
+  <li><a href="#condicionamiento-de-la-interpolación" id="toc-condicionamiento-de-la-interpolación" class="nav-link" data-scroll-target="#condicionamiento-de-la-interpolación"><span class="header-section-number">2</span> Condicionamiento de la interpolación</a></li>
+  <li><a href="#interpolación-lineal-a-trozos" id="toc-interpolación-lineal-a-trozos" class="nav-link" data-scroll-target="#interpolación-lineal-a-trozos"><span class="header-section-number">3</span> Interpolación lineal a trozos</a>
+  <ul class="collapse">
+  <li><a href="#por-qué-condicionamiento-absoluto" id="toc-por-qué-condicionamiento-absoluto" class="nav-link" data-scroll-target="#por-qué-condicionamiento-absoluto"><span class="header-section-number">3.1</span> Por qué condicionamiento absoluto</a></li>
+  </ul></li>
+  <li><a href="#convergencia-de-la-interpolación-lineal-a-trozos" id="toc-convergencia-de-la-interpolación-lineal-a-trozos" class="nav-link" data-scroll-target="#convergencia-de-la-interpolación-lineal-a-trozos"><span class="header-section-number">4</span> Convergencia de la interpolación lineal a trozos</a>
+  <ul class="collapse">
+  <li><a href="#el-orden-aquí-y-en-los-métodos-iterativos" id="toc-el-orden-aquí-y-en-los-métodos-iterativos" class="nav-link" data-scroll-target="#el-orden-aquí-y-en-los-métodos-iterativos"><span class="header-section-number">4.1</span> El orden aquí y en los métodos iterativos</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Interpolación</h1>
+<p class="subtitle lead">El problema de interpolación, el condicionamiento de la prescripción que produce el interpolante y la interpolación lineal a trozos.</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor</div>
+    <div class="quarto-title-meta-contents">
+             <p>Arturo Sanjuán </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">4 de noviembre de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Pasamos ahora al capítulo 5 del libro de Driscoll y Braun, dedicado a la interpolación. Seguimos las secciones 5.1 y 5.2.</p>
+<section id="el-problema-de-interpolación" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="el-problema-de-interpolación"><span class="header-section-number">1</span> El problema de interpolación</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="Definición: problema de interpolación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Definición: problema de interpolación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dados <span class="math inline">\(n+1\)</span> puntos <span class="math inline">\((t_0,y_0),\dots,(t_n,y_n)\)</span> con los <span class="math inline">\(t_k\)</span> distintos, llamados nodos, el problema de interpolación consiste en encontrar una función <span class="math inline">\(p\)</span>, llamada interpolante, tal que</p>
+<p><span class="math display">\[p(t_k)=y_k,\qquad k=0,\dots,n.\]</span></p>
+</div>
+</div>
+<p>Tomemos los tres puntos <span class="math inline">\((0,1)\)</span>, <span class="math inline">\((1,3)\)</span> y <span class="math inline">\((2,2)\)</span>. Hay muchas funciones que pasan por ellos, y vemos tres.</p>
+<div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin:0.75rem 0;">
+<figure style="margin:0;flex:1 1 220px;max-width:310px;" class="figure">
+<svg viewbox="0 0 300 230" width="100%" role="img" aria-label="Gráfica del interpolante lineal a trozos: un segmento de (0,1) a (1,3) y otro de (1,3) a (2,2)" font-family="system-ui, sans-serif" font-size="12.5">
+  <title>Interpolante lineal a trozos por los puntos (0,1), (1,3), (2,2)</title>
+  <line x1="34.0" y1="178.2" x2="286.0" y2="178.2" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.2"></line>
+  <line x1="65.5" y1="200.0" x2="65.5" y2="14.0" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.2"></line>
+  <line x1="155.5" y1="175.2" x2="155.5" y2="181.2" stroke="currentColor" stroke-opacity="0.6"></line>
+  <line x1="245.5" y1="175.2" x2="245.5" y2="181.2" stroke="currentColor" stroke-opacity="0.6"></line>
+  <text x="56.5" y="195.2" text-anchor="middle" fill="currentColor" fill-opacity="0.8">0</text>
+  <text x="155.5" y="195.2" text-anchor="middle" fill="currentColor" fill-opacity="0.8">1</text>
+  <text x="245.5" y="195.2" text-anchor="middle" fill="currentColor" fill-opacity="0.8">2</text>
+  <polyline points="65.5,138.7 155.5,59.5" fill="none" stroke="#2563a8" stroke-width="2.2"></polyline>
+  <polyline points="155.5,59.5 245.5,99.1" fill="none" stroke="#1a7f5a" stroke-width="2.2"></polyline>
+  <circle cx="65.5" cy="138.7" r="3.8" fill="#c1440e"></circle>
+  <circle cx="155.5" cy="59.5" r="3.8" fill="#c1440e"></circle>
+  <circle cx="245.5" cy="99.1" r="3.8" fill="#c1440e"></circle>
+  <text x="103.3" y="77.2" fill="#2563a8" text-anchor="end">p₁</text>
+  <text x="209.5" y="73.3" fill="#1a7f5a" text-anchor="start">p₂</text>
+</svg>
+<figcaption style="text-align:center;font-size:0.9em;">Lineal a trozos</figcaption>
+</figure>
+<figure style="margin:0;flex:1 1 220px;max-width:310px;" class="figure">
+<svg viewbox="0 0 300 230" width="100%" role="img" aria-label="Gráfica del interpolante cuadrático a trozos, suave en el nodo x igual a 1, que sube hasta un máximo cerca de 3,8 antes de bajar a (2,2)" font-family="system-ui, sans-serif" font-size="12.5">
+  <title>Interpolante cuadrático a trozos de clase C1 por los puntos (0,1), (1,3), (2,2)</title>
+  <line x1="34.0" y1="178.2" x2="286.0" y2="178.2" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.2"></line>
+  <line x1="65.5" y1="200.0" x2="65.5" y2="14.0" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.2"></line>
+  <line x1="155.5" y1="175.2" x2="155.5" y2="181.2" stroke="currentColor" stroke-opacity="0.6"></line>
+  <line x1="245.5" y1="175.2" x2="245.5" y2="181.2" stroke="currentColor" stroke-opacity="0.6"></line>
+  <text x="56.5" y="195.2" text-anchor="middle" fill="currentColor" fill-opacity="0.8">0</text>
+  <text x="155.5" y="195.2" text-anchor="middle" fill="currentColor" fill-opacity="0.8">1</text>
+  <text x="245.5" y="195.2" text-anchor="middle" fill="currentColor" fill-opacity="0.8">2</text>
+  <polyline points="65.5,138.7 67.0,138.6 68.6,138.6 70.1,138.5 71.6,138.3 73.1,138.1 74.7,137.8 76.2,137.5 77.7,137.2 79.2,136.8 80.8,136.4 82.3,135.9 83.8,135.4 85.3,134.8 86.9,134.2 88.4,133.5 89.9,132.8 91.4,132.1 93.0,131.3 94.5,130.5 96.0,129.6 97.5,128.6 99.1,127.7 100.6,126.6 102.1,125.6 103.6,124.4 105.2,123.3 106.7,122.1 108.2,120.8 109.7,119.5 111.3,118.2 112.8,116.8 114.3,115.4 115.8,113.9 117.4,112.4 118.9,110.8 120.4,109.2 121.9,107.5 123.5,105.8 125.0,104.1 126.5,102.3 128.0,100.4 129.6,98.6 131.1,96.6 132.6,94.6 134.1,92.6 135.7,90.5 137.2,88.4 138.7,86.3 140.2,84.1 141.8,81.8 143.3,79.5 144.8,77.2 146.3,74.8 147.9,72.4 149.4,69.9 150.9,67.4 152.4,64.8 154.0,62.2 155.5,59.5" fill="none" stroke="#2563a8" stroke-width="2.2"></polyline>
+  <polyline points="155.5,59.5 157.0,56.9 158.6,54.4 160.1,52.0 161.6,49.7 163.1,47.5 164.7,45.5 166.2,43.5 167.7,41.7 169.2,40.0 170.8,38.4 172.3,36.9 173.8,35.5 175.3,34.2 176.9,33.1 178.4,32.1 179.9,31.1 181.4,30.3 183.0,29.6 184.5,29.1 186.0,28.6 187.5,28.2 189.1,28.0 190.6,27.9 192.1,27.9 193.6,28.0 195.2,28.2 196.7,28.5 198.2,29.0 199.7,29.5 201.3,30.2 202.8,31.0 204.3,31.9 205.8,32.9 207.4,34.0 208.9,35.2 210.4,36.6 211.9,38.1 213.5,39.6 215.0,41.3 216.5,43.1 218.0,45.1 219.6,47.1 221.1,49.2 222.6,51.5 224.1,53.9 225.7,56.4 227.2,59.0 228.7,61.7 230.2,64.5 231.8,67.5 233.3,70.5 234.8,73.7 236.3,77.0 237.9,80.4 239.4,83.9 240.9,87.5 242.4,91.3 244.0,95.1 245.5,99.1" fill="none" stroke="#1a7f5a" stroke-width="2.2"></polyline>
+  <circle cx="65.5" cy="138.7" r="3.8" fill="#c1440e"></circle>
+  <circle cx="155.5" cy="59.5" r="3.8" fill="#c1440e"></circle>
+  <circle cx="245.5" cy="99.1" r="3.8" fill="#c1440e"></circle>
+  <text x="115.0" y="106.7" fill="#2563a8" text-anchor="end">p₁</text>
+  <text x="211.3" y="28.4" fill="#1a7f5a" text-anchor="start">p₂</text>
+</svg>
+<figcaption style="text-align:center;font-size:0.9em;">Cuadrática a trozos</figcaption>
+</figure>
+<figure style="margin:0;flex:1 1 220px;max-width:310px;" class="figure">
+<svg viewbox="0 0 300 230" width="100%" role="img" aria-label="Gráfica de la única parábola que pasa por (0,1), (1,3) y (2,2)" font-family="system-ui, sans-serif" font-size="12.5">
+  <title>Parábola única por los puntos (0,1), (1,3), (2,2)</title>
+  <line x1="34.0" y1="178.2" x2="286.0" y2="178.2" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.2"></line>
+  <line x1="65.5" y1="200.0" x2="65.5" y2="14.0" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.2"></line>
+  <line x1="155.5" y1="175.2" x2="155.5" y2="181.2" stroke="currentColor" stroke-opacity="0.6"></line>
+  <line x1="245.5" y1="175.2" x2="245.5" y2="181.2" stroke="currentColor" stroke-opacity="0.6"></line>
+  <text x="56.5" y="195.2" text-anchor="middle" fill="currentColor" fill-opacity="0.8">0</text>
+  <text x="155.5" y="195.2" text-anchor="middle" fill="currentColor" fill-opacity="0.8">1</text>
+  <text x="245.5" y="195.2" text-anchor="middle" fill="currentColor" fill-opacity="0.8">2</text>
+  <polyline points="65.5,138.7 68.6,134.0 71.6,129.5 74.7,125.2 77.7,121.0 80.8,116.9 83.8,112.9 86.9,109.1 89.9,105.5 93.0,101.9 96.0,98.5 99.1,95.3 102.1,92.1 105.2,89.1 108.2,86.3 111.3,83.6 114.3,81.0 117.4,78.6 120.4,76.2 123.5,74.1 126.5,72.0 129.6,70.1 132.6,68.4 135.7,66.8 138.7,65.3 141.8,63.9 144.8,62.7 147.9,61.6 150.9,60.7 154.0,59.9 157.0,59.2 160.1,58.7 163.1,58.3 166.2,58.0 169.2,57.9 172.3,57.9 175.3,58.0 178.4,58.3 181.4,58.7 184.5,59.3 187.5,60.0 190.6,60.8 193.6,61.8 196.7,62.9 199.7,64.1 202.8,65.5 205.8,67.0 208.9,68.7 211.9,70.4 215.0,72.4 218.0,74.4 221.1,76.6 224.1,79.0 227.2,81.4 230.2,84.0 233.3,86.8 236.3,89.6 239.4,92.7 242.4,95.8 245.5,99.1" fill="none" stroke="#2563a8" stroke-width="2.2"></polyline>
+  <circle cx="65.5" cy="138.7" r="3.8" fill="#c1440e"></circle>
+  <circle cx="155.5" cy="59.5" r="3.8" fill="#c1440e"></circle>
+  <circle cx="245.5" cy="99.1" r="3.8" fill="#c1440e"></circle>
+  <text x="205.0" y="57.6" fill="#2563a8" text-anchor="start">p</text>
+</svg>
+<figcaption style="text-align:center;font-size:0.9em;">Una sola cuadrática</figcaption>
+</figure>
+</div>
+<p><strong>Lineal a trozos.</strong> En cada subintervalo usamos una recta que une sus dos extremos:</p>
+<p><span class="math display">\[p_1(x)=1+2x\ \text{ en }[0,1],\qquad p_2(x)=4-x\ \text{ en }[1,2].\]</span></p>
+<p><strong>Cuadrática a trozos.</strong> Usamos ahora un polinomio de grado a lo más <span class="math inline">\(2\)</span> en cada subintervalo,</p>
+<p><span class="math display">\[p_1(x)=a_0+a_1x+a_2x^2\ \text{ en }[0,1],\qquad p_2(x)=b_0+b_1x+b_2x^2\ \text{ en }[1,2].\]</span></p>
+<p>Pasar por los cuatro extremos impone cuatro condiciones sobre seis coeficientes, así que quedan dos grados de libertad. Los podemos usar para que el empalme en <span class="math inline">\(x=1\)</span> sea suave, <span class="math inline">\(p_1'(1)=p_2'(1)\)</span>, y para fijar, por ejemplo, <span class="math inline">\(p_1'(0)=0\)</span>. De <span class="math inline">\(p_1(0)=1\)</span>, <span class="math inline">\(p_1'(0)=0\)</span> y <span class="math inline">\(p_1(1)=3\)</span> sale <span class="math inline">\(p_1(x)=1+2x^2\)</span>, con <span class="math inline">\(p_1'(1)=4\)</span>. Escribiendo <span class="math inline">\(p_2\)</span> alrededor de <span class="math inline">\(x=1\)</span> con esa misma pendiente, <span class="math inline">\(p_2(x)=3+4(x-1)+b_2(x-1)^2\)</span>, y la condición <span class="math inline">\(p_2(2)=2\)</span> da <span class="math inline">\(b_2=-5\)</span>:</p>
+<p><span class="math display">\[p_1(x)=1+2x^2,\qquad p_2(x)=3+4(x-1)-5(x-1)^2.\]</span></p>
+<p>La condición <span class="math inline">\(p_1'(0)=0\)</span> es solo una elección posible, otra elección da otra cuadrática a trozos.</p>
+<p><strong>Una sola cuadrática.</strong> También podemos usar un único polinomio de grado <span class="math inline">\(2\)</span> para todo el intervalo, el único que pasa por los tres puntos:</p>
+<p><span class="math display">\[p(x)=1+\frac72\,x-\frac32\,x^2.\]</span></p>
+<p>En general, <span class="math inline">\(n+1\)</span> puntos se pueden interpolar con un único polinomio de grado <span class="math inline">\(n\)</span>. Sin embargo, esto puede generar oscilaciones muy grandes en los extremos del intervalo, con errores y sensibilidad altos a los datos (fenómeno de Runge). Por eso es preferible interpolar con polinomios de grado pequeño en cada subintervalo. Los ejemplos de la <a href="https://fncbook.com/julia/interpolation/">sección 5.1 del libro</a> lo muestran.</p>
+</section>
+<section id="condicionamiento-de-la-interpolación" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="condicionamiento-de-la-interpolación"><span class="header-section-number">2</span> Condicionamiento de la interpolación</h2>
+<p>Fijados los nodos, una prescripción de interpolación es una función <span class="math inline">\(I\)</span> que a cada vector de datos <span class="math inline">\(y=(y_0,\dots,y_n)\)</span> le asigna su interpolante <span class="math inline">\(p=I(y)\)</span>, es decir, <span class="math inline">\(p(t_k)=y_k\)</span>. Solo consideraremos prescripciones lineales:</p>
+<p><span class="math display">\[I(\alpha y+\beta z)=\alpha\,I(y)+\beta\,I(z)\]</span></p>
+<p>para todo par de vectores <span class="math inline">\(y,z\)</span> y todo par de escalares <span class="math inline">\(\alpha,\beta\)</span>.</p>
+<p>Con un ejemplo se ve más claro. Sean <span class="math inline">\(t_0=0\)</span>, <span class="math inline">\(t_1=1\)</span>, <span class="math inline">\(t_2=2\)</span>, e <span class="math inline">\(I\)</span> la prescripción que a los datos <span class="math inline">\((0,y_0)\)</span>, <span class="math inline">\((1,y_1)\)</span>, <span class="math inline">\((2,y_2)\)</span> les asigna la función que une <span class="math inline">\((0,y_0)\)</span> con <span class="math inline">\((1,y_1)\)</span> mediante una recta y <span class="math inline">\((1,y_1)\)</span> con <span class="math inline">\((2,y_2)\)</span> mediante una cuadrática, de modo que en total <span class="math inline">\(p\)</span> sea de clase <span class="math inline">\(C^1\)</span>. La recta tiene pendiente <span class="math inline">\(y_1-y_0\)</span>, así que la cuadrática debe salir de <span class="math inline">\((1,y_1)\)</span> con esa pendiente y pasar por <span class="math inline">\((2,y_2)\)</span>. El resultado es</p>
+<p><span class="math display">\[p(x)=I(y)(x)=\begin{cases}
+y_0+(y_1-y_0)\,x, &amp; 0\le x\le 1,\\[2mm]
+y_1+(y_1-y_0)(x-1)+(y_0-2y_1+y_2)(x-1)^2, &amp; 1\le x\le 2.
+\end{cases}\]</span></p>
+<p>¿Qué pasa si calculamos <span class="math inline">\(I(\alpha y+\beta z)(x)\)</span>? Para <span class="math inline">\(x\in[0,1]\)</span>,</p>
+<p><span class="math display">\[\begin{aligned}
+I(\alpha y+\beta z)(x)&amp;=(\alpha y_0+\beta z_0)+\big[(\alpha y_1+\beta z_1)-(\alpha y_0+\beta z_0)\big]\,x\\
+&amp;=\alpha\big[y_0+(y_1-y_0)x\big]+\beta\big[z_0+(z_1-z_0)x\big]\\
+&amp;=\alpha\,I(y)(x)+\beta\,I(z)(x),
+\end{aligned}\]</span></p>
+<p>y de manera similar si <span class="math inline">\(x\in[1,2]\)</span>.</p>
+<p>Como <span class="math inline">\(I\)</span> es lineal en <span class="math inline">\(y\)</span>, podemos escribir el vector de datos como combinación lineal de los vectores canónicos, <span class="math inline">\(y=\sum_{k=0}^n y_k\,e_k\)</span>, donde <span class="math inline">\(e_k\)</span> es la columna <span class="math inline">\(k\)</span> de la matriz identidad (numerada desde <span class="math inline">\(0\)</span>). Por linealidad,</p>
+<p><span class="math display">\[I(y)=\sum_{k=0}^{n}y_k\,I(e_k).\]</span></p>
+<p>Las funciones <span class="math inline">\(\varphi_k=I(e_k)\)</span> son las que se llaman funciones cardinales: <span class="math inline">\(\varphi_k\)</span> es el interpolante de los datos que valen <span class="math inline">\(1\)</span> en el nodo <span class="math inline">\(t_k\)</span> y <span class="math inline">\(0\)</span> en los demás, es decir, <span class="math inline">\(\varphi_k(t_j)=1\)</span> si <span class="math inline">\(j=k\)</span> y <span class="math inline">\(0\)</span> si <span class="math inline">\(j\neq k\)</span>. En el ejemplo, evaluando la fórmula de <span class="math inline">\(I\)</span> en <span class="math inline">\(e_0=(1,0,0)\)</span>, <span class="math inline">\(e_1=(0,1,0)\)</span> y <span class="math inline">\(e_2=(0,0,1)\)</span> se obtiene</p>
+<p><span class="math display">\[I(e_0)(x)=\begin{cases}1-x, &amp; x\in[0,1],\\ -(x-1)+(x-1)^2, &amp; x\in[1,2],\end{cases}\qquad
+I(e_1)(x)=\begin{cases}x, &amp; x\in[0,1],\\ 1+(x-1)-2(x-1)^2, &amp; x\in[1,2],\end{cases}\]</span></p>
+<p><span class="math display">\[I(e_2)(x)=\begin{cases}0, &amp; x\in[0,1],\\ (x-1)^2, &amp; x\in[1,2],\end{cases}\]</span></p>
+<p>y por lo tanto <span class="math inline">\(I(y)=y_0\,I(e_0)+y_1\,I(e_1)+y_2\,I(e_2)\)</span>.</p>
+<p>Medimos los datos con la norma <span class="math inline">\(\|d\|_\infty=\max_k|d_k|\)</span> y las funciones con <span class="math inline">\(\|p\|_\infty=\max_{t_0\le x\le t_n}|p(x)|\)</span>.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Definición: condicionamiento absoluto de la interpolación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Definición: condicionamiento absoluto de la interpolación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El número de condicionamiento absoluto de <span class="math inline">\(I\)</span> es</p>
+<p><span class="math display">\[\kappa(I)=\max_{d\neq0}\frac{\|I(y+d)-I(y)\|_\infty}{\|d\|_\infty},\]</span></p>
+<p>es decir, el máximo del cociente entre el error (absoluto) en el resultado y el error (absoluto) en el dato.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Teorema">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Teorema
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El número de condicionamiento absoluto de <span class="math inline">\(I\)</span> satisface</p>
+<p><span class="math display">\[\max_{k}\|\varphi_k\|_\infty\;\le\;\kappa(I)\;\le\;\sum_{k=0}^{n}\|\varphi_k\|_\infty.\tag{1}\]</span></p>
+</div>
+</div>
+<p><strong>Demostración.</strong> Por linealidad, <span class="math inline">\(I(y+d)-I(y)=I(d)\)</span>, y entonces</p>
+<p><span class="math display">\[\frac{\|I(y+d)-I(y)\|_\infty}{\|d\|_\infty}=\frac{\|I(d)\|_\infty}{\|d\|_\infty}=\left\|I\!\left(\frac{d}{\|d\|_\infty}\right)\right\|_\infty .\]</span></p>
+<p>El número de condicionamiento es el máximo de esta cantidad sobre todos los <span class="math inline">\(d\neq0\)</span> posibles, y no depende de <span class="math inline">\(y\)</span>. Sea <span class="math inline">\(k^*\)</span> un índice en el que <span class="math inline">\(\max_k\|\varphi_k\|_\infty\)</span> se alcanza, es decir, <span class="math inline">\(\|\varphi_{k^*}\|_\infty=\max_k\|\varphi_k\|_\infty\)</span>. Tomando <span class="math inline">\(d=e_{k^*}\)</span> se tiene <span class="math inline">\(\|d\|_\infty=1\)</span> e <span class="math inline">\(I(d)=\varphi_{k^*}\)</span>, de modo que el cociente vale <span class="math inline">\(\|\varphi_{k^*}\|_\infty\)</span>. Como <span class="math inline">\(\kappa(I)\)</span> es el máximo sobre todos los <span class="math inline">\(d\)</span>, resulta <span class="math inline">\(\kappa(I)\ge\|\varphi_{k^*}\|_\infty\)</span>, que es la desigualdad de la izquierda en (1). La otra desigualdad es consecuencia directa de la desigualdad triangular y se deja como ejercicio. <span class="math inline">\(\blacksquare\)</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre la desigualdad de la derecha en (1) y resuelva los ejercicios 5.1.4 y 5.1.5 de <em>Fundamentals of Numerical Computation</em>, disponibles en <a href="https://fncbook.com/julia/interpolation/#exercises" class="uri">https://fncbook.com/julia/interpolation/#exercises</a>.</p>
+</div>
+</div>
+</section>
+<section id="interpolación-lineal-a-trozos" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="interpolación-lineal-a-trozos"><span class="header-section-number">3</span> Interpolación lineal a trozos</h2>
+<p>Consideremos ahora los nodos ordenados, <span class="math inline">\(t_0&lt;t_1&lt;\dots&lt;t_n\)</span>, y la interpolación lineal a trozos (PL, por <em>piecewise linear</em>): en cada subintervalo <span class="math inline">\([t_k,t_{k+1}]\)</span> el interpolante es el segmento que une <span class="math inline">\((t_k,y_k)\)</span> con <span class="math inline">\((t_{k+1},y_{k+1})\)</span>,</p>
+<p><span class="math display">\[p(x)=y_k+\frac{y_{k+1}-y_k}{t_{k+1}-t_k}\,(x-t_k),\qquad x\in[t_k,t_{k+1}],\quad k=0,\dots,n-1.\]</span></p>
+<p>Las funciones cardinales de PL se llaman funciones sombrero, por su forma:</p>
+<p><span class="math display">\[H_k(x)=\begin{cases}
+\dfrac{x-t_{k-1}}{t_k-t_{k-1}}, &amp; x\in[t_{k-1},t_k],\\[3mm]
+\dfrac{t_{k+1}-x}{t_{k+1}-t_k}, &amp; x\in[t_k,t_{k+1}],\\[3mm]
+0, &amp; \text{en otro caso.}
+\end{cases}\]</span></p>
+<p>Para <span class="math inline">\(H_0\)</span> no hay rama izquierda y para <span class="math inline">\(H_n\)</span> no hay rama derecha, porque no existen <span class="math inline">\(t_{-1}\)</span> ni <span class="math inline">\(t_{n+1}\)</span>.</p>
+<svg viewbox="0 0 420 200" width="100%" style="max-width:480px;display:block;margin:0.75rem auto;" role="img" aria-label="Gráfica de la función sombrero Hₖ: vale 0 hasta tₖ₋₁, sube linealmente hasta 1 en tₖ, baja linealmente hasta 0 en tₖ₊₁ y vale 0 después" font-family="system-ui, sans-serif" font-size="13">
+  <title>Función sombrero Hₖ asociada al nodo tₖ</title>
+  <line x1="20" y1="150" x2="410" y2="150" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.2"></line>
+  <line x1="40" y1="158" x2="40" y2="26" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.2"></line>
+  <line x1="40" y1="40" x2="215" y2="40" stroke="currentColor" stroke-opacity="0.45" stroke-dasharray="4 4"></line>
+  <text x="32" y="44" text-anchor="end" fill="currentColor" fill-opacity="0.8">1</text>
+  <polyline points="40,150 120,150 215,40 320,150 400,150" fill="none" stroke="#2563a8" stroke-width="2.4"></polyline>
+  <line x1="215" y1="40" x2="215" y2="150" stroke="currentColor" stroke-opacity="0.35" stroke-dasharray="3 4"></line>
+  <line x1="120" y1="146" x2="120" y2="154" stroke="currentColor" stroke-opacity="0.7"></line>
+  <text x="120" y="172" text-anchor="middle" fill="currentColor" fill-opacity="0.85">tₖ₋₁</text>
+  <line x1="215" y1="146" x2="215" y2="154" stroke="currentColor" stroke-opacity="0.7"></line>
+  <text x="215" y="172" text-anchor="middle" fill="currentColor" fill-opacity="0.85">tₖ</text>
+  <line x1="320" y1="146" x2="320" y2="154" stroke="currentColor" stroke-opacity="0.7"></line>
+  <text x="320" y="172" text-anchor="middle" fill="currentColor" fill-opacity="0.85">tₖ₊₁</text>
+  <circle cx="215" cy="40" r="3.6" fill="#c1440e"></circle>
+  <text x="225" y="34" fill="#c1440e">Hₖ</text>
+</svg>
+<p>Estas funciones son continuas en <span class="math inline">\(\mathbb{R}\)</span> y lineales a trozos, y son cardinales para PL: <span class="math inline">\(H_k(t_j)=1\)</span> si <span class="math inline">\(j=k\)</span> y <span class="math inline">\(0\)</span> si <span class="math inline">\(j\neq k\)</span>. Entonces</p>
+<p><span class="math display">\[p(x)=\sum_{k=0}^{n}y_k\,H_k(x).\]</span></p>
+<p>El siguiente tablero dibuja los sombreros, los sombreros multiplicados por los datos y el interpolante que resulta de sumarlos. Se pueden arrastrar los puntos para cambiar los datos, cambiar el número de subintervalos y perturbar los nodos para que no sean equiespaciados, y leer en una tabla el valor de cada sombrero en un punto.</p>
+<iframe src="sombreros-simulacion.html" width="100%" height="960px" style="border:none;">
+</iframe>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre que el número de condicionamiento absoluto de la interpolación lineal a trozos es <span class="math inline">\(\kappa(\mathrm{PL})=1\)</span>.</p>
+</div>
+</div>
+<section id="por-qué-condicionamiento-absoluto" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="por-qué-condicionamiento-absoluto"><span class="header-section-number">3.1</span> Por qué condicionamiento absoluto</h3>
+<p>El adjetivo absoluto significa que el error en el dato y el error en el resultado se miden tal cual, sin dividir por el tamaño de <span class="math inline">\(y\)</span> ni por el de <span class="math inline">\(I(y)\)</span>. Entonces <span class="math inline">\(\kappa(I)\)</span> dice cuánto se amplifica, a lo sumo, un error absoluto: si cada <span class="math inline">\(y_k\)</span> cambia en no más de <span class="math inline">\(\delta\)</span>, el interpolante cambia, en la norma del máximo, en no más de <span class="math inline">\(\kappa(I)\,\delta\)</span>. Lo usamos por dos razones.</p>
+<p>La primera es que, por ser <span class="math inline">\(I\)</span> lineal, la diferencia <span class="math inline">\(I(y+d)-I(y)=I(d)\)</span> no depende de <span class="math inline">\(y\)</span>, así que <span class="math inline">\(\kappa(I)\)</span> es un único número que depende solo de los nodos y del método de interpolación, y vale como garantía para todos los datos a la vez. La segunda es que el condicionamiento relativo en un dato <span class="math inline">\(y\neq0\)</span> sí depende de <span class="math inline">\(y\)</span>,</p>
+<p><span class="math display">\[\kappa_{\text{rel}}(y)=\kappa(I)\,\frac{\|y\|_\infty}{\|I(y)\|_\infty},\]</span></p>
+<p>pero como el interpolante pasa por los nodos se tiene <span class="math inline">\(\|I(y)\|_\infty\ge\|y\|_\infty\)</span>, y por lo tanto <span class="math inline">\(\kappa_{\text{rel}}(y)\le\kappa(I)\)</span> para todo <span class="math inline">\(y\)</span>. Acotar el condicionamiento absoluto controla también el relativo.</p>
+</section>
+</section>
+<section id="convergencia-de-la-interpolación-lineal-a-trozos" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="convergencia-de-la-interpolación-lineal-a-trozos"><span class="header-section-number">4</span> Convergencia de la interpolación lineal a trozos</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Teorema">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Teorema
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sea <span class="math inline">\(f\)</span> con segunda derivada continua en <span class="math inline">\([a,b]\)</span>, sea <span class="math inline">\(h=\dfrac{b-a}{n}\)</span> y sea <span class="math inline">\(p_n\)</span> el interpolante PL de los datos <span class="math inline">\((t_i,f(t_i))\)</span>, con nodos equiespaciados <span class="math inline">\(t_i=a+ih\)</span>. Entonces</p>
+<p><span class="math display">\[\|f-p_n\|_\infty\le\|f''\|_\infty\,h^2.\]</span></p>
+</div>
+</div>
+<p>Como <span class="math inline">\(h=(b-a)/n\)</span>, esto dice que la convergencia es algebraica, <span class="math inline">\(\|f-p_n\|_\infty=O(h^2)=O(n^{-2})\)</span>, y si el error no es <span class="math inline">\(O(h^3)\)</span>, entonces <span class="math inline">\(2\)</span> es el orden de precisión.</p>
+<section id="el-orden-aquí-y-en-los-métodos-iterativos" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="el-orden-aquí-y-en-los-métodos-iterativos"><span class="header-section-number">4.1</span> El orden aquí y en los métodos iterativos</h3>
+<p>La palabra orden aparece en los dos contextos, pero mide cosas distintas. En los métodos iterativos (punto fijo, Newton, secante) hay una sola sucesión de errores <span class="math inline">\(\varepsilon_k=x_k-x^*\)</span>, uno por cada iteración, y el orden <span class="math inline">\(\alpha\)</span> relaciona cada error con el anterior:</p>
+<p><span class="math display">\[\lim_{k\to\infty}\frac{|\varepsilon_{k+1}|}{|\varepsilon_k|^\alpha}=L&gt;0.\]</span></p>
+<p>Con <span class="math inline">\(\alpha=1\)</span> la convergencia es lineal, con <span class="math inline">\(\alpha=2\)</span> es cuadrática. Lo que va cambiando es el número de pasos <span class="math inline">\(k\)</span>, y el error baja de forma geométrica o más rápido: la convergencia lineal es una recta en una gráfica con el error en escala logarítmica contra <span class="math inline">\(k\)</span>.</p>
+<p>En la interpolación no hay iteración ni error anterior. Para cada <span class="math inline">\(n\)</span> hay un interpolante distinto <span class="math inline">\(p_n\)</span>, y el error <span class="math inline">\(E(h)=\|f-p_n\|_\infty\)</span> depende del tamaño de la malla. El orden <span class="math inline">\(q\)</span> es el exponente de <span class="math inline">\(h\)</span>:</p>
+<p><span class="math display">\[E(h)\approx C\,h^{q}.\]</span></p>
+<p>Para estimarlo se comparan dos mallas, <span class="math inline">\(E(h_1)/E(h_2)\approx(h_1/h_2)^q\)</span>, y al duplicar <span class="math inline">\(n\)</span> queda <span class="math inline">\(q\approx\log_2\big(E(h)/E(h/2)\big)\)</span>. Equivale a la pendiente de la recta que se ve al graficar <span class="math inline">\(E\)</span> contra <span class="math inline">\(h\)</span> con ambos ejes en escala logarítmica. Para PL, <span class="math inline">\(q=2\)</span>: al dividir <span class="math inline">\(h\)</span> entre <span class="math inline">\(2\)</span>, el error se divide aproximadamente entre <span class="math inline">\(4\)</span>. Con <span class="math inline">\(f(x)=\operatorname{sen}x\)</span> en <span class="math inline">\([0,\pi]\)</span>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(n\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(h\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\lVert f-p_n\rVert_\infty\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(E(2h)/E(h)\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\log_2\)</span> del cociente</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0{,}78540\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(7{,}0378\times10^{-2}\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(8\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0{,}39270\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1{,}8846\times10^{-2}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(3{,}734\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1{,}901\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(16\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0{,}19635\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(4{,}7921\times10^{-3}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(3{,}933\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1{,}976\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(32\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0{,}09817\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1{,}2031\times10^{-3}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(3{,}983\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1{,}994\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(64\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0{,}04909\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(3{,}0109\times10^{-4}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(3{,}996\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1{,}998\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(128\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(0{,}02454\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(7{,}5292\times10^{-5}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(3{,}999\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2{,}000\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>El cociente de errores tiende a <span class="math inline">\(4\)</span> y el logaritmo en base <span class="math inline">\(2\)</span> del cociente tiende a <span class="math inline">\(2\)</span>, que es el orden de precisión.</p>
+<p>Conviene notar la diferencia de velocidad. Un orden <span class="math inline">\(2\)</span> de este tipo es mucho más lento que la convergencia cuadrática de Newton, que duplica las cifras correctas en cada paso. Aquí cada vez que duplicamos <span class="math inline">\(n\)</span>, y con ello el costo, el error se divide entre <span class="math inline">\(4\)</span>, es decir, ganamos solo unas <span class="math inline">\(0{,}6\)</span> cifras decimales. El error decae como una potencia de <span class="math inline">\(n\)</span> y no como una geométrica en <span class="math inline">\(k\)</span>, y de ahí el nombre de convergencia algebraica.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Resuelva los ejercicios 5.2.2 a 5.2.4 de <em>Fundamentals of Numerical Computation</em>, disponibles en <a href="https://fncbook.com/julia/pwlin/#exercises" class="uri">https://fncbook.com/julia/pwlin/#exercises</a>.</p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/arturosanjuan\.xyz");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="preferred_color_scheme">
+<input type="hidden" id="giscus-alt-theme" value="preferred_color_scheme">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      if (authorPrefersDark) {
+          [baseTheme, altTheme] = [altTheme, baseTheme];
+      }
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "asanjuanc/arturosanjuan-sitio";
+    script.dataset.repoId = "R_kgDOTzuHrw";
+    script.dataset.category = "Comentarios";
+    script.dataset.categoryId = "DIC_kwDOTzuHr84DD_eD";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "es";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
