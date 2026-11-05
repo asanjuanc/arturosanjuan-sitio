@@ -90,7 +90,7 @@ website:
         - cursos/numerico/newton/index.qmd
         - cursos/numerico/convergencia/index.qmd
         - cursos/numerico/taller-3/index.qmd
-        - cursos/numerico/interpolacion/index.html
+        - cursos/numerico/interpolacion/index.qmd
 
     - id: probabilidad
       title: "Probabilidad"
