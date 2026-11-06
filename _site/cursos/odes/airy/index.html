@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Arturo Sanjuán">
+
+<title>Básquetbol con Neutrones – Arturo Sanjuán</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../cursos/odes/osciladorcuantico/index.html" rel="prev">
+<link href="../../../favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-5a1953863e1f72ef3b996ef827f01ca7.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-06ef128ffaab2aaffa18b1038abc86f3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-979bd06565eab1ad32ed49e916b209dc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/bootstrap/bootstrap-06ef128ffaab2aaffa18b1038abc86f3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Arturo Sanjuán</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../research/index.html"> 
+<span class="menu-text">research</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../cursos/index.html"> 
+<span class="menu-text">cursos</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../trabajos/index.html"> 
+<span class="menu-text">trabajos</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../research/genealogy/index.html"> 
+<span class="menu-text">genealogy</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../links.html"> 
+<span class="menu-text">contacto</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../files/cv_sanjuan.pdf"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo oscuro"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../cursos/odes/airy/index.html">Básquetbol con Neutrones</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="sidebar-tools-main">
+    <a href="../../../cursos/odes/index.xml" title="RSS — Ecuaciones Diferenciales" class="quarto-navigation-tool px-1" aria-label="RSS — Ecuaciones Diferenciales"><i class="bi bi-rss"></i></a>
+</div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Ecuaciones Diferenciales</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/introduccion/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/familiasortogonales/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Familias Ortogonales</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/modelacion/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Modelación con Ecuaciones Diferenciales</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/polares/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Coordenadas Polares</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/movimiento/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Problemas de Movimiento</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/taller-1/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Taller 1</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/homoexactas/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Ecuaciones Homogéneas y Exactas</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/fintegrante/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Factores Integrantes</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/reduccionorden/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Reducción de Orden</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/taller-2/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Taller 2</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/parcial-1/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Parcial 1</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/segundoorden/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Ecuaciones Lineales de Segundo Orden</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/parametros/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Coeficientes Constantes y Variación de Parámetros</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/osciladores/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Oscilaciones Mecánicas y Circuitos</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/planetario/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Movimiento Planetario</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/taller-3/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Taller 3</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/osciladorcuantico/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">El Oscilador Armónico Cuántico</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../cursos/odes/airy/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Básquetbol con Neutrones</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#el-experimento" id="toc-el-experimento" class="nav-link active" data-scroll-target="#el-experimento"><span class="header-section-number">1</span> El experimento</a></li>
+  <li><a href="#el-caso-ideal" id="toc-el-caso-ideal" class="nav-link" data-scroll-target="#el-caso-ideal"><span class="header-section-number">2</span> El caso ideal</a>
+  <ul class="collapse">
+  <li><a href="#sin-unidades" id="toc-sin-unidades" class="nav-link" data-scroll-target="#sin-unidades"><span class="header-section-number">2.1</span> Sin unidades</a></li>
+  <li><a href="#solución-por-series" id="toc-solución-por-series" class="nav-link" data-scroll-target="#solución-por-series"><span class="header-section-number">2.2</span> Solución por series</a></li>
+  </ul></li>
+  <li><a href="#de-vuelta-al-neutrón" id="toc-de-vuelta-al-neutrón" class="nav-link" data-scroll-target="#de-vuelta-al-neutrón"><span class="header-section-number">3</span> De vuelta al neutrón</a>
+  <ul class="collapse">
+  <li><a href="#el-suelo-cuantiza-la-energía" id="toc-el-suelo-cuantiza-la-energía" class="nav-link" data-scroll-target="#el-suelo-cuantiza-la-energía"><span class="header-section-number">3.1</span> El suelo cuantiza la energía</a></li>
+  <li><a href="#un-electrón-frente-a-una-placa" id="toc-un-electrón-frente-a-una-placa" class="nav-link" data-scroll-target="#un-electrón-frente-a-una-placa"><span class="header-section-number">3.2</span> Un electrón frente a una placa</a></li>
+  </ul></li>
+  <li><a href="#simulador" id="toc-simulador" class="nav-link" data-scroll-target="#simulador"><span class="header-section-number">4</span> Simulador</a></li>
+  <li><a href="#ejercicios-de-repaso" id="toc-ejercicios-de-repaso" class="nav-link" data-scroll-target="#ejercicios-de-repaso"><span class="header-section-number">5</span> Ejercicios de repaso</a>
+  <ul class="collapse">
+  <li><a href="#repaso-de-series-de-potencias-simmons-26" id="toc-repaso-de-series-de-potencias-simmons-26" class="nav-link" data-scroll-target="#repaso-de-series-de-potencias-simmons-26"><span class="header-section-number">5.1</span> Repaso de series de potencias (Simmons, §26)</a></li>
+  <li><a href="#series-para-ecuaciones-de-primer-orden-simmons-27" id="toc-series-para-ecuaciones-de-primer-orden-simmons-27" class="nav-link" data-scroll-target="#series-para-ecuaciones-de-primer-orden-simmons-27"><span class="header-section-number">5.2</span> Series para ecuaciones de primer orden (Simmons, §27)</a></li>
+  <li><a href="#puntos-ordinarios-y-fórmulas-de-recurrencia-simmons-28" id="toc-puntos-ordinarios-y-fórmulas-de-recurrencia-simmons-28" class="nav-link" data-scroll-target="#puntos-ordinarios-y-fórmulas-de-recurrencia-simmons-28"><span class="header-section-number">5.3</span> Puntos ordinarios y fórmulas de recurrencia (Simmons, §28)</a></li>
+  <li><a href="#la-ecuación-de-airy" id="toc-la-ecuación-de-airy" class="nav-link" data-scroll-target="#la-ecuación-de-airy"><span class="header-section-number">5.4</span> La ecuación de Airy</a></li>
+  <li><a href="#potencial-lineal-y-cuantización" id="toc-potencial-lineal-y-cuantización" class="nav-link" data-scroll-target="#potencial-lineal-y-cuantización"><span class="header-section-number">5.5</span> Potencial lineal y cuantización</a></li>
+  <li><a href="#el-oscilador-armónico-cuántico" id="toc-el-oscilador-armónico-cuántico" class="nav-link" data-scroll-target="#el-oscilador-armónico-cuántico"><span class="header-section-number">5.6</span> El oscilador armónico cuántico</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Básquetbol con Neutrones</h1>
+<p class="subtitle lead">La ecuación de Airy y los estados cuánticos de un neutrón que rebota por la gravedad</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor</div>
+    <div class="quarto-title-meta-contents">
+             <p>Arturo Sanjuán </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">5 de noviembre de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>En el <a href="../../../cursos/odes/osciladorcuantico/index.html">oscilador armónico cuántico</a> la energía quedó cuantizada porque la función de onda tenía que ir a cero en <span class="math inline">\(\pm\infty\)</span>. Aquí aparece otro mecanismo: una pared. El sistema es un neutrón que cae sobre un espejo, rebota y vuelve a caer, como un balón de básquetbol que se dribla sin perder energía. La ecuación que sale es la de Airy (Simmons, §28, problema 5), y la resolvemos por series de potencias.</p>
+<section id="el-experimento" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="el-experimento"><span class="header-section-number">1</span> El experimento</h2>
+<p>En 2002, en el Instituto Laue-Langevin de Grenoble (Francia), el grupo de Valery Nesvizhevsky hizo pasar neutrones muy lentos, llamados <em>ultrafríos</em>, por un canal horizontal muy angosto (<a href="https://doi.org/10.1038/415297a">artículo en <em>Nature</em></a>). El piso del canal es un espejo de vidrio muy pulido y el techo es un absorbente: un neutrón que lo toca desaparece. Al final del canal hay un detector que solo cuenta cuántos neutrones salieron.</p>
+<p>Se usan neutrones porque no tienen carga eléctrica: los campos eléctricos y magnéticos que hay en cualquier laboratorio no los desvían, y la gravedad es la única fuerza que actúa sobre ellos. Y se usan ultrafríos porque su movimiento vertical tiene tan poca energía que el espejo los refleja casi perfectamente, sin que pierdan energía en el rebote. Es una pelota ideal.</p>
+<p>Dentro del canal el neutrón avanza horizontalmente con velocidad constante, porque no hay fuerza horizontal. Verticalmente hace lo mismo que una pelota: sube, la gravedad lo frena, cae, rebota en el espejo y vuelve a subir a la misma altura. Su trayectoria es una cadena de parábolas (<a href="#fig-experimento" class="quarto-xref">Figura&nbsp;1</a>).</p>
+<div id="fig-experimento" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-experimento-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="experimento.svg" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-experimento-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Esquema del experimento. El canal mide unos 10 cm y su altura <span class="math inline">\(h\)</span> es de unas decenas de micras, así que el dibujo exagera mucho la dirección vertical.
+</figcaption>
+</figure>
+</div>
+<p>La única perilla del experimento es la altura <span class="math inline">\(h\)</span> del techo. Si un neutrón salta más alto que <span class="math inline">\(h\)</span>, toca el absorbente y se pierde. Si salta menos, atraviesa el canal y se cuenta. Contar neutrones para distintos valores de <span class="math inline">\(h\)</span> es, entonces, averiguar qué alturas de salto tienen los neutrones.</p>
+<p>Si los neutrones fueran pelotas clásicas habría saltos de todas las alturas, incluso muy pequeñas, y al subir <span class="math inline">\(h\)</span> pasarían cada vez más neutrones, de manera suave y desde <span class="math inline">\(h=0\)</span>. Lo que se observó es que por debajo de unas 14 micras no pasa prácticamente ningún neutrón, y que por encima de eso el conteo sube. No existe un salto más bajo que ese: la energía del movimiento vertical tiene un valor mínimo distinto de cero. La cuenta que sigue predice ese valor.</p>
+<p>Años después, en la misma institución, los experimentos qBounce midieron directamente las diferencias entre los niveles de energía haciendo vibrar el espejo: el neutrón solo cambia de nivel cuando la frecuencia de vibración corresponde a la diferencia entre dos energías permitidas, y esas frecuencias son de unos cientos de hertz.</p>
+</section>
+<section id="el-caso-ideal" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="el-caso-ideal"><span class="header-section-number">2</span> El caso ideal</h2>
+<p>Ahora vamos a considerar el caso ideal. Partimos de la ecuación de Schrödinger con el potencial</p>
+<p><span class="math display">\[V(z)=Fz,\]</span></p>
+<p>donde <span class="math inline">\(z\ge0\)</span> es la altura sobre el espejo y <span class="math inline">\(F=mg\)</span> es la fuerza de la gravedad. La fuerza es constante, <span class="math inline">\(-dV/dz=-F\)</span>, y por eso el potencial es lineal. La masa del neutrón es <span class="math inline">\(m=1.6749\times10^{-27}\)</span> kg y <span class="math inline">\(g=9.8\)</span> m/s<span class="math inline">\(^2\)</span>.</p>
+<p>Recordemos que la ecuación de Schrödinger en una dimensión espacial viene dada por</p>
+<p><span class="math display">\[i\hbar\frac{\partial\psi}{\partial t}=-\frac{\hbar^2}{2m}\frac{\partial^2\psi}{\partial z^2}+V(z)\,\psi.\]</span></p>
+<p>Pero, como en el oscilador cuántico, buscamos soluciones de la forma</p>
+<p><span class="math display">\[\psi(z,t)=\varphi(z)\,e^{-i\omega t},\qquad \omega=\frac{E}{\hbar},\]</span></p>
+<p>y con <span class="math inline">\(F=mg\)</span> obtenemos</p>
+<p><span class="math display">\[\hbar\,\frac{E}{\hbar}\,\varphi(z)=-\frac{\hbar^2}{2m}\varphi''(z)+mgz\,\varphi(z),\]</span></p>
+<p>es decir,</p>
+<p><span id="eq-estac"><span class="math display">\[\frac{\hbar^2}{2m}\varphi''(z)+(E-mgz)\,\varphi(z)=0. \tag{1}\]</span></span></p>
+<p>Esta ecuación vale para <span class="math inline">\(z&gt;0\)</span>. El espejo lo usaremos al final.</p>
+<section id="sin-unidades" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="sin-unidades"><span class="header-section-number">2.1</span> Sin unidades</h3>
+<p>Nos deshacemos de las unidades con el cambio de variable</p>
+<p><span class="math display">\[x=\frac{z-E/mg}{\ell}\quad\Longleftrightarrow\quad z=\ell x+\frac{E}{F},\]</span></p>
+<p>donde <span class="math inline">\(\ell\)</span> es una longitud que escogemos enseguida. El punto <span class="math inline">\(x=0\)</span> es la altura <span class="math inline">\(z=E/F\)</span> donde <span class="math inline">\(E=V(z)\)</span>, es decir, la altura máxima a la que llegaría una pelota clásica con energía <span class="math inline">\(E\)</span>. Por la regla de la cadena,</p>
+<p><span class="math display">\[\frac{d\varphi}{dz}=\frac{d\varphi}{dx}\,\frac1\ell,\qquad \frac{d^2\varphi}{dz^2}=\frac{d^2\varphi}{dx^2}\,\frac1{\ell^2}.\]</span></p>
+<p>(Abusando de la notación, seguimos llamando <span class="math inline">\(\varphi\)</span> a la función de onda escrita en la variable <span class="math inline">\(x\)</span>.) Como <span class="math inline">\(E-Fz=-\ell Fx\)</span>, la ecuación <a href="#eq-estac" class="quarto-xref">Ecuación&nbsp;1</a> queda</p>
+<p><span class="math display">\[\frac{\hbar^2}{2m\ell^2}\,\varphi''(x)-\ell Fx\,\varphi(x)=0,\]</span></p>
+<p>y multiplicando por <span class="math inline">\(2m\ell^2/\hbar^2\)</span>,</p>
+<p><span class="math display">\[\varphi''(x)-\frac{2\ell^3mF}{\hbar^2}\,x\,\varphi(x)=0.\]</span></p>
+<p>Escogemos</p>
+<p><span id="eq-ell"><span class="math display">\[\ell^3=\frac{\hbar^2}{2mF}, \tag{2}\]</span></span></p>
+<p>y la ecuación se convierte en</p>
+<p><span id="eq-airy"><span class="math display">\[\varphi''(x)-x\,\varphi(x)=0. \tag{3}\]</span></span></p>
+<p>Esta es la <strong>ecuación de Airy</strong>. Simmons la escribe como <span class="math inline">\(y''+xy=0\)</span> (§28, problema 5); se pasa de una a la otra cambiando <span class="math inline">\(x\)</span> por <span class="math inline">\(-x\)</span>. Para el neutrón, <a href="#eq-ell" class="quarto-xref">Ecuación&nbsp;2</a> da <span class="math inline">\(\ell\approx5.87\)</span> micras. Esa es la escala natural de longitud del problema, y la escala natural de energía es <span class="math inline">\(F\ell\approx0.60\)</span> peV (un peV es <span class="math inline">\(10^{-12}\)</span> eV).</p>
+<p>Observe que la energía <span class="math inline">\(E\)</span> desapareció de la ecuación: solo quedó escondida en el cambio de variable.</p>
+</section>
+<section id="solución-por-series" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="solución-por-series"><span class="header-section-number">2.2</span> Solución por series</h3>
+<p>Por series,</p>
+<p><span class="math display">\[\varphi(x)=\sum_{k=0}^{\infty}a_kx^k,\qquad \varphi'(x)=\sum_{k=1}^{\infty}k\,a_kx^{k-1},\qquad \varphi''(x)=\sum_{k=2}^{\infty}k(k-1)\,a_kx^{k-2}.\]</span></p>
+<p>Pero</p>
+<p><span class="math display">\[x\,\varphi(x)=\sum_{k=0}^{\infty}a_kx^{k+1}.\]</span></p>
+<p>Para comparar potencias iguales cambiamos <span class="math inline">\(k\)</span> por <span class="math inline">\(k+3\)</span> en la serie de <span class="math inline">\(\varphi''\)</span>, y entonces</p>
+<p><span class="math display">\[\varphi''(x)=\sum_{k=-1}^{\infty}(k+3)(k+2)\,a_{k+3}\,x^{k+1}.\]</span></p>
+<p>Así,</p>
+<p><span class="math display">\[0=\varphi''(x)-x\,\varphi(x)=2\cdot1\,a_2+\sum_{k=0}^{\infty}\bigl[(k+3)(k+2)\,a_{k+3}-a_k\bigr]x^{k+1},\]</span></p>
+<p>de modo que <span class="math inline">\(a_2=0\)</span> y <span class="math inline">\((k+3)(k+2)\,a_{k+3}=a_k\)</span>, de donde</p>
+<p><span id="eq-rec"><span class="math display">\[a_{k+3}=\frac{a_k}{(k+2)(k+3)},\qquad a_2=0. \tag{4}\]</span></span></p>
+<p>La recurrencia salta de tres en tres. Los coeficientes <span class="math inline">\(a_0\)</span> y <span class="math inline">\(a_1\)</span> quedan libres (son las dos constantes de la solución general) y</p>
+<p><span class="math display">\[a_3=\frac{a_0}{2\cdot3},\qquad a_4=\frac{a_1}{3\cdot4},\qquad a_5=0,\]</span></p>
+<p><span class="math display">\[a_6=\frac{a_3}{5\cdot6}=\frac{a_0}{2\cdot3\cdot5\cdot6},\qquad a_7=\frac{a_4}{6\cdot7}=\frac{a_1}{3\cdot4\cdot6\cdot7},\qquad a_8=0,\]</span></p>
+<p><span class="math display">\[a_9=\frac{a_0}{2\cdot3\cdot5\cdot6\cdot8\cdot9},\qquad a_{10}=\frac{a_1}{3\cdot4\cdot6\cdot7\cdot9\cdot10}.\]</span></p>
+<p>En general,</p>
+<p><span class="math display">\[a_{3m}=\frac{a_0}{(2\cdot3)(5\cdot6)\cdots\bigl((3m-1)(3m)\bigr)},\qquad a_{3m+1}=\frac{a_1}{(3\cdot4)(6\cdot7)\cdots\bigl(3m(3m+1)\bigr)},\qquad a_{3m+2}=0.\]</span></p>
+<p>Entonces <span class="math inline">\(\varphi(x)=a_0f(x)+a_1g(x)\)</span>, con</p>
+<p><span class="math display">\[f(x)=1+\frac{x^3}{2\cdot3}+\frac{x^6}{2\cdot3\cdot5\cdot6}+\frac{x^9}{2\cdot3\cdot5\cdot6\cdot8\cdot9}+\cdots\]</span></p>
+<p><span class="math display">\[g(x)=x+\frac{x^4}{3\cdot4}+\frac{x^7}{3\cdot4\cdot6\cdot7}+\frac{x^{10}}{3\cdot4\cdot6\cdot7\cdot9\cdot10}+\cdots\]</span></p>
+<p>El radio de convergencia es infinito porque, por el criterio del cociente,</p>
+<p><span class="math display">\[\left|\frac{a_{k+3}\,x^{k+3}}{a_k\,x^k}\right|=\frac{|x|^3}{(k+2)(k+3)}\longrightarrow0\qquad(k\to\infty)\]</span></p>
+<p>para todo <span class="math inline">\(x\)</span>. Las dos series convergen en toda la recta.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Fuera del curso: las funciones de Airy">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Fuera del curso: las funciones de Airy
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Las combinaciones de <span class="math inline">\(f\)</span> y <span class="math inline">\(g\)</span> que se usan en la literatura son las funciones de Airy <span class="math inline">\(\mathrm{Ai}\)</span> y <span class="math inline">\(\mathrm{Bi}\)</span>:</p>
+<p><span class="math display">\[a_0f(x)+a_1g(x)=A\,\mathrm{Ai}(x)+B\,\mathrm{Bi}(x),\]</span></p>
+<p>donde</p>
+<p><span class="math display">\[\mathrm{Ai}(x)=\frac1\pi\int_0^\infty\cos\!\left(\frac{t^3}{3}+xt\right)dt,\qquad \mathrm{Bi}(x)=\frac1\pi\int_0^\infty\left[e^{-t^3/3+xt}+\sin\!\left(\frac{t^3}{3}+xt\right)\right]dt,\]</span></p>
+<p>y en términos de las series,</p>
+<p><span class="math display">\[\mathrm{Ai}=c_1f-c_2g,\qquad \mathrm{Bi}=\sqrt3\,\bigl(c_1f+c_2g\bigr),\]</span></p>
+<p>con</p>
+<p><span class="math display">\[c_1=\mathrm{Ai}(0)=\frac{1}{3^{2/3}\,\Gamma(2/3)}\approx0.35503,\qquad c_2=-\mathrm{Ai}'(0)=\frac{1}{3^{1/3}\,\Gamma(1/3)}\approx0.25882.\]</span></p>
+<p>Pero esto se sale del dominio del curso.</p>
+</div>
+</div>
+<p>Hasta aquí iría un curso de ecuaciones normal.</p>
+</section>
+</section>
+<section id="de-vuelta-al-neutrón" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="de-vuelta-al-neutrón"><span class="header-section-number">3</span> De vuelta al neutrón</h2>
+<p>Pero si queremos retomar el problema físico necesitamos que <span class="math inline">\(\varphi(x)\to0\)</span> cuando <span class="math inline">\(x\to\infty\)</span>, para que la probabilidad total <span class="math inline">\(\int|\varphi|^2\)</span> sea finita. Hacia abajo no hay problema, porque el espejo corta la función en <span class="math inline">\(z=0\)</span>.</p>
+<p>Las dos funciones <span class="math inline">\(f\)</span> y <span class="math inline">\(g\)</span> crecen muy rápido cuando <span class="math inline">\(x\to+\infty\)</span> (todos sus coeficientes son positivos), así que la única esperanza es una combinación en la que ese crecimiento se cancele. Eso se consigue notando que</p>
+<p><span class="math display">\[\frac{f(x)}{g(x)}\longrightarrow r=\frac{c_2}{c_1}=\frac{3^{1/3}\,\Gamma(2/3)}{\Gamma(1/3)}\approx0.72901.\]</span></p>
+<p>Con las series se comprueba numéricamente: <span class="math inline">\(f(2)/g(2)\approx0.7563\)</span>, <span class="math inline">\(f(4)/g(4)\approx0.729040\)</span> y <span class="math inline">\(f(8)/g(8)\approx0.7290111329\)</span>. Así que la solución es</p>
+<p><span id="eq-decae"><span class="math display">\[\varphi(x)=f(x)-r\,g(x), \tag{5}\]</span></span></p>
+<p>que es la que decae en infinito. (Que de verdad decae no se lee en la serie: es la función <span class="math inline">\(\mathrm{Ai}(x)/c_1\)</span> del recuadro anterior, que se va a cero como <span class="math inline">\(e^{-\frac23x^{3/2}}\)</span>.)</p>
+<p>Hasta aquí la energía es libre. Para cualquier valor de <span class="math inline">\(E\)</span>, la función</p>
+<p><span class="math display">\[\varphi(z)=f\!\left(\frac{z-E/F}{\ell}\right)-r\,g\!\left(\frac{z-E/F}{\ell}\right)\]</span></p>
+<p>resuelve <a href="#eq-estac" class="quarto-xref">Ecuación&nbsp;1</a> y decae hacia arriba. Cambiar <span class="math inline">\(E\)</span> solo traslada la curva a lo largo del eje <span class="math inline">\(z\)</span>, sin deformarla.</p>
+<section id="el-suelo-cuantiza-la-energía" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="el-suelo-cuantiza-la-energía"><span class="header-section-number">3.1</span> El suelo cuantiza la energía</h3>
+<p>Pero si usamos la condición del suelo, <span class="math inline">\(\varphi=0\)</span> en <span class="math inline">\(z=0\)</span>, que equivale a <span class="math inline">\(x=-\varepsilon\)</span> con</p>
+<p><span class="math display">\[\varepsilon=\frac{E}{F\ell}\]</span></p>
+<p>(la energía medida en unidades de <span class="math inline">\(F\ell\)</span>), queda</p>
+<p><span id="eq-suelo"><span class="math display">\[f(-\varepsilon)-r\,g(-\varepsilon)=0, \tag{6}\]</span></span></p>
+<p>y esto ocurre solo para algunos valores de <span class="math inline">\(\varepsilon\)</span>, espaciados:</p>
+<p><span class="math display">\[\varepsilon_1\approx2.3381,\qquad \varepsilon_2\approx4.0879,\qquad \varepsilon_3\approx5.5206,\qquad \varepsilon_4\approx6.7867,\qquad\dots\]</span></p>
+<p>Entonces <span class="math inline">\(E\)</span> solo puede tomar valores discretos. En términos de <span class="math inline">\(m\)</span>, <span class="math inline">\(\hbar\)</span> y <span class="math inline">\(F\)</span>,</p>
+<p><span id="eq-niveles"><span class="math display">\[E_n=\varepsilon_n\,F\ell=\varepsilon_n\left(\frac{\hbar^2F^2}{2m}\right)^{1/3},\qquad n=1,2,3,\dots \tag{7}\]</span></span></p>
+<p>y</p>
+<p><span class="math display">\[z_n=\frac{E_n}{F}=\varepsilon_n\,\ell\]</span></p>
+<p>es la altura máxima: la altura a la que se detendría una pelota clásica con energía <span class="math inline">\(E_n\)</span>. Para el neutrón, <span class="math inline">\(E_1\approx1.41\)</span> peV y <span class="math inline">\(z_1\approx13.7\)</span> micras, que es justamente el umbral que se vio en el experimento. Las siguientes alturas son <span class="math inline">\(z_2\approx24.0\)</span>, <span class="math inline">\(z_3\approx32.4\)</span> y <span class="math inline">\(z_4\approx39.8\)</span> micras.</p>
+<p>Entre el suelo y <span class="math inline">\(z_n\)</span> la función oscila y tiene <span class="math inline">\(n-1\)</span> ceros. Más arriba de <span class="math inline">\(z_n\)</span> decae muy rápido, pero no es cero: el neutrón se puede encontrar un poco por encima de la altura máxima clásica, con probabilidad pequeña (<a href="#fig-niveles" class="quarto-xref">Figura&nbsp;2</a>).</p>
+<div id="fig-niveles" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-niveles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="niveles.png" class="img-fluid figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-niveles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Los cuatro primeros estados del neutrón, cada uno dibujado sobre su nivel de energía. El punto rojo marca la altura máxima <span class="math inline">\(z_n\)</span>, donde el nivel corta al potencial <span class="math inline">\(V=mgz\)</span>.
+</figcaption>
+</figure>
+</div>
+<p>Finalmente podemos recuperar la función de onda completa,</p>
+<p><span class="math display">\[\psi_n(z,t)=N_n\left[f\!\left(\frac{z-z_n}{\ell}\right)-r\,g\!\left(\frac{z-z_n}{\ell}\right)\right]e^{-iE_nt/\hbar},\]</span></p>
+<p>donde la constante <span class="math inline">\(N_n\)</span> se escoge para que <span class="math inline">\(\int_0^\infty|\psi_n|^2\,dz=1\)</span>.</p>
+<p>Vale la pena comparar con el oscilador armónico. Allá la condición en infinito bastó para cuantizar, porque obligaba a la serie a terminar. Aquí la condición en infinito solo escoge la combinación <span class="math inline">\(f-rg\)</span>, y la que cuantiza es la condición en el suelo: dos condiciones de frontera para una sola constante libre, la energía.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>);</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">/* 1. Sin unidades: con z = l*x + E/F la ecuacion queda phi'' - x*phi = 0 */</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">depends</span>(<span class="cn">phi</span>, <span class="cn">x</span>);</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cn">eq</span>: <span class="cn">hbar</span>^<span class="dv">2</span>/(<span class="dv">2</span>*<span class="cn">m</span>)*<span class="fu">diff</span>(<span class="cn">phi</span>, <span class="cn">x</span>, <span class="dv">2</span>)/<span class="cn">l</span>^<span class="dv">2</span> + (<span class="cn">E</span> - <span class="cn">F</span>*(<span class="cn">l</span>*<span class="cn">x</span> + <span class="cn">E</span>/<span class="cn">F</span>))*<span class="cn">phi</span>;</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="cn">eq2</span>: <span class="fu">expand</span>(<span class="cn">eq</span>*<span class="dv">2</span>*<span class="cn">m</span>*<span class="cn">l</span>^<span class="dv">2</span>/<span class="cn">hbar</span>^<span class="dv">2</span>);</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ratsimp</span>(<span class="fu">subst</span>(<span class="cn">l</span> = (<span class="cn">hbar</span>^<span class="dv">2</span>/(<span class="dv">2</span>*<span class="cn">m</span>*<span class="cn">F</span>))^(<span class="dv">1</span>/<span class="dv">3</span>), <span class="cn">eq2</span>));   <span class="co">/* debe dar phi'' - x*phi */</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">remove</span>(<span class="cn">phi</span>, <span class="cn">dependency</span>);</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">/* 2. La recurrencia a[k+3] = a[k]/((k+2)(k+3)) y el residuo de la serie truncada */</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="cn">a</span>[<span class="dv">0</span>]: <span class="cn">a0</span>$ <span class="cn">a</span>[<span class="dv">1</span>]: <span class="cn">a1</span>$ <span class="cn">a</span>[<span class="dv">2</span>]: <span class="dv">0</span>$</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> <span class="cn">k</span>:<span class="dv">0</span> <span class="kw">thru</span> <span class="dv">37</span> <span class="kw">do</span> <span class="cn">a</span>[<span class="cn">k</span><span class="dv">+3</span>]: <span class="cn">a</span>[<span class="cn">k</span>]/((<span class="cn">k</span><span class="dv">+2</span>)*(<span class="cn">k</span><span class="dv">+3</span>))$</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">makelist</span>(<span class="cn">a</span>[<span class="cn">k</span>], <span class="cn">k</span>, <span class="dv">3</span>, <span class="dv">10</span>);</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="cn">S</span>: <span class="fu">sum</span>(<span class="cn">a</span>[<span class="cn">k</span>]*<span class="cn">x</span>^<span class="cn">k</span>, <span class="cn">k</span>, <span class="dv">0</span>, <span class="dv">40</span>)$</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">lopow</span>(<span class="fu">expand</span>(<span class="fu">diff</span>(<span class="cn">S</span>, <span class="cn">x</span>, <span class="dv">2</span>) - <span class="cn">x</span>*<span class="cn">S</span>), <span class="cn">x</span>);   <span class="co">/* solo sobreviven potencias altas */</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">/* 3. f, g y la razon r = c2/c1 */</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="cn">f</span>(<span class="cn">x</span>) := <span class="dv">1</span> + <span class="fu">sum</span>(<span class="cn">x</span>^(<span class="dv">3</span>*<span class="cn">j</span>)/<span class="cn">prod</span>((<span class="dv">3</span>*<span class="cn">i</span><span class="dv">-1</span>)*(<span class="dv">3</span>*<span class="cn">i</span>), <span class="cn">i</span>, <span class="dv">1</span>, <span class="cn">j</span>), <span class="cn">j</span>, <span class="dv">1</span>, <span class="dv">60</span>)$</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="cn">g</span>(<span class="cn">x</span>) := <span class="fu">sum</span>(<span class="cn">x</span>^(<span class="dv">3</span>*<span class="cn">j</span><span class="dv">+1</span>)/<span class="cn">prod</span>((<span class="dv">3</span>*<span class="cn">i</span>)*(<span class="dv">3</span>*<span class="cn">i</span><span class="dv">+1</span>), <span class="cn">i</span>, <span class="dv">1</span>, <span class="cn">j</span>), <span class="cn">j</span>, <span class="dv">0</span>, <span class="dv">60</span>)$</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="va">fpprec</span>: <span class="dv">40</span>$</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="cn">r</span>: <span class="dv">3</span>^(<span class="dv">1</span>/<span class="dv">3</span>)*<span class="fu">gamma</span>(<span class="dv">2</span>/<span class="dv">3</span>)/<span class="fu">gamma</span>(<span class="dv">1</span>/<span class="dv">3</span>)$</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">bfloat</span>(<span class="cn">r</span>);</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">makelist</span>(<span class="fu">bfloat</span>(<span class="cn">f</span>(<span class="fu">bfloat</span>(<span class="cn">xx</span>))/<span class="cn">g</span>(<span class="fu">bfloat</span>(<span class="cn">xx</span>))), <span class="cn">xx</span>, [<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>]);</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">/* 4. El suelo: f(-e) - r g(-e) = 0 */</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="cn">h</span>(<span class="cn">ee</span>) := <span class="fu">float</span>(<span class="cn">f</span>(-<span class="cn">ee</span>) - <span class="fu">float</span>(<span class="cn">r</span>)*<span class="cn">g</span>(-<span class="cn">ee</span>))$</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="cn">eps</span>: [<span class="fu">find_root</span>(<span class="cn">h</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="fu">find_root</span>(<span class="cn">h</span>, <span class="fl">3.5</span>, <span class="fl">4.5</span>), <span class="fu">find_root</span>(<span class="cn">h</span>, <span class="dv">5</span>, <span class="dv">6</span>), <span class="fu">find_root</span>(<span class="cn">h</span>, <span class="fl">6.5</span>, <span class="fl">7.2</span>)];</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co">/* 5. Numeros para el neutron (g = 9.8) */</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="cn">hb</span>: <span class="fl">1.054571817e-34</span>$ <span class="cn">mn</span>: <span class="fl">1.67492749804e-27</span>$ <span class="cn">gg</span>: <span class="fl">9.8</span>$ <span class="cn">eV</span>: <span class="fl">1.602176634e-19</span>$</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="cn">F</span>: <span class="cn">mn</span>*<span class="cn">gg</span>$</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="cn">l</span>: (<span class="cn">hb</span>^<span class="dv">2</span>/(<span class="dv">2</span>*<span class="cn">mn</span>*<span class="cn">F</span>))^(<span class="dv">1</span>/<span class="dv">3</span>);                   <span class="co">/* metros */</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="cn">En</span>: <span class="cn">eps</span>*<span class="cn">F</span>*<span class="cn">l</span>/<span class="cn">eV</span>*<span class="fl">1e12</span>;                        <span class="co">/* peV */</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="cn">zn</span>: <span class="cn">eps</span>*<span class="cn">l</span>*<span class="fl">1e6</span>;                              <span class="co">/* micras */</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</section>
+<section id="un-electrón-frente-a-una-placa" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="un-electrón-frente-a-una-placa"><span class="header-section-number">3.2</span> Un electrón frente a una placa</h3>
+<p>Algo similar se puede hacer con un electrón y una placa de condensador. Entre las placas el campo eléctrico <span class="math inline">\(\mathcal{E}\)</span> es uniforme, y el electrón siente la fuerza constante <span class="math inline">\(F=e\mathcal{E}\)</span>: basta cambiar <span class="math inline">\(mg\)</span> por <span class="math inline">\(e\mathcal{E}\)</span> en todo lo anterior. Si una barrera le impide al electrón atravesar la placa (en un transistor, la capa de óxido), el electrón queda atrapado en un pozo triangular con niveles</p>
+<p><span class="math display">\[E_n=\varepsilon_n\left(\frac{\hbar^2e^2\mathcal{E}^2}{2m}\right)^{1/3}.\]</span></p>
+<p>Con un campo de <span class="math inline">\(10^7\)</span> V/m, que es habitual en la interfaz de un semiconductor, salen <span class="math inline">\(\ell\approx1.6\)</span> nm y <span class="math inline">\(E_1\approx37\)</span> meV. Dentro de un semiconductor hay que usar la masa efectiva del electrón, que cambia los números pero no la ecuación. Este pozo es el origen del gas bidimensional de electrones que hay en los transistores.</p>
+</section>
+</section>
+<section id="simulador" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="simulador"><span class="header-section-number">4</span> Simulador</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Simulador: el neutrón que rebota">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Simulador: el neutrón que rebota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El tablero dibuja el potencial <span class="math inline">\(V=mgz\)</span>, el suelo en <span class="math inline">\(z=0\)</span>, los niveles <span class="math inline">\(\varepsilon_n\)</span> (las soluciones de <a href="#eq-suelo" class="quarto-xref">Ecuación&nbsp;6</a>, calculadas por bisección con las series <span class="math inline">\(f\)</span> y <span class="math inline">\(g\)</span>) y la función de onda sobre su nivel. En azul está la parte real de <span class="math inline">\(\psi\)</span>, que gira con <span class="math inline">\(e^{-iE_nt/\hbar}\)</span>, y en naranja <span class="math inline">\(|\psi|^2\)</span>. La zona sombreada es la región que la pelota clásica no alcanza. El tiempo se mide en unidades de <span class="math inline">\(\hbar/(mg\ell)\)</span>, que para el neutrón son unos <span class="math inline">\(1.09\)</span> ms, y con la casilla de unidades los ejes pasan a micras y peV.</p>
+<p>Con <strong>Superposición</strong> se mezclan dos niveles y la nube de probabilidad empieza a moverse, con frecuencia <span class="math inline">\((E_n-E_m)/\hbar\)</span>. Con <strong>Paquete que rebota</strong> se suelta un paquete en reposo a la altura <span class="math inline">\(z_0\)</span>, escrito como suma de los primeros 30 estados, y se compara con una pelota clásica soltada desde la misma altura.</p>
+<style>
+  .air-caja{border:3px solid #ddd;border-radius:8px;padding:14px;max-width:780px;margin:1em auto;font-family:sans-serif;background:#fff;color:#222;}
+  .air-caja canvas{display:block;width:100%;height:auto;background:#fff;border:1px solid #e3e3e3;border-radius:6px;margin-top:8px;}
+  .air-caja button{padding:5px 11px;border:1px solid #bbb;border-radius:6px;background:#f5f5f5;color:#222;cursor:pointer;font-size:0.9em;}
+  .air-caja button:hover{background:#e9e9e9;}
+  .air-caja button.air-act{background:#2563a8;border-color:#2563a8;color:#fff;}
+  .air-fila{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .air-ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px 18px;margin-top:12px;}
+  .air-ctrl label{font-size:0.92em;display:block;}
+  .air-ctrl input[type=range]{width:100%;}
+  .air-info{margin-top:10px;font-size:0.93em;line-height:1.5;}
+</style>
+<div class="air-caja" id="air">
+  <div class="air-fila">
+    <b>Estado:</b>
+    <button data-m="est" class="air-act">Estacionario ψ<sub>n</sub></button>
+    <button data-m="sup">Superposición de n y m</button>
+    <button data-m="paq">Paquete que rebota</button>
+    <button id="air-play">Pausa</button>
+    <button id="air-reset">t = 0</button>
+  </div>
+  <div class="air-ctrl">
+    <label id="air-ln">n = <b id="air-nv">1</b><input type="range" id="air-n" min="1" max="12" step="1" value="1"></label>
+    <label id="air-lm" style="display:none">m = <b id="air-mv">2</b><input type="range" id="air-m" min="1" max="12" step="1" value="2"></label>
+    <label id="air-lz" style="display:none">altura inicial z₀/ℓ = <b id="air-zv">10</b><input type="range" id="air-z" min="4" max="15" step="0.5" value="10"></label>
+    <label>Velocidad = <b id="air-sv">1</b>×<input type="range" id="air-s" min="0.25" max="40" step="0.25" value="1"></label>
+  </div>
+  <div class="air-fila" style="margin-top:8px;">
+    <label><input type="checkbox" id="air-re" checked=""> Re ψ (azul)</label>
+    <label><input type="checkbox" id="air-d" checked=""> |ψ|² (naranja)</label>
+    <label><input type="checkbox" id="air-niv" checked=""> todos los niveles</label>
+    <label><input type="checkbox" id="air-cl" checked=""> pelota clásica (solo paquete)</label>
+    <label><input type="checkbox" id="air-fis"> ejes en micras y peV (neutrón)</label>
+  </div>
+  <canvas id="air-c" width="760" height="520" role="img" aria-label="Potencial lineal con un suelo en z igual a cero, niveles de energía del neutrón y su función de onda"></canvas>
+  <div class="air-info" id="air-info"></div>
+</div>
+<script>
+(function(){
+/*NUCLEO*/
+// Unidades: x = (z - E/F)/l adimensional, z en unidades de l, E en unidades de F l = mgl, t en unidades de hbar/(mgl).
+var R_AIRY = 0.7290111329472270;           // r = c2/c1 = 3^(1/3) Gamma(2/3)/Gamma(1/3)
+var C1_AIRY = 0.3550280538878172;          // c1 = Ai(0)
+// f(x) - r g(x) con las series de la recurrencia a_{k+3} = a_k/((k+2)(k+3))
+function fMenosRg(x){
+  var x3 = x*x*x, tf = 1, tg = x, f = 1, g = x;
+  for (var m = 0; m < 200; m++){
+    tf *= x3/((3*m+2)*(3*m+3)); tg *= x3/((3*m+3)*(3*m+4));
+    f += tf; g += tg;
+    if (Math.abs(tf) + Math.abs(tg) < 1e-17*(Math.abs(f) + Math.abs(g)) && m > 3) break;
+  }
+  return f - R_AIRY*g;
+}
+// Para |x| grande la serie pierde precision por cancelacion; ahi se usan los desarrollos asintoticos de Ai/c1
+function phiAiry(x){
+  if (x >= -7 && x <= 5) return fMenosRg(x);
+  var ax = Math.abs(x), zeta = 2/3*Math.pow(ax, 1.5);
+  var u = [1, 0.0694444444444444, 0.0371334876543210, 0.0379930591278464, 0.0576491904126697];
+  var v = [1, -0.0972222222222222, -0.0438850308641975, -0.0424628307922328, -0.0626028008983441];
+  if (x > 0){
+    var s = 0, p = 1;
+    for (var k = 0; k < 5; k++){ s += u[k]*p; p *= -1/zeta; }
+    return Math.exp(-zeta)/(2*Math.sqrt(Math.PI)*Math.pow(x, 0.25))*s/C1_AIRY;
+  }
+  var P = 0, Q = 0, q = 1/zeta;
+  P = 1 - u[2]*q*q + u[4]*q*q*q*q;
+  Q = u[1]*q - u[3]*q*q*q;
+  var th = zeta + Math.PI/4;
+  return (Math.sin(th)*P - Math.cos(th)*Q)/(Math.sqrt(Math.PI)*Math.pow(ax, 0.25))/C1_AIRY;
+}
+// Los niveles: epsilon_n tal que f(-epsilon) - r g(-epsilon) = 0 (condicion del suelo), por biseccion
+function nivel(n){
+  var e0 = Math.pow(3*Math.PI*(4*n - 1)/8, 2/3), a = e0 - 0.25, b = e0 + 0.25;
+  var fa = phiAiry(-a);
+  for (var i = 0; i < 80; i++){
+    var c = 0.5*(a + b), fc = phiAiry(-c);
+    if (fa*fc <= 0) b = c; else { a = c; fa = fc; }
+  }
+  return 0.5*(a + b);
+}
+// phi_n(z) normalizada en z >= 0 (z en unidades de l)
+function crearEstados(nmax, zmax, M){
+  var dz = zmax/M, eps = [], fun = [];
+  for (var n = 1; n <= nmax; n++){
+    var e = nivel(n), v = new Float64Array(M + 1), s = 0;
+    for (var i = 0; i <= M; i++){ v[i] = phiAiry(i*dz - e); }
+    for (i = 0; i <= M; i++) s += (i === 0 || i === M ? 1 : (i % 2 ? 4 : 2))*v[i]*v[i];
+    s = Math.sqrt(s*dz/3);
+    for (i = 0; i <= M; i++) v[i] /= s;
+    eps.push(e); fun.push(v);
+  }
+  return {eps:eps, fun:fun, dz:dz, M:M, zmax:zmax};
+}
+// coeficientes de un paquete gaussiano centrado en z0, ancho s, en reposo
+function coefPaquete(est, z0, s){
+  var M = est.M, dz = est.dz, g = new Float64Array(M + 1), i, n, nrm = 0;
+  for (i = 0; i <= M; i++){ var z = i*dz; g[i] = Math.exp(-0.5*Math.pow((z - z0)/s, 2))*(1 - Math.exp(-z*z/(0.02))); }
+  for (i = 0; i <= M; i++) nrm += (i === 0 || i === M ? 1 : (i % 2 ? 4 : 2))*g[i]*g[i];
+  nrm = Math.sqrt(nrm*dz/3);
+  var c = [], peso = 0;
+  for (n = 0; n < est.fun.length; n++){
+    var v = est.fun[n], p = 0;
+    for (i = 0; i <= M; i++) p += (i === 0 || i === M ? 1 : (i % 2 ? 4 : 2))*v[i]*g[i];
+    c.push(p*dz/3/nrm); peso += c[n]*c[n];
+  }
+  return {c:c, peso:peso};
+}
+function estadoTiempo(est, c, i, t){
+  var re = 0, im = 0;
+  for (var n = 0; n < c.length; n++){
+    if (c[n] === 0) continue;
+    var ph = -est.eps[n]*t, a = c[n]*est.fun[n][i];
+    re += a*Math.cos(ph); im += a*Math.sin(ph);
+  }
+  return {re:re, im:im};
+}
+/*FIN NUCLEO*/
+
+// Constantes del neutron con g = 9.8 m/s^2
+var ELL_UM = 5.86995, FL_PEV = 0.601376, TAU_MS = 1.09451;
+
+function $(id){ return document.getElementById(id); }
+var cv = $('air-c'); if (!cv) return;
+var ctx = cv.getContext('2d');
+var EST = crearEstados(30, 40, 1600);
+var S = {modo:'est', n:1, m:2, z0:10, vel:1, play:true, re:true, d:true, niv:true, cl:true, fis:false};
+var t = 0, last = null, infoTs = -1, paq = null;
+var ZMAX = 22, EMAX = 21, IMAX = Math.round(ZMAX/EST.dz);
+function escala(){
+  var tope;
+  if (S.modo === 'est') tope = EST.eps[S.n - 1] + 3.2;
+  else if (S.modo === 'sup') tope = EST.eps[Math.max(S.n, S.m) - 1] + 3.2;
+  else tope = S.z0 + 5;
+  EMAX = Math.max(7, tope); ZMAX = EMAX + 1.5; IMAX = Math.min(EST.M, Math.round(ZMAX/EST.dz));
+}
+function fmt(x, d){ return x.toFixed(d).replace('.', ','); }
+
+function coefs(){
+  var c = [], k;
+  for (k = 0; k < EST.eps.length; k++) c.push(0);
+  if (S.modo === 'est') c[S.n - 1] = 1;
+  else if (S.modo === 'sup'){ if (S.n === S.m) c[S.n - 1] = 1; else { c[S.n - 1] = Math.SQRT1_2; c[S.m - 1] = Math.SQRT1_2; } }
+  else { if (!paq || paq.z0 !== S.z0){ var P = coefPaquete(EST, S.z0, 1.0); paq = {z0:S.z0, c:P.c, peso:P.peso}; } c = paq.c; }
+  return c;
+}
+function energiaMedia(c){ var s = 0, w = 0; for (var k = 0; k < c.length; k++){ s += c[k]*c[k]*EST.eps[k]; w += c[k]*c[k]; } return s/w; }
+function autocorr(c){
+  var re = 0, im = 0;
+  for (var k = 0; k < c.length; k++){ var w = c[k]*c[k]; re += w*Math.cos(EST.eps[k]*t); im += w*Math.sin(EST.eps[k]*t); }
+  return re*re + im*im;
+}
+function zClasica(){
+  var a = Math.sqrt(S.z0), T = 2*a, s = ((t + a) % T + T) % T - a;
+  return S.z0 - s*s;
+}
+
+function info(){
+  var c = coefs(), txt = '', e;
+  var tms = ' &nbsp;(para el neutrón, t = ' + fmt(t*TAU_MS, 1) + ' ms)';
+  if (S.modo === 'est'){
+    e = EST.eps[S.n - 1];
+    txt = '<b>n = ' + S.n + '</b>: ε<sub>' + S.n + '</sub> = ' + fmt(e, 4) + ' es la solución número ' + S.n + ' de f(−ε) − r g(−ε) = 0. ' +
+          'Para el neutrón: E<sub>' + S.n + '</sub> = ε<sub>' + S.n + '</sub>·mgℓ = ' + fmt(e*FL_PEV, 3) + ' peV y altura máxima z<sub>' + S.n + '</sub> = ε<sub>' + S.n + '</sub>·ℓ = ' + fmt(e*ELL_UM, 2) + ' micras. ' +
+          'La función tiene ' + (S.n - 1) + (S.n === 2 ? ' cero' : ' ceros') + ' entre el suelo y z<sub>' + S.n + '</sub>, y más arriba decae (zona sombreada, prohibida para la pelota clásica). ' +
+          'Re ψ gira con e<sup>−iE<sub>n</sub>t/ħ</sup>, pero |ψ|² no cambia: un estado estacionario no se mueve.';
+  } else if (S.modo === 'sup'){
+    if (S.n === S.m) txt = 'Con n = m es un estado estacionario: |ψ|² no se mueve.';
+    else {
+      var de = Math.abs(EST.eps[S.n - 1] - EST.eps[S.m - 1]), per = 2*Math.PI/de;
+      txt = 'Superposición (ψ<sub>' + S.n + '</sub> + ψ<sub>' + S.m + '</sub>)/√2. |ψ|² oscila con frecuencia (E<sub>' + Math.max(S.n, S.m) + '</sub> − E<sub>' + Math.min(S.n, S.m) + '</sub>)/ħ, ' +
+            'es decir, con periodo ' + fmt(per, 2) + ' en unidades de ħ/(mgℓ); para el neutrón son ' + fmt(per*TAU_MS, 2) + ' ms (' + fmt(1000/(per*TAU_MS), 0) + ' Hz). ' +
+            'El movimiento aparece solo al mezclar niveles distintos.';
+    }
+  } else {
+    var Tc = 2*Math.sqrt(S.z0);
+    txt = 'Paquete gaussiano soltado en reposo a la altura z₀ = ' + fmt(S.z0, 1) + ' ℓ' + (S.fis ? ' = ' + fmt(S.z0*ELL_UM, 1) + ' micras' : '') + ', escrito como suma de los primeros 30 estados (recogen el ' + fmt(100*paq.peso, 2) + ' % del paquete). ' +
+          'Energía media ' + fmt(energiaMedia(c), 2) + ' mgℓ. La pelota clásica (punto gris) rebota con periodo 2√(z₀/ℓ) = ' + fmt(Tc, 2) + ' en unidades de ħ/(mgℓ), unos ' + fmt(Tc*TAU_MS, 1) + ' ms para el neutrón. ' +
+          'El paquete la sigue algunos rebotes y luego se deshace, porque los niveles no están igualmente espaciados; con la velocidad alta se ve que mucho después se vuelve a armar. ' +
+          'Parecido con el paquete inicial |⟨ψ(0)|ψ(t)⟩|² = ' + fmt(autocorr(c), 3) + '.';
+  }
+  $('air-info').innerHTML = txt + '<br><span style="color:#555">t = ' + fmt(t, 2) + ' ħ/(mgℓ)' + tms + '</span>';
+}
+
+function dibujar(){
+  escala();
+  var W = 760, H = 520, L = 56, R = 18, T0 = 14, B0 = 40, c = coefs(), i, x, y, k;
+  function X(z){ return L + z/ZMAX*(W - L - R); }
+  function Y(e){ return H - B0 - e/EMAX*(H - B0 - T0); }
+  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, H);
+  // suelo (espejo)
+  ctx.fillStyle = '#cfe3f3'; ctx.fillRect(L - 14, T0, 14, H - B0 - T0);
+  ctx.strokeStyle = '#1e2327'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(L, T0); ctx.lineTo(L, H - B0); ctx.stroke();
+  // ejes y marcas
+  ctx.strokeStyle = '#999'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(L, H - B0); ctx.lineTo(W - R, H - B0); ctx.stroke();
+  ctx.fillStyle = '#555'; ctx.font = '12px sans-serif'; ctx.textAlign = 'center';
+  if (S.fis){
+    var pz = ZMAX*ELL_UM > 90 ? 20 : 10;
+    for (x = 0; x <= ZMAX*ELL_UM; x += pz) ctx.fillText(x, X(x/ELL_UM), H - B0 + 15);
+    ctx.fillText('altura z (micras)', (L + W - R)/2, H - 8);
+  } else {
+    var pz2 = ZMAX > 16 ? 2 : 1;
+    for (x = 0; x <= ZMAX; x += pz2) ctx.fillText(x, X(x), H - B0 + 15);
+    ctx.fillText('altura z/ℓ', (L + W - R)/2, H - 8);
+  }
+  ctx.save(); ctx.translate(14, (T0 + H - B0)/2); ctx.rotate(-Math.PI/2); ctx.fillText(S.fis ? 'energía (peV)' : 'energía E/(mgℓ)', 0, 0); ctx.restore();
+  ctx.textAlign = 'right';
+  if (S.fis){ var pe = EMAX*FL_PEV > 8 ? 2 : 1; for (y = 0; y <= EMAX*FL_PEV + 1e-9; y += pe) ctx.fillText(y, L - 18, Y(y/FL_PEV) + 4); }
+  else { var pe2 = EMAX > 14 ? 2 : 1; for (y = 0; y <= EMAX; y += pe2) ctx.fillText(y, L - 18, Y(y) + 4); }
+  // zona prohibida (estacionario)
+  if (S.modo === 'est'){
+    var zn = EST.eps[S.n - 1];
+    ctx.fillStyle = 'rgba(193,68,14,0.10)'; ctx.fillRect(X(zn), Y(EMAX), X(ZMAX) - X(zn), Y(0) - Y(EMAX));
+    ctx.strokeStyle = 'rgba(193,68,14,0.6)'; ctx.setLineDash([5, 4]); ctx.beginPath(); ctx.moveTo(X(zn), Y(EMAX)); ctx.lineTo(X(zn), Y(0)); ctx.stroke(); ctx.setLineDash([]);
+  }
+  // niveles
+  if (S.niv){
+    ctx.strokeStyle = '#d4d9de'; ctx.lineWidth = 1;
+    for (k = 0; k < EST.eps.length && EST.eps[k] < EMAX; k++){ ctx.beginPath(); ctx.moveTo(L, Y(EST.eps[k])); ctx.lineTo(W - R, Y(EST.eps[k])); ctx.stroke(); }
+  }
+  // potencial V = z (en unidades de mgl y l)
+  ctx.strokeStyle = '#1e2327'; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(X(0), Y(0)); ctx.lineTo(X(Math.min(ZMAX, EMAX)), Y(Math.min(ZMAX, EMAX))); ctx.stroke();
+  var zv = 0.85*Math.min(ZMAX, EMAX);
+  ctx.fillStyle = '#1e2327'; ctx.textAlign = 'left'; ctx.fillText('V = mgz', X(zv) + 8, Y(zv) + 14);
+  // energias de referencia
+  var bases = [];
+  if (S.modo === 'est') bases = [EST.eps[S.n - 1]];
+  else if (S.modo === 'sup') bases = S.n === S.m ? [EST.eps[S.n - 1]] : [EST.eps[S.n - 1], EST.eps[S.m - 1]];
+  else bases = [energiaMedia(c)];
+  ctx.strokeStyle = '#2563a8'; ctx.lineWidth = 1.5; ctx.setLineDash(S.modo === 'paq' ? [6, 4] : []);
+  for (k = 0; k < bases.length; k++){ ctx.beginPath(); ctx.moveTo(L, Y(bases[k])); ctx.lineTo(W - R, Y(bases[k])); ctx.stroke(); }
+  ctx.setLineDash([]);
+  var base = bases.length === 2 ? (bases[0] + bases[1])/2 : bases[0];
+  var escPsi = EMAX/8, escD = EMAX/5.5, re = [], dens = [];
+  for (i = 0; i <= IMAX; i++){ var e = estadoTiempo(EST, c, i, t); re.push(e.re); dens.push(e.re*e.re + e.im*e.im); }
+  if (S.d){
+    ctx.beginPath(); ctx.moveTo(X(0), Y(base));
+    for (i = 0; i <= IMAX; i++) ctx.lineTo(X(i*EST.dz), Y(base + escD*dens[i]));
+    ctx.lineTo(X(IMAX*EST.dz), Y(base)); ctx.closePath();
+    ctx.fillStyle = 'rgba(232,121,30,0.35)'; ctx.fill();
+    ctx.strokeStyle = '#c1440e'; ctx.lineWidth = 1.5; ctx.beginPath();
+    for (i = 0; i <= IMAX; i++){ x = X(i*EST.dz); y = Y(base + escD*dens[i]); if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); }
+    ctx.stroke();
+  }
+  if (S.re){
+    ctx.strokeStyle = '#2563a8'; ctx.lineWidth = 2.2; ctx.beginPath();
+    for (i = 0; i <= IMAX; i++){ x = X(i*EST.dz); y = Y(base + escPsi*re[i]); if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y); }
+    ctx.stroke();
+  }
+  if (S.modo === 'paq' && S.cl){
+    var zc = zClasica();
+    ctx.fillStyle = '#5a6570'; ctx.beginPath(); ctx.arc(X(zc), Y(base), 7, 0, 2*Math.PI); ctx.fill();
+  }
+  ctx.fillStyle = '#555'; ctx.textAlign = 'left'; ctx.font = '12px sans-serif';
+  ctx.fillText('t = ' + fmt(t, 2) + ' ħ/(mgℓ)', L + 10, T0 + 14);
+}
+
+function loop(ts){
+  if (last === null) last = ts;
+  var dt = Math.min((ts - last)/1000, 0.05); last = ts;
+  if (S.play) t += dt*S.vel;
+  dibujar();
+  if (ts - infoTs > 400){ info(); infoTs = ts; }
+  requestAnimationFrame(loop);
+}
+function mostrar(){
+  $('air-lm').style.display = S.modo === 'sup' ? 'block' : 'none';
+  $('air-lz').style.display = S.modo === 'paq' ? 'block' : 'none';
+  $('air-ln').style.display = S.modo === 'paq' ? 'none' : 'block';
+  var bs = document.querySelectorAll('#air button[data-m]');
+  for (var i = 0; i < bs.length; i++) bs[i].className = bs[i].getAttribute('data-m') === S.modo ? 'air-act' : '';
+  info(); dibujar();
+}
+function ligar(id, clave, valId, dec){
+  $(id).addEventListener('input', function(){
+    var v = parseFloat(this.value); S[clave] = dec === 0 ? Math.round(v) : v;
+    $(valId).textContent = fmt(S[clave], dec);
+    if (clave === 'z0') t = 0;
+    info();
+  });
+}
+ligar('air-n', 'n', 'air-nv', 0);
+ligar('air-m', 'm', 'air-mv', 0);
+ligar('air-z', 'z0', 'air-zv', 1);
+ligar('air-s', 'vel', 'air-sv', 2);
+[['air-re', 're'], ['air-d', 'd'], ['air-niv', 'niv'], ['air-cl', 'cl'], ['air-fis', 'fis']].forEach(function(p){
+  $(p[0]).addEventListener('change', function(){ S[p[1]] = this.checked; info(); });
+});
+var bs = document.querySelectorAll('#air button[data-m]');
+for (var q = 0; q < bs.length; q++) bs[q].addEventListener('click', function(){ S.modo = this.getAttribute('data-m'); t = 0; mostrar(); });
+$('air-play').addEventListener('click', function(){ S.play = !S.play; this.textContent = S.play ? 'Pausa' : 'Seguir'; });
+$('air-reset').addEventListener('click', function(){ t = 0; info(); dibujar(); });
+mostrar(); requestAnimationFrame(loop);
+})();
+</script>
+</div>
+</div>
+</section>
+<section id="ejercicios-de-repaso" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="ejercicios-de-repaso"><span class="header-section-number">5</span> Ejercicios de repaso</h2>
+<p>Ejercicios del capítulo de series de potencias hasta aquí (Simmons, §26 a §28) y de las dos secciones de mecánica cuántica.</p>
+<section id="repaso-de-series-de-potencias-simmons-26" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="repaso-de-series-de-potencias-simmons-26"><span class="header-section-number">5.1</span> Repaso de series de potencias (Simmons, §26)</h3>
+<ol type="1">
+<li>Problema 1: radios de convergencia <span class="math inline">\(R=0\)</span>, <span class="math inline">\(R=\infty\)</span> y <span class="math inline">\(R=1\)</span> con el criterio del cociente.</li>
+<li>Problema 2: la serie binomial converge para <span class="math inline">\(|x|&lt;1\)</span> y diverge para <span class="math inline">\(|x|&gt;1\)</span>.</li>
+<li>Problema 3: <span class="math inline">\(R=\infty\)</span> para las series de <span class="math inline">\(\sin x\)</span> y <span class="math inline">\(\cos x\)</span>.</li>
+<li>Problema 4: validez de las series de <span class="math inline">\(e^x\)</span>, <span class="math inline">\(\sin x\)</span> y <span class="math inline">\(\cos x\)</span> con la fórmula de Taylor.</li>
+<li>Problema 5: series de <span class="math inline">\(\log(1+x)\)</span> y <span class="math inline">\(\arctan x\)</span> a partir de la serie geométrica.</li>
+<li>Problema 6: la serie de <span class="math inline">\(1/(1-x)^2\)</span> de dos maneras.</li>
+<li>Problema 7: las series de <span class="math inline">\(\cos x\)</span> y de <span class="math inline">\(J_0(x)\)</span> como soluciones de sus ecuaciones.</li>
+</ol>
+</section>
+<section id="series-para-ecuaciones-de-primer-orden-simmons-27" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="series-para-ecuaciones-de-primer-orden-simmons-27"><span class="header-section-number">5.2</span> Series para ecuaciones de primer orden (Simmons, §27)</h3>
+<ol start="8" type="1">
+<li>Problema 1: <span class="math inline">\(y'=2xy\)</span> y <span class="math inline">\(y'+y=1\)</span>.</li>
+<li>Problema 2: <span class="math inline">\(xy'=y\)</span> y <span class="math inline">\(x^2y'=y\)</span>, y la discrepancia entre los dos métodos.</li>
+<li>Problema 3: la serie de <span class="math inline">\(\arcsin x\)</span> y la fórmula para <span class="math inline">\(\pi/6\)</span>.</li>
+<li>Problema 4: la serie de <span class="math inline">\(\tan x\)</span> a partir de <span class="math inline">\(y'=1+y^2\)</span>.</li>
+<li>Problema 5: <span class="math inline">\(y'=x-y\)</span>, <span class="math inline">\(y(0)=0\)</span>.</li>
+</ol>
+</section>
+<section id="puntos-ordinarios-y-fórmulas-de-recurrencia-simmons-28" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="puntos-ordinarios-y-fórmulas-de-recurrencia-simmons-28"><span class="header-section-number">5.3</span> Puntos ordinarios y fórmulas de recurrencia (Simmons, §28)</h3>
+<ol start="13" type="1">
+<li>Problema 1: <span class="math inline">\((1+x^2)y''+2xy'-2y=0\)</span>.</li>
+<li>Problema 2: <span class="math inline">\(y''+xy'+y=0\)</span> y su relación con <span class="math inline">\(e^{-x^2/2}\)</span>.</li>
+<li>Problema 3: <span class="math inline">\(y''+y'-xy=0\)</span>, una recurrencia de tres términos.</li>
+<li>Problema 4: <span class="math inline">\(y''+\bigl(p+\tfrac12-\tfrac14x^2\bigr)y=0\)</span> y el cambio <span class="math inline">\(y=w\,e^{-x^2/4}\)</span>.</li>
+<li>Problema 6: la ecuación de Chebyshev y sus polinomios.</li>
+<li>Problema 7: la ecuación de Hermite y sus polinomios.</li>
+<li>La ecuación de Legendre del texto: fórmula de recurrencia y polinomios de Legendre.</li>
+</ol>
+</section>
+<section id="la-ecuación-de-airy" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="la-ecuación-de-airy"><span class="header-section-number">5.4</span> La ecuación de Airy</h3>
+<ol start="20" type="1">
+<li>Simmons, §28, problema 5, partes (b) y (c).</li>
+<li>Simmons, §28, problema 5, parte (a) (usa los teoremas de Sturm de la §24).</li>
+<li>Escriba <span class="math inline">\(f\)</span> y <span class="math inline">\(g\)</span> hasta la potencia <span class="math inline">\(x^{13}\)</span> y compruebe que <span class="math inline">\(\varphi''-x\varphi\)</span> se anula hasta ese orden.</li>
+<li>Calcule el wronskiano de <span class="math inline">\(f\)</span> y <span class="math inline">\(g\)</span> en <span class="math inline">\(x=0\)</span> y explique por qué no depende de <span class="math inline">\(x\)</span>.</li>
+<li>Muestre que si <span class="math inline">\(y(x)\)</span> resuelve <span class="math inline">\(y''+xy=0\)</span>, entonces <span class="math inline">\(u(x)=y(-x)\)</span> resuelve <span class="math inline">\(u''-xu=0\)</span>.</li>
+<li>Con seis términos de cada serie, ubique por bisección el primer cero de <span class="math inline">\(f(-\varepsilon)-r\,g(-\varepsilon)\)</span> con tres cifras.</li>
+</ol>
+</section>
+<section id="potencial-lineal-y-cuantización" class="level3" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="potencial-lineal-y-cuantización"><span class="header-section-number">5.5</span> Potencial lineal y cuantización</h3>
+<ol start="26" type="1">
+<li>Repita el cambio de variable para <span class="math inline">\(V(z)=Fz\)</span> y compruebe que <span class="math inline">\(\ell\)</span> tiene unidades de longitud y <span class="math inline">\(F\ell\)</span> de energía.</li>
+<li>Explique por qué cambiar <span class="math inline">\(E\)</span> solo traslada la solución <span class="math inline">\(\varphi(z)\)</span>, sin deformarla.</li>
+<li>Calcule <span class="math inline">\(\ell\)</span>, <span class="math inline">\(E_1\)</span> y <span class="math inline">\(z_1\)</span> para un neutrón en la Luna (<span class="math inline">\(g=1.62\)</span> m/s<span class="math inline">\(^2\)</span>) y en Júpiter (<span class="math inline">\(g\approx24.8\)</span> m/s<span class="math inline">\(^2\)</span>).</li>
+<li>Calcule <span class="math inline">\(\ell\)</span> y <span class="math inline">\(E_1\)</span> para un electrón frente a una placa con un campo de <span class="math inline">\(10^6\)</span> V/m.</li>
+<li>Calcule la velocidad con la que una pelota clásica de energía <span class="math inline">\(E_1\)</span> golpearía el espejo.</li>
+<li>Para la superposición de <span class="math inline">\(\psi_1\)</span> y <span class="math inline">\(\psi_2\)</span>, muestre que <span class="math inline">\(|\psi|^2\)</span> oscila y calcule su periodo para el neutrón.</li>
+<li>Use la aproximación <span class="math inline">\(\varepsilon_n\approx\bigl[\tfrac{3\pi}{8}(4n-1)\bigr]^{2/3}\)</span> para comparar el espaciamiento de los niveles del neutrón con el del oscilador armónico cuántico.</li>
+<li>¿Qué cambia en los niveles si el suelo está en <span class="math inline">\(z=-d\)</span> en lugar de <span class="math inline">\(z=0\)</span>?</li>
+<li>¿Por qué no hay estados con <span class="math inline">\(E\le0\)</span>?</li>
+</ol>
+</section>
+<section id="el-oscilador-armónico-cuántico" class="level3" data-number="5.6">
+<h3 data-number="5.6" class="anchored" data-anchor-id="el-oscilador-armónico-cuántico"><span class="header-section-number">5.6</span> El oscilador armónico cuántico</h3>
+<ol start="35" type="1">
+<li>Verifique que <span class="math inline">\(e^{-\xi^2/2}\)</span> resuelve <span class="math inline">\(\varphi''+(\varepsilon-\xi^2)\varphi=0\)</span> con <span class="math inline">\(\varepsilon=1\)</span>.</li>
+<li>Obtenga <span class="math inline">\(H_5\)</span> con la fórmula de recurrencia.</li>
+<li>Normalice <span class="math inline">\(\psi_1\)</span>.</li>
+<li>Explique por qué la serie de la ecuación de Hermite tiene que terminar.</li>
+<li>Compare cómo se cuantiza la energía en el oscilador armónico y en el neutrón que rebota.</li>
+</ol>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/arturosanjuan\.xyz");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="preferred_color_scheme">
+<input type="hidden" id="giscus-alt-theme" value="preferred_color_scheme">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      if (authorPrefersDark) {
+          [baseTheme, altTheme] = [altTheme, baseTheme];
+      }
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "asanjuanc/arturosanjuan-sitio";
+    script.dataset.repoId = "R_kgDOTzuHrw";
+    script.dataset.category = "Comentarios";
+    script.dataset.categoryId = "DIC_kwDOTzuHr84DD_eD";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "es";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../../cursos/odes/osciladorcuantico/index.html" class="pagination-link" aria-label="El Oscilador Armónico Cuántico">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">El Oscilador Armónico Cuántico</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
