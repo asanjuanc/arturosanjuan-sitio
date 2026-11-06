@@ -520,12 +520,11 @@ window.Quarto = {
   <li><a href="#simulador" id="toc-simulador" class="nav-link" data-scroll-target="#simulador"><span class="header-section-number">4</span> Simulador</a></li>
   <li><a href="#ejercicios-de-repaso" id="toc-ejercicios-de-repaso" class="nav-link" data-scroll-target="#ejercicios-de-repaso"><span class="header-section-number">5</span> Ejercicios de repaso</a>
   <ul class="collapse">
-  <li><a href="#repaso-de-series-de-potencias-simmons-26" id="toc-repaso-de-series-de-potencias-simmons-26" class="nav-link" data-scroll-target="#repaso-de-series-de-potencias-simmons-26"><span class="header-section-number">5.1</span> Repaso de series de potencias (Simmons, §26)</a></li>
-  <li><a href="#series-para-ecuaciones-de-primer-orden-simmons-27" id="toc-series-para-ecuaciones-de-primer-orden-simmons-27" class="nav-link" data-scroll-target="#series-para-ecuaciones-de-primer-orden-simmons-27"><span class="header-section-number">5.2</span> Series para ecuaciones de primer orden (Simmons, §27)</a></li>
-  <li><a href="#puntos-ordinarios-y-fórmulas-de-recurrencia-simmons-28" id="toc-puntos-ordinarios-y-fórmulas-de-recurrencia-simmons-28" class="nav-link" data-scroll-target="#puntos-ordinarios-y-fórmulas-de-recurrencia-simmons-28"><span class="header-section-number">5.3</span> Puntos ordinarios y fórmulas de recurrencia (Simmons, §28)</a></li>
-  <li><a href="#la-ecuación-de-airy" id="toc-la-ecuación-de-airy" class="nav-link" data-scroll-target="#la-ecuación-de-airy"><span class="header-section-number">5.4</span> La ecuación de Airy</a></li>
-  <li><a href="#potencial-lineal-y-cuantización" id="toc-potencial-lineal-y-cuantización" class="nav-link" data-scroll-target="#potencial-lineal-y-cuantización"><span class="header-section-number">5.5</span> Potencial lineal y cuantización</a></li>
-  <li><a href="#el-oscilador-armónico-cuántico" id="toc-el-oscilador-armónico-cuántico" class="nav-link" data-scroll-target="#el-oscilador-armónico-cuántico"><span class="header-section-number">5.6</span> El oscilador armónico cuántico</a></li>
+  <li><a href="#series-de-potencias-simmons-26-y-27" id="toc-series-de-potencias-simmons-26-y-27" class="nav-link" data-scroll-target="#series-de-potencias-simmons-26-y-27"><span class="header-section-number">5.1</span> Series de potencias (Simmons, §26 y §27)</a></li>
+  <li><a href="#puntos-ordinarios-simmons-28" id="toc-puntos-ordinarios-simmons-28" class="nav-link" data-scroll-target="#puntos-ordinarios-simmons-28"><span class="header-section-number">5.2</span> Puntos ordinarios (Simmons, §28)</a></li>
+  <li><a href="#la-ecuación-de-airy" id="toc-la-ecuación-de-airy" class="nav-link" data-scroll-target="#la-ecuación-de-airy"><span class="header-section-number">5.3</span> La ecuación de Airy</a></li>
+  <li><a href="#el-neutrón-que-rebota" id="toc-el-neutrón-que-rebota" class="nav-link" data-scroll-target="#el-neutrón-que-rebota"><span class="header-section-number">5.4</span> El neutrón que rebota</a></li>
+  <li><a href="#cuantización-en-dos-sistemas" id="toc-cuantización-en-dos-sistemas" class="nav-link" data-scroll-target="#cuantización-en-dos-sistemas"><span class="header-section-number">5.5</span> Cuantización en dos sistemas</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -1075,74 +1074,44 @@ mostrar(); requestAnimationFrame(loop);
 </section>
 <section id="ejercicios-de-repaso" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="ejercicios-de-repaso"><span class="header-section-number">5</span> Ejercicios de repaso</h2>
-<p>Ejercicios del capítulo de series de potencias hasta aquí (Simmons, §26 a §28) y de las dos secciones de mecánica cuántica.</p>
-<section id="repaso-de-series-de-potencias-simmons-26" class="level3" data-number="5.1">
-<h3 data-number="5.1" class="anchored" data-anchor-id="repaso-de-series-de-potencias-simmons-26"><span class="header-section-number">5.1</span> Repaso de series de potencias (Simmons, §26)</h3>
+<p>Taller de estudio para trabajar en grupo, de unas dos a cuatro horas. Cubre series de potencias (Simmons, §26 a §28), la ecuación de Airy y el neutrón que rebota.</p>
+<section id="series-de-potencias-simmons-26-y-27" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="series-de-potencias-simmons-26-y-27"><span class="header-section-number">5.1</span> Series de potencias (Simmons, §26 y §27)</h3>
 <ol type="1">
-<li>Problema 1: radios de convergencia <span class="math inline">\(R=0\)</span>, <span class="math inline">\(R=\infty\)</span> y <span class="math inline">\(R=1\)</span> con el criterio del cociente.</li>
-<li>Problema 2: la serie binomial converge para <span class="math inline">\(|x|&lt;1\)</span> y diverge para <span class="math inline">\(|x|&gt;1\)</span>.</li>
-<li>Problema 3: <span class="math inline">\(R=\infty\)</span> para las series de <span class="math inline">\(\sin x\)</span> y <span class="math inline">\(\cos x\)</span>.</li>
-<li>Problema 4: validez de las series de <span class="math inline">\(e^x\)</span>, <span class="math inline">\(\sin x\)</span> y <span class="math inline">\(\cos x\)</span> con la fórmula de Taylor.</li>
-<li>Problema 5: series de <span class="math inline">\(\log(1+x)\)</span> y <span class="math inline">\(\arctan x\)</span> a partir de la serie geométrica.</li>
-<li>Problema 6: la serie de <span class="math inline">\(1/(1-x)^2\)</span> de dos maneras.</li>
-<li>Problema 7: las series de <span class="math inline">\(\cos x\)</span> y de <span class="math inline">\(J_0(x)\)</span> como soluciones de sus ecuaciones.</li>
+<li>Problema 1 de la §26: radios de convergencia <span class="math inline">\(R=0\)</span>, <span class="math inline">\(R=\infty\)</span> y <span class="math inline">\(R=1\)</span> con el criterio del cociente.</li>
+<li>Problema 5 de la §26: series de <span class="math inline">\(\log(1+x)\)</span> y <span class="math inline">\(\arctan x\)</span> a partir de la serie geométrica.</li>
+<li>Problema 1 de la §27: resuelva <span class="math inline">\(y'=2xy\)</span> y <span class="math inline">\(y'+y=1\)</span> con series y reconozca las funciones.</li>
 </ol>
 </section>
-<section id="series-para-ecuaciones-de-primer-orden-simmons-27" class="level3" data-number="5.2">
-<h3 data-number="5.2" class="anchored" data-anchor-id="series-para-ecuaciones-de-primer-orden-simmons-27"><span class="header-section-number">5.2</span> Series para ecuaciones de primer orden (Simmons, §27)</h3>
-<ol start="8" type="1">
-<li>Problema 1: <span class="math inline">\(y'=2xy\)</span> y <span class="math inline">\(y'+y=1\)</span>.</li>
-<li>Problema 2: <span class="math inline">\(xy'=y\)</span> y <span class="math inline">\(x^2y'=y\)</span>, y la discrepancia entre los dos métodos.</li>
-<li>Problema 3: la serie de <span class="math inline">\(\arcsin x\)</span> y la fórmula para <span class="math inline">\(\pi/6\)</span>.</li>
-<li>Problema 4: la serie de <span class="math inline">\(\tan x\)</span> a partir de <span class="math inline">\(y'=1+y^2\)</span>.</li>
-<li>Problema 5: <span class="math inline">\(y'=x-y\)</span>, <span class="math inline">\(y(0)=0\)</span>.</li>
+<section id="puntos-ordinarios-simmons-28" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="puntos-ordinarios-simmons-28"><span class="header-section-number">5.2</span> Puntos ordinarios (Simmons, §28)</h3>
+<ol start="4" type="1">
+<li>Problema 1 de la §28: <span class="math inline">\((1+x^2)y''+2xy'-2y=0\)</span>.</li>
+<li>Problema 7 de la §28: la ecuación de Hermite, su recurrencia y sus polinomios.</li>
 </ol>
 </section>
-<section id="puntos-ordinarios-y-fórmulas-de-recurrencia-simmons-28" class="level3" data-number="5.3">
-<h3 data-number="5.3" class="anchored" data-anchor-id="puntos-ordinarios-y-fórmulas-de-recurrencia-simmons-28"><span class="header-section-number">5.3</span> Puntos ordinarios y fórmulas de recurrencia (Simmons, §28)</h3>
-<ol start="13" type="1">
-<li>Problema 1: <span class="math inline">\((1+x^2)y''+2xy'-2y=0\)</span>.</li>
-<li>Problema 2: <span class="math inline">\(y''+xy'+y=0\)</span> y su relación con <span class="math inline">\(e^{-x^2/2}\)</span>.</li>
-<li>Problema 3: <span class="math inline">\(y''+y'-xy=0\)</span>, una recurrencia de tres términos.</li>
-<li>Problema 4: <span class="math inline">\(y''+\bigl(p+\tfrac12-\tfrac14x^2\bigr)y=0\)</span> y el cambio <span class="math inline">\(y=w\,e^{-x^2/4}\)</span>.</li>
-<li>Problema 6: la ecuación de Chebyshev y sus polinomios.</li>
-<li>Problema 7: la ecuación de Hermite y sus polinomios.</li>
-<li>La ecuación de Legendre del texto: fórmula de recurrencia y polinomios de Legendre.</li>
-</ol>
-</section>
-<section id="la-ecuación-de-airy" class="level3" data-number="5.4">
-<h3 data-number="5.4" class="anchored" data-anchor-id="la-ecuación-de-airy"><span class="header-section-number">5.4</span> La ecuación de Airy</h3>
-<ol start="20" type="1">
-<li>Simmons, §28, problema 5, partes (b) y (c).</li>
-<li>Simmons, §28, problema 5, parte (a) (usa los teoremas de Sturm de la §24).</li>
-<li>Escriba <span class="math inline">\(f\)</span> y <span class="math inline">\(g\)</span> hasta la potencia <span class="math inline">\(x^{13}\)</span> y compruebe que <span class="math inline">\(\varphi''-x\varphi\)</span> se anula hasta ese orden.</li>
-<li>Calcule el wronskiano de <span class="math inline">\(f\)</span> y <span class="math inline">\(g\)</span> en <span class="math inline">\(x=0\)</span> y explique por qué no depende de <span class="math inline">\(x\)</span>.</li>
+<section id="la-ecuación-de-airy" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="la-ecuación-de-airy"><span class="header-section-number">5.3</span> La ecuación de Airy</h3>
+<ol start="6" type="1">
+<li>Problema 5 de la §28, partes (b) y (c).</li>
 <li>Muestre que si <span class="math inline">\(y(x)\)</span> resuelve <span class="math inline">\(y''+xy=0\)</span>, entonces <span class="math inline">\(u(x)=y(-x)\)</span> resuelve <span class="math inline">\(u''-xu=0\)</span>.</li>
+<li>Calcule el wronskiano de <span class="math inline">\(f\)</span> y <span class="math inline">\(g\)</span> en <span class="math inline">\(x=0\)</span> y explique por qué no depende de <span class="math inline">\(x\)</span>.</li>
 <li>Con seis términos de cada serie, ubique por bisección el primer cero de <span class="math inline">\(f(-\varepsilon)-r\,g(-\varepsilon)\)</span> con tres cifras.</li>
 </ol>
 </section>
-<section id="potencial-lineal-y-cuantización" class="level3" data-number="5.5">
-<h3 data-number="5.5" class="anchored" data-anchor-id="potencial-lineal-y-cuantización"><span class="header-section-number">5.5</span> Potencial lineal y cuantización</h3>
-<ol start="26" type="1">
-<li>Repita el cambio de variable para <span class="math inline">\(V(z)=Fz\)</span> y compruebe que <span class="math inline">\(\ell\)</span> tiene unidades de longitud y <span class="math inline">\(F\ell\)</span> de energía.</li>
-<li>Explique por qué cambiar <span class="math inline">\(E\)</span> solo traslada la solución <span class="math inline">\(\varphi(z)\)</span>, sin deformarla.</li>
+<section id="el-neutrón-que-rebota" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="el-neutrón-que-rebota"><span class="header-section-number">5.4</span> El neutrón que rebota</h3>
+<ol start="10" type="1">
+<li>Repita el cambio de variable para <span class="math inline">\(V(z)=Fz\)</span>, compruebe que <span class="math inline">\(\ell\)</span> tiene unidades de longitud y <span class="math inline">\(F\ell\)</span> de energía, y explique por qué cambiar <span class="math inline">\(E\)</span> solo traslada la solución <span class="math inline">\(\varphi(z)\)</span> sin deformarla.</li>
 <li>Calcule <span class="math inline">\(\ell\)</span>, <span class="math inline">\(E_1\)</span> y <span class="math inline">\(z_1\)</span> para un neutrón en la Luna (<span class="math inline">\(g=1.62\)</span> m/s<span class="math inline">\(^2\)</span>) y en Júpiter (<span class="math inline">\(g\approx24.8\)</span> m/s<span class="math inline">\(^2\)</span>).</li>
-<li>Calcule <span class="math inline">\(\ell\)</span> y <span class="math inline">\(E_1\)</span> para un electrón frente a una placa con un campo de <span class="math inline">\(10^6\)</span> V/m.</li>
-<li>Calcule la velocidad con la que una pelota clásica de energía <span class="math inline">\(E_1\)</span> golpearía el espejo.</li>
 <li>Para la superposición de <span class="math inline">\(\psi_1\)</span> y <span class="math inline">\(\psi_2\)</span>, muestre que <span class="math inline">\(|\psi|^2\)</span> oscila y calcule su periodo para el neutrón.</li>
-<li>Use la aproximación <span class="math inline">\(\varepsilon_n\approx\bigl[\tfrac{3\pi}{8}(4n-1)\bigr]^{2/3}\)</span> para comparar el espaciamiento de los niveles del neutrón con el del oscilador armónico cuántico.</li>
-<li>¿Qué cambia en los niveles si el suelo está en <span class="math inline">\(z=-d\)</span> en lugar de <span class="math inline">\(z=0\)</span>?</li>
 <li>¿Por qué no hay estados con <span class="math inline">\(E\le0\)</span>?</li>
 </ol>
 </section>
-<section id="el-oscilador-armónico-cuántico" class="level3" data-number="5.6">
-<h3 data-number="5.6" class="anchored" data-anchor-id="el-oscilador-armónico-cuántico"><span class="header-section-number">5.6</span> El oscilador armónico cuántico</h3>
-<ol start="35" type="1">
-<li>Verifique que <span class="math inline">\(e^{-\xi^2/2}\)</span> resuelve <span class="math inline">\(\varphi''+(\varepsilon-\xi^2)\varphi=0\)</span> con <span class="math inline">\(\varepsilon=1\)</span>.</li>
-<li>Obtenga <span class="math inline">\(H_5\)</span> con la fórmula de recurrencia.</li>
-<li>Normalice <span class="math inline">\(\psi_1\)</span>.</li>
-<li>Explique por qué la serie de la ecuación de Hermite tiene que terminar.</li>
-<li>Compare cómo se cuantiza la energía en el oscilador armónico y en el neutrón que rebota.</li>
+<section id="cuantización-en-dos-sistemas" class="level3" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="cuantización-en-dos-sistemas"><span class="header-section-number">5.5</span> Cuantización en dos sistemas</h3>
+<ol start="14" type="1">
+<li>Verifique que <span class="math inline">\(e^{-\xi^2/2}\)</span> resuelve <span class="math inline">\(\varphi''+(\varepsilon-\xi^2)\varphi=0\)</span> con <span class="math inline">\(\varepsilon=1\)</span>, y compare cómo se cuantiza la energía en el oscilador armónico y en el neutrón que rebota.</li>
 </ol>
 
 

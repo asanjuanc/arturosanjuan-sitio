@@ -982,74 +982,44 @@ mostrar(); requestAnimationFrame(loop);
 </section>
 <section id="ejercicios-de-repaso" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="ejercicios-de-repaso"><span class="header-section-number">5</span> Ejercicios de repaso</h2>
-<p>Ejercicios del capítulo de series de potencias hasta aquí (Simmons, §26 a §28) y de las dos secciones de mecánica cuántica.</p>
-<section id="repaso-de-series-de-potencias-simmons-26" class="level3" data-number="5.1">
-<h3 data-number="5.1" class="anchored" data-anchor-id="repaso-de-series-de-potencias-simmons-26"><span class="header-section-number">5.1</span> Repaso de series de potencias (Simmons, §26)</h3>
+<p>Taller de estudio para trabajar en grupo, de unas dos a cuatro horas. Cubre series de potencias (Simmons, §26 a §28), la ecuación de Airy y el neutrón que rebota.</p>
+<section id="series-de-potencias-simmons-26-y-27" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="series-de-potencias-simmons-26-y-27"><span class="header-section-number">5.1</span> Series de potencias (Simmons, §26 y §27)</h3>
 <ol type="1">
-<li>Problema 1: radios de convergencia <img src="https://latex.codecogs.com/png.latex?R=0">, <img src="https://latex.codecogs.com/png.latex?R=%5Cinfty"> y <img src="https://latex.codecogs.com/png.latex?R=1"> con el criterio del cociente.</li>
-<li>Problema 2: la serie binomial converge para <img src="https://latex.codecogs.com/png.latex?%7Cx%7C%3C1"> y diverge para <img src="https://latex.codecogs.com/png.latex?%7Cx%7C%3E1">.</li>
-<li>Problema 3: <img src="https://latex.codecogs.com/png.latex?R=%5Cinfty"> para las series de <img src="https://latex.codecogs.com/png.latex?%5Csin%20x"> y <img src="https://latex.codecogs.com/png.latex?%5Ccos%20x">.</li>
-<li>Problema 4: validez de las series de <img src="https://latex.codecogs.com/png.latex?e%5Ex">, <img src="https://latex.codecogs.com/png.latex?%5Csin%20x"> y <img src="https://latex.codecogs.com/png.latex?%5Ccos%20x"> con la fórmula de Taylor.</li>
-<li>Problema 5: series de <img src="https://latex.codecogs.com/png.latex?%5Clog(1+x)"> y <img src="https://latex.codecogs.com/png.latex?%5Carctan%20x"> a partir de la serie geométrica.</li>
-<li>Problema 6: la serie de <img src="https://latex.codecogs.com/png.latex?1/(1-x)%5E2"> de dos maneras.</li>
-<li>Problema 7: las series de <img src="https://latex.codecogs.com/png.latex?%5Ccos%20x"> y de <img src="https://latex.codecogs.com/png.latex?J_0(x)"> como soluciones de sus ecuaciones.</li>
+<li>Problema 1 de la §26: radios de convergencia <img src="https://latex.codecogs.com/png.latex?R=0">, <img src="https://latex.codecogs.com/png.latex?R=%5Cinfty"> y <img src="https://latex.codecogs.com/png.latex?R=1"> con el criterio del cociente.</li>
+<li>Problema 5 de la §26: series de <img src="https://latex.codecogs.com/png.latex?%5Clog(1+x)"> y <img src="https://latex.codecogs.com/png.latex?%5Carctan%20x"> a partir de la serie geométrica.</li>
+<li>Problema 1 de la §27: resuelva <img src="https://latex.codecogs.com/png.latex?y'=2xy"> y <img src="https://latex.codecogs.com/png.latex?y'+y=1"> con series y reconozca las funciones.</li>
 </ol>
 </section>
-<section id="series-para-ecuaciones-de-primer-orden-simmons-27" class="level3" data-number="5.2">
-<h3 data-number="5.2" class="anchored" data-anchor-id="series-para-ecuaciones-de-primer-orden-simmons-27"><span class="header-section-number">5.2</span> Series para ecuaciones de primer orden (Simmons, §27)</h3>
-<ol start="8" type="1">
-<li>Problema 1: <img src="https://latex.codecogs.com/png.latex?y'=2xy"> y <img src="https://latex.codecogs.com/png.latex?y'+y=1">.</li>
-<li>Problema 2: <img src="https://latex.codecogs.com/png.latex?xy'=y"> y <img src="https://latex.codecogs.com/png.latex?x%5E2y'=y">, y la discrepancia entre los dos métodos.</li>
-<li>Problema 3: la serie de <img src="https://latex.codecogs.com/png.latex?%5Carcsin%20x"> y la fórmula para <img src="https://latex.codecogs.com/png.latex?%5Cpi/6">.</li>
-<li>Problema 4: la serie de <img src="https://latex.codecogs.com/png.latex?%5Ctan%20x"> a partir de <img src="https://latex.codecogs.com/png.latex?y'=1+y%5E2">.</li>
-<li>Problema 5: <img src="https://latex.codecogs.com/png.latex?y'=x-y">, <img src="https://latex.codecogs.com/png.latex?y(0)=0">.</li>
+<section id="puntos-ordinarios-simmons-28" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="puntos-ordinarios-simmons-28"><span class="header-section-number">5.2</span> Puntos ordinarios (Simmons, §28)</h3>
+<ol start="4" type="1">
+<li>Problema 1 de la §28: <img src="https://latex.codecogs.com/png.latex?(1+x%5E2)y''+2xy'-2y=0">.</li>
+<li>Problema 7 de la §28: la ecuación de Hermite, su recurrencia y sus polinomios.</li>
 </ol>
 </section>
-<section id="puntos-ordinarios-y-fórmulas-de-recurrencia-simmons-28" class="level3" data-number="5.3">
-<h3 data-number="5.3" class="anchored" data-anchor-id="puntos-ordinarios-y-fórmulas-de-recurrencia-simmons-28"><span class="header-section-number">5.3</span> Puntos ordinarios y fórmulas de recurrencia (Simmons, §28)</h3>
-<ol start="13" type="1">
-<li>Problema 1: <img src="https://latex.codecogs.com/png.latex?(1+x%5E2)y''+2xy'-2y=0">.</li>
-<li>Problema 2: <img src="https://latex.codecogs.com/png.latex?y''+xy'+y=0"> y su relación con <img src="https://latex.codecogs.com/png.latex?e%5E%7B-x%5E2/2%7D">.</li>
-<li>Problema 3: <img src="https://latex.codecogs.com/png.latex?y''+y'-xy=0">, una recurrencia de tres términos.</li>
-<li>Problema 4: <img src="https://latex.codecogs.com/png.latex?y''+%5Cbigl(p+%5Ctfrac12-%5Ctfrac14x%5E2%5Cbigr)y=0"> y el cambio <img src="https://latex.codecogs.com/png.latex?y=w%5C,e%5E%7B-x%5E2/4%7D">.</li>
-<li>Problema 6: la ecuación de Chebyshev y sus polinomios.</li>
-<li>Problema 7: la ecuación de Hermite y sus polinomios.</li>
-<li>La ecuación de Legendre del texto: fórmula de recurrencia y polinomios de Legendre.</li>
-</ol>
-</section>
-<section id="la-ecuación-de-airy" class="level3" data-number="5.4">
-<h3 data-number="5.4" class="anchored" data-anchor-id="la-ecuación-de-airy"><span class="header-section-number">5.4</span> La ecuación de Airy</h3>
-<ol start="20" type="1">
-<li>Simmons, §28, problema 5, partes (b) y (c).</li>
-<li>Simmons, §28, problema 5, parte (a) (usa los teoremas de Sturm de la §24).</li>
-<li>Escriba <img src="https://latex.codecogs.com/png.latex?f"> y <img src="https://latex.codecogs.com/png.latex?g"> hasta la potencia <img src="https://latex.codecogs.com/png.latex?x%5E%7B13%7D"> y compruebe que <img src="https://latex.codecogs.com/png.latex?%5Cvarphi''-x%5Cvarphi"> se anula hasta ese orden.</li>
-<li>Calcule el wronskiano de <img src="https://latex.codecogs.com/png.latex?f"> y <img src="https://latex.codecogs.com/png.latex?g"> en <img src="https://latex.codecogs.com/png.latex?x=0"> y explique por qué no depende de <img src="https://latex.codecogs.com/png.latex?x">.</li>
+<section id="la-ecuación-de-airy" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="la-ecuación-de-airy"><span class="header-section-number">5.3</span> La ecuación de Airy</h3>
+<ol start="6" type="1">
+<li>Problema 5 de la §28, partes (b) y (c).</li>
 <li>Muestre que si <img src="https://latex.codecogs.com/png.latex?y(x)"> resuelve <img src="https://latex.codecogs.com/png.latex?y''+xy=0">, entonces <img src="https://latex.codecogs.com/png.latex?u(x)=y(-x)"> resuelve <img src="https://latex.codecogs.com/png.latex?u''-xu=0">.</li>
+<li>Calcule el wronskiano de <img src="https://latex.codecogs.com/png.latex?f"> y <img src="https://latex.codecogs.com/png.latex?g"> en <img src="https://latex.codecogs.com/png.latex?x=0"> y explique por qué no depende de <img src="https://latex.codecogs.com/png.latex?x">.</li>
 <li>Con seis términos de cada serie, ubique por bisección el primer cero de <img src="https://latex.codecogs.com/png.latex?f(-%5Cvarepsilon)-r%5C,g(-%5Cvarepsilon)"> con tres cifras.</li>
 </ol>
 </section>
-<section id="potencial-lineal-y-cuantización" class="level3" data-number="5.5">
-<h3 data-number="5.5" class="anchored" data-anchor-id="potencial-lineal-y-cuantización"><span class="header-section-number">5.5</span> Potencial lineal y cuantización</h3>
-<ol start="26" type="1">
-<li>Repita el cambio de variable para <img src="https://latex.codecogs.com/png.latex?V(z)=Fz"> y compruebe que <img src="https://latex.codecogs.com/png.latex?%5Cell"> tiene unidades de longitud y <img src="https://latex.codecogs.com/png.latex?F%5Cell"> de energía.</li>
-<li>Explique por qué cambiar <img src="https://latex.codecogs.com/png.latex?E"> solo traslada la solución <img src="https://latex.codecogs.com/png.latex?%5Cvarphi(z)">, sin deformarla.</li>
+<section id="el-neutrón-que-rebota" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="el-neutrón-que-rebota"><span class="header-section-number">5.4</span> El neutrón que rebota</h3>
+<ol start="10" type="1">
+<li>Repita el cambio de variable para <img src="https://latex.codecogs.com/png.latex?V(z)=Fz">, compruebe que <img src="https://latex.codecogs.com/png.latex?%5Cell"> tiene unidades de longitud y <img src="https://latex.codecogs.com/png.latex?F%5Cell"> de energía, y explique por qué cambiar <img src="https://latex.codecogs.com/png.latex?E"> solo traslada la solución <img src="https://latex.codecogs.com/png.latex?%5Cvarphi(z)"> sin deformarla.</li>
 <li>Calcule <img src="https://latex.codecogs.com/png.latex?%5Cell">, <img src="https://latex.codecogs.com/png.latex?E_1"> y <img src="https://latex.codecogs.com/png.latex?z_1"> para un neutrón en la Luna (<img src="https://latex.codecogs.com/png.latex?g=1.62"> m/s<img src="https://latex.codecogs.com/png.latex?%5E2">) y en Júpiter (<img src="https://latex.codecogs.com/png.latex?g%5Capprox24.8"> m/s<img src="https://latex.codecogs.com/png.latex?%5E2">).</li>
-<li>Calcule <img src="https://latex.codecogs.com/png.latex?%5Cell"> y <img src="https://latex.codecogs.com/png.latex?E_1"> para un electrón frente a una placa con un campo de <img src="https://latex.codecogs.com/png.latex?10%5E6"> V/m.</li>
-<li>Calcule la velocidad con la que una pelota clásica de energía <img src="https://latex.codecogs.com/png.latex?E_1"> golpearía el espejo.</li>
 <li>Para la superposición de <img src="https://latex.codecogs.com/png.latex?%5Cpsi_1"> y <img src="https://latex.codecogs.com/png.latex?%5Cpsi_2">, muestre que <img src="https://latex.codecogs.com/png.latex?%7C%5Cpsi%7C%5E2"> oscila y calcule su periodo para el neutrón.</li>
-<li>Use la aproximación <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_n%5Capprox%5Cbigl%5B%5Ctfrac%7B3%5Cpi%7D%7B8%7D(4n-1)%5Cbigr%5D%5E%7B2/3%7D"> para comparar el espaciamiento de los niveles del neutrón con el del oscilador armónico cuántico.</li>
-<li>¿Qué cambia en los niveles si el suelo está en <img src="https://latex.codecogs.com/png.latex?z=-d"> en lugar de <img src="https://latex.codecogs.com/png.latex?z=0">?</li>
 <li>¿Por qué no hay estados con <img src="https://latex.codecogs.com/png.latex?E%5Cle0">?</li>
 </ol>
 </section>
-<section id="el-oscilador-armónico-cuántico" class="level3" data-number="5.6">
-<h3 data-number="5.6" class="anchored" data-anchor-id="el-oscilador-armónico-cuántico"><span class="header-section-number">5.6</span> El oscilador armónico cuántico</h3>
-<ol start="35" type="1">
-<li>Verifique que <img src="https://latex.codecogs.com/png.latex?e%5E%7B-%5Cxi%5E2/2%7D"> resuelve <img src="https://latex.codecogs.com/png.latex?%5Cvarphi''+(%5Cvarepsilon-%5Cxi%5E2)%5Cvarphi=0"> con <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon=1">.</li>
-<li>Obtenga <img src="https://latex.codecogs.com/png.latex?H_5"> con la fórmula de recurrencia.</li>
-<li>Normalice <img src="https://latex.codecogs.com/png.latex?%5Cpsi_1">.</li>
-<li>Explique por qué la serie de la ecuación de Hermite tiene que terminar.</li>
-<li>Compare cómo se cuantiza la energía en el oscilador armónico y en el neutrón que rebota.</li>
+<section id="cuantización-en-dos-sistemas" class="level3" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="cuantización-en-dos-sistemas"><span class="header-section-number">5.5</span> Cuantización en dos sistemas</h3>
+<ol start="14" type="1">
+<li>Verifique que <img src="https://latex.codecogs.com/png.latex?e%5E%7B-%5Cxi%5E2/2%7D"> resuelve <img src="https://latex.codecogs.com/png.latex?%5Cvarphi''+(%5Cvarepsilon-%5Cxi%5E2)%5Cvarphi=0"> con <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon=1">, y compare cómo se cuantiza la energía en el oscilador armónico y en el neutrón que rebota.</li>
 </ol>
 
 
