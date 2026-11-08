@@ -15,7 +15,342 @@
 <link>https://arturosanjuan.xyz/cursos/probabilidad/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Tue, 03 Nov 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 07 Nov 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>La ley fuerte de los grandes números y el teorema del límite central</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/probabilidad/leyfuerte/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>La <a href="../../../cursos/probabilidad/leydebil/index.html">ley débil</a> dice que, para cada <img src="https://latex.codecogs.com/png.latex?n"> grande, es muy improbable que el promedio <img src="https://latex.codecogs.com/png.latex?%5Cbar%20X_n"> esté lejos de <img src="https://latex.codecogs.com/png.latex?%5Cmu">. Quedaron dos preguntas abiertas, y esta sección responde ambas. La primera: ¿converge la trayectoria <img src="https://latex.codecogs.com/png.latex?%5Cbar%20X_1,%5Cbar%20X_2,%5Cbar%20X_3,%5Cdots"> que produce un experimento concreto? Eso es lo que afirma la <strong>ley fuerte</strong>. La segunda: ¿cómo se ve la desviación <img src="https://latex.codecogs.com/png.latex?%5Cbar%20X_n-%5Cmu"> una vez la medimos en unidades de <img src="https://latex.codecogs.com/png.latex?%5Csigma/%5Csqrt%20n">? Eso es lo que dice el <strong>teorema del límite central</strong>, y explica por qué la campana de la sección sobre <a href="../../../cursos/probabilidad/limitenormal/index.html">la normal como límite</a> no era un accidente de la binomial y la Poisson.</p>
+<section id="la-ley-fuerte-de-los-grandes-números" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="la-ley-fuerte-de-los-grandes-números"><span class="header-section-number">1</span> La ley fuerte de los grandes números</h2>
+<section id="convergencia-casi-segura" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="convergencia-casi-segura"><span class="header-section-number">1.1</span> Convergencia casi segura</h3>
+<p>Sean <img src="https://latex.codecogs.com/png.latex?X_1,X_2,%5Cdots"> y <img src="https://latex.codecogs.com/png.latex?X"> variables aleatorias definidas sobre el mismo espacio de probabilidad <img src="https://latex.codecogs.com/png.latex?(%5COmega,%5Cmathcal%20F,P)">. Decimos que <img src="https://latex.codecogs.com/png.latex?X_n"> converge a <img src="https://latex.codecogs.com/png.latex?X"> <strong>casi seguramente</strong> (c.s.) si</p>
+<p><img src="https://latex.codecogs.com/png.latex?P%5Cbig(X_n%5Cto%20X%5Cbig)=1"></p>
+<p>es decir, si el conjunto de resultados <img src="https://latex.codecogs.com/png.latex?%5Comega%5Cin%5COmega"> para los cuales la sucesión numérica <img src="https://latex.codecogs.com/png.latex?X_n(%5Comega)"> converge a <img src="https://latex.codecogs.com/png.latex?X(%5Comega)"> tiene probabilidad uno. Lo escribimos <img src="https://latex.codecogs.com/png.latex?X_n%5Cxrightarrow%7B%5Ctext%7Bc.s.%7D%7DX">.</p>
+<p>La diferencia con la convergencia en probabilidad es de fondo. Allí, para cada <img src="https://latex.codecogs.com/png.latex?n"> se mira un evento distinto, <img src="https://latex.codecogs.com/png.latex?%5C%7B%7CX_n-X%7C%3E%5Cvarepsilon%5C%7D">, y se pide que su probabilidad tienda a cero. Aquí se fija un resultado <img src="https://latex.codecogs.com/png.latex?%5Comega">, es decir una trayectoria completa, y se pide que esa sucesión de números converja. Se puede demostrar (no lo haremos) que la convergencia casi segura implica la convergencia en probabilidad, pero no al revés. De ahí los nombres: la ley fuerte contiene a la débil.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema (ley fuerte de los grandes números)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Teorema (ley fuerte de los grandes números)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sean <img src="https://latex.codecogs.com/png.latex?X_1,X_2,%5Cdots"> variables aleatorias i.i.d. con media <img src="https://latex.codecogs.com/png.latex?%5Cmu"> y varianza finita <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbar%20X_n=%5Cfrac%7BX_1+%5Ccdots+X_n%7D%7Bn%7D%5Cxrightarrow%7B%5Ctext%7Bc.s.%7D%7D%5Cmu"></p>
+<p>es decir, <img src="https://latex.codecogs.com/png.latex?P%5Cbig(%5Clim_%7Bn%5Cto%5Cinfty%7D%5Cbar%20X_n=%5Cmu%5Cbig)=1">.</p>
+</div>
+</div>
+<p>Esto es lo que quedó pendiente en la ley débil. Si cada <img src="https://latex.codecogs.com/png.latex?X_i"> es Bernoulli<img src="https://latex.codecogs.com/png.latex?(p)">, la ley fuerte afirma que, con probabilidad uno, la sucesión de proporciones de éxitos se acerca a <img src="https://latex.codecogs.com/png.latex?p"> y se queda cerca. Observe que no dice que <em>toda</em> trayectoria converge: la sucesión que siempre da éxito es un resultado posible del experimento, pero el conjunto de las trayectorias que no convergen a <img src="https://latex.codecogs.com/png.latex?p"> tiene probabilidad cero.</p>
+</section>
+<section id="idea-de-la-demostración" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="idea-de-la-demostración"><span class="header-section-number">1.2</span> Idea de la demostración</h3>
+<p>Los detalles técnicos de este teorema se salen del alcance del curso, pero la idea se ve en pocas líneas. Sin pérdida de generalidad suponemos <img src="https://latex.codecogs.com/png.latex?%5Cmu=0"> (si no, trabajamos con <img src="https://latex.codecogs.com/png.latex?X_i-%5Cmu">, que tiene media cero y la misma varianza, y el promedio de estas variables es <img src="https://latex.codecogs.com/png.latex?%5Cbar%20X_n-%5Cmu">). Entonces <img src="https://latex.codecogs.com/png.latex?E(%5Cbar%20X_n)=0"> y</p>
+<p><img src="https://latex.codecogs.com/png.latex?E(%5Cbar%20X_n%5E2)=%5Cfrac1%7Bn%5E2%7D%5Csum_%7Bk,j=1%7D%5EnE(X_kX_j)"></p>
+<p>Por independencia, si <img src="https://latex.codecogs.com/png.latex?k%5Cne%20j"> entonces <img src="https://latex.codecogs.com/png.latex?E(X_kX_j)=E(X_k)E(X_j)=0">. Solo sobreviven los términos con <img src="https://latex.codecogs.com/png.latex?k=j">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?E(%5Cbar%20X_n%5E2)=%5Cfrac1%7Bn%5E2%7D%5Csum_%7Bi=1%7D%5EnE(X_i%5E2)=%5Cfrac%7Bn%5Csigma%5E2%7D%7Bn%5E2%7D=%5Cfrac%7B%5Csigma%5E2%7D%7Bn%7D%5Clongrightarrow0"></p>
+<p>Intuitivamente, que <img src="https://latex.codecogs.com/png.latex?E(%5Cbar%20X_n%5E2)%5Cto0"> debe ser lo mismo que decir <img src="https://latex.codecogs.com/png.latex?P(%5Cbar%20X_n%5E2%5Cto0)=1">, tal como vimos que una variable <img src="https://latex.codecogs.com/png.latex?Z%5Cge0"> con <img src="https://latex.codecogs.com/png.latex?E(Z)=0"> cumple <img src="https://latex.codecogs.com/png.latex?P(Z=0)=1">, y esto es lo mismo que <img src="https://latex.codecogs.com/png.latex?P(%5Cbar%20X_n%5Cto0)=1">.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Nota histórica">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Nota histórica
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Émile Borel</strong> probó en 1909 la ley fuerte para el lanzamiento de una moneda justa, en un lenguaje que hoy reconocemos como teoría de la medida: el conjunto de los números de <img src="https://latex.codecogs.com/png.latex?%5B0,1%5D"> cuya expansión binaria tiene una proporción de unos que tiende a <img src="https://latex.codecogs.com/png.latex?1/2"> tiene medida uno (son los llamados números normales). <strong>Francesco Paolo Cantelli</strong> lo redescubrió en 1916 y 1917, sin citar a Borel, y lo extendió a variables acotadas. <strong>Andréi Kolmogorov</strong>, hacia 1930, mostró que para variables i.i.d. basta con que exista la media. Es la misma historia de la ley débil, que va de Bernoulli (1713) a Khinchin (1929), pero con una afirmación más fuerte sobre qué significa converger.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="el-teorema-del-límite-central" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="el-teorema-del-límite-central"><span class="header-section-number">2</span> El teorema del límite central</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema (límite central)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Teorema (límite central)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sean <img src="https://latex.codecogs.com/png.latex?X_1,X_2,%5Cdots"> variables aleatorias i.i.d. con media <img src="https://latex.codecogs.com/png.latex?%5Cmu"> y varianza <img src="https://latex.codecogs.com/png.latex?0%3C%5Csigma%5E2%3C%5Cinfty">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?Y_n=%5Cfrac%7B%5Cbar%20X_n-%5Cmu%7D%7B%5Csigma/%5Csqrt%20n%7D=%5Cfrac%7BX_1+%5Ccdots+X_n-n%5Cmu%7D%7B%5Csigma%5Csqrt%20n%7D%5Clongrightarrow%20Y%5Csim%20N(0,1)"></p>
+<p>en el sentido de que <img src="https://latex.codecogs.com/png.latex?P(Y_n%5Cle%20y)%5Cto%5CPhi(y)"> para todo <img src="https://latex.codecogs.com/png.latex?y%5Cin%5Cmathbb%20R">, donde <img src="https://latex.codecogs.com/png.latex?%5CPhi"> es la función de distribución de la normal estándar (convergencia en distribución).</p>
+</div>
+</div>
+<p>Observe que no se pide que las <img src="https://latex.codecogs.com/png.latex?X_i"> sean normales. Pueden ser Bernoulli, uniformes, exponenciales, lo que sea con media y varianza finitas, y el promedio estandarizado se parece igual a la campana. Lo que ya vimos con la binomial (una suma de Bernoulli independientes) y con la Poisson (una suma de Poisson independientes, cuando <img src="https://latex.codecogs.com/png.latex?%5Clambda"> es entero) son dos casos particulares.</p>
+<section id="la-función-característica" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="la-función-característica"><span class="header-section-number">2.1</span> La función característica</h3>
+<p>Para entender la idea de la demostración necesitamos un concepto nuevo. Si <img src="https://latex.codecogs.com/png.latex?X"> es una variable aleatoria, su <strong>función característica</strong> es</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvarphi_X(t)=E%5Cbig(e%5E%7BitX%7D%5Cbig)=E%5Cbig(%5Ccos%20tX%5Cbig)+i%5C,E%5Cbig(%5Csin%20tX%5Cbig),%5Cqquad%20t%5Cin%5Cmathbb%20R"></p>
+<p>Si <img src="https://latex.codecogs.com/png.latex?X"> tiene densidad <img src="https://latex.codecogs.com/png.latex?f_X">, entonces <img src="https://latex.codecogs.com/png.latex?%5Cvarphi_X(t)=%5Cint_%7B-%5Cinfty%7D%5E%7B%5Cinfty%7De%5E%7Bitx%7Df_X(x)%5C,dx">. Como <img src="https://latex.codecogs.com/png.latex?%7Ce%5E%7Bitx%7D%7C=1">, la integral existe siempre, sea cual sea la distribución de <img src="https://latex.codecogs.com/png.latex?X">. Sus propiedades básicas son:</p>
+<ol type="1">
+<li><img src="https://latex.codecogs.com/png.latex?%5Cvarphi_X(0)=1">, porque <img src="https://latex.codecogs.com/png.latex?e%5E%7Bi%5Ccdot0%5Ccdot%20X%7D=1">.</li>
+<li><img src="https://latex.codecogs.com/png.latex?%7C%5Cvarphi_X(t)%7C%5Cle1">, porque <img src="https://latex.codecogs.com/png.latex?%5CBig%7C%5Cint%20e%5E%7Bitx%7Df_X(x)%5C,dx%5CBig%7C%5Cle%5Cint%7Ce%5E%7Bitx%7D%7Cf_X(x)%5C,dx=%5Cint%20f_X(x)%5C,dx=1">.</li>
+<li>Si <img src="https://latex.codecogs.com/png.latex?E(%7CX%7C%5Ek)%3C%5Cinfty">, entonces <img src="https://latex.codecogs.com/png.latex?%5Cvarphi_X%5E%7B(k)%7D(0)=i%5Ek%5C,E(X%5Ek)">.</li>
+</ol>
+<p>Veamos la propiedad 3 con <img src="https://latex.codecogs.com/png.latex?k=1"> y <img src="https://latex.codecogs.com/png.latex?k=2">. Derivando bajo la integral,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvarphi_X'(0)=%5Cleft(%5Cpartial_t%5Cint_%7B-%5Cinfty%7D%5E%7B%5Cinfty%7De%5E%7Bitx%7Df_X(x)%5C,dx%5Cright)_%7Bt=0%7D=%5Cleft(%5Cint_%7B-%5Cinfty%7D%5E%7B%5Cinfty%7Dix%5C,e%5E%7Bitx%7Df_X(x)%5C,dx%5Cright)_%7Bt=0%7D=i%5C,E(X)"></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Muestre que <img src="https://latex.codecogs.com/png.latex?%5Cvarphi_X''(0)=-E(X%5E2)">.</p>
+</div>
+</div>
+<ol start="4" type="1">
+<li><strong>Unicidad.</strong> Si <img src="https://latex.codecogs.com/png.latex?%5Cvarphi_X(t)=%5Cvarphi_Y(t)"> para todo <img src="https://latex.codecogs.com/png.latex?t">, entonces <img src="https://latex.codecogs.com/png.latex?X"> y <img src="https://latex.codecogs.com/png.latex?Y"> tienen la misma distribución. Con densidades <img src="https://latex.codecogs.com/png.latex?f"> y <img src="https://latex.codecogs.com/png.latex?g">, la hipótesis dice</li>
+</ol>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cint_%7B-%5Cinfty%7D%5E%7B%5Cinfty%7De%5E%7Bitx%7Df(x)%5C,dx=%5Cint_%7B-%5Cinfty%7D%5E%7B%5Cinfty%7De%5E%7Bity%7Dg(y)%5C,dy%5Cqquad%5CLongrightarrow%5Cqquad%5Cint_%7B-%5Cinfty%7D%5E%7B%5Cinfty%7De%5E%7Bitx%7D%5Cbig(f(x)-g(x)%5Cbig)%5C,dx=0%5Cquad%5Ctext%7Bpara%20todo%20%7Dt"></p>
+<p>y esto solo es posible si <img src="https://latex.codecogs.com/png.latex?f=g"> (salvo en un conjunto de medida cero), porque la integral es la transformada de Fourier de <img src="https://latex.codecogs.com/png.latex?f-g"> y esta transformada solo se anula idénticamente para la función cero. Es el teorema de unicidad de la transformada de Fourier, que no demostramos. Por eso la función característica “caracteriza” la distribución.</p>
+</section>
+<section id="la-función-característica-de-la-normal" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="la-función-característica-de-la-normal"><span class="header-section-number">2.2</span> La función característica de la normal</h3>
+<p>El último ingrediente que necesitamos es la función característica de la normal estándar.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Demuestre que si <img src="https://latex.codecogs.com/png.latex?X%5Csim%20N(0,1)">, entonces <img src="https://latex.codecogs.com/png.latex?%5Cvarphi_X(t)=e%5E%7B-t%5E2/2%7D">. Siga estos pasos:</p>
+<ol type="1">
+<li>Derive <img src="https://latex.codecogs.com/png.latex?%5Cvarphi_X"> con respecto a <img src="https://latex.codecogs.com/png.latex?t">.</li>
+<li>Integre por partes para deshacerse de la <img src="https://latex.codecogs.com/png.latex?x">.</li>
+<li>Plantee una ecuación diferencial para <img src="https://latex.codecogs.com/png.latex?%5Cvarphi_X">.</li>
+<li>Resuélvala.</li>
+</ol>
+</div>
+</div>
+<p>Por la unicidad, <img src="https://latex.codecogs.com/png.latex?e%5E%7B-t%5E2/2%7D"> es la función característica de la normal estándar y de ninguna otra distribución.</p>
+</section>
+<section id="idea-de-la-demostración-1" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="idea-de-la-demostración-1"><span class="header-section-number">2.3</span> Idea de la demostración</h3>
+<p>Suponemos otra vez <img src="https://latex.codecogs.com/png.latex?%5Cmu=0"> (restando <img src="https://latex.codecogs.com/png.latex?%5Cmu"> a cada <img src="https://latex.codecogs.com/png.latex?X_k"> la variable <img src="https://latex.codecogs.com/png.latex?Y_n"> no cambia). Sea <img src="https://latex.codecogs.com/png.latex?%5Cvarphi"> la función característica común de las <img src="https://latex.codecogs.com/png.latex?X_k">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvarphi_%7BY_n%7D(t)=E%5Cbig(e%5E%7BitY_n%7D%5Cbig)=E%5CBig(e%5E%7B%5Cfrac%7Bit%7D%7B%5Csigma%5Csqrt%20n%7D(X_1+%5Ccdots+X_n)%7D%5CBig)=E%5CBig(%5Cprod_%7Bk=1%7D%5Ene%5E%7B%5Cfrac%7Bit%7D%7B%5Csigma%5Csqrt%20n%7DX_k%7D%5CBig)=%5Cprod_%7Bk=1%7D%5EnE%5CBig(e%5E%7B%5Cfrac%7Bit%7D%7B%5Csigma%5Csqrt%20n%7DX_k%7D%5CBig)=%5Cvarphi%5CBig(%5Cfrac%7Bt%7D%7B%5Csigma%5Csqrt%20n%7D%5CBig)%5En"></p>
+<p>donde la cuarta igualdad es la independencia (la regla <img src="https://latex.codecogs.com/png.latex?E(UV)=E(U)E(V)"> vale también para variables complejas, aplicándola a las partes real e imaginaria).</p>
+<p>Ahora desarrollamos <img src="https://latex.codecogs.com/png.latex?%5Cvarphi"> en serie de Taylor alrededor de <img src="https://latex.codecogs.com/png.latex?0">, hasta orden dos, lo cual es posible porque <img src="https://latex.codecogs.com/png.latex?E(X%5E2)%3C%5Cinfty">. Por las propiedades 1 y 3, <img src="https://latex.codecogs.com/png.latex?%5Cvarphi(0)=1">, <img src="https://latex.codecogs.com/png.latex?%5Cvarphi'(0)=iE(X)=0"> y <img src="https://latex.codecogs.com/png.latex?%5Cvarphi''(0)=-E(X%5E2)=-%5Csigma%5E2">, así que</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvarphi(s)=%5Cvarphi(0)+%5Cvarphi'(0)%5C,s+%5Cfrac%7B%5Cvarphi''(0)%7D%7B2%7D%5C,s%5E2+o(s%5E2)=1-%5Cfrac%7B%5Csigma%5E2%7D%7B2%7D%5C,s%5E2+o(s%5E2)%5Cqquad(s%5Cto0)"></p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?s=t/(%5Csigma%5Csqrt%20n)">, que tiende a <img src="https://latex.codecogs.com/png.latex?0"> cuando <img src="https://latex.codecogs.com/png.latex?n%5Cto%5Cinfty"> para <img src="https://latex.codecogs.com/png.latex?t"> fijo,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvarphi_%7BY_n%7D(t)=%5CBig(1-%5Cfrac%7Bt%5E2%7D%7B2n%7D+o%5CBig(%5Cfrac1n%5CBig)%5CBig)%5En=%5CBig(1+%5Cfrac%7Ba_n%7D%7Bn%7D%5CBig)%5En%5Clongrightarrow%20e%5E%7B-t%5E2/2%7D%5Cqquad%5Ctext%7Bcon%20%7Da_n%5Cto-%5Cfrac%7Bt%5E2%7D%7B2%7D"></p>
+<p>usando que <img src="https://latex.codecogs.com/png.latex?(1+a_n/n)%5En%5Cto%20e%5Ea"> siempre que <img src="https://latex.codecogs.com/png.latex?a_n%5Cto%20a">. Es decir, para cada <img src="https://latex.codecogs.com/png.latex?t">, <img src="https://latex.codecogs.com/png.latex?%5Cvarphi_%7BY_n%7D(t)"> converge a la función característica de la <img src="https://latex.codecogs.com/png.latex?N(0,1)">. El paso que omitimos es el teorema de continuidad de Lévy, que es la unicidad llevada al límite: si las funciones características convergen a la de una distribución, entonces las distribuciones convergen a ella. Por lo tanto <img src="https://latex.codecogs.com/png.latex?Y_n%5Cto%20Y%5Csim%20N(0,1)">.</p>
+<p>Esto ya lo habíamos hecho con las aproximaciones de la binomial y de la Poisson por la normal. El método de Laplace con la fórmula de Stirling dio el mismo límite, pero distribución por distribución. La función característica lo hace para todas a la vez, porque de cada <img src="https://latex.codecogs.com/png.latex?X_k"> solo usa los dos primeros momentos.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Nota histórica">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Nota histórica
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Abraham de Moivre</strong> obtuvo en 1733 la forma de campana como límite de la binomial con <img src="https://latex.codecogs.com/png.latex?p=1/2">, usando la fórmula de Stirling, mientras buscaba una versión cuantitativa de la ley de Bernoulli. <strong>Laplace</strong> la generalizó en su <em>Théorie analytique des probabilités</em> (1812) a otras distribuciones. <strong>Aleksandr Lyapunov</strong> (1900 y 1901) dio las primeras condiciones generales rigurosas y las demostró con funciones características, el camino que acabamos de seguir. <strong>George Pólya</strong> le puso el nombre en 1920, “teorema central del límite”, para subrayar el papel central del teorema en la teoría de la probabilidad, no que describa el centro de una distribución. <strong>Jarl Lindeberg</strong> (1922) dio condiciones más generales y <strong>William Feller</strong> (1935) probó que son también necesarias. De Moivre y Lyapunov llegaron a la misma campana por caminos distintos: uno por la fórmula de Stirling sobre los coeficientes binomiales, el otro por el desarrollo de Taylor de la función característica.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="ejemplos" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="ejemplos"><span class="header-section-number">3</span> Ejemplos</h2>
+<p>Los tres teoremas responden preguntas distintas sobre el mismo promedio <img src="https://latex.codecogs.com/png.latex?%5Cbar%20X_n">:</p>
+<ul>
+<li>La <strong>ley débil</strong> controla, para cada <img src="https://latex.codecogs.com/png.latex?n">, la probabilidad de que <img src="https://latex.codecogs.com/png.latex?%5Cbar%20X_n"> esté lejos de <img src="https://latex.codecogs.com/png.latex?%5Cmu">. Con Chebyshev da una cota que se garantiza.</li>
+<li>La <strong>ley fuerte</strong> habla de la trayectoria completa: con probabilidad uno, la sucesión <img src="https://latex.codecogs.com/png.latex?%5Cbar%20X_1,%5Cbar%20X_2,%5Cdots"> converge a <img src="https://latex.codecogs.com/png.latex?%5Cmu">.</li>
+<li>El <strong>teorema del límite central</strong> dice que <img src="https://latex.codecogs.com/png.latex?%5Cbar%20X_n-%5Cmu"> es del orden de <img src="https://latex.codecogs.com/png.latex?%5Csigma/%5Csqrt%20n"> y tiene forma de campana. Da probabilidades aproximadas, no cotas.</li>
+</ul>
+<section id="ley-débil" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="ley-débil"><span class="header-section-number">3.1</span> Ley débil</h3>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo 1 (cuántas lecturas)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo 1 (cuántas lecturas)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un laboratorio mide la concentración de un contaminante en una muestra de agua. El instrumento da lecturas independientes, cada una igual a la concentración verdadera <img src="https://latex.codecogs.com/png.latex?%5Cmu"> más un error aleatorio de media <img src="https://latex.codecogs.com/png.latex?0"> y desviación estándar <img src="https://latex.codecogs.com/png.latex?0%7B,%7D5"> (microgramos por litro). Se promedian <img src="https://latex.codecogs.com/png.latex?n"> lecturas. ¿Cuántas lecturas garantizan que el promedio quede a menos de <img src="https://latex.codecogs.com/png.latex?0%7B,%7D1"> de <img src="https://latex.codecogs.com/png.latex?%5Cmu"> con probabilidad al menos <img src="https://latex.codecogs.com/png.latex?0%7B,%7D95">, sin suponer nada más sobre la distribución del error?</p>
+<p>Las lecturas <img src="https://latex.codecogs.com/png.latex?X_i"> son i.i.d. con media <img src="https://latex.codecogs.com/png.latex?%5Cmu"> y varianza <img src="https://latex.codecogs.com/png.latex?0%7B,%7D25">. Por Chebyshev aplicado a <img src="https://latex.codecogs.com/png.latex?%5Cbar%20X_n">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?P%5Cbig(%7C%5Cbar%20X_n-%5Cmu%7C%5Cge0%7B,%7D1%5Cbig)%5Cle%5Cfrac%7B0%7B,%7D25%7D%7Bn%5C,(0%7B,%7D1)%5E2%7D=%5Cfrac%7B25%7D%7Bn%7D"></p>
+<p>Queremos <img src="https://latex.codecogs.com/png.latex?P(%7C%5Cbar%20X_n-%5Cmu%7C%3C0%7B,%7D1)%5Cge0%7B,%7D95">, es decir <img src="https://latex.codecogs.com/png.latex?P(%7C%5Cbar%20X_n-%5Cmu%7C%5Cge0%7B,%7D1)%5Cle0%7B,%7D05">. Basta con <img src="https://latex.codecogs.com/png.latex?25/n%5Cle0%7B,%7D05">, o sea</p>
+<p><img src="https://latex.codecogs.com/png.latex?n%5Cge500"></p>
+<p>Quinientas lecturas bastan, pero la cota es generosa porque solo usa la varianza. Más adelante, con el teorema del límite central, veremos que se necesitan muchas menos.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo 2 (estimar $\pi$ lanzando puntos)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo 2 (estimar <img src="https://latex.codecogs.com/png.latex?%5Cpi"> lanzando puntos)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Se lanzan puntos independientes <img src="https://latex.codecogs.com/png.latex?(U_i,V_i)"> con distribución uniforme en el cuadrado <img src="https://latex.codecogs.com/png.latex?%5B0,1%5D%5E2">. Sea <img src="https://latex.codecogs.com/png.latex?X_i=1"> si <img src="https://latex.codecogs.com/png.latex?U_i%5E2+V_i%5E2%5Cle1"> y <img src="https://latex.codecogs.com/png.latex?X_i=0"> en otro caso. El área del cuarto de círculo es <img src="https://latex.codecogs.com/png.latex?%5Cpi/4">, así que <img src="https://latex.codecogs.com/png.latex?X_i%5Csim%5Ctext%7BBernoulli%7D(p)"> con <img src="https://latex.codecogs.com/png.latex?p=%5Cpi/4">. Por la ley débil, <img src="https://latex.codecogs.com/png.latex?%5Cbar%20X_n%5Cto%5Cpi/4"> en probabilidad, y entonces <img src="https://latex.codecogs.com/png.latex?%5Chat%5Cpi_n=4%5Cbar%20X_n%5Cto%5Cpi">. ¿Cuántos puntos garantizan <img src="https://latex.codecogs.com/png.latex?P(%7C%5Chat%5Cpi_n-%5Cpi%7C%3C0%7B,%7D01)%5Cge0%7B,%7D99">?</p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?%7C%5Chat%5Cpi_n-%5Cpi%7C%3C0%7B,%7D01"> equivale a <img src="https://latex.codecogs.com/png.latex?%7C%5Cbar%20X_n-p%7C%3C0%7B,%7D0025">, Chebyshev da</p>
+<p><img src="https://latex.codecogs.com/png.latex?P%5Cbig(%7C%5Cbar%20X_n-p%7C%5Cge0%7B,%7D0025%5Cbig)%5Cle%5Cfrac%7Bp(1-p)%7D%7Bn%5C,(0%7B,%7D0025)%5E2%7D"></p>
+<p>y pedimos que esto sea a lo sumo <img src="https://latex.codecogs.com/png.latex?0%7B,%7D01">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?n%5Cge%5Cfrac%7Bp(1-p)%7D%7B(0%7B,%7D0025)%5E2%5C,(0%7B,%7D01)%7D"></p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?p(1-p)=%5Cfrac%5Cpi4%5Cbig(1-%5Cfrac%5Cpi4%5Cbig)%5Capprox0%7B,%7D1685"> resulta <img src="https://latex.codecogs.com/png.latex?n%5Cge2%5C,696%5C,767">. Si no conociéramos <img src="https://latex.codecogs.com/png.latex?p">, usaríamos <img src="https://latex.codecogs.com/png.latex?p(1-p)%5Cle1/4"> y obtendríamos <img src="https://latex.codecogs.com/png.latex?n%5Cge4%5C,000%5C,000">.</p>
+<p>La garantía es sobre la probabilidad: con ese <img src="https://latex.codecogs.com/png.latex?n">, la probabilidad de equivocarse en más de <img src="https://latex.codecogs.com/png.latex?0%7B,%7D01"> es a lo sumo <img src="https://latex.codecogs.com/png.latex?0%7B,%7D01">. No dice que una simulación concreta acierte, y tampoco una simulación demuestra que el área valga <img src="https://latex.codecogs.com/png.latex?%5Cpi/4">. Eso es un cálculo de área, y la simulación solo exhibe una realización de <img src="https://latex.codecogs.com/png.latex?%5Cbar%20X_n">.</p>
+</div>
+</div>
+</section>
+<section id="ley-fuerte" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="ley-fuerte"><span class="header-section-number">3.2</span> Ley fuerte</h3>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo 3 (un chance que arruina al jugador)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo 3 (un chance que arruina al jugador)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Considere un juego de chance hipotético: el jugador paga <img src="https://latex.codecogs.com/png.latex?%5C$1%5C,000"> por jugada y elige un número de tres cifras (de <img src="https://latex.codecogs.com/png.latex?000"> a <img src="https://latex.codecogs.com/png.latex?999">). Si el número que sale al azar coincide con el suyo, recibe <img src="https://latex.codecogs.com/png.latex?%5C$700%5C,000">. Las jugadas son independientes. La ganancia neta de la <img src="https://latex.codecogs.com/png.latex?i">-ésima jugada es entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?X_i=%5Cbegin%7Bcases%7D699%5C,000%20&amp;%20%5Ctext%7Bcon%20probabilidad%20%7D1/1000%5C%5C%5B2pt%5D%20-1%5C,000%20&amp;%20%5Ctext%7Bcon%20probabilidad%20%7D999/1000%5Cend%7Bcases%7D"></p>
+<p>con media</p>
+<p><img src="https://latex.codecogs.com/png.latex?E(X_i)=699%5C,000%5Ccdot%5Cfrac1%7B1000%7D-1%5C,000%5Ccdot%5Cfrac%7B999%7D%7B1000%7D=699-999=-300"></p>
+<p>y varianza finita (la variable toma solo dos valores). El capital tras <img src="https://latex.codecogs.com/png.latex?n"> jugadas es <img src="https://latex.codecogs.com/png.latex?S_n=X_1+%5Ccdots+X_n=n%5Cbar%20X_n">. Por la ley fuerte, con probabilidad uno <img src="https://latex.codecogs.com/png.latex?%5Cbar%20X_n%5Cto-300">. Entonces existe un <img src="https://latex.codecogs.com/png.latex?N"> (que depende de la trayectoria) tal que <img src="https://latex.codecogs.com/png.latex?%5Cbar%20X_n%3C-250"> para todo <img src="https://latex.codecogs.com/png.latex?n%5Cge%20N">, y por lo tanto <img src="https://latex.codecogs.com/png.latex?S_n%3C-250%5C,n"> para todo <img src="https://latex.codecogs.com/png.latex?n%5Cge%20N">. En consecuencia</p>
+<p><img src="https://latex.codecogs.com/png.latex?S_n%5Cto-%5Cinfty%5Cquad%5Ctext%7Bcon%20probabilidad%20uno%7D"></p>
+<p>Con probabilidad uno el jugador termina arruinado y, a partir de cierto momento, ya no vuelve a estar en ventaja. Para <img src="https://latex.codecogs.com/png.latex?n"> pequeño la trayectoria puede ir muy bien (un solo acierto la lleva a <img src="https://latex.codecogs.com/png.latex?+699%5C,000">), pero eso no contradice nada: la ley fuerte habla del comportamiento para <img src="https://latex.codecogs.com/png.latex?n"> grande. La ley débil, por sí sola, no alcanza para esta conclusión, porque habla de cada <img src="https://latex.codecogs.com/png.latex?n"> por separado y no controla la trayectoria completa.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo 4 (media geométrica de uniformes)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo 4 (media geométrica de uniformes)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sean <img src="https://latex.codecogs.com/png.latex?U_1,U_2,%5Cdots"> i.i.d. uniformes en <img src="https://latex.codecogs.com/png.latex?(0,1)"> y <img src="https://latex.codecogs.com/png.latex?G_n=(U_1U_2%5Ccdots%20U_n)%5E%7B1/n%7D"> su media geométrica. ¿Converge <img src="https://latex.codecogs.com/png.latex?G_n">?</p>
+<p>No es un promedio de las <img src="https://latex.codecogs.com/png.latex?U_i">, pero su logaritmo sí es un promedio:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clog%20G_n=%5Cfrac1n%5Csum_%7Bi=1%7D%5En%5Clog%20U_i"></p>
+<p>con <img src="https://latex.codecogs.com/png.latex?Y_i=%5Clog%20U_i"> i.i.d. Calculamos</p>
+<p><img src="https://latex.codecogs.com/png.latex?E(Y_i)=%5Cint_0%5E1%5Clog%20x%5C,dx=-1%5Cqquad%20E(Y_i%5E2)=%5Cint_0%5E1(%5Clog%20x)%5E2%5C,dx=2%5Cqquad%5Ctext%7BVar%7D(Y_i)=2-1=1%3C%5Cinfty"></p>
+<p>Por la ley fuerte, <img src="https://latex.codecogs.com/png.latex?%5Clog%20G_n%5Cto-1"> c.s. Como la exponencial es continua,</p>
+<p><img src="https://latex.codecogs.com/png.latex?G_n%5Cxrightarrow%7B%5Ctext%7Bc.s.%7D%7De%5E%7B-1%7D%5Capprox0%7B,%7D3679"></p>
+</div>
+</div>
+</section>
+<section id="teorema-del-límite-central" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="teorema-del-límite-central"><span class="header-section-number">3.3</span> Teorema del límite central</h3>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo 5 (una encuesta)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo 5 (una encuesta)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Se encuesta a <img src="https://latex.codecogs.com/png.latex?n=1%5C,000"> personas elegidas al azar sobre si apoyan una medida, y suponemos que la verdadera proporción es <img src="https://latex.codecogs.com/png.latex?p=0%7B,%7D5">. ¿Con qué probabilidad la proporción muestral queda a menos de <img src="https://latex.codecogs.com/png.latex?0%7B,%7D03"> de <img src="https://latex.codecogs.com/png.latex?p">?</p>
+<p>Las respuestas <img src="https://latex.codecogs.com/png.latex?X_i"> son Bernoulli<img src="https://latex.codecogs.com/png.latex?(0%7B,%7D5)">, con <img src="https://latex.codecogs.com/png.latex?%5Cmu=0%7B,%7D5"> y <img src="https://latex.codecogs.com/png.latex?%5Csigma=0%7B,%7D5">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?P%5Cbig(%7C%5Cbar%20X_n-p%7C%5Cle0%7B,%7D03%5Cbig)=P%5Cleft(%7CY_n%7C%5Cle%5Cfrac%7B0%7B,%7D03%7D%7B0%7B,%7D5/%5Csqrt%7B1000%7D%7D%5Cright)=P%5Cbig(%7CY_n%7C%5Cle1%7B,%7D897%5Cbig)%5Capprox2%5CPhi(1%7B,%7D897)-1%5Capprox0%7B,%7D942"></p>
+<p>El valor exacto de la binomial, <img src="https://latex.codecogs.com/png.latex?P(470%5Cle%20X%5Cle530)">, es <img src="https://latex.codecogs.com/png.latex?0%7B,%7D9463">. La aproximación con corrección de continuidad (el intervalo <img src="https://latex.codecogs.com/png.latex?%5B469%7B,%7D5,%5C,530%7B,%7D5%5D">) da también <img src="https://latex.codecogs.com/png.latex?0%7B,%7D9463">.</p>
+<p>Ahora la pregunta inversa: ¿cuántas personas se necesitan para que la proporción muestral esté a menos de <img src="https://latex.codecogs.com/png.latex?0%7B,%7D03"> de <img src="https://latex.codecogs.com/png.latex?p"> con probabilidad <img src="https://latex.codecogs.com/png.latex?0%7B,%7D95">, sin saber <img src="https://latex.codecogs.com/png.latex?p">? Como <img src="https://latex.codecogs.com/png.latex?%5Csigma%5Cle1/2"> siempre, y <img src="https://latex.codecogs.com/png.latex?%5CPhi(1%7B,%7D96)=0%7B,%7D975">, el teorema del límite central sugiere</p>
+<p><img src="https://latex.codecogs.com/png.latex?n%5Cge%5Cleft(%5Cfrac%7B1%7B,%7D96%5Ccdot0%7B,%7D5%7D%7B0%7B,%7D03%7D%5Cright)%5E2%5Capprox1067%7B,%7D1%5Cqquad%5Ctext%7Bes%20decir,%20%7Dn%5Capprox1068"></p>
+<p>mientras que Chebyshev, que garantiza en lugar de aproximar, exige</p>
+<p><img src="https://latex.codecogs.com/png.latex?n%5Cge%5Cfrac%7B1%7D%7B4%5C,(0%7B,%7D03)%5E2%5C,(0%7B,%7D05)%7D%5Capprox5556"></p>
+<p>La diferencia entre <img src="https://latex.codecogs.com/png.latex?5556"> y <img src="https://latex.codecogs.com/png.latex?1068"> es el precio de no usar la forma de la distribución del promedio.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Ejemplo 6 (tiempos de espera)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ejemplo 6 (tiempos de espera)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El tiempo de espera de un bus en una estación se modela como una variable exponencial de media <img src="https://latex.codecogs.com/png.latex?3"> minutos, independiente de un viaje a otro. En <img src="https://latex.codecogs.com/png.latex?40"> viajes, ¿cuál es la probabilidad de que el tiempo total de espera supere <img src="https://latex.codecogs.com/png.latex?140"> minutos?</p>
+<p>Cada <img src="https://latex.codecogs.com/png.latex?X_i"> tiene media <img src="https://latex.codecogs.com/png.latex?3"> y varianza <img src="https://latex.codecogs.com/png.latex?9">. Para <img src="https://latex.codecogs.com/png.latex?S=X_1+%5Ccdots+X_%7B40%7D">, la media es <img src="https://latex.codecogs.com/png.latex?120"> y la varianza es <img src="https://latex.codecogs.com/png.latex?360">, con <img src="https://latex.codecogs.com/png.latex?%5Csigma_S=%5Csqrt%7B360%7D%5Capprox18%7B,%7D97">. Por el teorema del límite central,</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(S%3E140)=P%5Cleft(%5Cfrac%7BS-120%7D%7B18%7B,%7D97%7D%3E%5Cfrac%7B140-120%7D%7B18%7B,%7D97%7D%5Cright)%5Capprox1-%5CPhi(1%7B,%7D054)%5Capprox0%7B,%7D146"></p>
+<p>Aquí podemos comparar con el valor exacto. Por la <a href="../../../cursos/probabilidad/continuasespeciales/index.html">sección de distribuciones continuas especiales</a>, <img src="https://latex.codecogs.com/png.latex?S"> es una gamma (la suma de <img src="https://latex.codecogs.com/png.latex?40"> exponenciales independientes), y por la identidad <img src="https://latex.codecogs.com/png.latex?P(T_n%5Cle%20t)=P(N_t%5Cge%20n)"> del proceso de Poisson de tasa <img src="https://latex.codecogs.com/png.latex?1/3"> por minuto,</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(S%3E140)=P(N_%7B140%7D%5Cle39)%5Cqquad%20N_%7B140%7D%5Csim%5Ctext%7BPoisson%7D%5Cleft(%5Cfrac%7B140%7D%7B3%7D%5Cright)"></p>
+<p>que vale <img src="https://latex.codecogs.com/png.latex?0%7B,%7D1462">. La aproximación normal coincide con él en las tres cifras mostradas, aunque cada sumando es una variable muy asimétrica.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="ejercicios" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">4</span> Ejercicios</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejercicios">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejercicios
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para los ejercicios con la normal puede usar <img src="https://latex.codecogs.com/png.latex?%5CPhi(0%7B,%7D87)=0%7B,%7D8078">, <img src="https://latex.codecogs.com/png.latex?%5CPhi(1%7B,%7D10)=0%7B,%7D8643"> y <img src="https://latex.codecogs.com/png.latex?%5CPhi(1%7B,%7D96)=0%7B,%7D975">.</p>
+<p><strong>Ley débil</strong></p>
+<ol type="1">
+<li><p>Se quiere estimar la proporción <img src="https://latex.codecogs.com/png.latex?p"> de hogares de una localidad que tienen acceso a internet. ¿Cuántos hogares deben encuestarse para asegurar, sin ninguna información previa sobre <img src="https://latex.codecogs.com/png.latex?p">, que la proporción muestral difiera de <img src="https://latex.codecogs.com/png.latex?p"> en menos de <img src="https://latex.codecogs.com/png.latex?0%7B,%7D02"> con probabilidad al menos <img src="https://latex.codecogs.com/png.latex?0%7B,%7D95">?</p></li>
+<li><p>Sean <img src="https://latex.codecogs.com/png.latex?U_1,U_2,%5Cdots"> i.i.d. uniformes en <img src="https://latex.codecogs.com/png.latex?(0,1)">. Demuestre que <img src="https://latex.codecogs.com/png.latex?%5Cfrac1n%5Csum_%7Bi=1%7D%5EnU_i%5E2"> converge en probabilidad a <img src="https://latex.codecogs.com/png.latex?1/3">, y halle un <img src="https://latex.codecogs.com/png.latex?n"> tal que la probabilidad de que el promedio esté a menos de <img src="https://latex.codecogs.com/png.latex?0%7B,%7D05"> de <img src="https://latex.codecogs.com/png.latex?1/3"> sea al menos <img src="https://latex.codecogs.com/png.latex?0%7B,%7D9">.</p></li>
+</ol>
+<p><strong>Ley fuerte</strong></p>
+<ol start="3" type="1">
+<li><p>Sean <img src="https://latex.codecogs.com/png.latex?X_1,X_2,%5Cdots"> i.i.d. exponenciales de media <img src="https://latex.codecogs.com/png.latex?1/%5Clambda">. Demuestre que <img src="https://latex.codecogs.com/png.latex?%5Cfrac1n%5Csum_%7Bi=1%7D%5EnX_i%5E2%5Cto2/%5Clambda%5E2"> casi seguramente.</p></li>
+<li><p>Se lanza indefinidamente una moneda con probabilidad <img src="https://latex.codecogs.com/png.latex?p"> de cara. Sea <img src="https://latex.codecogs.com/png.latex?D_n"> el número de caras menos el número de sellos en los primeros <img src="https://latex.codecogs.com/png.latex?n"> lanzamientos. (a) Si <img src="https://latex.codecogs.com/png.latex?p=1/2">, demuestre que <img src="https://latex.codecogs.com/png.latex?D_n/n%5Cto0"> casi seguramente. (b) Si <img src="https://latex.codecogs.com/png.latex?p%3E1/2">, demuestre que <img src="https://latex.codecogs.com/png.latex?D_n%5Cto+%5Cinfty"> casi seguramente.</p></li>
+<li><p>En la ruleta americana hay <img src="https://latex.codecogs.com/png.latex?38"> casillas, de las cuales <img src="https://latex.codecogs.com/png.latex?18"> son rojas. Un jugador apuesta repetidamente una unidad al rojo: gana una unidad si sale rojo y pierde una unidad en caso contrario. Demuestre que, con probabilidad uno, su capital tiende a menos infinito.</p></li>
+</ol>
+<p><strong>Función característica</strong></p>
+<ol start="6" type="1">
+<li><p>Calcule la función característica de una Bernoulli<img src="https://latex.codecogs.com/png.latex?(p)"> y, usando independencia, la de una Binomial<img src="https://latex.codecogs.com/png.latex?(n,p)">. Verifique, derivando en cero, que <img src="https://latex.codecogs.com/png.latex?E(X)=np"> y que <img src="https://latex.codecogs.com/png.latex?E(X%5E2)=npq+n%5E2p%5E2">, con <img src="https://latex.codecogs.com/png.latex?q=1-p">.</p></li>
+<li><p>Sea <img src="https://latex.codecogs.com/png.latex?X%5Csim%20N(0,1)"> y <img src="https://latex.codecogs.com/png.latex?Y=%5Csigma%20X+%5Cmu"> con <img src="https://latex.codecogs.com/png.latex?%5Csigma%3E0">. Halle <img src="https://latex.codecogs.com/png.latex?%5Cvarphi_Y">. Concluya que si <img src="https://latex.codecogs.com/png.latex?X_1%5Csim%20N(%5Cmu_1,%5Csigma_1%5E2)"> y <img src="https://latex.codecogs.com/png.latex?X_2%5Csim%20N(%5Cmu_2,%5Csigma_2%5E2)"> son independientes, entonces <img src="https://latex.codecogs.com/png.latex?X_1+X_2%5Csim%20N(%5Cmu_1+%5Cmu_2,%5Csigma_1%5E2+%5Csigma_2%5E2)">.</p></li>
+</ol>
+<p><strong>Teorema del límite central</strong></p>
+<ol start="8" type="1">
+<li><p>El peso de cada paquete que llega a una bodega es uniforme entre <img src="https://latex.codecogs.com/png.latex?1"> y <img src="https://latex.codecogs.com/png.latex?3"> kg, independiente de los demás. Aproxime la probabilidad de que <img src="https://latex.codecogs.com/png.latex?36"> paquetes pesen en total más de <img src="https://latex.codecogs.com/png.latex?75"> kg.</p></li>
+<li><p>El número de llamadas diarias a una línea de atención es Poisson de media <img src="https://latex.codecogs.com/png.latex?25">, independiente de un día a otro. Aproxime la probabilidad de que en <img src="https://latex.codecogs.com/png.latex?30"> días el total supere <img src="https://latex.codecogs.com/png.latex?780"> llamadas.</p></li>
+<li><p>Una variable tiene desviación estándar <img src="https://latex.codecogs.com/png.latex?3"> y media desconocida <img src="https://latex.codecogs.com/png.latex?%5Cmu">. ¿Cuántas observaciones independientes se necesitan para que el promedio quede a menos de <img src="https://latex.codecogs.com/png.latex?0%7B,%7D5"> de <img src="https://latex.codecogs.com/png.latex?%5Cmu"> con probabilidad aproximada <img src="https://latex.codecogs.com/png.latex?0%7B,%7D95">? Compare con el <img src="https://latex.codecogs.com/png.latex?n"> que garantiza Chebyshev.</p></li>
+<li><p>Sea <img src="https://latex.codecogs.com/png.latex?X_%5Clambda%5Csim%5Ctext%7BPoisson%7D(%5Clambda)">. Calcule su función característica y, con el mismo método de la demostración del teorema del límite central, demuestre que <img src="https://latex.codecogs.com/png.latex?(X_%5Clambda-%5Clambda)/%5Csqrt%5Clambda"> converge a <img src="https://latex.codecogs.com/png.latex?N(0,1)"> cuando <img src="https://latex.codecogs.com/png.latex?%5Clambda%5Cto%5Cinfty">.</p></li>
+</ol>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/probabilidad/leyfuerte/</guid>
+  <pubDate>Sat, 07 Nov 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Vectores aleatorios</title>
   <dc:creator>Arturo Sanjuán</dc:creator>

@@ -1,10 +1,45 @@
 [
   {
-    "listing": "/cursos/index.html",
+    "listing": "/cursos/probabilidad/index.html",
     "items": [
-      "/cursos/numerico/index.html",
-      "/cursos/odes/index.html",
-      "/cursos/probabilidad/index.html"
+      "/cursos/probabilidad/introduccion/index.html",
+      "/cursos/probabilidad/calculoprobabilidades/index.html",
+      "/cursos/probabilidad/condicional/index.html",
+      "/cursos/probabilidad/taller-1/index.html",
+      "/cursos/probabilidad/vaintro/index.html",
+      "/cursos/probabilidad/vadiscretas/index.html",
+      "/cursos/probabilidad/vacontinuas/index.html",
+      "/cursos/probabilidad/limitenormal/index.html",
+      "/cursos/probabilidad/continuasespeciales/index.html",
+      "/cursos/probabilidad/taller-2/index.html",
+      "/cursos/probabilidad/parcial-1/index.html",
+      "/cursos/probabilidad/riesgo/index.html",
+      "/cursos/probabilidad/taller-3/index.html",
+      "/cursos/probabilidad/vecaleatorios/index.html",
+      "/cursos/probabilidad/leydebil/index.html",
+      "/cursos/probabilidad/leyfuerte/index.html"
+    ]
+  },
+  {
+    "listing": "/cursos/numerico/index.html",
+    "items": [
+      "/cursos/numerico/introduccion/index.html",
+      "/cursos/numerico/condicionamiento/index.html",
+      "/cursos/numerico/estabilidad/index.html",
+      "/cursos/numerico/taller-1/index.html",
+      "/cursos/numerico/matrices/index.html",
+      "/cursos/numerico/normas/index.html",
+      "/cursos/numerico/lu/index.html",
+      "/cursos/numerico/complejidad/index.html",
+      "/cursos/numerico/taller-2/index.html",
+      "/cursos/numerico/parcial-1/index.html",
+      "/cursos/numerico/raices/index.html",
+      "/cursos/numerico/newton/index.html",
+      "/cursos/numerico/convergencia/index.html",
+      "/cursos/numerico/taller-3/index.html",
+      "/cursos/numerico/interpolacion/index.html",
+      "/cursos/numerico/derivacion/index.html",
+      "/cursos/numerico/integracion/index.html"
     ]
   },
   {
@@ -31,45 +66,11 @@
     ]
   },
   {
-    "listing": "/cursos/numerico/index.html",
+    "listing": "/cursos/index.html",
     "items": [
-      "/cursos/numerico/introduccion/index.html",
-      "/cursos/numerico/condicionamiento/index.html",
-      "/cursos/numerico/estabilidad/index.html",
-      "/cursos/numerico/taller-1/index.html",
-      "/cursos/numerico/matrices/index.html",
-      "/cursos/numerico/normas/index.html",
-      "/cursos/numerico/lu/index.html",
-      "/cursos/numerico/complejidad/index.html",
-      "/cursos/numerico/taller-2/index.html",
-      "/cursos/numerico/parcial-1/index.html",
-      "/cursos/numerico/raices/index.html",
-      "/cursos/numerico/newton/index.html",
-      "/cursos/numerico/convergencia/index.html",
-      "/cursos/numerico/taller-3/index.html",
-      "/cursos/numerico/interpolacion/index.html",
-      "/cursos/numerico/derivacion/index.html",
-      "/cursos/numerico/integracion/index.html"
-    ]
-  },
-  {
-    "listing": "/cursos/probabilidad/index.html",
-    "items": [
-      "/cursos/probabilidad/introduccion/index.html",
-      "/cursos/probabilidad/calculoprobabilidades/index.html",
-      "/cursos/probabilidad/condicional/index.html",
-      "/cursos/probabilidad/taller-1/index.html",
-      "/cursos/probabilidad/vaintro/index.html",
-      "/cursos/probabilidad/vadiscretas/index.html",
-      "/cursos/probabilidad/vacontinuas/index.html",
-      "/cursos/probabilidad/limitenormal/index.html",
-      "/cursos/probabilidad/continuasespeciales/index.html",
-      "/cursos/probabilidad/taller-2/index.html",
-      "/cursos/probabilidad/parcial-1/index.html",
-      "/cursos/probabilidad/riesgo/index.html",
-      "/cursos/probabilidad/taller-3/index.html",
-      "/cursos/probabilidad/vecaleatorios/index.html",
-      "/cursos/probabilidad/leydebil/index.html"
+      "/cursos/numerico/index.html",
+      "/cursos/odes/index.html",
+      "/cursos/probabilidad/index.html"
     ]
   }
 ]
