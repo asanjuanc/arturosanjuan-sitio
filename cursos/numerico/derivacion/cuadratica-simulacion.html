@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La cuadrática por tres nodos y la fórmula centrada</title>
+<style>
+  :root{
+    --ink:#1e2327; --muted:#5a6570; --line:#dde3e8; --bg:#fbfcfd;
+    --accent:#2563a8; --accent2:#c1440e; --good:#1a7f5a;
+    --panel:#ffffff;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; padding:18px 20px 26px; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:14.5px; line-height:1.45;
+  }
+  h2{font-size:16px; margin:0 0 4px;}
+  .sub{color:var(--muted); margin:0 0 16px; font-size:13px;}
+  .qd-eq{
+    background:#f2f5f7; border:1px solid var(--line); border-radius:10px;
+    padding:10px 14px; margin-bottom:14px; font-size:13.5px;
+  }
+  .qd-eq div{margin:2px 0;}
+  .qd-grid{display:flex; gap:18px; flex-wrap:wrap; align-items:flex-start;}
+  .qd-panel{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 16px;}
+  .qd-ctrl{flex:1 1 240px; max-width:320px;}
+  .qd-plot{flex:2 1 380px; min-width:0;}
+  .qd-plot svg{width:100%; height:auto; display:block; background:#fff; border-radius:6px;}
+  .qd-lab{display:block; font-size:13px; margin:2px 0 4px;}
+  .qd-val{font-variant-numeric:tabular-nums; color:var(--accent); font-weight:600;}
+  .qd-ctrl input[type=range]{width:100%; margin:0 0 12px; accent-color:var(--accent);}
+  .qd-sec{font-size:12.5px; color:var(--muted); font-weight:600; margin:12px 0 6px;}
+  .qd-btns{display:flex; flex-wrap:wrap; gap:6px; margin:0 0 12px;}
+  .qd-btn{
+    border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:6px;
+    padding:3px 9px; font:inherit; font-size:12.5px; cursor:pointer;
+  }
+  .qd-btn:hover{background:#f2f5f7;}
+  .qd-btn[aria-pressed="true"]{border-color:var(--accent); background:#e6eef8;}
+  .qd-chk{display:block; font-size:13px; margin:0 0 5px;}
+  .qd-chk input{accent-color:var(--accent); margin-right:6px;}
+  .qd-sw{display:inline-block; width:12px; height:3px; margin-right:6px; vertical-align:middle;}
+  .qd-pie{margin:8px 0 0; font-size:12px; color:var(--muted);}
+  .qd-tabla{width:100%; border-collapse:collapse; font-size:13px; margin-top:10px;}
+  .qd-tabla th,.qd-tabla td{padding:4px 8px; text-align:right; border-bottom:1px solid var(--line);}
+  .qd-tabla th:first-child,.qd-tabla td:first-child{text-align:left;}
+  .qd-tabla th{color:var(--muted); font-weight:600; font-size:12.5px;}
+  .qd-tabla td{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-variant-numeric:tabular-nums;}
+  .qd-tabla tr.qd-cen td{font-weight:700; color:var(--accent2);}
+  svg text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; user-select:text;}
+</style>
+</head>
+<body>
+
+<h2>La cuadrática por tres nodos</h2>
+<p class="sub">La cuadrática <i>Q</i> interpola a <i>f</i> en &minus;<i>h</i>, 0 y <i>h</i>. Su derivada en 0 es la pendiente de la secante centrada. Elija uno de los tres ejemplos, cambie <i>h</i> y compare con la tangente a <i>f</i> en 0.</p>
+
+<div class="qd-eq">
+  <div><i>Q</i>&prime;(0) = (<i>f</i>(<i>h</i>) &minus; <i>f</i>(&minus;<i>h</i>)) / (2<i>h</i>)</div>
+</div>
+
+<div class="qd-grid">
+  <div class="qd-panel qd-ctrl">
+    <div class="qd-sec" style="margin-top:0">Ejemplo</div>
+    <div class="qd-btns" id="qd-ej">
+      <button class="qd-btn" data-e="0" aria-pressed="true"><i>x</i><sup>3</sup></button>
+      <button class="qd-btn" data-e="1" aria-pressed="false"><i>x</i><sup>4</sup></button>
+      <button class="qd-btn" data-e="2" aria-pressed="false"><i>e</i><sup>&minus;(<i>x</i>+0,5)</sup></button>
+    </div>
+
+    <label class="qd-lab" for="qd-h">Paso: <i>h</i> = <span class="qd-val" id="qd-hv"></span></label>
+    <input type="range" id="qd-h" min="0.05" max="0.6" step="any" value="0.3333">
+
+    <div class="qd-sec">Mostrar</div>
+    <label class="qd-chk"><input type="checkbox" id="qd-q" checked><span class="qd-sw" style="background:#c1440e"></span>Cuadrática <i>Q</i></label>
+    <label class="qd-chk"><input type="checkbox" id="qd-t" checked><span class="qd-sw" style="background:#1a7f5a"></span>Tangente a <i>f</i> en 0</label>
+    <label class="qd-chk"><input type="checkbox" id="qd-sa"><span class="qd-sw" style="background:#8a5a00"></span>Secante hacia adelante</label>
+    <label class="qd-chk"><input type="checkbox" id="qd-sb"><span class="qd-sw" style="background:#7b3fa0"></span>Secante hacia atrás</label>
+    <label class="qd-chk"><input type="checkbox" id="qd-sc" checked><span class="qd-sw" style="background:#3a3f45"></span>Secante centrada</label>
+    <label class="qd-chk"><input type="checkbox" id="qd-tq"><span class="qd-sw" style="background:#c1440e"></span>Tangente a <i>Q</i> en 0</label>
+  </div>
+
+  <div class="qd-panel qd-plot">
+    <svg id="qd-svg" viewBox="0 0 640 400" role="img" aria-label="Gráfica de f, de la cuadrática que interpola a f en menos h, 0 y h, de la tangente a f en 0 y de las secantes"></svg>
+    <p class="qd-pie">Puntos naranja: los tres nodos. La tangente a <i>Q</i> en 0 es paralela a la secante centrada.</p>
+    <table class="qd-tabla" id="qd-tabla"></table>
+  </div>
+</div>
+
+<script>
+(function(){
+  var NS="http://www.w3.org/2000/svg";
+  var EJ=[
+    {f:function(x){return x*x*x;}, d0:0, h:1/3, win:[-0.8,0.8], tit:"f(x) = x³"},
+    {f:function(x){return x*x*x*x;}, d0:0, h:0.25, win:[-0.7,0.7], tit:"f(x) = x⁴"},
+    {f:function(x){return Math.exp(-(x+0.5));}, d0:-Math.exp(-0.5), h:0.2, win:[-0.8,0.8], tit:"f(x) = exp(−(x + 0,5))"}
+  ];
+  var e=0;
+  var sh=document.getElementById("qd-h"), hv=document.getElementById("qd-hv");
+  var svg=document.getElementById("qd-svg"), tabla=document.getElementById("qd-tabla");
+  var chq=document.getElementById("qd-q"), cht=document.getElementById("qd-t"),
+      chsa=document.getElementById("qd-sa"), chsb=document.getElementById("qd-sb"),
+      chsc=document.getElementById("qd-sc"), chtq=document.getElementById("qd-tq");
+  var W=640,H=400,L=58,R=18,T=16,B=44;
+
+  function fmt(v,d){
+    d=(d===undefined)?6:d;
+    if(Math.abs(v)<1e-3 && v!==0){
+      var ex=Math.floor(Math.log10(Math.abs(v))), m=v/Math.pow(10,ex);
+      return m.toFixed(2).replace(".",",")+"×10<sup>"+String(ex).replace("-","&minus;")+"</sup>";
+    }
+    return (Math.abs(v)<5e-13?0:v).toFixed(d).replace(".",",").replace("-","&minus;");
+  }
+  function fmtS(v,d){ return fmt(v,d).replace(/&minus;/g,"−").replace(/<[^>]*>/g,""); }
+  function el(name,attrs,parent,text){
+    var n=document.createElementNS(NS,name);
+    for(var k in attrs) n.setAttribute(k,attrs[k]);
+    if(text!==undefined) n.textContent=text;
+    (parent||svg).appendChild(n); return n;
+  }
+
+  function draw(){
+    var E=EJ[e], h=parseFloat(sh.value), f=E.f;
+    hv.textContent=fmtS(h,3);
+    var fm=f(-h), f0=f(0), fp=f(h);
+    function Q(x){ return x*(x-h)/(2*h*h)*fm-(x*x-h*h)/(h*h)*f0+x*(x+h)/(2*h*h)*fp; }
+    var q1=(fp-fm)/(2*h), fw=(fp-f0)/h, bw=(f0-fm)/h;
+
+    var x0=E.win[0], x1=E.win[1], y0=Infinity, y1=-Infinity, i, N=240, u;
+    for(i=0;i<=N;i++){ u=x0+(x1-x0)*i/N; y0=Math.min(y0,f(u),Q(u)); y1=Math.max(y1,f(u),Q(u)); }
+    var pad=0.1*(y1-y0); y0-=pad; y1+=pad;
+    function X(v){return L+(v-x0)/(x1-x0)*(W-L-R);}
+    function Y(v){return H-B-(v-y0)/(y1-y0)*(H-T-B);}
+
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    var defs=el("defs",{}); var cp=el("clipPath",{id:"qd-clip"},defs);
+    el("rect",{x:L,y:T,width:W-L-R,height:H-T-B},cp);
+    el("rect",{x:L,y:T,width:W-L-R,height:H-T-B,fill:"none",stroke:"#9aa5ad","stroke-width":1});
+    if(y0<0&&y1>0) el("line",{x1:L,x2:W-R,y1:Y(0),y2:Y(0),stroke:"#b8c1c8"});
+    el("line",{x1:X(0),x2:X(0),y1:T,y2:H-B,stroke:"#b8c1c8"});
+
+    var g=el("g",{"clip-path":"url(#qd-clip)"});
+    function recta(px,py,m,color,w,dash){
+      var a={x1:X(x0),y1:Y(py+m*(x0-px)),x2:X(x1),y2:Y(py+m*(x1-px)),stroke:color,"stroke-width":w};
+      if(dash) a["stroke-dasharray"]=dash;
+      el("line",a,g);
+    }
+    if(cht.checked) recta(0,f0,E.d0,"#1a7f5a",1.8,"7 5");
+    if(chsa.checked) recta(0,f0,fw,"#8a5a00",1.6);
+    if(chsb.checked) recta(0,f0,bw,"#7b3fa0",1.6);
+    if(chsc.checked) recta(-h,fm,q1,"#3a3f45",1.6);
+    if(chtq.checked) recta(0,f0,q1,"#c1440e",1.4,"2 4");
+
+    var p=[]; for(i=0;i<=N;i++){ u=x0+(x1-x0)*i/N; p.push(X(u).toFixed(1)+","+Y(f(u)).toFixed(1)); }
+    el("polyline",{points:p.join(" "),fill:"none",stroke:"#2563a8","stroke-width":2.4},g);
+    if(chq.checked){
+      var q=[]; for(i=0;i<=N;i++){ u=x0+(x1-x0)*i/N; q.push(X(u).toFixed(1)+","+Y(Q(u)).toFixed(1)); }
+      el("polyline",{points:q.join(" "),fill:"none",stroke:"#c1440e","stroke-width":2.2},g);
+    }
+
+    // nodos y rótulos
+    [[-h,fm,"−h"],[0,f0,"0"],[h,fp,"h"]].forEach(function(n){
+      el("line",{x1:X(n[0]),y1:Y(n[1]),x2:X(n[0]),y2:H-B,stroke:"#8a949c","stroke-dasharray":"3 4"});
+      el("line",{x1:X(n[0]),y1:H-B,x2:X(n[0]),y2:H-B+5,stroke:"#5a6570"});
+      el("text",{x:X(n[0]),y:H-B+19,"text-anchor":"middle","font-size":13,fill:"#1e2327"},null,n[2]);
+      el("circle",{cx:X(n[0]),cy:Y(n[1]),r:4.6,fill:"#c1440e"});
+    });
+    // ejes de valores
+    var ticks=5;
+    for(i=0;i<=ticks;i++){
+      var v=y0+(y1-y0)*i/ticks;
+      el("text",{x:L-6,y:Y(v)+4,"text-anchor":"end","font-size":11.5,fill:"#5a6570"},null,fmtS(v,Math.abs(y1-y0)<0.5?3:2));
+    }
+    el("text",{x:W-R-8,y:T+18,"text-anchor":"end","font-size":13,fill:"#2563a8"},null,E.tit);
+
+    // tabla
+    function relf(err){ if(E.d0===0) return "no definido"; var r=err/Math.abs(E.d0); if(r<1e-3) return fmt(r); return r.toPrecision(3).replace(".",","); }
+    function fila(nom,v,cls){
+      var err=Math.abs(v-E.d0);
+      return "<tr"+(cls?" class='"+cls+"'":"")+"><td>"+nom+"</td><td>"+fmt(v,6)+"</td><td>"+fmt(err,6)+"</td><td>"+relf(err)+"</td></tr>";
+    }
+    tabla.innerHTML="<tr><th>Fórmula</th><th>Valor</th><th>Error abs.</th><th>Error rel.</th></tr>"+
+      fila("Adelante",fw)+fila("Atrás",bw)+fila("Centrada = <i>Q</i>&prime;(0)",q1,"qd-cen")+
+      "<tr><td><i>f</i>&prime;(0) exacta</td><td>"+fmt(E.d0,6)+"</td><td></td><td></td></tr>";
+  }
+
+  function setPar(){
+    var E=EJ[e]; sh.value=E.h; draw();
+  }
+  document.getElementById("qd-ej").addEventListener("click",function(ev){
+    var b=ev.target.closest("button"); if(!b) return;
+    e=parseInt(b.getAttribute("data-e"),10);
+    [].forEach.call(this.children,function(c){c.setAttribute("aria-pressed",c===b?"true":"false");});
+    setPar();
+  });
+  sh.addEventListener("input",draw);
+  [chq,cht,chsa,chsb,chsc,chtq].forEach(function(c){c.addEventListener("change",draw);});
+  setPar();
+})();
+</script>
+</body>
+</html>

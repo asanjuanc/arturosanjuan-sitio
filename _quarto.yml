@@ -92,6 +92,8 @@ website:
         - cursos/numerico/convergencia/index.qmd
         - cursos/numerico/taller-3/index.qmd
         - cursos/numerico/interpolacion/index.qmd
+        - cursos/numerico/derivacion/index.qmd
+        - cursos/numerico/integracion/index.qmd
 
     - id: probabilidad
       title: "Probabilidad"

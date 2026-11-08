@@ -1,0 +1,87 @@
+---
+title: "Integración numérica"
+subtitle: "La fórmula del trapecio como integral del interpolante lineal a trozos y su error de truncamiento."
+author: "Arturo Sanjuán"
+date: 2026-11-07
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 18
+---
+
+Vamos a usar la interpolación lineal a trozos para integrar numéricamente. Seguimos la sección 5.6 del libro de Driscoll y Braun.
+
+## La fórmula del trapecio
+
+Sea $f$ una función en $[a,b]$. Tomamos los nodos equiespaciados $t_k=a+kh$, $k=0,\dots,n$, con $h=\dfrac{b-a}{n}$, y reemplazamos $f$ por su interpolante lineal a trozos $p$. El siguiente tablero muestra ese reemplazo para tres funciones, y permite aumentar el número de nodos.
+
+<iframe src="trapecio-simulacion.html" width="100%" height="960px" style="border:none;"></iframe>
+
+Como se ve en la figura, la integral de $f$ se parece bastante bien a la integral del interpolante PL. Esto es,
+
+$$\int_a^b f(x)\,dx\approx\int_a^b\sum_{k=0}^{n}f(t_k)\,H_k(x)\,dx=\sum_{k=0}^{n}f(t_k)\int_a^b H_k(x)\,dx,$$
+
+donde $H_k$ son las funciones sombrero. Cada sombrero interior es un triángulo de altura $1$ y base $2h$, y los dos de los extremos son triángulos de altura $1$ y base $h$, así que
+
+$$\int_a^b H_k(x)\,dx=h\,w_k,\qquad w_k=\begin{cases}
+\dfrac12, & k=0\ \text{ o }\ k=n,\\[2mm]
+1, & k=1,\dots,n-1.
+\end{cases}$$
+
+Entonces
+
+$$\int_a^b f(x)\,dx\approx h\Big[\tfrac12 f(t_0)+f(t_1)+\cdots+f(t_{n-1})+\tfrac12 f(t_n)\Big]=h\sum_{k=0}^{n}w_k f(t_k)=T_f(h).\tag{1}$$
+
+::: {.callout-important title="Definición: fórmula del trapecio"}
+La fórmula del trapecio con $n$ subintervalos para la integral de $f$ en $[a,b]$ es el número $T_f(h)$ dado por (1). Es el área de los $n$ trapecios que forma el interpolante lineal a trozos de $f$ en los nodos $t_0,\dots,t_n$.
+:::
+
+## El error de truncamiento
+
+El error de truncamiento en este caso es
+
+$$\tau_f(h)=\int_a^b f(x)\,dx-h\sum_{k=0}^{n}w_k f(t_k).$$
+
+Si $I$ es la integral, entonces $\tau_f(h)=I-T_f(h)=\displaystyle\int_a^b (f-p)\,dx$, y por lo tanto
+
+$$|I-T_f(h)|\le(b-a)\,\|f-p\|_\infty\le(b-a)\,O(h^2).$$
+
+La última desigualdad usa el teorema de convergencia de la interpolación lineal a trozos: si $f$ tiene segunda derivada continua, $\|f-p\|_\infty\le\|f''\|_\infty h^2$. Es decir, el error algebraico del trapecio es de orden $2$.
+
+## Un ejemplo con la distribución normal
+
+Hagamos un ejemplo con calculadora. Sabemos que, si $X\sim N(0,1)$,
+
+$$P(-1\le X\le 1)\approx 0{,}6827,$$
+
+y por definición
+
+$$P(-1\le X\le 1)=\frac{1}{\sqrt{2\pi}}\int_{-1}^{1}e^{-x^2/2}\,dx.$$
+
+Sea $f(x)=e^{-x^2/2}$. Con $n=2$ se tiene $h=1$ y los nodos $-1$, $0$ y $1$:
+
+$$\begin{aligned}
+P(-1\le X\le 1)&\approx\frac{1}{\sqrt{2\pi}}\Big(\tfrac12 f(-1)+f(0)+\tfrac12 f(1)\Big)\\
+&=\frac{1}{\sqrt{2\pi}}\big(f(1)+f(0)\big)\\
+&\approx 0{,}6409.
+\end{aligned}$$
+
+Nada mal para tratarse de solo $3$ nodos. Si ponemos $5$ nodos, es decir $n=4$ y $h=\tfrac12$, queda
+
+$$\begin{aligned}
+P(-1\le X\le 1)&\approx\frac{1}{\sqrt{2\pi}}\cdot\frac12\Big[\tfrac12 f(-1)+f(-\tfrac12)+f(0)+f(\tfrac12)+\tfrac12 f(1)\Big]\\
+&=\frac{1}{\sqrt{2\pi}}\cdot\frac12\Big(f(1)+f(0)+2f(\tfrac12)\Big)\\
+&\approx 0{,}6725.
+\end{aligned}$$
+
+El error pasó de cerca de $0{,}042$ a cerca de $0{,}010$: al duplicar $n$ se dividió entre unos $4$, como corresponde a un método de orden $2$. Estos dos cálculos se pueden reproducir en el tablero con la gaussiana y $n=2$ y $n=4$.
+
+::: {.callout-note title="Tarea"}
+Haga todos los ejercicios de la sección 5.6 de *Fundamentals of Numerical Computation* que mencionen el trapecio, disponibles en <https://fncbook.com/julia/integration#exercises>. Demuestre que si $f$ no cambia de signo, el condicionamiento del trapecio es $1$.
+:::

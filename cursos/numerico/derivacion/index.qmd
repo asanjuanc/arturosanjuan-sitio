@@ -1,0 +1,155 @@
+---
+title: "Derivación numérica"
+subtitle: "Fórmulas de diferencias finitas, error de truncamiento, orden de precisión y el efecto del error de redondeo."
+author: "Arturo Sanjuán"
+date: 2026-11-07
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 17
+---
+
+Seguimos con el capítulo 5 del libro de Driscoll y Braun, ahora con las secciones 5.4 y 5.5, dedicadas a las fórmulas de diferencias finitas y a su convergencia.
+
+## Diferencias hacia adelante, hacia atrás y centrada
+
+Desde nuestro curso de cálculo hemos visto que la pendiente de una recta secante se aproxima a la derivada de la función. En el tablero se ve con las tres versiones que usaremos: la secante que usa el punto $x$ y el punto $x+h$, la que usa $x-h$ y $x$, y la que usa los dos extremos $x-h$ y $x+h$.
+
+<iframe src="secantes-simulacion.html" width="100%" height="620px" style="border:none;"></iframe>
+
+Entonces esto se puede interpretar como
+
+$$f'(x)\approx\frac{f(x+h)-f(x)}{h}\qquad\text{para } h \text{ pequeño.}$$
+
+Esto se llama la fórmula de aproximación hacia adelante. Pero podemos perfectamente aproximar hacia atrás,
+
+$$f'(x)\approx\frac{f(x)-f(x-h)}{h}.$$
+
+Por simplicidad vamos a centrar las cuentas en $x=0$. Si queremos la derivada en $x_0$, basta con hacer $\tilde f(x)=f(x+x_0)$ y aplicar lo que sigue a $\tilde f$. En $x=0$ las dos fórmulas quedan
+
+$$f'(0)\approx\frac{f(0)-f(-h)}{h}\quad\text{(hacia atrás)},\qquad f'(0)\approx\frac{f(h)-f(0)}{h}\quad\text{(hacia adelante)}.$$
+
+Por ejemplo, $x^3$ en $x=0$ tiene derivada $0$. Tomando $h=\tfrac13$, hacia atrás y hacia adelante se obtiene $f'(0)\approx\tfrac19=0{,}111\ldots$ Promediar en este caso no serviría de nada, porque da $\tfrac19$.
+
+## Una cuadrática por tres nodos
+
+Entonces sí podemos aproximar $f'(0)$ con los valores $h$, $f(h)$, $f(-h)$ y $f(0)$. Para obtener una mejor aproximación vamos a recurrir a otra técnica, para no desperdiciar estos datos. Tomemos $Q$ como la cuadrática que pasa por los tres nodos $(-h,f(-h))$, $(0,f(0))$ y $(h,f(h))$:
+
+$$Q(x)=\frac{x(x-h)}{2h^2}\,f(-h)-\frac{x^2-h^2}{h^2}\,f(0)+\frac{x(x+h)}{2h^2}\,f(h).$$
+
+::: {.callout-note title="Tarea"}
+Verifique que $Q(-h)=f(-h)$, $Q(0)=f(0)$ y $Q(h)=f(h)$.
+:::
+
+Entonces esta cuadrática interpola a $f$ en $[-h,h]$, y lo que hacemos es calcular su derivada exacta. El tablero muestra tres ejemplos con la cuadrática, la tangente a $f$ en $0$ y las secantes.
+
+<iframe src="cuadratica-simulacion.html" width="100%" height="820px" style="border:none;"></iframe>
+
+Derivando,
+
+$$Q'(x)=\frac{x-h}{2h^2}\,f(-h)+\frac{x}{2h^2}\,f(-h)-\frac{2x}{h^2}\,f(0)+\frac{x+h}{2h^2}\,f(h)+\frac{x}{2h^2}\,f(h),$$
+
+y evaluando en $0$,
+
+$$Q'(0)=-\frac{1}{2h}\,f(-h)+\frac{1}{2h}\,f(h)=\frac{f(h)-f(-h)}{2h}.\tag{1}$$
+
+La fórmula (1) es la fórmula centrada. Lo que obtuvimos es el mismo promedio de las fórmulas hacia adelante y hacia atrás, que en el caso de $x^3$ no nos sirvió de nada. En general sí es mejor usar la fórmula centrada. Por ejemplo, con $x^4$ en $x=0$ y $h=\tfrac14$, hacia atrás se obtiene $-\tfrac1{64}=-0{,}015625$ y hacia adelante $\tfrac1{64}=0{,}015625$. Si promediamos obtenemos, en este caso, la solución exacta $f'(0)=0$.
+
+### Un ejemplo con la exponencial
+
+Pensemos ahora en $g(x)=e^{-x}$ en $x=0{,}5$. Si evaluamos directamente,
+
+$$g'(0{,}5)=-0{,}6065306\ldots$$
+
+Usemos $f(x)=g(x+0{,}5)=e^{-(x+0{,}5)}$ y las fórmulas en $0$ con $h=0{,}2$. En la tabla, el error es el error relativo respecto de $f'(0)$:
+
+| Fórmula | Aproximación de $f'(0)$ | Error |
+|:---|:---:|:---:|
+| Hacia adelante | $-0{,}549727$ | $0{,}0937$ |
+| Hacia atrás | $-0{,}671438$ | $0{,}107$ |
+| Centrada, ecuación (1) | $-0{,}610582$ | $0{,}00668$ |
+
+La centrada es mucho mejor que las otras dos con el mismo costo, dos evaluaciones de $f$.
+
+## Más nodos, mejor aproximación
+
+Podríamos buscar una mejor aproximación usando un polinomio de grado mayor. Por ejemplo, con un polinomio de grado $4$ podemos usar los cinco nodos $(-2h,f(-2h))$, $(-h,f(-h))$, $(0,f(0))$, $(h,f(h))$ y $(2h,f(2h))$. Escribiendo el polinomio como $c_1+c_2x+c_3x^2+c_4x^3+c_5x^4$ y haciendo lo que hicimos al inicio del curso, queda el sistema
+
+$$\begin{bmatrix}
+1 & -2h & 4h^2 & -8h^3 & 16h^4\\
+1 & -h & h^2 & -h^3 & h^4\\
+1 & 0 & 0 & 0 & 0\\
+1 & h & h^2 & h^3 & h^4\\
+1 & 2h & 4h^2 & 8h^3 & 16h^4
+\end{bmatrix}
+\begin{bmatrix}c_1\\c_2\\c_3\\c_4\\c_5\end{bmatrix}
+=
+\begin{bmatrix}f(-2h)\\f(-h)\\f(0)\\f(h)\\f(2h)\end{bmatrix}.$$
+
+Podríamos incluso llegar a resolver este sistema analíticamente con ayuda de un programa de álgebra simbólica. Derivando el polinomio resultante y evaluando en $0$, que equivale a tomar $c_2$, obtenemos
+
+$$f'(0)\approx\frac1h\left(\frac1{12}f(-2h)-\frac23f(-h)+\frac23f(h)-\frac1{12}f(2h)\right).\tag{2}$$
+
+Con $f(x)=e^{-(x+0{,}5)}$ y $h=0{,}2$ esto da $-0{,}6064982$, con error relativo $0{,}0000536$. Podríamos haber hecho lo mismo con un método hacia adelante o con un polinomio de mayor grado.
+
+## Fórmulas de diferencias finitas en general
+
+Pero obviamente no podemos hacer este proceso analíticamente cada vez. Notemos que los algoritmos de derivación tienen la forma
+
+$$f^{(m)}(0)\approx\sum_{k=0}^{n}a_{k,m}\,f(t_k),$$
+
+y los nodos no tienen por qué estar igualmente espaciados. Hay un algoritmo que devuelve estos coeficientes, debido a Fornberg, y en su forma más sencilla es la función 5.4.1 del libro, `fdweights`. Haciendo `fdweights` con `t = [-2h, -h, 0, h, 2h]` y `m = 1`, y combinando los pesos con los valores de $f(x)=e^{-(x+0{,}5)}$ en esos nodos con $h=0{,}2$, se obtiene $-0{,}6064982$, el mismo valor de la fórmula (2).
+
+## Error de truncamiento y orden de precisión
+
+Consideremos una fórmula con pesos $a_{-p},\dots,a_q$ y nodos $kh$.
+
+::: {.callout-important title="Definición: error de truncamiento"}
+El error de truncamiento de la aproximación es
+
+$$\tau_f(h)=f'(0)-\frac1h\sum_{k=-p}^{q}a_k\,f(kh).$$
+
+El método converge si $\tau_f(h)\to0$ cuando $h\to0$.
+:::
+
+El error, por ejemplo, de la derivación hacia adelante es
+
+$$\begin{aligned}
+\tau_f(h)&=f'(0)-\frac{f(h)-f(0)}{h}\\
+&=\frac{f'(0)\,h-\Big(f(0)+h\,f'(0)+\tfrac12h^2f''(0)+O(h^3)-f(0)\Big)}{h}\\
+&=-\tfrac12\,h\,f''(0)+O(h^2).
+\end{aligned}$$
+
+::: {.callout-important title="Definición: orden de precisión"}
+Si $\tau_f(h)=O(h^s)$ para algún entero positivo $s$, se dice que $s$ es el orden de precisión del método.
+:::
+
+Entonces, en este caso, $1$ es el orden de precisión de la fórmula hacia adelante, y lo mismo vale para la de hacia atrás. Las fórmulas (1) y (2) tienen orden $2$ y $4$, respectivamente (el ejercicio 5.5.5 del libro pide demostrar el caso de la centrada). Esto es consistente con los errores del ejemplo anterior: con $h=0{,}2$ pasamos de errores relativos cercanos a $0{,}1$ para el orden $1$, a $0{,}007$ para el orden $2$ y a $0{,}00005$ para el orden $4$.
+
+## El error de redondeo
+
+Sin embargo, si estudiamos el condicionamiento, podemos anticipar un problema, porque hay una resta, la de $f(h)-f(0)$. Como vimos en la nota de [condicionamiento](../condicionamiento/index.qmd), el número de condicionamiento de esa resta es
+
+$$\kappa(h)=\frac{\max\{|f(h)|,\,|f(0)|\}}{|f(h)-f(0)|},$$
+
+y esto quiere decir que el error relativo es del tamaño de $\kappa(h)\,\varepsilon_{\text{mach}}$. Cuando $h\to0$ los dos valores se parecen cada vez más y $\kappa(h)$ crece.
+
+En el libro se puede estudiar la demostración de que
+
+$$\big|f'(0)-\tilde\delta(0)\big|\le\big|\tau_f(h)\big|+\big|f(0)\big|\,\varepsilon_{\text{mach}}\,h^{-1},$$
+
+donde $\tilde\delta(0)$ es el valor, en aritmética de máquina, de $\big(f(h)-f(0)\big)h^{-1}$. El primer término decrece con $h$ y el segundo crece, así que no conviene tomar $h$ demasiado pequeño. Para un método de orden $s$, equilibrar los dos términos da
+
+$$h_{\text{opt}}\approx\varepsilon_{\text{mach}}^{1/(s+1)},\qquad\text{con error óptimo}\approx\varepsilon_{\text{mach}}^{s/(s+1)}.$$
+
+Con $\varepsilon_{\text{mach}}\approx2{,}2\times10^{-16}$, para $s=1$ el mejor $h$ es del orden de $10^{-8}$ y el error óptimo también, es decir, se pierde la mitad de las cifras. Para $s=2$ son $h\approx6\times10^{-6}$ y error cercano a $4\times10^{-11}$, y para $s=4$ son $h\approx7\times10^{-4}$ y error cercano a $3\times10^{-13}$. Las constantes dependen de $f$, pero la conclusión es que los métodos de orden alto alcanzan mejor precisión con pasos más grandes y son menos vulnerables al redondeo.
+
+::: {.callout-note title="Tarea"}
+Haga todos los ejercicios de las secciones 5.4 y 5.5 de *Fundamentals of Numerical Computation*, disponibles en <https://fncbook.com/julia/finitediffs/#exercises> y <https://fncbook.com/julia/fd-converge/#exercises>.
+:::

@@ -15,7 +15,246 @@
 <link>https://arturosanjuan.xyz/cursos/numerico/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Wed, 04 Nov 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 07 Nov 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Derivación numérica</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/numerico/derivacion/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Seguimos con el capítulo 5 del libro de Driscoll y Braun, ahora con las secciones 5.4 y 5.5, dedicadas a las fórmulas de diferencias finitas y a su convergencia.</p>
+<section id="diferencias-hacia-adelante-hacia-atrás-y-centrada" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="diferencias-hacia-adelante-hacia-atrás-y-centrada"><span class="header-section-number">1</span> Diferencias hacia adelante, hacia atrás y centrada</h2>
+<p>Desde nuestro curso de cálculo hemos visto que la pendiente de una recta secante se aproxima a la derivada de la función. En el tablero se ve con las tres versiones que usaremos: la secante que usa el punto <img src="https://latex.codecogs.com/png.latex?x"> y el punto <img src="https://latex.codecogs.com/png.latex?x+h">, la que usa <img src="https://latex.codecogs.com/png.latex?x-h"> y <img src="https://latex.codecogs.com/png.latex?x">, y la que usa los dos extremos <img src="https://latex.codecogs.com/png.latex?x-h"> y <img src="https://latex.codecogs.com/png.latex?x+h">.</p>
+<iframe src="secantes-simulacion.html" width="100%" height="620px" style="border:none;">
+</iframe>
+<p>Entonces esto se puede interpretar como</p>
+<p><img src="https://latex.codecogs.com/png.latex?f'(x)%5Capprox%5Cfrac%7Bf(x+h)-f(x)%7D%7Bh%7D%5Cqquad%5Ctext%7Bpara%20%7D%20h%20%5Ctext%7B%20peque%C3%B1o.%7D"></p>
+<p>Esto se llama la fórmula de aproximación hacia adelante. Pero podemos perfectamente aproximar hacia atrás,</p>
+<p><img src="https://latex.codecogs.com/png.latex?f'(x)%5Capprox%5Cfrac%7Bf(x)-f(x-h)%7D%7Bh%7D."></p>
+<p>Por simplicidad vamos a centrar las cuentas en <img src="https://latex.codecogs.com/png.latex?x=0">. Si queremos la derivada en <img src="https://latex.codecogs.com/png.latex?x_0">, basta con hacer <img src="https://latex.codecogs.com/png.latex?%5Ctilde%20f(x)=f(x+x_0)"> y aplicar lo que sigue a <img src="https://latex.codecogs.com/png.latex?%5Ctilde%20f">. En <img src="https://latex.codecogs.com/png.latex?x=0"> las dos fórmulas quedan</p>
+<p><img src="https://latex.codecogs.com/png.latex?f'(0)%5Capprox%5Cfrac%7Bf(0)-f(-h)%7D%7Bh%7D%5Cquad%5Ctext%7B(hacia%20atr%C3%A1s)%7D,%5Cqquad%20f'(0)%5Capprox%5Cfrac%7Bf(h)-f(0)%7D%7Bh%7D%5Cquad%5Ctext%7B(hacia%20adelante)%7D."></p>
+<p>Por ejemplo, <img src="https://latex.codecogs.com/png.latex?x%5E3"> en <img src="https://latex.codecogs.com/png.latex?x=0"> tiene derivada <img src="https://latex.codecogs.com/png.latex?0">. Tomando <img src="https://latex.codecogs.com/png.latex?h=%5Ctfrac13">, hacia atrás y hacia adelante se obtiene <img src="https://latex.codecogs.com/png.latex?f'(0)%5Capprox%5Ctfrac19=0%7B,%7D111%5Cldots"> Promediar en este caso no serviría de nada, porque da <img src="https://latex.codecogs.com/png.latex?%5Ctfrac19">.</p>
+</section>
+<section id="una-cuadrática-por-tres-nodos" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="una-cuadrática-por-tres-nodos"><span class="header-section-number">2</span> Una cuadrática por tres nodos</h2>
+<p>Entonces sí podemos aproximar <img src="https://latex.codecogs.com/png.latex?f'(0)"> con los valores <img src="https://latex.codecogs.com/png.latex?h">, <img src="https://latex.codecogs.com/png.latex?f(h)">, <img src="https://latex.codecogs.com/png.latex?f(-h)"> y <img src="https://latex.codecogs.com/png.latex?f(0)">. Para obtener una mejor aproximación vamos a recurrir a otra técnica, para no desperdiciar estos datos. Tomemos <img src="https://latex.codecogs.com/png.latex?Q"> como la cuadrática que pasa por los tres nodos <img src="https://latex.codecogs.com/png.latex?(-h,f(-h))">, <img src="https://latex.codecogs.com/png.latex?(0,f(0))"> y <img src="https://latex.codecogs.com/png.latex?(h,f(h))">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?Q(x)=%5Cfrac%7Bx(x-h)%7D%7B2h%5E2%7D%5C,f(-h)-%5Cfrac%7Bx%5E2-h%5E2%7D%7Bh%5E2%7D%5C,f(0)+%5Cfrac%7Bx(x+h)%7D%7B2h%5E2%7D%5C,f(h)."></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Verifique que <img src="https://latex.codecogs.com/png.latex?Q(-h)=f(-h)">, <img src="https://latex.codecogs.com/png.latex?Q(0)=f(0)"> y <img src="https://latex.codecogs.com/png.latex?Q(h)=f(h)">.</p>
+</div>
+</div>
+<p>Entonces esta cuadrática interpola a <img src="https://latex.codecogs.com/png.latex?f"> en <img src="https://latex.codecogs.com/png.latex?%5B-h,h%5D">, y lo que hacemos es calcular su derivada exacta. El tablero muestra tres ejemplos con la cuadrática, la tangente a <img src="https://latex.codecogs.com/png.latex?f"> en <img src="https://latex.codecogs.com/png.latex?0"> y las secantes.</p>
+<iframe src="cuadratica-simulacion.html" width="100%" height="820px" style="border:none;">
+</iframe>
+<p>Derivando,</p>
+<p><img src="https://latex.codecogs.com/png.latex?Q'(x)=%5Cfrac%7Bx-h%7D%7B2h%5E2%7D%5C,f(-h)+%5Cfrac%7Bx%7D%7B2h%5E2%7D%5C,f(-h)-%5Cfrac%7B2x%7D%7Bh%5E2%7D%5C,f(0)+%5Cfrac%7Bx+h%7D%7B2h%5E2%7D%5C,f(h)+%5Cfrac%7Bx%7D%7B2h%5E2%7D%5C,f(h),"></p>
+<p>y evaluando en <img src="https://latex.codecogs.com/png.latex?0">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?Q'(0)=-%5Cfrac%7B1%7D%7B2h%7D%5C,f(-h)+%5Cfrac%7B1%7D%7B2h%7D%5C,f(h)=%5Cfrac%7Bf(h)-f(-h)%7D%7B2h%7D.%5Ctag%7B1%7D"></p>
+<p>La fórmula (1) es la fórmula centrada. Lo que obtuvimos es el mismo promedio de las fórmulas hacia adelante y hacia atrás, que en el caso de <img src="https://latex.codecogs.com/png.latex?x%5E3"> no nos sirvió de nada. En general sí es mejor usar la fórmula centrada. Por ejemplo, con <img src="https://latex.codecogs.com/png.latex?x%5E4"> en <img src="https://latex.codecogs.com/png.latex?x=0"> y <img src="https://latex.codecogs.com/png.latex?h=%5Ctfrac14">, hacia atrás se obtiene <img src="https://latex.codecogs.com/png.latex?-%5Ctfrac1%7B64%7D=-0%7B,%7D015625"> y hacia adelante <img src="https://latex.codecogs.com/png.latex?%5Ctfrac1%7B64%7D=0%7B,%7D015625">. Si promediamos obtenemos, en este caso, la solución exacta <img src="https://latex.codecogs.com/png.latex?f'(0)=0">.</p>
+<section id="un-ejemplo-con-la-exponencial" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="un-ejemplo-con-la-exponencial"><span class="header-section-number">2.1</span> Un ejemplo con la exponencial</h3>
+<p>Pensemos ahora en <img src="https://latex.codecogs.com/png.latex?g(x)=e%5E%7B-x%7D"> en <img src="https://latex.codecogs.com/png.latex?x=0%7B,%7D5">. Si evaluamos directamente,</p>
+<p><img src="https://latex.codecogs.com/png.latex?g'(0%7B,%7D5)=-0%7B,%7D6065306%5Cldots"></p>
+<p>Usemos <img src="https://latex.codecogs.com/png.latex?f(x)=g(x+0%7B,%7D5)=e%5E%7B-(x+0%7B,%7D5)%7D"> y las fórmulas en <img src="https://latex.codecogs.com/png.latex?0"> con <img src="https://latex.codecogs.com/png.latex?h=0%7B,%7D2">. En la tabla, el error es el error relativo respecto de <img src="https://latex.codecogs.com/png.latex?f'(0)">:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Fórmula</th>
+<th style="text-align: center;">Aproximación de <img src="https://latex.codecogs.com/png.latex?f'(0)"></th>
+<th style="text-align: center;">Error</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Hacia adelante</td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?-0%7B,%7D549727"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0%7B,%7D0937"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hacia atrás</td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?-0%7B,%7D671438"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0%7B,%7D107"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Centrada, ecuación (1)</td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?-0%7B,%7D610582"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0%7B,%7D00668"></td>
+</tr>
+</tbody>
+</table>
+<p>La centrada es mucho mejor que las otras dos con el mismo costo, dos evaluaciones de <img src="https://latex.codecogs.com/png.latex?f">.</p>
+</section>
+</section>
+<section id="más-nodos-mejor-aproximación" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="más-nodos-mejor-aproximación"><span class="header-section-number">3</span> Más nodos, mejor aproximación</h2>
+<p>Podríamos buscar una mejor aproximación usando un polinomio de grado mayor. Por ejemplo, con un polinomio de grado <img src="https://latex.codecogs.com/png.latex?4"> podemos usar los cinco nodos <img src="https://latex.codecogs.com/png.latex?(-2h,f(-2h))">, <img src="https://latex.codecogs.com/png.latex?(-h,f(-h))">, <img src="https://latex.codecogs.com/png.latex?(0,f(0))">, <img src="https://latex.codecogs.com/png.latex?(h,f(h))"> y <img src="https://latex.codecogs.com/png.latex?(2h,f(2h))">. Escribiendo el polinomio como <img src="https://latex.codecogs.com/png.latex?c_1+c_2x+c_3x%5E2+c_4x%5E3+c_5x%5E4"> y haciendo lo que hicimos al inicio del curso, queda el sistema</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%0A1%20&amp;%20-2h%20&amp;%204h%5E2%20&amp;%20-8h%5E3%20&amp;%2016h%5E4%5C%5C%0A1%20&amp;%20-h%20&amp;%20h%5E2%20&amp;%20-h%5E3%20&amp;%20h%5E4%5C%5C%0A1%20&amp;%200%20&amp;%200%20&amp;%200%20&amp;%200%5C%5C%0A1%20&amp;%20h%20&amp;%20h%5E2%20&amp;%20h%5E3%20&amp;%20h%5E4%5C%5C%0A1%20&amp;%202h%20&amp;%204h%5E2%20&amp;%208h%5E3%20&amp;%2016h%5E4%0A%5Cend%7Bbmatrix%7D%0A%5Cbegin%7Bbmatrix%7Dc_1%5C%5Cc_2%5C%5Cc_3%5C%5Cc_4%5C%5Cc_5%5Cend%7Bbmatrix%7D%0A=%0A%5Cbegin%7Bbmatrix%7Df(-2h)%5C%5Cf(-h)%5C%5Cf(0)%5C%5Cf(h)%5C%5Cf(2h)%5Cend%7Bbmatrix%7D."></p>
+<p>Podríamos incluso llegar a resolver este sistema analíticamente con ayuda de un programa de álgebra simbólica. Derivando el polinomio resultante y evaluando en <img src="https://latex.codecogs.com/png.latex?0">, que equivale a tomar <img src="https://latex.codecogs.com/png.latex?c_2">, obtenemos</p>
+<p><img src="https://latex.codecogs.com/png.latex?f'(0)%5Capprox%5Cfrac1h%5Cleft(%5Cfrac1%7B12%7Df(-2h)-%5Cfrac23f(-h)+%5Cfrac23f(h)-%5Cfrac1%7B12%7Df(2h)%5Cright).%5Ctag%7B2%7D"></p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?f(x)=e%5E%7B-(x+0%7B,%7D5)%7D"> y <img src="https://latex.codecogs.com/png.latex?h=0%7B,%7D2"> esto da <img src="https://latex.codecogs.com/png.latex?-0%7B,%7D6064982">, con error relativo <img src="https://latex.codecogs.com/png.latex?0%7B,%7D0000536">. Podríamos haber hecho lo mismo con un método hacia adelante o con un polinomio de mayor grado.</p>
+</section>
+<section id="fórmulas-de-diferencias-finitas-en-general" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="fórmulas-de-diferencias-finitas-en-general"><span class="header-section-number">4</span> Fórmulas de diferencias finitas en general</h2>
+<p>Pero obviamente no podemos hacer este proceso analíticamente cada vez. Notemos que los algoritmos de derivación tienen la forma</p>
+<p><img src="https://latex.codecogs.com/png.latex?f%5E%7B(m)%7D(0)%5Capprox%5Csum_%7Bk=0%7D%5E%7Bn%7Da_%7Bk,m%7D%5C,f(t_k),"></p>
+<p>y los nodos no tienen por qué estar igualmente espaciados. Hay un algoritmo que devuelve estos coeficientes, debido a Fornberg, y en su forma más sencilla es la función 5.4.1 del libro, <code>fdweights</code>. Haciendo <code>fdweights</code> con <code>t = [-2h, -h, 0, h, 2h]</code> y <code>m = 1</code>, y combinando los pesos con los valores de <img src="https://latex.codecogs.com/png.latex?f(x)=e%5E%7B-(x+0%7B,%7D5)%7D"> en esos nodos con <img src="https://latex.codecogs.com/png.latex?h=0%7B,%7D2">, se obtiene <img src="https://latex.codecogs.com/png.latex?-0%7B,%7D6064982">, el mismo valor de la fórmula (2).</p>
+</section>
+<section id="error-de-truncamiento-y-orden-de-precisión" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="error-de-truncamiento-y-orden-de-precisión"><span class="header-section-number">5</span> Error de truncamiento y orden de precisión</h2>
+<p>Consideremos una fórmula con pesos <img src="https://latex.codecogs.com/png.latex?a_%7B-p%7D,%5Cdots,a_q"> y nodos <img src="https://latex.codecogs.com/png.latex?kh">.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Definición: error de truncamiento">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Definición: error de truncamiento
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El error de truncamiento de la aproximación es</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ctau_f(h)=f'(0)-%5Cfrac1h%5Csum_%7Bk=-p%7D%5E%7Bq%7Da_k%5C,f(kh)."></p>
+<p>El método converge si <img src="https://latex.codecogs.com/png.latex?%5Ctau_f(h)%5Cto0"> cuando <img src="https://latex.codecogs.com/png.latex?h%5Cto0">.</p>
+</div>
+</div>
+<p>El error, por ejemplo, de la derivación hacia adelante es</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7D%0A%5Ctau_f(h)&amp;=f'(0)-%5Cfrac%7Bf(h)-f(0)%7D%7Bh%7D%5C%5C%0A&amp;=%5Cfrac%7Bf'(0)%5C,h-%5CBig(f(0)+h%5C,f'(0)+%5Ctfrac12h%5E2f''(0)+O(h%5E3)-f(0)%5CBig)%7D%7Bh%7D%5C%5C%0A&amp;=-%5Ctfrac12%5C,h%5C,f''(0)+O(h%5E2).%0A%5Cend%7Baligned%7D"></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Definición: orden de precisión">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Definición: orden de precisión
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si <img src="https://latex.codecogs.com/png.latex?%5Ctau_f(h)=O(h%5Es)"> para algún entero positivo <img src="https://latex.codecogs.com/png.latex?s">, se dice que <img src="https://latex.codecogs.com/png.latex?s"> es el orden de precisión del método.</p>
+</div>
+</div>
+<p>Entonces, en este caso, <img src="https://latex.codecogs.com/png.latex?1"> es el orden de precisión de la fórmula hacia adelante, y lo mismo vale para la de hacia atrás. Las fórmulas (1) y (2) tienen orden <img src="https://latex.codecogs.com/png.latex?2"> y <img src="https://latex.codecogs.com/png.latex?4">, respectivamente (el ejercicio 5.5.5 del libro pide demostrar el caso de la centrada). Esto es consistente con los errores del ejemplo anterior: con <img src="https://latex.codecogs.com/png.latex?h=0%7B,%7D2"> pasamos de errores relativos cercanos a <img src="https://latex.codecogs.com/png.latex?0%7B,%7D1"> para el orden <img src="https://latex.codecogs.com/png.latex?1">, a <img src="https://latex.codecogs.com/png.latex?0%7B,%7D007"> para el orden <img src="https://latex.codecogs.com/png.latex?2"> y a <img src="https://latex.codecogs.com/png.latex?0%7B,%7D00005"> para el orden <img src="https://latex.codecogs.com/png.latex?4">.</p>
+</section>
+<section id="el-error-de-redondeo" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="el-error-de-redondeo"><span class="header-section-number">6</span> El error de redondeo</h2>
+<p>Sin embargo, si estudiamos el condicionamiento, podemos anticipar un problema, porque hay una resta, la de <img src="https://latex.codecogs.com/png.latex?f(h)-f(0)">. Como vimos en la nota de <a href="../../../cursos/numerico/condicionamiento/index.html">condicionamiento</a>, el número de condicionamiento de esa resta es</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ckappa(h)=%5Cfrac%7B%5Cmax%5C%7B%7Cf(h)%7C,%5C,%7Cf(0)%7C%5C%7D%7D%7B%7Cf(h)-f(0)%7C%7D,"></p>
+<p>y esto quiere decir que el error relativo es del tamaño de <img src="https://latex.codecogs.com/png.latex?%5Ckappa(h)%5C,%5Cvarepsilon_%7B%5Ctext%7Bmach%7D%7D">. Cuando <img src="https://latex.codecogs.com/png.latex?h%5Cto0"> los dos valores se parecen cada vez más y <img src="https://latex.codecogs.com/png.latex?%5Ckappa(h)"> crece.</p>
+<p>En el libro se puede estudiar la demostración de que</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbig%7Cf'(0)-%5Ctilde%5Cdelta(0)%5Cbig%7C%5Cle%5Cbig%7C%5Ctau_f(h)%5Cbig%7C+%5Cbig%7Cf(0)%5Cbig%7C%5C,%5Cvarepsilon_%7B%5Ctext%7Bmach%7D%7D%5C,h%5E%7B-1%7D,"></p>
+<p>donde <img src="https://latex.codecogs.com/png.latex?%5Ctilde%5Cdelta(0)"> es el valor, en aritmética de máquina, de <img src="https://latex.codecogs.com/png.latex?%5Cbig(f(h)-f(0)%5Cbig)h%5E%7B-1%7D">. El primer término decrece con <img src="https://latex.codecogs.com/png.latex?h"> y el segundo crece, así que no conviene tomar <img src="https://latex.codecogs.com/png.latex?h"> demasiado pequeño. Para un método de orden <img src="https://latex.codecogs.com/png.latex?s">, equilibrar los dos términos da</p>
+<p><img src="https://latex.codecogs.com/png.latex?h_%7B%5Ctext%7Bopt%7D%7D%5Capprox%5Cvarepsilon_%7B%5Ctext%7Bmach%7D%7D%5E%7B1/(s+1)%7D,%5Cqquad%5Ctext%7Bcon%20error%20%C3%B3ptimo%7D%5Capprox%5Cvarepsilon_%7B%5Ctext%7Bmach%7D%7D%5E%7Bs/(s+1)%7D."></p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_%7B%5Ctext%7Bmach%7D%7D%5Capprox2%7B,%7D2%5Ctimes10%5E%7B-16%7D">, para <img src="https://latex.codecogs.com/png.latex?s=1"> el mejor <img src="https://latex.codecogs.com/png.latex?h"> es del orden de <img src="https://latex.codecogs.com/png.latex?10%5E%7B-8%7D"> y el error óptimo también, es decir, se pierde la mitad de las cifras. Para <img src="https://latex.codecogs.com/png.latex?s=2"> son <img src="https://latex.codecogs.com/png.latex?h%5Capprox6%5Ctimes10%5E%7B-6%7D"> y error cercano a <img src="https://latex.codecogs.com/png.latex?4%5Ctimes10%5E%7B-11%7D">, y para <img src="https://latex.codecogs.com/png.latex?s=4"> son <img src="https://latex.codecogs.com/png.latex?h%5Capprox7%5Ctimes10%5E%7B-4%7D"> y error cercano a <img src="https://latex.codecogs.com/png.latex?3%5Ctimes10%5E%7B-13%7D">. Las constantes dependen de <img src="https://latex.codecogs.com/png.latex?f">, pero la conclusión es que los métodos de orden alto alcanzan mejor precisión con pasos más grandes y son menos vulnerables al redondeo.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Haga todos los ejercicios de las secciones 5.4 y 5.5 de <em>Fundamentals of Numerical Computation</em>, disponibles en <a href="https://fncbook.com/julia/finitediffs/#exercises" class="uri">https://fncbook.com/julia/finitediffs/#exercises</a> y <a href="https://fncbook.com/julia/fd-converge/#exercises" class="uri">https://fncbook.com/julia/fd-converge/#exercises</a>.</p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/numerico/derivacion/</guid>
+  <pubDate>Sat, 07 Nov 2026 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Integración numérica</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/numerico/integracion/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Vamos a usar la interpolación lineal a trozos para integrar numéricamente. Seguimos la sección 5.6 del libro de Driscoll y Braun.</p>
+<section id="la-fórmula-del-trapecio" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="la-fórmula-del-trapecio"><span class="header-section-number">1</span> La fórmula del trapecio</h2>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?f"> una función en <img src="https://latex.codecogs.com/png.latex?%5Ba,b%5D">. Tomamos los nodos equiespaciados <img src="https://latex.codecogs.com/png.latex?t_k=a+kh">, <img src="https://latex.codecogs.com/png.latex?k=0,%5Cdots,n">, con <img src="https://latex.codecogs.com/png.latex?h=%5Cdfrac%7Bb-a%7D%7Bn%7D">, y reemplazamos <img src="https://latex.codecogs.com/png.latex?f"> por su interpolante lineal a trozos <img src="https://latex.codecogs.com/png.latex?p">. El siguiente tablero muestra ese reemplazo para tres funciones, y permite aumentar el número de nodos.</p>
+<iframe src="trapecio-simulacion.html" width="100%" height="960px" style="border:none;">
+</iframe>
+<p>Como se ve en la figura, la integral de <img src="https://latex.codecogs.com/png.latex?f"> se parece bastante bien a la integral del interpolante PL. Esto es,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cint_a%5Eb%20f(x)%5C,dx%5Capprox%5Cint_a%5Eb%5Csum_%7Bk=0%7D%5E%7Bn%7Df(t_k)%5C,H_k(x)%5C,dx=%5Csum_%7Bk=0%7D%5E%7Bn%7Df(t_k)%5Cint_a%5Eb%20H_k(x)%5C,dx,"></p>
+<p>donde <img src="https://latex.codecogs.com/png.latex?H_k"> son las funciones sombrero. Cada sombrero interior es un triángulo de altura <img src="https://latex.codecogs.com/png.latex?1"> y base <img src="https://latex.codecogs.com/png.latex?2h">, y los dos de los extremos son triángulos de altura <img src="https://latex.codecogs.com/png.latex?1"> y base <img src="https://latex.codecogs.com/png.latex?h">, así que</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cint_a%5Eb%20H_k(x)%5C,dx=h%5C,w_k,%5Cqquad%20w_k=%5Cbegin%7Bcases%7D%0A%5Cdfrac12,%20&amp;%20k=0%5C%20%5Ctext%7B%20o%20%7D%5C%20k=n,%5C%5C%5B2mm%5D%0A1,%20&amp;%20k=1,%5Cdots,n-1.%0A%5Cend%7Bcases%7D"></p>
+<p>Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cint_a%5Eb%20f(x)%5C,dx%5Capprox%20h%5CBig%5B%5Ctfrac12%20f(t_0)+f(t_1)+%5Ccdots+f(t_%7Bn-1%7D)+%5Ctfrac12%20f(t_n)%5CBig%5D=h%5Csum_%7Bk=0%7D%5E%7Bn%7Dw_k%20f(t_k)=T_f(h).%5Ctag%7B1%7D"></p>
+<div class="callout callout-style-default callout-important callout-titled" title="Definición: fórmula del trapecio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Definición: fórmula del trapecio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La fórmula del trapecio con <img src="https://latex.codecogs.com/png.latex?n"> subintervalos para la integral de <img src="https://latex.codecogs.com/png.latex?f"> en <img src="https://latex.codecogs.com/png.latex?%5Ba,b%5D"> es el número <img src="https://latex.codecogs.com/png.latex?T_f(h)"> dado por (1). Es el área de los <img src="https://latex.codecogs.com/png.latex?n"> trapecios que forma el interpolante lineal a trozos de <img src="https://latex.codecogs.com/png.latex?f"> en los nodos <img src="https://latex.codecogs.com/png.latex?t_0,%5Cdots,t_n">.</p>
+</div>
+</div>
+</section>
+<section id="el-error-de-truncamiento" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="el-error-de-truncamiento"><span class="header-section-number">2</span> El error de truncamiento</h2>
+<p>El error de truncamiento en este caso es</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ctau_f(h)=%5Cint_a%5Eb%20f(x)%5C,dx-h%5Csum_%7Bk=0%7D%5E%7Bn%7Dw_k%20f(t_k)."></p>
+<p>Si <img src="https://latex.codecogs.com/png.latex?I"> es la integral, entonces <img src="https://latex.codecogs.com/png.latex?%5Ctau_f(h)=I-T_f(h)=%5Cdisplaystyle%5Cint_a%5Eb%20(f-p)%5C,dx">, y por lo tanto</p>
+<p><img src="https://latex.codecogs.com/png.latex?%7CI-T_f(h)%7C%5Cle(b-a)%5C,%5C%7Cf-p%5C%7C_%5Cinfty%5Cle(b-a)%5C,O(h%5E2)."></p>
+<p>La última desigualdad usa el teorema de convergencia de la interpolación lineal a trozos: si <img src="https://latex.codecogs.com/png.latex?f"> tiene segunda derivada continua, <img src="https://latex.codecogs.com/png.latex?%5C%7Cf-p%5C%7C_%5Cinfty%5Cle%5C%7Cf''%5C%7C_%5Cinfty%20h%5E2">. Es decir, el error algebraico del trapecio es de orden <img src="https://latex.codecogs.com/png.latex?2">.</p>
+</section>
+<section id="un-ejemplo-con-la-distribución-normal" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="un-ejemplo-con-la-distribución-normal"><span class="header-section-number">3</span> Un ejemplo con la distribución normal</h2>
+<p>Hagamos un ejemplo con calculadora. Sabemos que, si <img src="https://latex.codecogs.com/png.latex?X%5Csim%20N(0,1)">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(-1%5Cle%20X%5Cle%201)%5Capprox%200%7B,%7D6827,"></p>
+<p>y por definición</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(-1%5Cle%20X%5Cle%201)=%5Cfrac%7B1%7D%7B%5Csqrt%7B2%5Cpi%7D%7D%5Cint_%7B-1%7D%5E%7B1%7De%5E%7B-x%5E2/2%7D%5C,dx."></p>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?f(x)=e%5E%7B-x%5E2/2%7D">. Con <img src="https://latex.codecogs.com/png.latex?n=2"> se tiene <img src="https://latex.codecogs.com/png.latex?h=1"> y los nodos <img src="https://latex.codecogs.com/png.latex?-1">, <img src="https://latex.codecogs.com/png.latex?0"> y <img src="https://latex.codecogs.com/png.latex?1">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7D%0AP(-1%5Cle%20X%5Cle%201)&amp;%5Capprox%5Cfrac%7B1%7D%7B%5Csqrt%7B2%5Cpi%7D%7D%5CBig(%5Ctfrac12%20f(-1)+f(0)+%5Ctfrac12%20f(1)%5CBig)%5C%5C%0A&amp;=%5Cfrac%7B1%7D%7B%5Csqrt%7B2%5Cpi%7D%7D%5Cbig(f(1)+f(0)%5Cbig)%5C%5C%0A&amp;%5Capprox%200%7B,%7D6409.%0A%5Cend%7Baligned%7D"></p>
+<p>Nada mal para tratarse de solo <img src="https://latex.codecogs.com/png.latex?3"> nodos. Si ponemos <img src="https://latex.codecogs.com/png.latex?5"> nodos, es decir <img src="https://latex.codecogs.com/png.latex?n=4"> y <img src="https://latex.codecogs.com/png.latex?h=%5Ctfrac12">, queda</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7D%0AP(-1%5Cle%20X%5Cle%201)&amp;%5Capprox%5Cfrac%7B1%7D%7B%5Csqrt%7B2%5Cpi%7D%7D%5Ccdot%5Cfrac12%5CBig%5B%5Ctfrac12%20f(-1)+f(-%5Ctfrac12)+f(0)+f(%5Ctfrac12)+%5Ctfrac12%20f(1)%5CBig%5D%5C%5C%0A&amp;=%5Cfrac%7B1%7D%7B%5Csqrt%7B2%5Cpi%7D%7D%5Ccdot%5Cfrac12%5CBig(f(1)+f(0)+2f(%5Ctfrac12)%5CBig)%5C%5C%0A&amp;%5Capprox%200%7B,%7D6725.%0A%5Cend%7Baligned%7D"></p>
+<p>El error pasó de cerca de <img src="https://latex.codecogs.com/png.latex?0%7B,%7D042"> a cerca de <img src="https://latex.codecogs.com/png.latex?0%7B,%7D010">: al duplicar <img src="https://latex.codecogs.com/png.latex?n"> se dividió entre unos <img src="https://latex.codecogs.com/png.latex?4">, como corresponde a un método de orden <img src="https://latex.codecogs.com/png.latex?2">. Estos dos cálculos se pueden reproducir en el tablero con la gaussiana y <img src="https://latex.codecogs.com/png.latex?n=2"> y <img src="https://latex.codecogs.com/png.latex?n=4">.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Haga todos los ejercicios de la sección 5.6 de <em>Fundamentals of Numerical Computation</em> que mencionen el trapecio, disponibles en <a href="https://fncbook.com/julia/integration#exercises" class="uri">https://fncbook.com/julia/integration#exercises</a>. Demuestre que si <img src="https://latex.codecogs.com/png.latex?f"> no cambia de signo, el condicionamiento del trapecio es <img src="https://latex.codecogs.com/png.latex?1">.</p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/numerico/integracion/</guid>
+  <pubDate>Sat, 07 Nov 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Interpolación</title>
   <dc:creator>Arturo Sanjuán</dc:creator>

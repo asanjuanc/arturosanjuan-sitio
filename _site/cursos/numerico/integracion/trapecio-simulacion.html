@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tablero de la fórmula del trapecio</title>
+<style>
+  :root{
+    --ink:#1e2327; --muted:#5a6570; --line:#dde3e8; --bg:#fbfcfd;
+    --accent:#2563a8; --accent2:#c1440e; --good:#1a7f5a;
+    --panel:#ffffff;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; padding:18px 20px 26px; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:14.5px; line-height:1.45;
+  }
+  h2{font-size:16px; margin:0 0 4px;}
+  .sub{color:var(--muted); margin:0 0 16px; font-size:13px;}
+
+  .tz-eq{
+    background:#f2f5f7; border:1px solid var(--line); border-radius:10px;
+    padding:10px 14px; margin-bottom:14px; font-size:13.5px;
+  }
+  .tz-eq div{margin:2px 0;}
+  .tz-eq .tz-lbl{color:var(--muted); display:inline-block; min-width:9.6em;}
+  .tz-num{font-variant-numeric:tabular-nums; font-weight:600; color:var(--accent);}
+
+  .tz-grid{display:flex; gap:18px; flex-wrap:wrap; align-items:flex-start;}
+  .tz-panel{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 16px;}
+  .tz-ctrl{flex:1 1 230px; max-width:300px;}
+  .tz-plot{flex:2 1 400px; min-width:0;}
+  .tz-plot canvas{width:100%; height:320px; display:block; background:#fff; border-radius:6px;}
+  .tz-lab{display:block; font-size:13px; margin:2px 0 4px;}
+  .tz-val{font-variant-numeric:tabular-nums; color:var(--accent); font-weight:600;}
+  .tz-ctrl input[type=range]{width:100%; margin:0 0 12px; accent-color:var(--accent);}
+  .tz-btns{display:flex; flex-wrap:wrap; gap:6px; margin:0 0 14px;}
+  .tz-btn{
+    border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:6px;
+    padding:3px 9px; font:inherit; font-size:12.5px; cursor:pointer;
+  }
+  .tz-btn:hover{background:#f2f5f7;}
+  .tz-btn[aria-pressed="true"]{border-color:var(--accent); background:#e6eef8;}
+  .tz-chk{display:block; font-size:13px; margin:0 0 5px;}
+  .tz-chk input{accent-color:var(--accent); margin-right:6px;}
+  .tz-sec{font-size:12.5px; color:var(--muted); font-weight:600; margin:12px 0 6px;}
+  .tz-pie{margin:8px 0 0; font-size:12px; color:var(--muted);}
+
+  .tz-tabla{width:100%; border-collapse:collapse; font-size:13px; margin-top:10px;}
+  .tz-tabla th,.tz-tabla td{padding:4px 8px; text-align:right; border-bottom:1px solid var(--line);}
+  .tz-tabla th{color:var(--muted); font-weight:600; font-size:12.5px;}
+  .tz-tabla td{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-variant-numeric:tabular-nums;}
+  .tz-tabla tr.tz-act td{background:#e6eef8; font-weight:700;}
+</style>
+</head>
+<body>
+
+<h2>La fórmula del trapecio</h2>
+<p class="sub">El interpolante lineal a trozos <i>p</i> de <i>f</i> en los nodos <i>t<sub>k</sub></i> forma trapecios bajo la curva, y la suma de sus áreas es <i>T<sub>f</sub></i>(<i>h</i>). Cambie la función y aumente el número de subintervalos <i>n</i> para ver cómo el área de los trapecios se acerca a la integral.</p>
+
+<div class="tz-eq">
+  <div><span class="tz-lbl">Fórmula</span> <i>T<sub>f</sub></i>(<i>h</i>) = <i>h</i> [ &frac12; <i>f</i>(<i>t</i><sub>0</sub>) + <i>f</i>(<i>t</i><sub>1</sub>) + &middot;&middot;&middot; + <i>f</i>(<i>t</i><sub><i>n</i>&minus;1</sub>) + &frac12; <i>f</i>(<i>t<sub>n</sub></i>) ],&nbsp; <i>h</i> = (<i>b</i> &minus; <i>a</i>)/<i>n</i></div>
+  <div><span class="tz-lbl">Integral exacta</span> <i>I</i> = <span class="tz-num" id="tz-I"></span></div>
+  <div><span class="tz-lbl">Trapecio</span> <i>T<sub>f</sub></i>(<i>h</i>) = <span class="tz-num" id="tz-T"></span></div>
+  <div><span class="tz-lbl">Error de truncamiento</span> <i>&tau;<sub>f</sub></i>(<i>h</i>) = <i>I</i> &minus; <i>T<sub>f</sub></i>(<i>h</i>) = <span class="tz-num" id="tz-tau"></span></div>
+</div>
+
+<div class="tz-grid">
+  <div class="tz-panel tz-ctrl">
+    <div class="tz-sec" style="margin-top:0">Función</div>
+    <div class="tz-btns" id="tz-funs" style="flex-direction:column;align-items:stretch;"></div>
+
+    <label class="tz-lab" for="tz-n">Subintervalos: <i>n</i> = <span class="tz-val" id="tz-nv"></span> &nbsp;(<i>h</i> = <span class="tz-val" id="tz-hv"></span>)</label>
+    <input type="range" id="tz-n" min="1" max="64" step="1" value="2">
+
+    <div class="tz-btns">
+      <button class="tz-btn" id="tz-dup">Duplicar <i>n</i></button>
+      <button class="tz-btn" id="tz-mit">Mitad de <i>n</i></button>
+      <button class="tz-btn" id="tz-uno"><i>n</i> = 1</button>
+    </div>
+
+    <div class="tz-sec">Mostrar</div>
+    <label class="tz-chk"><input type="checkbox" id="tz-ver-t" checked>Trapecios</label>
+    <label class="tz-chk"><input type="checkbox" id="tz-ver-n" checked>Nodos</label>
+  </div>
+
+  <div class="tz-panel tz-plot">
+    <canvas id="tz-canvas" role="img" aria-label="Gráfica de la función f en azul y de los trapecios que forma su interpolante lineal a trozos en naranja"></canvas>
+    <p class="tz-pie">La curva azul es <i>f</i>. Los trapecios naranja están limitados por el interpolante lineal a trozos <i>p</i>, y su área total es <i>T<sub>f</sub></i>(<i>h</i>). La tabla muestra qué pasa al duplicar <i>n</i>: el cociente entre errores consecutivos se acerca a 4, es decir, el error es de orden 2.</p>
+    <table class="tz-tabla" id="tz-tabla"></table>
+  </div>
+</div>
+
+<script>
+(function(){
+  var FUNS=[
+    {nombre:"Gaussiana en [−1, 1]", a:-1, b:1,
+     f:function(x){ return Math.exp(-x*x/2)/Math.sqrt(2*Math.PI); },
+     ticks:[[-1,"−1"],[-0.5,"−0,5"],[0,"0"],[0.5,"0,5"],[1,"1"]]},
+    {nombre:"sen x en [0, π]", a:0, b:Math.PI,
+     f:function(x){ return Math.sin(x); },
+     ticks:[[0,"0"],[Math.PI/2,"π/2"],[Math.PI,"π"]]},
+    {nombre:"e^(sen 7x) en [0, 2]", a:0, b:2,
+     f:function(x){ return Math.exp(Math.sin(7*x)); },
+     ticks:[[0,"0"],[0.5,"0,5"],[1,"1"],[1.5,"1,5"],[2,"2"]]}
+  ];
+  var cur=0, n=2;
+  var FILAS=[1,2,4,8,16,32,64];
+
+  var cv=document.getElementById("tz-canvas"), ctx=cv.getContext("2d");
+  var sn=document.getElementById("tz-n"), nv=document.getElementById("tz-nv"), hv=document.getElementById("tz-hv");
+  var elI=document.getElementById("tz-I"), elT=document.getElementById("tz-T"), elTau=document.getElementById("tz-tau");
+  var verT=document.getElementById("tz-ver-t"), verN=document.getElementById("tz-ver-n");
+  var tabla=document.getElementById("tz-tabla"), funsBox=document.getElementById("tz-funs");
+
+  function fix(v,d){ return (Math.abs(v)<5e-13?0:v).toFixed(d).replace(".",",").replace("-","−"); }
+  function sci(v){
+    if(v===0||Math.abs(v)<1e-16) return "0";
+    var e=Math.floor(Math.log10(Math.abs(v))), m=v/Math.pow(10,e);
+    return fix(m,3)+"×10<sup>"+String(e).replace("-","−")+"</sup>";
+  }
+  function num(v){ return Math.abs(v)>=0.01||v===0 ? fix(v,6) : sci(v); }
+
+  function simpson(f,a,b,N){
+    var h=(b-a)/N, s=f(a)+f(b);
+    for(var i=1;i<N;i++) s+=f(a+i*h)*(i%2?4:2);
+    return s*h/3;
+  }
+  function trap(f,a,b,m){
+    var h=(b-a)/m, s=0.5*(f(a)+f(b));
+    for(var i=1;i<m;i++) s+=f(a+i*h);
+    return h*s;
+  }
+  FUNS.forEach(function(F){
+    F.I=simpson(F.f,F.a,F.b,20000);
+    var lo=0, hi=0;
+    for(var i=0;i<=800;i++){ var v=F.f(F.a+(F.b-F.a)*i/800); if(v<lo)lo=v; if(v>hi)hi=v; }
+    var pad=0.08*(hi-lo); F.ymin=lo<0?lo-pad:0; F.ymax=hi+pad;
+  });
+
+  function niceStep(range){
+    var raw=range/5, p=Math.pow(10,Math.floor(Math.log10(raw))), r=raw/p;
+    return (r<1.5?1:r<3.5?2:r<7.5?5:10)*p;
+  }
+
+  var W=0,H=0,dpr=1, padL=48, padR=16, padT=12, padB=28;
+  function resize(){
+    dpr=window.devicePixelRatio||1;
+    var r=cv.getBoundingClientRect(); W=r.width; H=r.height;
+    cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    draw();
+  }
+
+  function draw(){
+    var F=FUNS[cur], a=F.a, b=F.b;
+    var X=function(x){ return padL+(x-a)/(b-a)*(W-padL-padR); };
+    var Y=function(y){ return padT+(F.ymax-y)/(F.ymax-F.ymin)*(H-padT-padB); };
+    ctx.clearRect(0,0,W,H);
+    ctx.font="12px -apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif";
+
+    // rejilla y eje y
+    var st=niceStep(F.ymax-F.ymin);
+    ctx.strokeStyle="#e8edf1"; ctx.fillStyle="#5a6570"; ctx.lineWidth=1;
+    ctx.textAlign="right"; ctx.textBaseline="middle";
+    for(var yv=Math.ceil(F.ymin/st)*st; yv<=F.ymax+1e-9; yv+=st){
+      var py=Math.round(Y(yv))+0.5;
+      ctx.beginPath(); ctx.moveTo(padL,py); ctx.lineTo(W-padR,py); ctx.stroke();
+      ctx.fillText(fix(Math.abs(yv)<1e-12?0:yv,st<1?(st<0.1?2:1):0),padL-6,py);
+    }
+    // eje x
+    ctx.strokeStyle="#8a949c";
+    ctx.beginPath(); ctx.moveTo(padL,Math.round(Y(0))+0.5); ctx.lineTo(W-padR,Math.round(Y(0))+0.5); ctx.stroke();
+    ctx.textAlign="center"; ctx.textBaseline="top";
+    F.ticks.forEach(function(tk){
+      var px=Math.round(X(tk[0]))+0.5;
+      ctx.beginPath(); ctx.moveTo(px,H-padB); ctx.lineTo(px,H-padB+4); ctx.stroke();
+      ctx.fillText(tk[1],px,H-padB+6);
+    });
+
+    var h=(b-a)/n, ts=[], ys=[];
+    for(var k=0;k<=n;k++){ ts.push(a+k*h); ys.push(F.f(ts[k])); }
+
+    // trapecios
+    if(verT.checked){
+      ctx.fillStyle="rgba(193,68,14,0.17)";
+      ctx.strokeStyle="rgba(193,68,14,0.75)"; ctx.lineWidth=n>32?0.6:1;
+      for(var i=0;i<n;i++){
+        ctx.beginPath();
+        ctx.moveTo(X(ts[i]),Y(0)); ctx.lineTo(X(ts[i]),Y(ys[i]));
+        ctx.lineTo(X(ts[i+1]),Y(ys[i+1])); ctx.lineTo(X(ts[i+1]),Y(0)); ctx.closePath();
+        ctx.fill();
+        if(n<=48){ ctx.stroke(); }
+      }
+    }
+    // interpolante p
+    ctx.strokeStyle="#c1440e"; ctx.lineWidth=2; ctx.lineJoin="round";
+    ctx.beginPath();
+    for(var j=0;j<=n;j++){ if(j===0) ctx.moveTo(X(ts[j]),Y(ys[j])); else ctx.lineTo(X(ts[j]),Y(ys[j])); }
+    ctx.stroke();
+    // curva f
+    ctx.strokeStyle="#2563a8"; ctx.lineWidth=2.2;
+    ctx.beginPath();
+    var M=700;
+    for(var q=0;q<=M;q++){
+      var xx=a+(b-a)*q/M, yy=F.f(xx);
+      if(q===0) ctx.moveTo(X(xx),Y(yy)); else ctx.lineTo(X(xx),Y(yy));
+    }
+    ctx.stroke();
+    // nodos
+    if(verN.checked && n<=48){
+      ctx.fillStyle="#c1440e";
+      for(var m=0;m<=n;m++){ ctx.beginPath(); ctx.arc(X(ts[m]),Y(ys[m]),3.2,0,2*Math.PI); ctx.fill(); }
+    }
+  }
+
+  function actualizar(){
+    var F=FUNS[cur], T=trap(F.f,F.a,F.b,n), tau=F.I-T;
+    nv.textContent=n; sn.value=n;
+    hv.textContent=fix((F.b-F.a)/n,4);
+    elI.textContent=fix(F.I,8);
+    elT.textContent=fix(T,8);
+    elTau.innerHTML=num(tau);
+
+    var html='<tr><th>n</th><th>h</th><th><i>T<sub>f</sub></i>(<i>h</i>)</th><th><i>&tau;<sub>f</sub></i>(<i>h</i>)</th><th>cociente</th></tr>';
+    var prev=null;
+    FILAS.forEach(function(m){
+      var Tm=trap(F.f,F.a,F.b,m), e=F.I-Tm;
+      var cociente=(prev===null||e===0)?"":fix(prev/e,3);
+      html+='<tr'+(m===n?' class="tz-act"':'')+'><td>'+m+'</td><td>'+fix((F.b-F.a)/m,5)+'</td><td>'+fix(Tm,6)+'</td><td>'+num(e)+'</td><td>'+cociente+'</td></tr>';
+      prev=e;
+    });
+    tabla.innerHTML=html;
+    draw();
+  }
+
+  FUNS.forEach(function(F,i){
+    var bt=document.createElement("button");
+    bt.className="tz-btn"; bt.textContent=F.nombre; bt.style.textAlign="left";
+    bt.setAttribute("aria-pressed",i===cur?"true":"false");
+    bt.addEventListener("click",function(){
+      cur=i;
+      Array.prototype.forEach.call(funsBox.children,function(c,j){ c.setAttribute("aria-pressed",j===cur?"true":"false"); });
+      actualizar();
+    });
+    funsBox.appendChild(bt);
+  });
+
+  sn.addEventListener("input",function(){ n=parseInt(sn.value,10); actualizar(); });
+  document.getElementById("tz-dup").addEventListener("click",function(){ n=Math.min(64,2*n); actualizar(); });
+  document.getElementById("tz-mit").addEventListener("click",function(){ n=Math.max(1,Math.floor(n/2)); actualizar(); });
+  document.getElementById("tz-uno").addEventListener("click",function(){ n=1; actualizar(); });
+  verT.addEventListener("change",draw);
+  verN.addEventListener("change",draw);
+  window.addEventListener("resize",resize);
+
+  resize();
+  actualizar();
+})();
+</script>
+</body>
+</html>
