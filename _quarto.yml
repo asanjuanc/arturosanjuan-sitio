@@ -118,6 +118,7 @@ website:
         - cursos/probabilidad/taller-3/index.qmd
         - cursos/probabilidad/vecaleatorios/index.qmd
         - cursos/probabilidad/leydebil/index.qmd
+        - cursos/probabilidad/leyfuerte/index.qmd
         
 
 format:
