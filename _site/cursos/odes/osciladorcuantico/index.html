@@ -488,7 +488,6 @@ window.Quarto = {
   <li><a href="#adimensionalizar" id="toc-adimensionalizar" class="nav-link" data-scroll-target="#adimensionalizar"><span class="header-section-number">5.1</span> Adimensionalizar</a></li>
   <li><a href="#el-comportamiento-para-xi-grande" id="toc-el-comportamiento-para-xi-grande" class="nav-link" data-scroll-target="#el-comportamiento-para-xi-grande"><span class="header-section-number">5.2</span> El comportamiento para <span class="math inline">\(\xi\)</span> grande</a></li>
   <li><a href="#la-ecuación-de-hermite" id="toc-la-ecuación-de-hermite" class="nav-link" data-scroll-target="#la-ecuación-de-hermite"><span class="header-section-number">5.3</span> La ecuación de Hermite</a></li>
-  <li><a href="#solución-por-series-de-potencias" id="toc-solución-por-series-de-potencias" class="nav-link" data-scroll-target="#solución-por-series-de-potencias"><span class="header-section-number">5.4</span> Solución por series de potencias</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -538,6 +537,11 @@ window.Quarto = {
 </header>
 
 
+<style>
+  .parte-matematica{color:#006400;}
+  .parte-matematica h3,.parte-matematica h4,.parte-matematica a,.parte-matematica .header-section-number{color:inherit;}
+  body.quarto-dark .parte-matematica{color:#6fcf8a;}
+</style>
 <p>Esta sección usa la ecuación de Hermite como destino, pero el camino es largo y vale la pena recorrerlo. Empezamos con una fila de osciladores acoplados, de ahí sale la ecuación de onda, de las ondas sale la relación entre frecuencia, energía y momento, y con eso se llega a la ecuación de Schrödinger. Al final la aplicamos al potencial de un resorte y la resolvemos por series de potencias.</p>
 <section id="osciladores-acoplados" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="osciladores-acoplados"><span class="header-section-number">1</span> Osciladores acoplados</h2>
@@ -1208,10 +1212,10 @@ actualizar(); requestAnimationFrame(loop);
 <h3 data-number="5.3" class="anchored" data-anchor-id="la-ecuación-de-hermite"><span class="header-section-number">5.3</span> La ecuación de Hermite</h3>
 <p>Reemplazamos <span class="math inline">\(\varphi=h\,e^{-\xi^2/2}\)</span> en <a href="#eq-adim" class="quarto-xref">Ecuación&nbsp;6</a>. Como <span class="math inline">\(\varphi'=(h'-\xi h)e^{-\xi^2/2}\)</span> y <span class="math inline">\(\varphi''=(h''-2\xi h'+(\xi^2-1)h)e^{-\xi^2/2}\)</span>, queda</p>
 <p><span class="math display">\[h''-2\xi\,h'+(\varepsilon-1)\,h=0.\]</span></p>
+<div class="parte-matematica">
 <p>Escribimos <span class="math inline">\(\varepsilon-1=2n\)</span> y obtenemos la <strong>ecuación de Hermite</strong> de parámetro <span class="math inline">\(n\)</span>,</p>
 <p><span id="eq-hermite"><span class="math display">\[h''-2\xi\,h'+2n\,h=0. \tag{7}\]</span></span></p>
 <p>Por ahora <span class="math inline">\(n\)</span> es un número real cualquiera, y la ecuación es una vieja conocida.</p>
-</section>
 <section id="solución-por-series-de-potencias" class="level3" data-number="5.4">
 <h3 data-number="5.4" class="anchored" data-anchor-id="solución-por-series-de-potencias"><span class="header-section-number">5.4</span> Solución por series de potencias</h3>
 <p>Buscamos soluciones <span class="math inline">\(h(\xi)=\sum_{k=0}^{\infty}a_k\xi^k\)</span>. Entonces</p>
@@ -1226,6 +1230,8 @@ actualizar(); requestAnimationFrame(loop);
 <p><span class="math display">\[2n+1-\varepsilon=0\quad\Longleftrightarrow\quad \varepsilon=2n+1,\qquad n=0,1,2,\dots\]</span></p>
 <p>(Si <span class="math inline">\(n\)</span> es par termina la serie par y hay que anular la impar con <span class="math inline">\(a_1=0\)</span>; si <span class="math inline">\(n\)</span> es impar, al revés, con <span class="math inline">\(a_0=0\)</span>.) Así la serie es un polinomio de grado <span class="math inline">\(n\)</span>, que es el <strong>polinomio de Hermite</strong> <span class="math inline">\(H_n(\xi)\)</span> salvo una constante:</p>
 <p><span class="math display">\[H_0=1,\quad H_1=2\xi,\quad H_2=4\xi^2-2,\quad H_3=8\xi^3-12\xi,\quad H_4=16\xi^4-48\xi^2+12.\]</span></p>
+</section>
+</div>
 <p>Como <span class="math inline">\(\varepsilon=2E/\hbar\omega\)</span>, la condición <span class="math inline">\(\varepsilon=2n+1\)</span> dice que la energía solo puede tomar los valores</p>
 <p><span class="math display">\[E_n=\hbar\omega\left(n+\tfrac12\right),\qquad n=0,1,2,\dots\]</span></p>
 <p>y las soluciones normalizadas son</p>

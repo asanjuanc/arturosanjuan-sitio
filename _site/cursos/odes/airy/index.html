@@ -510,7 +510,6 @@ window.Quarto = {
   <li><a href="#el-caso-ideal" id="toc-el-caso-ideal" class="nav-link" data-scroll-target="#el-caso-ideal"><span class="header-section-number">2</span> El caso ideal</a>
   <ul class="collapse">
   <li><a href="#sin-unidades" id="toc-sin-unidades" class="nav-link" data-scroll-target="#sin-unidades"><span class="header-section-number">2.1</span> Sin unidades</a></li>
-  <li><a href="#solución-por-series" id="toc-solución-por-series" class="nav-link" data-scroll-target="#solución-por-series"><span class="header-section-number">2.2</span> Solución por series</a></li>
   </ul></li>
   <li><a href="#de-vuelta-al-neutrón" id="toc-de-vuelta-al-neutrón" class="nav-link" data-scroll-target="#de-vuelta-al-neutrón"><span class="header-section-number">3</span> De vuelta al neutrón</a>
   <ul class="collapse">
@@ -569,6 +568,11 @@ window.Quarto = {
 </header>
 
 
+<style>
+  .parte-matematica{color:#006400;}
+  .parte-matematica h3,.parte-matematica h4,.parte-matematica a,.parte-matematica .header-section-number{color:inherit;}
+  body.quarto-dark .parte-matematica{color:#6fcf8a;}
+</style>
 <p>En el <a href="../../../cursos/odes/osciladorcuantico/index.html">oscilador armónico cuántico</a> la energía quedó cuantizada porque la función de onda tenía que ir a cero en <span class="math inline">\(\pm\infty\)</span>. Aquí aparece otro mecanismo: una pared. El sistema es un neutrón que cae sobre un espejo, rebota y vuelve a caer, como un balón de básquetbol que se dribla sin perder energía. La ecuación que sale es la de Airy (Simmons, §28, problema 5), y la resolvemos por series de potencias.</p>
 <section id="el-experimento" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="el-experimento"><span class="header-section-number">1</span> El experimento</h2>
@@ -617,9 +621,9 @@ Figura&nbsp;1: Esquema del experimento. El canal mide unos 10 cm y su altura <sp
 <p><span id="eq-ell"><span class="math display">\[\ell^3=\frac{\hbar^2}{2mF}, \tag{2}\]</span></span></p>
 <p>y la ecuación se convierte en</p>
 <p><span id="eq-airy"><span class="math display">\[\varphi''(x)-x\,\varphi(x)=0. \tag{3}\]</span></span></p>
+<div class="parte-matematica">
 <p>Esta es la <strong>ecuación de Airy</strong>. Simmons la escribe como <span class="math inline">\(y''+xy=0\)</span> (§28, problema 5); se pasa de una a la otra cambiando <span class="math inline">\(x\)</span> por <span class="math inline">\(-x\)</span>. Para el neutrón, <a href="#eq-ell" class="quarto-xref">Ecuación&nbsp;2</a> da <span class="math inline">\(\ell\approx5.87\)</span> micras. Esa es la escala natural de longitud del problema, y la escala natural de energía es <span class="math inline">\(F\ell\approx0.60\)</span> peV (un peV es <span class="math inline">\(10^{-12}\)</span> eV).</p>
 <p>Observe que la energía <span class="math inline">\(E\)</span> desapareció de la ecuación: solo quedó escondida en el cambio de variable.</p>
-</section>
 <section id="solución-por-series" class="level3" data-number="2.2">
 <h3 data-number="2.2" class="anchored" data-anchor-id="solución-por-series"><span class="header-section-number">2.2</span> Solución por series</h3>
 <p>Por series,</p>
@@ -666,6 +670,8 @@ Figura&nbsp;1: Esquema del experimento. El canal mide unos 10 cm y su altura <sp
 </div>
 </div>
 <p>Hasta aquí iría un curso de ecuaciones normal.</p>
+</section>
+</div>
 </section>
 </section>
 <section id="de-vuelta-al-neutrón" class="level2" data-number="3">

@@ -17,6 +17,15 @@ format:
 order: 15
 ---
 
+
+```{=html}
+<style>
+  .parte-matematica{color:#006400;}
+  .parte-matematica h3,.parte-matematica h4,.parte-matematica a,.parte-matematica .header-section-number{color:inherit;}
+  body.quarto-dark .parte-matematica{color:#6fcf8a;}
+</style>
+```
+
 Esta sección usa la ecuación de Hermite como destino, pero el camino es largo y vale la pena recorrerlo. Empezamos con una fila de osciladores acoplados, de ahí sale la ecuación de onda, de las ondas sale la relación entre frecuencia, energía y momento, y con eso se llega a la ecuación de Schrödinger. Al final la aplicamos al potencial de un resorte y la resolvemos por series de potencias.
 
 ## Osciladores acoplados
@@ -630,6 +639,8 @@ Reemplazamos $\varphi=h\,e^{-\xi^2/2}$ en @eq-adim. Como $\varphi'=(h'-\xi h)e^{
 
 $$h''-2\xi\,h'+(\varepsilon-1)\,h=0.$$
 
+::: {.parte-matematica}
+
 Escribimos $\varepsilon-1=2n$ y obtenemos la **ecuación de Hermite** de parámetro $n$,
 
 $$h''-2\xi\,h'+2n\,h=0.$$ {#eq-hermite}
@@ -661,6 +672,8 @@ $$2n+1-\varepsilon=0\quad\Longleftrightarrow\quad \varepsilon=2n+1,\qquad n=0,1,
 (Si $n$ es par termina la serie par y hay que anular la impar con $a_1=0$; si $n$ es impar, al revés, con $a_0=0$.) Así la serie es un polinomio de grado $n$, que es el **polinomio de Hermite** $H_n(\xi)$ salvo una constante:
 
 $$H_0=1,\quad H_1=2\xi,\quad H_2=4\xi^2-2,\quad H_3=8\xi^3-12\xi,\quad H_4=16\xi^4-48\xi^2+12.$$
+
+:::
 
 Como $\varepsilon=2E/\hbar\omega$, la condición $\varepsilon=2n+1$ dice que la energía solo puede tomar los valores
 

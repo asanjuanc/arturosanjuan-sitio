@@ -17,6 +17,16 @@ format:
 order: 16
 ---
 
+
+```{=html}
+<style>
+  .parte-matematica{color:#006400;}
+  .parte-matematica h3,.parte-matematica h4,.parte-matematica a,.parte-matematica .header-section-number{color:inherit;}
+  body.quarto-dark .parte-matematica{color:#6fcf8a;}
+</style>
+```
+
+
 En el [oscilador armónico cuántico](../osciladorcuantico/index.qmd) la energía quedó cuantizada porque la función de onda tenía que ir a cero en $\pm\infty$. Aquí aparece otro mecanismo: una pared. El sistema es un neutrón que cae sobre un espejo, rebota y vuelve a caer, como un balón de básquetbol que se dribla sin perder energía. La ecuación que sale es la de Airy (Simmons, §28, problema 5), y la resolvemos por series de potencias.
 
 ## El experimento
@@ -86,6 +96,8 @@ $$\ell^3=\frac{\hbar^2}{2mF},$$ {#eq-ell}
 y la ecuación se convierte en
 
 $$\varphi''(x)-x\,\varphi(x)=0.$$ {#eq-airy}
+
+::: {.parte-matematica}
 
 Esta es la **ecuación de Airy**. Simmons la escribe como $y''+xy=0$ (§28, problema 5); se pasa de una a la otra cambiando $x$ por $-x$. Para el neutrón, @eq-ell da $\ell\approx5.87$ micras. Esa es la escala natural de longitud del problema, y la escala natural de energía es $F\ell\approx0.60$ peV (un peV es $10^{-12}$ eV).
 
@@ -158,6 +170,7 @@ Pero esto se sale del dominio del curso.
 :::
 
 Hasta aquí iría un curso de ecuaciones normal.
+:::
 
 ## De vuelta al neutrón
 

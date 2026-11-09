@@ -1,0 +1,775 @@
+---
+title: "¿Se puede oír la forma de un tambor?"
+subtitle: "La ecuación de Bessel y los modos normales de una membrana circular"
+description: ""
+author: "Arturo Sanjuán"
+date: 2026-11-08
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 17
+---
+
+```{=html}
+<style>
+  .parte-matematica{color:#006400;}
+  .parte-matematica h3,.parte-matematica h4,.parte-matematica a,.parte-matematica .header-section-number{color:inherit;}
+  body.quarto-dark .parte-matematica{color:#6fcf8a;}
+</style>
+```
+
+En la ecuación de Airy desarrollábamos la solución alrededor de un punto donde la ecuación no era singular. Aquí aparece una ecuación con una singularidad, la ecuación de Bessel, y el método para tratarla es el de Frobenius. El problema físico que la produce es el de un tambor: una membrana circular que vibra.
+
+## La ecuación de onda en una membrana
+
+Ya vimos una motivación de dónde sale la ecuación de onda. En más dimensiones, para una membrana, la ecuación se transforma en
+
+$$u_{tt}=c^2\,\Delta u,\qquad \Delta u=u_{xx}+u_{yy},$$
+
+donde $\Delta$ se llama el **laplaciano**. Vamos a suponer que $c=1$ y que el tambor es una membrana circular de radio $1$ sujeta en el borde:
+
+$$u(x,y,t)=0\qquad\text{si}\qquad x^2+y^2=1.$$
+
+Esto no le quita generalidad. Con $r=a\rho$ y $t=(a/c)\,\tau$ el problema de radio $a$ y velocidad $c$ se convierte exactamente en este, y al final basta devolver el cambio: las frecuencias físicas son $\omega=c\,j/a$, donde $j$ son los números que van a aparecer abajo.
+
+## Coordenadas polares
+
+Lo primero que vamos a hacer es usar coordenadas polares. Es un buen ejercicio de derivación parcial. Con $x=r\cos\theta$, $y=r\sin\theta$,
+
+$$r=\sqrt{x^2+y^2},\quad \theta=\arctan\frac yx\ \Longrightarrow\ \frac{\partial r}{\partial x}=\frac xr=\cos\theta,\qquad \frac{\partial\theta}{\partial x}=\frac{-y}{x^2+y^2}=-\frac{\sin\theta}{r}.$$
+
+Por la regla de la cadena,
+
+$$u_x=u_r\,\frac{\partial r}{\partial x}+u_\theta\,\frac{\partial\theta}{\partial x}=u_r\cos\theta-u_\theta\,\frac{\sin\theta}{r}.$$
+
+Para la segunda derivada,
+
+$$u_{xx}=\frac{\partial}{\partial x}\bigl(u_r\cos\theta\bigr)-\frac{\partial}{\partial x}\Bigl(u_\theta\,\frac{\sin\theta}{r}\Bigr),$$
+
+y cada sumando se deriva de nuevo con la regla de la cadena:
+
+$$\begin{aligned}\frac{\partial}{\partial x}\bigl(u_r\cos\theta\bigr)&=\frac{\partial}{\partial r}\bigl(u_r\cos\theta\bigr)\cos\theta+\frac{\partial}{\partial\theta}\bigl(u_r\cos\theta\bigr)\Bigl(-\frac{\sin\theta}{r}\Bigr)\\&=u_{rr}\cos^2\theta-u_{r\theta}\,\frac{\sin\theta\cos\theta}{r}+u_r\,\frac{\sin^2\theta}{r},\end{aligned}$$
+
+$$\frac{\partial}{\partial x}\Bigl(u_\theta\,\frac{\sin\theta}{r}\Bigr)=u_{r\theta}\,\frac{\sin\theta\cos\theta}{r}-2u_\theta\,\frac{\sin\theta\cos\theta}{r^2}-u_{\theta\theta}\,\frac{\sin^2\theta}{r^2}.$$
+
+Entonces
+
+$$\begin{aligned}u_{xx}&=u_{rr}\cos^2\theta-2u_{r\theta}\,\frac{\sin\theta\cos\theta}{r}+u_r\,\frac{\sin^2\theta}{r}\\&\quad+2u_\theta\,\frac{\sin\theta\cos\theta}{r^2}+u_{\theta\theta}\,\frac{\sin^2\theta}{r^2},\end{aligned}$$
+
+y, de la misma manera, con $\partial r/\partial y=\sin\theta$ y $\partial\theta/\partial y=\cos\theta/r$,
+
+$$\begin{aligned}u_{yy}&=u_{rr}\sin^2\theta+2u_{r\theta}\,\frac{\sin\theta\cos\theta}{r}+u_r\,\frac{\cos^2\theta}{r}\\&\quad-2u_\theta\,\frac{\sin\theta\cos\theta}{r^2}+u_{\theta\theta}\,\frac{\cos^2\theta}{r^2}.\end{aligned}$$
+
+Al sumar, los términos cruzados se cancelan y $\sin^2\theta+\cos^2\theta=1$, de modo que el laplaciano en coordenadas polares es
+
+$$\Delta u=u_{rr}+\frac1r\,u_r+\frac1{r^2}\,u_{\theta\theta}.$$ {#eq-lap}
+
+## Separación de variables
+
+Buscamos soluciones de la forma $u(r,\theta,t)=\Theta(\theta)R(r)T(t)$. Al reemplazar en $u_{tt}=\Delta u$ queda
+
+$$\Theta R\,T''=\Theta R''\,T+\frac1r\,\Theta R'\,T+\frac1{r^2}\,\Theta''RT.$$
+
+Dividimos por $\Theta RT$ y obtenemos
+
+$$\frac{T''}{T}=\frac{R''}{R}+\frac{R'}{rR}+\frac{\Theta''}{r^2\Theta}=-\lambda^2.$$
+
+Como el lado izquierdo solo depende de $t$ y el derecho solo de $r$ y $\theta$, ambos son constantes. La llamamos $-\lambda^2$ porque si $T''/T>0$ no habría oscilación temporal, solo crecimiento o decaimiento. De ahí que la parte temporal sea
+
+$$T''+\lambda^2T=0\ \Longrightarrow\ T(t)=A\cos\lambda t+B\sin\lambda t=C\cos(\lambda t+\varphi).$$
+
+Ahora separamos $r$ de $\theta$. Multiplicando por $r^2$,
+
+$$\frac{r^2R''}{R}+\frac{rR'}{R}+\lambda^2r^2=-\frac{\Theta''}{\Theta}=n^2.$$
+
+Si resolvemos el problema angular, $\Theta''+n^2\Theta=0$, queda $\Theta(\theta)=c_0\cos n\theta+c_1\sin n\theta$. Pero como $\theta$ es un ángulo, $\Theta(\theta+2\pi)=\Theta(\theta)$, y esto exige que $n=0,1,2,\dots$ sea un entero. Así,
+
+$$\Theta(\theta)=A\cos n\theta+B\sin n\theta.$$
+
+Ahora sí podemos estudiar la parte radial,
+
+$$r^2R''+rR'+(\lambda^2r^2-n^2)R=0.$$
+
+Hacemos $s=\lambda r$ y obtenemos
+
+$$s^2R''+sR'+(s^2-n^2)R=0.$$ {#eq-bessel}
+
+## La ecuación de Bessel
+
+::: {.parte-matematica}
+
+Esta es la **ecuación de Bessel** de orden $n$. Aquí entramos al dominio matemático.
+
+### Un punto singular regular
+
+En forma normal,
+
+$$R''+\frac1s\,R'+\frac{s^2-n^2}{s^2}\,R=0,$$
+
+vemos que en $s=0$ hay una singularidad, y eso nos va a generar un dolor de cabeza. Un punto singular como este se llama **regular**: si la ecuación es $R''+P(s)R'+Q(s)R=0$, entonces $sP(s)$ y $s^2Q(s)$ ya no tienen singularidades y se pueden escribir como series de potencias. El teorema, debido a Frobenius, dice que hay que suponer que la solución tiene la forma
+
+$$R(s)=\sum_{k=0}^{\infty}a_k\,s^{k+r},\qquad a_0\neq0,$$
+
+y encontrar $r$. (Ojo: esta $r$ no es el radio, es un número que hay que encontrar; aquí va a salir entero.)
+
+### El método de Frobenius
+
+Derivando término a término,
+
+$$R'=\sum_{k=0}^{\infty}(k+r)\,a_k\,s^{k+r-1},\qquad R''=\sum_{k=0}^{\infty}(k+r)(k+r-1)\,a_k\,s^{k+r-2}.$$
+
+Reemplazamos en $s^2R''+sR'+(s^2-n^2)R$:
+
+$$\sum_{k=0}^{\infty}(k+r)(k+r-1)\,a_k\,s^{k+r}+\sum_{k=0}^{\infty}(k+r)\,a_k\,s^{k+r}+\sum_{k=0}^{\infty}a_k\,s^{k+r+2}-\sum_{k=0}^{\infty}n^2a_k\,s^{k+r}.$$
+
+Dejamos todo en potencias de $s^{k+r}$. En la tercera sumatoria corremos el índice para que la potencia sea $s^{k+r}$:
+
+$$\sum_{k=0}^{\infty}a_k\,s^{k+r+2}=\sum_{k=2}^{\infty}a_{k-2}\,s^{k+r}.$$
+
+Por otro lado, la primera, la segunda y la cuarta sumatoria dan $\sum\bigl((k+r)^2-n^2\bigr)a_k\,s^{k+r}$. Sacando los dos primeros términos y juntando todo,
+
+$$(r^2-n^2)\,a_0\,s^{r}+\bigl((1+r)^2-n^2\bigr)\,a_1\,s^{r+1}+\sum_{k=2}^{\infty}\Bigl[\bigl((k+r)^2-n^2\bigr)a_k+a_{k-2}\Bigr]s^{k+r}=0.$$
+
+Como $a_0\neq0$, la primera condición es $r^2-n^2=0$, que se llama la **ecuación indicial**, y da $r=\pm n$.
+
+### La primera solución: $J_n$
+
+Veamos qué pasa con $r=n$. El coeficiente $a_0$ queda libre. Para $a_1$,
+
+$$\bigl((1+n)^2-n^2\bigr)a_1=(1+2n)\,a_1=0\ \Longrightarrow\ a_1=0.$$
+
+Para $k\ge2$ la fórmula de recurrencia es $\bigl((k+n)^2-n^2\bigr)a_k=-a_{k-2}$, es decir,
+
+$$k(k+2n)\,a_k=-a_{k-2}.$$
+
+Como $a_1=0$, todos los coeficientes impares son cero y solo sobreviven los pares, $k=2m$:
+
+$$a_{2m}=-\frac{a_{2m-2}}{4m(n+m)}.$$
+
+Con $a_0$ libre,
+
+$$a_2=-\frac{a_0}{4(n+1)},\qquad a_4=\frac{a_0}{4^2\cdot2\,(n+1)(n+2)},\qquad a_6=-\frac{a_0}{4^3\cdot2\cdot3\,(n+1)(n+2)(n+3)},$$
+
+y en general, tomando $a_0=1$,
+
+$$a_{2m}=\frac{(-1)^m\,n!}{4^m\,m!\,(n+m)!}.$$
+
+La solución tiene entonces la forma
+
+$$\sum_{m=0}^{\infty}\frac{(-1)^m\,n!}{4^m\,m!\,(n+m)!}\,s^{n+2m}.$$
+
+Cualquier múltiplo constante también es solución, así que dividimos por $2^n\,n!$ y obtenemos
+
+$$J_n(s)=\sum_{m=0}^{\infty}\frac{(-1)^m}{m!\,(n+m)!}\Bigl(\frac s2\Bigr)^{2m+n}.$$ {#eq-jn}
+
+Esta función se llama **función de Bessel de primera especie de orden $n$**. Veamos que converge:
+
+$$\left|\frac{a_{2m+2}\,s^{2m+2}}{a_{2m}\,s^{2m}}\right|=\frac{s^2}{4(m+1)(m+1+n)}\longrightarrow0\qquad(m\to\infty)$$
+
+para todo $s$. La serie converge en toda la recta.
+
+### La otra raíz
+
+Veamos si se puede conseguir la otra solución con $r=-n$, que sale de la indicial. El coeficiente $a_0$ sigue libre, y
+
+$$\bigl((1-n)^2-n^2\bigr)a_1=(1-2n)\,a_1=0\ \Longrightarrow\ a_1=0.$$
+
+La fórmula de recurrencia se convierte en
+
+$$k(k-2n)\,a_k=-a_{k-2}.$$
+
+Si $k=2n$ el lado izquierdo es cero, y la ecuación exige que $a_{2n-2}=0$. Pero entonces, por la recurrencia, todos los anteriores serían cero, incluido $a_0$, y la solución sería la trivial. Aquí el método falla. (No siempre pasa así: si $2n$ no fuera un entero la recurrencia nunca se anularía. Pero en nuestro problema $n$ es entero.)
+
+### La segunda solución, con logaritmo
+
+Debemos buscar la otra solución por otro lado. Recordemos que cuando tenemos una solución $y_1$ podemos encontrar otra por reducción de orden:
+
+$$y_2=y_1\int\frac{W}{y_1^2}\,ds,$$
+
+donde $W$ es el wronskiano. Pero si $P(s)=\frac1s$, y recordando que $W'=-P(s)\,W=-\frac Ws$, entonces $\ln W=\ln s^{-1}+\text{cte}$, de donde $W=\frac Cs$. Tomando $C=1$,
+
+$$y_2=y_1\int\frac{ds}{s\,y_1^2}.$$
+
+Como $y_1$ viene del método de Frobenius, tiene la forma $y_1=s^n\bigl(a_0+a_1s+\cdots\bigr)=s^n g(s)$ con $g(0)\neq0$. Entonces
+
+$$\int\frac{ds}{s\,y_1^2}=\int\frac{ds}{s^{2n+1}\,g(s)^2}.$$
+
+A su vez $\frac1{g(s)^2}$ se puede escribir como serie de potencias, $b_0+b_1s+b_2s^2+\cdots$, de modo que
+
+$$\begin{aligned}\int\frac{ds}{s\,y_1^2}&=\int\Bigl(b_0s^{-2n-1}+b_1s^{-2n}+\cdots+b_{2n}s^{-1}+b_{2n+1}+b_{2n+2}\,s+\cdots\Bigr)ds\\&=b_{2n}\ln s+s^{-2n}\sum_{k=0}^{\infty}c_k\,s^k.\end{aligned}$$
+
+Multiplicando por $y_1=s^ng(s)$ queda
+
+$$y_2=b_{2n}\,y_1\ln s+s^{-n}\sum_{k=0}^{\infty}d_k\,s^k.$$
+
+El coeficiente $b_{2n}$ no es cero: si lo fuera, $y_2$ sería una solución de Frobenius con $r=-n$, y acabamos de ver que no existe. Esto sugiere que, en un punto singular regular, cuando la otra solución falla en ser de Frobenius tiene la forma
+
+$$y_2=b\,y_1\ln x+x^{\rho}\sum_{k=0}^{\infty}c_k\,x^k,$$
+
+con $\rho$ la raíz menor de la indicial. Volviendo a la ecuación de Bessel, la otra solución tiene la forma
+
+$$Y_n(s)=c\,J_n(s)\ln s+s^{-n}\sum_{k=0}^{\infty}c_k\,s^k,$$
+
+con $c\neq0$. (Con una constante apropiada es la función de Bessel de segunda especie.)
+
+:::
+
+## De vuelta a la membrana
+
+Pero en $s=0$ la función $Y_n$ no está acotada, y entonces no tiene sentido físico: el centro de la membrana no puede estar a altura infinita. La única solución que sirve es $J_n(s)$, y como $s=\lambda r$,
+
+$$R(r)=J_n(\lambda r).$$
+
+La condición de borde es $R(1)=0$, es decir,
+
+$$J_n(\lambda)=0.$$
+
+Las funciones de Bessel tienen infinitos ceros positivos, separados entre sí (verificar esto se sale del curso). El simulador deja ver las funciones y sus ceros.
+
+::: {.callout-note title="Simulador: las funciones de Bessel"}
+Con el deslizador se escoge el orden $n$. En azul está $J_n(s)$ con sus ceros $j_{n,1}<j_{n,2}<\cdots$ marcados. Con la casilla de $Y_n$ se dibuja la otra solución, que se va a $-\infty$ en $s=0$. Con la casilla de la serie se dibuja la suma parcial de @eq-jn con el número de términos que se escoja, para ver cómo la serie converge para todo $s$ pero pide más términos cuando $s$ crece.
+
+```{=html}
+<style>
+  .bes-caja{border:3px solid #ddd;border-radius:8px;padding:14px;max-width:780px;margin:1em auto;font-family:sans-serif;background:#fff;color:#222;}
+  .bes-caja canvas{display:block;width:100%;height:auto;background:#fff;border:1px solid #e3e3e3;border-radius:6px;margin-top:8px;}
+  .bes-fila{display:flex;align-items:center;gap:8px 18px;flex-wrap:wrap;}
+  .bes-fila label{font-size:0.92em;}
+  .bes-fila input[type=range]{width:150px;vertical-align:middle;}
+  .bes-info{margin-top:10px;font-size:0.93em;line-height:1.5;}
+</style>
+<div class="bes-caja" id="bes">
+  <div class="bes-fila">
+    <label>orden n = <b id="bes-nv">0</b> <input type="range" id="bes-n" min="0" max="6" step="1" value="0"></label>
+    <label><input type="checkbox" id="bes-y"> mostrar Y<sub>n</sub> (la otra solución)</label>
+    <label><input type="checkbox" id="bes-ser"> suma parcial de la serie</label>
+    <label id="bes-lM" style="display:none">términos = <b id="bes-Mv">4</b> <input type="range" id="bes-M" min="1" max="40" step="1" value="4"></label>
+  </div>
+  <canvas id="bes-c" width="760" height="400" role="img" aria-label="Gráfica de la función de Bessel J_n(s) con sus ceros marcados"></canvas>
+  <div class="bes-info" id="bes-info"></div>
+</div>
+<script>
+(function(){
+/*NUCLEO*/
+var EULER_GAMMA = 0.5772156649015329;
+function besselJ(n, x){
+  var N = 96 + Math.ceil(Math.abs(x)) * 2, s = 0;
+  for (var k = 0; k < N; k++){ var t = 2*Math.PI*k/N; s += Math.cos(n*t - x*Math.sin(t)); }
+  return s/N;
+}
+function serieJ(n, x, M){
+  var h = x/2, q = h*h, t = 1, i;
+  for (i = 1; i <= n; i++) t *= h/i;
+  var s = t;
+  for (var m = 0; m < M; m++){ t *= -q/((m + 1)*(m + 1 + n)); s += t; }
+  return s;
+}
+function besselY(n, x){
+  var h = x/2, q = h*h, k, i;
+  var fac = [1]; for (i = 1; i <= n + 80; i++) fac.push(fac[i - 1]*i);
+  var jn = besselJ(n, x), finita = 0;
+  for (k = 0; k < n; k++) finita += fac[n - k - 1]/fac[k]*Math.pow(h, 2*k - n);
+  var Hk = 0, Hnk = 0; for (i = 1; i <= n; i++) Hnk += 1/i;
+  var t = Math.pow(h, n)/fac[n], suma = 0;
+  for (k = 0; k < 80; k++){
+    suma += t*(Hk + Hnk);
+    Hk += 1/(k + 1); Hnk += 1/(n + k + 1);
+    t *= -q/((k + 1)*(n + k + 1));
+    if (Math.abs(t) < 1e-18 && k > 5) break;
+  }
+  return 2/Math.PI*jn*(Math.log(h) + EULER_GAMMA) - finita/Math.PI - suma/Math.PI;
+}
+function cerosJ(n, xmax){
+  var z = [], dx = 0.05, a = dx, fa = besselJ(n, a);
+  while (a < xmax){
+    var b = a + dx, fb = besselJ(n, b);
+    if (fa*fb < 0){
+      var lo = a, hi = b, flo = fa;
+      for (var i = 0; i < 60; i++){ var mid = 0.5*(lo + hi), fm = besselJ(n, mid); if (flo*fm <= 0) hi = mid; else { lo = mid; flo = fm; } }
+      z.push(0.5*(lo + hi));
+    }
+    a = b; fa = fb;
+  }
+  return z;
+}
+/*FIN NUCLEO*/
+
+function $(id){ return document.getElementById(id); }
+var cv = $('bes-c'); if (!cv) return;
+var ctx = cv.getContext('2d');
+var XMAX = 20, YMAX = 1.25;
+var S = {n:0, y:false, ser:false, M:4};
+function fmt(x, d){ return x.toFixed(d).replace('.', ','); }
+
+function dibujar(){
+  var W = 760, H = 400, L = 50, R = 14, T0 = 12, B0 = 34, i, x, k;
+  function X(s){ return L + s/XMAX*(W - L - R); }
+  function Y(v){ return T0 + (YMAX - v)/(2*YMAX)*(H - T0 - B0); }
+  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, H);
+  // cuadricula y ejes
+  ctx.strokeStyle = '#ececec'; ctx.lineWidth = 1; ctx.fillStyle = '#555'; ctx.font = '12px sans-serif';
+  ctx.textAlign = 'center';
+  for (x = 0; x <= XMAX; x += 5){ ctx.beginPath(); ctx.moveTo(X(x), T0); ctx.lineTo(X(x), H - B0); ctx.stroke(); ctx.fillText(x, X(x), H - B0 + 16); }
+  ctx.textAlign = 'right';
+  for (var v = -1; v <= 1.001; v += 0.5){ ctx.beginPath(); ctx.moveTo(L, Y(v)); ctx.lineTo(W - R, Y(v)); ctx.stroke(); ctx.fillText(fmt(v, 1), L - 6, Y(v) + 4); }
+  ctx.strokeStyle = '#888'; ctx.lineWidth = 1.2;
+  ctx.beginPath(); ctx.moveTo(L, Y(0)); ctx.lineTo(W - R, Y(0)); ctx.moveTo(L, T0); ctx.lineTo(L, H - B0); ctx.stroke();
+  ctx.fillStyle = '#555'; ctx.textAlign = 'center'; ctx.fillText('s', W - R - 6, Y(0) - 8);
+  ctx.save(); ctx.beginPath(); ctx.rect(L, T0, W - L - R, H - T0 - B0); ctx.clip();
+  var NP = 700, p;
+  function curva(f, col, ancho, dash, x0){
+    ctx.strokeStyle = col; ctx.lineWidth = ancho; ctx.setLineDash(dash || []); ctx.beginPath();
+    var on = false;
+    for (p = 0; p <= NP; p++){
+      var s = x0 + (XMAX - x0)*p/NP, val = f(s);
+      if (!isFinite(val) || Math.abs(val) > 40){ on = false; continue; }
+      if (!on){ ctx.moveTo(X(s), Y(val)); on = true; } else ctx.lineTo(X(s), Y(val));
+    }
+    ctx.stroke(); ctx.setLineDash([]);
+  }
+  if (S.y) curva(function(s){ return besselY(S.n, s); }, '#c0392b', 2.2, [7, 4], 0.02);
+  if (S.ser) curva(function(s){ return serieJ(S.n, s, S.M - 1); }, '#e67e22', 2.2, [], 0);
+  curva(function(s){ return besselJ(S.n, s); }, '#2563a8', 2.8, [], 0);
+  ctx.restore();
+  // ceros
+  var z = cerosJ(S.n, XMAX);
+  ctx.fillStyle = '#1b2a41'; ctx.textAlign = 'center'; ctx.font = '11px sans-serif';
+  for (k = 0; k < z.length; k++){
+    ctx.beginPath(); ctx.arc(X(z[k]), Y(0), 4, 0, 2*Math.PI); ctx.fill();
+    ctx.fillText('j' + (S.n) + ',' + (k + 1), X(z[k]), Y(0) + (k % 2 ? 22 : 15) * (S.n === 0 ? 1 : 1));
+  }
+  // leyenda
+  ctx.textAlign = 'left'; ctx.font = '13px sans-serif';
+  var lx = L + 12, ly = T0 + 16;
+  ctx.fillStyle = '#2563a8'; ctx.fillText('J' + S.n + '(s)', lx, ly);
+  if (S.y){ ctx.fillStyle = '#c0392b'; ctx.fillText('Y' + S.n + '(s)', lx + 64, ly); }
+  if (S.ser){ ctx.fillStyle = '#e67e22'; ctx.fillText('suma parcial', lx + (S.y ? 128 : 64), ly); }
+  // texto
+  var z0 = z.slice(0, 5).map(function(v, i){ return 'j<sub>' + S.n + ',' + (i + 1) + '</sub> = ' + fmt(v, 4); }).join(', ');
+  var txt = '<b>n = ' + S.n + '</b>. ' + (S.n === 0 ? 'J<sub>0</sub>(0) = 1.' : 'J<sub>' + S.n + '</sub>(0) = 0 y J<sub>' + S.n + '</sub> parte como s<sup>' + S.n + '</sup>.') + ' Los primeros ceros positivos son ' + z0 + '. ' +
+            'Quedan espaciados casi uniformemente (cada vez más cerca de π), y son los valores permitidos de λ en la membrana.';
+  if (S.y) txt += '<br><span style="color:#c0392b">Y<sub>' + S.n + '</sub>(s) → −∞ cuando s → 0<sup>+</sup>: una membrana con el centro a altura infinita no tiene sentido físico, y por eso se descarta.</span>';
+  if (S.ser){
+    var dev = null;
+    for (p = 1; p <= 2000; p++){ var s2 = XMAX*p/2000; if (Math.abs(serieJ(S.n, s2, S.M - 1) - besselJ(S.n, s2)) > 0.05){ dev = s2; break; } }
+    txt += '<br><span style="color:#b85c00">Con ' + S.M + (S.M === 1 ? ' término' : ' términos') + ' (un polinomio de grado ' + (2*(S.M - 1) + S.n) + ') la suma parcial ' +
+           (dev === null ? 'coincide con J<sub>' + S.n + '</sub> en todo el intervalo dibujado.' : 'se separa de J<sub>' + S.n + '</sub> más de 0,05 a partir de s ≈ ' + fmt(dev, 1) + '.') +
+           ' La serie converge para todo s, pero para s grande hacen falta más términos.</span>';
+  }
+  $('bes-info').innerHTML = txt;
+}
+function enlazar(){
+  $('bes-n').addEventListener('input', function(){ S.n = +this.value; $('bes-nv').textContent = S.n; dibujar(); });
+  $('bes-y').addEventListener('change', function(){ S.y = this.checked; dibujar(); });
+  $('bes-ser').addEventListener('change', function(){ S.ser = this.checked; $('bes-lM').style.display = this.checked ? '' : 'none'; dibujar(); });
+  $('bes-M').addEventListener('input', function(){ S.M = +this.value; $('bes-Mv').textContent = S.M; dibujar(); });
+}
+enlazar(); dibujar();
+})();
+</script>
+```
+:::
+
+Entonces, para cada $n$ existe una sucesión de ceros positivos $j_{n,1}<j_{n,2}<\cdots$ de $J_n$, y $\lambda=j_{n,m}$. Así podemos recuperar la solución de los **modos normales**, que son las soluciones en las que toda la membrana oscila con la misma frecuencia y en fase:
+
+$$u_{nm}(r,\theta,t)=J_n(j_{n,m}\,r)\bigl(A\cos n\theta+B\sin n\theta\bigr)\cos(j_{n,m}\,t+\varphi).$$ {#eq-modos}
+
+La frecuencia del modo $(n,m)$ es $\omega_{n,m}=j_{n,m}$. Los primeros valores son:
+
+| $n$ | $j_{n,1}$ | $j_{n,2}$ | $j_{n,3}$ |
+|:---:|:---:|:---:|:---:|
+| 0 | 2.4048 | 5.5201 | 8.6537 |
+| 1 | 3.8317 | 7.0156 | 10.1735 |
+| 2 | 5.1356 | 8.4172 | 11.6198 |
+| 3 | 6.3802 | 9.7610 | 13.0152 |
+| 4 | 7.5883 | 11.0647 | 14.3725 |
+
+Los cocientes con la frecuencia fundamental $j_{0,1}$ no son enteros: $1,\ 1.593,\ 2.135,\ 2.295,\ 2.653,\dots$ Por eso los sonidos de un tambor no forman una serie armónica como los de una cuerda.
+
+::: {.callout-note title="Haciendo las cuentas con Maxima"}
+```maxima
+kill(all);
+
+/* 1. El laplaciano en polares con la regla de la cadena */
+depends(u, [r, t]);
+dx(w) := cos(t)*diff(w, r) - sin(t)/r*diff(w, t)$
+dy(w) := sin(t)*diff(w, r) + cos(t)/r*diff(w, t)$
+trigsimp(expand(dx(dx(u)) + dy(dy(u))));   /* (u_tt + r^2 u_rr + r u_r)/r^2 */
+trigsimp(expand(dx(dx(u))));               /* u_xx en polares */
+remove(u, dependency);
+
+/* 2. La serie de J_n resuelve s^2 y'' + s y' + (s^2 - n^2) y = 0.
+      Del residuo solo quedan potencias mayores que 2M+n (el truncamiento) */
+Jn(n, s, M) := sum((-1)^m/(m!*(m+n)!)*(s/2)^(2*m+n), m, 0, M)$
+for n:0 thru 4 do (
+  res: expand(s^2*diff(Jn(n,s,12),s,2) + s*diff(Jn(n,s,12),s) + (s^2-n^2)*Jn(n,s,12)),
+  print("n =", n, " primera potencia del residuo:", lopow(res, s)))$
+
+/* 3. La recurrencia a[2m] = -a[2m-2]/(4m(n+m)) y la formula cerrada */
+a[0]: 1$
+for m:1 thru 6 do a[m]: -a[m-1]/(4*m*(n+m))$
+for nn:0 thru 4 do (
+  for m:0 thru 6 do
+    if ratsimp(subst(n=nn, a[m]) - (-1)^m*nn!/(4^m*m!*(nn+m)!)) # 0
+      then print("falla", nn, m),
+  print("n =", nn, " la formula cerrada coincide hasta m = 6"))$
+
+/* 4. r = -n: a[2m] = -a[2m-2]/(4m(m-n)) nunca se anula antes de k = 2n */
+kill(a)$
+for n:1 thru 3 do (
+  a[0]: 1,
+  for m:1 thru n-1 do a[m]: -a[m-1]/(4*m*(m-n)),
+  print("n =", n, " a_(2n-2) =", a[n-1], " (en k = 2n se exigiria 0 = -a_(2n-2))")
+)$
+
+/* 5. Con y1 = J_n = s^n g(s), el coeficiente b_2n de 1/g^2 no es cero:
+      por eso aparece el logaritmo */
+for n:0 thru 4 do (
+  g: ratsimp(Jn(n, s, 2*n+2)/s^n),
+  print("n =", n, " b_2n =", ratcoef(taylor(1/g^2, s, 0, 2*n), s, 2*n)))$
+
+/* 6. Ceros de J_n (j_(n,m)) y cocientes con la frecuencia fundamental j_(0,1) */
+cero(n, a0, b0) := find_root(bessel_j(n, x), x, a0, b0)$
+c01: cero(0, 2.3, 2.5)$
+tabla: [[0, cero(0,2.3,2.5), cero(0,5.4,5.6), cero(0,8.5,8.8)],
+        [1, cero(1,3.7,3.9), cero(1,7.0,7.1), cero(1,10.1,10.3)],
+        [2, cero(2,5.0,5.2), cero(2,8.3,8.5), cero(2,11.5,11.8)],
+        [3, cero(3,6.3,6.5), cero(3,9.7,9.9), cero(3,13.0,13.2)],
+        [4, cero(4,7.5,7.7), cero(4,11.0,11.2), cero(4,14.3,14.5)]]$
+for fila in tabla do print(fila)$
+for fila in tabla do print(first(fila), makelist(fila[k]/c01, k, 2, 4))$
+```
+:::
+
+## Los modos normales
+
+::: {.callout-note title="Simulador: los modos normales de la membrana"}
+El tablero muestra los modos $(n,m)$ de @eq-modos con $n=0,\dots,5$ y $m=1,2,3$, vistos desde arriba. Cada uno oscila con su propia frecuencia $\omega_{n,m}=j_{n,m}$, así que unos van más rápido que otros. En rojo la membrana sube, en azul baja, y en blanco no se mueve. Las líneas negras son las líneas nodales: $n$ diámetros y $m-1$ circunferencias, además del borde fijo. Al hacer clic en un modo se ve en 3D como una superficie que sube y baja sobre el plano de reposo (se puede girar arrastrando con el mouse, y el deslizador exagera la altura), y también desde arriba, junto con su perfil a lo largo de un diámetro. Con la orientación se pasa de $\cos n\theta$ a $\sin n\theta$, que son dos modos distintos con la misma frecuencia.
+
+```{=html}
+<style>
+  .tab-caja{border:3px solid #ddd;border-radius:8px;padding:14px;max-width:780px;margin:1em auto;font-family:sans-serif;background:#fff;color:#222;}
+  .tab-caja button{padding:5px 11px;border:1px solid #bbb;border-radius:6px;background:#f5f5f5;color:#222;cursor:pointer;font-size:0.9em;}
+  .tab-caja button:hover{background:#e9e9e9;}
+  .tab-fila{display:flex;align-items:center;gap:8px 18px;flex-wrap:wrap;}
+  .tab-fila label{font-size:0.92em;}
+  .tab-fila input[type=range]{width:140px;vertical-align:middle;}
+  .tab-rejilla{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:12px;}
+  .tab-celda{border:2px solid #e6e6e6;border-radius:8px;padding:4px 4px 3px;cursor:pointer;text-align:center;background:#fff;}
+  .tab-celda:hover{border-color:#b9c7d8;}
+  .tab-celda.tab-sel{border-color:#2563a8;box-shadow:0 0 0 2px #cfe0f3;}
+  .tab-celda canvas{display:block;width:100%;height:auto;}
+  .tab-celda div{font-size:0.74em;line-height:1.25;color:#444;}
+  .tab-cab{font-size:0.8em;color:#555;text-align:center;margin-top:10px;}
+  .tab-grande{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:14px;align-items:start;}
+  .tab-grande canvas{display:block;width:100%;height:auto;background:#fff;border:1px solid #e3e3e3;border-radius:6px;}
+  .tab-3d{margin-top:14px;}
+  .tab-3d canvas{display:block;width:100%;height:auto;background:#fff;border:1px solid #e3e3e3;border-radius:6px;cursor:grab;touch-action:none;}
+  .tab-3d canvas.tab-arr{cursor:grabbing;}
+  .tab-info{margin-top:10px;font-size:0.93em;line-height:1.5;}
+  @media (max-width:560px){ .tab-rejilla{grid-template-columns:repeat(3,1fr);} }
+</style>
+<div class="tab-caja" id="tab">
+  <div class="tab-fila">
+    <button id="tab-play">Pausa</button>
+    <button id="tab-reset">t = 0</button>
+    <label>velocidad = <b id="tab-sv">0,5</b>× <input type="range" id="tab-s" min="0.05" max="2" step="0.05" value="0.5"></label>
+    <label>orientación <select id="tab-or"><option value="c">cos nθ</option><option value="s">sin nθ</option></select></label>
+    <label><input type="checkbox" id="tab-nod" checked> líneas nodales</label>
+  </div>
+  <div class="tab-rejilla" id="tab-rej"></div>
+  <div class="tab-cab">Columnas: n = 0, 1, …, 5 (diámetros nodales). Filas: m = 1, 2, 3 (el m-ésimo cero de J<sub>n</sub>). Rojo: la membrana sube. Azul: baja. Blanco: no se mueve.</div>
+  <div class="tab-3d">
+    <canvas id="tab-3" width="760" height="430" role="img" aria-label="Modo normal seleccionado como superficie en tres dimensiones"></canvas>
+    <div class="tab-fila" style="margin-top:6px"><label>altura = <b id="tab-hv">0,45</b> <input type="range" id="tab-h" min="0.1" max="1" step="0.05" value="0.45"></label><span style="font-size:0.85em;color:#555">Arrastra con el mouse (o el dedo) para girar la membrana.</span></div>
+  </div>
+  <div class="tab-grande">
+    <canvas id="tab-g" width="340" height="340" role="img" aria-label="Modo normal seleccionado visto desde arriba"></canvas>
+    <canvas id="tab-p" width="400" height="340" role="img" aria-label="Perfil del modo a lo largo de un diámetro"></canvas>
+  </div>
+  <div class="tab-info" id="tab-info"></div>
+</div>
+<script>
+(function(){
+/*NUCLEO*/
+function besselJ(n, x){
+  var N = 96 + Math.ceil(Math.abs(x)) * 2, s = 0;
+  for (var k = 0; k < N; k++){ var t = 2*Math.PI*k/N; s += Math.cos(n*t - x*Math.sin(t)); }
+  return s/N;
+}
+function cerosJ(n, xmax){
+  var z = [], dx = 0.05, a = dx, fa = besselJ(n, a);
+  while (a < xmax){
+    var b = a + dx, fb = besselJ(n, b);
+    if (fa*fb < 0){
+      var lo = a, hi = b, flo = fa;
+      for (var i = 0; i < 60; i++){ var mid = 0.5*(lo + hi), fm = besselJ(n, mid); if (flo*fm <= 0) hi = mid; else { lo = mid; flo = fm; } }
+      z.push(0.5*(lo + hi));
+    }
+    a = b; fa = fb;
+  }
+  return z;
+}
+/*FIN NUCLEO*/
+
+function $(id){ return document.getElementById(id); }
+if (!$('tab-rej')) return;
+var NN = 6, MM = 3, PX = 120, DPR = Math.min(2, window.devicePixelRatio || 1);
+var S = {n:1, m:1, play:true, vel:0.5, or:'c', nod:true, alt:0.45, az:0.55, el:0.72}, t = 0, last = null;
+function fmt(x, d){ return x.toFixed(d).replace('.', ','); }
+
+// ceros j_{n,m} y perfiles radiales J_n(j_{n,m} rho)
+var J = [], NR = 400, modos = [];
+(function(){
+  for (var n = 0; n < NN; n++){
+    var z = cerosJ(n, 18); J.push(z);
+    for (var m = 1; m <= MM; m++){
+      var j = z[m - 1], tab = new Float64Array(NR + 1);
+      for (var i = 0; i <= NR; i++) tab[i] = besselJ(n, j*i/NR);
+      modos.push({n:n, m:m, j:j, tab:tab, ctx:null, cv:null, pat:null, size:0});
+    }
+  }
+})();
+function modo(n, m){ return modos[n*MM + (m - 1)]; }
+function radial(md, rho){ var u = rho*NR, i = Math.min(NR - 1, Math.floor(u)), f = u - i; return md.tab[i]*(1 - f) + md.tab[i + 1]*f; }
+function ang(n, th){ return S.or === 'c' ? Math.cos(n*th) : (n === 0 ? 1 : Math.sin(n*th)); }
+
+// patron espacial normalizado en una malla P x P
+function patron(md, P){
+  var a = new Float32Array(P*P), mx = 0, i, j;
+  for (j = 0; j < P; j++) for (i = 0; i < P; i++){
+    var x = (i + 0.5)/P*2 - 1, y = 1 - (j + 0.5)/P*2, r = Math.sqrt(x*x + y*y);
+    if (r >= 1.0){ a[j*P + i] = NaN; continue; }
+    var v = radial(md, r)*ang(md.n, Math.atan2(y, x)); a[j*P + i] = v; if (Math.abs(v) > mx) mx = Math.abs(v);
+  }
+  for (i = 0; i < P*P; i++) a[i] /= mx;
+  return a;
+}
+// mapa de color divergente: azul - blanco - rojo
+function color(v, out, o){
+  var a = Math.pow(Math.min(1, Math.abs(v)), 0.8);
+  if (v >= 0){ out[o] = 255 - a*(255 - 201); out[o + 1] = 255 - a*(255 - 48); out[o + 2] = 255 - a*(255 - 44); }
+  else { out[o] = 255 - a*(255 - 37); out[o + 1] = 255 - a*(255 - 99); out[o + 2] = 255 - a*(255 - 168); }
+}
+function pintar(md, ctx, P, pat, amp){
+  var img = ctx.createImageData(P, P), d = img.data, i, v;
+  for (i = 0; i < P*P; i++){
+    v = pat[i];
+    if (v !== v){ d[4*i + 3] = 0; continue; }
+    color(v*amp, d, 4*i); d[4*i + 3] = 255;
+  }
+  ctx.putImageData(img, 0, 0);
+}
+function lineasNodales(md, ctx, P, grosor){
+  var c = P/2, R = P/2 - 0.5, k, n = md.n, z = J[n];
+  ctx.strokeStyle = 'rgba(20,20,20,0.55)'; ctx.lineWidth = grosor;
+  for (k = 0; k < md.m - 1; k++){ ctx.beginPath(); ctx.arc(c, c, z[k]/md.j*R, 0, 2*Math.PI); ctx.stroke(); }
+  if (n > 0){
+    for (k = 0; k < n; k++){
+      var th = (S.or === 'c' ? (2*k + 1)*Math.PI/(2*n) : k*Math.PI/n);
+      ctx.beginPath(); ctx.moveTo(c - R*Math.cos(th), c + R*Math.sin(th)); ctx.lineTo(c + R*Math.cos(th), c - R*Math.sin(th)); ctx.stroke();
+    }
+  }
+}
+function borde(ctx, P, grosor){
+  ctx.strokeStyle = '#1e2327'; ctx.lineWidth = grosor; ctx.beginPath(); ctx.arc(P/2, P/2, P/2 - grosor/2 - 0.3, 0, 2*Math.PI); ctx.stroke();
+}
+
+// construir la rejilla de celdas
+var rej = $('tab-rej');
+(function(){
+  for (var m = 1; m <= MM; m++) for (var n = 0; n < NN; n++){
+    var md = modo(n, m), cel = document.createElement('div'); cel.className = 'tab-celda'; cel.setAttribute('data-n', n); cel.setAttribute('data-m', m);
+    var cv = document.createElement('canvas'); cv.width = PX*DPR; cv.height = PX*DPR; cel.appendChild(cv);
+    var lab = document.createElement('div'); lab.innerHTML = '(' + n + ', ' + m + ') &nbsp;ω = ' + fmt(md.j, 3); cel.appendChild(lab);
+    rej.appendChild(cel); md.cv = cv; md.ctx = cv.getContext('2d'); md.size = PX*DPR;
+    cel.addEventListener('click', (function(nn, mm){ return function(){ elegir(nn, mm); }; })(n, m));
+  }
+})();
+function reconstruir(){
+  for (var i = 0; i < modos.length; i++) modos[i].pat = patron(modos[i], modos[i].size);
+  gpat = patron(modo(S.n, S.m), GP); patron3(modo(S.n, S.m));
+}
+var GP = 340, gcv = $('tab-g'), gctx = gcv.getContext('2d'), pcv = $('tab-p'), pctx = pcv.getContext('2d'), gpat = null;
+
+function elegir(n, m){
+  S.n = n; S.m = m;
+  var cels = rej.children;
+  for (var i = 0; i < cels.length; i++) cels[i].className = 'tab-celda' + (+cels[i].getAttribute('data-n') === n && +cels[i].getAttribute('data-m') === m ? ' tab-sel' : '');
+  gpat = patron(modo(n, m), GP); patron3(modo(n, m)); dibujarTodo(); info();
+}
+
+function perfil(md, amp){
+  var W = 400, H = 340, L = 38, R = 12, T0 = 14, B0 = 40, i;
+  function X(x){ return L + (x + 1)/2*(W - L - R); }
+  function Y(v){ return T0 + (1 - v)/2*(H - T0 - B0); }
+  pctx.fillStyle = '#fff'; pctx.fillRect(0, 0, W, H);
+  pctx.strokeStyle = '#ececec'; pctx.lineWidth = 1; pctx.fillStyle = '#555'; pctx.font = '12px sans-serif'; pctx.textAlign = 'center';
+  for (var x = -1; x <= 1.001; x += 0.5){ pctx.beginPath(); pctx.moveTo(X(x), T0); pctx.lineTo(X(x), H - B0); pctx.stroke(); pctx.fillText(fmt(x, 1), X(x), H - B0 + 15); }
+  pctx.textAlign = 'right';
+  for (var v = -1; v <= 1.001; v += 0.5){ pctx.beginPath(); pctx.moveTo(L, Y(v)); pctx.lineTo(W - R, Y(v)); pctx.stroke(); pctx.fillText(fmt(v, 1), L - 5, Y(v) + 4); }
+  pctx.strokeStyle = '#888'; pctx.lineWidth = 1.2; pctx.beginPath(); pctx.moveTo(L, Y(0)); pctx.lineTo(W - R, Y(0)); pctx.stroke();
+  // diametro: theta0 con factor angular maximo; el lado opuesto lleva (-1)^n
+  var n = md.n, th0 = (S.or === 'c' || n === 0) ? 0 : Math.PI/(2*n), N = 240, mx = 0, A = [];
+  for (i = 0; i <= N; i++){
+    var xx = -1 + 2*i/N, r = Math.abs(xx), f = radial(md, r)*(xx >= 0 ? 1 : (n % 2 ? -1 : 1));
+    A.push(f); if (Math.abs(f) > mx) mx = Math.abs(f);
+  }
+  function trazar(esc, col, ancho){
+    pctx.strokeStyle = col; pctx.lineWidth = ancho; pctx.beginPath();
+    for (i = 0; i <= N; i++){ var px = X(-1 + 2*i/N), py = Y(A[i]/mx*esc); if (i === 0) pctx.moveTo(px, py); else pctx.lineTo(px, py); }
+    pctx.stroke();
+  }
+  trazar(1, '#cfcfcf', 1.2); trazar(-1, '#cfcfcf', 1.2);
+  trazar(amp, '#2563a8', 3);
+  // nodos
+  pctx.fillStyle = '#1b2a41';
+  for (i = 0; i < N; i++){ if (A[i]*A[i + 1] < 0){ var x0 = -1 + 2*(i + A[i]/(A[i] - A[i + 1]))/N; pctx.beginPath(); pctx.arc(X(x0), Y(0), 3.5, 0, 2*Math.PI); pctx.fill(); } }
+  pctx.fillStyle = '#555'; pctx.textAlign = 'left'; pctx.font = '12px sans-serif';
+  pctx.fillText('u a lo largo de un diámetro (ángulo ' + (th0 === 0 ? '0' : 'π/(2n)') + ')', L + 6, T0 + 12);
+  pctx.textAlign = 'center'; pctx.fillText('posición sobre el diámetro', (L + W - R)/2, H - 6);
+}
+
+// ---------- vista 3D: superficie en coordenadas polares, proyeccion ortografica y orden de atras hacia adelante ----------
+var N3R = 48, N3A = 96, V3 = new Float32Array((N3R + 1)*N3A), X3 = new Float32Array((N3R + 1)*N3A), U3 = new Float32Array((N3R + 1)*N3A), D3 = new Float32Array((N3R + 1)*N3A);
+var cv3 = $('tab-3'), c3 = cv3.getContext('2d'), W3 = 760, H3 = 430;
+cv3.width = W3*DPR; cv3.height = H3*DPR;
+var prof3 = null, orden3 = [], dep3 = new Float32Array(N3R*N3A), q;
+for (q = 0; q < N3R*N3A; q++) orden3.push(q);
+function patron3(md){
+  var i, j, mx = 0;
+  for (i = 0; i <= N3R; i++) for (j = 0; j < N3A; j++){
+    var v = radial(md, i/N3R)*ang(md.n, 2*Math.PI*j/N3A); V3[i*N3A + j] = v; if (Math.abs(v) > mx) mx = Math.abs(v);
+  }
+  for (i = 0; i < V3.length; i++) V3[i] /= mx;
+}
+var rgb3 = [0, 0, 0], luz = (function(){ var a = -0.35, b = 0.45, c = 0.82, n = Math.sqrt(a*a + b*b + c*c); return [a/n, b/n, c/n]; })();
+function dibujar3(amp){
+  var md = modo(S.n, S.m), i, j, k, ca = Math.cos(S.az), sa = Math.sin(S.az), ce = Math.cos(S.el), se = Math.sin(S.el);
+  var Sc = 188, cx = W3/2, cy = H3*0.60, H = S.alt*amp;
+  function px(x, y, z){ var x1 = x*ca - y*sa, y1 = x*sa + y*ca; return [cx + Sc*x1, cy - Sc*(z*ce + y1*se)]; }
+  c3.setTransform(DPR, 0, 0, DPR, 0, 0); c3.fillStyle = '#fff'; c3.fillRect(0, 0, W3, H3);
+  // vertices
+  for (i = 0; i <= N3R; i++) for (j = 0; j < N3A; j++){
+    var th = 2*Math.PI*j/N3A, rho = i/N3R, x = rho*Math.cos(th), y = rho*Math.sin(th), z = H*V3[i*N3A + j];
+    var x1 = x*ca - y*sa, y1 = x*sa + y*ca, id = i*N3A + j;
+    X3[id] = x1; U3[id] = z*ce + y1*se; D3[id] = -y1*ce + z*se;
+  }
+  // plano de reposo con las lineas nodales
+  c3.beginPath();
+  for (j = 0; j <= N3A; j++){ var p0 = px(Math.cos(2*Math.PI*j/N3A), Math.sin(2*Math.PI*j/N3A), 0); if (j === 0) c3.moveTo(p0[0], p0[1]); else c3.lineTo(p0[0], p0[1]); }
+  c3.closePath(); c3.fillStyle = 'rgba(40,50,60,0.07)'; c3.fill();
+  c3.strokeStyle = 'rgba(30,30,30,0.28)'; c3.lineWidth = 1;
+  if (S.nod){
+    var zs = J[md.n];
+    for (k = 0; k < md.m - 1; k++){ c3.beginPath(); for (j = 0; j <= N3A; j++){ var rr = zs[k]/md.j, pp = px(rr*Math.cos(2*Math.PI*j/N3A), rr*Math.sin(2*Math.PI*j/N3A), 0); if (j === 0) c3.moveTo(pp[0], pp[1]); else c3.lineTo(pp[0], pp[1]); } c3.stroke(); }
+    if (md.n > 0) for (k = 0; k < md.n; k++){
+      var thn = (S.or === 'c' ? (2*k + 1)*Math.PI/(2*md.n) : k*Math.PI/md.n), pa = px(-Math.cos(thn), -Math.sin(thn), 0), pb = px(Math.cos(thn), Math.sin(thn), 0);
+      c3.beginPath(); c3.moveTo(pa[0], pa[1]); c3.lineTo(pb[0], pb[1]); c3.stroke();
+    }
+  }
+  // caras, de las mas lejanas a las mas cercanas
+  for (i = 0; i < N3R; i++) for (j = 0; j < N3A; j++){
+    var a = i*N3A + j, b = (i + 1)*N3A + j, c = (i + 1)*N3A + (j + 1)%N3A, d = i*N3A + (j + 1)%N3A;
+    dep3[i*N3A + j] = D3[a] + D3[b] + D3[c] + D3[d];
+  }
+  orden3.sort(function(p, q2){ return dep3[p] - dep3[q2]; });
+  for (k = 0; k < orden3.length; k++){
+    var qd = orden3[k], ii = Math.floor(qd/N3A), jj = qd % N3A, jn = (jj + 1) % N3A;
+    var a = ii*N3A + jj, b = (ii + 1)*N3A + jj, c = (ii + 1)*N3A + jn, d = ii*N3A + jn;
+    // normal en el espacio de la camara (derecha, arriba, hacia el observador), con las diagonales para que no se degenere en el centro
+    var ux = X3[c] - X3[a], uy = U3[c] - U3[a], uz = D3[c] - D3[a], wx = X3[d] - X3[b], wy = U3[d] - U3[b], wz = D3[d] - D3[b];
+    var nx = uy*wz - uz*wy, ny = uz*wx - ux*wz, nz = ux*wy - uy*wx, nl = Math.sqrt(nx*nx + ny*ny + nz*nz) || 1;
+    var sh = 0.74 + 0.26*Math.abs((nx*luz[0] + ny*luz[1] + nz*luz[2])/nl);
+    var v = (V3[a] + V3[b] + V3[c] + V3[d])/4*amp; color(v, rgb3, 0);
+    c3.fillStyle = 'rgb(' + Math.round(rgb3[0]*sh) + ',' + Math.round(rgb3[1]*sh) + ',' + Math.round(rgb3[2]*sh) + ')';
+    c3.strokeStyle = c3.fillStyle; c3.lineWidth = 0.7;
+    c3.beginPath();
+    c3.moveTo(cx + Sc*X3[a], cy - Sc*U3[a]); c3.lineTo(cx + Sc*X3[b], cy - Sc*U3[b]); c3.lineTo(cx + Sc*X3[c], cy - Sc*U3[c]); c3.lineTo(cx + Sc*X3[d], cy - Sc*U3[d]);
+    c3.closePath(); c3.fill(); c3.stroke();
+  }
+  // borde fijo (z = 0): el tramo de atras mas tenue, el de adelante marcado
+  c3.lineWidth = 2;
+  for (j = 0; j < N3A; j++){
+    var t0 = 2*Math.PI*j/N3A, t1 = 2*Math.PI*(j + 1)/N3A, atras = Math.sin(0.5*(t0 + t1) + S.az) > 0;
+    var pa2 = px(Math.cos(t0), Math.sin(t0), 0), pb2 = px(Math.cos(t1), Math.sin(t1), 0);
+    c3.strokeStyle = atras ? 'rgba(30,35,39,0.35)' : '#1e2327';
+    c3.beginPath(); c3.moveTo(pa2[0], pa2[1]); c3.lineTo(pb2[0], pb2[1]); c3.stroke();
+  }
+}
+(function(){
+  var arrastrando = false, x0 = 0, y0 = 0;
+  function amp(){ var md = modo(S.n, S.m); return Math.cos(md.j*t); }
+  cv3.addEventListener('pointerdown', function(e){ arrastrando = true; x0 = e.clientX; y0 = e.clientY; cv3.classList.add('tab-arr'); try { cv3.setPointerCapture(e.pointerId); } catch (err) {} });
+  cv3.addEventListener('pointermove', function(e){
+    if (!arrastrando) return;
+    S.az += (e.clientX - x0)*0.009; S.el = Math.max(0.12, Math.min(1.45, S.el + (e.clientY - y0)*0.009)); x0 = e.clientX; y0 = e.clientY;
+    dibujar3(amp());
+  });
+  function fin(){ arrastrando = false; cv3.classList.remove('tab-arr'); }
+  cv3.addEventListener('pointerup', fin); cv3.addEventListener('pointercancel', fin);
+})();
+
+function dibujarTodo(){
+  var amp, i, md;
+  for (i = 0; i < modos.length; i++){
+    md = modos[i]; amp = Math.cos(md.j*t);
+    pintar(md, md.ctx, md.size, md.pat, amp);
+    if (S.nod) lineasNodales(md, md.ctx, md.size, 1*DPR);
+    borde(md.ctx, md.size, 1.5*DPR);
+  }
+  md = modo(S.n, S.m); amp = Math.cos(md.j*t);
+  pintar(md, gctx, GP, gpat, amp);
+  if (S.nod) lineasNodales(md, gctx, GP, 1.4);
+  borde(gctx, GP, 2);
+  perfil(md, amp);
+  dibujar3(amp);
+}
+function info(){
+  var md = modo(S.n, S.m), n = S.n, m = S.m, j01 = J[0][0];
+  var txt = '<b>Modo (n, m) = (' + n + ', ' + m + ')</b>: u = J<sub>' + n + '</sub>(' + fmt(md.j, 4) + ' r) ' + (n === 0 ? '' : (S.or === 'c' ? 'cos ' + (n === 1 ? '' : n) + 'θ ' : 'sin ' + (n === 1 ? '' : n) + 'θ ')) + 'cos(' + fmt(md.j, 4) + ' t + φ). ' +
+            'Frecuencia ω = j<sub>' + n + ',' + m + '</sub> = ' + fmt(md.j, 4) + ', que es ' + fmt(md.j/j01, 3) + ' veces la del modo fundamental (0, 1). ' +
+            'Tiene ' + n + (n === 1 ? ' diámetro nodal' : ' diámetros nodales') + ' y ' + (m - 1) + (m === 2 ? ' circunferencia nodal' : ' circunferencias nodales') + ' (además del borde).';
+  if (n > 0) txt += ' Para n ≥ 1 hay otro modo, con sin nθ en lugar de cos nθ, que tiene la misma frecuencia: cada frecuencia es doble.';
+  $('tab-info').innerHTML = txt;
+}
+
+// controles
+$('tab-play').addEventListener('click', function(){ S.play = !S.play; this.textContent = S.play ? 'Pausa' : 'Seguir'; last = null; });
+$('tab-reset').addEventListener('click', function(){ t = 0; dibujarTodo(); });
+$('tab-s').addEventListener('input', function(){ S.vel = +this.value; $('tab-sv').textContent = fmt(S.vel, 2).replace(/0$/, ''); });
+$('tab-or').addEventListener('change', function(){ S.or = this.value; reconstruir(); info(); dibujarTodo(); });
+$('tab-h').addEventListener('input', function(){ S.alt = +this.value; $('tab-hv').textContent = fmt(S.alt, 2); dibujarTodo(); });
+$('tab-nod').addEventListener('change', function(){ S.nod = this.checked; dibujarTodo(); });
+
+var visible = true;
+if ('IntersectionObserver' in window){ new IntersectionObserver(function(es){ visible = es[0].isIntersecting; last = null; }).observe($('tab')); }
+function cuadro(ts){
+  if (S.play && visible){ if (last !== null) t += Math.min(0.1, (ts - last)/1000)*S.vel; last = ts; dibujarTodo(); } else last = null;
+  requestAnimationFrame(cuadro);
+}
+reconstruir(); elegir(1, 1); requestAnimationFrame(cuadro);
+})();
+</script>
+```
+:::
+
+::: {.callout-note title="Nota: el problema inverso"}
+Los números $\omega_{n,m}=c\,j_{n,m}/a$ son las frecuencias con las que suena el tambor. Calcularlas a partir de la forma es el problema directo, el que acabamos de resolver. Mark Kac preguntó en 1966 el problema inverso: si conocemos todas las frecuencias, ¿podemos reconstruir la forma del tambor? En una región $\Omega$ cualquiera las frecuencias son las raíces cuadradas de los valores propios del problema $-\Delta\phi=\lambda\phi$ en $\Omega$, con $\phi=0$ en el borde.
+
+Algo sí se oye. Contando cómo crecen los valores propios se recupera el área (Weyl):
+
+$$N(\lambda)\sim\frac{|\Omega|}{4\pi}\,\lambda\qquad(\lambda\to\infty),$$
+
+donde $N(\lambda)$ es el número de valores propios menores que $\lambda$, y los términos siguientes del desarrollo dan el perímetro. De ahí sale que **el disco sí se oye**: un tambor que suena como un disco tiene el mismo área $A$ y el mismo perímetro $L$, entonces $L^2=4\pi A$, y la desigualdad isoperimétrica dice que esa igualdad solo la cumple el disco.
+
+Pero en general no se puede: en 1992 Gordon, Webb y Wolpert construyeron dos polígonos del plano que no son congruentes y que tienen exactamente las mismas frecuencias.
+
+Referencias: M. Kac, [Can one hear the shape of a drum?](https://doi.org/10.2307/2313748), *Amer. Math. Monthly* 73 (1966), no. 4, parte II, 1 a 23. C. Gordon, D. Webb y S. Wolpert, [One cannot hear the shape of a drum](https://www.ams.org/bull/1992-27-01/S0273-0979-1992-00289-6/), *Bull. Amer. Math. Soc.* 27 (1992), 134 a 138.
+:::
