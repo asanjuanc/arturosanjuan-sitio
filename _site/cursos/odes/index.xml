@@ -17,7 +17,7 @@
 <generator>quarto-1.10.18</generator>
 <lastBuildDate>Sun, 08 Nov 2026 05:00:00 GMT</lastBuildDate>
 <item>
-  <title>¿Se puede oír la forma de un tambor?</title>
+  <title>¿Puedes oír la forma de un tambor?</title>
   <dc:creator>Arturo Sanjuán</dc:creator>
   <link>https://arturosanjuan.xyz/cursos/odes/tambor/</link>
   <description><![CDATA[ 
@@ -1467,6 +1467,2503 @@ reconstruir(); elegir(1, 1); requestAnimationFrame(cuadro);
 
  ]]></description>
   <guid>https://arturosanjuan.xyz/cursos/odes/tambor/</guid>
+  <pubDate>Sun, 08 Nov 2026 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>El Átomo de Hidrógeno y sus Orbitales</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/odes/orbitales/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<style>
+  .parte-matematica{color:#006400;}
+  .parte-matematica h3,.parte-matematica h4,.parte-matematica a,.parte-matematica .header-section-number{color:inherit;}
+  body.quarto-dark .parte-matematica{color:#6fcf8a;}
+</style>
+<p>En el oscilador cuántico apareció la ecuación de Hermite, en el neutrón que rebota la de Airy y en el tambor la de Bessel. Ahora vamos al átomo de hidrógeno: un electrón que se mueve alrededor de un protón. Es un problema tridimensional con simetría esférica, y para resolverlo vamos a necesitar la ecuación de Legendre (la de la tarea del oscilador) y la de Laguerre. Al final vamos a ver qué forma tienen los <strong>orbitales</strong> de los libros de química.</p>
+<section id="un-poco-de-historia-de-dónde-sale-legendre" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="un-poco-de-historia-de-dónde-sale-legendre"><span class="header-section-number">1</span> Un poco de historia: de dónde sale Legendre</h2>
+<p>Los polinomios de Legendre no nacieron con el átomo, ni siquiera con la física cuántica. Legendre los encontró en la década de 1780 estudiando la <strong>atracción gravitacional de elipsoides</strong>, es decir, de cuerpos casi esféricos como un planeta achatado (el apéndice A del capítulo 8 de Simmons cuenta esta historia).</p>
+<p>El potencial gravitacional de una masa puntual situada en <img src="https://latex.codecogs.com/png.latex?P'">, medido en un punto <img src="https://latex.codecogs.com/png.latex?P">, es proporcional a <img src="https://latex.codecogs.com/png.latex?1/%7CPP'%7C">. Si <img src="https://latex.codecogs.com/png.latex?P"> está a distancia <img src="https://latex.codecogs.com/png.latex?r"> del origen, <img src="https://latex.codecogs.com/png.latex?P'"> a distancia <img src="https://latex.codecogs.com/png.latex?r'%3Cr"> y <img src="https://latex.codecogs.com/png.latex?%5Cgamma"> es el ángulo entre ambos vectores de posición, la ley de los cosenos da <img src="https://latex.codecogs.com/png.latex?%7CPP'%7C%5E2=r%5E2-2rr'%5Ccos%5Cgamma+r'%5E2">. Con <img src="https://latex.codecogs.com/png.latex?t=r'/r"> y <img src="https://latex.codecogs.com/png.latex?x=%5Ccos%5Cgamma">,</p>
+<p><span id="eq-gen"><img src="https://latex.codecogs.com/png.latex?%5Cfrac1%7B%7CPP'%7C%7D=%5Cfrac1r%5C,%5Cfrac%7B1%7D%7B%5Csqrt%7B1-2xt+t%5E2%7D%7D=%5Csum_%7Bn=0%7D%5E%7B%5Cinfty%7D%5Cfrac%7Br'%5E%7B%5C,n%7D%7D%7Br%5E%7B%5C,n+1%7D%7D%5C,P_n(%5Ccos%5Cgamma).%20%5Ctag%7B1%7D"></span></p>
+<p>Los coeficientes <img src="https://latex.codecogs.com/png.latex?P_n"> de este desarrollo son los <strong>polinomios de Legendre</strong>: aparecieron como coeficientes de una serie para el potencial. La ecuación diferencial que satisfacen aparece cuando se separan las variables en la ecuación de Laplace <img src="https://latex.codecogs.com/png.latex?%5Cnabla%5E2U=0"> en coordenadas esféricas, y eso es justo lo que vamos a hacer, pero para la ecuación de Schrödinger.</p>
+</section>
+<section id="el-átomo-de-hidrógeno" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="el-átomo-de-hidrógeno"><span class="header-section-number">2</span> El átomo de hidrógeno</h2>
+<section id="la-ecuación-de-schrödinger" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="la-ecuación-de-schrödinger"><span class="header-section-number">2.1</span> La ecuación de Schrödinger</h3>
+<p>El átomo de hidrógeno es un electrón (carga <img src="https://latex.codecogs.com/png.latex?-e">) y un protón (carga <img src="https://latex.codecogs.com/png.latex?+e">) que se atraen. La ecuación de Schrödinger estacionaria, que ya vimos en el oscilador, es</p>
+<p><span id="eq-schro"><img src="https://latex.codecogs.com/png.latex?-%5Cfrac%7B%5Chbar%5E2%7D%7B2%5Cmu%7D%5C,%5Cnabla%5E2%5Cpsi-%5Cfrac%7Be%5E2%7D%7B4%5Cpi%5Cvarepsilon_0%5C,r%7D%5C,%5Cpsi=E%5C,%5Cpsi,%20%5Ctag%7B2%7D"></span></p>
+<p>donde <img src="https://latex.codecogs.com/png.latex?r"> es la distancia entre el electrón y el protón, <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_0"> es la permitividad del vacío y <img src="https://latex.codecogs.com/png.latex?%5Cmu"> es la <strong>masa reducida</strong>,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cmu=%5Cfrac%7Bm_e%5C,m_p%7D%7Bm_e+m_p%7D."></p>
+<p>Aparece porque es un problema de dos cuerpos: al pasar al centro de masa queda una sola partícula ficticia de masa <img src="https://latex.codecogs.com/png.latex?%5Cmu"> moviéndose en el potencial. Como el protón es unas 1836 veces más pesado que el electrón, <img src="https://latex.codecogs.com/png.latex?%5Cmu%5Capprox%20m_e">, con una diferencia de apenas <img src="https://latex.codecogs.com/png.latex?0%7B,%7D05%5C,%5C%25">. Por eso muchos textos escriben directamente <img src="https://latex.codecogs.com/png.latex?m_e">.</p>
+</section>
+<section id="por-qué-el-potencial-de-coulomb" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="por-qué-el-potencial-de-coulomb"><span class="header-section-number">2.2</span> Por qué el potencial de Coulomb</h3>
+<p>Usamos el potencial de Coulomb, <img src="https://latex.codecogs.com/png.latex?V(r)=-%5Cdfrac%7Be%5E2%7D%7B4%5Cpi%5Cvarepsilon_0%5C,r%7D">, porque la atracción eléctrica domina sobre cualquier otra interacción entre las dos partículas. Además es <strong>central</strong>: depende solo de la distancia <img src="https://latex.codecogs.com/png.latex?r"> y no de los ángulos. Eso es lo que nos va a permitir separar variables en coordenadas esféricas. Tiene la misma forma <img src="https://latex.codecogs.com/png.latex?1/r"> del potencial gravitacional de la sección anterior.</p>
+<p>Es un modelo: para el hidrógeno es exacto si se ignora el espín y la relatividad. En átomos con varios electrones aparece además la repulsión entre ellos, que ya no es un potencial central simple, y hay que recurrir a aproximaciones.</p>
+</section>
+</section>
+<section id="coordenadas-esféricas" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="coordenadas-esféricas"><span class="header-section-number">3</span> Coordenadas esféricas</h2>
+<p>Como el potencial depende de <img src="https://latex.codecogs.com/png.latex?r">, usamos coordenadas esféricas, con <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> el ángulo polar (medido desde el eje <img src="https://latex.codecogs.com/png.latex?z">) y <img src="https://latex.codecogs.com/png.latex?%5Cvarphi"> el ángulo azimutal (en el plano <img src="https://latex.codecogs.com/png.latex?xy">):</p>
+<p><img src="https://latex.codecogs.com/png.latex?x=r%5Csin%5Ctheta%5Ccos%5Cvarphi,%5Cqquad%20y=r%5Csin%5Ctheta%5Csin%5Cvarphi,%5Cqquad%20z=r%5Ccos%5Ctheta,"></p>
+<p>con <img src="https://latex.codecogs.com/png.latex?r%5Cge0">, <img src="https://latex.codecogs.com/png.latex?0%5Cle%5Ctheta%5Cle%5Cpi"> y <img src="https://latex.codecogs.com/png.latex?0%5Cle%5Cvarphi%3C2%5Cpi">. (Ojo: Simmons usa la convención contraria, <img src="https://latex.codecogs.com/png.latex?%5Cvarphi"> para el ángulo polar y <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> para el azimutal, y <img src="https://latex.codecogs.com/png.latex?%5Crho"> para la distancia. Aquí usamos la de la física.) El elemento de volumen es <img src="https://latex.codecogs.com/png.latex?dV=r%5E2%5Csin%5Ctheta%5C,dr%5C,d%5Ctheta%5C,d%5Cvarphi">.</p>
+<p>El laplaciano en esféricas se obtiene con la regla de la cadena, igual que hicimos en polares para el tambor, pero con más cuentas:</p>
+<p><span id="eq-lap-esf"><img src="https://latex.codecogs.com/png.latex?%5Cnabla%5E2%5Cpsi=%5Cfrac1%7Br%5E2%7D%5Cfrac%7B%5Cpartial%7D%7B%5Cpartial%20r%7D%5C!%5Cleft(r%5E2%5Cfrac%7B%5Cpartial%5Cpsi%7D%7B%5Cpartial%20r%7D%5Cright)+%5Cfrac1%7Br%5E2%5Csin%5Ctheta%7D%5Cfrac%7B%5Cpartial%7D%7B%5Cpartial%5Ctheta%7D%5C!%5Cleft(%5Csin%5Ctheta%5C,%5Cfrac%7B%5Cpartial%5Cpsi%7D%7B%5Cpartial%5Ctheta%7D%5Cright)+%5Cfrac1%7Br%5E2%5Csin%5E2%5Ctheta%7D%5Cfrac%7B%5Cpartial%5E2%5Cpsi%7D%7B%5Cpartial%5Cvarphi%5E2%7D.%20%5Ctag%7B3%7D"></span></p>
+<p>(En la sección de Maxima, al final, se verifica esta fórmula contra el laplaciano cartesiano.)</p>
+</section>
+<section id="separación-de-variables" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="separación-de-variables"><span class="header-section-number">4</span> Separación de variables</h2>
+<p>Reemplazamos Ecuación&nbsp;3 en Ecuación&nbsp;2, escribimos la ecuación como <img src="https://latex.codecogs.com/png.latex?%5Cnabla%5E2%5Cpsi+%5Cfrac%7B2%5Cmu%7D%7B%5Chbar%5E2%7D(E-V)%5Cpsi=0"> y la multiplicamos por <img src="https://latex.codecogs.com/png.latex?r%5E2">. Buscamos soluciones de la forma <img src="https://latex.codecogs.com/png.latex?%5Cpsi(r,%5Ctheta,%5Cvarphi)=R(r)%5C,%5CTheta(%5Ctheta)%5C,%5CPhi(%5Cvarphi)">. Al dividir por <img src="https://latex.codecogs.com/png.latex?R%5CTheta%5CPhi"> queda</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cunderbrace%7B%5Cfrac1R%5Cfrac%7Bd%7D%7Bdr%7D%5C!%5Cleft(r%5E2R'%5Cright)+%5Cfrac%7B2%5Cmu%20r%5E2%7D%7B%5Chbar%5E2%7D%5Cbigl(E-V(r)%5Cbigr)%7D_%7B%5Ctext%7Bsolo%20depende%20de%20%7Dr%7D%5C;+%5C;%5Cunderbrace%7B%5Cfrac1%7B%5CTheta%5Csin%5Ctheta%7D%5Cfrac%7Bd%7D%7Bd%5Ctheta%7D%5C!%5Cleft(%5Csin%5Ctheta%5C,%5CTheta'%5Cright)+%5Cfrac%7B%5CPhi''%7D%7B%5CPhi%5C,%5Csin%5E2%5Ctheta%7D%7D_%7B%5Ctext%7Bsolo%20depende%20de%20%7D%5Ctheta%5Ctext%7B%20y%20%7D%5Cvarphi%7D=0."></p>
+<p>Una función de <img src="https://latex.codecogs.com/png.latex?r"> más una función de <img src="https://latex.codecogs.com/png.latex?(%5Ctheta,%5Cvarphi)"> que suman cero tienen que ser constantes opuestas. Llamamos <img src="https://latex.codecogs.com/png.latex?%5Clambda"> a la constante:</p>
+<p><span id="eq-lambda"><img src="https://latex.codecogs.com/png.latex?%5Cfrac1R%5Cfrac%7Bd%7D%7Bdr%7D%5C!%5Cleft(r%5E2R'%5Cright)+%5Cfrac%7B2%5Cmu%20r%5E2%7D%7B%5Chbar%5E2%7D%5Cbigl(E-V(r)%5Cbigr)=%5Clambda,%5Cqquad%20%5Cfrac1%7B%5CTheta%5Csin%5Ctheta%7D%5Cfrac%7Bd%7D%7Bd%5Ctheta%7D%5C!%5Cleft(%5Csin%5Ctheta%5C,%5CTheta'%5Cright)+%5Cfrac%7B%5CPhi''%7D%7B%5CPhi%5C,%5Csin%5E2%5Ctheta%7D=-%5Clambda.%20%5Ctag%7B4%7D"></span></p>
+<p>Multiplicamos la segunda por <img src="https://latex.codecogs.com/png.latex?%5Csin%5E2%5Ctheta">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%5Csin%5Ctheta%7D%7B%5CTheta%7D%5Cfrac%7Bd%7D%7Bd%5Ctheta%7D%5C!%5Cleft(%5Csin%5Ctheta%5C,%5CTheta'%5Cright)+%5Clambda%5Csin%5E2%5Ctheta+%5Cfrac%7B%5CPhi''%7D%7B%5CPhi%7D=0."></p>
+<p>El último término solo depende de <img src="https://latex.codecogs.com/png.latex?%5Cvarphi"> y el resto solo de <img src="https://latex.codecogs.com/png.latex?%5Ctheta">, así que <img src="https://latex.codecogs.com/png.latex?%5CPhi''/%5CPhi"> es otra constante, que llamamos <img src="https://latex.codecogs.com/png.latex?-m%5E2"> (si fuera positiva saldrían exponenciales reales, que no son periódicas). La parte azimutal es entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5CPhi''+m%5E2%5CPhi=0%5C%20%5CLongrightarrow%5C%20%5CPhi(%5Cvarphi)=A%5Ccos%20m%5Cvarphi+B%5Csin%20m%5Cvarphi."></p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?%5Cvarphi"> es un ángulo, <img src="https://latex.codecogs.com/png.latex?%5CPhi(%5Cvarphi+2%5Cpi)=%5CPhi(%5Cvarphi)">, y esto exige que <img src="https://latex.codecogs.com/png.latex?m=0,1,2,%5Cdots"> sea un entero. (En forma compleja, <img src="https://latex.codecogs.com/png.latex?%5CPhi=e%5E%7Bim%5Cvarphi%7D"> con <img src="https://latex.codecogs.com/png.latex?m%5Cin%5Cmathbb%20Z">.) Lo que queda para <img src="https://latex.codecogs.com/png.latex?%5Ctheta"> es</p>
+<p><span id="eq-theta"><img src="https://latex.codecogs.com/png.latex?%5Cfrac1%7B%5Csin%5Ctheta%7D%5Cfrac%7Bd%7D%7Bd%5Ctheta%7D%5C!%5Cleft(%5Csin%5Ctheta%5C,%5Cfrac%7Bd%5CTheta%7D%7Bd%5Ctheta%7D%5Cright)+%5Cleft(%5Clambda-%5Cfrac%7Bm%5E2%7D%7B%5Csin%5E2%5Ctheta%7D%5Cright)%5CTheta=0.%20%5Ctag%7B5%7D"></span></p>
+</section>
+<section id="la-parte-polar-legendre" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="la-parte-polar-legendre"><span class="header-section-number">5</span> La parte polar: Legendre</h2>
+<p>La ecuación Ecuación&nbsp;5 es la que nos interesa. Para <img src="https://latex.codecogs.com/png.latex?m=0"> es la ecuación de Legendre, y para <img src="https://latex.codecogs.com/png.latex?m%5Cneq0"> es la ecuación de Legendre <em>asociada</em>. Vamos a resolverlas con cuidado, pero primero hay que decidir qué tipo de solución queremos.</p>
+<section id="qué-le-pedimos-a-theta" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="qué-le-pedimos-a-theta"><span class="header-section-number">5.1</span> Qué le pedimos a <img src="https://latex.codecogs.com/png.latex?%5CTheta"></h3>
+<p>Los puntos <img src="https://latex.codecogs.com/png.latex?%5Ctheta=0"> y <img src="https://latex.codecogs.com/png.latex?%5Ctheta=%5Cpi"> son los que están sobre el eje <img src="https://latex.codecogs.com/png.latex?z">. No son puntos especiales del espacio: el eje <img src="https://latex.codecogs.com/png.latex?z"> lo escogimos nosotros, y los puntos sobre él se parecen a todos los demás. La singularidad de la ecuación en esos puntos es un defecto del sistema de coordenadas, y la función de onda debe ser finita allí. Pedimos entonces que <img src="https://latex.codecogs.com/png.latex?%5CTheta"> sea <strong>acotada</strong> en <img src="https://latex.codecogs.com/png.latex?%5B0,%5Cpi%5D">.</p>
+<p>Aquí hay un detalle. No basta pedir que <img src="https://latex.codecogs.com/png.latex?%5Cpsi"> sea de cuadrado integrable, porque las soluciones malas que vamos a encontrar crecen como <img src="https://latex.codecogs.com/png.latex?%5Cln%5Ctheta"> y <img src="https://latex.codecogs.com/png.latex?%5Cint(%5Cln%5Ctheta)%5E2%5C,d%5Ctheta"> converge. Lo que falla es otra cosa: cerca del eje, <img src="https://latex.codecogs.com/png.latex?%5Cln%5Ctheta"> se comporta como <img src="https://latex.codecogs.com/png.latex?%5Cln%5Crho"> en coordenadas cilíndricas, y <img src="https://latex.codecogs.com/png.latex?%5Cln%5Crho"> es la solución fundamental del laplaciano en dos dimensiones, <img src="https://latex.codecogs.com/png.latex?%5Cnabla%5E2%5Cln%5Crho=2%5Cpi%5C,%5Cdelta">. Una función así no resuelve la ecuación en el eje, sino que exigiría una fuente a lo largo de todo el eje <img src="https://latex.codecogs.com/png.latex?z">. Además tendría energía cinética infinita, porque <img src="https://latex.codecogs.com/png.latex?%7C%5Cnabla%5Cpsi%7C%5E2%5Csim1/%5Crho%5E2"> y <img src="https://latex.codecogs.com/png.latex?%5Cint%5Cfrac1%7B%5Crho%5E2%7D%5C,%5Crho%5C,d%5Crho"> diverge.</p>
+</section>
+<div class="parte-matematica">
+<section id="el-cambio-xcostheta" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="el-cambio-xcostheta"><span class="header-section-number">5.2</span> El cambio <img src="https://latex.codecogs.com/png.latex?x=%5Ccos%5Ctheta"></h3>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?%5CTheta(%5Ctheta)=y(x)"> con <img src="https://latex.codecogs.com/png.latex?x=%5Ccos%5Ctheta">. Por la regla de la cadena, <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7Bd%7D%7Bd%5Ctheta%7D=-%5Csin%5Ctheta%5C,%5Cdfrac%7Bd%7D%7Bdx%7D">, y entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Csin%5Ctheta%5C,%5Cfrac%7Bd%5CTheta%7D%7Bd%5Ctheta%7D=-%5Csin%5E2%5Ctheta%5C,%5Cfrac%7Bdy%7D%7Bdx%7D=-(1-x%5E2)%5C,%5Cfrac%7Bdy%7D%7Bdx%7D,"></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bd%7D%7Bd%5Ctheta%7D%5C!%5Cleft%5B-(1-x%5E2)%5Cfrac%7Bdy%7D%7Bdx%7D%5Cright%5D=%5Csin%5Ctheta%5C,%5Cfrac%7Bd%7D%7Bdx%7D%5C!%5Cleft%5B(1-x%5E2)%5Cfrac%7Bdy%7D%7Bdx%7D%5Cright%5D."></p>
+<p>Al dividir entre <img src="https://latex.codecogs.com/png.latex?%5Csin%5Ctheta"> desaparece el seno, y como <img src="https://latex.codecogs.com/png.latex?%5Csin%5E2%5Ctheta=1-x%5E2"> queda</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bd%7D%7Bdx%7D%5C!%5Cleft%5B(1-x%5E2)%5Cfrac%7Bdy%7D%7Bdx%7D%5Cright%5D+%5Cleft(%5Clambda-%5Cfrac%7Bm%5E2%7D%7B1-x%5E2%7D%5Cright)y=0,"></p>
+<p>es decir,</p>
+<p><span id="eq-legendre-asoc"><img src="https://latex.codecogs.com/png.latex?(1-x%5E2)%5C,y''-2x%5C,y'+%5Cleft%5B%5Clambda-%5Cfrac%7Bm%5E2%7D%7B1-x%5E2%7D%5Cright%5Dy=0.%20%5Ctag%7B6%7D"></span></p>
+<p>Los puntos <img src="https://latex.codecogs.com/png.latex?x=%5Cpm1"> corresponden al eje <img src="https://latex.codecogs.com/png.latex?z">. Pedimos que <img src="https://latex.codecogs.com/png.latex?y"> sea acotada en <img src="https://latex.codecogs.com/png.latex?%5B-1,1%5D">.</p>
+</section>
+<section id="el-caso-m0-series-de-potencias" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="el-caso-m0-series-de-potencias"><span class="header-section-number">5.3</span> El caso <img src="https://latex.codecogs.com/png.latex?m=0">: series de potencias</h3>
+<p>Con <img src="https://latex.codecogs.com/png.latex?m=0"> queda la <strong>ecuación de Legendre</strong>,</p>
+<p><span id="eq-legendre"><img src="https://latex.codecogs.com/png.latex?(1-x%5E2)%5C,y''-2x%5C,y'+%5Clambda%5C,y=0.%20%5Ctag%7B7%7D"></span></p>
+<p>El punto <img src="https://latex.codecogs.com/png.latex?x=0"> es ordinario, así que buscamos <img src="https://latex.codecogs.com/png.latex?y=%5Csum_%7Bk=0%7D%5E%7B%5Cinfty%7Da_kx%5Ek">. El coeficiente de <img src="https://latex.codecogs.com/png.latex?x%5Ek"> en Ecuación&nbsp;7 es</p>
+<p><img src="https://latex.codecogs.com/png.latex?(k+2)(k+1)%5C,a_%7Bk+2%7D-k(k-1)%5C,a_k-2k%5C,a_k+%5Clambda%5C,a_k=0,"></p>
+<p>de donde sale la fórmula de recurrencia</p>
+<p><span id="eq-rec-leg"><img src="https://latex.codecogs.com/png.latex?a_%7Bk+2%7D=%5Cfrac%7Bk(k+1)-%5Clambda%7D%7B(k+1)(k+2)%7D%5C,a_k.%20%5Ctag%7B8%7D"></span></p>
+<p>La recurrencia conecta coeficientes de la misma paridad, así que hay una serie par (que empieza en <img src="https://latex.codecogs.com/png.latex?a_0">) y una serie impar (que empieza en <img src="https://latex.codecogs.com/png.latex?a_1">), y las dos son independientes.</p>
+<p><strong>Convergencia.</strong> Como <img src="https://latex.codecogs.com/png.latex?a_%7Bk+2%7D/a_k%5Cto1">, las dos series convergen para <img src="https://latex.codecogs.com/png.latex?%7Cx%7C%3C1">. Más finamente,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Ba_%7Bk+2%7D%7D%7Ba_k%7D=1-%5Cfrac%7B2(k+1)+%5Clambda%7D%7B(k+1)(k+2)%7D%5Capprox1-%5Cfrac2k,"></p>
+<p>así que los coeficientes se comportan como <img src="https://latex.codecogs.com/png.latex?1/k">, igual que en <img src="https://latex.codecogs.com/png.latex?%5Csum%20x%5Ek/k=-%5Cln(1-x)">. Esto quiere decir que la <strong>función</strong> suma se va a infinito cuando <img src="https://latex.codecogs.com/png.latex?x%5Cto%5Cpm1">, como un logaritmo. Ojo: no es que la serie “no converja” y listo, lo que pasa es que la función no es acotada en los extremos, y eso es lo que nos importa.</p>
+<p><strong>Truncamiento.</strong> Hay una sola manera de evitarlo: que la serie termine. Si</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clambda=n(n+1),%5Cqquad%20n=0,1,2,%5Cdots"></p>
+<p>entonces <img src="https://latex.codecogs.com/png.latex?a_%7Bn+2%7D=0">, y como los coeficientes siguientes de la misma paridad dependen de <img src="https://latex.codecogs.com/png.latex?a_%7Bn+2%7D">, todos son cero. Queda un polinomio de grado <img src="https://latex.codecogs.com/png.latex?n">.</p>
+<p>Veamos qué pasa con la serie de la otra paridad. Su numerador es <img src="https://latex.codecogs.com/png.latex?k(k+1)-n(n+1)"> con <img src="https://latex.codecogs.com/png.latex?k"> de paridad opuesta a <img src="https://latex.codecogs.com/png.latex?n">, y eso nunca se anula, porque <img src="https://latex.codecogs.com/png.latex?k%5Cneq%20n">. Esa serie no termina y no es acotada. Para que la solución sea acotada hay que anularla, es decir, tomar <img src="https://latex.codecogs.com/png.latex?a_1=0"> si <img src="https://latex.codecogs.com/png.latex?n"> es par y <img src="https://latex.codecogs.com/png.latex?a_0=0"> si <img src="https://latex.codecogs.com/png.latex?n"> es impar. La solución acotada es entonces un único polinomio con la paridad de <img src="https://latex.codecogs.com/png.latex?n">, que normalizado con <img src="https://latex.codecogs.com/png.latex?P_n(1)=1"> es el <strong>polinomio de Legendre</strong> <img src="https://latex.codecogs.com/png.latex?P_n(x)">, y cumple <img src="https://latex.codecogs.com/png.latex?P_n(-x)=(-1)%5EnP_n(x)">.</p>
+<p>¿Y si <img src="https://latex.codecogs.com/png.latex?%5Clambda"> no es de la forma <img src="https://latex.codecogs.com/png.latex?n(n+1)">? Entonces las dos series son infinitas. Cerca de <img src="https://latex.codecogs.com/png.latex?x=1"> la serie par se comporta como <img src="https://latex.codecogs.com/png.latex?%5Calpha%5Cln(1-x)"> y la impar como <img src="https://latex.codecogs.com/png.latex?%5Cbeta%5Cln(1-x)">, con <img src="https://latex.codecogs.com/png.latex?%5Calpha,%5Cbeta%5Cneq0">; cerca de <img src="https://latex.codecogs.com/png.latex?x=-1"> la par como <img src="https://latex.codecogs.com/png.latex?%5Calpha%5Cln(1+x)"> y la impar como <img src="https://latex.codecogs.com/png.latex?-%5Cbeta%5Cln(1+x)">. Una combinación <img src="https://latex.codecogs.com/png.latex?c_1y_%7B%5Ctext%7Bpar%7D%7D+c_2y_%7B%5Ctext%7Bimpar%7D%7D"> es acotada en <img src="https://latex.codecogs.com/png.latex?x=1"> solo si <img src="https://latex.codecogs.com/png.latex?c_1%5Calpha+c_2%5Cbeta=0"> y en <img src="https://latex.codecogs.com/png.latex?x=-1"> solo si <img src="https://latex.codecogs.com/png.latex?c_1%5Calpha-c_2%5Cbeta=0">, y esto obliga a <img src="https://latex.codecogs.com/png.latex?c_1=c_2=0">. No hay solución acotada: <strong>la acotación en los dos extremos es lo que cuantiza <img src="https://latex.codecogs.com/png.latex?%5Clambda"></strong>.</p>
+</section>
+<section id="la-otra-solución" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="la-otra-solución"><span class="header-section-number">5.4</span> La otra solución</h3>
+<p>Ya tenemos una solución, <img src="https://latex.codecogs.com/png.latex?y_1=P_n">, y falta una linealmente independiente. Se obtiene por reducción de orden con el wronskiano. En forma normal, <img src="https://latex.codecogs.com/png.latex?y''-%5Cdfrac%7B2x%7D%7B1-x%5E2%7D%5C,y'+%5Ccdots=0">, así que por la fórmula de Abel</p>
+<p><img src="https://latex.codecogs.com/png.latex?W(x)=C%5Cexp%5C!%5Cleft(%5Cint%5Cfrac%7B2x%7D%7B1-x%5E2%7D%5C,dx%5Cright)=%5Cfrac%7BC%7D%7B1-x%5E2%7D."></p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?W=y_1y_2'-y_1'y_2=y_1%5E2%5Cleft(%5Cdfrac%7By_2%7D%7By_1%7D%5Cright)'">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?y_2=P_n(x)%5Cint%5Cfrac%7Bdx%7D%7B(1-x%5E2)%5C,%5BP_n(x)%5D%5E2%7D."></p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?P_n(%5Cpm1)=%5Cpm1%5Cneq0">, el integrando se comporta como <img src="https://latex.codecogs.com/png.latex?1/(1-x%5E2)"> cerca de <img src="https://latex.codecogs.com/png.latex?%5Cpm1">, que tiene polos simples, y al integrar aparece <img src="https://latex.codecogs.com/png.latex?%5Ctfrac12%5Cln%5Cfrac%7B1+x%7D%7B1-x%7D">. Esta solución se llama <img src="https://latex.codecogs.com/png.latex?Q_n"> (<strong>función de Legendre de segunda especie</strong>). Por ejemplo,</p>
+<p><img src="https://latex.codecogs.com/png.latex?Q_0(x)=%5Cfrac12%5Cln%5Cfrac%7B1+x%7D%7B1-x%7D=x+%5Cfrac%7Bx%5E3%7D%7B3%7D+%5Cfrac%7Bx%5E5%7D%7B5%7D+%5Ccdots,%5Cqquad%20Q_1(x)=%5Cfrac%20x2%5Cln%5Cfrac%7B1+x%7D%7B1-x%7D-1,"></p>
+<p>y en general <img src="https://latex.codecogs.com/png.latex?Q_n=%5Ctfrac12P_n%5Cln%5Cfrac%7B1+x%7D%7B1-x%7D-W_%7Bn-1%7D"> con <img src="https://latex.codecogs.com/png.latex?W_%7Bn-1%7D"> un polinomio de grado <img src="https://latex.codecogs.com/png.latex?n-1">. Es justo la serie infinita de paridad opuesta a <img src="https://latex.codecogs.com/png.latex?P_n">, que converge en <img src="https://latex.codecogs.com/png.latex?%7Cx%7C%3C1"> y no es acotada en <img src="https://latex.codecogs.com/png.latex?x=%5Cpm1">. La solución general es <img src="https://latex.codecogs.com/png.latex?y=c_1P_n+c_2Q_n">, y la acotación obliga a <img src="https://latex.codecogs.com/png.latex?c_2=0">.</p>
+</section>
+<section id="el-caso-mneq0" class="level3" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="el-caso-mneq0"><span class="header-section-number">5.5</span> El caso <img src="https://latex.codecogs.com/png.latex?m%5Cneq0"></h3>
+<p>Tomamos <img src="https://latex.codecogs.com/png.latex?m%3E0"> (la ecuación solo depende de <img src="https://latex.codecogs.com/png.latex?m%5E2">). Ahora el término <img src="https://latex.codecogs.com/png.latex?m%5E2/(1-x%5E2)"> de Ecuación&nbsp;6 hace que <img src="https://latex.codecogs.com/png.latex?x=%5Cpm1"> sean puntos singulares, y no podemos usar directamente el truncamiento de series centradas en <img src="https://latex.codecogs.com/png.latex?0">. Hay que averiguar primero cómo se comportan las soluciones cerca de <img src="https://latex.codecogs.com/png.latex?x=%5Cpm%201">. Realizamos esta sustitución que sugiere sacar el factor que describe el comportamiento en los extremos:</p>
+<p><img src="https://latex.codecogs.com/png.latex?y=(1-x%5E2)%5E%7Bm/2%7D%5C,v(x)."></p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?s=1-x%5E2">, y usando que <img src="https://latex.codecogs.com/png.latex?s'=-2x">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?y'=s%5E%7Bm/2%7Dv'-mx%5C,s%5E%7Bm/2-1%7Dv,"></p>
+<p><img src="https://latex.codecogs.com/png.latex?y''=s%5E%7Bm/2%7Dv''-2mx%5C,s%5E%7Bm/2-1%7Dv'-m%5C,s%5E%7Bm/2-1%7Dv+m(m-2)%5C,x%5E2s%5E%7Bm/2-2%7Dv."></p>
+<p>Reemplazamos en Ecuación&nbsp;6 y dividimos entre <img src="https://latex.codecogs.com/png.latex?s%5E%7Bm/2%7D">. Los términos que traen <img src="https://latex.codecogs.com/png.latex?1/s"> son <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7Bx%5E2%7D%7Bs%7D%5Cbigl%5Bm(m-2)+2m%5Cbigr%5D-%5Cdfrac%7Bm%5E2%7D%7Bs%7D=%5Cdfrac%7Bm%5E2(x%5E2-1)%7D%7Bs%7D=-m%5E2">, porque <img src="https://latex.codecogs.com/png.latex?m(m-2)+2m=m%5E2">. Lo que queda es</p>
+<p><span id="eq-v"><img src="https://latex.codecogs.com/png.latex?(1-x%5E2)%5C,v''-2(m+1)%5C,x%5C,v'+%5Cbigl%5B%5Clambda-m(m+1)%5Cbigr%5D%5C,v=0.%20%5Ctag%7B9%7D"></span></p>
+<p>Ahora <img src="https://latex.codecogs.com/png.latex?x=%5Cpm1"> ya no tiene el término singular, y buscamos <img src="https://latex.codecogs.com/png.latex?v=%5Csum%20a_kx%5Ek">. El coeficiente de <img src="https://latex.codecogs.com/png.latex?x%5Ek"> es</p>
+<p><img src="https://latex.codecogs.com/png.latex?(k+2)(k+1)%5C,a_%7Bk+2%7D-k(k-1)%5C,a_k-2(m+1)k%5C,a_k+%5Cbigl%5B%5Clambda-m(m+1)%5Cbigr%5Da_k=0,"></p>
+<p>y como <img src="https://latex.codecogs.com/png.latex?k%5E2+(2m+1)k+m(m+1)=(k+m)(k+m+1)">,</p>
+<p><span id="eq-rec-v"><img src="https://latex.codecogs.com/png.latex?a_%7Bk+2%7D=%5Cfrac%7B(k+m)(k+m+1)-%5Clambda%7D%7B(k+1)(k+2)%7D%5C,a_k.%20%5Ctag%7B10%7D"></span></p>
+<p>Si la serie no se corta, <img src="https://latex.codecogs.com/png.latex?a_%7Bk+2%7D/a_k%5Capprox1+(2m-2)/k"> y la serie se comporta como <img src="https://latex.codecogs.com/png.latex?(1-x%5E2)%5E%7B-m%7D">, que no es acotada. Entonces tiene que cortarse, y esto pasa cuando</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clambda=(k+m)(k+m+1)%5Cquad%5Ctext%7Bpara%20alg%C3%BAn%20%7Dk=0,1,2,%5Cdots"></p>
+<p>Escribimos <img src="https://latex.codecogs.com/png.latex?%5Cell=k+m">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Clambda=%5Cell(%5Cell+1),%5Cqquad%20%5Cell=m,%5C%20m+1,%5C%20m+2,%5Cdots,"></p>
+<p>es decir, <img src="https://latex.codecogs.com/png.latex?m%5Cle%5Cell">, y <img src="https://latex.codecogs.com/png.latex?v"> es un polinomio de grado <img src="https://latex.codecogs.com/png.latex?%5Cell-m">.</p>
+<p><strong>¿Qué polinomio es?</strong> Veamos que es la derivada <img src="https://latex.codecogs.com/png.latex?m">-ésima de <img src="https://latex.codecogs.com/png.latex?P_%5Cell">. Partimos de la ecuación de Legendre con <img src="https://latex.codecogs.com/png.latex?%5Clambda=%5Cell(%5Cell+1)"> y derivamos término por término con la regla del producto:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bd%7D%7Bdx%7D%5Cbigl%5B(1-x%5E2)u''%5Cbigr%5D=(1-x%5E2)u'''-2x%5C,u'',%5Cquad%20%5Cfrac%7Bd%7D%7Bdx%7D%5Cbigl%5B-2x%5C,u'%5Cbigr%5D=-2u'-2x%5C,u'',%5Cquad%20%5Cfrac%7Bd%7D%7Bdx%7D%5Cbigl%5B%5Clambda%20u%5Cbigr%5D=%5Clambda%20u'."></p>
+<p>Sumando queda <img src="https://latex.codecogs.com/png.latex?(1-x%5E2)u'''-4x%5C,u''+(%5Clambda-2)u'=0">. Si <img src="https://latex.codecogs.com/png.latex?v=u'">, esto dice</p>
+<p><img src="https://latex.codecogs.com/png.latex?(1-x%5E2)%5C,v''-4x%5C,v'+(%5Clambda-2)%5C,v=0,"></p>
+<p>que es Ecuación&nbsp;9 con <img src="https://latex.codecogs.com/png.latex?m=1">. Derivando de nuevo, con <img src="https://latex.codecogs.com/png.latex?w=u''"> sale <img src="https://latex.codecogs.com/png.latex?(1-x%5E2)w''-6x%5C,w'+(%5Clambda-6)w=0">, que es Ecuación&nbsp;9 con <img src="https://latex.codecogs.com/png.latex?m=2">. En general, al derivar una vez más, el coeficiente de la primera derivada gana un <img src="https://latex.codecogs.com/png.latex?-2x"> y la constante pierde <img src="https://latex.codecogs.com/png.latex?2(m+1)">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?-2(m+1)x%5C%20%5Cto%5C%20-2(m+2)x,%5Cqquad%20%5Clambda-m(m+1)%5C%20%5Cto%5C%20%5Clambda-(m+1)(m+2)."></p>
+<p>Repitiendo <img src="https://latex.codecogs.com/png.latex?m"> veces, <img src="https://latex.codecogs.com/png.latex?u%5E%7B(m)%7D"> satisface Ecuación&nbsp;9. Entonces, si <img src="https://latex.codecogs.com/png.latex?u=P_%5Cell">, la función <img src="https://latex.codecogs.com/png.latex?v=P_%5Cell%5E%7B(m)%7D"> es solución de Ecuación&nbsp;9, y es un polinomio de grado <img src="https://latex.codecogs.com/png.latex?%5Cell-m">, que es el polinomio acotado que buscábamos. (Ojo: Ecuación&nbsp;9 no es la ecuación de Legendre, salvo para <img src="https://latex.codecogs.com/png.latex?m=0">. Es la ecuación de Legendre derivada <img src="https://latex.codecogs.com/png.latex?m"> veces.)</p>
+<p>La solución acotada de Ecuación&nbsp;6 es entonces la <strong>función de Legendre asociada</strong></p>
+<p><span id="eq-asociada"><img src="https://latex.codecogs.com/png.latex?P_%5Cell%5Em(x)=(1-x%5E2)%5E%7Bm/2%7D%5C,%5Cfrac%7Bd%5Em%7D%7Bdx%5Em%7DP_%5Cell(x),%5Cqquad%20%5Cell=0,1,2,%5Cdots,%5Cquad%20m=0,1,%5Cdots,%5Cell.%20%5Ctag%7B11%7D"></span></p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?P_%5Cell"> es un polinomio de grado <img src="https://latex.codecogs.com/png.latex?%5Cell">, su derivada <img src="https://latex.codecogs.com/png.latex?m">-ésima es cero si <img src="https://latex.codecogs.com/png.latex?m%3E%5Cell">, lo que reproduce la condición <img src="https://latex.codecogs.com/png.latex?m%5Cle%5Cell">. Por ejemplo, <img src="https://latex.codecogs.com/png.latex?P_1%5E1=%5Csqrt%7B1-x%5E2%7D">, <img src="https://latex.codecogs.com/png.latex?P_2%5E1=3x%5Csqrt%7B1-x%5E2%7D"> y <img src="https://latex.codecogs.com/png.latex?P_2%5E2=3(1-x%5E2)">.</p>
+</section>
+</div>
+<section id="los-armónicos-esféricos" class="level3" data-number="5.6">
+<h3 data-number="5.6" class="anchored" data-anchor-id="los-armónicos-esféricos"><span class="header-section-number">5.6</span> Los armónicos esféricos</h3>
+<p>Juntamos las dos partes angulares. Con <img src="https://latex.codecogs.com/png.latex?%5CTheta(%5Ctheta)=P_%5Cell%5Em(%5Ccos%5Ctheta)"> y <img src="https://latex.codecogs.com/png.latex?%5CPhi=e%5E%7Bim%5Cvarphi%7D"> se obtienen los <strong>armónicos esféricos</strong>,</p>
+<p><img src="https://latex.codecogs.com/png.latex?Y_%5Cell%5Em(%5Ctheta,%5Cvarphi)=%5Csqrt%7B%5Cfrac%7B2%5Cell+1%7D%7B4%5Cpi%7D%5C,%5Cfrac%7B(%5Cell-%7Cm%7C)!%7D%7B(%5Cell+%7Cm%7C)!%7D%7D%5C;P_%5Cell%5E%7B%7Cm%7C%7D(%5Ccos%5Ctheta)%5C,e%5E%7Bim%5Cvarphi%7D,%5Cqquad%20%5Cell=0,1,2,%5Cdots,%5Cquad%20m=-%5Cell,%5Cdots,%5Cell,"></p>
+<p>(hasta un signo, según la convención). Para cada <img src="https://latex.codecogs.com/png.latex?%5Cell"> hay <img src="https://latex.codecogs.com/png.latex?2%5Cell+1"> valores de <img src="https://latex.codecogs.com/png.latex?m">. Las constantes son las que hacen que <img src="https://latex.codecogs.com/png.latex?%5Cint%7CY_%5Cell%5Em%7C%5E2%5C,d%5COmega=1">.</p>
+<p>La ecuación de Legendre se puede escribir en forma de Sturm-Liouville, <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7Bd%7D%7Bdx%7D%5Cbigl%5B(1-x%5E2)y'%5Cbigr%5D+%5Clambda%20y=0"> en <img src="https://latex.codecogs.com/png.latex?%5B-1,1%5D">. Es un problema <strong>singular</strong>, porque el coeficiente <img src="https://latex.codecogs.com/png.latex?1-x%5E2"> se anula en los extremos, y sus autofunciones son ortogonales con peso <img src="https://latex.codecogs.com/png.latex?1">: <img src="https://latex.codecogs.com/png.latex?%5Cint_%7B-1%7D%5E%7B1%7DP_%5Cell%20P_%7B%5Cell'%7D%5C,dx=%5Cdfrac%7B2%7D%7B2%5Cell+1%7D%5C,%5Cdelta_%7B%5Cell%5Cell'%7D">.</p>
+<p>Algo importante: la parte angular no usó para nada el potencial <img src="https://latex.codecogs.com/png.latex?V(r)">. Los armónicos esféricos sirven para <strong>cualquier</strong> potencial central. Lo que distingue al hidrógeno es la parte radial.</p>
+</section>
+</section>
+<section id="la-parte-radial" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="la-parte-radial"><span class="header-section-number">6</span> La parte radial</h2>
+<section id="preparando-la-ecuación" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="preparando-la-ecuación"><span class="header-section-number">6.1</span> Preparando la ecuación</h3>
+<p>Con <img src="https://latex.codecogs.com/png.latex?%5Clambda=%5Cell(%5Cell+1)">, la primera ecuación de Ecuación&nbsp;4 queda, dividiendo por <img src="https://latex.codecogs.com/png.latex?r%5E2">,</p>
+<p><span id="eq-radial"><img src="https://latex.codecogs.com/png.latex?%5Cfrac1%7Br%5E2%7D%5Cfrac%7Bd%7D%7Bdr%7D%5C!%5Cleft(r%5E2%5Cfrac%7BdR%7D%7Bdr%7D%5Cright)+%5Cleft%5B%5Cfrac%7B2%5Cmu%7D%7B%5Chbar%5E2%7D%5Cleft(E+%5Cfrac%7Be%5E2%7D%7B4%5Cpi%5Cvarepsilon_0%5C,r%7D%5Cright)-%5Cfrac%7B%5Cell(%5Cell+1)%7D%7Br%5E2%7D%5Cright%5DR=0.%20%5Ctag%7B12%7D"></span></p>
+<p>Para deshacernos del <img src="https://latex.codecogs.com/png.latex?r%5E2"> en la derivada hacemos <img src="https://latex.codecogs.com/png.latex?u=rR">, y como <img src="https://latex.codecogs.com/png.latex?%5Cfrac1%7Br%5E2%7D(r%5E2R')'=%5Cfrac1r%5C,u''">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?u''+%5Cleft%5B%5Cfrac%7B2%5Cmu%7D%7B%5Chbar%5E2%7D%5Cleft(E+%5Cfrac%7Be%5E2%7D%7B4%5Cpi%5Cvarepsilon_0%5C,r%7D%5Cright)-%5Cfrac%7B%5Cell(%5Cell+1)%7D%7Br%5E2%7D%5Cright%5Du=0."></p>
+<p>Nos interesan los <strong>estados ligados</strong>, <img src="https://latex.codecogs.com/png.latex?E%3C0">. Definimos</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ckappa%5E2=-%5Cfrac%7B2%5Cmu%20E%7D%7B%5Chbar%5E2%7D,%5Cqquad%20a_0=%5Cfrac%7B4%5Cpi%5Cvarepsilon_0%5Chbar%5E2%7D%7B%5Cmu%20e%5E2%7D%5Capprox0%7B,%7D529%5C%20%5Ctext%7B%C3%85%7D,"></p>
+<p>donde <img src="https://latex.codecogs.com/png.latex?a_0"> es el <strong>radio de Bohr</strong>, y entonces <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7B2%5Cmu%7D%7B%5Chbar%5E2%7D%5Cdfrac%7Be%5E2%7D%7B4%5Cpi%5Cvarepsilon_0%7D=%5Cdfrac2%7Ba_0%7D">. Con <img src="https://latex.codecogs.com/png.latex?%5Crho=2%5Ckappa%20r"> y <img src="https://latex.codecogs.com/png.latex?%5Cnu=%5Cdfrac1%7B%5Ckappa%20a_0%7D"> la ecuación queda</p>
+<p><span id="eq-u"><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bd%5E2u%7D%7Bd%5Crho%5E2%7D+%5Cleft%5B-%5Cfrac14+%5Cfrac%7B%5Cnu%7D%7B%5Crho%7D-%5Cfrac%7B%5Cell(%5Cell+1)%7D%7B%5Crho%5E2%7D%5Cright%5Du=0.%20%5Ctag%7B13%7D"></span></p>
+<p>Todavía no sabemos qué valores puede tomar <img src="https://latex.codecogs.com/png.latex?%5Cnu">: eso es lo que va a cuantizar la energía.</p>
+</section>
+<div class="parte-matematica">
+<section id="los-comportamientos-en-los-extremos" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="los-comportamientos-en-los-extremos"><span class="header-section-number">6.2</span> Los comportamientos en los extremos</h3>
+<p>El punto <img src="https://latex.codecogs.com/png.latex?%5Crho=0"> es singular regular de Ecuación&nbsp;13, y <img src="https://latex.codecogs.com/png.latex?%5Crho=%5Cinfty"> es singular irregular. Veamos qué hacen las soluciones en cada uno.</p>
+<ul>
+<li><strong>Cerca de <img src="https://latex.codecogs.com/png.latex?%5Crho=0"></strong> domina el término <img src="https://latex.codecogs.com/png.latex?%5Cell(%5Cell+1)/%5Crho%5E2">. La ecuación indicial de <img src="https://latex.codecogs.com/png.latex?u''-%5Cfrac%7B%5Cell(%5Cell+1)%7D%7B%5Crho%5E2%7Du=0"> con <img src="https://latex.codecogs.com/png.latex?u=%5Crho%5Es"> es <img src="https://latex.codecogs.com/png.latex?s(s-1)=%5Cell(%5Cell+1)">, de donde <img src="https://latex.codecogs.com/png.latex?s=%5Cell+1"> o <img src="https://latex.codecogs.com/png.latex?s=-%5Cell">. La segunda da <img src="https://latex.codecogs.com/png.latex?R=u/r%5Csim%20r%5E%7B-%5Cell-1%7D">, que no es acotada en el núcleo, y la descartamos.</li>
+<li><strong>Para <img src="https://latex.codecogs.com/png.latex?%5Crho"> grande</strong> domina <img src="https://latex.codecogs.com/png.latex?-%5Cfrac14">, y <img src="https://latex.codecogs.com/png.latex?u''%5Capprox%5Cfrac14u"> da <img src="https://latex.codecogs.com/png.latex?u%5Csim%20e%5E%7B%5Cpm%5Crho/2%7D">. La solución con <img src="https://latex.codecogs.com/png.latex?e%5E%7B+%5Crho/2%7D"> no es normalizable y la descartamos.</li>
+</ul>
+</section>
+<section id="factorizar-la-ecuación-de-laguerre-asociada" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="factorizar-la-ecuación-de-laguerre-asociada"><span class="header-section-number">6.3</span> Factorizar: la ecuación de Laguerre asociada</h3>
+<p>Sacamos esos dos comportamientos: <img src="https://latex.codecogs.com/png.latex?u=f(%5Crho)%5C,L(%5Crho)"> con <img src="https://latex.codecogs.com/png.latex?f=%5Crho%5E%7B%5Cell+1%7De%5E%7B-%5Crho/2%7D">. Calculamos</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bf'%7D%7Bf%7D=%5Cfrac%7B%5Cell+1%7D%7B%5Crho%7D-%5Cfrac12,%5Cqquad%20%5Cfrac%7Bf''%7D%7Bf%7D=%5Cleft(%5Cfrac%7Bf'%7D%7Bf%7D%5Cright)%5E2+%5Cleft(%5Cfrac%7Bf'%7D%7Bf%7D%5Cright)'=%5Cfrac%7B%5Cell(%5Cell+1)%7D%7B%5Crho%5E2%7D-%5Cfrac%7B%5Cell+1%7D%7B%5Crho%7D+%5Cfrac14."></p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?u''=f''L+2f'L'+fL''">, al dividir Ecuación&nbsp;13 entre <img src="https://latex.codecogs.com/png.latex?f"> queda</p>
+<p><img src="https://latex.codecogs.com/png.latex?L''+2%5Cleft(%5Cfrac%7B%5Cell+1%7D%7B%5Crho%7D-%5Cfrac12%5Cright)L'+%5Cleft%5B%5Cfrac%7B%5Cell(%5Cell+1)%7D%7B%5Crho%5E2%7D-%5Cfrac%7B%5Cell+1%7D%7B%5Crho%7D+%5Cfrac14%5Cright%5DL+%5Cleft%5B-%5Cfrac14+%5Cfrac%5Cnu%5Crho-%5Cfrac%7B%5Cell(%5Cell+1)%7D%7B%5Crho%5E2%7D%5Cright%5DL=0."></p>
+<p>Se cancelan los términos con <img src="https://latex.codecogs.com/png.latex?1/%5Crho%5E2"> y los términos con <img src="https://latex.codecogs.com/png.latex?%5Cfrac14">. Multiplicando por <img src="https://latex.codecogs.com/png.latex?%5Crho">,</p>
+<p><span id="eq-laguerre-asoc"><img src="https://latex.codecogs.com/png.latex?%5Crho%5C,L''+(2%5Cell+2-%5Crho)%5C,L'+(%5Cnu-%5Cell-1)%5C,L=0.%20%5Ctag%7B14%7D"></span></p>
+<p>Esta es la <strong>ecuación de Laguerre asociada</strong>, <img src="https://latex.codecogs.com/png.latex?xy''+(k+1-x)y'+p%5C,y=0"> con <img src="https://latex.codecogs.com/png.latex?k=2%5Cell+1"> y <img src="https://latex.codecogs.com/png.latex?p=%5Cnu-%5Cell-1">. (Con <img src="https://latex.codecogs.com/png.latex?k=0"> es la ecuación de Laguerre, <img src="https://latex.codecogs.com/png.latex?xy''+(1-x)y'+py=0">, que aparece en los problemas del capítulo 5 de Simmons.)</p>
+</section>
+<section id="frobenius-en-rho0" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="frobenius-en-rho0"><span class="header-section-number">6.4</span> Frobenius en <img src="https://latex.codecogs.com/png.latex?%5Crho=0"></h3>
+<p>En forma normal, <img src="https://latex.codecogs.com/png.latex?L''+%5Cdfrac%7B2%5Cell+2-%5Crho%7D%7B%5Crho%7DL'+%5Cdfrac%7B%5Cnu-%5Cell-1%7D%7B%5Crho%7DL=0">. Como <img src="https://latex.codecogs.com/png.latex?%5Crho%20P=2%5Cell+2-%5Crho"> y <img src="https://latex.codecogs.com/png.latex?%5Crho%5E2Q=(%5Cnu-%5Cell-1)%5Crho"> son analíticas, <img src="https://latex.codecogs.com/png.latex?%5Crho=0"> es un punto singular regular. Con <img src="https://latex.codecogs.com/png.latex?L=%5Crho%5Es%5Csum%20b_j%5Crho%5Ej"> la ecuación indicial es</p>
+<p><img src="https://latex.codecogs.com/png.latex?s(s-1)+(2%5Cell+2)s=0%5C%20%5CLongrightarrow%5C%20s%5C,(s+2%5Cell+1)=0,"></p>
+<p>con exponentes <img src="https://latex.codecogs.com/png.latex?s=0"> y <img src="https://latex.codecogs.com/png.latex?s=-(2%5Cell+1)">. El segundo da <img src="https://latex.codecogs.com/png.latex?u=%5Crho%5E%7B%5Cell+1%7D%5Crho%5E%7B-2%5Cell-1%7D=%5Crho%5E%7B-%5Cell%7D">: es justo la solución que ya habíamos descartado. Nos quedamos con <img src="https://latex.codecogs.com/png.latex?s=0">, y la serie <img src="https://latex.codecogs.com/png.latex?L=%5Csum_%7Bj=0%7D%5E%7B%5Cinfty%7Db_j%5Crho%5Ej"> con <img src="https://latex.codecogs.com/png.latex?b_0%5Cneq0">. El coeficiente de <img src="https://latex.codecogs.com/png.latex?%5Crho%5Ej"> es</p>
+<p><img src="https://latex.codecogs.com/png.latex?(j+1)j%5C,b_%7Bj+1%7D+(2%5Cell+2)(j+1)%5C,b_%7Bj+1%7D-j%5C,b_j+(%5Cnu-%5Cell-1)%5C,b_j=0,"></p>
+<p>es decir,</p>
+<p><span id="eq-rec-lag"><img src="https://latex.codecogs.com/png.latex?b_%7Bj+1%7D=%5Cfrac%7Bj-%5Cnu+%5Cell+1%7D%7B(j+1)(j+2%5Cell+2)%7D%5C,b_j.%20%5Ctag%7B15%7D"></span></p>
+<p>Los denominadores nunca se anulan, y esta recurrencia da una serie para <strong>cualquier</strong> valor de <img src="https://latex.codecogs.com/png.latex?%5Cnu">. Hasta aquí no hay cuantización.</p>
+</section>
+<section id="el-infinito-la-serie-tiene-que-cortarse" class="level3" data-number="6.5">
+<h3 data-number="6.5" class="anchored" data-anchor-id="el-infinito-la-serie-tiene-que-cortarse"><span class="header-section-number">6.5</span> El infinito: la serie tiene que cortarse</h3>
+<p>Si la serie no termina, <img src="https://latex.codecogs.com/png.latex?b_%7Bj+1%7D/b_j%5Capprox1/j">, que es el comportamiento de los coeficientes de <img src="https://latex.codecogs.com/png.latex?e%5E%7B%5Crho%7D">. Entonces <img src="https://latex.codecogs.com/png.latex?L"> crece como una potencia de <img src="https://latex.codecogs.com/png.latex?%5Crho"> por <img src="https://latex.codecogs.com/png.latex?e%5E%7B%5Crho%7D">, y <img src="https://latex.codecogs.com/png.latex?u=%5Crho%5E%7B%5Cell+1%7De%5E%7B-%5Crho/2%7DL"> crece como una potencia de <img src="https://latex.codecogs.com/png.latex?%5Crho"> por <img src="https://latex.codecogs.com/png.latex?e%5E%7B+%5Crho/2%7D">, que no es normalizable: es justo la solución mala de <img src="https://latex.codecogs.com/png.latex?%5Crho%5Cto%5Cinfty">. La única salida es que la serie se corte. El numerador de Ecuación&nbsp;15 se anula cuando <img src="https://latex.codecogs.com/png.latex?%5Cnu=j+%5Cell+1">, así que</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cnu=n,%5Cqquad%20n=%5Cell+1,%5C%20%5Cell+2,%5C%20%5Cell+3,%5Cdots"></p>
+<p>y <img src="https://latex.codecogs.com/png.latex?L"> es un polinomio de grado <img src="https://latex.codecogs.com/png.latex?n-%5Cell-1">, el <strong>polinomio de Laguerre asociado</strong> <img src="https://latex.codecogs.com/png.latex?L_%7Bn-%5Cell-1%7D%5E%7B(2%5Cell+1)%7D(%5Crho)"> (salvo una constante).</p>
+</section>
+</div>
+<section id="la-energía" class="level3" data-number="6.6">
+<h3 data-number="6.6" class="anchored" data-anchor-id="la-energía"><span class="header-section-number">6.6</span> La energía</h3>
+<p>La condición <img src="https://latex.codecogs.com/png.latex?%5Cnu=n"> dice <img src="https://latex.codecogs.com/png.latex?%5Ckappa=%5Cdfrac1%7Bna_0%7D">, y entonces</p>
+<p><span id="eq-energia"><img src="https://latex.codecogs.com/png.latex?E_n=-%5Cfrac%7B%5Chbar%5E2%5Ckappa%5E2%7D%7B2%5Cmu%7D=-%5Cfrac%7B%5Chbar%5E2%7D%7B2%5Cmu%20a_0%5E2%7D%5C,%5Cfrac1%7Bn%5E2%7D=-%5Cfrac%7B%5Cmu%20e%5E4%7D%7B2(4%5Cpi%5Cvarepsilon_0)%5E2%5Chbar%5E2%7D%5C,%5Cfrac1%7Bn%5E2%7D%5Capprox-%5Cfrac%7B13%7B,%7D6%5C%20%5Ctext%7BeV%7D%7D%7Bn%5E2%7D,%5Cqquad%20n=1,2,3,%5Cdots%20%5Ctag%7B16%7D"></span></p>
+<p>Estos son los niveles de energía del hidrógeno, y coinciden con los del modelo de Bohr. Dos observaciones:</p>
+<ul>
+<li>La energía solo depende de <img src="https://latex.codecogs.com/png.latex?n">, no de <img src="https://latex.codecogs.com/png.latex?%5Cell"> ni de <img src="https://latex.codecogs.com/png.latex?m">. Es una característica del potencial <img src="https://latex.codecogs.com/png.latex?1/r"> (con otro potencial central los niveles dependerían de <img src="https://latex.codecogs.com/png.latex?%5Cell">).</li>
+<li>Para cada <img src="https://latex.codecogs.com/png.latex?n"> hay <img src="https://latex.codecogs.com/png.latex?%5Cell=0,%5Cdots,n-1"> y, para cada <img src="https://latex.codecogs.com/png.latex?%5Cell">, <img src="https://latex.codecogs.com/png.latex?m=-%5Cell,%5Cdots,%5Cell">. Entonces el número de estados con la misma energía es <img src="https://latex.codecogs.com/png.latex?%5Csum_%7B%5Cell=0%7D%5E%7Bn-1%7D(2%5Cell+1)=n%5E2"> (sin contar el espín).</li>
+</ul>
+<p>La parte radial de la función de onda es</p>
+<p><img src="https://latex.codecogs.com/png.latex?R_%7Bn%5Cell%7D(r)=N_%7Bn%5Cell%7D%5C,%5Crho%5E%7B%5Cell%7D%5C,e%5E%7B-%5Crho/2%7D%5C,L_%7Bn-%5Cell-1%7D%5E%7B(2%5Cell+1)%7D(%5Crho),%5Cqquad%20%5Crho=%5Cfrac%7B2r%7D%7Bna_0%7D,"></p>
+<p>donde <img src="https://latex.codecogs.com/png.latex?N_%7Bn%5Cell%7D"> se fija con <img src="https://latex.codecogs.com/png.latex?%5Cint_0%5E%7B%5Cinfty%7DR_%7Bn%5Cell%7D%5E2%5C,r%5E2%5C,dr=1">.</p>
+</section>
+</section>
+<section id="los-orbitales" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="los-orbitales"><span class="header-section-number">7</span> Los orbitales</h2>
+<section id="los-tres-números-cuánticos" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="los-tres-números-cuánticos"><span class="header-section-number">7.1</span> Los tres números cuánticos</h3>
+<p>La función de onda completa es</p>
+<p><span id="eq-orbital"><img src="https://latex.codecogs.com/png.latex?%5Cpsi_%7Bn%5Cell%20m%7D(r,%5Ctheta,%5Cvarphi)=R_%7Bn%5Cell%7D(r)%5C,Y_%5Cell%5Em(%5Ctheta,%5Cvarphi),%20%5Ctag%7B17%7D"></span></p>
+<p>y se llama un <strong>orbital</strong>. Está determinado por tres números enteros:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">número</th>
+<th style="text-align: left;">nombre</th>
+<th style="text-align: left;">valores</th>
+<th style="text-align: left;">de dónde sale</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?n"></td>
+<td style="text-align: left;">principal</td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?1,2,3,%5Cdots"></td>
+<td style="text-align: left;">truncamiento de la serie radial (Laguerre)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?%5Cell"></td>
+<td style="text-align: left;">azimutal</td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?0,1,%5Cdots,n-1"></td>
+<td style="text-align: left;">truncamiento de la serie polar (Legendre), con <img src="https://latex.codecogs.com/png.latex?n%5Cge%5Cell+1"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?m"></td>
+<td style="text-align: left;">magnético</td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?-%5Cell,%5Cdots,%5Cell"></td>
+<td style="text-align: left;">periodicidad en <img src="https://latex.codecogs.com/png.latex?%5Cvarphi">, con <img src="https://latex.codecogs.com/png.latex?%7Cm%7C%5Cle%5Cell"></td>
+</tr>
+</tbody>
+</table>
+<p>A <img src="https://latex.codecogs.com/png.latex?%5Cell=0,1,2,3"> se les llama <img src="https://latex.codecogs.com/png.latex?s,%5C%20p,%5C%20d,%5C%20f"> (son letras que quedaron de la espectroscopía), y los orbitales se nombran con <img src="https://latex.codecogs.com/png.latex?n"> y la letra: <img src="https://latex.codecogs.com/png.latex?1s">, <img src="https://latex.codecogs.com/png.latex?2s">, <img src="https://latex.codecogs.com/png.latex?2p">, <img src="https://latex.codecogs.com/png.latex?3d">, etc. Los <strong>nodos</strong> (donde <img src="https://latex.codecogs.com/png.latex?%5Cpsi=0">) son de dos tipos: <img src="https://latex.codecogs.com/png.latex?R_%7Bn%5Cell%7D"> tiene <img src="https://latex.codecogs.com/png.latex?n-%5Cell-1"> ceros positivos, porque el polinomio de Laguerre tiene ese grado (nodos radiales, que son esferas), y la parte angular tiene <img src="https://latex.codecogs.com/png.latex?%5Cell"> superficies nodales (planos o conos).</p>
+</section>
+<section id="las-funciones-radiales" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="las-funciones-radiales"><span class="header-section-number">7.2</span> Las funciones radiales</h3>
+<p>Con la recurrencia Ecuación&nbsp;15 y la normalización se obtienen las primeras funciones radiales. En unidades <img src="https://latex.codecogs.com/png.latex?a_0=1"> (y en unidades de <img src="https://latex.codecogs.com/png.latex?a_0%5E%7B-3/2%7D">):</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">orbital</th>
+<th style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?R_%7Bn%5Cell%7D(r)"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1s"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?2%5C,e%5E%7B-r%7D"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?2s"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7B1%7D%7B2%5Csqrt2%7D%5C,(2-r)%5C,e%5E%7B-r/2%7D"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?2p"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7B1%7D%7B2%5Csqrt6%7D%5C,r%5C,e%5E%7B-r/2%7D"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?3s"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7B2%7D%7B81%5Csqrt3%7D%5C,(27-18r+2r%5E2)%5C,e%5E%7B-r/3%7D"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?3p"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7B4%7D%7B81%5Csqrt6%7D%5C,r%5C,(6-r)%5C,e%5E%7B-r/3%7D"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?3d"></td>
+<td style="text-align: left;"><img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7B4%7D%7B81%5Csqrt%7B30%7D%7D%5C,r%5E2%5C,e%5E%7B-r/3%7D"></td>
+</tr>
+</tbody>
+</table>
+<p>(Todas se verificaron en Maxima al final.) Se ve el número de nodos: <img src="https://latex.codecogs.com/png.latex?2s"> tiene uno en <img src="https://latex.codecogs.com/png.latex?r=2">, <img src="https://latex.codecogs.com/png.latex?3s"> tiene dos, <img src="https://latex.codecogs.com/png.latex?3p"> tiene uno en <img src="https://latex.codecogs.com/png.latex?r=6">, y <img src="https://latex.codecogs.com/png.latex?1s">, <img src="https://latex.codecogs.com/png.latex?2p"> y <img src="https://latex.codecogs.com/png.latex?3d"> no tienen ninguno.</p>
+</section>
+<section id="los-orbitales-reales" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="los-orbitales-reales"><span class="header-section-number">7.3</span> Los orbitales reales</h3>
+<p>Los estados con <img src="https://latex.codecogs.com/png.latex?m"> y <img src="https://latex.codecogs.com/png.latex?-m"> tienen la misma energía, así que cualquier combinación lineal de ellos también es solución. Si en lugar de <img src="https://latex.codecogs.com/png.latex?e%5E%7B%5Cpm%20im%5Cvarphi%7D"> se toman <img src="https://latex.codecogs.com/png.latex?%5Ccos%20m%5Cvarphi"> y <img src="https://latex.codecogs.com/png.latex?%5Csin%20m%5Cvarphi">, se obtienen funciones <strong>reales</strong>, que son las que aparecen en los libros de química. Por ejemplo, con <img src="https://latex.codecogs.com/png.latex?a_0"> explícito,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cpsi_%7B1s%7D=%5Cfrac%7B1%7D%7B%5Csqrt%7B%5Cpi%20a_0%5E3%7D%7D%5C,e%5E%7B-r/a_0%7D,%5Cqquad%20%5Cpsi_%7B2p_z%7D=%5Cfrac%7B1%7D%7B4%5Csqrt%7B2%5Cpi%20a_0%5E5%7D%7D%5C;z%5C,e%5E%7B-r/2a_0%7D,%5Cqquad%20%5Cpsi_%7B3d_%7Bz%5E2%7D%7D=%5Cfrac%7B1%7D%7B81%5Csqrt%7B6%5Cpi%20a_0%5E7%7D%7D%5C,(3z%5E2-r%5E2)%5C,e%5E%7B-r/3a_0%7D."></p>
+<p>El nombre sale de la parte angular escrita en cartesianas: <img src="https://latex.codecogs.com/png.latex?%5Ccos%5Ctheta=z/r">, <img src="https://latex.codecogs.com/png.latex?%5Csin%5Ctheta%5Ccos%5Cvarphi=x/r">, <img src="https://latex.codecogs.com/png.latex?%5Csin%5Ctheta%5Csin%5Cvarphi=y/r">. Así, <img src="https://latex.codecogs.com/png.latex?%5Cell=1"> da <img src="https://latex.codecogs.com/png.latex?p_z">, <img src="https://latex.codecogs.com/png.latex?p_x"> y <img src="https://latex.codecogs.com/png.latex?p_y">, y <img src="https://latex.codecogs.com/png.latex?%5Cell=2"> da <img src="https://latex.codecogs.com/png.latex?d_%7Bz%5E2%7D">, <img src="https://latex.codecogs.com/png.latex?d_%7Bxz%7D">, <img src="https://latex.codecogs.com/png.latex?d_%7Byz%7D">, <img src="https://latex.codecogs.com/png.latex?d_%7Bx%5E2-y%5E2%7D"> y <img src="https://latex.codecogs.com/png.latex?d_%7Bxy%7D">.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Simulador: los orbitales del átomo de hidrógeno">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Simulador: los orbitales del átomo de hidrógeno
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con los selectores se escogen <img src="https://latex.codecogs.com/png.latex?n">, <img src="https://latex.codecogs.com/png.latex?%5Cell"> y <img src="https://latex.codecogs.com/png.latex?m">. A la izquierda se ve un corte del orbital por un plano que contiene al eje <img src="https://latex.codecogs.com/png.latex?z">: en <strong>rojo</strong> donde <img src="https://latex.codecogs.com/png.latex?%5Cpsi%3E0">, en <strong>azul</strong> donde <img src="https://latex.codecogs.com/png.latex?%5Cpsi%3C0"> y en blanco donde <img src="https://latex.codecogs.com/png.latex?%5Cpsi=0"> (las franjas blancas son los nodos). Con la casilla se pasa a la densidad de probabilidad <img src="https://latex.codecogs.com/png.latex?%7C%5Cpsi%7C%5E2">. A la derecha está la densidad radial <img src="https://latex.codecogs.com/png.latex?r%5E2R_%7Bn%5Cell%7D%5E2">, que da la probabilidad de encontrar al electrón a una distancia <img src="https://latex.codecogs.com/png.latex?r"> del núcleo, con los nodos radiales (puntos negros) y el radio medio <img src="https://latex.codecogs.com/png.latex?%5Clangle%20r%5Crangle=%5Ctfrac12%5Cbigl(3n%5E2-%5Cell(%5Cell+1)%5Cbigr)a_0">. Las distancias están en unidades de <img src="https://latex.codecogs.com/png.latex?a_0">. Prueba con <img src="https://latex.codecogs.com/png.latex?2s"> y <img src="https://latex.codecogs.com/png.latex?3p"> para ver los nodos radiales, con <img src="https://latex.codecogs.com/png.latex?3d_%7Bz%5E2%7D"> para ver los conos nodales, y compara los orbitales con el mismo <img src="https://latex.codecogs.com/png.latex?n">: tienen la misma energía y formas muy distintas.</p>
+
+
+<style>
+  .orb-caja{border:3px solid #ddd;border-radius:8px;padding:14px;max-width:780px;margin:1em auto;font-family:sans-serif;background:#fff;color:#222;}
+  .orb-caja button{padding:5px 11px;border:1px solid #bbb;border-radius:6px;background:#f5f5f5;color:#222;cursor:pointer;font-size:0.9em;}
+  .orb-caja button:hover{background:#e9e9e9;}
+  .orb-fila{display:flex;align-items:center;gap:8px 18px;flex-wrap:wrap;margin-top:6px;}
+  .orb-fila label{font-size:0.92em;}
+  .orb-grande{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:12px;align-items:start;}
+  .orb-grande canvas{display:block;width:100%;height:auto;background:#fff;border:1px solid #e3e3e3;border-radius:6px;}
+  .orb-3d{margin-top:14px;}
+  .orb-3d canvas{display:block;width:100%;height:auto;background:#fff;border:1px solid #e3e3e3;border-radius:6px;cursor:grab;touch-action:none;margin-top:6px;}
+  .orb-3d canvas.orb-arr{cursor:grabbing;}
+  .orb-info{margin-top:10px;font-size:0.93em;line-height:1.55;}
+</style>
+<div class="orb-caja" id="orb">
+  <div class="orb-fila">
+    <label>n <select id="orb-n"><option>1</option><option selected="">2</option><option>3</option><option>4</option><option>5</option></select></label>
+    <label>ℓ <select id="orb-l"></select></label>
+    <label>m <select id="orb-m"></select></label>
+    <label>orientación <select id="orb-or"><option value="c">cos mφ</option><option value="s">sen mφ</option></select></label>
+    <label><input type="checkbox" id="orb-d"> mostrar |ψ|²</label>
+  </div>
+  <div class="orb-fila" id="orb-pre">
+    <span style="font-size:0.9em">Orbitales conocidos:</span>
+    <button data-p="1,0,0,c">1s</button>
+    <button data-p="2,0,0,c">2s</button>
+    <button data-p="2,1,0,c">2p<sub>z</sub></button>
+    <button data-p="2,1,1,c">2p<sub>x</sub></button>
+    <button data-p="3,2,0,c">3d<sub>z²</sub></button>
+    <button data-p="3,2,2,s">3d<sub>xy</sub></button>
+    <button data-p="3,1,0,c">3p<sub>z</sub></button>
+    <button data-p="4,3,0,c">4f<sub>z³</sub></button>
+  </div>
+  <div class="orb-grande">
+    <canvas id="orb-g" width="340" height="340" aria-label="Corte del orbital por un plano que contiene al eje z"></canvas>
+    <canvas id="orb-p" width="400" height="340" aria-label="Densidad de probabilidad radial del orbital"></canvas>
+  </div>
+  <div class="orb-3d">
+    <div class="orb-fila">
+      <label>puntos = <b id="orb-npv">8000</b> <input type="range" id="orb-np" min="1000" max="30000" step="1000" value="8000" style="width:150px;vertical-align:middle"></label>
+      <button id="orb-re">Sortear de nuevo</button>
+      <label><input type="checkbox" id="orb-giro"> girar solo</label>
+    </div>
+    <canvas id="orb-c" width="760" height="430" aria-label="Nube de puntos del orbital en tres dimensiones"></canvas>
+    <div style="font-size:0.85em;color:#555;margin-top:4px">Arrastra con el mouse (o el dedo) para girar la nube. Cada punto es una posición posible del electrón, sorteada con probabilidad |ψ|²: rojo donde ψ &gt; 0 y azul donde ψ &lt; 0. Los ejes son x, y, z.</div>
+  </div>
+  <div class="orb-info" id="orb-info"></div>
+</div>
+<script>
+(function(){
+/*NUCLEO*/
+function coefL(n, l){ var b = [1]; for (var j = 0; j < n - l - 1; j++) b.push(b[j]*(j - n + l + 1)/((j + 1)*(j + 2*l + 2))); return b; }
+function radialSin(n, l, b, r){ var rho = 2*r/n, s = 0; for (var j = b.length - 1; j >= 0; j--) s = s*rho + b[j]; return Math.pow(rho, l)*Math.exp(-rho/2)*s; }
+function Plm(l, m, x){
+  var s = Math.sqrt(Math.max(0, 1 - x*x)), pmm = 1, f = 1, i;
+  for (i = 1; i <= m; i++){ pmm *= f*s; f += 2; }
+  if (l === m) return pmm;
+  var a = pmm, b = x*(2*m + 1)*pmm, c;
+  if (l === m + 1) return b;
+  for (var k = m + 2; k <= l; k++){ c = (x*(2*k - 1)*b - (k + m - 1)*a)/(k - m); a = b; b = c; }
+  return b;
+}
+/*FIN NUCLEO*/
+
+function $(id){ return document.getElementById(id); }
+var cv = $('orb-g'); if (!cv) return;
+var cg = cv.getContext('2d'), cp = $('orb-p').getContext('2d'), cc = $('orb-c').getContext('2d');
+var S = {n:2, l:1, m:0, or:'c', den:false, np:8000, az:0.6, el:0.35, giro:false};
+var NUBE = {x:null, y:null, z:null, s:null, q:1}, sucio = true;
+var LET = ['s', 'p', 'd', 'f', 'g'];
+var TAB = {
+  c: [[''], ['z', 'x'], ['z²', 'xz', 'x²-y²'], ['z³', 'xz²', 'z(x²-y²)', 'x(x²-3y²)']],
+  s: [[''], ['', 'y'], ['', 'yz', 'xy'], ['', 'yz²', 'xyz', 'y(3x²-y²)']]
+};
+function fmt(x, d){ return x.toFixed(d).replace('.', ','); }
+function nombre(){
+  var n = S.n, l = S.l, m = S.m, base = n + LET[l];
+  if (l === 0) return base;
+  if (l > 3) return base + ' (m = ' + m + (m ? (S.or === 'c' ? ', coseno' : ', seno') : '') + ')';
+  return base + '<sub>' + TAB[m === 0 ? 'c' : S.or][l][m] + '</sub>';
+}
+function simpson(f, a, b, N){ var h = (b - a)/N, s = f(a) + f(b); for (var i = 1; i < N; i++) s += f(a + i*h)*(i % 2 ? 4 : 2); return s*h/3; }
+function paso(L){ var q = L/3, c = [1, 2, 5, 10, 20, 50, 100], k = 0; while (k < c.length - 1 && c[k + 1] <= q) k++; return c[k]; }
+function colorDiv(v, out, o){
+  var a = Math.pow(Math.min(1, Math.abs(v)), 0.55);
+  if (v >= 0){ out[o] = 255 - a*(255 - 201); out[o + 1] = 255 - a*(255 - 48); out[o + 2] = 255 - a*(255 - 44); }
+  else { out[o] = 255 - a*(255 - 37); out[o + 1] = 255 - a*(255 - 99); out[o + 2] = 255 - a*(255 - 168); }
+}
+
+function dibujar(){
+  var n = S.n, l = S.l, m = S.m, b = coefL(n, l), rmax = 12*n*n + 40, i, j, k;
+  var Cn = 1/Math.sqrt(simpson(function(r){ var R = radialSin(n, l, b, r); return r*r*R*R; }, 0, rmax, 4000));
+  var Lext = 2.4*n*n + 4, P = 340;
+  var cosb = (S.or === 'c' || m === 0), ph0 = cosb ? 0 : Math.PI/(2*m);
+  // corte por un plano que contiene al eje z
+  var val = new Float32Array(P*P), mx = 0;
+  for (j = 0; j < P; j++) for (i = 0; i < P; i++){
+    var X = (i + 0.5)/P*2*Lext - Lext, Z = Lext - (j + 0.5)/P*2*Lext, r = Math.sqrt(X*X + Z*Z);
+    if (r < 1e-9) r = 1e-9;
+    var ph = X >= 0 ? ph0 : ph0 + Math.PI;
+    var v = Cn*radialSin(n, l, b, r)*Plm(l, m, Z/r)*(cosb ? Math.cos(m*ph) : Math.sin(m*ph));
+    val[j*P + i] = v; if (Math.abs(v) > mx) mx = Math.abs(v);
+  }
+  var img = cg.createImageData(P, P), d = img.data;
+  for (k = 0; k < P*P; k++){
+    var w = val[k]/mx, o = 4*k;
+    if (S.den){ var t = Math.pow(Math.abs(w), 0.9); d[o] = 255 - t*(255 - 40); d[o + 1] = 255 - t*(255 - 40); d[o + 2] = 255 - t*(255 - 140); }
+    else colorDiv(w, d, o);
+    d[o + 3] = 255;
+  }
+  cg.putImageData(img, 0, 0);
+  // ejes y escala
+  cg.strokeStyle = 'rgba(0,0,0,0.35)'; cg.lineWidth = 1; cg.setLineDash([4, 4]);
+  cg.beginPath(); cg.moveTo(0, P/2); cg.lineTo(P, P/2); cg.moveTo(P/2, 0); cg.lineTo(P/2, P); cg.stroke(); cg.setLineDash([]);
+  var st = paso(Lext); cg.fillStyle = '#333'; cg.font = '11px sans-serif'; cg.textAlign = 'center';
+  for (k = -Math.floor(Lext/st); k <= Math.floor(Lext/st); k++){
+    if (k === 0) continue; var px = P/2 + k*st/Lext*P/2;
+    cg.beginPath(); cg.moveTo(px, P/2 - 4); cg.lineTo(px, P/2 + 4); cg.stroke(); cg.fillText(k*st, px, P/2 + 16);
+  }
+  cg.textAlign = 'left'; cg.fillText('x (unidades de a₀)', 8, P - 8); cg.fillText('z', P/2 + 8, 14);
+
+  // densidad radial r^2 R^2
+  var W = 400, H = 340, L0 = 48, R0 = 14, T0 = 16, B0 = 36, NP = 500, pr = new Float64Array(NP + 1), pm = 0;
+  for (k = 0; k <= NP; k++){ var rr = Lext*k/NP, R = Cn*radialSin(n, l, b, rr); pr[k] = rr*rr*R*R; if (pr[k] > pm) pm = pr[k]; }
+  function X2(r){ return L0 + r/Lext*(W - L0 - R0); }
+  function Y2(v){ return T0 + (1 - v/(1.1*pm))*(H - T0 - B0); }
+  cp.fillStyle = '#fff'; cp.fillRect(0, 0, W, H);
+  cp.strokeStyle = '#ececec'; cp.lineWidth = 1; cp.fillStyle = '#555'; cp.font = '12px sans-serif'; cp.textAlign = 'center';
+  for (k = 0; k*st <= Lext; k++){ cp.beginPath(); cp.moveTo(X2(k*st), T0); cp.lineTo(X2(k*st), H - B0); cp.stroke(); cp.fillText(k*st, X2(k*st), H - B0 + 16); }
+  cp.strokeStyle = '#888'; cp.lineWidth = 1.2; cp.beginPath(); cp.moveTo(L0, H - B0); cp.lineTo(W - R0, H - B0); cp.moveTo(L0, T0); cp.lineTo(L0, H - B0); cp.stroke();
+  cp.textAlign = 'center'; cp.fillText('r (unidades de a₀)', (L0 + W - R0)/2, H - 6);
+  cp.save(); cp.translate(14, (T0 + H - B0)/2); cp.rotate(-Math.PI/2); cp.fillText('r²R² (probabilidad por unidad de r)', 0, 0); cp.restore();
+  cp.beginPath(); cp.moveTo(X2(0), Y2(0));
+  for (k = 0; k <= NP; k++) cp.lineTo(X2(Lext*k/NP), Y2(pr[k]));
+  cp.lineTo(X2(Lext), Y2(0)); cp.closePath(); cp.fillStyle = 'rgba(37,99,168,0.18)'; cp.fill();
+  cp.strokeStyle = '#2563a8'; cp.lineWidth = 2.4; cp.beginPath();
+  for (k = 0; k <= NP; k++){ if (k === 0) cp.moveTo(X2(0), Y2(pr[0])); else cp.lineTo(X2(Lext*k/NP), Y2(pr[k])); }
+  cp.stroke();
+  // nodos radiales (ceros de R)
+  var nodos = 0, prev = Math.sign(radialSin(n, l, b, Lext/4000)), NG = 4000;
+  cp.fillStyle = '#1b2a41';
+  for (k = 2; k <= NG; k++){
+    var rg = Lext*k/NG, sg = Math.sign(radialSin(n, l, b, rg));
+    if (sg !== 0 && prev !== 0 && sg !== prev){ nodos++; cp.beginPath(); cp.arc(X2(rg), Y2(0), 4, 0, 2*Math.PI); cp.fill(); }
+    if (sg !== 0) prev = sg;
+  }
+  // radio medio
+  var rm = 0.5*(3*n*n - l*(l + 1));
+  cp.strokeStyle = '#c0392b'; cp.lineWidth = 1.6; cp.setLineDash([6, 4]);
+  cp.beginPath(); cp.moveTo(X2(rm), T0); cp.lineTo(X2(rm), H - B0); cp.stroke(); cp.setLineDash([]);
+  cp.fillStyle = '#c0392b'; cp.textAlign = 'left'; cp.fillText('⟨r⟩ = ' + fmt(rm, 1), Math.min(X2(rm) + 6, W - 80), T0 + 12);
+
+  var nm = nombre();
+  var txt = '<b>Orbital ' + nm + '</b>: n = ' + n + ', &ell; = ' + l + ', m = ' + (m > 0 ? '&plusmn;' : '') + m + '. ' +
+    'Energía E = &minus;13,606 eV/n&sup2; = &minus;' + fmt(13.6057/(n*n), 2) + ' eV (solo depende de n). ' +
+    'Nodos radiales: n &minus; &ell; &minus; 1 = ' + (n - l - 1) + ' (los puntos negros). Superficies nodales angulares: &ell; = ' + l + '. ' +
+    'Radio medio &lang;r&rang; = (3n&sup2; &minus; &ell;(&ell; + 1))/2 a<sub>0</sub> = ' + fmt(rm, 1) + ' a<sub>0</sub>.';
+  if (m === 0) txt += '<br>Con m = 0 el orbital es de revolución alrededor del eje z: el corte de la izquierda se gira alrededor de z para ver el orbital completo.';
+  else txt += '<br>Con m &gt; 0 el corte se hace por el plano que contiene al eje z donde la parte angular es máxima.';
+  $('orb-info').innerHTML = txt;
+}
+
+// nube de puntos: se sortea r con densidad r^2 R^2, x = cos(theta) con densidad P^2 y phi con densidad cos^2(m phi) (o sen^2)
+function generarNube(){
+  var n = S.n, l = S.l, m = S.m, b = coefL(n, l), rmax = 12*n*n + 40, NR = 4000, h = rmax/NR, i, k;
+  var cosb = (S.or === 'c' || m === 0);
+  var cdf = new Float64Array(NR + 1), acc = 0, prev = 0;
+  for (i = 1; i <= NR; i++){ var r0 = i*h, R0 = radialSin(n, l, b, r0), f = r0*r0*R0*R0; acc += 0.5*(prev + f)*h; prev = f; cdf[i] = acc; }
+  for (i = 1; i <= NR; i++) cdf[i] /= acc;
+  var mp = 0, xx, v;
+  for (i = 0; i <= 400; i++){ xx = -1 + 2*i/400; v = Plm(l, m, xx); if (v*v > mp) mp = v*v; }
+  var N = S.np, X = new Float32Array(N), Y = new Float32Array(N), Z = new Float32Array(N), SG = new Int8Array(N), RR = new Float32Array(N);
+  for (k = 0; k < N; k++){
+    var u = Math.random(), lo = 0, hi = NR;
+    while (hi - lo > 1){ var mid = (lo + hi) >> 1; if (cdf[mid] >= u) hi = mid; else lo = mid; }
+    var den = cdf[hi] - cdf[lo], r = (lo + (den > 0 ? (u - cdf[lo])/den : 0))*h;
+    do { xx = 2*Math.random() - 1; v = Plm(l, m, xx); } while (Math.random()*mp > v*v);
+    var ph, a = 1;
+    if (m > 0){ do { ph = 2*Math.PI*Math.random(); a = cosb ? Math.cos(m*ph) : Math.sin(m*ph); } while (Math.random() > a*a); }
+    else ph = 2*Math.PI*Math.random();
+    var st = Math.sqrt(Math.max(0, 1 - xx*xx));
+    X[k] = r*st*Math.cos(ph); Y[k] = r*st*Math.sin(ph); Z[k] = r*xx; RR[k] = r;
+    SG[k] = (radialSin(n, l, b, r) >= 0 ? 1 : -1)*(v >= 0 ? 1 : -1)*(a >= 0 ? 1 : -1);
+  }
+  var ord = Float32Array.from(RR).sort();
+  NUBE = {x:X, y:Y, z:Z, s:SG, q:Math.max(1, ord[Math.floor(0.985*(N - 1))]*1.05)};
+  sucio = true;
+}
+function dibujarNube(){
+  var W = 760, H = 430, N = NUBE.x.length, k, sc = Math.min(W, H)/2*0.9/NUBE.q;
+  var ca = Math.cos(S.az), sa = Math.sin(S.az), ce = Math.cos(S.el), se = Math.sin(S.el);
+  cc.globalAlpha = 1; cc.fillStyle = '#fff'; cc.fillRect(0, 0, W, H);
+  function P(x, y, z){ var x1 = ca*x - sa*y, y1 = sa*x + ca*y; return [W/2 + x1*sc, H/2 - (z*ce - y1*se)*sc]; }
+  var A = NUBE.q*0.95, ejes = [[A, 0, 0, 'x'], [0, A, 0, 'y'], [0, 0, A, 'z']];
+  cc.strokeStyle = '#999'; cc.lineWidth = 1; cc.fillStyle = '#555'; cc.font = '13px sans-serif'; cc.textAlign = 'center';
+  for (k = 0; k < 3; k++){
+    var e = ejes[k], p0 = P(-e[0], -e[1], -e[2]), p1 = P(e[0], e[1], e[2]);
+    cc.beginPath(); cc.moveTo(p0[0], p0[1]); cc.lineTo(p1[0], p1[1]); cc.stroke(); cc.fillText(e[3], p1[0] + (p1[0] >= W/2 ? 10 : -10), p1[1] - 4);
+  }
+  var pasada, col = ['#c9302c', '#2563a8'];
+  cc.globalAlpha = 0.6;
+  for (pasada = 0; pasada < 2; pasada++){
+    cc.fillStyle = col[pasada]; var signo = pasada === 0 ? 1 : -1;
+    for (k = 0; k < N; k++){
+      if (NUBE.s[k] !== signo) continue;
+      var x = NUBE.x[k], y = NUBE.y[k], z = NUBE.z[k], x1 = ca*x - sa*y, y1 = sa*x + ca*y;
+      cc.fillRect(W/2 + x1*sc - 1.2, H/2 - (z*ce - y1*se)*sc - 1.2, 2.4, 2.4);
+    }
+  }
+  cc.globalAlpha = 1;
+}
+var visible = true;
+if ('IntersectionObserver' in window){ new IntersectionObserver(function(es){ visible = es[0].isIntersecting; }).observe($('orb')); }
+function cuadro(){
+  if (S.giro && visible){ S.az += 0.01; sucio = true; }
+  if (sucio && visible){ dibujarNube(); sucio = false; }
+  requestAnimationFrame(cuadro);
+}
+var cvc = $('orb-c'), arr = null;
+cvc.addEventListener('pointerdown', function(e){ arr = {x:e.clientX, y:e.clientY}; cvc.classList.add('orb-arr'); try{ cvc.setPointerCapture(e.pointerId); }catch(_){} });
+cvc.addEventListener('pointermove', function(e){
+  if (!arr) return;
+  S.az += (e.clientX - arr.x)*0.01; S.el = Math.max(-1.5, Math.min(1.5, S.el + (e.clientY - arr.y)*0.01));
+  arr = {x:e.clientX, y:e.clientY}; sucio = true;
+});
+function soltar(){ arr = null; cvc.classList.remove('orb-arr'); }
+cvc.addEventListener('pointerup', soltar); cvc.addEventListener('pointercancel', soltar);
+$('orb-np').addEventListener('input', function(){ S.np = +this.value; $('orb-npv').textContent = S.np; generarNube(); });
+$('orb-re').addEventListener('click', function(){ generarNube(); });
+$('orb-giro').addEventListener('change', function(){ S.giro = this.checked; });
+
+function llenar(sel, a, b, val){
+  sel.innerHTML = '';
+  for (var v = a; v <= b; v++){ var o = document.createElement('option'); o.value = v; o.textContent = v; sel.appendChild(o); }
+  sel.value = Math.min(Math.max(val, a), b); return +sel.value;
+}
+function sincronizar(){
+  $('orb-n').value = S.n;
+  S.l = llenar($('orb-l'), 0, S.n - 1, S.l);
+  S.m = llenar($('orb-m'), 0, S.l, S.m);
+  $('orb-or').value = S.or; $('orb-or').disabled = (S.m === 0);
+  dibujar(); generarNube();
+}
+$('orb-n').addEventListener('change', function(){ S.n = +this.value; sincronizar(); });
+$('orb-l').addEventListener('change', function(){ S.l = +this.value; sincronizar(); });
+$('orb-m').addEventListener('change', function(){ S.m = +this.value; sincronizar(); });
+$('orb-or').addEventListener('change', function(){ S.or = this.value; dibujar(); generarNube(); });
+$('orb-d').addEventListener('change', function(){ S.den = this.checked; dibujar(); });
+var bs = document.querySelectorAll('#orb-pre button');
+for (var q = 0; q < bs.length; q++) bs[q].addEventListener('click', function(){
+  var p = this.getAttribute('data-p').split(',');
+  S.n = +p[0]; S.l = +p[1]; S.m = +p[2]; S.or = p[3]; sincronizar();
+});
+sincronizar(); requestAnimationFrame(cuadro);
+})();
+</script>
+</div>
+</div>
+<p>Lo que no vimos: el <strong>espín</strong> del electrón, que duplica el número de estados (hay <img src="https://latex.codecogs.com/png.latex?2n%5E2"> por cada <img src="https://latex.codecogs.com/png.latex?n">), y los átomos con varios electrones, donde la repulsión entre electrones rompe la simetría del problema y la energía pasa a depender también de <img src="https://latex.codecogs.com/png.latex?%5Cell">. Pero los orbitales del hidrógeno que acabamos de calcular son el punto de partida para describir esos átomos, y de ahí sale la forma de la tabla periódica.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con Maxima se verifica todo lo anterior: el laplaciano en esféricas contra el cartesiano, las series de <img src="https://latex.codecogs.com/png.latex?P_n"> y de <img src="https://latex.codecogs.com/png.latex?Q_n">, la ecuación de <img src="https://latex.codecogs.com/png.latex?v"> y su recurrencia, las funciones de Legendre asociadas, la normalización de los armónicos esféricos, las funciones radiales (con la serie de Ecuación&nbsp;15) y los orbitales en cartesianas con sus energías.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kill</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">all</span>)$</span>
+<span id="cb1-2"></span>
+<span id="cb1-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* 1. El laplaciano en esfericas se compara con el cartesiano en una funcion de prueba */</span></span>
+<span id="cb1-4"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">f</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">z</span>) := (<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">z</span> + <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">z</span> + <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">exp</span>(-<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>+<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>+<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">z</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))$</span>
+<span id="cb1-5"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">lapcart</span>: <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">f</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">z</span>),<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) + <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">f</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">z</span>),<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) + <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">f</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">z</span>),<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">z</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)$</span>
+<span id="cb1-6"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">g</span>: <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">f</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span>)*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cos</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">ph</span>), <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span>)*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">ph</span>), <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cos</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span>))$</span>
+<span id="cb1-7"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">lapesf</span>: <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">g</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>),<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>)/<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> + <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span>)*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">g</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span>),<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span>)/(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span>)) + <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">g</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">ph</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)/(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span>)^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)$</span>
+<span id="cb1-8"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">pt</span>: [<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>=<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span>=<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">-0.4</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">z</span>=<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>]$</span>
+<span id="cb1-9"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">pe</span>: [<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>=<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+0.4</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+0.9</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>), <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span>=<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">acos</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>/<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+0.4</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+0.9</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)), <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">ph</span>=<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">atan2</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">-0.4</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>)]$</span>
+<span id="cb1-10"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"laplaciano cartesiano:"</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">float</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ev</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">lapcart</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">pt</span>)))$</span>
+<span id="cb1-11"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"laplaciano esferico:  "</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">float</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ev</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">lapesf</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">pe</span>)))$</span>
+<span id="cb1-12"></span>
+<span id="cb1-13"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* 2. Legendre por series: a[k+2] = (k(k+1) - n(n+1))/((k+1)(k+2)) a[k], normalizado con P_n(1) = 1 */</span></span>
+<span id="cb1-14"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">serieP</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>) := <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">block</span>([<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">a</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">p</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k0</span>],</span>
+<span id="cb1-15">  <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k0</span>: <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mod</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>), <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">a</span>: <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">makelist</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">i</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>), <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">a</span>[<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k0</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+1</span>]: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,</span>
+<span id="cb1-16">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>: <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k0</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">step</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">thru</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">-2</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">a</span>[<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+3</span>]: (<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>*(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+1</span>) - <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>*(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+1</span>))/((<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+1</span>)*(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+2</span>))*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">a</span>[<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+1</span>],</span>
+<span id="cb1-17">  <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">p</span>: <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sum</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">a</span>[<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+1</span>]*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>^<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>),</span>
+<span id="cb1-18">  <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">p</span>/<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">subst</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>=<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">p</span>))$</span>
+<span id="cb1-19"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">thru</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span> (</span>
+<span id="cb1-20">  <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">edo</span>: <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ratsimp</span>((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>-<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">serieP</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>),<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) - <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">serieP</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>),<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>) + <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>*(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+1</span>)*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">serieP</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>)),</span>
+<span id="cb1-21">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"n ="</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">" residuo de la EDO:"</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">edo</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"  coincide con legendre_p:"</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">is</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expand</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">serieP</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>) - <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">legendre_p</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>)) = <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>)))$</span>
+<span id="cb1-22"></span>
+<span id="cb1-23"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* 3. La segunda solucion Q_n = (1/2) P_n log((1+x)/(1-x)) - W_(n-1) tambien resuelve la ecuacion */</span></span>
+<span id="cb1-24"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">W</span>: [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>/<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>/<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> - <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>/<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>]$</span>
+<span id="cb1-25"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">thru</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span> (</span>
+<span id="cb1-26">  <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Q</span>: <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">legendre_p</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>)*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">log</span>((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>+<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>)/(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>-<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>))/<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> - <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">W</span>[<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+1</span>],</span>
+<span id="cb1-27">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"n ="</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">" residuo de Q_n:"</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ratsimp</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">radcan</span>((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>-<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Q</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) - <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Q</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>) + <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>*(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+1</span>)*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Q</span>))))$</span>
+<span id="cb1-28"></span>
+<span id="cb1-29"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* 4. Legendre asociada: y = (1-x^2)^(m/2) d^m P_l/dx^m */</span></span>
+<span id="cb1-30"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Pas</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span>) := (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>-<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)^(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span>/<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">legendre_p</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>), <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span>)$</span>
+<span id="cb1-31"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">thru</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">thru</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span> (</span>
+<span id="cb1-32">  <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span>: <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Pas</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span>),</span>
+<span id="cb1-33">  <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">res</span>: <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">radcan</span>((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>-<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) - <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>) + (<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>*(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+1</span>) - <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>/(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>-<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span>),</span>
+<span id="cb1-34">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">res</span> # <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">then</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fallo"</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">res</span>))$</span>
+<span id="cb1-35"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"asociada: residuo nulo para 0 &lt;= m &lt;= l &lt;= 4"</span>)$</span>
+<span id="cb1-36"></span>
+<span id="cb1-37"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* la derivada m-esima de P_l resuelve la ecuacion de v, y sus coeficientes siguen la recurrencia de v */</span></span>
+<span id="cb1-38"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">thru</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">thru</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">block</span>([<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">v</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">c</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">ok</span>],</span>
+<span id="cb1-39">  <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">v</span>: <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expand</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">legendre_p</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>), <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span>)),</span>
+<span id="cb1-40">  <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">c</span>: <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ratsimp</span>((<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>-<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">v</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) - <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+1</span>)*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">v</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>) + (<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>*(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+1</span>) - <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span>*(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+1</span>))*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">v</span>),</span>
+<span id="cb1-41">  <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">ok</span>: <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">is</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">c</span> = <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>),</span>
+<span id="cb1-42">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">thru</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>-<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">-2</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span></span>
+<span id="cb1-43">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ratsimp</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">coeff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">v</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+2</span>) - ((<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>+<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span>)*(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>+<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+1</span>) - <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>*(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+1</span>))/((<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+1</span>)*(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+2</span>))*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">coeff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">v</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>)) # <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">then</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">ok</span>: <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">false</span>,</span>
+<span id="cb1-44">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">ok</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">then</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fallo en v"</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span>))$</span>
+<span id="cb1-45"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ecuacion y recurrencia de v verificadas para 1 &lt;= m &lt;= l &lt;= 5"</span>)$</span>
+<span id="cb1-46"></span>
+<span id="cb1-47"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* 5. Normalizacion de los armonicos esfericos: int |Y|^2 dOmega = 1 */</span></span>
+<span id="cb1-48"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">thru</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">thru</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">block</span>([<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">N2</span>],</span>
+<span id="cb1-49">  <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">N2</span>: (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+1</span>)/(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>*<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">%pi</span>)*(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>-<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span>)!/(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>+<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span>)!,</span>
+<span id="cb1-50">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span> = <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">then</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">c</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">%pi</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">c</span>: <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">%pi</span>,   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* int cos^2(m phi) dphi = pi si m &gt; 0 */</span></span>
+<span id="cb1-51">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ratsimp</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">N2</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">c</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">integrate</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">expand</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Pas</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span>)^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>), <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">-1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)*(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span> = <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">then</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) - <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) # <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">then</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fallo Y"</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">m</span>))$</span>
+<span id="cb1-52"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"armonicos esfericos normalizados (versiones reales) para 0 &lt;= m &lt;= l &lt;= 4"</span>)$</span>
+<span id="cb1-53"></span>
+<span id="cb1-54"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* 6. Parte radial en unidades atomicas (a0 = mu = hbar = e^2/(4 pi eps0) = 1) */</span></span>
+<span id="cb1-55"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* R = rho^l e^(-rho/2) L(rho), rho = 2r/n, con b[j+1] = (j - n + l + 1)/((j+1)(j+2l+2)) b[j] */</span></span>
+<span id="cb1-56"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Lpol</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>) := <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">block</span>([<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">b</span>],</span>
+<span id="cb1-57">  <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">b</span>: <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">makelist</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">i</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>-<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">-1</span>), <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">b</span>[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,</span>
+<span id="cb1-58">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">j</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">thru</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>-<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">-2</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">b</span>[<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">j</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+2</span>]: (<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">j</span> - <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span> + <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span> + <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)/((<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">j</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+1</span>)*(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">j</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+2</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+2</span>))*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">b</span>[<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">j</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+1</span>],</span>
+<span id="cb1-59">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sum</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">b</span>[<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">j</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+1</span>]*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">rho</span>^<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">j</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">j</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>-<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">-1</span>))$</span>
+<span id="cb1-60"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Rsin</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>) := <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">subst</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">rho</span> = <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>/<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">rho</span>^<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">exp</span>(-<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">rho</span>/<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Lpol</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>))$</span>
+<span id="cb1-61"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">thru</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">thru</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">-1</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span> (</span>
+<span id="cb1-62">  <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">R</span>: <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Rsin</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>),</span>
+<span id="cb1-63">  <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">res</span>: <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ratsimp</span>(-(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>/<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)*(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">R</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) + <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>/<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">R</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>)) + <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>*(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+1</span>)/(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">R</span> - <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">R</span>/<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span> + <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">R</span>/(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)),</span>
+<span id="cb1-64">  <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">C</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>/<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">integrate</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">R</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">inf</span>)),</span>
+<span id="cb1-65">  <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">res</span> # <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">then</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fallo radial"</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">res</span>),</span>
+<span id="cb1-66">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"n ="</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">n</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">" l ="</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">" R_nl ="</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">factor</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ratsimp</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">C</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">R</span>))))$</span>
+<span id="cb1-67"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"radial: residuo nulo con E = -1/(2 n^2)"</span>)$</span>
+<span id="cb1-68"></span>
+<span id="cb1-69"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* exponentes de L en rho = 0: s(s-1) + (2l+2)s = 0 */</span></span>
+<span id="cb1-70"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">print</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">solve</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">s</span>*(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">s</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">-1</span>) + (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">l</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">+2</span>)*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">s</span> = <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">s</span>))$</span>
+<span id="cb1-71"></span>
+<span id="cb1-72"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* 7. Orbitales en cartesianas: normalizados y con E = -1/8 y -1/18 */</span></span>
+<span id="cb1-73"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kill</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">c</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">R</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">C</span>)$   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* y y c guardaban valores de los bloques anteriores */</span></span>
+<span id="cb1-74"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">rr</span>: <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> + <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> + <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">z</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)$</span>
+<span id="cb1-75"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">psi</span>: [<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">exp</span>(-<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">rr</span>)/<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">%pi</span>), <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">z</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">exp</span>(-<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">rr</span>/<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)/(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">%pi</span>)), (<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">z</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> - <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">rr</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">exp</span>(-<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">rr</span>/<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)/(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">81</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>*<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">%pi</span>))]$</span>
+<span id="cb1-76"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Es</span>: [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">-1</span>/<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">-1</span>/<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">-1</span>/<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">18</span>]$</span>
+<span id="cb1-77"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">thru</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">block</span>([<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">p</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">e</span>],</span>
+<span id="cb1-78">  <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">p</span>: <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">psi</span>[<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>], <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">e</span>: <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Es</span>[<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>],</span>
+<span id="cb1-79">  <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">res0</span>: -(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>/<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)*(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">p</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) + <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">p</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) + <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">p</span>,<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">z</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)) - <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">p</span>/<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">rr</span> - <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">e</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">p</span>,</span>
+<span id="cb1-80">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"orbital"</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">" residuo de Schrodinger en un punto:"</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">float</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ev</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">res0</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span>=<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span>=<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">-0.4</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">z</span>=<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.9</span>))))$</span>
+<span id="cb1-81"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/* psi = R_nl(r) Y_lm: se compara en el punto (r, th) = (1.3, 0.8) del plano xz */</span></span>
+<span id="cb1-82"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">kill</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span>)$</span>
+<span id="cb1-83"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Y</span>: [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>/<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>*<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">%pi</span>), <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>/(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>*<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">%pi</span>))*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cos</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span>), <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>/(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16</span>*<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">%pi</span>))*(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cos</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span>)^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span> - <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)]$</span>
+<span id="cb1-84"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">nl</span>: [[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>]]$</span>
+<span id="cb1-85"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>:<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">thru</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">block</span>([<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">R</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">C</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">rv</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">tv</span>],</span>
+<span id="cb1-86">  <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">R</span>: <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Rsin</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">nl</span>[<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>][<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">nl</span>[<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>][<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>]),</span>
+<span id="cb1-87">  <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">C</span>: <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>/<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sqrt</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">integrate</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">R</span>^<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">inf</span>)),</span>
+<span id="cb1-88">  <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">rv</span>: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.3</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">tv</span>: <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>,</span>
+<span id="cb1-89">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"orbital"</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">" cartesiana:"</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">float</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ev</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">psi</span>[<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>], <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">x</span> = <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">rv</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sin</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">tv</span>), <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">y</span> = <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">z</span> = <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">rv</span>*<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cos</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">tv</span>))),</span>
+<span id="cb1-90">        <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"  R*Y:"</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">float</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ev</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">C</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">R</span>*<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Y</span>[<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">k</span>], <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">r</span> = <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">rv</span>, <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">th</span> = <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">tv</span>))))$</span></code></pre></div></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Una nota histórica: de dónde sale Laguerre">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Una nota histórica: de dónde sale Laguerre
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Los polinomios de Laguerre tampoco nacieron en la mecánica cuántica. Laguerre los encontró en 1879 estudiando la integral <img src="https://latex.codecogs.com/png.latex?%5Cint_x%5E%7B%5Cinfty%7D%5Cfrac%7Be%5E%7B-t%7D%7D%7Bt%7D%5C,dt">. Integrando por partes se obtiene una serie divergente,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cint_x%5E%7B%5Cinfty%7D%5Cfrac%7Be%5E%7B-t%7D%7D%7Bt%7D%5C,dt%5Csim%20e%5E%7B-x%7D%5Cleft(%5Cfrac1x-%5Cfrac1%7Bx%5E2%7D+%5Cfrac%7B2!%7D%7Bx%5E3%7D-%5Cfrac%7B3!%7D%7Bx%5E4%7D+%5Ccdots%5Cright),"></p>
+<p>cuyos primeros términos aproximan bien la integral cuando <img src="https://latex.codecogs.com/png.latex?x"> es grande. Laguerre encontró además un desarrollo en fracción continua de esa integral, y los convergentes de la fracción involucran los polinomios que hoy llevan su nombre. Después probó que son ortogonales y que una función se puede desarrollar en una serie de ellos. La ecuación diferencial es la que satisfacen esos polinomios. Su conexión con el átomo de hidrógeno llegó mucho después, con la mecánica cuántica a partir de 1926.</p>
+<p>Referencias: E. Laguerre, <a href="https://www.numdam.org/item/10.24033/bsmf.157.pdf">Sur l’intégrale <img src="https://latex.codecogs.com/png.latex?%5Cint_x%5E%5Cinfty%20e%5E%7B-x%7Ddx/x"></a>, <em>Bull. Soc. Math. France</em> 7 (1879), 72 a 81. J. J. O’Connor y E. F. Robertson, <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Laguerre.html">Edmond Nicolas Laguerre</a>, MacTutor.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Tarea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Tarea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Resuelva por series de potencias la ecuación de Laguerre <img src="https://latex.codecogs.com/png.latex?xy''+(1-x)y'+py=0">. Encuentre la fórmula de recurrencia, diga para qué valores de <img src="https://latex.codecogs.com/png.latex?p"> la serie se corta y calcule los polinomios <img src="https://latex.codecogs.com/png.latex?L_0">, <img src="https://latex.codecogs.com/png.latex?L_1">, <img src="https://latex.codecogs.com/png.latex?L_2"> y <img src="https://latex.codecogs.com/png.latex?L_3">.</li>
+<li>Verifique que <img src="https://latex.codecogs.com/png.latex?%5Cpsi_%7B1s%7D=e%5E%7B-r/a_0%7D/%5Csqrt%7B%5Cpi%20a_0%5E3%7D"> es solución de la ecuación de Schrödinger del átomo de hidrógeno y encuentre su energía.</li>
+<li>Cuente cuántos orbitales hay con número cuántico principal <img src="https://latex.codecogs.com/png.latex?n"> y demuestre que son <img src="https://latex.codecogs.com/png.latex?n%5E2">.</li>
+</ol>
+</div>
+</div>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/odes/orbitales/</guid>
   <pubDate>Sun, 08 Nov 2026 05:00:00 GMT</pubDate>
 </item>
 <item>

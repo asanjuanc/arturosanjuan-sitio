@@ -1,0 +1,749 @@
+---
+title: "El Átomo de Hidrógeno y sus Orbitales"
+subtitle: "De las ecuaciones de Legendre y de Laguerre a la forma de los orbitales"
+description: "La ecuación de Schrödinger del átomo de hidrógeno en coordenadas esféricas, resuelta con las ecuaciones de Legendre y de Laguerre, y los orbitales que resultan, con un simulador."
+author: "Arturo Sanjuán"
+date: 2026-11-08
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 18
+---
+
+```{=html}
+<style>
+  .parte-matematica{color:#006400;}
+  .parte-matematica h3,.parte-matematica h4,.parte-matematica a,.parte-matematica .header-section-number{color:inherit;}
+  body.quarto-dark .parte-matematica{color:#6fcf8a;}
+</style>
+```
+
+En el oscilador cuántico apareció la ecuación de Hermite, en el neutrón que rebota la de Airy y en el tambor la de Bessel. Ahora vamos al átomo de hidrógeno: un electrón que se mueve alrededor de un protón. Es un problema tridimensional con simetría esférica, y para resolverlo vamos a necesitar la ecuación de Legendre (la de la tarea del oscilador) y la de Laguerre. Al final vamos a ver qué forma tienen los **orbitales** de los libros de química.
+
+## Un poco de historia: de dónde sale Legendre
+
+Los polinomios de Legendre no nacieron con el átomo, ni siquiera con la física cuántica. Legendre los encontró en la década de 1780 estudiando la **atracción gravitacional de elipsoides**, es decir, de cuerpos casi esféricos como un planeta achatado (el apéndice A del capítulo 8 de Simmons cuenta esta historia).
+
+El potencial gravitacional de una masa puntual situada en $P'$, medido en un punto $P$, es proporcional a $1/|PP'|$. Si $P$ está a distancia $r$ del origen, $P'$ a distancia $r'<r$ y $\gamma$ es el ángulo entre ambos vectores de posición, la ley de los cosenos da $|PP'|^2=r^2-2rr'\cos\gamma+r'^2$. Con $t=r'/r$ y $x=\cos\gamma$,
+
+$$\frac1{|PP'|}=\frac1r\,\frac{1}{\sqrt{1-2xt+t^2}}=\sum_{n=0}^{\infty}\frac{r'^{\,n}}{r^{\,n+1}}\,P_n(\cos\gamma).$$ {#eq-gen}
+
+Los coeficientes $P_n$ de este desarrollo son los **polinomios de Legendre**: aparecieron como coeficientes de una serie para el potencial. La ecuación diferencial que satisfacen aparece cuando se separan las variables en la ecuación de Laplace $\nabla^2U=0$ en coordenadas esféricas, y eso es justo lo que vamos a hacer, pero para la ecuación de Schrödinger.
+
+## El átomo de hidrógeno
+
+### La ecuación de Schrödinger
+
+El átomo de hidrógeno es un electrón (carga $-e$) y un protón (carga $+e$) que se atraen. La ecuación de Schrödinger estacionaria, que ya vimos en el oscilador, es
+
+$$-\frac{\hbar^2}{2\mu}\,\nabla^2\psi-\frac{e^2}{4\pi\varepsilon_0\,r}\,\psi=E\,\psi,$$ {#eq-schro}
+
+donde $r$ es la distancia entre el electrón y el protón, $\varepsilon_0$ es la permitividad del vacío y $\mu$ es la **masa reducida**,
+
+$$\mu=\frac{m_e\,m_p}{m_e+m_p}.$$
+
+Aparece porque es un problema de dos cuerpos: al pasar al centro de masa queda una sola partícula ficticia de masa $\mu$ moviéndose en el potencial. Como el protón es unas 1836 veces más pesado que el electrón, $\mu\approx m_e$, con una diferencia de apenas $0{,}05\,\%$. Por eso muchos textos escriben directamente $m_e$.
+
+### Por qué el potencial de Coulomb
+
+Usamos el potencial de Coulomb, $V(r)=-\dfrac{e^2}{4\pi\varepsilon_0\,r}$, porque la atracción eléctrica domina sobre cualquier otra interacción entre las dos partículas. Además es **central**: depende solo de la distancia $r$ y no de los ángulos. Eso es lo que nos va a permitir separar variables en coordenadas esféricas. Tiene la misma forma $1/r$ del potencial gravitacional de la sección anterior.
+
+Es un modelo: para el hidrógeno es exacto si se ignora el espín y la relatividad. En átomos con varios electrones aparece además la repulsión entre ellos, que ya no es un potencial central simple, y hay que recurrir a aproximaciones.
+
+## Coordenadas esféricas
+
+Como el potencial depende de $r$, usamos coordenadas esféricas, con $\theta$ el ángulo polar (medido desde el eje $z$) y $\varphi$ el ángulo azimutal (en el plano $xy$):
+
+$$x=r\sin\theta\cos\varphi,\qquad y=r\sin\theta\sin\varphi,\qquad z=r\cos\theta,$$
+
+con $r\ge0$, $0\le\theta\le\pi$ y $0\le\varphi<2\pi$. (Ojo: Simmons usa la convención contraria, $\varphi$ para el ángulo polar y $\theta$ para el azimutal, y $\rho$ para la distancia. Aquí usamos la de la física.) El elemento de volumen es $dV=r^2\sin\theta\,dr\,d\theta\,d\varphi$.
+
+El laplaciano en esféricas se obtiene con la regla de la cadena, igual que hicimos en polares para el tambor, pero con más cuentas:
+
+$$\nabla^2\psi=\frac1{r^2}\frac{\partial}{\partial r}\!\left(r^2\frac{\partial\psi}{\partial r}\right)+\frac1{r^2\sin\theta}\frac{\partial}{\partial\theta}\!\left(\sin\theta\,\frac{\partial\psi}{\partial\theta}\right)+\frac1{r^2\sin^2\theta}\frac{\partial^2\psi}{\partial\varphi^2}.$$ {#eq-lap-esf}
+
+(En la sección de Maxima, al final, se verifica esta fórmula contra el laplaciano cartesiano.)
+
+## Separación de variables
+
+Reemplazamos @eq-lap-esf en @eq-schro, escribimos la ecuación como $\nabla^2\psi+\frac{2\mu}{\hbar^2}(E-V)\psi=0$ y la multiplicamos por $r^2$. Buscamos soluciones de la forma $\psi(r,\theta,\varphi)=R(r)\,\Theta(\theta)\,\Phi(\varphi)$. Al dividir por $R\Theta\Phi$ queda
+
+$$\underbrace{\frac1R\frac{d}{dr}\!\left(r^2R'\right)+\frac{2\mu r^2}{\hbar^2}\bigl(E-V(r)\bigr)}_{\text{solo depende de }r}\;+\;\underbrace{\frac1{\Theta\sin\theta}\frac{d}{d\theta}\!\left(\sin\theta\,\Theta'\right)+\frac{\Phi''}{\Phi\,\sin^2\theta}}_{\text{solo depende de }\theta\text{ y }\varphi}=0.$$
+
+Una función de $r$ más una función de $(\theta,\varphi)$ que suman cero tienen que ser constantes opuestas. Llamamos $\lambda$ a la constante:
+
+$$\frac1R\frac{d}{dr}\!\left(r^2R'\right)+\frac{2\mu r^2}{\hbar^2}\bigl(E-V(r)\bigr)=\lambda,\qquad \frac1{\Theta\sin\theta}\frac{d}{d\theta}\!\left(\sin\theta\,\Theta'\right)+\frac{\Phi''}{\Phi\,\sin^2\theta}=-\lambda.$$ {#eq-lambda}
+
+Multiplicamos la segunda por $\sin^2\theta$:
+
+$$\frac{\sin\theta}{\Theta}\frac{d}{d\theta}\!\left(\sin\theta\,\Theta'\right)+\lambda\sin^2\theta+\frac{\Phi''}{\Phi}=0.$$
+
+El último término solo depende de $\varphi$ y el resto solo de $\theta$, así que $\Phi''/\Phi$ es otra constante, que llamamos $-m^2$ (si fuera positiva saldrían exponenciales reales, que no son periódicas). La parte azimutal es entonces
+
+$$\Phi''+m^2\Phi=0\ \Longrightarrow\ \Phi(\varphi)=A\cos m\varphi+B\sin m\varphi.$$
+
+Como $\varphi$ es un ángulo, $\Phi(\varphi+2\pi)=\Phi(\varphi)$, y esto exige que $m=0,1,2,\dots$ sea un entero. (En forma compleja, $\Phi=e^{im\varphi}$ con $m\in\mathbb Z$.) Lo que queda para $\theta$ es
+
+$$\frac1{\sin\theta}\frac{d}{d\theta}\!\left(\sin\theta\,\frac{d\Theta}{d\theta}\right)+\left(\lambda-\frac{m^2}{\sin^2\theta}\right)\Theta=0.$$ {#eq-theta}
+
+## La parte polar: Legendre
+
+La ecuación @eq-theta es la que nos interesa. Para $m=0$ es la ecuación de Legendre, y para $m\neq0$ es la ecuación de Legendre *asociada*. Vamos a resolverlas con cuidado, pero primero hay que decidir qué tipo de solución queremos.
+
+### Qué le pedimos a $\Theta$
+
+Los puntos $\theta=0$ y $\theta=\pi$ son los que están sobre el eje $z$. No son puntos especiales del espacio: el eje $z$ lo escogimos nosotros, y los puntos sobre él se parecen a todos los demás. La singularidad de la ecuación en esos puntos es un defecto del sistema de coordenadas, y la función de onda debe ser finita allí. Pedimos entonces que $\Theta$ sea **acotada** en $[0,\pi]$.
+
+Aquí hay un detalle. No basta pedir que $\psi$ sea de cuadrado integrable, porque las soluciones malas que vamos a encontrar crecen como $\ln\theta$ y $\int(\ln\theta)^2\,d\theta$ converge. Lo que falla es otra cosa: cerca del eje, $\ln\theta$ se comporta como $\ln\rho$ en coordenadas cilíndricas, y $\ln\rho$ es la solución fundamental del laplaciano en dos dimensiones, $\nabla^2\ln\rho=2\pi\,\delta$. Una función así no resuelve la ecuación en el eje, sino que exigiría una fuente a lo largo de todo el eje $z$. Además tendría energía cinética infinita, porque $|\nabla\psi|^2\sim1/\rho^2$ y $\int\frac1{\rho^2}\,\rho\,d\rho$ diverge.
+
+::: {.parte-matematica}
+
+### El cambio $x=\cos\theta$
+
+Sea $\Theta(\theta)=y(x)$ con $x=\cos\theta$. Por la regla de la cadena, $\dfrac{d}{d\theta}=-\sin\theta\,\dfrac{d}{dx}$, y entonces
+
+$$\sin\theta\,\frac{d\Theta}{d\theta}=-\sin^2\theta\,\frac{dy}{dx}=-(1-x^2)\,\frac{dy}{dx},$$
+
+$$\frac{d}{d\theta}\!\left[-(1-x^2)\frac{dy}{dx}\right]=\sin\theta\,\frac{d}{dx}\!\left[(1-x^2)\frac{dy}{dx}\right].$$
+
+Al dividir entre $\sin\theta$ desaparece el seno, y como $\sin^2\theta=1-x^2$ queda
+
+$$\frac{d}{dx}\!\left[(1-x^2)\frac{dy}{dx}\right]+\left(\lambda-\frac{m^2}{1-x^2}\right)y=0,$$
+
+es decir,
+
+$$(1-x^2)\,y''-2x\,y'+\left[\lambda-\frac{m^2}{1-x^2}\right]y=0.$$ {#eq-legendre-asoc}
+
+Los puntos $x=\pm1$ corresponden al eje $z$. Pedimos que $y$ sea acotada en $[-1,1]$.
+
+### El caso $m=0$: series de potencias
+
+Con $m=0$ queda la **ecuación de Legendre**,
+
+$$(1-x^2)\,y''-2x\,y'+\lambda\,y=0.$$ {#eq-legendre}
+
+El punto $x=0$ es ordinario, así que buscamos $y=\sum_{k=0}^{\infty}a_kx^k$. El coeficiente de $x^k$ en @eq-legendre es
+
+$$(k+2)(k+1)\,a_{k+2}-k(k-1)\,a_k-2k\,a_k+\lambda\,a_k=0,$$
+
+de donde sale la fórmula de recurrencia
+
+$$a_{k+2}=\frac{k(k+1)-\lambda}{(k+1)(k+2)}\,a_k.$$ {#eq-rec-leg}
+
+La recurrencia conecta coeficientes de la misma paridad, así que hay una serie par (que empieza en $a_0$) y una serie impar (que empieza en $a_1$), y las dos son independientes.
+
+**Convergencia.** Como $a_{k+2}/a_k\to1$, las dos series convergen para $|x|<1$. Más finamente,
+
+$$\frac{a_{k+2}}{a_k}=1-\frac{2(k+1)+\lambda}{(k+1)(k+2)}\approx1-\frac2k,$$
+
+así que los coeficientes se comportan como $1/k$, igual que en $\sum x^k/k=-\ln(1-x)$. Esto quiere decir que la **función** suma se va a infinito cuando $x\to\pm1$, como un logaritmo. Ojo: no es que la serie "no converja" y listo, lo que pasa es que la función no es acotada en los extremos, y eso es lo que nos importa.
+
+**Truncamiento.** Hay una sola manera de evitarlo: que la serie termine. Si
+
+$$\lambda=n(n+1),\qquad n=0,1,2,\dots$$
+
+entonces $a_{n+2}=0$, y como los coeficientes siguientes de la misma paridad dependen de $a_{n+2}$, todos son cero. Queda un polinomio de grado $n$.
+
+Veamos qué pasa con la serie de la otra paridad. Su numerador es $k(k+1)-n(n+1)$ con $k$ de paridad opuesta a $n$, y eso nunca se anula, porque $k\neq n$. Esa serie no termina y no es acotada. Para que la solución sea acotada hay que anularla, es decir, tomar $a_1=0$ si $n$ es par y $a_0=0$ si $n$ es impar. La solución acotada es entonces un único polinomio con la paridad de $n$, que normalizado con $P_n(1)=1$ es el **polinomio de Legendre** $P_n(x)$, y cumple $P_n(-x)=(-1)^nP_n(x)$.
+
+¿Y si $\lambda$ no es de la forma $n(n+1)$? Entonces las dos series son infinitas. Cerca de $x=1$ la serie par se comporta como $\alpha\ln(1-x)$ y la impar como $\beta\ln(1-x)$, con $\alpha,\beta\neq0$; cerca de $x=-1$ la par como $\alpha\ln(1+x)$ y la impar como $-\beta\ln(1+x)$. Una combinación $c_1y_{\text{par}}+c_2y_{\text{impar}}$ es acotada en $x=1$ solo si $c_1\alpha+c_2\beta=0$ y en $x=-1$ solo si $c_1\alpha-c_2\beta=0$, y esto obliga a $c_1=c_2=0$. No hay solución acotada: **la acotación en los dos extremos es lo que cuantiza $\lambda$**.
+
+### La otra solución
+
+Ya tenemos una solución, $y_1=P_n$, y falta una linealmente independiente. Se obtiene por reducción de orden con el wronskiano. En forma normal, $y''-\dfrac{2x}{1-x^2}\,y'+\cdots=0$, así que por la fórmula de Abel
+
+$$W(x)=C\exp\!\left(\int\frac{2x}{1-x^2}\,dx\right)=\frac{C}{1-x^2}.$$
+
+Como $W=y_1y_2'-y_1'y_2=y_1^2\left(\dfrac{y_2}{y_1}\right)'$,
+
+$$y_2=P_n(x)\int\frac{dx}{(1-x^2)\,[P_n(x)]^2}.$$
+
+Como $P_n(\pm1)=\pm1\neq0$, el integrando se comporta como $1/(1-x^2)$ cerca de $\pm1$, que tiene polos simples, y al integrar aparece $\tfrac12\ln\frac{1+x}{1-x}$. Esta solución se llama $Q_n$ (**función de Legendre de segunda especie**). Por ejemplo,
+
+$$Q_0(x)=\frac12\ln\frac{1+x}{1-x}=x+\frac{x^3}{3}+\frac{x^5}{5}+\cdots,\qquad Q_1(x)=\frac x2\ln\frac{1+x}{1-x}-1,$$
+
+y en general $Q_n=\tfrac12P_n\ln\frac{1+x}{1-x}-W_{n-1}$ con $W_{n-1}$ un polinomio de grado $n-1$. Es justo la serie infinita de paridad opuesta a $P_n$, que converge en $|x|<1$ y no es acotada en $x=\pm1$. La solución general es $y=c_1P_n+c_2Q_n$, y la acotación obliga a $c_2=0$.
+
+### El caso $m\neq0$
+
+Tomamos $m>0$ (la ecuación solo depende de $m^2$). Ahora el término $m^2/(1-x^2)$ de @eq-legendre-asoc hace que $x=\pm1$ sean puntos singulares, y no podemos usar directamente el truncamiento de series centradas en $0$. Hay que averiguar primero cómo se comportan las soluciones cerca de $x=\pm 1$. Realizamos esta sustitución que sugiere sacar el factor que describe el comportamiento en los extremos:
+
+$$y=(1-x^2)^{m/2}\,v(x).$$
+
+Con $s=1-x^2$, y usando que $s'=-2x$,
+
+$$y'=s^{m/2}v'-mx\,s^{m/2-1}v,$$
+
+$$y''=s^{m/2}v''-2mx\,s^{m/2-1}v'-m\,s^{m/2-1}v+m(m-2)\,x^2s^{m/2-2}v.$$
+
+Reemplazamos en @eq-legendre-asoc y dividimos entre $s^{m/2}$. Los términos que traen $1/s$ son $\dfrac{x^2}{s}\bigl[m(m-2)+2m\bigr]-\dfrac{m^2}{s}=\dfrac{m^2(x^2-1)}{s}=-m^2$, porque $m(m-2)+2m=m^2$. Lo que queda es
+
+$$(1-x^2)\,v''-2(m+1)\,x\,v'+\bigl[\lambda-m(m+1)\bigr]\,v=0.$$ {#eq-v}
+
+Ahora $x=\pm1$ ya no tiene el término singular, y buscamos $v=\sum a_kx^k$. El coeficiente de $x^k$ es
+
+$$(k+2)(k+1)\,a_{k+2}-k(k-1)\,a_k-2(m+1)k\,a_k+\bigl[\lambda-m(m+1)\bigr]a_k=0,$$
+
+y como $k^2+(2m+1)k+m(m+1)=(k+m)(k+m+1)$,
+
+$$a_{k+2}=\frac{(k+m)(k+m+1)-\lambda}{(k+1)(k+2)}\,a_k.$$ {#eq-rec-v}
+
+Si la serie no se corta, $a_{k+2}/a_k\approx1+(2m-2)/k$ y la serie se comporta como $(1-x^2)^{-m}$, que no es acotada. Entonces tiene que cortarse, y esto pasa cuando
+
+$$\lambda=(k+m)(k+m+1)\quad\text{para algún }k=0,1,2,\dots$$
+
+Escribimos $\ell=k+m$. Entonces
+
+$$\lambda=\ell(\ell+1),\qquad \ell=m,\ m+1,\ m+2,\dots,$$
+
+es decir, $m\le\ell$, y $v$ es un polinomio de grado $\ell-m$.
+
+**¿Qué polinomio es?** Veamos que es la derivada $m$-ésima de $P_\ell$. Partimos de la ecuación de Legendre con $\lambda=\ell(\ell+1)$ y derivamos término por término con la regla del producto:
+
+$$\frac{d}{dx}\bigl[(1-x^2)u''\bigr]=(1-x^2)u'''-2x\,u'',\quad \frac{d}{dx}\bigl[-2x\,u'\bigr]=-2u'-2x\,u'',\quad \frac{d}{dx}\bigl[\lambda u\bigr]=\lambda u'.$$
+
+Sumando queda $(1-x^2)u'''-4x\,u''+(\lambda-2)u'=0$. Si $v=u'$, esto dice
+
+$$(1-x^2)\,v''-4x\,v'+(\lambda-2)\,v=0,$$
+
+que es @eq-v con $m=1$. Derivando de nuevo, con $w=u''$ sale $(1-x^2)w''-6x\,w'+(\lambda-6)w=0$, que es @eq-v con $m=2$. En general, al derivar una vez más, el coeficiente de la primera derivada gana un $-2x$ y la constante pierde $2(m+1)$:
+
+$$-2(m+1)x\ \to\ -2(m+2)x,\qquad \lambda-m(m+1)\ \to\ \lambda-(m+1)(m+2).$$
+
+Repitiendo $m$ veces, $u^{(m)}$ satisface @eq-v. Entonces, si $u=P_\ell$, la función $v=P_\ell^{(m)}$ es solución de @eq-v, y es un polinomio de grado $\ell-m$, que es el polinomio acotado que buscábamos. (Ojo: @eq-v no es la ecuación de Legendre, salvo para $m=0$. Es la ecuación de Legendre derivada $m$ veces.)
+
+La solución acotada de @eq-legendre-asoc es entonces la **función de Legendre asociada**
+
+$$P_\ell^m(x)=(1-x^2)^{m/2}\,\frac{d^m}{dx^m}P_\ell(x),\qquad \ell=0,1,2,\dots,\quad m=0,1,\dots,\ell.$$ {#eq-asociada}
+
+Como $P_\ell$ es un polinomio de grado $\ell$, su derivada $m$-ésima es cero si $m>\ell$, lo que reproduce la condición $m\le\ell$. Por ejemplo, $P_1^1=\sqrt{1-x^2}$, $P_2^1=3x\sqrt{1-x^2}$ y $P_2^2=3(1-x^2)$.
+
+:::
+
+### Los armónicos esféricos
+
+Juntamos las dos partes angulares. Con $\Theta(\theta)=P_\ell^m(\cos\theta)$ y $\Phi=e^{im\varphi}$ se obtienen los **armónicos esféricos**,
+
+$$Y_\ell^m(\theta,\varphi)=\sqrt{\frac{2\ell+1}{4\pi}\,\frac{(\ell-|m|)!}{(\ell+|m|)!}}\;P_\ell^{|m|}(\cos\theta)\,e^{im\varphi},\qquad \ell=0,1,2,\dots,\quad m=-\ell,\dots,\ell,$$
+
+(hasta un signo, según la convención). Para cada $\ell$ hay $2\ell+1$ valores de $m$. Las constantes son las que hacen que $\int|Y_\ell^m|^2\,d\Omega=1$.
+
+La ecuación de Legendre se puede escribir en forma de Sturm-Liouville, $\dfrac{d}{dx}\bigl[(1-x^2)y'\bigr]+\lambda y=0$ en $[-1,1]$. Es un problema **singular**, porque el coeficiente $1-x^2$ se anula en los extremos, y sus autofunciones son ortogonales con peso $1$: $\int_{-1}^{1}P_\ell P_{\ell'}\,dx=\dfrac{2}{2\ell+1}\,\delta_{\ell\ell'}$.
+
+Algo importante: la parte angular no usó para nada el potencial $V(r)$. Los armónicos esféricos sirven para **cualquier** potencial central. Lo que distingue al hidrógeno es la parte radial.
+
+## La parte radial
+
+### Preparando la ecuación
+
+Con $\lambda=\ell(\ell+1)$, la primera ecuación de @eq-lambda queda, dividiendo por $r^2$,
+
+$$\frac1{r^2}\frac{d}{dr}\!\left(r^2\frac{dR}{dr}\right)+\left[\frac{2\mu}{\hbar^2}\left(E+\frac{e^2}{4\pi\varepsilon_0\,r}\right)-\frac{\ell(\ell+1)}{r^2}\right]R=0.$$ {#eq-radial}
+
+Para deshacernos del $r^2$ en la derivada hacemos $u=rR$, y como $\frac1{r^2}(r^2R')'=\frac1r\,u''$,
+
+$$u''+\left[\frac{2\mu}{\hbar^2}\left(E+\frac{e^2}{4\pi\varepsilon_0\,r}\right)-\frac{\ell(\ell+1)}{r^2}\right]u=0.$$
+
+Nos interesan los **estados ligados**, $E<0$. Definimos
+
+$$\kappa^2=-\frac{2\mu E}{\hbar^2},\qquad a_0=\frac{4\pi\varepsilon_0\hbar^2}{\mu e^2}\approx0{,}529\ \text{Å},$$
+
+donde $a_0$ es el **radio de Bohr**, y entonces $\dfrac{2\mu}{\hbar^2}\dfrac{e^2}{4\pi\varepsilon_0}=\dfrac2{a_0}$. Con $\rho=2\kappa r$ y $\nu=\dfrac1{\kappa a_0}$ la ecuación queda
+
+$$\frac{d^2u}{d\rho^2}+\left[-\frac14+\frac{\nu}{\rho}-\frac{\ell(\ell+1)}{\rho^2}\right]u=0.$$ {#eq-u}
+
+Todavía no sabemos qué valores puede tomar $\nu$: eso es lo que va a cuantizar la energía.
+
+::: {.parte-matematica}
+
+### Los comportamientos en los extremos
+
+El punto $\rho=0$ es singular regular de @eq-u, y $\rho=\infty$ es singular irregular. Veamos qué hacen las soluciones en cada uno.
+
+- **Cerca de $\rho=0$** domina el término $\ell(\ell+1)/\rho^2$. La ecuación indicial de $u''-\frac{\ell(\ell+1)}{\rho^2}u=0$ con $u=\rho^s$ es $s(s-1)=\ell(\ell+1)$, de donde $s=\ell+1$ o $s=-\ell$. La segunda da $R=u/r\sim r^{-\ell-1}$, que no es acotada en el núcleo, y la descartamos.
+- **Para $\rho$ grande** domina $-\frac14$, y $u''\approx\frac14u$ da $u\sim e^{\pm\rho/2}$. La solución con $e^{+\rho/2}$ no es normalizable y la descartamos.
+
+### Factorizar: la ecuación de Laguerre asociada
+
+Sacamos esos dos comportamientos: $u=f(\rho)\,L(\rho)$ con $f=\rho^{\ell+1}e^{-\rho/2}$. Calculamos
+
+$$\frac{f'}{f}=\frac{\ell+1}{\rho}-\frac12,\qquad \frac{f''}{f}=\left(\frac{f'}{f}\right)^2+\left(\frac{f'}{f}\right)'=\frac{\ell(\ell+1)}{\rho^2}-\frac{\ell+1}{\rho}+\frac14.$$
+
+Como $u''=f''L+2f'L'+fL''$, al dividir @eq-u entre $f$ queda
+
+$$L''+2\left(\frac{\ell+1}{\rho}-\frac12\right)L'+\left[\frac{\ell(\ell+1)}{\rho^2}-\frac{\ell+1}{\rho}+\frac14\right]L+\left[-\frac14+\frac\nu\rho-\frac{\ell(\ell+1)}{\rho^2}\right]L=0.$$
+
+Se cancelan los términos con $1/\rho^2$ y los términos con $\frac14$. Multiplicando por $\rho$,
+
+$$\rho\,L''+(2\ell+2-\rho)\,L'+(\nu-\ell-1)\,L=0.$$ {#eq-laguerre-asoc}
+
+Esta es la **ecuación de Laguerre asociada**, $xy''+(k+1-x)y'+p\,y=0$ con $k=2\ell+1$ y $p=\nu-\ell-1$. (Con $k=0$ es la ecuación de Laguerre, $xy''+(1-x)y'+py=0$, que aparece en los problemas del capítulo 5 de Simmons.)
+
+### Frobenius en $\rho=0$
+
+En forma normal, $L''+\dfrac{2\ell+2-\rho}{\rho}L'+\dfrac{\nu-\ell-1}{\rho}L=0$. Como $\rho P=2\ell+2-\rho$ y $\rho^2Q=(\nu-\ell-1)\rho$ son analíticas, $\rho=0$ es un punto singular regular. Con $L=\rho^s\sum b_j\rho^j$ la ecuación indicial es
+
+$$s(s-1)+(2\ell+2)s=0\ \Longrightarrow\ s\,(s+2\ell+1)=0,$$
+
+con exponentes $s=0$ y $s=-(2\ell+1)$. El segundo da $u=\rho^{\ell+1}\rho^{-2\ell-1}=\rho^{-\ell}$: es justo la solución que ya habíamos descartado. Nos quedamos con $s=0$, y la serie $L=\sum_{j=0}^{\infty}b_j\rho^j$ con $b_0\neq0$. El coeficiente de $\rho^j$ es
+
+$$(j+1)j\,b_{j+1}+(2\ell+2)(j+1)\,b_{j+1}-j\,b_j+(\nu-\ell-1)\,b_j=0,$$
+
+es decir,
+
+$$b_{j+1}=\frac{j-\nu+\ell+1}{(j+1)(j+2\ell+2)}\,b_j.$$ {#eq-rec-lag}
+
+Los denominadores nunca se anulan, y esta recurrencia da una serie para **cualquier** valor de $\nu$. Hasta aquí no hay cuantización.
+
+### El infinito: la serie tiene que cortarse
+
+Si la serie no termina, $b_{j+1}/b_j\approx1/j$, que es el comportamiento de los coeficientes de $e^{\rho}$. Entonces $L$ crece como una potencia de $\rho$ por $e^{\rho}$, y $u=\rho^{\ell+1}e^{-\rho/2}L$ crece como una potencia de $\rho$ por $e^{+\rho/2}$, que no es normalizable: es justo la solución mala de $\rho\to\infty$. La única salida es que la serie se corte. El numerador de @eq-rec-lag se anula cuando $\nu=j+\ell+1$, así que
+
+$$\nu=n,\qquad n=\ell+1,\ \ell+2,\ \ell+3,\dots$$
+
+y $L$ es un polinomio de grado $n-\ell-1$, el **polinomio de Laguerre asociado** $L_{n-\ell-1}^{(2\ell+1)}(\rho)$ (salvo una constante).
+
+:::
+
+### La energía
+
+La condición $\nu=n$ dice $\kappa=\dfrac1{na_0}$, y entonces
+
+$$E_n=-\frac{\hbar^2\kappa^2}{2\mu}=-\frac{\hbar^2}{2\mu a_0^2}\,\frac1{n^2}=-\frac{\mu e^4}{2(4\pi\varepsilon_0)^2\hbar^2}\,\frac1{n^2}\approx-\frac{13{,}6\ \text{eV}}{n^2},\qquad n=1,2,3,\dots$$ {#eq-energia}
+
+Estos son los niveles de energía del hidrógeno, y coinciden con los del modelo de Bohr. Dos observaciones:
+
+- La energía solo depende de $n$, no de $\ell$ ni de $m$. Es una característica del potencial $1/r$ (con otro potencial central los niveles dependerían de $\ell$).
+- Para cada $n$ hay $\ell=0,\dots,n-1$ y, para cada $\ell$, $m=-\ell,\dots,\ell$. Entonces el número de estados con la misma energía es $\sum_{\ell=0}^{n-1}(2\ell+1)=n^2$ (sin contar el espín).
+
+La parte radial de la función de onda es
+
+$$R_{n\ell}(r)=N_{n\ell}\,\rho^{\ell}\,e^{-\rho/2}\,L_{n-\ell-1}^{(2\ell+1)}(\rho),\qquad \rho=\frac{2r}{na_0},$$
+
+donde $N_{n\ell}$ se fija con $\int_0^{\infty}R_{n\ell}^2\,r^2\,dr=1$.
+
+## Los orbitales
+
+### Los tres números cuánticos
+
+La función de onda completa es
+
+$$\psi_{n\ell m}(r,\theta,\varphi)=R_{n\ell}(r)\,Y_\ell^m(\theta,\varphi),$$ {#eq-orbital}
+
+y se llama un **orbital**. Está determinado por tres números enteros:
+
+| número | nombre | valores | de dónde sale |
+|:---:|:---|:---|:---|
+| $n$ | principal | $1,2,3,\dots$ | truncamiento de la serie radial (Laguerre) |
+| $\ell$ | azimutal | $0,1,\dots,n-1$ | truncamiento de la serie polar (Legendre), con $n\ge\ell+1$ |
+| $m$ | magnético | $-\ell,\dots,\ell$ | periodicidad en $\varphi$, con $|m|\le\ell$ |
+
+A $\ell=0,1,2,3$ se les llama $s,\ p,\ d,\ f$ (son letras que quedaron de la espectroscopía), y los orbitales se nombran con $n$ y la letra: $1s$, $2s$, $2p$, $3d$, etc. Los **nodos** (donde $\psi=0$) son de dos tipos: $R_{n\ell}$ tiene $n-\ell-1$ ceros positivos, porque el polinomio de Laguerre tiene ese grado (nodos radiales, que son esferas), y la parte angular tiene $\ell$ superficies nodales (planos o conos).
+
+### Las funciones radiales
+
+Con la recurrencia @eq-rec-lag y la normalización se obtienen las primeras funciones radiales. En unidades $a_0=1$ (y en unidades de $a_0^{-3/2}$):
+
+| orbital | $R_{n\ell}(r)$ |
+|:---:|:---|
+| $1s$ | $2\,e^{-r}$ |
+| $2s$ | $\dfrac{1}{2\sqrt2}\,(2-r)\,e^{-r/2}$ |
+| $2p$ | $\dfrac{1}{2\sqrt6}\,r\,e^{-r/2}$ |
+| $3s$ | $\dfrac{2}{81\sqrt3}\,(27-18r+2r^2)\,e^{-r/3}$ |
+| $3p$ | $\dfrac{4}{81\sqrt6}\,r\,(6-r)\,e^{-r/3}$ |
+| $3d$ | $\dfrac{4}{81\sqrt{30}}\,r^2\,e^{-r/3}$ |
+
+(Todas se verificaron en Maxima al final.) Se ve el número de nodos: $2s$ tiene uno en $r=2$, $3s$ tiene dos, $3p$ tiene uno en $r=6$, y $1s$, $2p$ y $3d$ no tienen ninguno.
+
+### Los orbitales reales
+
+Los estados con $m$ y $-m$ tienen la misma energía, así que cualquier combinación lineal de ellos también es solución. Si en lugar de $e^{\pm im\varphi}$ se toman $\cos m\varphi$ y $\sin m\varphi$, se obtienen funciones **reales**, que son las que aparecen en los libros de química. Por ejemplo, con $a_0$ explícito,
+
+$$\psi_{1s}=\frac{1}{\sqrt{\pi a_0^3}}\,e^{-r/a_0},\qquad \psi_{2p_z}=\frac{1}{4\sqrt{2\pi a_0^5}}\;z\,e^{-r/2a_0},\qquad \psi_{3d_{z^2}}=\frac{1}{81\sqrt{6\pi a_0^7}}\,(3z^2-r^2)\,e^{-r/3a_0}.$$
+
+El nombre sale de la parte angular escrita en cartesianas: $\cos\theta=z/r$, $\sin\theta\cos\varphi=x/r$, $\sin\theta\sin\varphi=y/r$. Así, $\ell=1$ da $p_z$, $p_x$ y $p_y$, y $\ell=2$ da $d_{z^2}$, $d_{xz}$, $d_{yz}$, $d_{x^2-y^2}$ y $d_{xy}$.
+
+::: {.callout-note title="Simulador: los orbitales del átomo de hidrógeno"}
+Con los selectores se escogen $n$, $\ell$ y $m$. A la izquierda se ve un corte del orbital por un plano que contiene al eje $z$: en **rojo** donde $\psi>0$, en **azul** donde $\psi<0$ y en blanco donde $\psi=0$ (las franjas blancas son los nodos). Con la casilla se pasa a la densidad de probabilidad $|\psi|^2$. A la derecha está la densidad radial $r^2R_{n\ell}^2$, que da la probabilidad de encontrar al electrón a una distancia $r$ del núcleo, con los nodos radiales (puntos negros) y el radio medio $\langle r\rangle=\tfrac12\bigl(3n^2-\ell(\ell+1)\bigr)a_0$. Las distancias están en unidades de $a_0$. Prueba con $2s$ y $3p$ para ver los nodos radiales, con $3d_{z^2}$ para ver los conos nodales, y compara los orbitales con el mismo $n$: tienen la misma energía y formas muy distintas.
+
+```{=html}
+
+
+<style>
+  .orb-caja{border:3px solid #ddd;border-radius:8px;padding:14px;max-width:780px;margin:1em auto;font-family:sans-serif;background:#fff;color:#222;}
+  .orb-caja button{padding:5px 11px;border:1px solid #bbb;border-radius:6px;background:#f5f5f5;color:#222;cursor:pointer;font-size:0.9em;}
+  .orb-caja button:hover{background:#e9e9e9;}
+  .orb-fila{display:flex;align-items:center;gap:8px 18px;flex-wrap:wrap;margin-top:6px;}
+  .orb-fila label{font-size:0.92em;}
+  .orb-grande{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:12px;align-items:start;}
+  .orb-grande canvas{display:block;width:100%;height:auto;background:#fff;border:1px solid #e3e3e3;border-radius:6px;}
+  .orb-3d{margin-top:14px;}
+  .orb-3d canvas{display:block;width:100%;height:auto;background:#fff;border:1px solid #e3e3e3;border-radius:6px;cursor:grab;touch-action:none;margin-top:6px;}
+  .orb-3d canvas.orb-arr{cursor:grabbing;}
+  .orb-info{margin-top:10px;font-size:0.93em;line-height:1.55;}
+</style>
+<div class="orb-caja" id="orb">
+  <div class="orb-fila">
+    <label>n <select id="orb-n"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option></select></label>
+    <label>&ell; <select id="orb-l"></select></label>
+    <label>m <select id="orb-m"></select></label>
+    <label>orientación <select id="orb-or"><option value="c">cos m&phi;</option><option value="s">sen m&phi;</option></select></label>
+    <label><input type="checkbox" id="orb-d"> mostrar |&psi;|&sup2;</label>
+  </div>
+  <div class="orb-fila" id="orb-pre">
+    <span style="font-size:0.9em">Orbitales conocidos:</span>
+    <button data-p="1,0,0,c">1s</button>
+    <button data-p="2,0,0,c">2s</button>
+    <button data-p="2,1,0,c">2p<sub>z</sub></button>
+    <button data-p="2,1,1,c">2p<sub>x</sub></button>
+    <button data-p="3,2,0,c">3d<sub>z&sup2;</sub></button>
+    <button data-p="3,2,2,s">3d<sub>xy</sub></button>
+    <button data-p="3,1,0,c">3p<sub>z</sub></button>
+    <button data-p="4,3,0,c">4f<sub>z&sup3;</sub></button>
+  </div>
+  <div class="orb-grande">
+    <canvas id="orb-g" width="340" height="340" role="img" aria-label="Corte del orbital por un plano que contiene al eje z"></canvas>
+    <canvas id="orb-p" width="400" height="340" role="img" aria-label="Densidad de probabilidad radial del orbital"></canvas>
+  </div>
+  <div class="orb-3d">
+    <div class="orb-fila">
+      <label>puntos = <b id="orb-npv">8000</b> <input type="range" id="orb-np" min="1000" max="30000" step="1000" value="8000" style="width:150px;vertical-align:middle"></label>
+      <button id="orb-re">Sortear de nuevo</button>
+      <label><input type="checkbox" id="orb-giro"> girar solo</label>
+    </div>
+    <canvas id="orb-c" width="760" height="430" role="img" aria-label="Nube de puntos del orbital en tres dimensiones"></canvas>
+    <div style="font-size:0.85em;color:#555;margin-top:4px">Arrastra con el mouse (o el dedo) para girar la nube. Cada punto es una posición posible del electrón, sorteada con probabilidad |&psi;|&sup2;: rojo donde &psi; &gt; 0 y azul donde &psi; &lt; 0. Los ejes son x, y, z.</div>
+  </div>
+  <div class="orb-info" id="orb-info"></div>
+</div>
+<script>
+(function(){
+/*NUCLEO*/
+function coefL(n, l){ var b = [1]; for (var j = 0; j < n - l - 1; j++) b.push(b[j]*(j - n + l + 1)/((j + 1)*(j + 2*l + 2))); return b; }
+function radialSin(n, l, b, r){ var rho = 2*r/n, s = 0; for (var j = b.length - 1; j >= 0; j--) s = s*rho + b[j]; return Math.pow(rho, l)*Math.exp(-rho/2)*s; }
+function Plm(l, m, x){
+  var s = Math.sqrt(Math.max(0, 1 - x*x)), pmm = 1, f = 1, i;
+  for (i = 1; i <= m; i++){ pmm *= f*s; f += 2; }
+  if (l === m) return pmm;
+  var a = pmm, b = x*(2*m + 1)*pmm, c;
+  if (l === m + 1) return b;
+  for (var k = m + 2; k <= l; k++){ c = (x*(2*k - 1)*b - (k + m - 1)*a)/(k - m); a = b; b = c; }
+  return b;
+}
+/*FIN NUCLEO*/
+
+function $(id){ return document.getElementById(id); }
+var cv = $('orb-g'); if (!cv) return;
+var cg = cv.getContext('2d'), cp = $('orb-p').getContext('2d'), cc = $('orb-c').getContext('2d');
+var S = {n:2, l:1, m:0, or:'c', den:false, np:8000, az:0.6, el:0.35, giro:false};
+var NUBE = {x:null, y:null, z:null, s:null, q:1}, sucio = true;
+var LET = ['s', 'p', 'd', 'f', 'g'];
+var TAB = {
+  c: [[''], ['z', 'x'], ['z²', 'xz', 'x²-y²'], ['z³', 'xz²', 'z(x²-y²)', 'x(x²-3y²)']],
+  s: [[''], ['', 'y'], ['', 'yz', 'xy'], ['', 'yz²', 'xyz', 'y(3x²-y²)']]
+};
+function fmt(x, d){ return x.toFixed(d).replace('.', ','); }
+function nombre(){
+  var n = S.n, l = S.l, m = S.m, base = n + LET[l];
+  if (l === 0) return base;
+  if (l > 3) return base + ' (m = ' + m + (m ? (S.or === 'c' ? ', coseno' : ', seno') : '') + ')';
+  return base + '<sub>' + TAB[m === 0 ? 'c' : S.or][l][m] + '</sub>';
+}
+function simpson(f, a, b, N){ var h = (b - a)/N, s = f(a) + f(b); for (var i = 1; i < N; i++) s += f(a + i*h)*(i % 2 ? 4 : 2); return s*h/3; }
+function paso(L){ var q = L/3, c = [1, 2, 5, 10, 20, 50, 100], k = 0; while (k < c.length - 1 && c[k + 1] <= q) k++; return c[k]; }
+function colorDiv(v, out, o){
+  var a = Math.pow(Math.min(1, Math.abs(v)), 0.55);
+  if (v >= 0){ out[o] = 255 - a*(255 - 201); out[o + 1] = 255 - a*(255 - 48); out[o + 2] = 255 - a*(255 - 44); }
+  else { out[o] = 255 - a*(255 - 37); out[o + 1] = 255 - a*(255 - 99); out[o + 2] = 255 - a*(255 - 168); }
+}
+
+function dibujar(){
+  var n = S.n, l = S.l, m = S.m, b = coefL(n, l), rmax = 12*n*n + 40, i, j, k;
+  var Cn = 1/Math.sqrt(simpson(function(r){ var R = radialSin(n, l, b, r); return r*r*R*R; }, 0, rmax, 4000));
+  var Lext = 2.4*n*n + 4, P = 340;
+  var cosb = (S.or === 'c' || m === 0), ph0 = cosb ? 0 : Math.PI/(2*m);
+  // corte por un plano que contiene al eje z
+  var val = new Float32Array(P*P), mx = 0;
+  for (j = 0; j < P; j++) for (i = 0; i < P; i++){
+    var X = (i + 0.5)/P*2*Lext - Lext, Z = Lext - (j + 0.5)/P*2*Lext, r = Math.sqrt(X*X + Z*Z);
+    if (r < 1e-9) r = 1e-9;
+    var ph = X >= 0 ? ph0 : ph0 + Math.PI;
+    var v = Cn*radialSin(n, l, b, r)*Plm(l, m, Z/r)*(cosb ? Math.cos(m*ph) : Math.sin(m*ph));
+    val[j*P + i] = v; if (Math.abs(v) > mx) mx = Math.abs(v);
+  }
+  var img = cg.createImageData(P, P), d = img.data;
+  for (k = 0; k < P*P; k++){
+    var w = val[k]/mx, o = 4*k;
+    if (S.den){ var t = Math.pow(Math.abs(w), 0.9); d[o] = 255 - t*(255 - 40); d[o + 1] = 255 - t*(255 - 40); d[o + 2] = 255 - t*(255 - 140); }
+    else colorDiv(w, d, o);
+    d[o + 3] = 255;
+  }
+  cg.putImageData(img, 0, 0);
+  // ejes y escala
+  cg.strokeStyle = 'rgba(0,0,0,0.35)'; cg.lineWidth = 1; cg.setLineDash([4, 4]);
+  cg.beginPath(); cg.moveTo(0, P/2); cg.lineTo(P, P/2); cg.moveTo(P/2, 0); cg.lineTo(P/2, P); cg.stroke(); cg.setLineDash([]);
+  var st = paso(Lext); cg.fillStyle = '#333'; cg.font = '11px sans-serif'; cg.textAlign = 'center';
+  for (k = -Math.floor(Lext/st); k <= Math.floor(Lext/st); k++){
+    if (k === 0) continue; var px = P/2 + k*st/Lext*P/2;
+    cg.beginPath(); cg.moveTo(px, P/2 - 4); cg.lineTo(px, P/2 + 4); cg.stroke(); cg.fillText(k*st, px, P/2 + 16);
+  }
+  cg.textAlign = 'left'; cg.fillText('x (unidades de a₀)', 8, P - 8); cg.fillText('z', P/2 + 8, 14);
+
+  // densidad radial r^2 R^2
+  var W = 400, H = 340, L0 = 48, R0 = 14, T0 = 16, B0 = 36, NP = 500, pr = new Float64Array(NP + 1), pm = 0;
+  for (k = 0; k <= NP; k++){ var rr = Lext*k/NP, R = Cn*radialSin(n, l, b, rr); pr[k] = rr*rr*R*R; if (pr[k] > pm) pm = pr[k]; }
+  function X2(r){ return L0 + r/Lext*(W - L0 - R0); }
+  function Y2(v){ return T0 + (1 - v/(1.1*pm))*(H - T0 - B0); }
+  cp.fillStyle = '#fff'; cp.fillRect(0, 0, W, H);
+  cp.strokeStyle = '#ececec'; cp.lineWidth = 1; cp.fillStyle = '#555'; cp.font = '12px sans-serif'; cp.textAlign = 'center';
+  for (k = 0; k*st <= Lext; k++){ cp.beginPath(); cp.moveTo(X2(k*st), T0); cp.lineTo(X2(k*st), H - B0); cp.stroke(); cp.fillText(k*st, X2(k*st), H - B0 + 16); }
+  cp.strokeStyle = '#888'; cp.lineWidth = 1.2; cp.beginPath(); cp.moveTo(L0, H - B0); cp.lineTo(W - R0, H - B0); cp.moveTo(L0, T0); cp.lineTo(L0, H - B0); cp.stroke();
+  cp.textAlign = 'center'; cp.fillText('r (unidades de a₀)', (L0 + W - R0)/2, H - 6);
+  cp.save(); cp.translate(14, (T0 + H - B0)/2); cp.rotate(-Math.PI/2); cp.fillText('r²R² (probabilidad por unidad de r)', 0, 0); cp.restore();
+  cp.beginPath(); cp.moveTo(X2(0), Y2(0));
+  for (k = 0; k <= NP; k++) cp.lineTo(X2(Lext*k/NP), Y2(pr[k]));
+  cp.lineTo(X2(Lext), Y2(0)); cp.closePath(); cp.fillStyle = 'rgba(37,99,168,0.18)'; cp.fill();
+  cp.strokeStyle = '#2563a8'; cp.lineWidth = 2.4; cp.beginPath();
+  for (k = 0; k <= NP; k++){ if (k === 0) cp.moveTo(X2(0), Y2(pr[0])); else cp.lineTo(X2(Lext*k/NP), Y2(pr[k])); }
+  cp.stroke();
+  // nodos radiales (ceros de R)
+  var nodos = 0, prev = Math.sign(radialSin(n, l, b, Lext/4000)), NG = 4000;
+  cp.fillStyle = '#1b2a41';
+  for (k = 2; k <= NG; k++){
+    var rg = Lext*k/NG, sg = Math.sign(radialSin(n, l, b, rg));
+    if (sg !== 0 && prev !== 0 && sg !== prev){ nodos++; cp.beginPath(); cp.arc(X2(rg), Y2(0), 4, 0, 2*Math.PI); cp.fill(); }
+    if (sg !== 0) prev = sg;
+  }
+  // radio medio
+  var rm = 0.5*(3*n*n - l*(l + 1));
+  cp.strokeStyle = '#c0392b'; cp.lineWidth = 1.6; cp.setLineDash([6, 4]);
+  cp.beginPath(); cp.moveTo(X2(rm), T0); cp.lineTo(X2(rm), H - B0); cp.stroke(); cp.setLineDash([]);
+  cp.fillStyle = '#c0392b'; cp.textAlign = 'left'; cp.fillText('⟨r⟩ = ' + fmt(rm, 1), Math.min(X2(rm) + 6, W - 80), T0 + 12);
+
+  var nm = nombre();
+  var txt = '<b>Orbital ' + nm + '</b>: n = ' + n + ', &ell; = ' + l + ', m = ' + (m > 0 ? '&plusmn;' : '') + m + '. ' +
+    'Energía E = &minus;13,606 eV/n&sup2; = &minus;' + fmt(13.6057/(n*n), 2) + ' eV (solo depende de n). ' +
+    'Nodos radiales: n &minus; &ell; &minus; 1 = ' + (n - l - 1) + ' (los puntos negros). Superficies nodales angulares: &ell; = ' + l + '. ' +
+    'Radio medio &lang;r&rang; = (3n&sup2; &minus; &ell;(&ell; + 1))/2 a<sub>0</sub> = ' + fmt(rm, 1) + ' a<sub>0</sub>.';
+  if (m === 0) txt += '<br>Con m = 0 el orbital es de revolución alrededor del eje z: el corte de la izquierda se gira alrededor de z para ver el orbital completo.';
+  else txt += '<br>Con m &gt; 0 el corte se hace por el plano que contiene al eje z donde la parte angular es máxima.';
+  $('orb-info').innerHTML = txt;
+}
+
+// nube de puntos: se sortea r con densidad r^2 R^2, x = cos(theta) con densidad P^2 y phi con densidad cos^2(m phi) (o sen^2)
+function generarNube(){
+  var n = S.n, l = S.l, m = S.m, b = coefL(n, l), rmax = 12*n*n + 40, NR = 4000, h = rmax/NR, i, k;
+  var cosb = (S.or === 'c' || m === 0);
+  var cdf = new Float64Array(NR + 1), acc = 0, prev = 0;
+  for (i = 1; i <= NR; i++){ var r0 = i*h, R0 = radialSin(n, l, b, r0), f = r0*r0*R0*R0; acc += 0.5*(prev + f)*h; prev = f; cdf[i] = acc; }
+  for (i = 1; i <= NR; i++) cdf[i] /= acc;
+  var mp = 0, xx, v;
+  for (i = 0; i <= 400; i++){ xx = -1 + 2*i/400; v = Plm(l, m, xx); if (v*v > mp) mp = v*v; }
+  var N = S.np, X = new Float32Array(N), Y = new Float32Array(N), Z = new Float32Array(N), SG = new Int8Array(N), RR = new Float32Array(N);
+  for (k = 0; k < N; k++){
+    var u = Math.random(), lo = 0, hi = NR;
+    while (hi - lo > 1){ var mid = (lo + hi) >> 1; if (cdf[mid] >= u) hi = mid; else lo = mid; }
+    var den = cdf[hi] - cdf[lo], r = (lo + (den > 0 ? (u - cdf[lo])/den : 0))*h;
+    do { xx = 2*Math.random() - 1; v = Plm(l, m, xx); } while (Math.random()*mp > v*v);
+    var ph, a = 1;
+    if (m > 0){ do { ph = 2*Math.PI*Math.random(); a = cosb ? Math.cos(m*ph) : Math.sin(m*ph); } while (Math.random() > a*a); }
+    else ph = 2*Math.PI*Math.random();
+    var st = Math.sqrt(Math.max(0, 1 - xx*xx));
+    X[k] = r*st*Math.cos(ph); Y[k] = r*st*Math.sin(ph); Z[k] = r*xx; RR[k] = r;
+    SG[k] = (radialSin(n, l, b, r) >= 0 ? 1 : -1)*(v >= 0 ? 1 : -1)*(a >= 0 ? 1 : -1);
+  }
+  var ord = Float32Array.from(RR).sort();
+  NUBE = {x:X, y:Y, z:Z, s:SG, q:Math.max(1, ord[Math.floor(0.985*(N - 1))]*1.05)};
+  sucio = true;
+}
+function dibujarNube(){
+  var W = 760, H = 430, N = NUBE.x.length, k, sc = Math.min(W, H)/2*0.9/NUBE.q;
+  var ca = Math.cos(S.az), sa = Math.sin(S.az), ce = Math.cos(S.el), se = Math.sin(S.el);
+  cc.globalAlpha = 1; cc.fillStyle = '#fff'; cc.fillRect(0, 0, W, H);
+  function P(x, y, z){ var x1 = ca*x - sa*y, y1 = sa*x + ca*y; return [W/2 + x1*sc, H/2 - (z*ce - y1*se)*sc]; }
+  var A = NUBE.q*0.95, ejes = [[A, 0, 0, 'x'], [0, A, 0, 'y'], [0, 0, A, 'z']];
+  cc.strokeStyle = '#999'; cc.lineWidth = 1; cc.fillStyle = '#555'; cc.font = '13px sans-serif'; cc.textAlign = 'center';
+  for (k = 0; k < 3; k++){
+    var e = ejes[k], p0 = P(-e[0], -e[1], -e[2]), p1 = P(e[0], e[1], e[2]);
+    cc.beginPath(); cc.moveTo(p0[0], p0[1]); cc.lineTo(p1[0], p1[1]); cc.stroke(); cc.fillText(e[3], p1[0] + (p1[0] >= W/2 ? 10 : -10), p1[1] - 4);
+  }
+  var pasada, col = ['#c9302c', '#2563a8'];
+  cc.globalAlpha = 0.6;
+  for (pasada = 0; pasada < 2; pasada++){
+    cc.fillStyle = col[pasada]; var signo = pasada === 0 ? 1 : -1;
+    for (k = 0; k < N; k++){
+      if (NUBE.s[k] !== signo) continue;
+      var x = NUBE.x[k], y = NUBE.y[k], z = NUBE.z[k], x1 = ca*x - sa*y, y1 = sa*x + ca*y;
+      cc.fillRect(W/2 + x1*sc - 1.2, H/2 - (z*ce - y1*se)*sc - 1.2, 2.4, 2.4);
+    }
+  }
+  cc.globalAlpha = 1;
+}
+var visible = true;
+if ('IntersectionObserver' in window){ new IntersectionObserver(function(es){ visible = es[0].isIntersecting; }).observe($('orb')); }
+function cuadro(){
+  if (S.giro && visible){ S.az += 0.01; sucio = true; }
+  if (sucio && visible){ dibujarNube(); sucio = false; }
+  requestAnimationFrame(cuadro);
+}
+var cvc = $('orb-c'), arr = null;
+cvc.addEventListener('pointerdown', function(e){ arr = {x:e.clientX, y:e.clientY}; cvc.classList.add('orb-arr'); try{ cvc.setPointerCapture(e.pointerId); }catch(_){} });
+cvc.addEventListener('pointermove', function(e){
+  if (!arr) return;
+  S.az += (e.clientX - arr.x)*0.01; S.el = Math.max(-1.5, Math.min(1.5, S.el + (e.clientY - arr.y)*0.01));
+  arr = {x:e.clientX, y:e.clientY}; sucio = true;
+});
+function soltar(){ arr = null; cvc.classList.remove('orb-arr'); }
+cvc.addEventListener('pointerup', soltar); cvc.addEventListener('pointercancel', soltar);
+$('orb-np').addEventListener('input', function(){ S.np = +this.value; $('orb-npv').textContent = S.np; generarNube(); });
+$('orb-re').addEventListener('click', function(){ generarNube(); });
+$('orb-giro').addEventListener('change', function(){ S.giro = this.checked; });
+
+function llenar(sel, a, b, val){
+  sel.innerHTML = '';
+  for (var v = a; v <= b; v++){ var o = document.createElement('option'); o.value = v; o.textContent = v; sel.appendChild(o); }
+  sel.value = Math.min(Math.max(val, a), b); return +sel.value;
+}
+function sincronizar(){
+  $('orb-n').value = S.n;
+  S.l = llenar($('orb-l'), 0, S.n - 1, S.l);
+  S.m = llenar($('orb-m'), 0, S.l, S.m);
+  $('orb-or').value = S.or; $('orb-or').disabled = (S.m === 0);
+  dibujar(); generarNube();
+}
+$('orb-n').addEventListener('change', function(){ S.n = +this.value; sincronizar(); });
+$('orb-l').addEventListener('change', function(){ S.l = +this.value; sincronizar(); });
+$('orb-m').addEventListener('change', function(){ S.m = +this.value; sincronizar(); });
+$('orb-or').addEventListener('change', function(){ S.or = this.value; dibujar(); generarNube(); });
+$('orb-d').addEventListener('change', function(){ S.den = this.checked; dibujar(); });
+var bs = document.querySelectorAll('#orb-pre button');
+for (var q = 0; q < bs.length; q++) bs[q].addEventListener('click', function(){
+  var p = this.getAttribute('data-p').split(',');
+  S.n = +p[0]; S.l = +p[1]; S.m = +p[2]; S.or = p[3]; sincronizar();
+});
+sincronizar(); requestAnimationFrame(cuadro);
+})();
+</script>
+```
+:::
+
+Lo que no vimos: el **espín** del electrón, que duplica el número de estados (hay $2n^2$ por cada $n$), y los átomos con varios electrones, donde la repulsión entre electrones rompe la simetría del problema y la energía pasa a depender también de $\ell$. Pero los orbitales del hidrógeno que acabamos de calcular son el punto de partida para describir esos átomos, y de ahí sale la forma de la tabla periódica.
+
+::: {.callout-note title="Haciendo las cuentas con Maxima"}
+Con Maxima se verifica todo lo anterior: el laplaciano en esféricas contra el cartesiano, las series de $P_n$ y de $Q_n$, la ecuación de $v$ y su recurrencia, las funciones de Legendre asociadas, la normalización de los armónicos esféricos, las funciones radiales (con la serie de @eq-rec-lag) y los orbitales en cartesianas con sus energías.
+
+```maxima
+kill(all)$
+
+/* 1. El laplaciano en esfericas se compara con el cartesiano en una funcion de prueba */
+f(x,y,z) := (x*z + y^2*z + x^2)*exp(-sqrt(x^2+y^2+z^2))$
+lapcart: diff(f(x,y,z),x,2) + diff(f(x,y,z),y,2) + diff(f(x,y,z),z,2)$
+g: f(r*sin(th)*cos(ph), r*sin(th)*sin(ph), r*cos(th))$
+lapesf: diff(r^2*diff(g,r),r)/r^2 + diff(sin(th)*diff(g,th),th)/(r^2*sin(th)) + diff(g,ph,2)/(r^2*sin(th)^2)$
+pt: [x=0.7, y=-0.4, z=0.9]$
+pe: [r=sqrt(0.7^2+0.4^2+0.9^2), th=acos(0.9/sqrt(0.7^2+0.4^2+0.9^2)), ph=atan2(-0.4,0.7)]$
+print("laplaciano cartesiano:", float(ev(lapcart, pt)))$
+print("laplaciano esferico:  ", float(ev(lapesf, pe)))$
+
+/* 2. Legendre por series: a[k+2] = (k(k+1) - n(n+1))/((k+1)(k+2)) a[k], normalizado con P_n(1) = 1 */
+serieP(n) := block([a, p, k0],
+  k0: mod(n, 2), a: makelist(0, i, 0, n), a[k0+1]: 1,
+  for k: k0 step 2 thru n-2 do a[k+3]: (k*(k+1) - n*(n+1))/((k+1)*(k+2))*a[k+1],
+  p: sum(a[k+1]*x^k, k, 0, n),
+  p/subst(x=1, p))$
+for n:0 thru 6 do (
+  edo: ratsimp((1-x^2)*diff(serieP(n),x,2) - 2*x*diff(serieP(n),x) + n*(n+1)*serieP(n)),
+  print("n =", n, " residuo de la EDO:", edo, "  coincide con legendre_p:", is(expand(serieP(n) - legendre_p(n,x)) = 0)))$
+
+/* 3. La segunda solucion Q_n = (1/2) P_n log((1+x)/(1-x)) - W_(n-1) tambien resuelve la ecuacion */
+W: [0, 1, 3*x/2, 5*x^2/2 - 2/3]$
+for n:0 thru 3 do (
+  Q: legendre_p(n,x)*log((1+x)/(1-x))/2 - W[n+1],
+  print("n =", n, " residuo de Q_n:", ratsimp(radcan((1-x^2)*diff(Q,x,2) - 2*x*diff(Q,x) + n*(n+1)*Q))))$
+
+/* 4. Legendre asociada: y = (1-x^2)^(m/2) d^m P_l/dx^m */
+Pas(l,m) := (1-x^2)^(m/2)*diff(legendre_p(l,x), x, m)$
+for l:0 thru 4 do for m:0 thru l do (
+  y: Pas(l,m),
+  res: radcan((1-x^2)*diff(y,x,2) - 2*x*diff(y,x) + (l*(l+1) - m^2/(1-x^2))*y),
+  if res # 0 then print("fallo", l, m, res))$
+print("asociada: residuo nulo para 0 <= m <= l <= 4")$
+
+/* la derivada m-esima de P_l resuelve la ecuacion de v, y sus coeficientes siguen la recurrencia de v */
+for l:1 thru 5 do for m:1 thru l do block([v, c, ok],
+  v: expand(diff(legendre_p(l,x), x, m)),
+  c: ratsimp((1-x^2)*diff(v,x,2) - 2*(m+1)*x*diff(v,x) + (l*(l+1) - m*(m+1))*v),
+  ok: is(c = 0),
+  for k: 0 thru l-m-2 do
+    if ratsimp(coeff(v,x,k+2) - ((k+m)*(k+m+1) - l*(l+1))/((k+1)*(k+2))*coeff(v,x,k)) # 0 then ok: false,
+  if not ok then print("fallo en v", l, m))$
+print("ecuacion y recurrencia de v verificadas para 1 <= m <= l <= 5")$
+
+/* 5. Normalizacion de los armonicos esfericos: int |Y|^2 dOmega = 1 */
+for l:0 thru 4 do for m:0 thru l do block([N2],
+  N2: (2*l+1)/(4*%pi)*(l-m)!/(l+m)!,
+  if m = 0 then c: 2*%pi else c: %pi,   /* int cos^2(m phi) dphi = pi si m > 0 */
+  if ratsimp(N2*c*integrate(expand(Pas(l,m)^2), x, -1, 1)*(if m = 0 then 1 else 2) - 1) # 0 then print("fallo Y", l, m))$
+print("armonicos esfericos normalizados (versiones reales) para 0 <= m <= l <= 4")$
+
+/* 6. Parte radial en unidades atomicas (a0 = mu = hbar = e^2/(4 pi eps0) = 1) */
+/* R = rho^l e^(-rho/2) L(rho), rho = 2r/n, con b[j+1] = (j - n + l + 1)/((j+1)(j+2l+2)) b[j] */
+Lpol(n,l) := block([b],
+  b: makelist(0, i, 0, n-l-1), b[1]: 1,
+  for j:0 thru n-l-2 do b[j+2]: (j - n + l + 1)/((j+1)*(j+2*l+2))*b[j+1],
+  sum(b[j+1]*rho^j, j, 0, n-l-1))$
+Rsin(n,l) := subst(rho = 2*r/n, rho^l*exp(-rho/2)*Lpol(n,l))$
+for n:1 thru 5 do for l:0 thru n-1 do (
+  R: Rsin(n,l),
+  res: ratsimp(-(1/2)*(diff(R,r,2) + 2/r*diff(R,r)) + l*(l+1)/(2*r^2)*R - R/r + R/(2*n^2)),
+  C: 1/sqrt(integrate(r^2*R^2, r, 0, inf)),
+  if res # 0 then print("fallo radial", n, l, res),
+  print("n =", n, " l =", l, " R_nl =", factor(ratsimp(C*R))))$
+print("radial: residuo nulo con E = -1/(2 n^2)")$
+
+/* exponentes de L en rho = 0: s(s-1) + (2l+2)s = 0 */
+print(solve(s*(s-1) + (2*l+2)*s = 0, s))$
+
+/* 7. Orbitales en cartesianas: normalizados y con E = -1/8 y -1/18 */
+kill(y, c, R, C)$   /* y y c guardaban valores de los bloques anteriores */
+rr: sqrt(x^2 + y^2 + z^2)$
+psi: [exp(-rr)/sqrt(%pi), z*exp(-rr/2)/(4*sqrt(2*%pi)), (3*z^2 - rr^2)*exp(-rr/3)/(81*sqrt(6*%pi))]$
+Es: [-1/2, -1/8, -1/18]$
+for k:1 thru 3 do block([p, e],
+  p: psi[k], e: Es[k],
+  res0: -(1/2)*(diff(p,x,2) + diff(p,y,2) + diff(p,z,2)) - p/rr - e*p,
+  print("orbital", k, " residuo de Schrodinger en un punto:", float(ev(res0, x=0.7, y=-0.4, z=0.9))))$
+/* psi = R_nl(r) Y_lm: se compara en el punto (r, th) = (1.3, 0.8) del plano xz */
+kill(r, th)$
+Y: [1/sqrt(4*%pi), sqrt(3/(4*%pi))*cos(th), sqrt(5/(16*%pi))*(3*cos(th)^2 - 1)]$
+nl: [[1,0], [2,1], [3,2]]$
+for k:1 thru 3 do block([R, C, rv, tv],
+  R: Rsin(nl[k][1], nl[k][2]),
+  C: 1/sqrt(integrate(r^2*R^2, r, 0, inf)),
+  rv: 1.3, tv: 0.8,
+  print("orbital", k, " cartesiana:", float(ev(psi[k], x = rv*sin(tv), y = 0, z = rv*cos(tv))),
+        "  R*Y:", float(ev(C*R*Y[k], r = rv, th = tv))))$
+```
+:::
+
+::: {.callout-note title="Una nota histórica: de dónde sale Laguerre"}
+Los polinomios de Laguerre tampoco nacieron en la mecánica cuántica. Laguerre los encontró en 1879 estudiando la integral $\int_x^{\infty}\frac{e^{-t}}{t}\,dt$. Integrando por partes se obtiene una serie divergente,
+
+$$\int_x^{\infty}\frac{e^{-t}}{t}\,dt\sim e^{-x}\left(\frac1x-\frac1{x^2}+\frac{2!}{x^3}-\frac{3!}{x^4}+\cdots\right),$$
+
+cuyos primeros términos aproximan bien la integral cuando $x$ es grande. Laguerre encontró además un desarrollo en fracción continua de esa integral, y los convergentes de la fracción involucran los polinomios que hoy llevan su nombre. Después probó que son ortogonales y que una función se puede desarrollar en una serie de ellos. La ecuación diferencial es la que satisfacen esos polinomios. Su conexión con el átomo de hidrógeno llegó mucho después, con la mecánica cuántica a partir de 1926.
+
+Referencias: E. Laguerre, [Sur l'intégrale $\int_x^\infty e^{-x}dx/x$](https://www.numdam.org/item/10.24033/bsmf.157.pdf), *Bull. Soc. Math. France* 7 (1879), 72 a 81. J. J. O'Connor y E. F. Robertson, [Edmond Nicolas Laguerre](https://mathshistory.st-andrews.ac.uk/Biographies/Laguerre.html), MacTutor.
+:::
+
+::: {.callout-important title="Tarea"}
+1. Resuelva por series de potencias la ecuación de Laguerre $xy''+(1-x)y'+py=0$. Encuentre la fórmula de recurrencia, diga para qué valores de $p$ la serie se corta y calcule los polinomios $L_0$, $L_1$, $L_2$ y $L_3$.
+2. Verifique que $\psi_{1s}=e^{-r/a_0}/\sqrt{\pi a_0^3}$ es solución de la ecuación de Schrödinger del átomo de hidrógeno y encuentre su energía.
+3. Cuente cuántos orbitales hay con número cuántico principal $n$ y demuestre que son $n^2$.
+:::

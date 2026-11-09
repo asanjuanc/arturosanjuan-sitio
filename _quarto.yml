@@ -69,6 +69,8 @@ website:
         - cursos/odes/taller-3/index.qmd
         - cursos/odes/osciladorcuantico/index.qmd
         - cursos/odes/airy/index.qmd
+        - cursos/odes/tambor/index.qmd
+        - cursos/odes/orbitales/index.qmd
     - id: numerico
       title: "Análisis Numérico"
       style: docked
