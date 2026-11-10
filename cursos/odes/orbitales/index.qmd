@@ -260,55 +260,94 @@ $$\frac{d^2u}{d\rho^2}+\left[-\frac14+\frac{\nu}{\rho}-\frac{\ell(\ell+1)}{\rho^
 
 Todavía no sabemos qué valores puede tomar $\nu$: eso es lo que va a cuantizar la energía.
 
-::: {.parte-matematica}
+::: {.callout-important title="Tarea: la parte radial paso a paso"}
+Vamos a resolver la parte radial del átomo de hidrógeno. Partimos de la ecuación
 
-### Los comportamientos en los extremos
+$$\frac{d^2u}{d\rho^2}+\left[-\frac14+\frac{\nu}{\rho}-\frac{\ell(\ell+1)}{\rho^2}\right]u=0,$$
 
-El punto $\rho=0$ es singular regular de @eq-u, y $\rho=\infty$ es singular irregular. Veamos qué hacen las soluciones en cada uno.
+donde $\ell=0,1,2,\dots$ es conocido y $\nu>0$ es una constante que todavía no conocemos (viene de la energía: $\nu=1/(\kappa a_0)$ con $E=-\hbar^2\kappa^2/2\mu$). Queremos saber para qué valores de $\nu$ existe una solución que sea buena en los dos extremos: acotada cerca del núcleo ($R=u/r$ acotada en $r=0$) y normalizable lejos de él ($\int^{\infty}|u|^2\,d\rho<\infty$). Los dos puntos problemáticos son $\rho=0$ y $\rho=\infty$, y se estudian con herramientas distintas. Trabajen en grupos de hasta tres personas.
 
-- **Cerca de $\rho=0$** domina el término $\ell(\ell+1)/\rho^2$. La ecuación indicial de $u''-\frac{\ell(\ell+1)}{\rho^2}u=0$ con $u=\rho^s$ es $s(s-1)=\ell(\ell+1)$, de donde $s=\ell+1$ o $s=-\ell$. La segunda da $R=u/r\sim r^{-\ell-1}$, que no es acotada en el núcleo, y la descartamos.
-- **Para $\rho$ grande** domina $-\frac14$, y $u''\approx\frac14u$ da $u\sim e^{\pm\rho/2}$. La solución con $e^{+\rho/2}$ no es normalizable y la descartamos.
+**Paso 1. Los puntos singulares.**
 
-### Factorizar: la ecuación de Laguerre asociada
+**(a)** Escriba la ecuación como $u''+Q(\rho)\,u=0$ y diga quién es $Q$. Muestre que $\rho=0$ es un punto singular regular, es decir, que $\rho^2Q(\rho)$ es analítica en $\rho=0$.
 
-Sacamos esos dos comportamientos: $u=f(\rho)\,L(\rho)$ con $f=\rho^{\ell+1}e^{-\rho/2}$. Calculamos
+**(b)** Para mirar $\rho=\infty$ haga $w=1/\rho$ y $u(\rho)=v(w)$. Por la regla de la cadena, $u'=-w^2v_w$ y $u''=w^4v_{ww}+2w^3v_w$. Muestre que la ecuación queda
 
-$$\frac{f'}{f}=\frac{\ell+1}{\rho}-\frac12,\qquad \frac{f''}{f}=\left(\frac{f'}{f}\right)^2+\left(\frac{f'}{f}\right)'=\frac{\ell(\ell+1)}{\rho^2}-\frac{\ell+1}{\rho}+\frac14.$$
+$$v_{ww}+\frac2w\,v_w+\left[-\frac{1}{4w^4}+\frac{\nu}{w^3}-\frac{\ell(\ell+1)}{w^2}\right]v=0.$$
 
-Como $u''=f''L+2f'L'+fL''$, al dividir @eq-u entre $f$ queda
+Llame $\tilde Q(w)$ al coeficiente de $v$. Concluya que $w=0$ (es decir, $\rho=\infty$) es un punto singular **irregular**, porque $w^2\tilde Q(w)$ no es analítica en $w=0$ (tiene un término $-1/(4w^2)$).
 
-$$L''+2\left(\frac{\ell+1}{\rho}-\frac12\right)L'+\left[\frac{\ell(\ell+1)}{\rho^2}-\frac{\ell+1}{\rho}+\frac14\right]L+\left[-\frac14+\frac\nu\rho-\frac{\ell(\ell+1)}{\rho^2}\right]L=0.$$
+El método de Frobenius solo funciona en puntos singulares regulares. En $\rho=0$ lo vamos a usar, pero en $\rho=\infty$ no se puede, y por eso en el paso 3 se usa otra idea.
 
-Se cancelan los términos con $1/\rho^2$ y los términos con $\frac14$. Multiplicando por $\rho$,
+**Paso 2. Cerca de $\rho=0$.**
 
-$$\rho\,L''+(2\ell+2-\rho)\,L'+(\nu-\ell-1)\,L=0.$$ {#eq-laguerre-asoc}
+Para $\rho$ pequeño domina el término $-\ell(\ell+1)/\rho^2$, y la ecuación se parece a $u''-\dfrac{\ell(\ell+1)}{\rho^2}\,u=0$.
 
-Esta es la **ecuación de Laguerre asociada**, $xy''+(k+1-x)y'+p\,y=0$ con $k=2\ell+1$ y $p=\nu-\ell-1$. (Con $k=0$ es la ecuación de Laguerre, $xy''+(1-x)y'+py=0$, que aparece en los problemas del capítulo 5 de Simmons.)
+**(a)** Pruebe $u=\rho^s$ y obtenga $s(s-1)=\ell(\ell+1)$. Concluya que $s=\ell+1$ o $s=-\ell$.
 
-### Frobenius en $\rho=0$
+**(b)** Recuerde que $R=u/r$. Diga cómo se comporta $R$ cerca de $r=0$ para cada valor de $s$, y explique por qué hay que descartar $s=-\ell$.
 
-En forma normal, $L''+\dfrac{2\ell+2-\rho}{\rho}L'+\dfrac{\nu-\ell-1}{\rho}L=0$. Como $\rho P=2\ell+2-\rho$ y $\rho^2Q=(\nu-\ell-1)\rho$ son analíticas, $\rho=0$ es un punto singular regular. Con $L=\rho^s\sum b_j\rho^j$ la ecuación indicial es
+**Paso 3. Para $\rho$ grande.**
 
-$$s(s-1)+(2\ell+2)s=0\ \Longrightarrow\ s\,(s+2\ell+1)=0,$$
+Este paso usa una idea que no hemos visto en clase. En un punto singular irregular no hay serie de Frobenius, así que se propone que la solución se comporta como una exponencial por una potencia, $u\approx e^{s\rho}\rho^{a}$, y se determinan $s$ y $a$ igualando los términos dominantes en potencias de $1/\rho$.
 
-con exponentes $s=0$ y $s=-(2\ell+1)$. El segundo da $u=\rho^{\ell+1}\rho^{-2\ell-1}=\rho^{-\ell}$: es justo la solución que ya habíamos descartado. Nos quedamos con $s=0$, y la serie $L=\sum_{j=0}^{\infty}b_j\rho^j$ con $b_0\neq0$. El coeficiente de $\rho^j$ es
+**(a)** Para $\rho$ grande, $\nu/\rho$ y $\ell(\ell+1)/\rho^2$ son mucho menores que $\frac14$. Resuelva $u''-\frac14u=0$ y vea que $u\sim e^{\pm\rho/2}$. Esto da la exponencial, pero no la potencia de $\rho$ que la acompaña, y esa potencia la vamos a necesitar.
 
-$$(j+1)j\,b_{j+1}+(2\ell+2)(j+1)\,b_{j+1}-j\,b_j+(\nu-\ell-1)\,b_j=0,$$
+**(b)** Sustituya $u=e^{s\rho}\rho^{a}$ en la ecuación original. Compruebe que
 
-es decir,
+$$u''=e^{s\rho}\rho^{a}\left[s^2+\frac{2sa}{\rho}+\frac{a(a-1)}{\rho^2}\right].$$
 
-$$b_{j+1}=\frac{j-\nu+\ell+1}{(j+1)(j+2\ell+2)}\,b_j.$$ {#eq-rec-lag}
+Divida la ecuación entre $e^{s\rho}\rho^{a}$ y agrupe por potencias de $1/\rho$. Del término de orden $\rho^{0}$ debe salir $s^2-\frac14=0$, y del de orden $\rho^{-1}$ debe salir $2sa+\nu=0$. Concluya que $s=\pm\frac12$ y $a=\mp\nu$.
 
-Los denominadores nunca se anulan, y esta recurrencia da una serie para **cualquier** valor de $\nu$. Hasta aquí no hay cuantización.
+**(c)** Hay entonces dos comportamientos posibles:
 
-### El infinito: la serie tiene que cortarse
+$$u\sim\rho^{-\nu}\,e^{\rho/2}\qquad\text{y}\qquad u\sim\rho^{\nu}\,e^{-\rho/2}.$$
 
-Si la serie no termina, $b_{j+1}/b_j\approx1/j$, que es el comportamiento de los coeficientes de $e^{\rho}$. Entonces $L$ crece como una potencia de $\rho$ por $e^{\rho}$, y $u=\rho^{\ell+1}e^{-\rho/2}L$ crece como una potencia de $\rho$ por $e^{+\rho/2}$, que no es normalizable: es justo la solución mala de $\rho\to\infty$. La única salida es que la serie se corte. El numerador de @eq-rec-lag se anula cuando $\nu=j+\ell+1$, así que
+Para cada uno decida si $\int^{\infty}|u|^2\,d\rho$ converge, y descarte el que no.
+
+**Paso 4. Factorizar lo que ya sabemos.**
+
+Sacamos el comportamiento bueno en cada extremo: $u=f(\rho)\,L(\rho)$ con $f=\rho^{\ell+1}e^{-\rho/2}$.
+
+**(a)** Calcule $f'/f$ y $f''/f$. Pista: $f''/f=(f'/f)^2+(f'/f)'$. Debe obtener $\dfrac{f'}{f}=\dfrac{\ell+1}{\rho}-\dfrac12$ y $\dfrac{f''}{f}=\dfrac{\ell(\ell+1)}{\rho^2}-\dfrac{\ell+1}{\rho}+\dfrac14$.
+
+**(b)** Use $u''=f''L+2f'L'+fL''$, sustituya en la ecuación, divida entre $f$ y simplifique (se cancelan los términos con $1/\rho^2$ y los términos con $\frac14$). Multiplique por $\rho$. Debe llegar a
+
+$$\rho\,L''+(2\ell+2-\rho)\,L'+(\nu-\ell-1)\,L=0.$$
+
+Esta es la **ecuación de Laguerre asociada**.
+
+**Paso 5. Frobenius para $L$ en $\rho=0$.**
+
+**(a)** Muestre que $\rho=0$ es un punto singular regular de la ecuación de $L$ y que la ecuación indicial es $s(s+2\ell+1)=0$. Los exponentes son $s=0$ y $s=-(2\ell+1)$. ¿Cuál se queda y cuál se descarta? Pista: calcule $u=\rho^{\ell+1}\rho^{s}$ para $s=-(2\ell+1)$ y compare con el paso 2.
+
+**(b)** Con $L=\sum_{j=0}^{\infty}b_j\rho^j$ y $b_0\neq0$, sustituya en la ecuación. Pista: $\rho L''=\sum j(j-1)\,b_j\rho^{j-1}$, $(2\ell+2)L'=\sum(2\ell+2)\,j\,b_j\rho^{j-1}$, $-\rho L'=-\sum j\,b_j\rho^{j}$, y reindexe para que todos los términos tengan $\rho^j$. Muestre que el coeficiente de $\rho^j$ da
+
+$$(j+1)(j+2\ell+2)\,b_{j+1}=(j-\nu+\ell+1)\,b_j.$$
+
+**(c)** Observe que el factor $(j+1)(j+2\ell+2)$ nunca se anula. Entonces hay una serie solución para **cualquier** valor de $\nu$. ¿Ya apareció alguna cuantización?
+
+**Paso 6. Otra vez el infinito: la serie tiene que cortarse.**
+
+**(a)** Suponga que la serie no termina. Muestre que $b_{j+1}/b_j\approx 1/j$ cuando $j\to\infty$.
+
+**(b)** Los coeficientes de $e^{\rho}=\sum\rho^j/j!$ tienen razón $1/(j+1)\approx1/j$. Esto indica que $L$ crece como $e^{\rho}$ (por una potencia de $\rho$). Entonces $u=\rho^{\ell+1}e^{-\rho/2}L$ crece como $e^{+\rho/2}$ por una potencia de $\rho$. ¿A cuál de los dos comportamientos del paso 3 corresponde? ¿Es aceptable?
+
+**(c)** La única salida es que la serie se corte, es decir, que $L$ sea un polinomio. Muestre que si el numerador $j-\nu+\ell+1$ se anula para algún $j=k\ge0$, entonces $b_{k+1}=b_{k+2}=\cdots=0$. Deduzca que
 
 $$\nu=n,\qquad n=\ell+1,\ \ell+2,\ \ell+3,\dots$$
 
-y $L$ es un polinomio de grado $n-\ell-1$, el **polinomio de Laguerre asociado** $L_{n-\ell-1}^{(2\ell+1)}(\rho)$ (salvo una constante).
+y que $L$ es un polinomio de grado $n-\ell-1$.
 
+**(d) Reto (opcional).** Muestre que $\dfrac{b_{j+1}}{b_j}=\dfrac1j\left(1-\dfrac{\nu+\ell+2}{j}+\cdots\right)$. Los coeficientes de $\rho^{q}e^{\rho}$ (que son $1/\Gamma(j-q+1)$) tienen razón $\dfrac1j\left(1+\dfrac{q-1}{j}+\cdots\right)$. Concluya que $q=-\nu-\ell-1$ y verifique que esto es consistente con $u\sim\rho^{-\nu}e^{\rho/2}$ del paso 3.
+
+**Paso 7. La energía.**
+
+Como $\nu=1/(\kappa a_0)=n$, se tiene $\kappa=1/(na_0)$. Use $E=-\hbar^2\kappa^2/2\mu$ y $a_0=4\pi\varepsilon_0\hbar^2/(\mu e^2)$ para escribir $E_n$ en términos de $n$ y de las constantes, y diga qué valores de $\ell$ son posibles para un $n$ dado.
+
+**Paso 8. Verificación.**
+
+Con $\rho=2r/n$ se tiene $R(r)\propto\rho^{\ell}e^{-\rho/2}L(\rho)$. Use la fórmula de recurrencia del paso 5(b), con $b_0=1$, para calcular $L$ en los casos $(n,\ell)=(2,0)$, $(2,1)$ y $(3,0)$, y compare $R$ con la tabla de funciones radiales de esta página (salvo una constante).
 :::
 
 ### La energía

@@ -535,7 +535,7 @@ window.Quarto = {
   <li><a href="#la-parte-radial" id="toc-la-parte-radial" class="nav-link" data-scroll-target="#la-parte-radial"><span class="header-section-number">6</span> La parte radial</a>
   <ul class="collapse">
   <li><a href="#preparando-la-ecuación" id="toc-preparando-la-ecuación" class="nav-link" data-scroll-target="#preparando-la-ecuación"><span class="header-section-number">6.1</span> Preparando la ecuación</a></li>
-  <li><a href="#la-energía" id="toc-la-energía" class="nav-link" data-scroll-target="#la-energía"><span class="header-section-number">6.6</span> La energía</a></li>
+  <li><a href="#la-energía" id="toc-la-energía" class="nav-link" data-scroll-target="#la-energía"><span class="header-section-number">6.2</span> La energía</a></li>
   </ul></li>
   <li><a href="#los-orbitales" id="toc-los-orbitales" class="nav-link" data-scroll-target="#los-orbitales"><span class="header-section-number">7</span> Los orbitales</a>
   <ul class="collapse">
@@ -742,47 +742,67 @@ window.Quarto = {
 <p>donde <span class="math inline">\(a_0\)</span> es el <strong>radio de Bohr</strong>, y entonces <span class="math inline">\(\dfrac{2\mu}{\hbar^2}\dfrac{e^2}{4\pi\varepsilon_0}=\dfrac2{a_0}\)</span>. Con <span class="math inline">\(\rho=2\kappa r\)</span> y <span class="math inline">\(\nu=\dfrac1{\kappa a_0}\)</span> la ecuación queda</p>
 <p><span id="eq-u"><span class="math display">\[\frac{d^2u}{d\rho^2}+\left[-\frac14+\frac{\nu}{\rho}-\frac{\ell(\ell+1)}{\rho^2}\right]u=0. \tag{13}\]</span></span></p>
 <p>Todavía no sabemos qué valores puede tomar <span class="math inline">\(\nu\)</span>: eso es lo que va a cuantizar la energía.</p>
-</section>
-<div class="parte-matematica">
-<section id="los-comportamientos-en-los-extremos" class="level3" data-number="6.2">
-<h3 data-number="6.2" class="anchored" data-anchor-id="los-comportamientos-en-los-extremos"><span class="header-section-number">6.2</span> Los comportamientos en los extremos</h3>
-<p>El punto <span class="math inline">\(\rho=0\)</span> es singular regular de <a href="#eq-u" class="quarto-xref">Ecuación&nbsp;13</a>, y <span class="math inline">\(\rho=\infty\)</span> es singular irregular. Veamos qué hacen las soluciones en cada uno.</p>
-<ul>
-<li><strong>Cerca de <span class="math inline">\(\rho=0\)</span></strong> domina el término <span class="math inline">\(\ell(\ell+1)/\rho^2\)</span>. La ecuación indicial de <span class="math inline">\(u''-\frac{\ell(\ell+1)}{\rho^2}u=0\)</span> con <span class="math inline">\(u=\rho^s\)</span> es <span class="math inline">\(s(s-1)=\ell(\ell+1)\)</span>, de donde <span class="math inline">\(s=\ell+1\)</span> o <span class="math inline">\(s=-\ell\)</span>. La segunda da <span class="math inline">\(R=u/r\sim r^{-\ell-1}\)</span>, que no es acotada en el núcleo, y la descartamos.</li>
-<li><strong>Para <span class="math inline">\(\rho\)</span> grande</strong> domina <span class="math inline">\(-\frac14\)</span>, y <span class="math inline">\(u''\approx\frac14u\)</span> da <span class="math inline">\(u\sim e^{\pm\rho/2}\)</span>. La solución con <span class="math inline">\(e^{+\rho/2}\)</span> no es normalizable y la descartamos.</li>
-</ul>
-</section>
-<section id="factorizar-la-ecuación-de-laguerre-asociada" class="level3" data-number="6.3">
-<h3 data-number="6.3" class="anchored" data-anchor-id="factorizar-la-ecuación-de-laguerre-asociada"><span class="header-section-number">6.3</span> Factorizar: la ecuación de Laguerre asociada</h3>
-<p>Sacamos esos dos comportamientos: <span class="math inline">\(u=f(\rho)\,L(\rho)\)</span> con <span class="math inline">\(f=\rho^{\ell+1}e^{-\rho/2}\)</span>. Calculamos</p>
-<p><span class="math display">\[\frac{f'}{f}=\frac{\ell+1}{\rho}-\frac12,\qquad \frac{f''}{f}=\left(\frac{f'}{f}\right)^2+\left(\frac{f'}{f}\right)'=\frac{\ell(\ell+1)}{\rho^2}-\frac{\ell+1}{\rho}+\frac14.\]</span></p>
-<p>Como <span class="math inline">\(u''=f''L+2f'L'+fL''\)</span>, al dividir <a href="#eq-u" class="quarto-xref">Ecuación&nbsp;13</a> entre <span class="math inline">\(f\)</span> queda</p>
-<p><span class="math display">\[L''+2\left(\frac{\ell+1}{\rho}-\frac12\right)L'+\left[\frac{\ell(\ell+1)}{\rho^2}-\frac{\ell+1}{\rho}+\frac14\right]L+\left[-\frac14+\frac\nu\rho-\frac{\ell(\ell+1)}{\rho^2}\right]L=0.\]</span></p>
-<p>Se cancelan los términos con <span class="math inline">\(1/\rho^2\)</span> y los términos con <span class="math inline">\(\frac14\)</span>. Multiplicando por <span class="math inline">\(\rho\)</span>,</p>
-<p><span id="eq-laguerre-asoc"><span class="math display">\[\rho\,L''+(2\ell+2-\rho)\,L'+(\nu-\ell-1)\,L=0. \tag{14}\]</span></span></p>
-<p>Esta es la <strong>ecuación de Laguerre asociada</strong>, <span class="math inline">\(xy''+(k+1-x)y'+p\,y=0\)</span> con <span class="math inline">\(k=2\ell+1\)</span> y <span class="math inline">\(p=\nu-\ell-1\)</span>. (Con <span class="math inline">\(k=0\)</span> es la ecuación de Laguerre, <span class="math inline">\(xy''+(1-x)y'+py=0\)</span>, que aparece en los problemas del capítulo 5 de Simmons.)</p>
-</section>
-<section id="frobenius-en-rho0" class="level3" data-number="6.4">
-<h3 data-number="6.4" class="anchored" data-anchor-id="frobenius-en-rho0"><span class="header-section-number">6.4</span> Frobenius en <span class="math inline">\(\rho=0\)</span></h3>
-<p>En forma normal, <span class="math inline">\(L''+\dfrac{2\ell+2-\rho}{\rho}L'+\dfrac{\nu-\ell-1}{\rho}L=0\)</span>. Como <span class="math inline">\(\rho P=2\ell+2-\rho\)</span> y <span class="math inline">\(\rho^2Q=(\nu-\ell-1)\rho\)</span> son analíticas, <span class="math inline">\(\rho=0\)</span> es un punto singular regular. Con <span class="math inline">\(L=\rho^s\sum b_j\rho^j\)</span> la ecuación indicial es</p>
-<p><span class="math display">\[s(s-1)+(2\ell+2)s=0\ \Longrightarrow\ s\,(s+2\ell+1)=0,\]</span></p>
-<p>con exponentes <span class="math inline">\(s=0\)</span> y <span class="math inline">\(s=-(2\ell+1)\)</span>. El segundo da <span class="math inline">\(u=\rho^{\ell+1}\rho^{-2\ell-1}=\rho^{-\ell}\)</span>: es justo la solución que ya habíamos descartado. Nos quedamos con <span class="math inline">\(s=0\)</span>, y la serie <span class="math inline">\(L=\sum_{j=0}^{\infty}b_j\rho^j\)</span> con <span class="math inline">\(b_0\neq0\)</span>. El coeficiente de <span class="math inline">\(\rho^j\)</span> es</p>
-<p><span class="math display">\[(j+1)j\,b_{j+1}+(2\ell+2)(j+1)\,b_{j+1}-j\,b_j+(\nu-\ell-1)\,b_j=0,\]</span></p>
-<p>es decir,</p>
-<p><span id="eq-rec-lag"><span class="math display">\[b_{j+1}=\frac{j-\nu+\ell+1}{(j+1)(j+2\ell+2)}\,b_j. \tag{15}\]</span></span></p>
-<p>Los denominadores nunca se anulan, y esta recurrencia da una serie para <strong>cualquier</strong> valor de <span class="math inline">\(\nu\)</span>. Hasta aquí no hay cuantización.</p>
-</section>
-<section id="el-infinito-la-serie-tiene-que-cortarse" class="level3" data-number="6.5">
-<h3 data-number="6.5" class="anchored" data-anchor-id="el-infinito-la-serie-tiene-que-cortarse"><span class="header-section-number">6.5</span> El infinito: la serie tiene que cortarse</h3>
-<p>Si la serie no termina, <span class="math inline">\(b_{j+1}/b_j\approx1/j\)</span>, que es el comportamiento de los coeficientes de <span class="math inline">\(e^{\rho}\)</span>. Entonces <span class="math inline">\(L\)</span> crece como una potencia de <span class="math inline">\(\rho\)</span> por <span class="math inline">\(e^{\rho}\)</span>, y <span class="math inline">\(u=\rho^{\ell+1}e^{-\rho/2}L\)</span> crece como una potencia de <span class="math inline">\(\rho\)</span> por <span class="math inline">\(e^{+\rho/2}\)</span>, que no es normalizable: es justo la solución mala de <span class="math inline">\(\rho\to\infty\)</span>. La única salida es que la serie se corte. El numerador de <a href="#eq-rec-lag" class="quarto-xref">Ecuación&nbsp;15</a> se anula cuando <span class="math inline">\(\nu=j+\ell+1\)</span>, así que</p>
-<p><span class="math display">\[\nu=n,\qquad n=\ell+1,\ \ell+2,\ \ell+3,\dots\]</span></p>
-<p>y <span class="math inline">\(L\)</span> es un polinomio de grado <span class="math inline">\(n-\ell-1\)</span>, el <strong>polinomio de Laguerre asociado</strong> <span class="math inline">\(L_{n-\ell-1}^{(2\ell+1)}(\rho)\)</span> (salvo una constante).</p>
-</section>
+<div class="callout callout-style-default callout-important callout-titled" title="Tarea: la parte radial paso a paso">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<section id="la-energía" class="level3" data-number="6.6">
-<h3 data-number="6.6" class="anchored" data-anchor-id="la-energía"><span class="header-section-number">6.6</span> La energía</h3>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Tarea: la parte radial paso a paso
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Vamos a resolver la parte radial del átomo de hidrógeno. Partimos de la ecuación</p>
+<p><span class="math display">\[\frac{d^2u}{d\rho^2}+\left[-\frac14+\frac{\nu}{\rho}-\frac{\ell(\ell+1)}{\rho^2}\right]u=0,\]</span></p>
+<p>donde <span class="math inline">\(\ell=0,1,2,\dots\)</span> es conocido y <span class="math inline">\(\nu&gt;0\)</span> es una constante que todavía no conocemos (viene de la energía: <span class="math inline">\(\nu=1/(\kappa a_0)\)</span> con <span class="math inline">\(E=-\hbar^2\kappa^2/2\mu\)</span>). Queremos saber para qué valores de <span class="math inline">\(\nu\)</span> existe una solución que sea buena en los dos extremos: acotada cerca del núcleo (<span class="math inline">\(R=u/r\)</span> acotada en <span class="math inline">\(r=0\)</span>) y normalizable lejos de él (<span class="math inline">\(\int^{\infty}|u|^2\,d\rho&lt;\infty\)</span>). Los dos puntos problemáticos son <span class="math inline">\(\rho=0\)</span> y <span class="math inline">\(\rho=\infty\)</span>, y se estudian con herramientas distintas. Trabajen en grupos de hasta tres personas.</p>
+<p><strong>Paso 1. Los puntos singulares.</strong></p>
+<p><strong>(a)</strong> Escriba la ecuación como <span class="math inline">\(u''+Q(\rho)\,u=0\)</span> y diga quién es <span class="math inline">\(Q\)</span>. Muestre que <span class="math inline">\(\rho=0\)</span> es un punto singular regular, es decir, que <span class="math inline">\(\rho^2Q(\rho)\)</span> es analítica en <span class="math inline">\(\rho=0\)</span>.</p>
+<p><strong>(b)</strong> Para mirar <span class="math inline">\(\rho=\infty\)</span> haga <span class="math inline">\(w=1/\rho\)</span> y <span class="math inline">\(u(\rho)=v(w)\)</span>. Por la regla de la cadena, <span class="math inline">\(u'=-w^2v_w\)</span> y <span class="math inline">\(u''=w^4v_{ww}+2w^3v_w\)</span>. Muestre que la ecuación queda</p>
+<p><span class="math display">\[v_{ww}+\frac2w\,v_w+\left[-\frac{1}{4w^4}+\frac{\nu}{w^3}-\frac{\ell(\ell+1)}{w^2}\right]v=0.\]</span></p>
+<p>Llame <span class="math inline">\(\tilde Q(w)\)</span> al coeficiente de <span class="math inline">\(v\)</span>. Concluya que <span class="math inline">\(w=0\)</span> (es decir, <span class="math inline">\(\rho=\infty\)</span>) es un punto singular <strong>irregular</strong>, porque <span class="math inline">\(w^2\tilde Q(w)\)</span> no es analítica en <span class="math inline">\(w=0\)</span> (tiene un término <span class="math inline">\(-1/(4w^2)\)</span>).</p>
+<p>El método de Frobenius solo funciona en puntos singulares regulares. En <span class="math inline">\(\rho=0\)</span> lo vamos a usar, pero en <span class="math inline">\(\rho=\infty\)</span> no se puede, y por eso en el paso 3 se usa otra idea.</p>
+<p><strong>Paso 2. Cerca de <span class="math inline">\(\rho=0\)</span>.</strong></p>
+<p>Para <span class="math inline">\(\rho\)</span> pequeño domina el término <span class="math inline">\(-\ell(\ell+1)/\rho^2\)</span>, y la ecuación se parece a <span class="math inline">\(u''-\dfrac{\ell(\ell+1)}{\rho^2}\,u=0\)</span>.</p>
+<p><strong>(a)</strong> Pruebe <span class="math inline">\(u=\rho^s\)</span> y obtenga <span class="math inline">\(s(s-1)=\ell(\ell+1)\)</span>. Concluya que <span class="math inline">\(s=\ell+1\)</span> o <span class="math inline">\(s=-\ell\)</span>.</p>
+<p><strong>(b)</strong> Recuerde que <span class="math inline">\(R=u/r\)</span>. Diga cómo se comporta <span class="math inline">\(R\)</span> cerca de <span class="math inline">\(r=0\)</span> para cada valor de <span class="math inline">\(s\)</span>, y explique por qué hay que descartar <span class="math inline">\(s=-\ell\)</span>.</p>
+<p><strong>Paso 3. Para <span class="math inline">\(\rho\)</span> grande.</strong></p>
+<p>Este paso usa una idea que no hemos visto en clase. En un punto singular irregular no hay serie de Frobenius, así que se propone que la solución se comporta como una exponencial por una potencia, <span class="math inline">\(u\approx e^{s\rho}\rho^{a}\)</span>, y se determinan <span class="math inline">\(s\)</span> y <span class="math inline">\(a\)</span> igualando los términos dominantes en potencias de <span class="math inline">\(1/\rho\)</span>.</p>
+<p><strong>(a)</strong> Para <span class="math inline">\(\rho\)</span> grande, <span class="math inline">\(\nu/\rho\)</span> y <span class="math inline">\(\ell(\ell+1)/\rho^2\)</span> son mucho menores que <span class="math inline">\(\frac14\)</span>. Resuelva <span class="math inline">\(u''-\frac14u=0\)</span> y vea que <span class="math inline">\(u\sim e^{\pm\rho/2}\)</span>. Esto da la exponencial, pero no la potencia de <span class="math inline">\(\rho\)</span> que la acompaña, y esa potencia la vamos a necesitar.</p>
+<p><strong>(b)</strong> Sustituya <span class="math inline">\(u=e^{s\rho}\rho^{a}\)</span> en la ecuación original. Compruebe que</p>
+<p><span class="math display">\[u''=e^{s\rho}\rho^{a}\left[s^2+\frac{2sa}{\rho}+\frac{a(a-1)}{\rho^2}\right].\]</span></p>
+<p>Divida la ecuación entre <span class="math inline">\(e^{s\rho}\rho^{a}\)</span> y agrupe por potencias de <span class="math inline">\(1/\rho\)</span>. Del término de orden <span class="math inline">\(\rho^{0}\)</span> debe salir <span class="math inline">\(s^2-\frac14=0\)</span>, y del de orden <span class="math inline">\(\rho^{-1}\)</span> debe salir <span class="math inline">\(2sa+\nu=0\)</span>. Concluya que <span class="math inline">\(s=\pm\frac12\)</span> y <span class="math inline">\(a=\mp\nu\)</span>.</p>
+<p><strong>(c)</strong> Hay entonces dos comportamientos posibles:</p>
+<p><span class="math display">\[u\sim\rho^{-\nu}\,e^{\rho/2}\qquad\text{y}\qquad u\sim\rho^{\nu}\,e^{-\rho/2}.\]</span></p>
+<p>Para cada uno decida si <span class="math inline">\(\int^{\infty}|u|^2\,d\rho\)</span> converge, y descarte el que no.</p>
+<p><strong>Paso 4. Factorizar lo que ya sabemos.</strong></p>
+<p>Sacamos el comportamiento bueno en cada extremo: <span class="math inline">\(u=f(\rho)\,L(\rho)\)</span> con <span class="math inline">\(f=\rho^{\ell+1}e^{-\rho/2}\)</span>.</p>
+<p><strong>(a)</strong> Calcule <span class="math inline">\(f'/f\)</span> y <span class="math inline">\(f''/f\)</span>. Pista: <span class="math inline">\(f''/f=(f'/f)^2+(f'/f)'\)</span>. Debe obtener <span class="math inline">\(\dfrac{f'}{f}=\dfrac{\ell+1}{\rho}-\dfrac12\)</span> y <span class="math inline">\(\dfrac{f''}{f}=\dfrac{\ell(\ell+1)}{\rho^2}-\dfrac{\ell+1}{\rho}+\dfrac14\)</span>.</p>
+<p><strong>(b)</strong> Use <span class="math inline">\(u''=f''L+2f'L'+fL''\)</span>, sustituya en la ecuación, divida entre <span class="math inline">\(f\)</span> y simplifique (se cancelan los términos con <span class="math inline">\(1/\rho^2\)</span> y los términos con <span class="math inline">\(\frac14\)</span>). Multiplique por <span class="math inline">\(\rho\)</span>. Debe llegar a</p>
+<p><span class="math display">\[\rho\,L''+(2\ell+2-\rho)\,L'+(\nu-\ell-1)\,L=0.\]</span></p>
+<p>Esta es la <strong>ecuación de Laguerre asociada</strong>.</p>
+<p><strong>Paso 5. Frobenius para <span class="math inline">\(L\)</span> en <span class="math inline">\(\rho=0\)</span>.</strong></p>
+<p><strong>(a)</strong> Muestre que <span class="math inline">\(\rho=0\)</span> es un punto singular regular de la ecuación de <span class="math inline">\(L\)</span> y que la ecuación indicial es <span class="math inline">\(s(s+2\ell+1)=0\)</span>. Los exponentes son <span class="math inline">\(s=0\)</span> y <span class="math inline">\(s=-(2\ell+1)\)</span>. ¿Cuál se queda y cuál se descarta? Pista: calcule <span class="math inline">\(u=\rho^{\ell+1}\rho^{s}\)</span> para <span class="math inline">\(s=-(2\ell+1)\)</span> y compare con el paso 2.</p>
+<p><strong>(b)</strong> Con <span class="math inline">\(L=\sum_{j=0}^{\infty}b_j\rho^j\)</span> y <span class="math inline">\(b_0\neq0\)</span>, sustituya en la ecuación. Pista: <span class="math inline">\(\rho L''=\sum j(j-1)\,b_j\rho^{j-1}\)</span>, <span class="math inline">\((2\ell+2)L'=\sum(2\ell+2)\,j\,b_j\rho^{j-1}\)</span>, <span class="math inline">\(-\rho L'=-\sum j\,b_j\rho^{j}\)</span>, y reindexe para que todos los términos tengan <span class="math inline">\(\rho^j\)</span>. Muestre que el coeficiente de <span class="math inline">\(\rho^j\)</span> da</p>
+<p><span class="math display">\[(j+1)(j+2\ell+2)\,b_{j+1}=(j-\nu+\ell+1)\,b_j.\]</span></p>
+<p><strong>(c)</strong> Observe que el factor <span class="math inline">\((j+1)(j+2\ell+2)\)</span> nunca se anula. Entonces hay una serie solución para <strong>cualquier</strong> valor de <span class="math inline">\(\nu\)</span>. ¿Ya apareció alguna cuantización?</p>
+<p><strong>Paso 6. Otra vez el infinito: la serie tiene que cortarse.</strong></p>
+<p><strong>(a)</strong> Suponga que la serie no termina. Muestre que <span class="math inline">\(b_{j+1}/b_j\approx 1/j\)</span> cuando <span class="math inline">\(j\to\infty\)</span>.</p>
+<p><strong>(b)</strong> Los coeficientes de <span class="math inline">\(e^{\rho}=\sum\rho^j/j!\)</span> tienen razón <span class="math inline">\(1/(j+1)\approx1/j\)</span>. Esto indica que <span class="math inline">\(L\)</span> crece como <span class="math inline">\(e^{\rho}\)</span> (por una potencia de <span class="math inline">\(\rho\)</span>). Entonces <span class="math inline">\(u=\rho^{\ell+1}e^{-\rho/2}L\)</span> crece como <span class="math inline">\(e^{+\rho/2}\)</span> por una potencia de <span class="math inline">\(\rho\)</span>. ¿A cuál de los dos comportamientos del paso 3 corresponde? ¿Es aceptable?</p>
+<p><strong>(c)</strong> La única salida es que la serie se corte, es decir, que <span class="math inline">\(L\)</span> sea un polinomio. Muestre que si el numerador <span class="math inline">\(j-\nu+\ell+1\)</span> se anula para algún <span class="math inline">\(j=k\ge0\)</span>, entonces <span class="math inline">\(b_{k+1}=b_{k+2}=\cdots=0\)</span>. Deduzca que</p>
+<p><span class="math display">\[\nu=n,\qquad n=\ell+1,\ \ell+2,\ \ell+3,\dots\]</span></p>
+<p>y que <span class="math inline">\(L\)</span> es un polinomio de grado <span class="math inline">\(n-\ell-1\)</span>.</p>
+<p><strong>(d) Reto (opcional).</strong> Muestre que <span class="math inline">\(\dfrac{b_{j+1}}{b_j}=\dfrac1j\left(1-\dfrac{\nu+\ell+2}{j}+\cdots\right)\)</span>. Los coeficientes de <span class="math inline">\(\rho^{q}e^{\rho}\)</span> (que son <span class="math inline">\(1/\Gamma(j-q+1)\)</span>) tienen razón <span class="math inline">\(\dfrac1j\left(1+\dfrac{q-1}{j}+\cdots\right)\)</span>. Concluya que <span class="math inline">\(q=-\nu-\ell-1\)</span> y verifique que esto es consistente con <span class="math inline">\(u\sim\rho^{-\nu}e^{\rho/2}\)</span> del paso 3.</p>
+<p><strong>Paso 7. La energía.</strong></p>
+<p>Como <span class="math inline">\(\nu=1/(\kappa a_0)=n\)</span>, se tiene <span class="math inline">\(\kappa=1/(na_0)\)</span>. Use <span class="math inline">\(E=-\hbar^2\kappa^2/2\mu\)</span> y <span class="math inline">\(a_0=4\pi\varepsilon_0\hbar^2/(\mu e^2)\)</span> para escribir <span class="math inline">\(E_n\)</span> en términos de <span class="math inline">\(n\)</span> y de las constantes, y diga qué valores de <span class="math inline">\(\ell\)</span> son posibles para un <span class="math inline">\(n\)</span> dado.</p>
+<p><strong>Paso 8. Verificación.</strong></p>
+<p>Con <span class="math inline">\(\rho=2r/n\)</span> se tiene <span class="math inline">\(R(r)\propto\rho^{\ell}e^{-\rho/2}L(\rho)\)</span>. Use la fórmula de recurrencia del paso 5(b), con <span class="math inline">\(b_0=1\)</span>, para calcular <span class="math inline">\(L\)</span> en los casos <span class="math inline">\((n,\ell)=(2,0)\)</span>, <span class="math inline">\((2,1)\)</span> y <span class="math inline">\((3,0)\)</span>, y compare <span class="math inline">\(R\)</span> con la tabla de funciones radiales de esta página (salvo una constante).</p>
+</div>
+</div>
+</section>
+<section id="la-energía" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="la-energía"><span class="header-section-number">6.2</span> La energía</h3>
 <p>La condición <span class="math inline">\(\nu=n\)</span> dice <span class="math inline">\(\kappa=\dfrac1{na_0}\)</span>, y entonces</p>
-<p><span id="eq-energia"><span class="math display">\[E_n=-\frac{\hbar^2\kappa^2}{2\mu}=-\frac{\hbar^2}{2\mu a_0^2}\,\frac1{n^2}=-\frac{\mu e^4}{2(4\pi\varepsilon_0)^2\hbar^2}\,\frac1{n^2}\approx-\frac{13{,}6\ \text{eV}}{n^2},\qquad n=1,2,3,\dots \tag{16}\]</span></span></p>
+<p><span id="eq-energia"><span class="math display">\[E_n=-\frac{\hbar^2\kappa^2}{2\mu}=-\frac{\hbar^2}{2\mu a_0^2}\,\frac1{n^2}=-\frac{\mu e^4}{2(4\pi\varepsilon_0)^2\hbar^2}\,\frac1{n^2}\approx-\frac{13{,}6\ \text{eV}}{n^2},\qquad n=1,2,3,\dots \tag{14}\]</span></span></p>
 <p>Estos son los niveles de energía del hidrógeno, y coinciden con los del modelo de Bohr. Dos observaciones:</p>
 <ul>
 <li>La energía solo depende de <span class="math inline">\(n\)</span>, no de <span class="math inline">\(\ell\)</span> ni de <span class="math inline">\(m\)</span>. Es una característica del potencial <span class="math inline">\(1/r\)</span> (con otro potencial central los niveles dependerían de <span class="math inline">\(\ell\)</span>).</li>
@@ -798,7 +818,7 @@ window.Quarto = {
 <section id="los-tres-números-cuánticos" class="level3" data-number="7.1">
 <h3 data-number="7.1" class="anchored" data-anchor-id="los-tres-números-cuánticos"><span class="header-section-number">7.1</span> Los tres números cuánticos</h3>
 <p>La función de onda completa es</p>
-<p><span id="eq-orbital"><span class="math display">\[\psi_{n\ell m}(r,\theta,\varphi)=R_{n\ell}(r)\,Y_\ell^m(\theta,\varphi), \tag{17}\]</span></span></p>
+<p><span id="eq-orbital"><span class="math display">\[\psi_{n\ell m}(r,\theta,\varphi)=R_{n\ell}(r)\,Y_\ell^m(\theta,\varphi), \tag{15}\]</span></span></p>
 <p>y se llama un <strong>orbital</strong>. Está determinado por tres números enteros:</p>
 <table class="caption-top table">
 <colgroup>
@@ -840,7 +860,7 @@ window.Quarto = {
 </section>
 <section id="las-funciones-radiales" class="level3" data-number="7.2">
 <h3 data-number="7.2" class="anchored" data-anchor-id="las-funciones-radiales"><span class="header-section-number">7.2</span> Las funciones radiales</h3>
-<p>Con la recurrencia <a href="#eq-rec-lag" class="quarto-xref">Ecuación&nbsp;15</a> y la normalización se obtienen las primeras funciones radiales. En unidades <span class="math inline">\(a_0=1\)</span> (y en unidades de <span class="math inline">\(a_0^{-3/2}\)</span>):</p>
+<p>Con la recurrencia <strong>?@eq-rec-lag</strong> y la normalización se obtienen las primeras funciones radiales. En unidades <span class="math inline">\(a_0=1\)</span> (y en unidades de <span class="math inline">\(a_0^{-3/2}\)</span>):</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -1163,7 +1183,7 @@ sincronizar(); requestAnimationFrame(cuadro);
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Con Maxima se verifica todo lo anterior: el laplaciano en esféricas contra el cartesiano, las series de <span class="math inline">\(P_n\)</span> y de <span class="math inline">\(Q_n\)</span>, la ecuación de <span class="math inline">\(v\)</span> y su recurrencia, las funciones de Legendre asociadas, la normalización de los armónicos esféricos, las funciones radiales (con la serie de <a href="#eq-rec-lag" class="quarto-xref">Ecuación&nbsp;15</a>) y los orbitales en cartesianas con sus energías.</p>
+<p>Con Maxima se verifica todo lo anterior: el laplaciano en esféricas contra el cartesiano, las series de <span class="math inline">\(P_n\)</span> y de <span class="math inline">\(Q_n\)</span>, la ecuación de <span class="math inline">\(v\)</span> y su recurrencia, las funciones de Legendre asociadas, la normalización de los armónicos esféricos, las funciones radiales (con la serie de <strong>?@eq-rec-lag</strong>) y los orbitales en cartesianas con sus energías.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kill</span>(<span class="cn">all</span>)$</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">/* 1. El laplaciano en esfericas se compara con el cartesiano en una funcion de prueba */</span></span>
