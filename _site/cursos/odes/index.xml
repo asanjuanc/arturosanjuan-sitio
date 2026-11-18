@@ -15,7 +15,132 @@
 <link>https://arturosanjuan.xyz/cursos/odes/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Sun, 08 Nov 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 17 Nov 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Parcial 2</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/odes/parcial-2/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Este parcial individual repasa las técnicas vistas en el segundo corte del curso para las ecuaciones lineales de segundo orden: coeficientes constantes con coeficientes indeterminados y resonancia, una solución conocida con reducción de orden y variación de parámetros, y el papel de las hipótesis del teorema de existencia y unicidad. En todos los puntos el Wronskiano es la herramienta para decidir si dos soluciones son linealmente independientes.</p>
+<section id="coeficientes-constantes-y-resonancia" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="coeficientes-constantes-y-resonancia"><span class="header-section-number">1</span> Coeficientes constantes y resonancia</h2>
+<p>Considere el problema de valor inicial</p>
+<p><img src="https://latex.codecogs.com/png.latex?y''+4y=%5Csin%202x,%20%5Cqquad%20y(0)=1,%20%5Cquad%20y'(0)=0."></p>
+<ol type="1">
+<li>Halle la solución general de la ecuación homogénea asociada y verifique con el Wronskiano que las dos soluciones encontradas son linealmente independientes. (5 pts)</li>
+<li>Explique por qué el ensayo <img src="https://latex.codecogs.com/png.latex?y_p=A%5Ccos%202x+B%5Csin%202x"> no funciona y proponga la forma correcta. Determine <img src="https://latex.codecogs.com/png.latex?y_p"> por coeficientes indeterminados. (5 pts)</li>
+<li>Resuelva el problema de valor inicial. (5 pts)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La ecuación característica de <img src="https://latex.codecogs.com/png.latex?y''+4y=0"> es <img src="https://latex.codecogs.com/png.latex?m%5E2+4=0">, con raíces <img src="https://latex.codecogs.com/png.latex?m=%5Cpm%202i">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?y_1=%5Ccos%202x,%20%5Cqquad%20y_2=%5Csin%202x,%20%5Cqquad%20y_h=c_1%5Ccos%202x+c_2%5Csin%202x."></p>
+<p>El Wronskiano es</p>
+<p><img src="https://latex.codecogs.com/png.latex?W(y_1,y_2)=y_1y_2'-y_2y_1'=%5Ccos%202x%5C,(2%5Ccos%202x)-%5Csin%202x%5C,(-2%5Csin%202x)=2%5Cneq%200,"></p>
+<p>así que <img src="https://latex.codecogs.com/png.latex?y_1"> y <img src="https://latex.codecogs.com/png.latex?y_2"> son linealmente independientes en todo <img src="https://latex.codecogs.com/png.latex?%5Cmathbb%20R">.</p>
+<p>El ensayo natural para <img src="https://latex.codecogs.com/png.latex?%5Csin%202x"> sería <img src="https://latex.codecogs.com/png.latex?A%5Ccos%202x+B%5Csin%202x">, pero esa función es una combinación de <img src="https://latex.codecogs.com/png.latex?y_1"> y <img src="https://latex.codecogs.com/png.latex?y_2">, es decir, una solución de la homogénea. Al sustituirla el lado izquierdo da <img src="https://latex.codecogs.com/png.latex?0"> y nunca <img src="https://latex.codecogs.com/png.latex?%5Csin%202x">. Esto es resonancia: la frecuencia del forzamiento coincide con la frecuencia natural <img src="https://latex.codecogs.com/png.latex?2"> del oscilador. Se multiplica por <img src="https://latex.codecogs.com/png.latex?x">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?y_p=x%5C,(A%5Ccos%202x+B%5Csin%202x)."></p>
+<p>Al calcular <img src="https://latex.codecogs.com/png.latex?y_p''+4y_p">, los términos que llevan <img src="https://latex.codecogs.com/png.latex?x"> se cancelan porque <img src="https://latex.codecogs.com/png.latex?A%5Ccos%202x+B%5Csin%202x"> resuelve la homogénea, y solo sobrevive el doble de la derivada de ese factor:</p>
+<p><img src="https://latex.codecogs.com/png.latex?y_p''+4y_p=2%5Cleft(-2A%5Csin%202x+2B%5Ccos%202x%5Cright)=%5Csin%202x%20%5C;%5CLongrightarrow%5C;%20A=-%5Cfrac14,%20%5Cquad%20B=0."></p>
+<p><img src="https://latex.codecogs.com/png.latex?y_p=-%5Cfrac14%5C,x%5Ccos%202x."></p>
+<p>La solución general es</p>
+<p><img src="https://latex.codecogs.com/png.latex?y=c_1%5Ccos%202x+c_2%5Csin%202x-%5Cfrac%7Bx%7D%7B4%7D%5Ccos%202x."></p>
+<p>De <img src="https://latex.codecogs.com/png.latex?y(0)=c_1=1"> y <img src="https://latex.codecogs.com/png.latex?y'(0)=2c_2-%5Ctfrac14=0"> sale <img src="https://latex.codecogs.com/png.latex?c_2=%5Ctfrac18">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cboxed%7By(x)=%5Ccos%202x+%5Cfrac18%5Csin%202x-%5Cfrac%7Bx%7D%7B4%7D%5Ccos%202x%7D"></p>
+</div>
+</div>
+</section>
+<section id="coeficientes-variables-una-solución-conocida-y-variación-de-parámetros" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="coeficientes-variables-una-solución-conocida-y-variación-de-parámetros"><span class="header-section-number">2</span> Coeficientes variables: una solución conocida y variación de parámetros</h2>
+<p>Considere ahora, en el intervalo <img src="https://latex.codecogs.com/png.latex?(-1,1)">, el problema de valor inicial</p>
+<p><img src="https://latex.codecogs.com/png.latex?(x%5E2-1)%5C,y''-2x%5C,y'+2y=(x%5E2-1)%5E2,%20%5Cqquad%20y(0)=1,%20%5Cquad%20y'(0)=2."></p>
+<ol start="4" type="1">
+<li>Intuya una solución sencilla <img src="https://latex.codecogs.com/png.latex?y_1"> de la ecuación homogénea y verifíquela. Con reducción de orden, halle una segunda solución <img src="https://latex.codecogs.com/png.latex?y_2">. (10 pts)</li>
+<li>Calcule el Wronskiano <img src="https://latex.codecogs.com/png.latex?W(y_1,y_2)">, concluya que <img src="https://latex.codecogs.com/png.latex?y_1"> y <img src="https://latex.codecogs.com/png.latex?y_2"> son linealmente independientes en <img src="https://latex.codecogs.com/png.latex?(-1,1)"> y escriba la solución general de la ecuación homogénea. ¿Qué le pasa a <img src="https://latex.codecogs.com/png.latex?W"> en <img src="https://latex.codecogs.com/png.latex?x=%5Cpm1">? Explique. (5 pts)</li>
+<li>Halle la solución particular por variación de parámetros y resuelva el problema de valores iniciales. (10 pts)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Probando potencias <img src="https://latex.codecogs.com/png.latex?y=x%5Em">, con <img src="https://latex.codecogs.com/png.latex?y=x"> se tiene <img src="https://latex.codecogs.com/png.latex?y''=0"> y</p>
+<p><img src="https://latex.codecogs.com/png.latex?(x%5E2-1)%5Ccdot%200-2x%5Ccdot%201+2x=0,"></p>
+<p>así que <img src="https://latex.codecogs.com/png.latex?y_1=x">. En forma estándar la ecuación es</p>
+<p><img src="https://latex.codecogs.com/png.latex?y''-%5Cfrac%7B2x%7D%7Bx%5E2-1%7D%5C,y'+%5Cfrac%7B2%7D%7Bx%5E2-1%7D%5C,y=x%5E2-1,%20%5Cqquad%20P=-%5Cfrac%7B2x%7D%7Bx%5E2-1%7D,%20%5Cquad%20Q=%5Cfrac%7B2%7D%7Bx%5E2-1%7D,%20%5Cquad%20R=x%5E2-1."></p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?y_2=v%5C,y_1"> y <img src="https://latex.codecogs.com/png.latex?v=%5Cdisplaystyle%5Cint%5Cfrac%7Be%5E%7B-%5Cint%20P%5C,dx%7D%7D%7By_1%5E%7B2%7D%7D%5C,dx">: como <img src="https://latex.codecogs.com/png.latex?%5Cint%20P%5C,dx=-%5Cln%7Cx%5E2-1%7C">, se tiene <img src="https://latex.codecogs.com/png.latex?e%5E%7B-%5Cint%20P%5C,dx%7D=%7Cx%5E2-1%7C">, y como <img src="https://latex.codecogs.com/png.latex?y_2"> está definida salvo una constante multiplicativa, basta tomar <img src="https://latex.codecogs.com/png.latex?x%5E2-1">. Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?v=%5Cint%5Cfrac%7Bx%5E2-1%7D%7Bx%5E2%7D%5C,dx=%5Cint%5Cleft(1-%5Cfrac1%7Bx%5E2%7D%5Cright)dx=x+%5Cfrac1x,%20%5Cqquad%20y_2=x%5Cleft(x+%5Cfrac1x%5Cright)=x%5E2+1."></p>
+<p>Comprobación directa: <img src="https://latex.codecogs.com/png.latex?(x%5E2-1)(2)-2x(2x)+2(x%5E2+1)=2x%5E2-2-4x%5E2+2x%5E2+2=0">.</p>
+<p>El Wronskiano es</p>
+<p><img src="https://latex.codecogs.com/png.latex?W(y_1,y_2)=x%5Ccdot%202x-(x%5E2+1)%5Ccdot%201=x%5E2-1."></p>
+<p>No se anula en <img src="https://latex.codecogs.com/png.latex?(-1,1)">, luego <img src="https://latex.codecogs.com/png.latex?y_1"> y <img src="https://latex.codecogs.com/png.latex?y_2"> son linealmente independientes allí y</p>
+<p><img src="https://latex.codecogs.com/png.latex?y_h=c_1x+c_2(x%5E2+1)."></p>
+<p>En <img src="https://latex.codecogs.com/png.latex?x=%5Cpm1"> el Wronskiano vale cero, y es justo donde <img src="https://latex.codecogs.com/png.latex?P"> y <img src="https://latex.codecogs.com/png.latex?Q"> dejan de ser continuas. Es lo que se espera de la fórmula de Abel: <img src="https://latex.codecogs.com/png.latex?W=C%5C,e%5E%7B-%5Cint%20P%5C,dx%7D=C%5C,(x%5E2-1)">, que en este caso se anula en los puntos donde los coeficientes no están definidos.</p>
+<p>Para variación de parámetros, con <img src="https://latex.codecogs.com/png.latex?R=x%5E2-1"> y <img src="https://latex.codecogs.com/png.latex?W=x%5E2-1">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?y_p=-y_1%5Cint%5Cfrac%7By_2R%7D%7BW%7D%5C,dx+y_2%5Cint%5Cfrac%7By_1R%7D%7BW%7D%5C,dx."></p>
+<p>Es decir, <img src="https://latex.codecogs.com/png.latex?y_p=v_1y_1+v_2y_2"> con</p>
+<p><img src="https://latex.codecogs.com/png.latex?v_1'=-%5Cfrac%7By_2R%7D%7BW%7D=-(x%5E2+1)%20%5C;%5CLongrightarrow%5C;%20v_1=-%5Cfrac%7Bx%5E3%7D%7B3%7D-x,%20%5Cqquad%20v_2'=%5Cfrac%7By_1R%7D%7BW%7D=x%20%5C;%5CLongrightarrow%5C;%20v_2=%5Cfrac%7Bx%5E2%7D%7B2%7D."></p>
+<p><img src="https://latex.codecogs.com/png.latex?y_p=x%5Cleft(-%5Cfrac%7Bx%5E3%7D%7B3%7D-x%5Cright)+(x%5E2+1)%5Cfrac%7Bx%5E2%7D%7B2%7D=%5Cfrac%7Bx%5E4%7D%7B6%7D-%5Cfrac%7Bx%5E2%7D%7B2%7D."></p>
+<p>La solución general es</p>
+<p><img src="https://latex.codecogs.com/png.latex?y=c_1x+c_2(x%5E2+1)+%5Cfrac%7Bx%5E4%7D%7B6%7D-%5Cfrac%7Bx%5E2%7D%7B2%7D."></p>
+<p>Como <img src="https://latex.codecogs.com/png.latex?y_p(0)=y_p'(0)=0">, de <img src="https://latex.codecogs.com/png.latex?y(0)=c_2=1"> y <img src="https://latex.codecogs.com/png.latex?y'(0)=c_1=2"> resulta</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cboxed%7By(x)=%5Cfrac%7Bx%5E4%7D%7B6%7D+%5Cfrac%7Bx%5E2%7D%7B2%7D+2x+1%7D"></p>
+</div>
+</div>
+</section>
+<section id="existencia-y-unicidad" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="existencia-y-unicidad"><span class="header-section-number">3</span> Existencia y unicidad</h2>
+<ol start="7" type="1">
+<li>Considere la ecuación <img src="https://latex.codecogs.com/png.latex?y''+y=0"> en <img src="https://latex.codecogs.com/png.latex?%5B0,%5Cpi%5D"> con las condiciones <img src="https://latex.codecogs.com/png.latex?y(0)=0"> y <img src="https://latex.codecogs.com/png.latex?y(%5Cpi)=0">. Resuélvala. Un compañero dice que el resultado contradice el teorema de existencia y unicidad. ¿Tiene razón? Explique. (5 pts)</li>
+<li>Considere la ecuación <img src="https://latex.codecogs.com/png.latex?x%5E2y''-2xy'+2y=0."> Verifique con el Wronskiano que <img src="https://latex.codecogs.com/png.latex?x"> y <img src="https://latex.codecogs.com/png.latex?x%5E2"> son soluciones linealmente independientes. Muestre que con <img src="https://latex.codecogs.com/png.latex?y(0)=0"> y <img src="https://latex.codecogs.com/png.latex?y'(0)=0"> hay infinitas soluciones, y que con <img src="https://latex.codecogs.com/png.latex?y(0)=1"> y <img src="https://latex.codecogs.com/png.latex?y'(0)=0"> no hay ninguna. ¿Se contradice el teorema de existencia y unicidad? Explique. (5 pts)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Punto 7.</strong> La solución general es <img src="https://latex.codecogs.com/png.latex?y=c_1%5Ccos%20x+c_2%5Csin%20x">. De <img src="https://latex.codecogs.com/png.latex?y(0)=c_1=0"> queda <img src="https://latex.codecogs.com/png.latex?y=c_2%5Csin%20x">, y <img src="https://latex.codecogs.com/png.latex?y(%5Cpi)=0"> se cumple para todo <img src="https://latex.codecogs.com/png.latex?c_2">. Hay infinitas soluciones.</p>
+<p>No hay contradicción. El teorema de existencia y unicidad habla de condiciones sobre <img src="https://latex.codecogs.com/png.latex?y"> y <img src="https://latex.codecogs.com/png.latex?y'"> en un mismo punto <img src="https://latex.codecogs.com/png.latex?x_0">, es decir, de un problema de valor inicial. Aquí las dos condiciones están en puntos distintos: son condiciones de frontera, y el teorema no las cubre. Con condiciones iniciales en <img src="https://latex.codecogs.com/png.latex?x_0=0"> la solución sí es única: <img src="https://latex.codecogs.com/png.latex?y(0)=0">, <img src="https://latex.codecogs.com/png.latex?y'(0)=c"> da <img src="https://latex.codecogs.com/png.latex?y=c%5Csin%20x">.</p>
+<p><strong>Punto 8.</strong> El Wronskiano es</p>
+<p><img src="https://latex.codecogs.com/png.latex?W(x,x%5E2)=x%5Ccdot%202x-x%5E2%5Ccdot%201=x%5E2,"></p>
+<p>que no es idénticamente cero, así que <img src="https://latex.codecogs.com/png.latex?x"> y <img src="https://latex.codecogs.com/png.latex?x%5E2"> son linealmente independientes y <img src="https://latex.codecogs.com/png.latex?y=c_1x+c_2x%5E2">. Entonces <img src="https://latex.codecogs.com/png.latex?y(0)=0"> se cumple siempre y <img src="https://latex.codecogs.com/png.latex?y'(0)=c_1">.</p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?y'(0)=0"> queda <img src="https://latex.codecogs.com/png.latex?y=c_2x%5E2"> para todo <img src="https://latex.codecogs.com/png.latex?c_2">: infinitas soluciones. Con <img src="https://latex.codecogs.com/png.latex?y(0)=1"> es imposible, porque toda solución vale <img src="https://latex.codecogs.com/png.latex?0"> en el origen: ninguna solución.</p>
+<p>No hay contradicción. En forma estándar la ecuación es</p>
+<p><img src="https://latex.codecogs.com/png.latex?y''-%5Cfrac%7B2%7D%7Bx%7D%5C,y'+%5Cfrac%7B2%7D%7Bx%5E2%7D%5C,y=0,"></p>
+<p>y <img src="https://latex.codecogs.com/png.latex?P=-2/x">, <img src="https://latex.codecogs.com/png.latex?Q=2/x%5E2"> no son continuas en <img src="https://latex.codecogs.com/png.latex?x_0=0">. No se cumplen las hipótesis del teorema en ningún intervalo que contenga al origen. Además <img src="https://latex.codecogs.com/png.latex?W=x%5E2"> se anula en <img src="https://latex.codecogs.com/png.latex?0">, cosa que el Lema 1 de Simmons excluye cuando <img src="https://latex.codecogs.com/png.latex?P"> es continua, y aquí no lo es.</p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/odes/parcial-2/</guid>
+  <pubDate>Tue, 17 Nov 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>¿Puedes oír la forma de un tambor?</title>
   <dc:creator>Arturo Sanjuán</dc:creator>
@@ -14997,533 +15122,6 @@ font-style: inherit;">/* ~27.46 min */</span></span></code></pre></div></div>
   <guid>https://arturosanjuan.xyz/cursos/odes/modelacion/</guid>
   <pubDate>Mon, 17 Aug 2026 05:00:00 GMT</pubDate>
   <media:content url="https://arturosanjuan.xyz/cursos/odes/modelacion/sigmoides.png" medium="image" type="image/png" height="89" width="144"/>
-</item>
-<item>
-  <title>Introducción</title>
-  <dc:creator>Arturo Sanjuán</dc:creator>
-  <link>https://arturosanjuan.xyz/cursos/odes/introduccion/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="algo-de-historia" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="algo-de-historia"><span class="header-section-number">1</span> Algo de historia</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Época</th>
-<th>Autor(es)</th>
-<th>Aporte</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>~450 a.e.c.</td>
-<td>Zenón</td>
-<td>El movimiento es una ilusión</td>
-</tr>
-<tr class="even">
-<td>~350 a.e.c.</td>
-<td>Aristóteles</td>
-<td>Teleología del movimiento: todo se mueve <em>por otro</em> — el primer motor inmóvil</td>
-</tr>
-<tr class="odd">
-<td>S. XVII</td>
-<td>Newton (<em>Principia</em>, 1687)</td>
-<td>Quiere describir el movimiento, el cambio. Para eso inventa el cálculo y las ecuaciones diferenciales: <strong>cómo cambian las cosas</strong>, en lugar de dónde están o por qué cambian</td>
-</tr>
-<tr class="even">
-<td>S. XVIII</td>
-<td>Bernoulli (Jacob, Johann, Daniel)</td>
-<td>La braquistócrona, la catenaria y la ecuación de onda</td>
-</tr>
-<tr class="odd">
-<td>S. XVIII</td>
-<td>Euler y Lagrange</td>
-<td>Reformulan toda la mecánica</td>
-</tr>
-<tr class="even">
-<td>S. XIX</td>
-<td>Laplace</td>
-<td>El determinismo</td>
-</tr>
-<tr class="odd">
-<td>S. XIX</td>
-<td>Fourier</td>
-<td>La ecuación del calor (teoría de funciones)</td>
-</tr>
-<tr class="even">
-<td>S. XIX</td>
-<td>Picard–Lindelöf</td>
-<td>La imposibilidad de encontrar, en general, una solución exacta</td>
-</tr>
-<tr class="odd">
-<td>S. XIX</td>
-<td>Poincaré</td>
-<td>El estudio cualitativo de las ecuaciones</td>
-</tr>
-<tr class="even">
-<td>S. XX</td>
-<td>Lorenz y Smale</td>
-<td>Aparecen los sistemas dinámicos y la teoría del caos</td>
-</tr>
-<tr class="odd">
-<td>S. XX</td>
-<td>—</td>
-<td>Aplicaciones a biología (poblaciones, crecimiento celular), economía, neurociencia (Hodgkin–Huxley–Nagumo), epidemiología (modelo SIR), química (quimiotaxis), física cuántica, formación de estrellas y agujeros negros</td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-important callout-titled" title="La idea central">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>La idea central
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>El giro de Newton es el que define el curso: en lugar de preguntar <strong>dónde</strong> está algo o <strong>por qué</strong> cambia, una ecuación diferencial pregunta <strong>cómo</strong> cambia — y de ahí se reconstruye todo lo demás.</p>
-</div>
-</div>
-</section>
-<section id="ejercicios-resueltos-del-simmons" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="ejercicios-resueltos-del-simmons"><span class="header-section-number">2</span> Ejercicios resueltos del Simmons</h2>
-<div class="callout callout-style-default callout-tip callout-titled" title="Ejercicio 1-j — Verificar una solución implícita">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Ejercicio 1-j — Verificar una solución implícita
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Verificar que <img src="https://latex.codecogs.com/png.latex?x%5E2%20=%202y%5E2%5Clog%20y"> es solución de</p>
-<p><img src="https://latex.codecogs.com/png.latex?y'%20=%20%5Cfrac%7Bxy%7D%7Bx%5E2+y%5E2%7D"></p>
-</div>
-</div>
-<p>Derivamos implícitamente, pensando a <img src="https://latex.codecogs.com/png.latex?y"> como función de <img src="https://latex.codecogs.com/png.latex?x">:</p>
-<p><img src="https://latex.codecogs.com/png.latex?2x%20=%204y%5C,y'%5Clog%20y%20+%202y%5E2%5Ccdot%5Cfrac%7By'%7D%7By%7D%20=%204y%5C,y'%5Clog%20y%20+%202y%5C,y'%20=%202y%5C,y'%5Cbig(2%5Clog%20y%20+%201%5Cbig)"></p>
-<p><img src="https://latex.codecogs.com/png.latex?%5CRightarrow%5Cquad%20x%20=%20y%5C,y'%5Cbig(2%5Clog%20y%20+%201%5Cbig)"></p>
-<p>De la ecuación original, <img src="https://latex.codecogs.com/png.latex?%5Clog%20y%20=%20%5Cdfrac%7Bx%5E2%7D%7B2y%5E2%7D">. Reemplazando:</p>
-<p><img src="https://latex.codecogs.com/png.latex?x%20=%20y%5C,y'%5Cleft(%5Cfrac%7Bx%5E2%7D%7By%5E2%7D+1%5Cright)%20=%20y%5C,y'%5Ccdot%5Cfrac%7Bx%5E2+y%5E2%7D%7By%5E2%7D%20%5Cquad%5CLongrightarrow%5Cquad%20xy%20=%20y'(x%5E2+y%5E2)"></p>
-<p><img src="https://latex.codecogs.com/png.latex?%5CLongrightarrow%5Cquad%20y'%20=%20%5Cfrac%7Bxy%7D%7Bx%5E2+y%5E2%7D%5C%20%5Ccheckmark"></p>
-<div class="callout callout-style-default callout-note callout-titled" title="Chequeo con Maxima">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Chequeo con Maxima
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb1-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">kill</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">all</span>);</span>
-<span id="cb1-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">depends</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">y</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>);</span>
-<span id="cb1-3"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">eq</span>: <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>^<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span> = <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>*<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">y</span>^<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>*<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">log</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">y</span>);</span>
-<span id="cb1-4"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">deq</span>: <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">eq</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>);</span>
-<span id="cb1-5"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">solve</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">deq</span>, <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">y</span>,<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>));</span></code></pre></div></div>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Ejercicio 2-q — Solución general de una ecuación separable">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Ejercicio 2-q — Solución general de una ecuación separable
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Encuentre la solución general de</p>
-<p><img src="https://latex.codecogs.com/png.latex?(1+x%5E2)%5C,dy%20+%20(1+y%5E2)%5C,dx%20=%200"></p>
-</div>
-</div>
-<p>Se puede escribir como <img src="https://latex.codecogs.com/png.latex?(1+x%5E2)y'%20+%20(1+y%5E2)%20=%200">, de donde</p>
-<p><img src="https://latex.codecogs.com/png.latex?y'%20=%20-%5Cfrac%7B1+y%5E2%7D%7B1+x%5E2%7D%20%5Cquad%5CLongrightarrow%5Cquad%20%5Cfrac%7Bdy%7D%7B1+y%5E2%7D%20=%20-%5Cfrac%7Bdx%7D%7B1+x%5E2%7D"></p>
-<p>Integrando ambos lados:</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Carctan%20y%20=%20-%5Carctan%20x%20+%20C%20%5Cquad%5CLongrightarrow%5Cquad%20y%20=%20%5Ctan%5Cbig(C%20-%20%5Carctan%20x%5Cbig)"></p>
-<p>Usando la identidad <img src="https://latex.codecogs.com/png.latex?%5Ctan(A-B)%20=%20%5Cdfrac%7B%5Ctan%20A%20-%20%5Ctan%20B%7D%7B1+%5Ctan%20A%5Ctan%20B%7D"> con <img src="https://latex.codecogs.com/png.latex?k=%5Ctan%20C">:</p>
-<p><img src="https://latex.codecogs.com/png.latex?y%20=%20%5Cfrac%7Bk%20-%20x%7D%7B1%20+%20kx%7D"></p>
-<div class="callout callout-style-default callout-note callout-titled" title="Chequeo con Maxima">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Chequeo con Maxima
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb2-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">kill</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">all</span>);</span>
-<span id="cb2-2"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">ode</span>: <span class="do" style="color: #5E5E5E;
-background-color: null;
-font-style: italic;">'</span><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">y</span>,<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>) = -(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>+<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">y</span>^<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>)/(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>+<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>^<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>);</span>
-<span id="cb2-3"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">sol</span>: <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ode2</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">ode</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">y</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>);</span></code></pre></div></div>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Ejercicio 3-f — Problema de valor inicial con fracciones parciales">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Ejercicio 3-f — Problema de valor inicial con fracciones parciales
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Encuentre la solución particular de</p>
-<p><img src="https://latex.codecogs.com/png.latex?(x+1)(x%5E2+1)%5C,y'%20=%202x%5E2+1,%20%5Cqquad%20y(0)=1"></p>
-</div>
-</div>
-<p><img src="https://latex.codecogs.com/png.latex?y'%20=%20%5Cfrac%7B2x%5E2+1%7D%7B(x+1)(x%5E2+1)%7D"></p>
-<p>Hacemos fracciones parciales: <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7B2x%5E2+1%7D%7B(x+1)(x%5E2+1)%7D%20=%20%5Cdfrac%7BA%7D%7Bx+1%7D%20+%20%5Cdfrac%7BBx+C%7D%7Bx%5E2+1%7D"></p>
-<p><img src="https://latex.codecogs.com/png.latex?2x%5E2+1%20=%20A(x%5E2+1)%20+%20(Bx+C)(x+1)%20=%20(A+B)x%5E2%20+%20(B+C)x%20+%20(A+C)"></p>
-<p>Igualando coeficientes:</p>
-<p><img src="https://latex.codecogs.com/png.latex?(1)%5C%20A+B=2%20%5Cqquad%20(2)%5C%20B+C=0%20%5Cqquad%20(3)%5C%20A+C=1"></p>
-<p>De (2), <img src="https://latex.codecogs.com/png.latex?C=-B">. Sustituyendo en (3): <img src="https://latex.codecogs.com/png.latex?A-B=1">. Sumando con (1): <img src="https://latex.codecogs.com/png.latex?2A=3%20%5CRightarrow%20A=%5Ctfrac32">, luego <img src="https://latex.codecogs.com/png.latex?B=%5Ctfrac12"> y <img src="https://latex.codecogs.com/png.latex?C=-%5Ctfrac12">.</p>
-<p><img src="https://latex.codecogs.com/png.latex?y'%20=%20%5Cfrac%7B3/2%7D%7Bx+1%7D%20+%20%5Cfrac%7B1%7D%7B2%7D%5Ccdot%5Cfrac%7Bx%7D%7Bx%5E2+1%7D%20-%20%5Cfrac%7B1/2%7D%7Bx%5E2+1%7D"></p>
-<div class="callout callout-style-default callout-note callout-titled" title="Chequeo con Maxima">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Chequeo con Maxima
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb3-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">kill</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">all</span>);</span>
-<span id="cb3-2"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">ode</span>: (<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">+1</span>)*(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>^<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2+1</span>)*<span class="do" style="color: #5E5E5E;
-background-color: null;
-font-style: italic;">'</span><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">y</span>,<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>) = <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>*<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>^<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2+1</span>;</span>
-<span id="cb3-3"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">sol</span>: <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ode2</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">ode</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">y</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>);</span>
-<span id="cb3-4"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ic1</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">sol</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>=<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">y</span>=<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>);</span></code></pre></div></div>
-<p>Como la ecuación es de <strong>primer orden</strong>, la condición inicial se fija con <code>ic1</code>, no con <code>ic2</code> (esa es para ecuaciones de segundo orden, que necesitan <img src="https://latex.codecogs.com/png.latex?y"> y <img src="https://latex.codecogs.com/png.latex?y'"> en el punto).</p>
-</div>
-</div>
-<p>Integrando:</p>
-<p><img src="https://latex.codecogs.com/png.latex?y%20=%20%5Cfrac32%5Clog%7Cx+1%7C%20+%20%5Cfrac14%5Clog(x%5E2+1)%20-%20%5Cfrac12%5Carctan%20x%20+%20K"></p>
-<p>Con la condición <img src="https://latex.codecogs.com/png.latex?y(0)=1">: <img src="https://latex.codecogs.com/png.latex?1%20=%200+0-0+K%20%5CRightarrow%20K=1">. Por tanto,</p>
-<p><img src="https://latex.codecogs.com/png.latex?y%20=%20%5Cfrac32%5Clog(x+1)%20+%20%5Cfrac14%5Clog(x%5E2+1)%20-%20%5Cfrac12%5Carctan%20x%20+%201"></p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Ejercicio 4-b — Curva integral por un punto dado">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Ejercicio 4-b — Curva integral por un punto dado
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Encuentre la curva integral que pasa por el punto <img src="https://latex.codecogs.com/png.latex?(1,1)">, sabiendo que</p>
-<p><img src="https://latex.codecogs.com/png.latex?dy%20=%20%5Cleft(2x+%5Cfrac1x%5Cright)dx"></p>
-</div>
-</div>
-<p>Integrando directamente:</p>
-<p><img src="https://latex.codecogs.com/png.latex?y%20=%20x%5E2%20+%20%5Clog%20x%20+%20C"></p>
-<p>Con la condición <img src="https://latex.codecogs.com/png.latex?y(1)=1">: <img src="https://latex.codecogs.com/png.latex?1%20=%201%5E2+%5Clog%201%20+%20C%20%5CRightarrow%20C=0">. La curva es</p>
-<p><img src="https://latex.codecogs.com/png.latex?y%20=%20x%5E2%20+%20%5Clog%20x"></p>
-<div class="callout callout-style-default callout-note callout-titled" title="Chequeo con Maxima">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Chequeo con Maxima
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb4-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">kill</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">all</span>);</span>
-<span id="cb4-2"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">ode</span>: <span class="do" style="color: #5E5E5E;
-background-color: null;
-font-style: italic;">'</span><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">y</span>,<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>) = <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>*<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span> + <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>/<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>;</span>
-<span id="cb4-3"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">sol</span>: <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ode2</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">ode</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">y</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>);</span>
-<span id="cb4-4"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ic1</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">sol</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>=<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">y</span>=<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>);</span></code></pre></div></div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="Gráfica con Maxima">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Gráfica con Maxima
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb5-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">kill</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">all</span>);</span>
-<span id="cb5-2"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">y</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>) := <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>^<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span> + <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">log</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>);</span>
-<span id="cb5-3"></span>
-<span id="cb5-4"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">plot2d</span>([<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">y</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>), [<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">discrete</span>, [[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>]]]], [<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.05</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span>],</span>
-<span id="cb5-5">       [<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">style</span>, [<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">lines</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>], [<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">points</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">3</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">7</span>]],</span>
-<span id="cb5-6">       [<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">legend</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"curva"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"(1,1)"</span>],</span>
-<span id="cb5-7">       [<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">xlabel</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"x"</span>], [<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">ylabel</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"y"</span>]);</span></code></pre></div></div>
-</div>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://arturosanjuan.xyz/cursos/odes/introduccion/sol.png" class="img-fluid figure-img"></p>
-<figcaption>Solucion que pasa por (1,1)</figcaption>
-</figure>
-</div>
-<div class="callout callout-style-default callout-important callout-titled" title="Tarea">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Tarea
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Hacer los demás ejercicios de tarea, en especial el número 8.</p>
-</div>
-</div>
-
-
-</section>
-
- ]]></description>
-  <guid>https://arturosanjuan.xyz/cursos/odes/introduccion/</guid>
-  <pubDate>Fri, 14 Aug 2026 05:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

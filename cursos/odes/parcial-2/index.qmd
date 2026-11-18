@@ -1,0 +1,138 @@
+---
+title: "Parcial 2"
+subtitle: "Resonancia, una solución conocida con variación de parámetros, y cuándo parece fallar el teorema de existencia y unicidad"
+description: "Segundo parcial individual, con solución."
+author: "Arturo Sanjuán"
+date: 2026-11-17
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 19
+---
+
+Este parcial individual repasa las técnicas vistas en el segundo corte del curso para las ecuaciones lineales de segundo orden: coeficientes constantes con coeficientes indeterminados y resonancia, una solución conocida con reducción de orden y variación de parámetros, y el papel de las hipótesis del teorema de existencia y unicidad. En todos los puntos el Wronskiano es la herramienta para decidir si dos soluciones son linealmente independientes.
+
+## Coeficientes constantes y resonancia
+
+Considere el problema de valor inicial
+
+$$y''+4y=\sin 2x, \qquad y(0)=1, \quad y'(0)=0.$$
+
+1. Halle la solución general de la ecuación homogénea asociada y verifique con el Wronskiano que las dos soluciones encontradas son linealmente independientes. (5 pts)
+2. Explique por qué el ensayo $y_p=A\cos 2x+B\sin 2x$ no funciona y proponga la forma correcta. Determine $y_p$ por coeficientes indeterminados. (5 pts)
+3. Resuelva el problema de valor inicial. (5 pts)
+
+::: {.callout-tip title="Solución"}
+La ecuación característica de $y''+4y=0$ es $m^2+4=0$, con raíces $m=\pm 2i$. Entonces
+
+$$y_1=\cos 2x, \qquad y_2=\sin 2x, \qquad y_h=c_1\cos 2x+c_2\sin 2x.$$
+
+El Wronskiano es
+
+$$W(y_1,y_2)=y_1y_2'-y_2y_1'=\cos 2x\,(2\cos 2x)-\sin 2x\,(-2\sin 2x)=2\neq 0,$$
+
+así que $y_1$ y $y_2$ son linealmente independientes en todo $\mathbb R$.
+
+El ensayo natural para $\sin 2x$ sería $A\cos 2x+B\sin 2x$, pero esa función es una combinación de $y_1$ y $y_2$, es decir, una solución de la homogénea. Al sustituirla el lado izquierdo da $0$ y nunca $\sin 2x$. Esto es resonancia: la frecuencia del forzamiento coincide con la frecuencia natural $2$ del oscilador. Se multiplica por $x$:
+
+$$y_p=x\,(A\cos 2x+B\sin 2x).$$
+
+Al calcular $y_p''+4y_p$, los términos que llevan $x$ se cancelan porque $A\cos 2x+B\sin 2x$ resuelve la homogénea, y solo sobrevive el doble de la derivada de ese factor:
+
+$$y_p''+4y_p=2\left(-2A\sin 2x+2B\cos 2x\right)=\sin 2x \;\Longrightarrow\; A=-\frac14, \quad B=0.$$
+
+$$y_p=-\frac14\,x\cos 2x.$$
+
+La solución general es
+
+$$y=c_1\cos 2x+c_2\sin 2x-\frac{x}{4}\cos 2x.$$
+
+De $y(0)=c_1=1$ y $y'(0)=2c_2-\tfrac14=0$ sale $c_2=\tfrac18$:
+
+$$\boxed{y(x)=\cos 2x+\frac18\sin 2x-\frac{x}{4}\cos 2x}$$
+:::
+
+## Coeficientes variables: una solución conocida y variación de parámetros
+
+Considere ahora, en el intervalo $(-1,1)$, el problema de valor inicial
+
+$$(x^2-1)\,y''-2x\,y'+2y=(x^2-1)^2, \qquad y(0)=1, \quad y'(0)=2.$$
+
+4. Intuya una solución sencilla $y_1$ de la ecuación homogénea y verifíquela. Con reducción de orden, halle una segunda solución $y_2$. (10 pts)
+5. Calcule el Wronskiano $W(y_1,y_2)$, concluya que $y_1$ y $y_2$ son linealmente independientes en $(-1,1)$ y escriba la solución general de la ecuación homogénea. ¿Qué le pasa a $W$ en $x=\pm1$? Explique. (5 pts)
+6. Halle la solución particular por variación de parámetros y resuelva el problema de valores iniciales. (10 pts)
+
+::: {.callout-tip title="Solución"}
+Probando potencias $y=x^m$, con $y=x$ se tiene $y''=0$ y
+
+$$(x^2-1)\cdot 0-2x\cdot 1+2x=0,$$
+
+así que $y_1=x$. En forma estándar la ecuación es
+
+$$y''-\frac{2x}{x^2-1}\,y'+\frac{2}{x^2-1}\,y=x^2-1, \qquad P=-\frac{2x}{x^2-1}, \quad Q=\frac{2}{x^2-1}, \quad R=x^2-1.$$
+
+Con $y_2=v\,y_1$ y $v=\displaystyle\int\frac{e^{-\int P\,dx}}{y_1^{2}}\,dx$: como $\int P\,dx=-\ln|x^2-1|$, se tiene $e^{-\int P\,dx}=|x^2-1|$, y como $y_2$ está definida salvo una constante multiplicativa, basta tomar $x^2-1$. Entonces
+
+$$v=\int\frac{x^2-1}{x^2}\,dx=\int\left(1-\frac1{x^2}\right)dx=x+\frac1x, \qquad y_2=x\left(x+\frac1x\right)=x^2+1.$$
+
+Comprobación directa: $(x^2-1)(2)-2x(2x)+2(x^2+1)=2x^2-2-4x^2+2x^2+2=0$.
+
+El Wronskiano es
+
+$$W(y_1,y_2)=x\cdot 2x-(x^2+1)\cdot 1=x^2-1.$$
+
+No se anula en $(-1,1)$, luego $y_1$ y $y_2$ son linealmente independientes allí y
+
+$$y_h=c_1x+c_2(x^2+1).$$
+
+En $x=\pm1$ el Wronskiano vale cero, y es justo donde $P$ y $Q$ dejan de ser continuas. Es lo que se espera de la fórmula de Abel: $W=C\,e^{-\int P\,dx}=C\,(x^2-1)$, que en este caso se anula en los puntos donde los coeficientes no están definidos.
+
+Para variación de parámetros, con $R=x^2-1$ y $W=x^2-1$,
+
+$$y_p=-y_1\int\frac{y_2R}{W}\,dx+y_2\int\frac{y_1R}{W}\,dx.$$
+
+Es decir, $y_p=v_1y_1+v_2y_2$ con
+
+$$v_1'=-\frac{y_2R}{W}=-(x^2+1) \;\Longrightarrow\; v_1=-\frac{x^3}{3}-x, \qquad v_2'=\frac{y_1R}{W}=x \;\Longrightarrow\; v_2=\frac{x^2}{2}.$$
+
+$$y_p=x\left(-\frac{x^3}{3}-x\right)+(x^2+1)\frac{x^2}{2}=\frac{x^4}{6}-\frac{x^2}{2}.$$
+
+La solución general es
+
+$$y=c_1x+c_2(x^2+1)+\frac{x^4}{6}-\frac{x^2}{2}.$$
+
+Como $y_p(0)=y_p'(0)=0$, de $y(0)=c_2=1$ y $y'(0)=c_1=2$ resulta
+
+$$\boxed{y(x)=\frac{x^4}{6}+\frac{x^2}{2}+2x+1}$$
+:::
+
+## Existencia y unicidad
+
+7. Considere la ecuación $y''+y=0$ en $[0,\pi]$ con las condiciones $y(0)=0$ y $y(\pi)=0$. Resuélvala. Un compañero dice que el resultado contradice el teorema de existencia y unicidad. ¿Tiene razón? Explique. (5 pts)
+8. Considere la ecuación $$x^2y''-2xy'+2y=0.$$ Verifique con el Wronskiano que $x$ y $x^2$ son soluciones linealmente independientes. Muestre que con $y(0)=0$ y $y'(0)=0$ hay infinitas soluciones, y que con $y(0)=1$ y $y'(0)=0$ no hay ninguna. ¿Se contradice el teorema de existencia y unicidad? Explique. (5 pts)
+
+::: {.callout-tip title="Solución"}
+**Punto 7.** La solución general es $y=c_1\cos x+c_2\sin x$. De $y(0)=c_1=0$ queda $y=c_2\sin x$, y $y(\pi)=0$ se cumple para todo $c_2$. Hay infinitas soluciones.
+
+No hay contradicción. El teorema de existencia y unicidad habla de condiciones sobre $y$ y $y'$ en un mismo punto $x_0$, es decir, de un problema de valor inicial. Aquí las dos condiciones están en puntos distintos: son condiciones de frontera, y el teorema no las cubre. Con condiciones iniciales en $x_0=0$ la solución sí es única: $y(0)=0$, $y'(0)=c$ da $y=c\sin x$.
+
+**Punto 8.** El Wronskiano es
+
+$$W(x,x^2)=x\cdot 2x-x^2\cdot 1=x^2,$$
+
+que no es idénticamente cero, así que $x$ y $x^2$ son linealmente independientes y $y=c_1x+c_2x^2$. Entonces $y(0)=0$ se cumple siempre y $y'(0)=c_1$.
+
+Con $y'(0)=0$ queda $y=c_2x^2$ para todo $c_2$: infinitas soluciones. Con $y(0)=1$ es imposible, porque toda solución vale $0$ en el origen: ninguna solución.
+
+No hay contradicción. En forma estándar la ecuación es
+
+$$y''-\frac{2}{x}\,y'+\frac{2}{x^2}\,y=0,$$
+
+y $P=-2/x$, $Q=2/x^2$ no son continuas en $x_0=0$. No se cumplen las hipótesis del teorema en ningún intervalo que contenga al origen. Además $W=x^2$ se anula en $0$, cosa que el Lema 1 de Simmons excluye cuando $P$ es continua, y aquí no lo es.
+:::
