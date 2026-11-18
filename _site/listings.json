@@ -17,29 +17,16 @@
       "/cursos/probabilidad/taller-3/index.html",
       "/cursos/probabilidad/vecaleatorios/index.html",
       "/cursos/probabilidad/leydebil/index.html",
-      "/cursos/probabilidad/leyfuerte/index.html"
+      "/cursos/probabilidad/leyfuerte/index.html",
+      "/cursos/probabilidad/parical-2/index.html"
     ]
   },
   {
-    "listing": "/cursos/numerico/index.html",
+    "listing": "/cursos/index.html",
     "items": [
-      "/cursos/numerico/introduccion/index.html",
-      "/cursos/numerico/condicionamiento/index.html",
-      "/cursos/numerico/estabilidad/index.html",
-      "/cursos/numerico/taller-1/index.html",
-      "/cursos/numerico/matrices/index.html",
-      "/cursos/numerico/normas/index.html",
-      "/cursos/numerico/lu/index.html",
-      "/cursos/numerico/complejidad/index.html",
-      "/cursos/numerico/taller-2/index.html",
-      "/cursos/numerico/parcial-1/index.html",
-      "/cursos/numerico/raices/index.html",
-      "/cursos/numerico/newton/index.html",
-      "/cursos/numerico/convergencia/index.html",
-      "/cursos/numerico/taller-3/index.html",
-      "/cursos/numerico/interpolacion/index.html",
-      "/cursos/numerico/derivacion/index.html",
-      "/cursos/numerico/integracion/index.html"
+      "/cursos/numerico/index.html",
+      "/cursos/odes/index.html",
+      "/cursos/probabilidad/index.html"
     ]
   },
   {
@@ -69,11 +56,25 @@
     ]
   },
   {
-    "listing": "/cursos/index.html",
+    "listing": "/cursos/numerico/index.html",
     "items": [
-      "/cursos/numerico/index.html",
-      "/cursos/odes/index.html",
-      "/cursos/probabilidad/index.html"
+      "/cursos/numerico/introduccion/index.html",
+      "/cursos/numerico/condicionamiento/index.html",
+      "/cursos/numerico/estabilidad/index.html",
+      "/cursos/numerico/taller-1/index.html",
+      "/cursos/numerico/matrices/index.html",
+      "/cursos/numerico/normas/index.html",
+      "/cursos/numerico/lu/index.html",
+      "/cursos/numerico/complejidad/index.html",
+      "/cursos/numerico/taller-2/index.html",
+      "/cursos/numerico/parcial-1/index.html",
+      "/cursos/numerico/raices/index.html",
+      "/cursos/numerico/newton/index.html",
+      "/cursos/numerico/convergencia/index.html",
+      "/cursos/numerico/taller-3/index.html",
+      "/cursos/numerico/interpolacion/index.html",
+      "/cursos/numerico/derivacion/index.html",
+      "/cursos/numerico/integracion/index.html"
     ]
   }
 ]

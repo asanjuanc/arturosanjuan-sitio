@@ -71,6 +71,7 @@ website:
         - cursos/odes/airy/index.qmd
         - cursos/odes/tambor/index.qmd
         - cursos/odes/orbitales/index.qmd
+        - cursos/odes/parcial-2/index.qmd
     - id: numerico
       title: "Análisis Numérico"
       style: docked
@@ -121,7 +122,7 @@ website:
         - cursos/probabilidad/vecaleatorios/index.qmd
         - cursos/probabilidad/leydebil/index.qmd
         - cursos/probabilidad/leyfuerte/index.qmd
-        
+        - cursos/probabilidad/parical-2/index.qmd
 
 format:
   html:

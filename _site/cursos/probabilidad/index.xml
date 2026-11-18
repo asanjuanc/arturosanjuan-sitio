@@ -15,7 +15,197 @@
 <link>https://arturosanjuan.xyz/cursos/probabilidad/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Sat, 07 Nov 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 18 Nov 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Parcial 2</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/probabilidad/parical-2/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Este segundo parcial individual repasa las distribuciones continuas y el límite normal: una densidad beta con sus momentos, la aproximación normal de la binomial con corrección de continuidad, el teorema de cambio de variable aplicado a una normal, el uso de una simetría de la densidad y una función de riesgo que no es constante. El examen se entregó con la siguiente tabla de valores de <img src="https://latex.codecogs.com/png.latex?%5CPhi">, la función de distribución de la normal estándar, recordando que <img src="https://latex.codecogs.com/png.latex?%5CPhi(-z)=1-%5CPhi(z)">.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><img src="https://latex.codecogs.com/png.latex?z"></th>
+<th><img src="https://latex.codecogs.com/png.latex?0%7B,%7D50"></th>
+<th><img src="https://latex.codecogs.com/png.latex?1%7B,%7D00"></th>
+<th><img src="https://latex.codecogs.com/png.latex?1%7B,%7D12"></th>
+<th><img src="https://latex.codecogs.com/png.latex?1%7B,%7D25"></th>
+<th><img src="https://latex.codecogs.com/png.latex?1%7B,%7D64"></th>
+<th><img src="https://latex.codecogs.com/png.latex?1%7B,%7D75"></th>
+<th><img src="https://latex.codecogs.com/png.latex?1%7B,%7D96"></th>
+<th><img src="https://latex.codecogs.com/png.latex?2%7B,%7D14"></th>
+<th><img src="https://latex.codecogs.com/png.latex?2%7B,%7D33"></th>
+<th><img src="https://latex.codecogs.com/png.latex?2%7B,%7D58"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img src="https://latex.codecogs.com/png.latex?%5CPhi(z)"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D6915"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D8413"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D8686"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D8944"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D9495"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D9599"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D9750"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D9838"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D9901"></td>
+<td><img src="https://latex.codecogs.com/png.latex?0%7B,%7D9951"></td>
+</tr>
+</tbody>
+</table>
+<section id="una-densidad-beta-y-sus-momentos" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="una-densidad-beta-y-sus-momentos"><span class="header-section-number">1</span> Una densidad beta y sus momentos</h2>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?X"> una variable aleatoria con densidad beta de parámetros <img src="https://latex.codecogs.com/png.latex?2"> y <img src="https://latex.codecogs.com/png.latex?3">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?f(x)=12%5C,x%5C,(1-x)%5E2%20%5Cquad%5Ctext%7Bsi%20%7D%200%3Cx%3C1,%20%5Cqquad%20f(x)=0%20%5Cquad%5Ctext%7Ben%20otro%20caso.%7D"></p>
+<ol type="1">
+<li>Demuestre que <img src="https://latex.codecogs.com/png.latex?f"> es una densidad de probabilidad. (5 puntos)</li>
+<li>Calcule <img src="https://latex.codecogs.com/png.latex?E%5BX%5D"> y <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7BVar%7D(X)">. (10 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> Es claro que <img src="https://latex.codecogs.com/png.latex?f%5Cge0">. Además</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cint_0%5E1%2012%5C,x(1-x)%5E2%5C,dx%20=%2012%5Cint_0%5E1%5Cbig(x-2x%5E2+x%5E3%5Cbig)%5C,dx%20=%2012%5CBig(%5Cfrac12-%5Cfrac23+%5Cfrac14%5CBig)%20=%2012%5Ccdot%5Cfrac1%7B12%7D=1."></p>
+<p><strong>2.</strong></p>
+<p><img src="https://latex.codecogs.com/png.latex?E%5BX%5D=12%5Cint_0%5E1%20x%5E2(1-x)%5E2%5C,dx%20=%2012%5Cint_0%5E1%5Cbig(x%5E2-2x%5E3+x%5E4%5Cbig)%5C,dx%20=%2012%5CBig(%5Cfrac13-%5Cfrac12+%5Cfrac15%5CBig)=%5Cfrac%7B12%7D%7B30%7D=%5Cfrac25."></p>
+<p><img src="https://latex.codecogs.com/png.latex?E%5BX%5E2%5D=12%5Cint_0%5E1%20x%5E3(1-x)%5E2%5C,dx%20=%2012%5Cint_0%5E1%5Cbig(x%5E3-2x%5E4+x%5E5%5Cbig)%5C,dx%20=%2012%5CBig(%5Cfrac14-%5Cfrac25+%5Cfrac16%5CBig)=%5Cfrac%7B12%7D%7B60%7D=%5Cfrac15."></p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7BVar%7D(X)=E%5BX%5E2%5D-E%5BX%5D%5E2=%5Cfrac15-%5Cfrac4%7B25%7D=%5Cfrac1%7B25%7D."></p>
+</div>
+</div>
+</section>
+<section id="aproximación-normal-de-la-binomial" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="aproximación-normal-de-la-binomial"><span class="header-section-number">2</span> Aproximación normal de la binomial</h2>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?X%5Csim%20B(100,0%7B,%7D4)">. Aproxime <img src="https://latex.codecogs.com/png.latex?P(35%5Cle%20X%5Cle50)"> usando la aproximación normal con corrección de continuidad. Indique la media y la varianza de la normal que utiliza y los valores de <img src="https://latex.codecogs.com/png.latex?z"> que obtiene. (5 puntos)</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Aquí <img src="https://latex.codecogs.com/png.latex?%5Cmu=np=40"> y <img src="https://latex.codecogs.com/png.latex?%5Csigma%5E2=np(1-p)=24">, así que <img src="https://latex.codecogs.com/png.latex?%5Csigma%5Capprox4%7B,%7D899">. Cada entero <img src="https://latex.codecogs.com/png.latex?k"> representa la franja <img src="https://latex.codecogs.com/png.latex?%5Bk-%5Ctfrac12,k+%5Ctfrac12%5D">, de modo que el rango de enteros de <img src="https://latex.codecogs.com/png.latex?35"> a <img src="https://latex.codecogs.com/png.latex?50"> corresponde al intervalo continuo <img src="https://latex.codecogs.com/png.latex?%5B34%7B,%7D5,%5C,50%7B,%7D5%5D">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(35%5Cle%20X%5Cle50)%5Capprox%20P%5CBig(%5Cfrac%7B34%7B,%7D5-40%7D%7B%5Csigma%7D%5Cle%20Z%5Cle%5Cfrac%7B50%7B,%7D5-40%7D%7B%5Csigma%7D%5CBig)%20=%20P(-1%7B,%7D12%5Cle%20Z%5Cle2%7B,%7D14)=%5CPhi(2%7B,%7D14)-%5CPhi(-1%7B,%7D12)."></p>
+<p>Con la tabla, <img src="https://latex.codecogs.com/png.latex?%5CPhi(2%7B,%7D14)=0%7B,%7D9838"> y <img src="https://latex.codecogs.com/png.latex?%5CPhi(-1%7B,%7D12)=1-%5CPhi(1%7B,%7D12)=1-0%7B,%7D8686=0%7B,%7D1314">, y por lo tanto</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(35%5Cle%20X%5Cle50)%5Capprox0%7B,%7D9838-0%7B,%7D1314=0%7B,%7D8524."></p>
+<p>El valor exacto de la binomial es <img src="https://latex.codecogs.com/png.latex?0%7B,%7D8529">.</p>
+</div>
+</div>
+</section>
+<section id="cambio-de-variable-el-cuadrado-de-una-normal-estándar" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="cambio-de-variable-el-cuadrado-de-una-normal-estándar"><span class="header-section-number">3</span> Cambio de variable: el cuadrado de una normal estándar</h2>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?Z%5Csim%20N(0,1)"> y <img src="https://latex.codecogs.com/png.latex?W=Z%5E2">. Halle la densidad de <img src="https://latex.codecogs.com/png.latex?W"> (observe que <img src="https://latex.codecogs.com/png.latex?z%5Cmapsto%20z%5E2"> no es inyectiva). Recuerde que la densidad gamma de parámetros <img src="https://latex.codecogs.com/png.latex?%5Calpha"> y <img src="https://latex.codecogs.com/png.latex?%5Clambda"> es</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%5Clambda%5E%5Calpha%7D%7B%5CGamma(%5Calpha)%7D%5C,w%5E%7B%5Calpha-1%7De%5E%7B-%5Clambda%20w%7D%5Cquad%5Ctext%7Bpara%20%7D%20w%3E0,"></p>
+<p>donde <img src="https://latex.codecogs.com/png.latex?%5CGamma(%5Calpha)=%5Cint_0%5E%5Cinfty%20t%5E%7B%5Calpha-1%7De%5E%7B-t%7D%5C,dt">. Reconozca que <img src="https://latex.codecogs.com/png.latex?W"> es gamma e indique sus parámetros. (10 puntos)</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Como <img src="https://latex.codecogs.com/png.latex?z%5Cmapsto%20z%5E2"> no es inyectiva, se calcula primero la función de distribución. Para <img src="https://latex.codecogs.com/png.latex?w%3E0">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?F_W(w)=P%5Cbig(-%5Csqrt%20w%5Cle%20Z%5Cle%5Csqrt%20w%5Cbig)=2%5CPhi(%5Csqrt%20w)-1."></p>
+<p>Derivando, con <img src="https://latex.codecogs.com/png.latex?%5CPhi'=%5Cvarphi">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?f_W(w)=2%5Cvarphi(%5Csqrt%20w)%5Ccdot%5Cfrac1%7B2%5Csqrt%20w%7D=%5Cfrac1%7B%5Csqrt%7B2%5Cpi%7D%7D%5C,w%5E%7B-1/2%7De%5E%7B-w/2%7D,%5Cqquad%20w%3E0,"></p>
+<p>y <img src="https://latex.codecogs.com/png.latex?f_W(w)=0"> si <img src="https://latex.codecogs.com/png.latex?w%5Cle0">. Esta densidad tiene la forma <img src="https://latex.codecogs.com/png.latex?w%5E%7B%5Calpha-1%7De%5E%7B-%5Clambda%20w%7D"> con <img src="https://latex.codecogs.com/png.latex?%5Calpha=%5Ctfrac12"> y <img src="https://latex.codecogs.com/png.latex?%5Clambda=%5Ctfrac12">. Como <img src="https://latex.codecogs.com/png.latex?f_W"> integra <img src="https://latex.codecogs.com/png.latex?1">, la constante que acompaña a esa forma tiene que ser la de la gamma, y por lo tanto</p>
+<p><img src="https://latex.codecogs.com/png.latex?W%5Csim%5Ctext%7BGamma%7D%5CBig(%5Cfrac12,%5Cfrac12%5CBig)."></p>
+</div>
+</div>
+</section>
+<section id="una-simetría-de-la-densidad" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="una-simetría-de-la-densidad"><span class="header-section-number">4</span> Una simetría de la densidad</h2>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?X"> una variable aleatoria con densidad <img src="https://latex.codecogs.com/png.latex?f"> y función de distribución <img src="https://latex.codecogs.com/png.latex?F">. Suponga que existe <img src="https://latex.codecogs.com/png.latex?a%5Cin%5Cmathbb%20R"> tal que <img src="https://latex.codecogs.com/png.latex?f(a+t)=f(a-t)"> para todo <img src="https://latex.codecogs.com/png.latex?t%5Cin%5Cmathbb%20R"> y que <img src="https://latex.codecogs.com/png.latex?E%7CX%7C%3C%5Cinfty">. Usando únicamente esta simetría, demuestre que <img src="https://latex.codecogs.com/png.latex?F(a)=%5Ctfrac12"> y que <img src="https://latex.codecogs.com/png.latex?E%5BX%5D=a">. <strong>Sugerencia:</strong> use el cambio de variable <img src="https://latex.codecogs.com/png.latex?x=a-t">. (5 puntos)</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con <img src="https://latex.codecogs.com/png.latex?x=a-t"> y luego la simetría,</p>
+<p><img src="https://latex.codecogs.com/png.latex?F(a)=%5Cint_%7B-%5Cinfty%7D%5Ea%20f(x)%5C,dx=%5Cint_0%5E%5Cinfty%20f(a-t)%5C,dt=%5Cint_0%5E%5Cinfty%20f(a+t)%5C,dt=P(X%3Ea)=1-F(a),"></p>
+<p>de donde <img src="https://latex.codecogs.com/png.latex?F(a)=%5Ctfrac12">.</p>
+<p>Por otro lado, como <img src="https://latex.codecogs.com/png.latex?E%7CX%7C%3C%5Cinfty">, la esperanza <img src="https://latex.codecogs.com/png.latex?E%5BX-a%5D=%5Cint_%7B-%5Cinfty%7D%5E%5Cinfty%20t%5C,f(a+t)%5C,dt"> existe. Con <img src="https://latex.codecogs.com/png.latex?t=-s"> en la parte negativa y la simetría,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cint_%7B-%5Cinfty%7D%5E0%20t%5C,f(a+t)%5C,dt=-%5Cint_0%5E%5Cinfty%20s%5C,f(a-s)%5C,ds=-%5Cint_0%5E%5Cinfty%20s%5C,f(a+s)%5C,ds,"></p>
+<p>así que las dos mitades de la integral se cancelan y <img src="https://latex.codecogs.com/png.latex?E%5BX-a%5D=0">, es decir, <img src="https://latex.codecogs.com/png.latex?E%5BX%5D=a">.</p>
+<p>La hipótesis <img src="https://latex.codecogs.com/png.latex?E%7CX%7C%3C%5Cinfty"> es necesaria. La densidad de Cauchy <img src="https://latex.codecogs.com/png.latex?%5Cdfrac1%7B%5Cpi(1+x%5E2)%7D"> es simétrica respecto a <img src="https://latex.codecogs.com/png.latex?a=0">, pero <img src="https://latex.codecogs.com/png.latex?%5Cint%7Cx%7Cf(x)%5C,dx=%5Cinfty"> y no tiene esperanza.</p>
+</div>
+</div>
+</section>
+<section id="función-de-riesgo-de-una-distribución-rayleigh" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="función-de-riesgo-de-una-distribución-rayleigh"><span class="header-section-number">5</span> Función de riesgo de una distribución Rayleigh</h2>
+<p>La vida útil <img src="https://latex.codecogs.com/png.latex?T"> (en años) de una bomba de riego en un cultivo de flores de la Sabana de Bogotá tiene distribución de Rayleigh, con densidad</p>
+<p><img src="https://latex.codecogs.com/png.latex?f(t)=%5Cfrac%20t2%5C,e%5E%7B-t%5E2/4%7D%5Cquad%5Ctext%7Bsi%20%7D%20t%3E0,%20%5Cqquad%20f(t)=0%5Cquad%5Ctext%7Bsi%20%7D%20t%5Cle0."></p>
+<p>La función de riesgo de <img src="https://latex.codecogs.com/png.latex?T"> se define como <img src="https://latex.codecogs.com/png.latex?h(t)=%5Cdfrac%7Bf(t)%7D%7BP(T%3Et)%7D"> para <img src="https://latex.codecogs.com/png.latex?t%3E0"> y mide la tasa instantánea de falla de una bomba que ya ha funcionado <img src="https://latex.codecogs.com/png.latex?t"> años.</p>
+<ol type="1">
+<li>Halle <img src="https://latex.codecogs.com/png.latex?P(T%3Et)"> y la función de riesgo <img src="https://latex.codecogs.com/png.latex?h(t)">. Indique si el riesgo es constante, creciente o decreciente y qué significa esto para la bomba. (10 puntos)</li>
+<li>Calcule la probabilidad de que una bomba que ya ha funcionado <img src="https://latex.codecogs.com/png.latex?2"> años funcione más de <img src="https://latex.codecogs.com/png.latex?3"> años en total, es decir, <img src="https://latex.codecogs.com/png.latex?P(T%3E3%5Cmid%20T%3E2)">. (5 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> Para <img src="https://latex.codecogs.com/png.latex?t%3E0">, con el cambio de variable <img src="https://latex.codecogs.com/png.latex?u=s%5E2/4">, <img src="https://latex.codecogs.com/png.latex?du=%5Ctfrac%20s2%5C,ds">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(T%3Et)=%5Cint_t%5E%5Cinfty%5Cfrac%20s2%5C,e%5E%7B-s%5E2/4%7D%5C,ds=%5Cint_%7Bt%5E2/4%7D%5E%5Cinfty%20e%5E%7B-u%7D%5C,du=e%5E%7B-t%5E2/4%7D."></p>
+<p>Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?h(t)=%5Cfrac%7B%5Cfrac%20t2%5C,e%5E%7B-t%5E2/4%7D%7D%7Be%5E%7B-t%5E2/4%7D%7D=%5Cfrac%20t2,%5Cqquad%20t%3E0."></p>
+<p>El riesgo crece linealmente con <img src="https://latex.codecogs.com/png.latex?t">: la bomba se desgasta, y cuanto más vieja es, mayor es la probabilidad de que falle en el siguiente instante. Es lo contrario de la exponencial, cuyo riesgo es constante. En la <a href="../../../cursos/probabilidad/riesgo/index.html">sección de riesgo</a> la función de riesgo se llama <img src="https://latex.codecogs.com/png.latex?%5Clambda(t)">; aquí se usa <img src="https://latex.codecogs.com/png.latex?h(t)"> como en el enunciado. Como <img src="https://latex.codecogs.com/png.latex?h(t)=%5Calpha%5Cbeta%5C,t%5E%7B%5Cbeta-1%7D"> con <img src="https://latex.codecogs.com/png.latex?%5Calpha=%5Ctfrac14"> y <img src="https://latex.codecogs.com/png.latex?%5Cbeta=2">, esta distribución es la Weibull de parámetros <img src="https://latex.codecogs.com/png.latex?%5Ctfrac14"> y <img src="https://latex.codecogs.com/png.latex?2">, que recibe el nombre de Rayleigh.</p>
+<p><strong>2.</strong> Como <img src="https://latex.codecogs.com/png.latex?%5C%7BT%3E3%5C%7D%5Csubset%5C%7BT%3E2%5C%7D">,</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(T%3E3%5Cmid%20T%3E2)=%5Cfrac%7BP(T%3E3)%7D%7BP(T%3E2)%7D=%5Cfrac%7Be%5E%7B-9/4%7D%7D%7Be%5E%7B-1%7D%7D=e%5E%7B-5/4%7D%5Capprox0%7B,%7D2865."></p>
+<p>Con la función de riesgo se obtiene lo mismo:</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(T%3E3%5Cmid%20T%3E2)=%5Cexp%5CBig(-%5Cint_2%5E3%20h(u)%5C,du%5CBig)=%5Cexp%5CBig(-%5Cint_2%5E3%5Cfrac%20u2%5C,du%5CBig)=%5Cexp%5CBig(-%5Cfrac%7B9-4%7D%7B4%7D%5CBig)=e%5E%7B-5/4%7D."></p>
+<p>Compare con <img src="https://latex.codecogs.com/png.latex?P(T%3E1)=e%5E%7B-1/4%7D%5Capprox0%7B,%7D7788">, que es distinto de <img src="https://latex.codecogs.com/png.latex?0%7B,%7D2865">: la vida útil de la bomba no es sin memoria.</p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/probabilidad/parical-2/</guid>
+  <pubDate>Wed, 18 Nov 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>La ley fuerte de los grandes números y el teorema del límite central</title>
   <dc:creator>Arturo Sanjuán</dc:creator>

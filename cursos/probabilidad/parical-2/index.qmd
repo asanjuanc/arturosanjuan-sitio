@@ -1,0 +1,137 @@
+---
+title: "Parcial 2"
+subtitle: "Una densidad beta y sus momentos, la aproximación normal de la binomial, el cambio de variable, una simetría de la densidad y una función de riesgo"
+description: "Segundo parcial individual, con solución."
+author: "Arturo Sanjuán"
+date: 2026-11-18
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 17
+---
+
+Este segundo parcial individual repasa las distribuciones continuas y el límite normal: una densidad beta con sus momentos, la aproximación normal de la binomial con corrección de continuidad, el teorema de cambio de variable aplicado a una normal, el uso de una simetría de la densidad y una función de riesgo que no es constante. El examen se entregó con la siguiente tabla de valores de $\Phi$, la función de distribución de la normal estándar, recordando que $\Phi(-z)=1-\Phi(z)$.
+
+| $z$ | $0{,}50$ | $1{,}00$ | $1{,}12$ | $1{,}25$ | $1{,}64$ | $1{,}75$ | $1{,}96$ | $2{,}14$ | $2{,}33$ | $2{,}58$ |
+|---|---|---|---|---|---|---|---|---|---|---|
+| $\Phi(z)$ | $0{,}6915$ | $0{,}8413$ | $0{,}8686$ | $0{,}8944$ | $0{,}9495$ | $0{,}9599$ | $0{,}9750$ | $0{,}9838$ | $0{,}9901$ | $0{,}9951$ |
+
+## Una densidad beta y sus momentos
+
+Sea $X$ una variable aleatoria con densidad beta de parámetros $2$ y $3$:
+
+$$f(x)=12\,x\,(1-x)^2 \quad\text{si } 0<x<1, \qquad f(x)=0 \quad\text{en otro caso.}$$
+
+1. Demuestre que $f$ es una densidad de probabilidad. (5 puntos)
+2. Calcule $E[X]$ y $\operatorname{Var}(X)$. (10 puntos)
+
+::: {.callout-tip title="Solución"}
+**1.** Es claro que $f\ge0$. Además
+
+$$\int_0^1 12\,x(1-x)^2\,dx = 12\int_0^1\big(x-2x^2+x^3\big)\,dx = 12\Big(\frac12-\frac23+\frac14\Big) = 12\cdot\frac1{12}=1.$$
+
+**2.**
+
+$$E[X]=12\int_0^1 x^2(1-x)^2\,dx = 12\int_0^1\big(x^2-2x^3+x^4\big)\,dx = 12\Big(\frac13-\frac12+\frac15\Big)=\frac{12}{30}=\frac25.$$
+
+$$E[X^2]=12\int_0^1 x^3(1-x)^2\,dx = 12\int_0^1\big(x^3-2x^4+x^5\big)\,dx = 12\Big(\frac14-\frac25+\frac16\Big)=\frac{12}{60}=\frac15.$$
+
+$$\operatorname{Var}(X)=E[X^2]-E[X]^2=\frac15-\frac4{25}=\frac1{25}.$$
+:::
+
+## Aproximación normal de la binomial
+
+Sea $X\sim B(100,0{,}4)$. Aproxime $P(35\le X\le50)$ usando la aproximación normal con corrección de continuidad. Indique la media y la varianza de la normal que utiliza y los valores de $z$ que obtiene. (5 puntos)
+
+::: {.callout-tip title="Solución"}
+Aquí $\mu=np=40$ y $\sigma^2=np(1-p)=24$, así que $\sigma\approx4{,}899$. Cada entero $k$ representa la franja $[k-\tfrac12,k+\tfrac12]$, de modo que el rango de enteros de $35$ a $50$ corresponde al intervalo continuo $[34{,}5,\,50{,}5]$:
+
+$$P(35\le X\le50)\approx P\Big(\frac{34{,}5-40}{\sigma}\le Z\le\frac{50{,}5-40}{\sigma}\Big) = P(-1{,}12\le Z\le2{,}14)=\Phi(2{,}14)-\Phi(-1{,}12).$$
+
+Con la tabla, $\Phi(2{,}14)=0{,}9838$ y $\Phi(-1{,}12)=1-\Phi(1{,}12)=1-0{,}8686=0{,}1314$, y por lo tanto
+
+$$P(35\le X\le50)\approx0{,}9838-0{,}1314=0{,}8524.$$
+
+El valor exacto de la binomial es $0{,}8529$.
+:::
+
+## Cambio de variable: el cuadrado de una normal estándar
+
+Sea $Z\sim N(0,1)$ y $W=Z^2$. Halle la densidad de $W$ (observe que $z\mapsto z^2$ no es inyectiva). Recuerde que la densidad gamma de parámetros $\alpha$ y $\lambda$ es
+
+$$\frac{\lambda^\alpha}{\Gamma(\alpha)}\,w^{\alpha-1}e^{-\lambda w}\quad\text{para } w>0,$$
+
+donde $\Gamma(\alpha)=\int_0^\infty t^{\alpha-1}e^{-t}\,dt$. Reconozca que $W$ es gamma e indique sus parámetros. (10 puntos)
+
+::: {.callout-tip title="Solución"}
+Como $z\mapsto z^2$ no es inyectiva, se calcula primero la función de distribución. Para $w>0$,
+
+$$F_W(w)=P\big(-\sqrt w\le Z\le\sqrt w\big)=2\Phi(\sqrt w)-1.$$
+
+Derivando, con $\Phi'=\varphi$,
+
+$$f_W(w)=2\varphi(\sqrt w)\cdot\frac1{2\sqrt w}=\frac1{\sqrt{2\pi}}\,w^{-1/2}e^{-w/2},\qquad w>0,$$
+
+y $f_W(w)=0$ si $w\le0$. Esta densidad tiene la forma $w^{\alpha-1}e^{-\lambda w}$ con $\alpha=\tfrac12$ y $\lambda=\tfrac12$. Como $f_W$ integra $1$, la constante que acompaña a esa forma tiene que ser la de la gamma, y por lo tanto
+
+$$W\sim\text{Gamma}\Big(\frac12,\frac12\Big).$$
+:::
+
+## Una simetría de la densidad
+
+Sea $X$ una variable aleatoria con densidad $f$ y función de distribución $F$. Suponga que existe $a\in\mathbb R$ tal que $f(a+t)=f(a-t)$ para todo $t\in\mathbb R$ y que $E|X|<\infty$. Usando únicamente esta simetría, demuestre que $F(a)=\tfrac12$ y que $E[X]=a$. **Sugerencia:** use el cambio de variable $x=a-t$. (5 puntos)
+
+::: {.callout-tip title="Solución"}
+Con $x=a-t$ y luego la simetría,
+
+$$F(a)=\int_{-\infty}^a f(x)\,dx=\int_0^\infty f(a-t)\,dt=\int_0^\infty f(a+t)\,dt=P(X>a)=1-F(a),$$
+
+de donde $F(a)=\tfrac12$.
+
+Por otro lado, como $E|X|<\infty$, la esperanza $E[X-a]=\int_{-\infty}^\infty t\,f(a+t)\,dt$ existe. Con $t=-s$ en la parte negativa y la simetría,
+
+$$\int_{-\infty}^0 t\,f(a+t)\,dt=-\int_0^\infty s\,f(a-s)\,ds=-\int_0^\infty s\,f(a+s)\,ds,$$
+
+así que las dos mitades de la integral se cancelan y $E[X-a]=0$, es decir, $E[X]=a$.
+
+La hipótesis $E|X|<\infty$ es necesaria. La densidad de Cauchy $\dfrac1{\pi(1+x^2)}$ es simétrica respecto a $a=0$, pero $\int|x|f(x)\,dx=\infty$ y no tiene esperanza.
+:::
+
+## Función de riesgo de una distribución Rayleigh
+
+La vida útil $T$ (en años) de una bomba de riego en un cultivo de flores de la Sabana de Bogotá tiene distribución de Rayleigh, con densidad
+
+$$f(t)=\frac t2\,e^{-t^2/4}\quad\text{si } t>0, \qquad f(t)=0\quad\text{si } t\le0.$$
+
+La función de riesgo de $T$ se define como $h(t)=\dfrac{f(t)}{P(T>t)}$ para $t>0$ y mide la tasa instantánea de falla de una bomba que ya ha funcionado $t$ años.
+
+1. Halle $P(T>t)$ y la función de riesgo $h(t)$. Indique si el riesgo es constante, creciente o decreciente y qué significa esto para la bomba. (10 puntos)
+2. Calcule la probabilidad de que una bomba que ya ha funcionado $2$ años funcione más de $3$ años en total, es decir, $P(T>3\mid T>2)$. (5 puntos)
+
+::: {.callout-tip title="Solución"}
+**1.** Para $t>0$, con el cambio de variable $u=s^2/4$, $du=\tfrac s2\,ds$,
+
+$$P(T>t)=\int_t^\infty\frac s2\,e^{-s^2/4}\,ds=\int_{t^2/4}^\infty e^{-u}\,du=e^{-t^2/4}.$$
+
+Entonces
+
+$$h(t)=\frac{\frac t2\,e^{-t^2/4}}{e^{-t^2/4}}=\frac t2,\qquad t>0.$$
+
+El riesgo crece linealmente con $t$: la bomba se desgasta, y cuanto más vieja es, mayor es la probabilidad de que falle en el siguiente instante. Es lo contrario de la exponencial, cuyo riesgo es constante. En la [sección de riesgo](../riesgo/index.qmd) la función de riesgo se llama $\lambda(t)$; aquí se usa $h(t)$ como en el enunciado. Como $h(t)=\alpha\beta\,t^{\beta-1}$ con $\alpha=\tfrac14$ y $\beta=2$, esta distribución es la Weibull de parámetros $\tfrac14$ y $2$, que recibe el nombre de Rayleigh.
+
+**2.** Como $\{T>3\}\subset\{T>2\}$,
+
+$$P(T>3\mid T>2)=\frac{P(T>3)}{P(T>2)}=\frac{e^{-9/4}}{e^{-1}}=e^{-5/4}\approx0{,}2865.$$
+
+Con la función de riesgo se obtiene lo mismo:
+
+$$P(T>3\mid T>2)=\exp\Big(-\int_2^3 h(u)\,du\Big)=\exp\Big(-\int_2^3\frac u2\,du\Big)=\exp\Big(-\frac{9-4}{4}\Big)=e^{-5/4}.$$
+
+Compare con $P(T>1)=e^{-1/4}\approx0{,}7788$, que es distinto de $0{,}2865$: la vida útil de la bomba no es sin memoria.
+:::
