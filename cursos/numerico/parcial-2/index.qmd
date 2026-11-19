@@ -1,0 +1,107 @@
+---
+title: "Parcial 2"
+subtitle: "Condicionamiento de una raíz, el papel de la derivada en el punto fijo y la convergencia cuadrática de Newton"
+description: "Segundo parcial individual, con solución."
+author: "Arturo Sanjuán"
+date: 2026-11-19
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 19
+---
+
+Este segundo parcial individual repasa lo visto en el segundo corte sobre ecuaciones no lineales: el número de condición de una raíz y su relación con el criterio de parada, la iteración de punto fijo con el análisis de la serie de errores, y la constante de la convergencia cuadrática del método de Newton. Todo se puede resolver a mano con una calculadora científica.
+
+## Condicionamiento de una raíz
+
+1. Calcule $\kappa_r$ en las tres raíces de
+$$f(x)=(x-1)(x-1{,}01)(x-3)$$
+y diga cuáles están mal condicionadas y por qué. (5 puntos)
+2. Si $f$ se evalúa con un error absoluto de $10^{-8}$, estime con $\kappa_r$ cuánto se mueve cada raíz. ¿Qué dice esto sobre detener un algoritmo cuando $|f(x_k)|<10^{-8}$? (5 puntos)
+3. Si la raíz $1{,}01$ se acerca a $1$ hasta que las dos se juntan en una raíz doble, ¿qué pasa con $\kappa_r$? Para $f(x)=(x-1)^2$ perturbada a $f+\varepsilon$ con $\varepsilon=-10^{-12}$, halle las raíces y compare su desplazamiento con $|\varepsilon|$. Interprete: ¿por qué $\kappa_r$ no describe lo que ocurre? (5 puntos)
+
+::: {.callout-tip title="Solución"}
+**1.** Por la regla del producto, en cada raíz solo sobrevive el término donde no aparece su propio factor:
+
+$$f'(1)=(1-1{,}01)(1-3)=0{,}02,$$
+
+$$f'(1{,}01)=(1{,}01-1)(1{,}01-3)=-0{,}0199,$$
+
+$$f'(3)=(3-1)(3-1{,}01)=3{,}98.$$
+
+Entonces $\kappa_r=1/|f'(r)|$ vale $50$ en $r=1$, $\kappa_r\approx50{,}25$ en $r=1{,}01$ y $\kappa_r\approx0{,}251$ en $r=3$. Las dos primeras están mal condicionadas: están a $0{,}01$ una de la otra, la gráfica de $f$ es casi plana entre ellas y $f'$ es pequeña en ambas. La raíz $r=3$ está aislada y bien condicionada.
+
+**2.** El desplazamiento es aproximadamente $\kappa_r\cdot10^{-8}$: unos $5\cdot10^{-7}$ en las raíces $1$ y $1{,}01$, y $2{,}5\cdot10^{-9}$ en $3$. Cerca de $1$ un residuo menor que $10^{-8}$ no garantiza un error menor que $10^{-8}$: por ejemplo $x_k=1-2{,}5\cdot10^{-7}$ da $f(x_k)\approx-5\cdot10^{-9}$, pero su error es $2{,}5\cdot10^{-7}$, cincuenta veces el residuo. Cerca de $3$, en cambio, el error es menor que el residuo.
+
+**3.** Es el límite de lo que se vio con las raíces $1$ y $1{,}01$: a medida que se acercan, $\kappa_r$ crece sin cota, y en la raíz doble $f'(r)=0$ y $\kappa_r=+\infty$. Con $\varepsilon=-10^{-12}$, las raíces de $(x-1)^2-10^{-12}=0$ son $1\pm10^{-6}$: la raíz se mueve $10^{-6}$, un millón de veces $|\varepsilon|$. La aproximación $f(r+\delta)-f(r)\approx f'(r)\,\delta$ conserva solo el término lineal de Taylor, que aquí es cero. Lo que domina es el término cuadrático, $\delta^2=-\varepsilon$, de modo que $|\delta|=\sqrt{|\varepsilon|}$. El desplazamiento es del orden de $\sqrt{|\varepsilon|}$ y no de $|\varepsilon|$, y por eso ningún $\kappa_r$ finito lo describe.
+:::
+
+## Punto fijo y el papel de $g'$
+
+Sea
+
+$$g(x)=\frac52\,x(1-x)$$
+
+y considere la iteración $x_{k+1}=g(x_k)$.
+
+1. Halle los puntos fijos de $g$ y calcule $g'$. (5 puntos)
+2. Evalúe $g'$ en cada punto fijo y clasifíquelo como atractor o repulsor, monótono u oscilante. En el atractor, ¿qué valor predice el análisis de la serie de errores para $\varepsilon_{k+1}/\varepsilon_k$? (5 puntos)
+3. Desde $x_0=0{,}7$ calcule $x_1,x_2,x_3$ y los cocientes $\varepsilon_{k+1}/\varepsilon_k$ respecto al atractor, y compárelos con $g'$ en él. (5 puntos)
+4. Desde $x_0=0{,}01$ los primeros iterados son $0{,}0248$, $0{,}0603$, $0{,}1418$: se alejan de $0$ y, sin embargo, la sucesión termina en el otro punto fijo. Explique qué papel juega $g'$ en cada observación y por qué no hay contradicción. (5 puntos)
+
+::: {.callout-tip title="Solución"}
+**1.** La ecuación $x=\tfrac52x(1-x)$ da $x=0$ o $1=\tfrac52(1-x)$, es decir $x=\tfrac35$. Además
+
+$$g'(x)=\frac52(1-2x)=\frac52-5x.$$
+
+**2.** Como $g'(0)=\tfrac52>1$, el punto $p=0$ es un repulsor monótono. Como $g'(\tfrac35)=-\tfrac12$, el punto $p=\tfrac35$ es un atractor oscilante: el signo negativo de $g'$ hace que los iterados salten de un lado a otro de $p$. El análisis $\varepsilon_{k+1}\approx g'(p)\,\varepsilon_k$ predice
+
+$$\frac{\varepsilon_{k+1}}{\varepsilon_k}\to-\frac12,$$
+
+es decir, el error se reduce a la mitad y cambia de signo en cada paso.
+
+**3.** Con $p=0{,}6$ se obtiene $x_1=0{,}525$, $x_2=0{,}6234$, $x_3=0{,}5869$. Los errores $\varepsilon_k=x_k-p$ son $0{,}1,\ -0{,}075,\ 0{,}0234,\ -0{,}0131$, y los cocientes
+
+$$-0{,}75,\qquad-0{,}3125,\qquad-0{,}559.$$
+
+Alternan de signo y oscilan alrededor de $g'(\tfrac35)=-\tfrac12$. Como $g$ es cuadrática, el error cumple exactamente
+
+$$\varepsilon_{k+1}=-\frac12\,\varepsilon_k-\frac52\,\varepsilon_k^2,$$
+
+y el segundo término, que el análisis desprecia, es el que desvía los primeros cocientes.
+
+**4.** Cerca de $0$ cada paso multiplica el iterado por casi $g'(0)=2{,}5$: de $0{,}01$ a $0{,}0248$, $0{,}0603$, $0{,}1418$, con factores $2{,}48,\ 2{,}44,\ 2{,}35$. Eso es lo que dice $|g'(0)|>1$, pero solo vale mientras el iterado siga cerca de $0$. Como $g$ manda $[0,1]$ en $[0,\tfrac58]\subset[0,1]$, el iterado no puede escapar; al alejarse de $0$ llega a la zona de $\tfrac35$, donde $|g'|<1$, y converge oscilando. La repulsión es local y no implica divergencia.
+:::
+
+## Método de Newton
+
+Sea $f(x)=x^3-2$, con raíz $r=\sqrt[3]{2}\approx1{,}25992105$.
+
+1. Para el método de Newton, con $e_k=x_k-r$, el desarrollo de Taylor alrededor de $r$ da
+$$e_{k+1}\approx\frac12\,\frac{f''(r)}{f'(r)}\,e_k^2.$$
+Calcule la constante $\dfrac12\left|\dfrac{f''(r)}{f'(r)}\right|$ para esta $f$, en términos de $r$, e interprete el resultado: si $|e_k|\approx10^{-3}$, ¿cuánto vale aproximadamente $|e_{k+1}|$ y qué pasa con el número de cifras correctas en cada paso? ¿Qué le ocurre a la constante cuando $f'(r)$ es muy pequeña, y qué relación tiene eso con el condicionamiento de la raíz? (10 puntos)
+2. Con Newton desde $x_0=3/2$ calcule $x_1$ y $x_2$ (use $6$ cifras decimales) y los cocientes $\varepsilon_{k+1}/\varepsilon_k^2$ para $k=0,1$, con $\varepsilon_k=|x_k-r|$, y compárelos con la constante del numeral anterior. (5 puntos)
+
+::: {.callout-tip title="Solución"}
+**1.** Para $f=x^3-2$ se tiene $f'(r)=3r^2$ y $f''(r)=6r$, así que la constante es
+
+$$\frac12\,\frac{6r}{3r^2}=\frac1r\approx0{,}7937.$$
+
+Si $|e_k|\approx10^{-3}$, entonces $|e_{k+1}|\approx0{,}79\cdot10^{-6}$: el exponente del error se duplica, es decir, el número de cifras correctas se duplica aproximadamente en cada paso. Cuando $f'(r)$ es muy pequeña la constante es grande, porque es $\tfrac12|f''(r)|\,\kappa_r$: es el mismo fenómeno de una raíz mal condicionada, y Newton solo entra en su régimen cuadrático si la semilla está muy cerca de $r$. Si $f'(r)=0$ la deducción deja de valer y la convergencia deja de ser cuadrática.
+
+**2.** Con $x_0=\tfrac32$ el primer paso da exactamente
+
+$$x_1=\frac{35}{27}\approx1{,}296296,$$
+
+y el segundo $x_2\approx1{,}260932$. Los errores son $\varepsilon_0=0{,}24008$, $\varepsilon_1=0{,}036375$ y $\varepsilon_2=1{,}011\times10^{-3}$, y los cocientes
+
+$$\frac{\varepsilon_1}{\varepsilon_0^2}\approx0{,}631,\qquad\frac{\varepsilon_2}{\varepsilon_1^2}\approx0{,}764,$$
+
+que van acercándose a $1/r\approx0{,}7937$: convergencia cuadrática.
+:::

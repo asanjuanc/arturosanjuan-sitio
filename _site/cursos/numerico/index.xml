@@ -15,7 +15,115 @@
 <link>https://arturosanjuan.xyz/cursos/numerico/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Sat, 07 Nov 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 19 Nov 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Parcial 2</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/numerico/parcial-2/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Este segundo parcial individual repasa lo visto en el segundo corte sobre ecuaciones no lineales: el número de condición de una raíz y su relación con el criterio de parada, la iteración de punto fijo con el análisis de la serie de errores, y la constante de la convergencia cuadrática del método de Newton. Todo se puede resolver a mano con una calculadora científica.</p>
+<section id="condicionamiento-de-una-raíz" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="condicionamiento-de-una-raíz"><span class="header-section-number">1</span> Condicionamiento de una raíz</h2>
+<ol type="1">
+<li>Calcule <img src="https://latex.codecogs.com/png.latex?%5Ckappa_r"> en las tres raíces de <img src="https://latex.codecogs.com/png.latex?f(x)=(x-1)(x-1%7B,%7D01)(x-3)"> y diga cuáles están mal condicionadas y por qué. (5 puntos)</li>
+<li>Si <img src="https://latex.codecogs.com/png.latex?f"> se evalúa con un error absoluto de <img src="https://latex.codecogs.com/png.latex?10%5E%7B-8%7D">, estime con <img src="https://latex.codecogs.com/png.latex?%5Ckappa_r"> cuánto se mueve cada raíz. ¿Qué dice esto sobre detener un algoritmo cuando <img src="https://latex.codecogs.com/png.latex?%7Cf(x_k)%7C%3C10%5E%7B-8%7D">? (5 puntos)</li>
+<li>Si la raíz <img src="https://latex.codecogs.com/png.latex?1%7B,%7D01"> se acerca a <img src="https://latex.codecogs.com/png.latex?1"> hasta que las dos se juntan en una raíz doble, ¿qué pasa con <img src="https://latex.codecogs.com/png.latex?%5Ckappa_r">? Para <img src="https://latex.codecogs.com/png.latex?f(x)=(x-1)%5E2"> perturbada a <img src="https://latex.codecogs.com/png.latex?f+%5Cvarepsilon"> con <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon=-10%5E%7B-12%7D">, halle las raíces y compare su desplazamiento con <img src="https://latex.codecogs.com/png.latex?%7C%5Cvarepsilon%7C">. Interprete: ¿por qué <img src="https://latex.codecogs.com/png.latex?%5Ckappa_r"> no describe lo que ocurre? (5 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> Por la regla del producto, en cada raíz solo sobrevive el término donde no aparece su propio factor:</p>
+<p><img src="https://latex.codecogs.com/png.latex?f'(1)=(1-1%7B,%7D01)(1-3)=0%7B,%7D02,"></p>
+<p><img src="https://latex.codecogs.com/png.latex?f'(1%7B,%7D01)=(1%7B,%7D01-1)(1%7B,%7D01-3)=-0%7B,%7D0199,"></p>
+<p><img src="https://latex.codecogs.com/png.latex?f'(3)=(3-1)(3-1%7B,%7D01)=3%7B,%7D98."></p>
+<p>Entonces <img src="https://latex.codecogs.com/png.latex?%5Ckappa_r=1/%7Cf'(r)%7C"> vale <img src="https://latex.codecogs.com/png.latex?50"> en <img src="https://latex.codecogs.com/png.latex?r=1">, <img src="https://latex.codecogs.com/png.latex?%5Ckappa_r%5Capprox50%7B,%7D25"> en <img src="https://latex.codecogs.com/png.latex?r=1%7B,%7D01"> y <img src="https://latex.codecogs.com/png.latex?%5Ckappa_r%5Capprox0%7B,%7D251"> en <img src="https://latex.codecogs.com/png.latex?r=3">. Las dos primeras están mal condicionadas: están a <img src="https://latex.codecogs.com/png.latex?0%7B,%7D01"> una de la otra, la gráfica de <img src="https://latex.codecogs.com/png.latex?f"> es casi plana entre ellas y <img src="https://latex.codecogs.com/png.latex?f'"> es pequeña en ambas. La raíz <img src="https://latex.codecogs.com/png.latex?r=3"> está aislada y bien condicionada.</p>
+<p><strong>2.</strong> El desplazamiento es aproximadamente <img src="https://latex.codecogs.com/png.latex?%5Ckappa_r%5Ccdot10%5E%7B-8%7D">: unos <img src="https://latex.codecogs.com/png.latex?5%5Ccdot10%5E%7B-7%7D"> en las raíces <img src="https://latex.codecogs.com/png.latex?1"> y <img src="https://latex.codecogs.com/png.latex?1%7B,%7D01">, y <img src="https://latex.codecogs.com/png.latex?2%7B,%7D5%5Ccdot10%5E%7B-9%7D"> en <img src="https://latex.codecogs.com/png.latex?3">. Cerca de <img src="https://latex.codecogs.com/png.latex?1"> un residuo menor que <img src="https://latex.codecogs.com/png.latex?10%5E%7B-8%7D"> no garantiza un error menor que <img src="https://latex.codecogs.com/png.latex?10%5E%7B-8%7D">: por ejemplo <img src="https://latex.codecogs.com/png.latex?x_k=1-2%7B,%7D5%5Ccdot10%5E%7B-7%7D"> da <img src="https://latex.codecogs.com/png.latex?f(x_k)%5Capprox-5%5Ccdot10%5E%7B-9%7D">, pero su error es <img src="https://latex.codecogs.com/png.latex?2%7B,%7D5%5Ccdot10%5E%7B-7%7D">, cincuenta veces el residuo. Cerca de <img src="https://latex.codecogs.com/png.latex?3">, en cambio, el error es menor que el residuo.</p>
+<p><strong>3.</strong> Es el límite de lo que se vio con las raíces <img src="https://latex.codecogs.com/png.latex?1"> y <img src="https://latex.codecogs.com/png.latex?1%7B,%7D01">: a medida que se acercan, <img src="https://latex.codecogs.com/png.latex?%5Ckappa_r"> crece sin cota, y en la raíz doble <img src="https://latex.codecogs.com/png.latex?f'(r)=0"> y <img src="https://latex.codecogs.com/png.latex?%5Ckappa_r=+%5Cinfty">. Con <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon=-10%5E%7B-12%7D">, las raíces de <img src="https://latex.codecogs.com/png.latex?(x-1)%5E2-10%5E%7B-12%7D=0"> son <img src="https://latex.codecogs.com/png.latex?1%5Cpm10%5E%7B-6%7D">: la raíz se mueve <img src="https://latex.codecogs.com/png.latex?10%5E%7B-6%7D">, un millón de veces <img src="https://latex.codecogs.com/png.latex?%7C%5Cvarepsilon%7C">. La aproximación <img src="https://latex.codecogs.com/png.latex?f(r+%5Cdelta)-f(r)%5Capprox%20f'(r)%5C,%5Cdelta"> conserva solo el término lineal de Taylor, que aquí es cero. Lo que domina es el término cuadrático, <img src="https://latex.codecogs.com/png.latex?%5Cdelta%5E2=-%5Cvarepsilon">, de modo que <img src="https://latex.codecogs.com/png.latex?%7C%5Cdelta%7C=%5Csqrt%7B%7C%5Cvarepsilon%7C%7D">. El desplazamiento es del orden de <img src="https://latex.codecogs.com/png.latex?%5Csqrt%7B%7C%5Cvarepsilon%7C%7D"> y no de <img src="https://latex.codecogs.com/png.latex?%7C%5Cvarepsilon%7C">, y por eso ningún <img src="https://latex.codecogs.com/png.latex?%5Ckappa_r"> finito lo describe.</p>
+</div>
+</div>
+</section>
+<section id="punto-fijo-y-el-papel-de-g" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="punto-fijo-y-el-papel-de-g"><span class="header-section-number">2</span> Punto fijo y el papel de <img src="https://latex.codecogs.com/png.latex?g'"></h2>
+<p>Sea</p>
+<p><img src="https://latex.codecogs.com/png.latex?g(x)=%5Cfrac52%5C,x(1-x)"></p>
+<p>y considere la iteración <img src="https://latex.codecogs.com/png.latex?x_%7Bk+1%7D=g(x_k)">.</p>
+<ol type="1">
+<li>Halle los puntos fijos de <img src="https://latex.codecogs.com/png.latex?g"> y calcule <img src="https://latex.codecogs.com/png.latex?g'">. (5 puntos)</li>
+<li>Evalúe <img src="https://latex.codecogs.com/png.latex?g'"> en cada punto fijo y clasifíquelo como atractor o repulsor, monótono u oscilante. En el atractor, ¿qué valor predice el análisis de la serie de errores para <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_%7Bk+1%7D/%5Cvarepsilon_k">? (5 puntos)</li>
+<li>Desde <img src="https://latex.codecogs.com/png.latex?x_0=0%7B,%7D7"> calcule <img src="https://latex.codecogs.com/png.latex?x_1,x_2,x_3"> y los cocientes <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_%7Bk+1%7D/%5Cvarepsilon_k"> respecto al atractor, y compárelos con <img src="https://latex.codecogs.com/png.latex?g'"> en él. (5 puntos)</li>
+<li>Desde <img src="https://latex.codecogs.com/png.latex?x_0=0%7B,%7D01"> los primeros iterados son <img src="https://latex.codecogs.com/png.latex?0%7B,%7D0248">, <img src="https://latex.codecogs.com/png.latex?0%7B,%7D0603">, <img src="https://latex.codecogs.com/png.latex?0%7B,%7D1418">: se alejan de <img src="https://latex.codecogs.com/png.latex?0"> y, sin embargo, la sucesión termina en el otro punto fijo. Explique qué papel juega <img src="https://latex.codecogs.com/png.latex?g'"> en cada observación y por qué no hay contradicción. (5 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> La ecuación <img src="https://latex.codecogs.com/png.latex?x=%5Ctfrac52x(1-x)"> da <img src="https://latex.codecogs.com/png.latex?x=0"> o <img src="https://latex.codecogs.com/png.latex?1=%5Ctfrac52(1-x)">, es decir <img src="https://latex.codecogs.com/png.latex?x=%5Ctfrac35">. Además</p>
+<p><img src="https://latex.codecogs.com/png.latex?g'(x)=%5Cfrac52(1-2x)=%5Cfrac52-5x."></p>
+<p><strong>2.</strong> Como <img src="https://latex.codecogs.com/png.latex?g'(0)=%5Ctfrac52%3E1">, el punto <img src="https://latex.codecogs.com/png.latex?p=0"> es un repulsor monótono. Como <img src="https://latex.codecogs.com/png.latex?g'(%5Ctfrac35)=-%5Ctfrac12">, el punto <img src="https://latex.codecogs.com/png.latex?p=%5Ctfrac35"> es un atractor oscilante: el signo negativo de <img src="https://latex.codecogs.com/png.latex?g'"> hace que los iterados salten de un lado a otro de <img src="https://latex.codecogs.com/png.latex?p">. El análisis <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_%7Bk+1%7D%5Capprox%20g'(p)%5C,%5Cvarepsilon_k"> predice</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%5Cvarepsilon_%7Bk+1%7D%7D%7B%5Cvarepsilon_k%7D%5Cto-%5Cfrac12,"></p>
+<p>es decir, el error se reduce a la mitad y cambia de signo en cada paso.</p>
+<p><strong>3.</strong> Con <img src="https://latex.codecogs.com/png.latex?p=0%7B,%7D6"> se obtiene <img src="https://latex.codecogs.com/png.latex?x_1=0%7B,%7D525">, <img src="https://latex.codecogs.com/png.latex?x_2=0%7B,%7D6234">, <img src="https://latex.codecogs.com/png.latex?x_3=0%7B,%7D5869">. Los errores <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_k=x_k-p"> son <img src="https://latex.codecogs.com/png.latex?0%7B,%7D1,%5C%20-0%7B,%7D075,%5C%200%7B,%7D0234,%5C%20-0%7B,%7D0131">, y los cocientes</p>
+<p><img src="https://latex.codecogs.com/png.latex?-0%7B,%7D75,%5Cqquad-0%7B,%7D3125,%5Cqquad-0%7B,%7D559."></p>
+<p>Alternan de signo y oscilan alrededor de <img src="https://latex.codecogs.com/png.latex?g'(%5Ctfrac35)=-%5Ctfrac12">. Como <img src="https://latex.codecogs.com/png.latex?g"> es cuadrática, el error cumple exactamente</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_%7Bk+1%7D=-%5Cfrac12%5C,%5Cvarepsilon_k-%5Cfrac52%5C,%5Cvarepsilon_k%5E2,"></p>
+<p>y el segundo término, que el análisis desprecia, es el que desvía los primeros cocientes.</p>
+<p><strong>4.</strong> Cerca de <img src="https://latex.codecogs.com/png.latex?0"> cada paso multiplica el iterado por casi <img src="https://latex.codecogs.com/png.latex?g'(0)=2%7B,%7D5">: de <img src="https://latex.codecogs.com/png.latex?0%7B,%7D01"> a <img src="https://latex.codecogs.com/png.latex?0%7B,%7D0248">, <img src="https://latex.codecogs.com/png.latex?0%7B,%7D0603">, <img src="https://latex.codecogs.com/png.latex?0%7B,%7D1418">, con factores <img src="https://latex.codecogs.com/png.latex?2%7B,%7D48,%5C%202%7B,%7D44,%5C%202%7B,%7D35">. Eso es lo que dice <img src="https://latex.codecogs.com/png.latex?%7Cg'(0)%7C%3E1">, pero solo vale mientras el iterado siga cerca de <img src="https://latex.codecogs.com/png.latex?0">. Como <img src="https://latex.codecogs.com/png.latex?g"> manda <img src="https://latex.codecogs.com/png.latex?%5B0,1%5D"> en <img src="https://latex.codecogs.com/png.latex?%5B0,%5Ctfrac58%5D%5Csubset%5B0,1%5D">, el iterado no puede escapar; al alejarse de <img src="https://latex.codecogs.com/png.latex?0"> llega a la zona de <img src="https://latex.codecogs.com/png.latex?%5Ctfrac35">, donde <img src="https://latex.codecogs.com/png.latex?%7Cg'%7C%3C1">, y converge oscilando. La repulsión es local y no implica divergencia.</p>
+</div>
+</div>
+</section>
+<section id="método-de-newton" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="método-de-newton"><span class="header-section-number">3</span> Método de Newton</h2>
+<p>Sea <img src="https://latex.codecogs.com/png.latex?f(x)=x%5E3-2">, con raíz <img src="https://latex.codecogs.com/png.latex?r=%5Csqrt%5B3%5D%7B2%7D%5Capprox1%7B,%7D25992105">.</p>
+<ol type="1">
+<li>Para el método de Newton, con <img src="https://latex.codecogs.com/png.latex?e_k=x_k-r">, el desarrollo de Taylor alrededor de <img src="https://latex.codecogs.com/png.latex?r"> da <img src="https://latex.codecogs.com/png.latex?e_%7Bk+1%7D%5Capprox%5Cfrac12%5C,%5Cfrac%7Bf''(r)%7D%7Bf'(r)%7D%5C,e_k%5E2."> Calcule la constante <img src="https://latex.codecogs.com/png.latex?%5Cdfrac12%5Cleft%7C%5Cdfrac%7Bf''(r)%7D%7Bf'(r)%7D%5Cright%7C"> para esta <img src="https://latex.codecogs.com/png.latex?f">, en términos de <img src="https://latex.codecogs.com/png.latex?r">, e interprete el resultado: si <img src="https://latex.codecogs.com/png.latex?%7Ce_k%7C%5Capprox10%5E%7B-3%7D">, ¿cuánto vale aproximadamente <img src="https://latex.codecogs.com/png.latex?%7Ce_%7Bk+1%7D%7C"> y qué pasa con el número de cifras correctas en cada paso? ¿Qué le ocurre a la constante cuando <img src="https://latex.codecogs.com/png.latex?f'(r)"> es muy pequeña, y qué relación tiene eso con el condicionamiento de la raíz? (10 puntos)</li>
+<li>Con Newton desde <img src="https://latex.codecogs.com/png.latex?x_0=3/2"> calcule <img src="https://latex.codecogs.com/png.latex?x_1"> y <img src="https://latex.codecogs.com/png.latex?x_2"> (use <img src="https://latex.codecogs.com/png.latex?6"> cifras decimales) y los cocientes <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_%7Bk+1%7D/%5Cvarepsilon_k%5E2"> para <img src="https://latex.codecogs.com/png.latex?k=0,1">, con <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_k=%7Cx_k-r%7C">, y compárelos con la constante del numeral anterior. (5 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1.</strong> Para <img src="https://latex.codecogs.com/png.latex?f=x%5E3-2"> se tiene <img src="https://latex.codecogs.com/png.latex?f'(r)=3r%5E2"> y <img src="https://latex.codecogs.com/png.latex?f''(r)=6r">, así que la constante es</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac12%5C,%5Cfrac%7B6r%7D%7B3r%5E2%7D=%5Cfrac1r%5Capprox0%7B,%7D7937."></p>
+<p>Si <img src="https://latex.codecogs.com/png.latex?%7Ce_k%7C%5Capprox10%5E%7B-3%7D">, entonces <img src="https://latex.codecogs.com/png.latex?%7Ce_%7Bk+1%7D%7C%5Capprox0%7B,%7D79%5Ccdot10%5E%7B-6%7D">: el exponente del error se duplica, es decir, el número de cifras correctas se duplica aproximadamente en cada paso. Cuando <img src="https://latex.codecogs.com/png.latex?f'(r)"> es muy pequeña la constante es grande, porque es <img src="https://latex.codecogs.com/png.latex?%5Ctfrac12%7Cf''(r)%7C%5C,%5Ckappa_r">: es el mismo fenómeno de una raíz mal condicionada, y Newton solo entra en su régimen cuadrático si la semilla está muy cerca de <img src="https://latex.codecogs.com/png.latex?r">. Si <img src="https://latex.codecogs.com/png.latex?f'(r)=0"> la deducción deja de valer y la convergencia deja de ser cuadrática.</p>
+<p><strong>2.</strong> Con <img src="https://latex.codecogs.com/png.latex?x_0=%5Ctfrac32"> el primer paso da exactamente</p>
+<p><img src="https://latex.codecogs.com/png.latex?x_1=%5Cfrac%7B35%7D%7B27%7D%5Capprox1%7B,%7D296296,"></p>
+<p>y el segundo <img src="https://latex.codecogs.com/png.latex?x_2%5Capprox1%7B,%7D260932">. Los errores son <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_0=0%7B,%7D24008">, <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_1=0%7B,%7D036375"> y <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_2=1%7B,%7D011%5Ctimes10%5E%7B-3%7D">, y los cocientes</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B%5Cvarepsilon_1%7D%7B%5Cvarepsilon_0%5E2%7D%5Capprox0%7B,%7D631,%5Cqquad%5Cfrac%7B%5Cvarepsilon_2%7D%7B%5Cvarepsilon_1%5E2%7D%5Capprox0%7B,%7D764,"></p>
+<p>que van acercándose a <img src="https://latex.codecogs.com/png.latex?1/r%5Capprox0%7B,%7D7937">: convergencia cuadrática.</p>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/numerico/parcial-2/</guid>
+  <pubDate>Thu, 19 Nov 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Derivación numérica</title>
   <dc:creator>Arturo Sanjuán</dc:creator>
