@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tablero de problemas de valor inicial: existencia, unicidad y escala de tiempo</title>
+<style>
+  :root{--ink:#1e2327;--muted:#5a6570;--line:#dde3e8;--bg:#fbfcfd;--accent:#2563a8;--accent2:#c1440e;--good:#1a7f5a;--bad:#b3261e;--gold:#9a7300;--panel:#fff;}
+  *{box-sizing:border-box;}
+  body{margin:0;padding:18px 20px 26px;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:14.5px;line-height:1.45;}
+  h2{font-size:16px;margin:0 0 4px;} .sub{color:var(--muted);margin:0 0 14px;font-size:13px;}
+  .pc-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;}
+  .pc-tab{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:999px;padding:4px 13px;cursor:pointer;font:inherit;font-size:13px;}
+  .pc-tab:hover{background:#f2f5f7;}
+  .pc-tab[aria-pressed="true"]{background:#e6eef8;border-color:var(--accent);font-weight:600;color:var(--accent);}
+  .pc-eq{background:#f2f5f7;border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:0 0 14px;font-size:13.5px;}
+  .pc-eq div{margin:2px 0;} .pc-eq .pc-lbl{color:var(--muted);display:inline-block;min-width:9em;}
+  .pc-grid{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;}
+  .pc-panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;}
+  .pc-ctrl{flex:1 1 270px;max-width:360px;} .pc-plot{flex:2 1 380px;min-width:0;}
+  .pc-plot canvas{width:100%;display:block;background:#fff;border-radius:6px;}
+  #pc-c1{aspect-ratio:1/1;} #pc-c2{height:210px;margin-top:10px;}
+  .pc-lab{display:block;font-size:13px;margin:2px 0 3px;} .pc-val{font-variant-numeric:tabular-nums;color:var(--accent);font-weight:600;}
+  .pc-ctrl input[type=range]{width:100%;margin:0 0 9px;accent-color:var(--accent);}
+  .pc-sec{font-size:12.5px;color:var(--muted);margin:10px 0 6px;font-weight:600;}
+  .pc-btns{display:flex;gap:8px;margin:6px 0 12px;}
+  .pc-btn{flex:1;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:6px;padding:5px 9px;font:inherit;font-size:13px;cursor:pointer;}
+  .pc-btn:hover{background:#f2f5f7;} .pc-btn.pc-prim{background:#e6eef8;border-color:var(--accent);color:var(--accent);font-weight:600;}
+  .pc-nota{border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-size:13px;line-height:1.4;background:#f8fafb;}
+  .pc-nota p{margin:0 0 4px;} .pc-nota p:last-child{margin:0;}
+  .pc-pie{margin:8px 0 0;font-size:12px;color:var(--muted);}
+  .pc-leg{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;margin:0 0 6px;}
+  .pc-leg i{display:inline-block;width:18px;height:3px;vertical-align:middle;margin-right:5px;border-radius:2px;}
+</style>
+</head>
+<body>
+<h2>Problemas de valor inicial: <i>x&prime; = f(x), x(0) = x<sub>0</sub></i></h2>
+<p class="sub">Cambie el sistema, el dato inicial y los parámetros. El tablero estima en qué intervalo de tiempo garantiza la teoría de Picard-Lindelöf la solución y lo compara con lo que realmente ocurre.</p>
+
+<div class="pc-tabs" id="pc-tabs"></div>
+<div class="pc-eq" id="pc-eq"></div>
+
+<div class="pc-grid">
+  <div class="pc-panel pc-ctrl">
+    <div class="pc-sec">Dato inicial</div><div id="pc-ini"></div>
+    <div class="pc-sec">Parámetros</div><div id="pc-par"></div>
+    <div class="pc-sec">Tiempo y bola de Lipschitz</div><div id="pc-gen"></div>
+    <div class="pc-btns">
+      <button class="pc-btn pc-prim" id="pc-play" type="button">Animar</button>
+      <button class="pc-btn" id="pc-reset" type="button">Restablecer</button>
+    </div>
+    <div class="pc-nota" id="pc-nota"></div>
+  </div>
+  <div class="pc-panel pc-plot">
+    <div class="pc-leg" id="pc-leg"></div>
+    <canvas id="pc-c1" role="img" aria-label="Trayectoria en el espacio de fases"></canvas>
+    <canvas id="pc-c2" role="img" aria-label="Componentes de la solución en función del tiempo"></canvas>
+    <p class="pc-pie" id="pc-pie"></p>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  const MENOS = '−', $ = id => document.getElementById(id);
+  const signo = s => s.replace(/^-/, MENOS);
+  function fm(v, d) { if (!isFinite(v)) return '∞'; if (Math.abs(v) < 5e-10) return '0'; return signo(v.toFixed(d === undefined ? 2 : d)); }
+  const COLS = ['#2563a8', '#c1440e', '#1a7f5a'];
+
+  const SIS = {
+    lv: { nom: 'Lotka-Volterra', dim: 2, n: ['x', 'y'], eq: ['x′ = α x − β x y', 'y′ = δ x y − γ y'],
+          par: [['α', .1, 2, .01, 1], ['β', .1, 2, .01, 1], ['γ', .1, 2, .01, 1], ['δ', .1, 2, .01, 1]],
+          ini: [['x₀', .1, 6, .05, 2], ['y₀', .1, 6, .05, 1]], T: 20, win: [0, 6, 0, 6], fase: [0, 1],
+          f: (u, p) => [p[0]*u[0] - p[1]*u[0]*u[1], p[3]*u[0]*u[1] - p[2]*u[1]],
+          nota: 'f es polinómica: localmente Lipschitz, pero no globalmente (término cuadrático). Con x, y ≥ 0 la solución es global y periódica.' },
+    sir: { nom: 'SIR', dim: 3, n: ['S', 'I', 'R'], eq: ['S′ = −β S I / N', 'I′ = β S I / N − γ I', 'R′ = γ I'],
+          par: [['β', .05, 2, .01, .6], ['γ', .02, 1, .01, .2]],
+          ini: [['S₀', 0, 1000, 1, 990], ['I₀', 0, 200, 1, 10], ['R₀', 0, 500, 1, 0]], T: 100, win: null, fase: [0, 1],
+          f: (u, p) => { const N = u[0] + u[1] + u[2] || 1; return [-p[0]*u[0]*u[1]/N, p[0]*u[0]*u[1]/N - p[1]*u[1], p[1]*u[1]]; },
+          nota: 'N = S + I + R se conserva. El campo es localmente Lipschitz lejos de N = 0, y como S, I, R permanecen en [0, N] la solución es global.' },
+    lorenz: { nom: 'Lorenz', dim: 3, n: ['x', 'y', 'z'], eq: ['x′ = σ (y − x)', 'y′ = x (ρ − z) − y', 'z′ = x y − β z'],
+          par: [['σ', 1, 20, .1, 10], ['ρ', 0, 60, .5, 28], ['β', .5, 5, .01, 2.67]],
+          ini: [['x₀', -25, 25, .1, 1], ['y₀', -25, 25, .1, 1], ['z₀', 0, 50, .1, 1]], T: 40, win: [-25, 25, 0, 50], fase: [0, 2],
+          f: (u, p) => [p[0]*(u[1] - u[0]), u[0]*(p[1] - u[2]) - u[1], u[0]*u[1] - p[2]*u[2]],
+          nota: 'Localmente Lipschitz, no globalmente. Hay una región absorbente, así que la solución es global; la garantía de Picard-Lindelöf, en cambio, cubre un tiempo muy corto comparado con la escala real.' },
+    vdp: { nom: 'Van der Pol', dim: 2, n: ['x', 'y'], eq: ['x′ = y', 'y′ = μ (1 − x²) y − x'],
+          par: [['μ', 0, 6, .05, 1.5]],
+          ini: [['x₀', -4, 4, .05, .5], ['y₀', -4, 4, .05, 0]], T: 30, win: [-4, 4, -7, 7], fase: [0, 1],
+          f: (u, p) => [u[1], p[0]*(1 - u[0]*u[0])*u[1] - u[0]],
+          nota: 'Localmente Lipschitz, no globalmente (término cúbico). La solución es global y se acerca a un ciclo límite; para μ grande hay escalas de tiempo muy distintas (rígido).' }
+  };
+  const ORDEN = ['lv', 'sir', 'lorenz', 'vdp'];
+  const S = { id: 'lv', ini: [], par: [], T: 20, R: 1 };
+  let anim = null, hasta = null, SOL = null;
+
+  function rk4(f, u0, T, N) {
+    const h = T/N, out = [{ t: 0, u: u0.slice() }]; let u = u0.slice();
+    for (let i = 0; i < N; i++) {
+      const k1 = f(u), a = u.map((v, j) => v + h/2*k1[j]), k2 = f(a), b = u.map((v, j) => v + h/2*k2[j]), k3 = f(b),
+            c = u.map((v, j) => v + h*k3[j]), k4 = f(c);
+      u = u.map((v, j) => v + h/6*(k1[j] + 2*k2[j] + 2*k3[j] + k4[j]));
+      if (u.some(v => !isFinite(v) || Math.abs(v) > 1e8)) break;
+      out.push({ t: (i+1)*h, u: u.slice() });
+    }
+    return out;
+  }
+  const norma = u => Math.sqrt(u.reduce((s, v) => s + v*v, 0));
+
+  /* M = sup|f| y L = sup|Df| estimados sobre la bola cerrada B(x0, R) */
+  function constantes(sis, p, u0, R) {
+    const f = u => sis.f(u, p), d = sis.dim, pts = [u0.slice()];
+    const dir = () => { const v = Array.from({ length: d }, () => Math.random()*2 - 1), n = norma(v) || 1; return v.map(x => x/n); };
+    for (let i = 0; i < 500; i++) { const v = dir(), r = R*Math.cbrt(Math.random()); pts.push(u0.map((x, j) => x + r*v[j])); }
+    for (let i = 0; i < 60; i++) { const v = dir(); pts.push(u0.map((x, j) => x + R*v[j])); }
+    let M = 0, L = 0; pts.forEach(u => { M = Math.max(M, norma(f(u))); });
+    const e = 1e-6*Math.max(1, R);
+    pts.forEach(u => { const fu = f(u), J = Array.from({ length: d }, () => new Array(d).fill(0));
+      for (let j = 0; j < d; j++) { const v = u.slice(); v[j] += e; const fv = f(v); for (let k = 0; k < d; k++) J[k][j] = (fv[k] - fu[k])/e; }
+      /* norma espectral de J por iteración de potencias sobre JᵀJ */
+      let x = new Array(d).fill(1/Math.sqrt(d)), s = 0;
+      for (let it = 0; it < 30; it++) { const y = J.map(r => r.reduce((t, a, j) => t + a*x[j], 0)), z = x.map((_, j) => J.reduce((t, r, k) => t + r[j]*y[k], 0)), nz = norma(z);
+        s = Math.sqrt(nz); if (nz < 1e-14) break; x = z.map(v => v/nz); }
+      L = Math.max(L, s); });
+    return { M: M, L: L };
+  }
+
+  function resolver() {
+    const sis = SIS[S.id], p = S.par, f = u => sis.f(u, p);
+    SOL = rk4(f, S.ini, S.T, 4000);
+    const c = constantes(sis, p, S.ini, S.R);
+    SOL.c = c; SOL.tpl = c.M > 0 ? S.R/c.M : Infinity; SOL.tsup = Math.min(SOL.tpl, c.L > 0 ? 1/(2*c.L) : Infinity);
+    let tsal = Infinity; for (const q of SOL) { if (norma(q.u.map((v, j) => v - S.ini[j])) > S.R) { tsal = q.t; break; } }
+    SOL.tsal = tsal; SOL.tfin = SOL[SOL.length-1].t;
+  }
+
+  function lienzo(cv) { const dpr = window.devicePixelRatio || 1, w = cv.clientWidth || 600, h = cv.clientHeight || w;
+    cv.width = Math.round(w*dpr); cv.height = Math.round(h*dpr); const g = cv.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, w, h); return { g: g, w: w, h: h }; }
+  function rango(vals, pad) { let lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals); if (hi - lo < 1e-9) { hi += 1; lo -= 1; } const m = (hi - lo)*pad; return [lo - m, hi + m]; }
+  function ticks(lo, hi, n) { const raw = (hi - lo)/n, mag = Math.pow(10, Math.floor(Math.log10(raw))), r = raw/mag, st = (r < 1.5 ? 1 : r < 3.5 ? 2 : r < 7.5 ? 5 : 10)*mag, out = []; for (let v = Math.ceil(lo/st)*st; v <= hi + 1e-9; v += st) out.push(v); return out; }
+
+  function dibujar() {
+    const sis = SIS[S.id], tmax = hasta === null ? SOL.tfin : hasta, pts = SOL.filter(q => q.t <= tmax + 1e-9);
+    const a = sis.fase[0], b = sis.fase[1];
+    let L = lienzo($('pc-c1')), g = L.g, w = L.w, h = L.h, ml = 48, mb = 28, mt = 10, mr = 12;
+    const ra = sis.win ? [sis.win[0], sis.win[1]] : rango(SOL.map(q => q.u[a]), .08), rb = sis.win ? [sis.win[2], sis.win[3]] : rango(SOL.map(q => q.u[b]), .08);
+    const X = v => ml + (w-ml-mr)*(v-ra[0])/(ra[1]-ra[0]), Y = v => mt + (h-mt-mb)*(rb[1]-v)/(rb[1]-rb[0]);
+    g.font = '11px ui-monospace,Menlo,Consolas,monospace'; g.strokeStyle = 'rgba(0,0,0,.09)'; g.fillStyle = '#5a6570';
+    g.textAlign = 'center'; g.textBaseline = 'top';
+    ticks(ra[0], ra[1], 6).forEach(v => { g.beginPath(); g.moveTo(X(v), mt); g.lineTo(X(v), h-mb); g.stroke(); g.fillText(signo(String(+v.toFixed(3))), X(v), h-mb+5); });
+    g.textAlign = 'right'; g.textBaseline = 'middle';
+    ticks(rb[0], rb[1], 6).forEach(v => { g.beginPath(); g.moveTo(ml, Y(v)); g.lineTo(w-mr, Y(v)); g.stroke(); g.fillText(signo(String(+v.toFixed(3))), ml-5, Y(v)); });
+    g.fillStyle = '#1e2327'; g.textAlign = 'right'; g.textBaseline = 'bottom'; g.fillText(sis.n[a], w-mr, h-mb-3);
+    g.textAlign = 'left'; g.textBaseline = 'top'; g.fillText(sis.n[b], ml+4, mt+2);
+    const R = S.R, rx = Math.abs(X(S.ini[a] + R) - X(S.ini[a])), ry = Math.abs(Y(S.ini[b] + R) - Y(S.ini[b]));
+    g.save(); g.beginPath(); g.rect(ml, mt, w-ml-mr, h-mt-mb); g.clip();
+    g.beginPath(); g.ellipse(X(S.ini[a]), Y(S.ini[b]), rx, ry, 0, 0, 7); g.fillStyle = 'rgba(193,68,14,.06)'; g.fill();
+    g.setLineDash([5, 4]); g.strokeStyle = '#c1440e'; g.lineWidth = 1.3; g.stroke(); g.setLineDash([]);
+    g.strokeStyle = '#2563a8'; g.lineWidth = 1.8; g.beginPath(); pts.forEach((q, i) => i ? g.lineTo(X(q.u[a]), Y(q.u[b])) : g.moveTo(X(q.u[a]), Y(q.u[b]))); g.stroke();
+    const piv = pts.filter(q => q.t <= SOL.tpl + 1e-9);
+    g.strokeStyle = '#1a7f5a'; g.lineWidth = 4.5; g.beginPath(); piv.forEach((q, i) => i ? g.lineTo(X(q.u[a]), Y(q.u[b])) : g.moveTo(X(q.u[a]), Y(q.u[b]))); g.stroke();
+    g.restore();
+    g.beginPath(); g.arc(X(S.ini[a]), Y(S.ini[b]), 5, 0, 7); g.fillStyle = '#fff'; g.fill(); g.strokeStyle = '#c1440e'; g.lineWidth = 2.2; g.stroke();
+    const q = pts[pts.length-1]; g.beginPath(); g.arc(X(q.u[a]), Y(q.u[b]), 3.5, 0, 7); g.fillStyle = '#2563a8'; g.fill();
+
+    L = lienzo($('pc-c2')); g = L.g; w = L.w; h = L.h; ml = 48; mb = 24; mt = 8;
+    const comp = sis.n.map((_, j) => j), allv = []; SOL.forEach(r => comp.forEach(j => allv.push(r.u[j])));
+    const rv = rango(allv, .06), tm = SOL.tfin, XT = t => ml + (w-ml-mr)*t/tm, YT = v => mt + (h-mt-mb)*(rv[1]-v)/(rv[1]-rv[0]);
+    g.font = '11px ui-monospace,Menlo,Consolas,monospace'; g.strokeStyle = 'rgba(0,0,0,.09)'; g.fillStyle = '#5a6570';
+    g.textAlign = 'center'; g.textBaseline = 'top'; ticks(0, tm, 8).forEach(v => { g.beginPath(); g.moveTo(XT(v), mt); g.lineTo(XT(v), h-mb); g.stroke(); g.fillText(String(+v.toFixed(2)), XT(v), h-mb+5); });
+    g.textAlign = 'right'; g.textBaseline = 'middle'; ticks(rv[0], rv[1], 4).forEach(v => { g.beginPath(); g.moveTo(ml, YT(v)); g.lineTo(w-mr, YT(v)); g.stroke(); g.fillText(signo(String(+v.toFixed(2))), ml-5, YT(v)); });
+    const tp = Math.min(SOL.tpl, tm);
+    g.fillStyle = 'rgba(26,127,90,.14)'; g.fillRect(XT(0), mt, Math.max(2, XT(tp) - XT(0)), h-mt-mb);
+    g.strokeStyle = '#1a7f5a'; g.lineWidth = 1.4; g.beginPath(); g.moveTo(XT(tp), mt); g.lineTo(XT(tp), h-mb); g.stroke();
+    g.save(); g.beginPath(); g.rect(ml, mt, w-ml-mr, h-mt-mb); g.clip();
+    comp.forEach(j => { g.strokeStyle = COLS[j]; g.lineWidth = 1.7; g.beginPath(); pts.forEach((r, i) => i ? g.lineTo(XT(r.t), YT(r.u[j])) : g.moveTo(XT(r.t), YT(r.u[j]))); g.stroke(); });
+    g.restore();
+    g.fillStyle = '#5a6570'; g.textAlign = 'right'; g.textBaseline = 'bottom'; g.fillText('t', w-mr, h-mb-3);
+  }
+
+  function leyenda() {
+    const sis = SIS[S.id];
+    $('pc-leg').innerHTML = sis.n.map((n, j) => '<span><i style="background:' + COLS[j] + '"></i>' + n + '(t)</span>').join('') +
+      '<span><i style="background:#1a7f5a;height:5px"></i>tramo garantizado</span><span><i style="background:none;border-top:2px dashed #c1440e;height:0"></i>bola B(x₀, R)</span>';
+    $('pc-pie').innerHTML = 'Arriba: espacio de fases (' + sis.n[sis.fase[0]] + ', ' + sis.n[sis.fase[1]] + '). Abajo: componentes. La franja verde es [0, T<sub>PL</sub>] con T<sub>PL</sub> = R/M, el tiempo que da la norma ponderada (no depende de L).';
+  }
+
+  function nota() {
+    const sis = SIS[S.id], c = SOL.c, tpl = SOL.tpl, real = SOL.tsal;
+    let h = '<p><b>Sobre la bola de radio R = ' + fm(S.R, 2) + ':</b> M = sup|f| ≈ ' + fm(c.M, 2) + ', L ≈ ' + fm(c.L, 2) + '.</p>' +
+            '<p>Garantía con la norma ponderada: solución única en [0, T<sub>PL</sub>] con T<sub>PL</sub> = R/M ≈ <b>' + fm(tpl, 3) + '</b>. Con la norma del máximo habría que pedir además T·L ≤ 1/2 y quedaría T ≈ ' + fm(SOL.tsup, 3) + '.</p>' +
+            '<p>La solución numérica sale de la bola en t ≈ <b>' + (isFinite(real) ? fm(real, 3) : 'no sale en [0, ' + fm(S.T, 0) + ']') + '</b>' +
+            (isFinite(real) && tpl > 0 ? ' (' + fm(real/tpl, 1) + ' veces la garantía).' : '.') + '</p>' +
+            '<p style="color:#5a6570">' + sis.nota + '</p>';
+    if (SOL.tfin < S.T - 1e-6) h += '<p><b>La integración se detuvo en t = ' + fm(SOL.tfin, 2) + ':</b> la solución crece sin cota.</p>';
+    $('pc-nota').innerHTML = h;
+  }
+
+  function deslizador(cont, key, i, def) {
+    const id = key + i, d = document.createElement('div');
+    d.innerHTML = '<label class="pc-lab" for="' + id + '">' + def[0] + ' = <span class="pc-val" id="v-' + id + '"></span></label><input type="range" id="' + id + '" min="' + def[1] + '" max="' + def[2] + '" step="' + def[3] + '">';
+    $(cont).appendChild(d);
+    $(id).addEventListener('input', e => { S[key][i] = parseFloat(e.target.value); $('v-' + id).textContent = fm(S[key][i], 2); refrescar(); });
+  }
+  function extra(id, txt, mn, mx, st, set) {
+    const d = document.createElement('div');
+    d.innerHTML = '<label class="pc-lab" for="' + id + '">' + txt + ' = <span class="pc-val" id="v-' + id + '"></span></label><input type="range" id="' + id + '" min="' + mn + '" max="' + mx + '" step="' + st + '">';
+    $('pc-gen').appendChild(d);
+    $(id).addEventListener('input', e => { const v = parseFloat(e.target.value); set(v); $('v-' + id).textContent = fm(v, 2); refrescar(); });
+  }
+  function montar() {
+    const sis = SIS[S.id];
+    $('pc-ini').innerHTML = ''; $('pc-par').innerHTML = ''; $('pc-gen').innerHTML = '';
+    sis.ini.forEach((d, i) => deslizador('pc-ini', 'ini', i, d));
+    sis.par.forEach((d, i) => deslizador('pc-par', 'par', i, d));
+    extra('ge-T', 'tiempo final T', 1, 120, 1, v => { S.T = v; });
+    extra('ge-R', 'radio R de la bola', .05, S.id === 'sir' ? 300 : 12, .05, v => { S.R = v; });
+    $('ge-T').value = S.T; $('v-ge-T').textContent = fm(S.T, 0); $('ge-R').value = S.R; $('v-ge-R').textContent = fm(S.R, 2);
+    sis.ini.forEach((d, i) => { $('ini' + i).value = S.ini[i]; $('v-ini' + i).textContent = fm(S.ini[i], 2); });
+    sis.par.forEach((d, i) => { $('par' + i).value = S.par[i]; $('v-par' + i).textContent = fm(S.par[i], 2); });
+    $('pc-eq').innerHTML = '<div><span class="pc-lbl">' + sis.nom + '</span>' + sis.eq.join(' &nbsp;·&nbsp; ') + '</div>';
+    leyenda();
+  }
+  function cargar(id) {
+    parar(); S.id = id; const sis = SIS[id];
+    S.ini = sis.ini.map(d => d[4]); S.par = sis.par.map(d => d[4]); S.T = sis.T; S.R = id === 'sir' ? 50 : id === 'lorenz' ? 6 : 1;
+    document.querySelectorAll('.pc-tab').forEach((bt, j) => bt.setAttribute('aria-pressed', ORDEN[j] === id ? 'true' : 'false'));
+    montar(); refrescar();
+  }
+  function refrescar() { resolver(); nota(); dibujar(); }
+  function parar() { if (anim) { clearInterval(anim); anim = null; } hasta = null; const bt = $('pc-play'); if (bt) bt.textContent = 'Animar'; }
+  $('pc-play').addEventListener('click', () => {
+    if (anim) { parar(); dibujar(); return; }
+    hasta = 0; $('pc-play').textContent = 'Detener'; const paso = SOL.tfin/150;
+    anim = setInterval(() => { hasta += paso; if (hasta >= SOL.tfin) parar(); dibujar(); }, 30);
+  });
+  $('pc-reset').addEventListener('click', () => cargar(S.id));
+  ORDEN.forEach(id => { const bt = document.createElement('button'); bt.type = 'button'; bt.className = 'pc-tab'; bt.textContent = SIS[id].nom; bt.addEventListener('click', () => cargar(id)); $('pc-tabs').appendChild(bt); });
+  window.addEventListener('resize', dibujar);
+  cargar('lv');
+})();
+</script>
+</body>
+</html>

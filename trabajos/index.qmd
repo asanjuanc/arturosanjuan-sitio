@@ -19,3 +19,4 @@ Documentos de trabajo, tesis y notas de clase de distintas etapas de mi formaci�
 - Sanjuán, A. (2019). *Pequeños Universos y el Método de Cuadratura.* Cursillo para el V Taller de Análisis No Lineal y Ecuaciones Diferenciales Parciales. [PDF](files/cuadratura.pdf)
 - Sanjuán, A. (2023). *Una Aplicación del Análisis Complejo al Álgebra Lineal* Presentación para la I Semana de la Ciencia Universidad Distrital Francisco José de Caldas [PDF](files/cauchy-cayley.pdf)
 - Sanjuán, A. (2025). *Una introducción a las ecuaciones con retardo y algunas aplicaciones a la biología* Curso para La XVIII Jornada de la Ciencia y el Seminario de Análisis Matemático de la Unviersidad Nacional -- Sede Manizales [PDF](files/curso-ecuacionesconretardo.pdf)
+- Sanjuán, A. (2026). *El principio de contracciones.* Notas del semillero SAMAT sobre el teorema de Banach y sus aplicaciones a ecuaciones integrales y diferenciales. [Página](contracciones/index.qmd)

@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Arturo Sanjuán">
+<meta name="description" content="Notas del semillero SAMAT sobre el principio de contracciones y su uso en ecuaciones de Volterra, funciones de Green, el teorema de Picard-Lindelöf y ecuaciones de evolución en una dimensión.">
+
+<title>El principio de contracciones – Arturo Sanjuán</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-5a1953863e1f72ef3b996ef827f01ca7.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-06ef128ffaab2aaffa18b1038abc86f3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-979bd06565eab1ad32ed49e916b209dc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-06ef128ffaab2aaffa18b1038abc86f3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Arturo Sanjuán</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../research/index.html"> 
+<span class="menu-text">research</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../cursos/index.html"> 
+<span class="menu-text">cursos</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../trabajos/index.html"> 
+<span class="menu-text">trabajos</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../research/genealogy/index.html"> 
+<span class="menu-text">genealogy</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../links.html"> 
+<span class="menu-text">contacto</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../files/cv_sanjuan.pdf"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo oscuro"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#el-teorema" id="toc-el-teorema" class="nav-link active" data-scroll-target="#el-teorema"><span class="header-section-number">1</span> El teorema</a></li>
+  <li><a href="#ejemplos-de-juguete-por-qué-importan-todas-las-hipótesis" id="toc-ejemplos-de-juguete-por-qué-importan-todas-las-hipótesis" class="nav-link" data-scroll-target="#ejemplos-de-juguete-por-qué-importan-todas-las-hipótesis"><span class="header-section-number">2</span> Ejemplos de juguete: por qué importan todas las hipótesis</a></li>
+  <li><a href="#algo-de-intuición-el-plano-de-la-ciudad" id="toc-algo-de-intuición-el-plano-de-la-ciudad" class="nav-link" data-scroll-target="#algo-de-intuición-el-plano-de-la-ciudad"><span class="header-section-number">3</span> Algo de intuición: el plano de la ciudad</a></li>
+  <li><a href="#demostración" id="toc-demostración" class="nav-link" data-scroll-target="#demostración"><span class="header-section-number">4</span> Demostración</a></li>
+  <li><a href="#dos-variantes-útiles" id="toc-dos-variantes-útiles" class="nav-link" data-scroll-target="#dos-variantes-útiles"><span class="header-section-number">5</span> Dos variantes útiles</a></li>
+  <li><a href="#una-ecuación-integral-con-memoria" id="toc-una-ecuación-integral-con-memoria" class="nav-link" data-scroll-target="#una-ecuación-integral-con-memoria"><span class="header-section-number">6</span> Una ecuación integral con memoria</a>
+  <ul class="collapse">
+  <li><a href="#la-ecuación-de-volterra-de-segunda-especie" id="toc-la-ecuación-de-volterra-de-segunda-especie" class="nav-link" data-scroll-target="#la-ecuación-de-volterra-de-segunda-especie"><span class="header-section-number">6.1</span> La ecuación de Volterra de segunda especie</a></li>
+  <li><a href="#una-observación-ecuaciones-no-locales" id="toc-una-observación-ecuaciones-no-locales" class="nav-link" data-scroll-target="#una-observación-ecuaciones-no-locales"><span class="header-section-number">6.2</span> Una observación: ecuaciones no locales</a></li>
+  </ul></li>
+  <li><a href="#una-ecuación-diferencial-lineal-de-segundo-orden" id="toc-una-ecuación-diferencial-lineal-de-segundo-orden" class="nav-link" data-scroll-target="#una-ecuación-diferencial-lineal-de-segundo-orden"><span class="header-section-number">7</span> Una ecuación diferencial lineal de segundo orden</a></li>
+  <li><a href="#funciones-de-green-y-problemas-de-frontera" id="toc-funciones-de-green-y-problemas-de-frontera" class="nav-link" data-scroll-target="#funciones-de-green-y-problemas-de-frontera"><span class="header-section-number">8</span> Funciones de Green y problemas de frontera</a></li>
+  <li><a href="#el-teorema-de-picard-lindelöf" id="toc-el-teorema-de-picard-lindelöf" class="nav-link" data-scroll-target="#el-teorema-de-picard-lindelöf"><span class="header-section-number">9</span> El teorema de Picard-Lindelöf</a></li>
+  <li><a href="#ecuaciones-de-evolución-en-una-dimensión-con-fourier" id="toc-ecuaciones-de-evolución-en-una-dimensión-con-fourier" class="nav-link" data-scroll-target="#ecuaciones-de-evolución-en-una-dimensión-con-fourier"><span class="header-section-number">10</span> Ecuaciones de evolución en una dimensión con Fourier</a>
+  <ul class="collapse">
+  <li><a href="#la-ecuación-del-calor" id="toc-la-ecuación-del-calor" class="nav-link" data-scroll-target="#la-ecuación-del-calor"><span class="header-section-number">10.1</span> La ecuación del calor</a></li>
+  <li><a href="#la-ecuación-de-schrödinger" id="toc-la-ecuación-de-schrödinger" class="nav-link" data-scroll-target="#la-ecuación-de-schrödinger"><span class="header-section-number">10.2</span> La ecuación de Schrödinger</a></li>
+  <li><a href="#un-problema-similar-la-viga-simplemente-apoyada" id="toc-un-problema-similar-la-viga-simplemente-apoyada" class="nav-link" data-scroll-target="#un-problema-similar-la-viga-simplemente-apoyada"><span class="header-section-number">10.3</span> Un problema similar: la viga simplemente apoyada</a></li>
+  <li><a href="#qué-cambia-de-un-caso-a-otro" id="toc-qué-cambia-de-un-caso-a-otro" class="nav-link" data-scroll-target="#qué-cambia-de-un-caso-a-otro"><span class="header-section-number">10.4</span> Qué cambia de un caso a otro</a></li>
+  </ul></li>
+  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias"><span class="header-section-number">11</span> Referencias</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Otros formatos</h2><ul><li><a href="index.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">El principio de contracciones</h1>
+<p class="subtitle lead">Semillero SAMAT. El teorema de punto fijo de Banach, por qué importan todas sus hipótesis y algunas aplicaciones a ecuaciones integrales y diferenciales.</p>
+</div>
+
+<div>
+  <div class="description">
+    Notas del semillero SAMAT sobre el principio de contracciones y su uso en ecuaciones de Volterra, funciones de Green, el teorema de Picard-Lindelöf y ecuaciones de evolución en una dimensión.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor</div>
+    <div class="quarto-title-meta-contents">
+             <p>Arturo Sanjuán </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">22 de noviembre de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Estas son las notas del semillero SAMAT (Semillero en Análisis Matemático) sobre el principio de contracciones. Seguimos la monografía de Brooks y Schmitt, <a href="https://ejde.math.txstate.edu/Monographs/09/brooks.pdf"><em>The Contraction Mapping Principle and Some Applications</em></a> (Electronic Journal of Differential Equations, Monograph 09, 2009), y para las ecuaciones de Volterra las ideas del libro de <a href="https://link.springer.com/book/10.1007/978-93-86279-42-2">Kesavan, <em>Functional Analysis</em></a> (Hindustan Book Agency, 2009).</p>
+<p>Como en las notas de los cursos, el texto lo escribo yo a mano y me ayudo de una IA para pasarlo a esta versión web, pulir la redacción y programar las simulaciones. Los detalles están en la <a href="../../cursos/index.html">declaración de uso de IA</a> de la página de cursos.</p>
+<p>Si prefiere leer o imprimir, hay una <a href="index.pdf">versión en PDF</a> de esta página. Las dos simulaciones interactivas solo aparecen en la versión web.</p>
+<section id="el-teorema" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="el-teorema"><span class="header-section-number">1</span> El teorema</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="Teorema (principio de contracciones)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Teorema (principio de contracciones)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sea <span class="math inline">\((\mathbb{M},d)\)</span> un espacio métrico completo y <span class="math inline">\(T:\mathbb{M}\to\mathbb{M}\)</span> una contracción de constante <span class="math inline">\(k\)</span>, es decir,</p>
+<p><span class="math display">\[d(Tx,Ty)\le k\,d(x,y)\qquad\text{para todo } x,y\in\mathbb{M},\quad\text{con } k\in[0,1).\]</span></p>
+<p>Entonces <span class="math inline">\(T\)</span> tiene un único punto fijo <span class="math inline">\(x^*\)</span>, esto es, <span class="math inline">\(Tx^*=x^*\)</span>. Además, si <span class="math inline">\(x_0\in\mathbb{M}\)</span> es cualquier punto, la iteración</p>
+<p><span class="math display">\[x_{n+1}=Tx_n\]</span></p>
+<p>cumple <span class="math inline">\(\displaystyle\lim_{n\to\infty}x_n=x^*\)</span>, y el error satisface <span class="math inline">\(d(x_n,x^*)\le\dfrac{k^n}{1-k}\,d(x_0,x_1)\)</span>.</p>
+</div>
+</div>
+<p>El teorema tiene tres hipótesis: que <span class="math inline">\(\mathbb{M}\)</span> sea completo, que <span class="math inline">\(T\)</span> lleve <span class="math inline">\(\mathbb{M}\)</span> en sí mismo y que la constante <span class="math inline">\(k\)</span> sea estrictamente menor que <span class="math inline">\(1\)</span>. En la <a href="../../cursos/numerico/raices/index.html">nota de raíces y puntos fijos</a> vimos el caso de <span class="math inline">\(\mathbb{R}^n\)</span>. Aquí lo hacemos en un espacio métrico completo cualquiera, que es lo que permite aplicarlo a espacios de funciones.</p>
+</section>
+<section id="ejemplos-de-juguete-por-qué-importan-todas-las-hipótesis" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="ejemplos-de-juguete-por-qué-importan-todas-las-hipótesis"><span class="header-section-number">2</span> Ejemplos de juguete: por qué importan todas las hipótesis</h2>
+<p>Antes de la demostración, veamos que ninguna de las tres hipótesis sobra.</p>
+<p><strong>La condición <span class="math inline">\(k&lt;1\)</span> es crucial.</strong> Si <span class="math inline">\(\mathbb{M}=[0,1]\)</span> y <span class="math inline">\(Tx=x\)</span>, entonces <span class="math inline">\(|Tx-Ty|\le|x-y|\)</span>, pero <span class="math inline">\(T\)</span> tiene infinitos puntos fijos. Aquí <span class="math inline">\(k=1\)</span> y se pierde la unicidad.</p>
+<p><strong>Hace falta que <span class="math inline">\(T(\mathbb{M})\subset\mathbb{M}\)</span>.</strong> Tomemos <span class="math inline">\(\mathbb{M}=[2,\infty)\)</span> y <span class="math inline">\(Tx=1/x\)</span>. Por el teorema del valor medio, <span class="math inline">\(|Tx-Ty|\le|T'(\xi)|\,|x-y|\)</span> con <span class="math inline">\(T'(x)=-x^{-2}\)</span>, y como <span class="math inline">\(x\ge2\)</span> resulta <span class="math inline">\(|T'(\xi)|\le1/4\)</span>. Así que <span class="math inline">\(T\)</span> es una contracción y <span class="math inline">\(\mathbb{M}\)</span> es un espacio métrico completo. Lo que falla es que <span class="math inline">\(T(\mathbb{M})=(0,\tfrac12]\not\subset[2,\infty)\)</span> (de hecho son disjuntos), y claramente <span class="math inline">\(T\)</span> no tiene puntos fijos en <span class="math inline">\(\mathbb{M}\)</span>.</p>
+<p><strong>Hace falta que <span class="math inline">\(\mathbb{M}\)</span> sea completo.</strong> Sea <span class="math inline">\(Tx=\sqrt{x}\)</span> en <span class="math inline">\(\mathbb{M}=(1,\infty)\)</span>. Es claro que <span class="math inline">\(T(\mathbb{M})\subset\mathbb{M}\)</span> (de hecho son iguales) y <span class="math inline">\(T'(x)=\dfrac{1}{2\sqrt{x}}&lt;\dfrac12\)</span>, de donde <span class="math inline">\(T\)</span> es una contracción con <span class="math inline">\(k=1/2\)</span>, pero no tiene ningún punto fijo, porque <span class="math inline">\(\sqrt{x}=x\)</span> solo para <span class="math inline">\(x=1\)</span>, que no está en <span class="math inline">\(\mathbb{M}\)</span>. Si en cambio tomamos <span class="math inline">\(\mathbb{M}=[1,\infty)\)</span>, que sí es completo, tenemos todas las hipótesis y <span class="math inline">\(x^*=1\)</span>.</p>
+</section>
+<section id="algo-de-intuición-el-plano-de-la-ciudad" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="algo-de-intuición-el-plano-de-la-ciudad"><span class="header-section-number">3</span> Algo de intuición: el plano de la ciudad</h2>
+<p>Antes de continuar, algo de intuición. Si estamos en una ciudad, un plano de la ciudad es una contracción (suponiendo que no es muy grande y que la curvatura de la Tierra se puede despreciar): lleva cada punto de la ciudad a su imagen más pequeña dentro del plano, y el plano está a su vez en la ciudad. El principio de contracciones dice que hay un punto del plano que coincide con el punto de la ciudad que representa.</p>
+<p>En el siguiente tablero se puede explorar esta situación para algunas contracciones de regiones del plano: giros y contracciones combinados, y los casos en los que falla una de las hipótesis. Arrastre los puntos <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> para ver que la distancia entre <span class="math inline">\(TA\)</span> y <span class="math inline">\(TB\)</span> es menor que la de <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span>, y arrastre o añada órbitas para ver las iteraciones <span class="math inline">\(x_{n+1}=Tx_n\)</span>.</p>
+<iframe src="contracciones-simulacion.html" width="100%" height="2250px" style="border:none;">
+</iframe>
+<p>Conviene mirar las dos filas de casos. En la primera se cumplen las tres hipótesis y las órbitas llegan a <span class="math inline">\(x^*\)</span> con un error por debajo de la cota del teorema. En la segunda falla una: <span class="math inline">\(\mathbb{M}\)</span> no cerrado (los iterados se acercan a un hueco), <span class="math inline">\(T(\mathbb{M})\not\subset\mathbb{M}\)</span> (los iterados salen de la región, círculos rojos), <span class="math inline">\(k=1\)</span> (identidad, rotación pura y traslación) o <span class="math inline">\(k&gt;1\)</span> (expansión). El último caso es el análogo en el plano de <span class="math inline">\(Tx=\sqrt{x}\)</span> de la sección anterior: <span class="math inline">\(T(x,y)=(\sqrt{x^2+1},\,y/2)\)</span> cumple <span class="math inline">\(\|Tu-Tv\|&lt;\|u-v\|\)</span> para <span class="math inline">\(u\ne v\)</span> y, sin embargo, no tiene puntos fijos, porque el supremo del cociente es exactamente <span class="math inline">\(1\)</span>.</p>
+</section>
+<section id="demostración" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="demostración"><span class="header-section-number">4</span> Demostración</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Demostración">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Demostración
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sea <span class="math inline">\(x_0\in\mathbb{M}\)</span> arbitrario pero fijo y sea <span class="math inline">\(x_{n+1}=Tx_n\)</span> la iteración de punto fijo.</p>
+<p><strong>Paso 1: los pasos se acortan geométricamente.</strong> Como <span class="math inline">\(T\)</span> es contracción,</p>
+<p><span class="math display">\[d(x_{p+1},x_p)=d(Tx_p,Tx_{p-1})\le k\,d(x_p,x_{p-1})\le k^2\,d(x_{p-1},x_{p-2})\le\cdots\le k^p\,d(x_1,x_0).\]</span></p>
+<p><strong>Paso 2: la sucesión es de Cauchy.</strong> Si <span class="math inline">\(n&gt;m\)</span>, escribimos <span class="math inline">\(n=m+\ell\)</span> y usamos la desigualdad triangular:</p>
+<p><span class="math display">\[\begin{aligned}
+d(x_m,x_n)&amp;\le d(x_m,x_{m+1})+d(x_{m+1},x_{m+\ell})\\
+&amp;\le d(x_m,x_{m+1})+d(x_{m+1},x_{m+2})+d(x_{m+2},x_{m+\ell})\\
+&amp;\;\;\vdots\\
+&amp;\le d(x_m,x_{m+1})+d(x_{m+1},x_{m+2})+\cdots+d(x_{n-1},x_n).
+\end{aligned}\]</span></p>
+<p>Sumando las cotas del paso 1,</p>
+<p><span class="math display">\[d(x_m,x_n)\le\big(k^m+k^{m+1}+\cdots+k^{n-1}\big)\,d(x_0,x_1)=k^m\big(1+k+\cdots+k^{n-m-1}\big)\,d(x_0,x_1)\le\frac{k^m}{1-k}\,d(x_0,x_1),\]</span></p>
+<p>donde usamos que la suma geométrica finita es menor que la serie <span class="math inline">\(\sum_{j\ge0}k^j=1/(1-k)\)</span>. Como <span class="math inline">\(k^m\to0\)</span>, la sucesión <span class="math inline">\((x_n)\)</span> es de Cauchy y, por ser <span class="math inline">\(\mathbb{M}\)</span> completo, converge a un punto <span class="math inline">\(x^*\in\mathbb{M}\)</span>.</p>
+<p><strong>Paso 3: el límite es un punto fijo.</strong> Una contracción es continua (es Lipschitz), así que de <span class="math inline">\(x_{n+1}=Tx_n\)</span> obtenemos, haciendo <span class="math inline">\(n\to\infty\)</span>, que <span class="math inline">\(x^*=Tx^*\)</span>. Es decir, existe un punto fijo.</p>
+<p><strong>Paso 4: unicidad.</strong> Si <span class="math inline">\(y^*\)</span> es otro punto fijo,</p>
+<p><span class="math display">\[d(x^*,y^*)=d(Tx^*,Ty^*)\le k\,d(x^*,y^*),\]</span></p>
+<p>de donde <span class="math inline">\((1-k)\,d(x^*,y^*)\le0\)</span>, y como <span class="math inline">\(k\in[0,1)\)</span>, <span class="math inline">\(d(x^*,y^*)=0\)</span>, es decir, <span class="math inline">\(x^*=y^*\)</span>.</p>
+<p><strong>Cota del error.</strong> Fijamos <span class="math inline">\(m\)</span> y hacemos <span class="math inline">\(n\to\infty\)</span> en la desigualdad del paso 2; como <span class="math inline">\(x_n\to x^*\)</span>, obtenemos <span class="math inline">\(d(x_m,x^*)\le\dfrac{k^m}{1-k}\,d(x_0,x_1)\)</span>. <span class="math inline">\(\blacksquare\)</span></p>
+</div>
+</div>
+</section>
+<section id="dos-variantes-útiles" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="dos-variantes-útiles"><span class="header-section-number">5</span> Dos variantes útiles</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="Corolario (basta que una potencia contraiga)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Corolario (basta que una potencia contraiga)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si en las hipótesis del teorema solo sabemos que <span class="math inline">\(T^m\)</span> es una contracción para algún <span class="math inline">\(m\ge1\)</span>, la conclusión es la misma: <span class="math inline">\(T\)</span> tiene un único punto fijo.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Demostración">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Demostración
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Por el teorema, <span class="math inline">\(T^m\)</span> tiene un único punto fijo <span class="math inline">\(z^*\)</span>, es decir, <span class="math inline">\(T^mz^*=z^*\)</span>. Entonces</p>
+<p><span class="math display">\[T^m(Tz^*)=T(T^mz^*)=Tz^*,\]</span></p>
+<p>así que <span class="math inline">\(Tz^*\)</span> también es un punto fijo de <span class="math inline">\(T^m\)</span>, y por unicidad <span class="math inline">\(Tz^*=z^*\)</span>. Todo punto fijo de <span class="math inline">\(T\)</span> lo es de <span class="math inline">\(T^m\)</span>, de modo que <span class="math inline">\(z^*\)</span> es el único punto fijo de <span class="math inline">\(T\)</span>. <span class="math inline">\(\blacksquare\)</span></p>
+</div>
+</div>
+<p>En el tablero del plano, el caso <em>Solo <span class="math inline">\(T^3\)</span> contrae</em> es un ejemplo: la matriz de <span class="math inline">\(T\)</span> tiene norma mayor que <span class="math inline">\(1\)</span>, pero su cubo tiene norma menor que <span class="math inline">\(1\)</span>, y las órbitas igual convergen.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Teorema (dependencia continua de un parámetro)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Teorema (dependencia continua de un parámetro)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sean <span class="math inline">\((\Lambda,\rho)\)</span> y <span class="math inline">\((\mathbb{M},d)\)</span> espacios métricos, con <span class="math inline">\(\mathbb{M}\)</span> completo, y sea <span class="math inline">\(T:\Lambda\times\mathbb{M}\to\mathbb{M}\)</span>, <span class="math inline">\((\lambda,x)\mapsto T_\lambda x\)</span>, continua en la primera variable y contracción uniforme en la segunda, es decir, con una misma constante <span class="math inline">\(k&lt;1\)</span> para todo <span class="math inline">\(\lambda\)</span>. Entonces, para cada <span class="math inline">\(\lambda\in\Lambda\)</span>, <span class="math inline">\(T_\lambda\)</span> tiene un único punto fijo <span class="math inline">\(x^*(\lambda)\)</span>, y la aplicación</p>
+<p><span class="math display">\[x^*:\Lambda\to\mathbb{M},\qquad\lambda\mapsto x^*(\lambda)\]</span></p>
+<p>es continua.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Demostración">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Demostración
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La existencia y unicidad de <span class="math inline">\(x^*(\lambda)\)</span> es el teorema para cada <span class="math inline">\(\lambda\)</span>. Solo falta ver que <span class="math inline">\(x^*\)</span> es continua. Sean <span class="math inline">\(\lambda_1,\lambda_2\in\Lambda\)</span>. Entonces</p>
+<p><span class="math display">\[\begin{aligned}
+d\big(x^*(\lambda_1),x^*(\lambda_2)\big)&amp;=d\big(T_{\lambda_1}x^*(\lambda_1),\,T_{\lambda_2}x^*(\lambda_2)\big)\\
+&amp;\le d\big(T_{\lambda_1}x^*(\lambda_1),\,T_{\lambda_2}x^*(\lambda_1)\big)+d\big(T_{\lambda_2}x^*(\lambda_1),\,T_{\lambda_2}x^*(\lambda_2)\big)\\
+&amp;\le d\big(T_{\lambda_1}x^*(\lambda_1),\,T_{\lambda_2}x^*(\lambda_1)\big)+k\,d\big(x^*(\lambda_1),x^*(\lambda_2)\big),
+\end{aligned}\]</span></p>
+<p>de donde</p>
+<p><span class="math display">\[d\big(x^*(\lambda_1),x^*(\lambda_2)\big)\le(1-k)^{-1}\,d\big(T_{\lambda_1}x^*(\lambda_1),\,T_{\lambda_2}x^*(\lambda_1)\big).\]</span></p>
+<p>Fijado <span class="math inline">\(\lambda_1\)</span> y dado <span class="math inline">\(\varepsilon&gt;0\)</span>, como <span class="math inline">\(\lambda\mapsto T_\lambda x^*(\lambda_1)\)</span> es continua en <span class="math inline">\(\lambda_1\)</span>, existe <span class="math inline">\(\delta&gt;0\)</span> tal que <span class="math inline">\(\rho(\lambda_1,\lambda_2)&lt;\delta\)</span> implica <span class="math inline">\(d\big(T_{\lambda_1}x^*(\lambda_1),T_{\lambda_2}x^*(\lambda_1)\big)&lt;\varepsilon(1-k)\)</span>. Para esos <span class="math inline">\(\lambda_2\)</span> tenemos <span class="math inline">\(d\big(x^*(\lambda_1),x^*(\lambda_2)\big)&lt;\varepsilon\)</span>, lo que completa la demostración. <span class="math inline">\(\blacksquare\)</span></p>
+</div>
+</div>
+<p>Veamos ahora algunas aplicaciones a ecuaciones diferenciales e integrales.</p>
+</section>
+<section id="una-ecuación-integral-con-memoria" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="una-ecuación-integral-con-memoria"><span class="header-section-number">6</span> Una ecuación integral con memoria</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejemplo 1: una partícula en un fluido viscoelástico">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejemplo 1: una partícula en un fluido viscoelástico
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suponga que se lanza una partícula de masa <span class="math inline">\(m\)</span> con velocidad inicial <span class="math inline">\(v_0\)</span> en un fluido viscoelástico con memoria (geles, polímeros, soluciones micelares). Su ecuación de movimiento viene dada por</p>
+<p><span class="math display">\[v(t)=v_0-\frac1m\int_0^t\Gamma(t-s)\,v(s)\,ds=v_0-\frac1m(\Gamma*v)(t),\]</span></p>
+<p>con <span class="math inline">\(\Gamma(\tau)=\int_0^\tau\gamma\)</span>, donde <span class="math inline">\(\gamma\)</span> es la memoria del fluido. Por ejemplo, <span class="math inline">\(\gamma(\tau)=\gamma_0e^{-\tau/\tau_c}\)</span> describe un fluido con un único tiempo de relajación <span class="math inline">\(\tau_c\)</span>. Si <span class="math inline">\(\gamma(\tau)\to\gamma\,\delta(\tau)\)</span> (delta de Dirac), entonces <span class="math inline">\(\Gamma\)</span> se vuelve un escalón de altura <span class="math inline">\(\gamma\)</span> y se recupera la fricción usual: <span class="math inline">\(v'=-(\gamma/m)\,v\)</span>.</p>
+</div>
+</div>
+<p>Con la memoria exponencial la ecuación integral se puede resolver a mano, y vale la pena hacerlo porque muestra qué hace la memoria. Como <span class="math inline">\(\Gamma(0)=0\)</span>, derivando una vez,</p>
+<p><span class="math display">\[v'(t)=-\frac1m\int_0^t\gamma(t-s)\,v(s)\,ds,\qquad v'(0)=0.\]</span></p>
+<p>Derivando otra vez, y usando <span class="math inline">\(\gamma'=-\gamma/\tau_c\)</span> junto con la identidad anterior,</p>
+<p><span class="math display">\[v''(t)=-\frac{\gamma_0}{m}\,v(t)-\frac1m\int_0^t\gamma'(t-s)\,v(s)\,ds=-\frac{\gamma_0}{m}\,v(t)-\frac1{\tau_c}\,v'(t).\]</span></p>
+<p>Es decir, la ecuación integral es equivalente a la EDO <span class="math inline">\(v''+v'/\tau_c+(\gamma_0/m)\,v=0\)</span> con <span class="math inline">\(v(0)=v_0\)</span> y <span class="math inline">\(v'(0)=0\)</span>. Con la variable adimensional <span class="math inline">\(s=t/\tau_c\)</span> y el parámetro <span class="math inline">\(g=\gamma_0\tau_c^2/m\)</span> queda</p>
+<p><span class="math display">\[v''+v'+g\,v=0,\qquad v(0)=v_0,\quad v'(0)=0.\]</span></p>
+<p>Si <span class="math inline">\(g&gt;1/4\)</span> el fluido tiene suficiente elasticidad (memoria) para que la partícula oscile, y con <span class="math inline">\(\omega=\sqrt{g-1/4}\)</span>,</p>
+<p><span class="math display">\[v(s)=v_0\,e^{-s/2}\left[\cos\omega s+\frac1{2\omega}\sin\omega s\right].\]</span></p>
+<p>La partícula frena, se detiene, retrocede y se amortigua: el fluido “rebota”. Si <span class="math inline">\(g\le1/4\)</span> los exponentes son reales y no hay oscilación, como en la fricción usual. (Se puede comprobar numéricamente que esta fórmula resuelve la ecuación integral original, por ejemplo con <span class="math inline">\(g=2\)</span>.)</p>
+<section id="la-ecuación-de-volterra-de-segunda-especie" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="la-ecuación-de-volterra-de-segunda-especie"><span class="header-section-number">6.1</span> La ecuación de Volterra de segunda especie</h3>
+<p>De manera más general podemos considerar la ecuación integral de Volterra de segunda especie: encontrar <span class="math inline">\(u\in C[0,1]\)</span> tal que</p>
+<p><span class="math display">\[u(s)=w(s)+\lambda\int_0^sK(s,t)\,u(t)\,dt,\]</span></p>
+<p>donde <span class="math inline">\(K\)</span> es continua en el triángulo <span class="math inline">\(0\le t\le s\le1\)</span>. En el Ejemplo 1, <span class="math inline">\(K(s,t)=\Gamma(s-t)\)</span>, <span class="math inline">\(\lambda=-1/m\)</span>, <span class="math inline">\(w(s)\equiv v_0\)</span> y <span class="math inline">\(u=v\)</span>. Seguimos las ideas de Kesavan (p.&nbsp;56, análisis funcional).</p>
+<p>Definimos <span class="math inline">\(F:C[0,1]\to C[0,1]\)</span> por <span class="math inline">\(u\mapsto w+\lambda\,T(u)\)</span>, con</p>
+<p><span class="math display">\[T(u)(s)=\int_0^sK(s,t)\,u(t)\,dt,\qquad K_\infty=\sup|K|.\]</span></p>
+<p>Entonces</p>
+<p><span class="math display">\[|F(u_1)(s)-F(u_2)(s)|=|\lambda|\left|\int_0^sK(s,t)\,(u_1(t)-u_2(t))\,dt\right|\le|\lambda|\,K_\infty\,\|u_1-u_2\|\int_0^sdt=|\lambda|\,K_\infty\,\|u_1-u_2\|\,s,\]</span></p>
+<p>de donde <span class="math inline">\(\|F(u_1)-F(u_2)\|\le|\lambda|K_\infty\|u_1-u_2\|\)</span>. Esto solo es una contracción si <span class="math inline">\(|\lambda|K_\infty&lt;1\)</span>. Pero si hacemos un paso más,</p>
+<p><span class="math display">\[|F^2(u_1)(s)-F^2(u_2)(s)|=\left|\lambda\int_0^sK(s,t)\,\big(F(u_1)(t)-F(u_2)(t)\big)\,dt\right|\le|\lambda|^2K_\infty^2\,\|u_1-u_2\|\int_0^st\,dt=|\lambda|^2K_\infty^2\,\frac{s^2}{2}\,\|u_1-u_2\|,\]</span></p>
+<p>y por inducción,</p>
+<p><span class="math display">\[|F^n(u_1)(s)-F^n(u_2)(s)|\le\frac{(|\lambda|K_\infty)^n\,s^n}{n!}\,\|u_1-u_2\|,\qquad\text{de donde}\qquad\|F^n(u_1)-F^n(u_2)\|\le\frac{(|\lambda|K_\infty)^n}{n!}\,\|u_1-u_2\|.\]</span></p>
+<p>Esto quiere decir que, por propiedad arquimediana (<span class="math inline">\(a^n/n!\to0\)</span> para cualquier <span class="math inline">\(a\)</span>), existe un <span class="math inline">\(m\)</span> tal que <span class="math inline">\(F^m\)</span> es una contracción, y por el corolario la ecuación de Volterra tiene una única solución, para todo <span class="math inline">\(\lambda\)</span> y todo <span class="math inline">\(w\)</span>, sin ninguna condición de pequeñez. Además, para <span class="math inline">\(|\lambda|\)</span> acotado el mismo <span class="math inline">\(m\)</span> sirve, de modo que la versión con parámetro aplicada a <span class="math inline">\(F^m\)</span> muestra que la solución depende continuamente de <span class="math inline">\(\lambda\)</span> y de <span class="math inline">\(w\)</span>.</p>
+</section>
+<section id="una-observación-ecuaciones-no-locales" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="una-observación-ecuaciones-no-locales"><span class="header-section-number">6.2</span> Una observación: ecuaciones no locales</h3>
+<p>A este tipo de ecuaciones, cuando no se pueden reducir a una EDO, se les llama <em>no locales</em>: el valor de <span class="math inline">\(u(s)\)</span> depende de todo el pasado <span class="math inline">\(u|_{[0,s]}\)</span> y no solo de lo que pasa en <span class="math inline">\(s\)</span>. En el Ejemplo 1 sí se pudo reducir, porque el núcleo exponencial se puede eliminar con una variable auxiliar (la derivada <span class="math inline">\(v'\)</span>). Para memorias con decaimiento más lento, como una ley de potencias, no existe tal reducción y la ecuación es genuinamente no local. Un ejemplo de ecuaciones diferenciales no locales se ve en la <a href="https://www.youtube.com/watch?v=klKHajVuvWc">charla de Peter Bates</a>.</p>
+</section>
+</section>
+<section id="una-ecuación-diferencial-lineal-de-segundo-orden" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="una-ecuación-diferencial-lineal-de-segundo-orden"><span class="header-section-number">7</span> Una ecuación diferencial lineal de segundo orden</h2>
+<p>Una consecuencia de lo anterior es el teorema de existencia y unicidad de ecuaciones diferenciales lineales de orden <span class="math inline">\(2\)</span> que se ve en los cursos de pregrado.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejemplo 2: el problema de valor inicial lineal de segundo orden">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejemplo 2: el problema de valor inicial lineal de segundo orden
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sea <span class="math inline">\(s\in[0,1]\)</span> y <span class="math inline">\(p,q,r\in C[0,1]\)</span>. Considere</p>
+<p><span class="math display">\[\begin{cases}x''(s)+p(s)\,x'(s)+q(s)\,x(s)=r(s),\\ x(0)=\alpha,\quad x'(0)=\beta.\end{cases}\]</span></p>
+</div>
+</div>
+<p>Sea <span class="math inline">\(u=x''\)</span>. Integrando,</p>
+<p><span class="math display">\[x'(s)=\beta+\int_0^su(t)\,dt,\]</span></p>
+<p>y de nuevo,</p>
+<p><span class="math display">\[\begin{aligned}
+x(s)&amp;=\alpha+\int_0^sx'(t)\,dt=\alpha+\int_0^s\Big(\beta+\int_0^tu(\tau)\,d\tau\Big)dt\\
+&amp;=\alpha+\beta s+\int_0^s\!\!\int_0^tu(\tau)\,d\tau\,dt=\alpha+\beta s+\int_0^s\!\!\int_\tau^su(\tau)\,dt\,d\tau=\alpha+\beta s+\int_0^s(s-t)\,u(t)\,dt,
+\end{aligned}\]</span></p>
+<p>donde cambiamos el orden de integración en el triángulo <span class="math inline">\(0\le\tau\le t\le s\)</span> (en la última igualdad se renombra <span class="math inline">\(\tau\)</span> como <span class="math inline">\(t\)</span>). Reemplazando <span class="math inline">\(x\)</span> y <span class="math inline">\(x'\)</span> en la ecuación <span class="math inline">\(u=r-p\,x'-q\,x\)</span> obtenemos una ecuación de Volterra para <span class="math inline">\(u\)</span>:</p>
+<p><span class="math display">\[u(s)=w(s)+\int_0^sK(s,t)\,u(t)\,dt,\]</span></p>
+<p>con</p>
+<p><span class="math display">\[K(s,t)=-p(s)-q(s)\,(s-t),\qquad w(s)=r(s)-\beta\,p(s)-q(s)\,(\alpha+\beta s),\qquad\lambda=1.\]</span></p>
+<p>Como <span class="math inline">\(K\)</span> es continuo en el triángulo, la sección anterior da una única <span class="math inline">\(u\)</span>, y por lo tanto una única <span class="math inline">\(x(s)=\alpha+\beta s+\int_0^s(s-t)\,u(t)\,dt\)</span>, que es de clase <span class="math inline">\(C^2\)</span>. Además la solución depende continuamente de <span class="math inline">\(p,q,r,\alpha\)</span> y <span class="math inline">\(\beta\)</span>. Nótese que no se pidió ninguna condición de pequeñez, y que el intervalo <span class="math inline">\([0,1]\)</span> no es restrictivo (un cambio lineal de variable lo lleva a cualquier intervalo compacto).</p>
+</section>
+<section id="funciones-de-green-y-problemas-de-frontera" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="funciones-de-green-y-problemas-de-frontera"><span class="header-section-number">8</span> Funciones de Green y problemas de frontera</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejemplo 3: un problema de frontera">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejemplo 3: un problema de frontera
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suponga que queremos resolver el problema de frontera</p>
+<p><span class="math display">\[\begin{cases}-u''=\varepsilon f(u),\\ u(0)=u(1)=0.\end{cases}\tag{$*$}\]</span></p>
+</div>
+</div>
+<p>Por teoría de funciones de Green, existe una función <span class="math inline">\(G\)</span> tal que <span class="math inline">\((*)\)</span> tiene solución si y solo si este problema integral la tiene:</p>
+<p><span class="math display">\[u(s)=\int_0^1G(s,t)\,\varepsilon f(u(t))\,dt.\]</span></p>
+<p>En este caso <span class="math inline">\(G(s,t)=s(1-t)\)</span> si <span class="math inline">\(s\le t\)</span> y <span class="math inline">\(G(s,t)=t(1-s)\)</span> si <span class="math inline">\(t\le s\)</span>, y <span class="math inline">\(G_\infty=\sup|G|=1/4\)</span>. Esta misma técnica se aplica a cualquier operador lineal de Sturm-Liouville <span class="math inline">\(L\)</span> de cualquier orden con condiciones de frontera autoadjuntas <span class="math inline">\(B(0)=0\)</span> y <span class="math inline">\(B(1)=0\)</span>, siempre que el problema homogéneo <span class="math inline">\(Lu=0\)</span> con esas condiciones solo tenga la solución trivial.</p>
+<p>Por ejemplo, imagine una viga en voladizo con carga axial variable <span class="math inline">\(N(x)\)</span> y restitución elástica variable <span class="math inline">\(r(x)\)</span>:</p>
+<p><span class="math display">\[\begin{cases}u''''-N(x)\,u''+r(x)\,u=\varepsilon f(u),\\ u(0)=u'(0)=0,\quad u''(1)=u'''(1)=0.\end{cases}\]</span></p>
+<p>Vamos a suponer que <span class="math inline">\(f\in C^1(\mathbb{R})\)</span> y que <span class="math inline">\(f'\)</span> es acotada, y llamamos <span class="math inline">\(f'_\infty=\sup|f'|\)</span>. Entonces existe un <span class="math inline">\(\varepsilon_0\)</span> tal que si <span class="math inline">\(|\varepsilon|\le\varepsilon_0\)</span> el problema de valores en la frontera tiene solución. En efecto, definimos</p>
+<p><span class="math display">\[F(u)(t)=\int_0^1G(s,t)\,\varepsilon f(u(s))\,ds,\]</span></p>
+<p>y tenemos que</p>
+<p><span class="math display">\[|F(u_1)(t)-F(u_2)(t)|\le G_\infty\int_0^1|\varepsilon|\,|f(u_1(s))-f(u_2(s))|\,ds\le G_\infty\,|\varepsilon|\,f'_\infty\,\|u_1-u_2\|,\]</span></p>
+<p>de donde, si tomamos</p>
+<p><span class="math display">\[\varepsilon_0=\frac{1}{2\,G_\infty f'_\infty},\]</span></p>
+<p><span class="math inline">\(F\)</span> es una contracción de constante <span class="math inline">\(k\le1/2\)</span> en <span class="math inline">\(C[0,1]\)</span> y el problema tiene una única solución, que depende continuamente de <span class="math inline">\(\varepsilon\)</span>, <span class="math inline">\(r\)</span> y <span class="math inline">\(N\)</span> (por la versión con parámetro). Si además <span class="math inline">\(f(0)=0\)</span>, la función <span class="math inline">\(u\equiv0\)</span> es solución y, por unicidad, es la única.</p>
+<p>Por ejemplo, una viga modelada por</p>
+<p><span class="math display">\[\begin{cases}u''''-N(x)\,u''+r(x)\,u=\varepsilon\cos(\pi u),\\ u(0)=u'(0)=0,\quad u''(1)=u'''(1)=0\end{cases}\]</span></p>
+<p>tiene una única solución para <span class="math inline">\(\varepsilon\)</span> pequeño (aquí <span class="math inline">\(f'_\infty=\pi\)</span>, así que basta <span class="math inline">\(|\varepsilon|\le1/(2\pi G_\infty)\)</span>). Como <span class="math inline">\(f(0)=\cos 0=1\ne0\)</span>, esa solución no es la trivial.</p>
+</section>
+<section id="el-teorema-de-picard-lindelöf" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="el-teorema-de-picard-lindelöf"><span class="header-section-number">9</span> El teorema de Picard-Lindelöf</h2>
+<p>Ahora sí estamos listos para demostrar el teorema más importante de las ecuaciones diferenciales.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Teorema (Picard-Lindelöf)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Teorema (Picard-Lindelöf)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sea <span class="math inline">\(E\)</span> un espacio de Banach y <span class="math inline">\(f:D\subseteq\mathbb{R}\times E\to E\)</span>, donde <span class="math inline">\(D\)</span> es abierto y conexo. Suponga que <span class="math inline">\(f\)</span> es continua y localmente Lipschitz en la segunda variable. Entonces, para cada <span class="math inline">\((t_0,u_0)\in D\)</span>, el problema de valor inicial</p>
+<p><span class="math display">\[\begin{cases}u'=f(t,u(t)),\\ u(t_0)=u_0,\end{cases}\]</span></p>
+<p>tiene una única solución, que depende continuamente de <span class="math inline">\(u_0\)</span>, en algún intervalo que contiene a <span class="math inline">\(t_0\)</span>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Demostración">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Demostración
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Aprovechando que <span class="math inline">\(D\)</span> es abierto, sean <span class="math inline">\(a,b&gt;0\)</span> tales que</p>
+<p><span class="math display">\[Q=\{(t,u)\in\mathbb{R}\times E:\ |t-t_0|\le a,\ \|u-u_0\|\le b\}\subseteq D.\]</span></p>
+<p><span class="math inline">\(Q\)</span> es cerrado y acotado, y por hipótesis (tomando <span class="math inline">\(a,b\)</span> pequeños) <span class="math inline">\(f\)</span> tiene en <span class="math inline">\(Q\)</span> una constante de Lipschitz <span class="math inline">\(L\)</span> en la segunda variable. Sean además</p>
+<p><span class="math display">\[m=\sup_Q\|f(t,u)\|,\qquad\alpha=\min\Big\{a,\frac bm\Big\}.\]</span></p>
+<p><strong>El supremo <span class="math inline">\(m\)</span> es finito.</strong> Como <span class="math inline">\(E\)</span> puede tener dimensión infinita, cerrado y acotado no implica compacto, y no podemos acotar <span class="math inline">\(f\)</span> por compacidad de <span class="math inline">\(Q\)</span>. Pero basta usar la continuidad en <span class="math inline">\(t\)</span> y la condición de Lipschitz:</p>
+<p><span class="math display">\[\|f(t,u)\|\le\|f(t,u_0)\|+\|f(t,u)-f(t,u_0)\|\le\max_{|t-t_0|\le a}\|f(t,u_0)\|+L\,\|u-u_0\|\le\max_{|t-t_0|\le a}\|f(t,u_0)\|+L\,b&lt;\infty,\]</span></p>
+<p>y el máximo existe porque <span class="math inline">\(t\mapsto f(t,u_0)\)</span> es continua sobre el compacto <span class="math inline">\(|t-t_0|\le a\)</span>.</p>
+<p><strong>El espacio.</strong> Sea <span class="math inline">\(\tilde L&gt;L\)</span> cualquier constante, <span class="math inline">\(I=[t_0-\alpha,t_0+\alpha]\)</span> y</p>
+<p><span class="math display">\[\mathbb{M}=\{u\in C(I,E):\ u(t)\in\overline{B}_b(u_0)\ \text{para todo } t\in I\}.\]</span></p>
+<p>En <span class="math inline">\(\mathbb{M}\)</span> definimos la norma ponderada</p>
+<p><span class="math display">\[\|u\|_{\mathbb{M}}=\max_{|t-t_0|\le\alpha}\Big(e^{-\tilde L|t-t_0|}\,\|u(t)\|\Big).\]</span></p>
+<p>Esta norma es equivalente a la norma del máximo, así que <span class="math inline">\(\mathbb{M}\)</span>, que es cerrado, con esta métrica es un espacio métrico completo. Definimos el operador</p>
+<p><span class="math display">\[Tu(t)=u_0+\int_{t_0}^tf(s,u(s))\,ds.\tag{$\star$}\]</span></p>
+<p>Resolver <span class="math inline">\((\star)\)</span> es lo mismo que resolver el problema de valor inicial.</p>
+<p><strong><span class="math inline">\(T(\mathbb{M})\subseteq\mathbb{M}\)</span>.</strong> En efecto,</p>
+<p><span class="math display">\[\|Tu(t)-u_0\|\le\left|\int_{t_0}^t\|f(s,u(s))\|\,ds\right|\le\alpha\,m\le b,\]</span></p>
+<p>es decir, <span class="math inline">\(Tu(t)\in\overline{B}_b(u_0)\)</span> para todo <span class="math inline">\(t\in I\)</span>.</p>
+<p><strong><span class="math inline">\(T\)</span> es una contracción.</strong> Para <span class="math inline">\(t\ge t_0\)</span> (el caso <span class="math inline">\(t\le t_0\)</span> es igual),</p>
+<p><span class="math display">\[\|(Tu)(t)-(Tv)(t)\|\le\int_{t_0}^t\|f(s,u(s))-f(s,v(s))\|\,ds\le L\int_{t_0}^t\|u(s)-v(s)\|\,ds,\]</span></p>
+<p>y por lo tanto</p>
+<p><span class="math display">\[e^{-\tilde L|t-t_0|}\,\|Tu(t)-Tv(t)\|\le L\,e^{-\tilde L|t-t_0|}\int_{t_0}^t\|u(s)-v(s)\|\,ds.\]</span></p>
+<p>Aquí está el paso de la norma ponderada. Escribimos <span class="math inline">\(\|u(s)-v(s)\|=e^{\tilde L|s-t_0|}\,e^{-\tilde L|s-t_0|}\,\|u(s)-v(s)\|\le e^{\tilde L|s-t_0|}\,\|u-v\|_{\mathbb{M}}\)</span>, y entonces</p>
+<p><span class="math display">\[\int_{t_0}^t\|u(s)-v(s)\|\,ds\le\frac{e^{\tilde L|t-t_0|}-1}{\tilde L}\,\|u-v\|_{\mathbb{M}}\le\frac{e^{\tilde L|t-t_0|}}{\tilde L}\,\|u-v\|_{\mathbb{M}}.\]</span></p>
+<p>Reemplazando,</p>
+<p><span class="math display">\[e^{-\tilde L|t-t_0|}\,\|Tu(t)-Tv(t)\|\le\frac{L}{\tilde L}\,\|u-v\|_{\mathbb{M}},\qquad\text{de donde}\qquad\|Tu-Tv\|_{\mathbb{M}}\le\frac{L}{\tilde L}\,\|u-v\|_{\mathbb{M}},\]</span></p>
+<p>y <span class="math inline">\(L/\tilde L&lt;1\)</span>. Por el principio de contracciones, <span class="math inline">\(T\)</span> tiene un único punto fijo en <span class="math inline">\(\mathbb{M}\)</span>.</p>
+<p><strong>Dependencia continua del dato inicial.</strong> Repetimos la construcción con <span class="math inline">\(\alpha'=\min\{a,b/(2m)\}\)</span>, <span class="math inline">\(I'=[t_0-\alpha',t_0+\alpha']\)</span>, el mismo espacio <span class="math inline">\(\mathbb{M}\)</span> (con <span class="math inline">\(I'\)</span> en lugar de <span class="math inline">\(I\)</span>) y datos iniciales <span class="math inline">\(u_1\in\Lambda:=B_{b/2}(u_0)\)</span>, con el operador <span class="math inline">\(T_{u_1}u(t)=u_1+\int_{t_0}^tf(s,u(s))\,ds\)</span>. Ahora <span class="math inline">\(\|T_{u_1}u(t)-u_0\|\le\|u_1-u_0\|+\alpha'm&lt;b/2+b/2=b\)</span>, así que <span class="math inline">\(T_{u_1}\)</span> lleva <span class="math inline">\(\mathbb{M}\)</span> en <span class="math inline">\(\mathbb{M}\)</span>, es una contracción uniforme de constante <span class="math inline">\(L/\tilde L\)</span>, y como <span class="math inline">\(\|T_{u_1}u-T_{u_2}u\|_{\mathbb{M}}\le\|u_1-u_2\|\)</span> es continua en <span class="math inline">\(u_1\)</span>. La versión con parámetro da que el punto fijo, es decir, la solución, es continua en el dato inicial. <span class="math inline">\(\blacksquare\)</span></p>
+</div>
+</div>
+<p>La norma ponderada hace que el intervalo de existencia sea <span class="math inline">\(\alpha=\min\{a,b/m\}\)</span> y no dependa de la constante de Lipschitz <span class="math inline">\(L\)</span>: con la norma del máximo habría que pedir además <span class="math inline">\(\alpha L&lt;1\)</span>. En el siguiente tablero se ve la diferencia.</p>
+<p>Una consecuencia inmediata es que cualquier ecuación o sistema lineal <span class="math inline">\(x'=A(t)\,x+g(t)\)</span> con coeficientes continuos tiene una única solución en todo el intervalo donde están definidos los coeficientes. Allí <span class="math inline">\(f\)</span> es Lipschitz globalmente en <span class="math inline">\(x\)</span> (con <span class="math inline">\(L=\max\|A(t)\|\)</span> sobre cada intervalo compacto), <span class="math inline">\(T\)</span> lleva todo <span class="math inline">\(C(I,E)\)</span> en sí mismo y la misma cuenta de la norma ponderada da que es una contracción, sin necesidad de la bola <span class="math inline">\(\overline{B}_b(u_0)\)</span>, así que <span class="math inline">\(\alpha\)</span> puede ser todo el intervalo.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Ejemplo 4: modelos clásicos">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Ejemplo 4: modelos clásicos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Los siguientes sistemas tienen un campo <span class="math inline">\(f\)</span> polinomial o racional, de clase <span class="math inline">\(C^1\)</span> y por lo tanto localmente Lipschitz. El teorema da una única solución para cada dato inicial.</p>
+<p><strong>Lotka-Volterra</strong> (depredador y presa), con <span class="math inline">\(x(0)=x_0\)</span>, <span class="math inline">\(y(0)=y_0\)</span>: <span class="math display">\[x'=\alpha x-\beta xy,\qquad y'=\delta xy-\gamma y.\]</span></p>
+<p><strong>Modelo SIR</strong> (epidemias), con <span class="math inline">\(N=S+I+R\)</span>: <span class="math display">\[S'=-\beta\,\frac{SI}{N},\qquad I'=\beta\,\frac{SI}{N}-\gamma I,\qquad R'=\gamma I.\]</span></p>
+<p><strong>Lorenz</strong>: <span class="math display">\[x'=\sigma(y-x),\qquad y'=x(\rho-z)-y,\qquad z'=xy-\beta z.\]</span></p>
+<p><strong>Van der Pol</strong>: <span class="math display">\[x'=y,\qquad y'=\mu(1-x^2)\,y-x.\]</span></p>
+</div>
+</div>
+<p>El siguiente tablero permite explorar estos cuatro ejemplos con distintos datos iniciales y parámetros. Para cada uno calcula, sobre la bola cerrada <span class="math inline">\(\overline{B}_R(x_0)\)</span>, las constantes <span class="math inline">\(m=\sup\|f\|\)</span> y <span class="math inline">\(L=\sup\|Df\|\)</span>, el tiempo garantizado <span class="math inline">\(T_{PL}=R/m\)</span> del teorema, y lo compara con el momento en que la solución numérica realmente sale de la bola. Aun cuando las soluciones sean globales, el teorema solo garantiza un intervalo corto, que depende de los datos y del tamaño del campo.</p>
+<iframe src="contracciones-edo.html" width="100%" height="1200px" style="border:none;">
+</iframe>
+</section>
+<section id="ecuaciones-de-evolución-en-una-dimensión-con-fourier" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="ecuaciones-de-evolución-en-una-dimensión-con-fourier"><span class="header-section-number">10</span> Ecuaciones de evolución en una dimensión con Fourier</h2>
+<p>Las mismas ideas funcionan para ecuaciones en derivadas parciales de evolución, donde la incógnita es una función del tiempo con valores en un espacio de funciones de <span class="math inline">\(x\)</span>. Veamos tres casos en una dimensión espacial sobre el intervalo <span class="math inline">\((0,\pi)\)</span> con condiciones de Dirichlet homogéneas <span class="math inline">\(u(0,t)=u(\pi,t)=0\)</span>: el calor, Schrödinger y un problema similar, una viga. En los tres la solución se escribe con la fórmula de Duhamel, y lo que cambia es en qué espacio de Banach el operador de la parte lineal tiene norma controlada.</p>
+<p><strong>Serie de Fourier de medio rango.</strong> Una función <span class="math inline">\(u\)</span> en <span class="math inline">\((0,\pi)\)</span> con <span class="math inline">\(u(0)=u(\pi)=0\)</span> se extiende de forma impar a <span class="math inline">\((-\pi,\pi)\)</span> y periódica, y se desarrolla en serie de senos:</p>
+<p><span class="math display">\[u(x)=\sum_{k\ge1}u_k\sin kx,\qquad u_k=\frac2\pi\int_0^\pi u(x)\sin kx\,dx.\]</span></p>
+<p>Las funciones <span class="math inline">\(\sin kx\)</span> son autofunciones de <span class="math inline">\(-\partial_x^2\)</span> con autovalor <span class="math inline">\(k^2\)</span> y condiciones de Dirichlet, así que <span class="math inline">\(u_{xx}\)</span> corresponde a <span class="math inline">\(-k^2u_k\)</span>. Con estos coeficientes vale Parseval,</p>
+<p><span class="math display">\[\|u\|_{L^2}^2=\frac\pi2\sum_{k\ge1}|u_k|^2,\qquad\|u\|_{H_0^1}^2:=\|u_x\|_{L^2}^2=\frac\pi2\sum_{k\ge1}k^2|u_k|^2,\]</span></p>
+<p>donde <span class="math inline">\(H_0^1(0,\pi)\)</span> son las funciones con derivada en <span class="math inline">\(L^2\)</span> y valores nulos en los extremos. Como <span class="math inline">\(k\ge1\)</span>, <span class="math inline">\(\|w\|_{L^2}\le\|w\|_{H_0^1}\)</span>. Además, por Cauchy-Schwarz con <span class="math inline">\(\sum k^{-2}=\pi^2/6\)</span>,</p>
+<p><span class="math display">\[\|u\|_\infty\le\sum|u_k|\le\Big(\sum k^{-2}\Big)^{1/2}\Big(\sum k^2|u_k|^2\Big)^{1/2}=C_\infty\,\|u\|_{H_0^1},\qquad C_\infty=\sqrt{\frac2\pi\cdot\frac{\pi^2}6}=\sqrt{\frac\pi3}\approx1{,}02.\tag{$\dagger$}\]</span></p>
+<p>Esta desigualdad es lo que permite que una función no lineal <span class="math inline">\(f(u)\)</span> sea localmente Lipschitz en <span class="math inline">\(H_0^1\)</span>: en una dimensión, tener energía finita acota <span class="math inline">\(u\)</span> en valor absoluto.</p>
+<section id="la-ecuación-del-calor" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="la-ecuación-del-calor"><span class="header-section-number">10.1</span> La ecuación del calor</h3>
+<div class="callout callout-style-default callout-note callout-titled" title="Problema">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Problema
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sea <span class="math inline">\(f:\mathbb{R}\to\mathbb{R}\)</span> localmente Lipschitz y <span class="math inline">\(u_0\in H_0^1(0,\pi)\)</span>. Resuelva</p>
+<p><span class="math display">\[u_t=u_{xx}+f(u),\qquad u(0,t)=u(\pi,t)=0,\qquad u(x,0)=u_0(x),\quad x\in(0,\pi).\]</span></p>
+</div>
+</div>
+<p><strong>La parte lineal.</strong> Si <span class="math inline">\(f=0\)</span>, cada coeficiente cumple <span class="math inline">\(u_k'=-k^2u_k\)</span>, de donde <span class="math inline">\(u_k(t)=e^{-k^2t}u_{0,k}\)</span>. Es decir,</p>
+<p><span class="math display">\[u(x,t)=\sum_{k\ge1}e^{-k^2t}\,u_{0,k}\sin kx=\int_0^\pi G_t(x,y)\,u_0(y)\,dy,\qquad G_t(x,y)=\frac2\pi\sum_{k\ge1}e^{-k^2t}\sin kx\,\sin ky.\]</span></p>
+<p>Llamamos <span class="math inline">\(S(t)u_0\)</span> a esta función. Como <span class="math inline">\(0&lt;e^{-k^2t}\le1\)</span>, por Parseval <span class="math inline">\(S(t)\)</span> no aumenta ni la norma <span class="math inline">\(L^2\)</span> ni la norma <span class="math inline">\(H_0^1\)</span>:</p>
+<p><span class="math display">\[\|S(t)v\|_{L^2}\le\|v\|_{L^2},\qquad\|S(t)v\|_{H_0^1}\le\|v\|_{H_0^1}.\]</span></p>
+<p><strong>La parte no lineal (Duhamel).</strong> Con <span class="math inline">\(f(u)=\sum f_k(t)\sin kx\)</span>, <span class="math inline">\(f_k=\frac2\pi\int_0^\pi f(u)\sin kx\,dx\)</span>, cada coeficiente cumple <span class="math inline">\(u_k'+k^2u_k=f_k\)</span>. Multiplicando por <span class="math inline">\(e^{k^2t}\)</span> queda <span class="math inline">\(\big(e^{k^2t}u_k\big)'=e^{k^2t}f_k\)</span>, e integrando,</p>
+<p><span class="math display">\[u_k(t)=e^{-k^2t}u_{0,k}+\int_0^te^{-k^2(t-s)}f_k(s)\,ds,\qquad\text{es decir,}\qquad u(t)=S(t)u_0+\int_0^tS(t-s)\,f(u(s))\,ds.\]</span></p>
+<p>Resolver el problema es hallar un punto fijo del operador <span class="math inline">\(\Phi(u)(t)=S(t)u_0+\int_0^tS(t-s)\,f(u(s))\,ds\)</span>.</p>
+<p><strong>La ganancia de una derivada.</strong> Para el término integral <span class="math inline">\(D(t)=\int_0^tS(t-s)g(s)\,ds\)</span>, con <span class="math inline">\(g\)</span> en <span class="math inline">\(L^2\)</span>, por Cauchy-Schwarz en <span class="math inline">\(s\)</span> y <span class="math inline">\(\int_0^te^{-k^2(t-s)}ds\le1/k^2\)</span>,</p>
+<p><span class="math display">\[k^2\Big(\int_0^te^{-k^2(t-s)}|g_k(s)|\,ds\Big)^2\le k^2\cdot\frac1{k^2}\int_0^te^{-k^2(t-s)}|g_k(s)|^2\,ds\le\int_0^t|g_k(s)|^2\,ds.\]</span></p>
+<p>Sumando en <span class="math inline">\(k\)</span> (con el factor <span class="math inline">\(\pi/2\)</span>),</p>
+<p><span class="math display">\[\|D(t)\|_{H_0^1}^2\le\int_0^t\|g(s)\|_{L^2}^2\,ds\le t\,\sup_{s\le t}\|g(s)\|_{L^2}^2.\tag{$\ddagger$}\]</span></p>
+<p>Es decir, una función en <span class="math inline">\(L^2\)</span> entra y sale una derivada mejor, en <span class="math inline">\(H_0^1\)</span>, con un costo <span class="math inline">\(\sqrt t\)</span>. Esto es lo que se usa para cerrar el argumento con <span class="math inline">\(f\)</span> arbitraria, que solo lleva <span class="math inline">\(H_0^1\)</span> en <span class="math inline">\(L^2\)</span>.</p>
+<p><strong>El espacio y las constantes.</strong> Sea <span class="math inline">\(X_\tau=C\big([0,\tau];H_0^1(0,\pi)\big)\)</span> con <span class="math inline">\(\|u\|_X=\max_{t\le\tau}\|u(t)\|_{H_0^1}\)</span>. Sea <span class="math inline">\(\rho=\|u_0\|_{H_0^1}+1\)</span>, <span class="math inline">\(R=C_\infty\rho\)</span> y</p>
+<p><span class="math display">\[M_R=\max_{|x|\le R}|f(x)|,\qquad L_R=\text{constante de Lipschitz de }f\text{ en }[-R,R].\]</span></p>
+<p>Si <span class="math inline">\(\|u\|_X\le\rho\)</span>, por <span class="math inline">\((\dagger)\)</span> se tiene <span class="math inline">\(|u|\le R\)</span>, y entonces</p>
+<p><span class="math display">\[\|f(u)\|_{L^2}\le\sqrt\pi\,M_R,\qquad\|f(u)-f(v)\|_{L^2}\le L_R\,\|u-v\|_{L^2}\le L_R\,\|u-v\|_{H_0^1}.\]</span></p>
+<p>Por <span class="math inline">\((\ddagger)\)</span>,</p>
+<p><span class="math display">\[\|\Phi(u)\|_X\le\|u_0\|_{H_0^1}+\sqrt\tau\,\sqrt\pi\,M_R\le\rho\quad\text{si }\tau\le\frac1{\pi M_R^2},\qquad\|\Phi(u)-\Phi(v)\|_X\le\sqrt\tau\,L_R\,\|u-v\|_X\le\tfrac12\|u-v\|_X\quad\text{si }\tau\le\frac1{4L_R^2}.\]</span></p>
+<p>Con <span class="math inline">\(\tau=\min\{1/(\pi M_R^2),\,1/(4L_R^2)\}\)</span>, <span class="math inline">\(\Phi\)</span> es una contracción de la bola cerrada de radio <span class="math inline">\(\rho\)</span> de <span class="math inline">\(X_\tau\)</span> en sí misma, y hay una única solución en <span class="math inline">\([0,\tau]\)</span>. Es la estructura de Picard-Lindelöf, con la diferencia de que el tiempo entra como <span class="math inline">\(\sqrt\tau\)</span> por la ganancia de derivada. La continuidad en <span class="math inline">\(t\)</span> de <span class="math inline">\(S(t)u_0\)</span> con valores en <span class="math inline">\(H_0^1\)</span> viene de convergencia dominada en la serie.</p>
+</section>
+<section id="la-ecuación-de-schrödinger" class="level3" data-number="10.2">
+<h3 data-number="10.2" class="anchored" data-anchor-id="la-ecuación-de-schrödinger"><span class="header-section-number">10.2</span> La ecuación de Schrödinger</h3>
+<div class="callout callout-style-default callout-note callout-titled" title="Problema">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Problema
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sea <span class="math inline">\(u_0\in H_0^1(0,\pi)\)</span> con valores complejos. Resuelva la ecuación de Schrödinger no lineal cúbica</p>
+<p><span class="math display">\[iu_t+u_{xx}=F(u),\quad F(u)=|u|^2u,\qquad u(0,t)=u(\pi,t)=0,\qquad u(x,0)=u_0(x).\]</span></p>
+</div>
+</div>
+<p><strong>La parte lineal.</strong> Si <span class="math inline">\(F=0\)</span>, cada coeficiente cumple <span class="math inline">\(iu_k'=k^2u_k\)</span>, es decir, <span class="math inline">\(u_k'=-ik^2u_k\)</span>, de donde <span class="math inline">\(u_k(t)=e^{-ik^2t}u_{0,k}\)</span>. Es el mismo cálculo del calor con <span class="math inline">\(k^2\)</span> reemplazado por <span class="math inline">\(ik^2\)</span>:</p>
+<p><span class="math display">\[S(t)u_0=\sum_{k\ge1}e^{-ik^2t}\,u_{0,k}\sin kx.\]</span></p>
+<p><strong>Por qué falla el argumento del calor.</strong> Ahora <span class="math inline">\(|e^{-ik^2t}|=1\)</span>: no hay decaimiento, y por lo tanto no hay ganancia de derivada. El núcleo <span class="math inline">\(\frac2\pi\sum e^{-ik^2t}\sin kx\sin ky\)</span> no es una función sino una serie que no converge absolutamente, y no sirve para acotar en <span class="math inline">\(L^\infty\)</span>. Lo que sí hay es conservación de normas. Por Parseval,</p>
+<p><span class="math display">\[\|S(t)v\|_{L^2}=\|v\|_{L^2},\qquad\|S(t)v\|_{H_0^1}=\|v\|_{H_0^1},\]</span></p>
+<p>es decir, <span class="math inline">\(S(t)\)</span> es unitario en <span class="math inline">\(L^2\)</span> y es una isometría en <span class="math inline">\(H_0^1\)</span>. Por eso el espacio de trabajo tiene que ser <span class="math inline">\(H_0^1\)</span> y no <span class="math inline">\(L^2\)</span>, y no hay <span class="math inline">\(\sqrt\tau\)</span> gratis.</p>
+<p><strong>Duhamel.</strong> De <span class="math inline">\(iu_k'=k^2u_k+F_k\)</span> se obtiene <span class="math inline">\(u_k(t)=e^{-ik^2t}u_{0,k}-i\int_0^te^{-ik^2(t-s)}F_k(s)\,ds\)</span>, es decir,</p>
+<p><span class="math display">\[u(t)=S(t)u_0-i\int_0^tS(t-s)\,F(u(s))\,ds=:\Phi(u)(t).\]</span></p>
+<p><strong>Las constantes.</strong> Usamos <span class="math inline">\(X_\tau=C\big([0,\tau];H_0^1(0,\pi)\big)\)</span>. Para tres funciones <span class="math inline">\(a,b,c\in H_0^1\)</span> (reales o complejas, o sus conjugadas), el producto <span class="math inline">\(abc\)</span> se anula en los extremos y <span class="math inline">\((abc)_x=a_xbc+ab_xc+abc_x\)</span>, de modo que por <span class="math inline">\((\dagger)\)</span></p>
+<p><span class="math display">\[\|abc\|_{H_0^1}\le3\,C_\infty^2\,\|a\|_{H_0^1}\|b\|_{H_0^1}\|c\|_{H_0^1}=\pi\,\|a\|_{H_0^1}\|b\|_{H_0^1}\|c\|_{H_0^1}.\]</span></p>
+<p>Aplicado a <span class="math inline">\(F(u)=u\,u\,\bar u\)</span> da <span class="math inline">\(\|F(u)\|_{H_0^1}\le\pi\|u\|_{H_0^1}^3\)</span>. Para la diferencia usamos la identidad <span class="math inline">\(F(u)-F(v)=(u-v)\,u\bar u+v\,(u-v)\,\bar u+v\,v\,\overline{(u-v)}\)</span>, y obtenemos</p>
+<p><span class="math display">\[\|F(u)-F(v)\|_{H_0^1}\le\pi\big(\|u\|^2+\|u\|\|v\|+\|v\|^2\big)\,\|u-v\|_{H_0^1}\le3\pi\rho^2\,\|u-v\|_{H_0^1}\quad\text{si }\|u\|,\|v\|\le\rho.\]</span></p>
+<p>Tomemos <span class="math inline">\(\rho=2\|u_0\|_{H_0^1}\)</span> y la bola <span class="math inline">\(\|u\|_X\le\rho\)</span>. Como <span class="math inline">\(S(t)\)</span> es isometría, no hay costo de tiempo más que el integral:</p>
+<p><span class="math display">\[\|\Phi(u)\|_X\le\|u_0\|_{H_0^1}+\tau\,\pi\rho^3\le\rho\quad\text{si }\tau\le\frac1{2\pi\rho^2},\qquad\|\Phi(u)-\Phi(v)\|_X\le3\pi\rho^2\,\tau\,\|u-v\|_X\le\tfrac12\|u-v\|_X\quad\text{si }\tau\le\frac1{6\pi\rho^2}.\]</span></p>
+<p>Con <span class="math inline">\(\tau=1/(6\pi\rho^2)=1/(24\pi\|u_0\|_{H_0^1}^2)\)</span>, <span class="math inline">\(\Phi\)</span> es una contracción y la ecuación tiene una única solución local en <span class="math inline">\(H_0^1\)</span>. El tiempo garantizado es del orden de <span class="math inline">\(1/\|u_0\|_{H_0^1}^2\)</span>: cuanto mayor el dato, menor el intervalo, el mismo fenómeno <span class="math inline">\(R/m\)</span> del tablero anterior con <span class="math inline">\(m\sim R^3\)</span>. Compárese con el calor, donde el tiempo entra como <span class="math inline">\(\sqrt\tau\)</span>: allí el integral de Duhamel gana una derivada, aquí no.</p>
+</section>
+<section id="un-problema-similar-la-viga-simplemente-apoyada" class="level3" data-number="10.3">
+<h3 data-number="10.3" class="anchored" data-anchor-id="un-problema-similar-la-viga-simplemente-apoyada"><span class="header-section-number">10.3</span> Un problema similar: la viga simplemente apoyada</h3>
+<div class="callout callout-style-default callout-note callout-titled" title="Problema">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Problema
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sea <span class="math inline">\(f:\mathbb{R}\to\mathbb{R}\)</span> localmente Lipschitz. Resuelva la ecuación de una viga simplemente apoyada con carga no lineal,</p>
+<p><span class="math display">\[u_{tt}+u_{xxxx}=f(u),\qquad x\in(0,\pi),\quad u(0,t)=u(\pi,t)=u_{xx}(0,t)=u_{xx}(\pi,t)=0,\]</span></p>
+<p>con datos <span class="math inline">\(u(x,0)=u_0(x)\)</span>, <span class="math inline">\(u_t(x,0)=u_1(x)\)</span>.</p>
+</div>
+</div>
+<p>Es la misma serie de senos de las secciones anteriores. Las funciones <span class="math inline">\(\sin kx\)</span> son además autofunciones de <span class="math inline">\(\partial_x^4\)</span> con autovalor <span class="math inline">\(k^4\)</span>, y las condiciones <span class="math inline">\(u=u_{xx}=0\)</span> en los extremos son las de una viga simplemente apoyada. Escribimos</p>
+<p><span class="math display">\[u(x,t)=\sum_{k\ge1}u_k(t)\sin kx,\qquad f(u)=\sum_{k\ge1}f_k(t)\sin kx,\quad f_k=\frac2\pi\int_0^\pi f(u)\sin kx\,dx.\]</span></p>
+<p>Cada coeficiente cumple <span class="math inline">\(u_k''+k^4u_k=f_k(t)\)</span>, y por variación de constantes,</p>
+<p><span class="math display">\[u_k(t)=u_{0,k}\cos(k^2t)+u_{1,k}\,\frac{\sin(k^2t)}{k^2}+\int_0^t\frac{\sin\big(k^2(t-s)\big)}{k^2}\,f_k(s)\,ds.\]</span></p>
+<p>Aquí el multiplicador de la parte lineal ya no es <span class="math inline">\(e^{-tk^2}\)</span> (calor) ni <span class="math inline">\(e^{-itk^2}\)</span> (Schrödinger), sino el par <span class="math inline">\(\cos(k^2t)\)</span>, <span class="math inline">\(\sin(k^2t)/k^2\)</span>: la frecuencia es <span class="math inline">\(k^2\)</span>. Además, el núcleo del forzamiento <span class="math inline">\(\sin(k^2(t-s))/k^2\)</span> está acotado por <span class="math inline">\(1/k^2\)</span>, de modo que el forzamiento <em>gana dos derivadas</em> en <span class="math inline">\(x\)</span>.</p>
+<p><strong>El espacio.</strong> Normas con los coeficientes: <span class="math inline">\(\|u\|_{L^2}^2=\frac\pi2\sum|u_k|^2\)</span> y <span class="math inline">\(\|u\|_V^2=\frac\pi2\sum k^4|u_k|^2\)</span> (el espacio <span class="math inline">\(V=H^2\cap H_0^1\)</span> de las condiciones de frontera). Sea <span class="math inline">\(H=V\times L^2(0,\pi)\)</span> con <span class="math inline">\(\|(u,v)\|_H^2=\|u\|_V^2+\|v\|_{L^2}^2\)</span>. En las variables <span class="math inline">\(U=(u,u_t)\)</span> el flujo lineal rota cada par <span class="math inline">\((k^2u_k,u_k')\)</span> un ángulo <span class="math inline">\(k^2t\)</span>, así que es una isometría de <span class="math inline">\(H\)</span> (conserva la energía), y la fórmula de arriba se lee</p>
+<p><span class="math display">\[U(t)=S(t)U_0+\int_0^tS(t-s)\,(0,f(u(s)))\,ds=:\Phi(U)(t),\qquad\|S(t)\|=1.\]</span></p>
+<p>Necesitamos dos desigualdades. Como <span class="math inline">\(k\ge1\)</span>, <span class="math inline">\(\|w\|_{L^2}\le\|w\|_V\)</span>. Y por Cauchy-Schwarz con <span class="math inline">\(\sum k^{-4}=\pi^4/90\)</span>,</p>
+<p><span class="math display">\[\|u\|_\infty\le\sum|u_k|\le\Big(\sum k^{-4}\Big)^{1/2}\Big(\sum k^4|u_k|^2\Big)^{1/2}=C_V\|u\|_V,\qquad C_V=\sqrt{\frac{2}{\pi}\cdot\frac{\pi^4}{90}}=\frac{\pi^{3/2}}{\sqrt{45}}\approx0{,}83.\]</span></p>
+<p><strong>Las constantes.</strong> Sea <span class="math inline">\(\rho_0=\|U_0\|_H\)</span>, <span class="math inline">\(\rho=\rho_0+1\)</span>, <span class="math inline">\(R=C_V\rho\)</span>, y <span class="math inline">\(M_R\)</span>, <span class="math inline">\(L_R\)</span> como antes. En la bola <span class="math inline">\(\|U\|_X\le\rho\)</span> de <span class="math inline">\(X_\tau=C([0,\tau];H)\)</span> tenemos <span class="math inline">\(|u|\le R\)</span> y por lo tanto</p>
+<p><span class="math display">\[\|(0,f(u))\|_H=\|f(u)\|_{L^2}\le\sqrt\pi\,M_R,\qquad\|f(u)-f(w)\|_{L^2}\le L_R\|u-w\|_{L^2}\le L_R\,\|U-W\|_H.\]</span></p>
+<p>Entonces <span class="math inline">\(\|\Phi(U)\|_X\le\rho_0+\tau\sqrt\pi\,M_R\le\rho\)</span> si <span class="math inline">\(\tau\sqrt\pi M_R\le1\)</span>, y <span class="math inline">\(\|\Phi(U)-\Phi(W)\|_X\le\tau L_R\|U-W\|_X\le\frac12\|U-W\|_X\)</span> si <span class="math inline">\(\tau L_R\le\frac12\)</span>. Con <span class="math inline">\(\tau=\min\{1/(\sqrt\pi M_R),\,1/(2L_R)\}\)</span> hay una única solución local para cualquier <span class="math inline">\(f\)</span> localmente Lipschitz.</p>
+<p><strong>Extensión global.</strong> Si además <span class="math inline">\(|f(x)|\le A+B|x|\)</span>, entonces <span class="math inline">\(\|f(u)\|_{L^2}\le A\sqrt\pi+B\|u\|_{L^2}\le A\sqrt\pi+B\|U\|_H\)</span>, y de la fórmula de Duhamel y de <span class="math inline">\(\|S\|=1\)</span>,</p>
+<p><span class="math display">\[\|U(t)\|_H\le\|U_0\|_H+\int_0^t\big(A\sqrt\pi+B\|U(s)\|_H\big)\,ds\qquad\Longrightarrow\qquad\|U(t)\|_H\le\big(\|U_0\|_H+A\sqrt\pi\,t\big)\,e^{Bt}\]</span></p>
+<p>por el lema de Gronwall. La norma no puede explotar en tiempo finito, y como el tiempo de existencia local solo depende de <span class="math inline">\(\|U(t)\|_H\)</span>, la solución se extiende a todo <span class="math inline">\(t\ge0\)</span>.</p>
+</section>
+<section id="qué-cambia-de-un-caso-a-otro" class="level3" data-number="10.4">
+<h3 data-number="10.4" class="anchored" data-anchor-id="qué-cambia-de-un-caso-a-otro"><span class="header-section-number">10.4</span> Qué cambia de un caso a otro</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Ecuación</th>
+<th style="text-align: left;">Multiplicador de la parte lineal</th>
+<th style="text-align: left;">Dónde está controlada</th>
+<th style="text-align: left;">Qué se usa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Calor</td>
+<td style="text-align: left;"><span class="math inline">\(e^{-tk^2}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(L^2\)</span> y <span class="math inline">\(H_0^1\)</span></td>
+<td style="text-align: left;">decaimiento: ganancia de una derivada, <span class="math inline">\(\sqrt\tau\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Schrödinger</td>
+<td style="text-align: left;"><span class="math inline">\(e^{-itk^2}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(L^2\)</span> y <span class="math inline">\(H_0^1\)</span> (isometría)</td>
+<td style="text-align: left;">unitariedad y <span class="math inline">\(H_0^1\subset L^\infty\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Viga</td>
+<td style="text-align: left;"><span class="math inline">\(\cos(k^2t)\)</span>, <span class="math inline">\(\sin(k^2t)/k^2\)</span></td>
+<td style="text-align: left;">energía <span class="math inline">\(V\times L^2\)</span></td>
+<td style="text-align: left;">isometría y ganancia de dos derivadas</td>
+</tr>
+</tbody>
+</table>
+<p>En los tres casos, el principio de contracciones hace el trabajo y la elección del espacio de Banach decide si funciona.</p>
+</section>
+</section>
+<section id="referencias" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="referencias"><span class="header-section-number">11</span> Referencias</h2>
+<ul>
+<li>R. M. Brooks y K. Schmitt, <em>The Contraction Mapping Principle and Some Applications</em>, Electronic Journal of Differential Equations, Monograph 09, 2009. <a href="https://ejde.math.txstate.edu/Monographs/09/brooks.pdf">Texto completo</a>.</li>
+<li>S. Kesavan, <em>Functional Analysis</em>, Texts and Readings in Mathematics 52, Hindustan Book Agency, 2009. <a href="https://link.springer.com/book/10.1007/978-93-86279-42-2">Springer</a>.</li>
+<li>Charla de Peter Bates sobre ecuaciones diferenciales no locales. <a href="https://www.youtube.com/watch?v=klKHajVuvWc">Video</a>.</li>
+<li>Declaración de uso de IA: <a href="../../cursos/index.html">página de cursos</a>.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/arturosanjuan\.xyz");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="preferred_color_scheme">
+<input type="hidden" id="giscus-alt-theme" value="preferred_color_scheme">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      if (authorPrefersDark) {
+          [baseTheme, altTheme] = [altTheme, baseTheme];
+      }
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "asanjuanc/arturosanjuan-sitio";
+    script.dataset.repoId = "R_kgDOTzuHrw";
+    script.dataset.category = "Comentarios";
+    script.dataset.categoryId = "DIC_kwDOTzuHr84DD_eD";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "es";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tablero del principio de contracciones en el plano</title>
+<style>
+  :root{
+    --ink:#1e2327; --muted:#5a6570; --line:#dde3e8; --bg:#fbfcfd;
+    --accent:#2563a8; --accent2:#c1440e; --good:#1a7f5a; --bad:#b3261e; --gold:#9a7300;
+    --panel:#ffffff;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; padding:18px 20px 26px; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:14.5px; line-height:1.45;
+  }
+  h2{font-size:16px; margin:0 0 4px;}
+  .sub{color:var(--muted); margin:0 0 14px; font-size:13px;}
+
+  .pc-grupo{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px;}
+  .pc-gl{color:var(--muted); font-size:12.5px; min-width:11.5em;}
+  .pc-tabs{display:flex; gap:7px; flex-wrap:wrap;}
+  .pc-tab{
+    border:1px solid var(--line); background:var(--panel); color:var(--ink); border-radius:999px;
+    padding:4px 13px; cursor:pointer; font:inherit; font-size:13px;
+  }
+  .pc-tab:hover{background:#f2f5f7;}
+  .pc-tab[aria-pressed="true"]{background:#e6eef8; border-color:var(--accent); font-weight:600; color:var(--accent);}
+
+  .pc-eq{
+    background:#f2f5f7; border:1px solid var(--line); border-radius:10px;
+    padding:10px 14px; margin:12px 0 14px; font-size:13.5px;
+  }
+  .pc-eq div{margin:2px 0;}
+  .pc-eq .pc-lbl{color:var(--muted); display:inline-block; min-width:8.4em;}
+
+  .pc-grid{display:flex; gap:18px; flex-wrap:wrap; align-items:flex-start;}
+  .pc-panel{background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 16px;}
+  .pc-ctrl{flex:1 1 270px; max-width:360px;}
+  .pc-plot{flex:2 1 380px; min-width:0;}
+  .pc-plot canvas{width:100%; aspect-ratio:1/1; display:block; background:#fff; border-radius:6px; cursor:crosshair; touch-action:none;}
+  .pc-lab{display:block; font-size:13px; margin:2px 0 3px;}
+  .pc-val{font-variant-numeric:tabular-nums; color:var(--accent); font-weight:600;}
+  .pc-ctrl input[type=range]{width:100%; margin:0 0 9px; accent-color:var(--accent);}
+  .pc-ctrl select{width:100%; padding:5px 7px; border:1px solid var(--line); border-radius:6px; background:#fff; color:var(--ink); font:inherit; font-size:13px; margin:0 0 10px;}
+  .pc-btns{display:flex; gap:8px; margin:4px 0 12px;}
+  .pc-btn{
+    flex:1; border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:6px;
+    padding:5px 9px; font:inherit; font-size:13px; cursor:pointer;
+  }
+  .pc-btn:hover{background:#f2f5f7;}
+  .pc-btn.pc-prim{background:#e6eef8; border-color:var(--accent); color:var(--accent); font-weight:600;}
+
+  .pc-h{display:grid; grid-template-columns:auto 1fr; gap:6px 10px; align-items:start; margin:0 0 10px;}
+  .pc-ver{display:inline-block; padding:2px 11px; border-radius:20px; font-weight:600; font-size:12.5px; white-space:nowrap;}
+  .pc-ver.good{background:#e4f4ec; color:var(--good);}
+  .pc-ver.bad{background:#fbe9e2; color:var(--bad);}
+  .pc-ver.warn{background:#fdf3da; color:var(--gold);}
+  .pc-det{font-size:12.5px; color:var(--muted); line-height:1.35;}
+  .pc-concl{border-radius:8px; padding:9px 11px; font-size:13px; line-height:1.4; border:1px solid var(--line);}
+  .pc-concl.good{border-color:var(--good); background:#f1faf5;}
+  .pc-concl.bad{border-color:var(--bad); background:#fdf3f0;}
+  .pc-concl p{margin:0 0 4px;} .pc-concl p:last-child{margin:0;}
+  .pc-pie{margin:8px 0 0; font-size:12px; color:var(--muted);}
+  #pc-stats{font-size:12.5px; color:var(--muted); margin:2px 0 10px;}
+  #pc-stats b{color:var(--ink);}
+
+  .pc-tabla{width:100%; border-collapse:collapse; font-size:13px;}
+  .pc-tabla th,.pc-tabla td{padding:5px 8px; text-align:right; border-bottom:1px solid var(--line);}
+  .pc-tabla th:first-child,.pc-tabla td:first-child{text-align:left;}
+  .pc-tabla th{color:var(--muted); font-weight:600; font-size:12.5px;}
+  .pc-tabla td{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-variant-numeric:tabular-nums;}
+  #pc-err{width:100%; height:190px; display:block; margin-top:6px;}
+</style>
+</head>
+<body>
+
+<h2>Contracciones en el plano: <i>d(Tx, Ty) &le; k d(x, y)</i></h2>
+<p class="sub">Elija un caso, arrastre los puntos y cambie la aplicación <i>T</i> o la región <i>M</i>. El tablero verifica las tres hipótesis del teorema y dibuja las órbitas <i>x<sub>n+1</sub> = Tx<sub>n</sub></i>.</p>
+
+<div class="pc-grupo"><span class="pc-gl">Cumplen las hipótesis</span><div class="pc-tabs" id="pc-ok"></div></div>
+<div class="pc-grupo"><span class="pc-gl">Falla alguna hipótesis</span><div class="pc-tabs" id="pc-no"></div></div>
+
+<div class="pc-eq" id="pc-eq"></div>
+
+<div class="pc-grid">
+  <div class="pc-panel pc-ctrl">
+    <label class="pc-lab" for="pc-map">Aplicación <i>T</i></label>
+    <select id="pc-map">
+      <option value="spiral">Rotación y contracción alrededor de p</option>
+      <option value="affine">Afín general Ax + b</option>
+      <option value="strict">T(x, y) = (&radic;(x&sup2;+1), y/2)</option>
+    </select>
+    <div id="pc-gspiral"></div>
+    <div id="pc-gaffine"></div>
+    <label class="pc-lab" for="pc-reg">Región <i>M</i></label>
+    <select id="pc-reg">
+      <option value="disc">Disco cerrado</option>
+      <option value="square">Cuadrado cerrado</option>
+      <option value="punct">Disco sin el punto fijo</option>
+      <option value="half">Semiplano x &ge; 0</option>
+      <option value="plane">Todo el plano</option>
+    </select>
+    <div id="pc-gview"></div>
+    <div class="pc-btns">
+      <button class="pc-btn pc-prim" id="pc-play" type="button">Animar órbitas</button>
+      <button class="pc-btn" id="pc-reset" type="button">Restablecer caso</button>
+    </div>
+    <div class="pc-h">
+      <span class="pc-ver" id="pc-v1">M completo</span><span class="pc-det" id="pc-d1"></span>
+      <span class="pc-ver" id="pc-v2">T(M) &sub; M</span><span class="pc-det" id="pc-d2"></span>
+      <span class="pc-ver" id="pc-v3">k &lt; 1</span><span class="pc-det" id="pc-d3"></span>
+    </div>
+    <div class="pc-concl" id="pc-concl"></div>
+  </div>
+  <div class="pc-panel pc-plot">
+    <canvas id="pc-cv" role="img" aria-label="Plano con la región M, las órbitas de T y el punto fijo"></canvas>
+    <p class="pc-pie">Azul: la región <i>M</i> y sus imágenes <i>T<sup>n</sup>(M)</i>. Naranja: órbitas. Dorado: el par <i>A</i>, <i>B</i> y sus imágenes <i>TA</i>, <i>TB</i>. Verde: el punto fijo <i>x*</i>. Un círculo rojo marca un iterado fuera de <i>M</i>. Arrastre cualquier punto; un clic en un lugar vacío añade una órbita (hasta 6).</p>
+  </div>
+</div>
+
+<div class="pc-panel" style="margin-top:16px; overflow-x:auto;">
+  <div id="pc-stats"></div>
+  <table class="pc-tabla">
+    <thead><tr><th>n</th><th>x<sub>n</sub> (primera órbita)</th><th>&Vert;x<sub>n</sub> &minus; x*&Vert;</th><th>cota k<sup>n</sup>/(1&minus;k) &Vert;x<sub>1</sub> &minus; x<sub>0</sub>&Vert;</th></tr></thead>
+    <tbody id="pc-tbody"></tbody>
+  </table>
+  <canvas id="pc-err" role="img" aria-label="Gráfica logarítmica del error y de la cota a priori"></canvas>
+  <p class="pc-pie">Puntos naranjas: log<sub>10</sub> del error de la primera órbita. Línea azul punteada: log<sub>10</sub> de la cota a priori del teorema, que solo existe si <i>k</i> &lt; 1 (para una aplicación afín se usa <i>k</i> = &Vert;A&Vert;<sub>2</sub>).</p>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  const MENOS = '−';
+  const $ = id => document.getElementById(id);
+  const signo = s => s.replace(/^-/, MENOS);
+  const COL = { ink: '#1e2327', muted: '#5a6570', region: '#2563a8', regionFill: 'rgba(37,99,168,.10)',
+                orbita: '#c1440e', par: '#9a7300', fijo: '#1a7f5a', mal: '#b3261e',
+                grid: 'rgba(0,0,0,.09)', eje: 'rgba(0,0,0,.55)' };
+
+  function fm(v, d) {
+    if (!isFinite(v)) return v > 0 ? '∞' : (v < 0 ? MENOS + '∞' : 'no definido');
+    if (Math.abs(v) < 5e-13) return '0';
+    if (Math.abs(v) < 1e-4 || Math.abs(v) >= 1e6) {
+      const p = v.toExponential(2).split('e');
+      return signo(p[0]) + '×10^' + parseInt(p[1], 10);
+    }
+    return signo(v.toFixed(d === undefined ? 3 : d));
+  }
+
+  /* ---------- estado y casos ---------- */
+  const S = { map: 'spiral', c: .7, th: 50, px: .8, py: .4, a11: .6, a12: -.3, a21: .2, a22: .5, bx: .8, by: -.3,
+              reg: 'disc', r: 3, steps: 25, imgs: 4, view: 4.5, pts: [] };
+  let shown = null, timer = null, caso = 0, arrastre = null, MANIJAS = [];
+
+  const OK = [
+    ['Espiral en un disco', { map: 'spiral', c: .7, th: 50, px: .8, py: .4, reg: 'disc', r: 3, view: 4.5 }],
+    ['Cuadrado, giro de 20°', { map: 'spiral', c: .7, th: 20, px: .5, py: .3, reg: 'square', r: 3, view: 4.5 }],
+    ['Afín anisótropa', { map: 'affine', a11: .6, a12: -.3, a21: .2, a22: .5, bx: .8, by: -.3, reg: 'disc', r: 4, view: 5 }],
+    ['Todo el plano', { map: 'spiral', c: .8, th: 70, px: -.6, py: .9, reg: 'plane', view: 5 }],
+    ['Solo T³ contrae', { map: 'affine', a11: .5, a12: 1, a21: 0, a22: .5, bx: .5, by: -.3, reg: 'plane', view: 5 }]
+  ];
+  const NO = [
+    ['M no cerrado', { map: 'spiral', c: .7, th: 50, px: .8, py: .4, reg: 'punct', r: 3, view: 4.5 }],
+    ['T(M) no cabe: x* fuera', { map: 'spiral', c: .7, th: 40, px: 2.5, py: .8, reg: 'disc', r: 1.5, view: 4.5 }, { o: [[-.6, .5], [.9, -.8]] }],
+    ['T(M) no cabe: esquinas', { map: 'spiral', c: .85, th: 45, px: .5, py: .3, reg: 'square', r: 3, view: 4.5 }],
+    ['k = 1: identidad', { map: 'spiral', c: 1, th: 0, px: 0, py: 0, reg: 'disc', r: 3, view: 4.5 }],
+    ['k = 1: rotación pura', { map: 'spiral', c: 1, th: 50, px: 0, py: 0, reg: 'disc', r: 3, view: 4.5 }],
+    ['k = 1: traslación', { map: 'affine', a11: 1, a12: 0, a21: 0, a22: 1, bx: .6, by: .2, reg: 'plane', view: 6 }],
+    ['k > 1: expansión', { map: 'spiral', c: 1.15, th: 30, px: .5, py: .3, reg: 'plane', view: 6 }, { o: [[.9, .6], [-.4, -.1]] }],
+    ['Estricta pero sin k < 1', { map: 'strict', reg: 'half', view: 8 }, { ab: [4, 1.2, 7, 1.2], o: [[1, 1.5], [0.5, -2.5], [3, 2.5]] }]
+  ];
+  const CASOS = OK.concat(NO);
+
+  /* ---------- álgebra 2x2 ---------- */
+  const mul = (A, B) => [[A[0][0]*B[0][0]+A[0][1]*B[1][0], A[0][0]*B[0][1]+A[0][1]*B[1][1]],
+                         [A[1][0]*B[0][0]+A[1][1]*B[1][0], A[1][0]*B[0][1]+A[1][1]*B[1][1]]];
+  function nrm(A) {
+    const a = A[0][0], b = A[0][1], c = A[1][0], d = A[1][1];
+    const p = a*a + b*b + c*c + d*d, q = a*d - b*c, disc = Math.sqrt(Math.max(0, p*p - 4*q*q));
+    return Math.sqrt((p + disc) / 2);
+  }
+  function rho(A) {
+    const tr = A[0][0] + A[1][1], q = A[0][0]*A[1][1] - A[0][1]*A[1][0], disc = tr*tr - 4*q;
+    if (disc >= 0) { const s = Math.sqrt(disc); return Math.max(Math.abs((tr+s)/2), Math.abs((tr-s)/2)); }
+    return Math.sqrt(Math.abs(q));
+  }
+  function Amat() {
+    if (S.map === 'spiral') { const t = S.th*Math.PI/180, c = S.c;
+      return [[c*Math.cos(t), -c*Math.sin(t)], [c*Math.sin(t), c*Math.cos(t)]]; }
+    if (S.map === 'affine') return [[S.a11, S.a12], [S.a21, S.a22]];
+    return null;
+  }
+  function bvec() {
+    if (S.map === 'spiral') { const A = Amat();
+      return [S.px - (A[0][0]*S.px + A[0][1]*S.py), S.py - (A[1][0]*S.px + A[1][1]*S.py)]; }
+    if (S.map === 'affine') return [S.bx, S.by];
+    return null;
+  }
+  function T(p) {
+    if (S.map === 'strict') return [Math.sqrt(p[0]*p[0] + 1), p[1]/2];
+    const A = Amat(), b = bvec();
+    return [A[0][0]*p[0] + A[0][1]*p[1] + b[0], A[1][0]*p[0] + A[1][1]*p[1] + b[1]];
+  }
+  function esId() {
+    if (S.map === 'strict') return false;
+    const A = Amat(), b = bvec();
+    return Math.abs(A[0][0]-1) + Math.abs(A[1][1]-1) + Math.abs(A[0][1]) + Math.abs(A[1][0]) + Math.abs(b[0]) + Math.abs(b[1]) < 1e-9;
+  }
+  function fijo() {
+    if (S.map === 'strict') return null;
+    const A = Amat(), b = bvec(), m00 = 1-A[0][0], m01 = -A[0][1], m10 = -A[1][0], m11 = 1-A[1][1];
+    const det = m00*m11 - m01*m10; if (Math.abs(det) < 1e-9) return null;
+    return [(m11*b[0] - m01*b[1])/det, (-m10*b[0] + m00*b[1])/det];
+  }
+  const lip = () => S.map === 'strict' ? 1 : nrm(Amat());
+  function potencia() {
+    const A = Amat(); if (!A) return 0; let P = A;
+    for (let m = 1; m <= 80; m++) { if (nrm(P) < 1 - 1e-9) return m; P = mul(P, A); }
+    return 0;
+  }
+
+  /* ---------- regiones ---------- */
+  const hueco = () => fijo() || [S.px, S.py];
+  function enM(p) {
+    const e = 1e-9, x = p[0], y = p[1];
+    switch (S.reg) {
+      case 'disc': return Math.hypot(x, y) <= S.r + e;
+      case 'square': return Math.abs(x) <= S.r + e && Math.abs(y) <= S.r + e;
+      case 'punct': { const h = hueco(); return Math.hypot(x, y) <= S.r + e && Math.hypot(x-h[0], y-h[1]) > 1e-9; }
+      case 'half': return x >= -e;
+      default: return true;
+    }
+  }
+  function borde(n) {
+    const r = S.r, out = [];
+    if (S.reg === 'plane' || S.reg === 'half') return null;
+    if (S.reg === 'square') {
+      for (let i = 0; i < n; i++) { const u = (i/n)*4, k = Math.floor(u), f = (u-k)*2*r - r;
+        out.push(k === 0 ? [f, -r] : k === 1 ? [r, f] : k === 2 ? [-f, r] : [-r, -f]); }
+      return out;
+    }
+    for (let i = 0; i < n; i++) { const t = 2*Math.PI*i/n; out.push([r*Math.cos(t), r*Math.sin(t)]); }
+    return out;
+  }
+  function muestras() {
+    const out = [], n = 30;
+    if (S.reg === 'plane') return out;
+    if (S.reg === 'half') {
+      for (let i = 0; i <= n; i++) for (let j = 0; j <= n; j++) out.push([S.view*i/n, -S.view + 2*S.view*j/n]);
+      return out;
+    }
+    for (let i = 0; i <= n; i++) for (let j = 0; j <= n; j++) {
+      const p = [-S.r + 2*S.r*i/n, -S.r + 2*S.r*j/n]; if (enM(p)) out.push(p);
+    }
+    return out;
+  }
+  function revisaH2() {
+    if (S.reg === 'plane') return { ok: true, mal: 0, total: 0 };
+    const pts = (borde(360) || []).concat(muestras()); let mal = 0;
+    pts.forEach(p => { if (!enM(T(p))) mal++; });
+    return { ok: mal === 0, mal: mal, total: pts.length };
+  }
+  function orbita(s, n) {
+    const o = [s.slice()];
+    for (let i = 0; i < n; i++) {
+      const q = T(o[o.length-1]);
+      if (!isFinite(q[0]) || !isFinite(q[1]) || Math.abs(q[0]) > 1e7 || Math.abs(q[1]) > 1e7) break;
+      o.push(q);
+    }
+    return o;
+  }
+  const dist = (a, b) => Math.hypot(a[0]-b[0], a[1]-b[1]);
+
+  /* ---------- dibujo ---------- */
+  function lienzo(cv) {
+    const dpr = window.devicePixelRatio || 1, w = cv.clientWidth || 600, h = cv.clientHeight || w;
+    cv.width = Math.round(w*dpr); cv.height = Math.round(h*dpr);
+    const g = cv.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, w, h);
+    return { g: g, w: w, h: h };
+  }
+  function dibujar() {
+    const L = lienzo($('pc-cv')), g = L.g, w = L.w, sc = w/(2*S.view);
+    const X = x => w/2 + x*sc, Y = y => w/2 - y*sc;
+    const st = S.view > 8 ? 2 : 1, lim = Math.ceil(S.view);
+    g.font = '11px ui-monospace,Menlo,Consolas,monospace';
+    for (let k = -lim; k <= lim; k += st) {
+      g.strokeStyle = k === 0 ? COL.eje : COL.grid; g.lineWidth = k === 0 ? 1.2 : 1;
+      g.beginPath(); g.moveTo(X(k), 0); g.lineTo(X(k), w); g.moveTo(0, Y(k)); g.lineTo(w, Y(k)); g.stroke();
+      if (k !== 0) { g.fillStyle = COL.muted; g.textAlign = 'center'; g.textBaseline = 'top'; g.fillText(signo(String(k)), X(k), Y(0)+4);
+        g.textAlign = 'left'; g.textBaseline = 'middle'; g.fillText(signo(String(k)), X(0)+5, Y(k)); }
+    }
+    const poli = (pts, cierra) => { g.beginPath(); pts.forEach((p, i) => i ? g.lineTo(X(p[0]), Y(p[1])) : g.moveTo(X(p[0]), Y(p[1]))); if (cierra) g.closePath(); };
+    const bd = borde(240);
+    if (bd) {
+      poli(bd, true); g.fillStyle = COL.regionFill; g.fill(); g.strokeStyle = COL.region; g.lineWidth = 2; g.stroke();
+      let cur = bd;
+      for (let k = 1; k <= S.imgs; k++) {
+        cur = cur.map(T); if (cur.some(p => !isFinite(p[0]) || !isFinite(p[1]))) break;
+        poli(cur, true); g.strokeStyle = COL.region; g.globalAlpha = Math.max(.25, .85 - k*.08); g.lineWidth = 1.2;
+        g.setLineDash([5, 4]); g.stroke(); g.setLineDash([]); g.globalAlpha = 1;
+      }
+    } else if (S.reg === 'half') {
+      g.fillStyle = COL.regionFill; g.fillRect(X(0), 0, w - X(0), w);
+      g.strokeStyle = COL.region; g.lineWidth = 2; g.beginPath(); g.moveTo(X(0), 0); g.lineTo(X(0), w); g.stroke();
+    } else { g.fillStyle = COL.regionFill; g.fillRect(0, 0, w, w); }
+    if (S.reg === 'punct') {
+      const h = hueco(); g.beginPath(); g.arc(X(h[0]), Y(h[1]), 6, 0, 7); g.fillStyle = '#fff'; g.fill();
+      g.strokeStyle = COL.region; g.lineWidth = 2; g.stroke();
+    }
+    /* par A, B */
+    const A = S.pts.find(p => p.k === 'A'), B = S.pts.find(p => p.k === 'B');
+    const a = [A.x, A.y], b = [B.x, B.y], ta = T(a), tb = T(b);
+    g.strokeStyle = COL.par; g.lineWidth = 1.6; g.setLineDash([4, 4]); poli([a, b], false); g.stroke(); g.setLineDash([]);
+    g.lineWidth = 2.4; poli([ta, tb], false); g.stroke();
+    g.lineWidth = 1; g.globalAlpha = .5; poli([a, ta], false); g.stroke(); poli([b, tb], false); g.stroke(); g.globalAlpha = 1;
+    /* órbitas */
+    const n = shown === null ? S.steps : shown;
+    S.pts.filter(p => p.k === 'o').forEach(s => {
+      const ob = orbita([s.x, s.y], n);
+      g.strokeStyle = COL.orbita; g.lineWidth = 1.4; g.globalAlpha = .6; poli(ob, false); g.stroke(); g.globalAlpha = 1;
+      ob.forEach((p, i) => {
+        if (i === 0) return;
+        g.beginPath(); g.arc(X(p[0]), Y(p[1]), i === ob.length-1 ? 4 : 2.6, 0, 7); g.fillStyle = COL.orbita; g.fill();
+        if (!enM(p)) { g.beginPath(); g.arc(X(p[0]), Y(p[1]), 5.8, 0, 7); g.strokeStyle = COL.mal; g.lineWidth = 1.6; g.stroke(); }
+      });
+    });
+    /* punto fijo */
+    const fp = fijo();
+    if (fp) {
+      const x = X(fp[0]), y = Y(fp[1]);
+      g.strokeStyle = COL.fijo; g.lineWidth = 2.6; g.beginPath(); g.moveTo(x-7, y-7); g.lineTo(x+7, y+7); g.moveTo(x-7, y+7); g.lineTo(x+7, y-7); g.stroke();
+      g.fillStyle = COL.fijo; g.font = '600 13px system-ui,sans-serif'; g.textAlign = 'left'; g.textBaseline = 'bottom'; g.fillText('x*', x+9, y-6);
+    }
+    /* manijas */
+    MANIJAS = []; let oi = 0;
+    g.font = '600 12px system-ui,sans-serif'; g.textAlign = 'left'; g.textBaseline = 'bottom';
+    S.pts.forEach(p => {
+      const x = X(p.x), y = Y(p.y); MANIJAS.push({ p: p, x: x, y: y });
+      if (p.k === 'o') {
+        g.beginPath(); g.arc(x, y, 7, 0, 7); g.fillStyle = '#fff'; g.fill(); g.strokeStyle = COL.orbita; g.lineWidth = 2.2; g.stroke();
+        g.fillStyle = COL.orbita; g.fillText(['x0', 'y0', 'z0', 'u0', 'v0', 'w0'][oi], x+10, y-6); oi++;
+      } else {
+        g.save(); g.translate(x, y); g.rotate(Math.PI/4); g.fillStyle = COL.par; g.fillRect(-6, -6, 12, 12); g.restore();
+        g.fillStyle = COL.par; g.fillText(p.k, x+10, y-6);
+      }
+    });
+    [[ta, 'TA'], [tb, 'TB']].forEach(q => {
+      const x = X(q[0][0]), y = Y(q[0][1]);
+      g.save(); g.translate(x, y); g.rotate(Math.PI/4); g.strokeStyle = COL.par; g.lineWidth = 2; g.strokeRect(-5, -5, 10, 10); g.restore();
+      g.fillStyle = COL.par; g.fillText(q[1], x+9, y-5);
+    });
+  }
+
+  function dibujarError(L, fp) {
+    const Lc = lienzo($('pc-err')), g = Lc.g, w = Lc.w, h = Lc.h;
+    const s = S.pts.find(p => p.k === 'o');
+    g.font = '11px ui-monospace,Menlo,Consolas,monospace';
+    if (!fp || !s) {
+      g.fillStyle = COL.muted; g.textAlign = 'center'; g.textBaseline = 'middle'; g.font = '13px system-ui,sans-serif';
+      g.fillText(esId() ? 'T es la identidad: no hay un punto fijo único con el cual medir el error.' : 'T no tiene punto fijo: no hay error que medir.', w/2, h/2); return;
+    }
+    const N = Math.max(S.steps, 2), ob = orbita([s.x, s.y], N), m = ob.length - 1;
+    const lg = v => Math.log10(Math.max(v, 1e-14));
+    const err = ob.map(p => lg(dist(p, fp)));
+    const d01 = ob.length > 1 ? dist(ob[1], ob[0]) : 0;
+    const cota = L < 1 ? ob.map((_, i) => lg(Math.pow(L, i)/(1-L)*d01)) : [];
+    const todo = err.concat(cota).filter(isFinite);
+    let lo = Math.floor(Math.min.apply(null, todo)), hi = Math.ceil(Math.max.apply(null, todo)); if (hi - lo < 2) { hi += 1; lo -= 1; }
+    const ml = 42, mr = 10, mt = 10, mb = 24, px = i => ml + (w-ml-mr)*(m ? i/m : 0), py = v => mt + (h-mt-mb)*(hi-v)/(hi-lo);
+    g.strokeStyle = COL.grid; g.fillStyle = COL.muted; g.lineWidth = 1; g.textAlign = 'right'; g.textBaseline = 'middle';
+    const ys = Math.max(1, Math.ceil((hi-lo)/6));
+    for (let v = lo; v <= hi; v += ys) { g.beginPath(); g.moveTo(ml, py(v)); g.lineTo(w-mr, py(v)); g.stroke(); g.fillText('1e' + signo(String(v)), ml-5, py(v)); }
+    g.textAlign = 'center'; g.textBaseline = 'top';
+    const xs = m > 30 ? 10 : m > 12 ? 5 : 1; for (let i = 0; i <= m; i += xs) g.fillText(i, px(i), h-mb+6);
+    g.textAlign = 'right'; g.fillText('n', w-mr, h-mb+16);
+    if (cota.length) { g.strokeStyle = COL.region; g.lineWidth = 1.8; g.setLineDash([6, 4]); g.beginPath();
+      cota.forEach((v, i) => i ? g.lineTo(px(i), py(v)) : g.moveTo(px(i), py(v))); g.stroke(); g.setLineDash([]); }
+    g.strokeStyle = COL.orbita; g.lineWidth = 1.6; g.beginPath(); err.forEach((v, i) => i ? g.lineTo(px(i), py(v)) : g.moveTo(px(i), py(v))); g.stroke();
+    g.fillStyle = COL.orbita; err.forEach((v, i) => { g.beginPath(); g.arc(px(i), py(v), 3, 0, 7); g.fill(); });
+  }
+
+  /* ---------- controles ---------- */
+  const DEF = { map: 'spiral', c: .7, th: 50, px: .8, py: .4, a11: .6, a12: -.3, a21: .2, a22: .5, bx: .8, by: -.3,
+                reg: 'disc', r: 3, steps: 25, imgs: 4, view: 4.5 };
+  function deslizador(cont, id, texto, min, max, paso, dec, suf) {
+    const d = document.createElement('div');
+    d.innerHTML = '<label class="pc-lab" for="s-' + id + '">' + texto + ' = <span class="pc-val" id="v-' + id + '"></span></label>' +
+                  '<input type="range" id="s-' + id + '" min="' + min + '" max="' + max + '" step="' + paso + '">';
+    $(cont).appendChild(d);
+    const s = $('s-' + id);
+    s.addEventListener('input', () => { S[id] = parseFloat(s.value); refrescar(); });
+    s._dec = dec; s._suf = suf || '';
+  }
+  function sincronizar() {
+    ['c', 'th', 'px', 'py', 'a11', 'a12', 'a21', 'a22', 'bx', 'by', 'r', 'steps', 'imgs', 'view'].forEach(id => {
+      const s = $('s-' + id); if (!s) return;
+      s.value = S[id]; $('v-' + id).textContent = fm(S[id], s._dec) + s._suf;
+    });
+    $('pc-map').value = S.map; $('pc-reg').value = S.reg;
+    $('pc-gspiral').style.display = S.map === 'spiral' ? '' : 'none';
+    $('pc-gaffine').style.display = S.map === 'affine' ? '' : 'none';
+  }
+  deslizador('pc-gspiral', 'c', 'c (razón)', 0, 1.3, .01, 2);
+  deslizador('pc-gspiral', 'th', 'giro θ', -180, 180, 1, 0, '°');
+  deslizador('pc-gspiral', 'px', 'p<sub>x</sub> (centro)', -3, 3, .05, 2);
+  deslizador('pc-gspiral', 'py', 'p<sub>y</sub> (centro)', -3, 3, .05, 2);
+  ['a11', 'a12', 'a21', 'a22'].forEach(id => deslizador('pc-gaffine', id, 'A<sub>' + id.slice(1) + '</sub>', -1.5, 1.5, .01, 2));
+  deslizador('pc-gaffine', 'bx', 'b<sub>1</sub>', -3, 3, .05, 2);
+  deslizador('pc-gaffine', 'by', 'b<sub>2</sub>', -3, 3, .05, 2);
+  deslizador('pc-gview', 'r', 'tamaño de M', .5, 5, .1, 1);
+  deslizador('pc-gview', 'steps', 'iteraciones', 2, 40, 1, 0);
+  deslizador('pc-gview', 'imgs', 'imágenes T<sup>n</sup>(M)', 0, 8, 1, 0);
+  deslizador('pc-gview', 'view', 'zoom (ancho de ventana)', 2, 10, .5, 1);
+
+  $('pc-map').addEventListener('change', e => { S.map = e.target.value; refrescar(); });
+  $('pc-reg').addEventListener('change', e => { S.reg = e.target.value; refrescar(); });
+
+  function crearTabs(cont, lista, off) {
+    lista.forEach((c, j) => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'pc-tab'; b.textContent = c[0];
+      b.addEventListener('click', () => cargar(off + j)); $(cont).appendChild(b);
+    });
+  }
+  crearTabs('pc-ok', OK, 0); crearTabs('pc-no', NO, OK.length);
+
+  function cargar(i) {
+    caso = i; const c = CASOS[i], extra = c[2] || {};
+    Object.assign(S, DEF, c[1]);
+    const ab = extra.ab || [-1.5, 1.2, 1.8, -.8], o = extra.o || [[2.2, 1.6]];
+    S.pts = [{ k: 'A', x: ab[0], y: ab[1] }, { k: 'B', x: ab[2], y: ab[3] }].concat(o.map(q => ({ k: 'o', x: q[0], y: q[1] })));
+    document.querySelectorAll('.pc-tab').forEach((b, j) => b.setAttribute('aria-pressed', j === i ? 'true' : 'false'));
+    parar(); refrescar();
+  }
+
+  /* ---------- panel de verificación ---------- */
+  function veredicto(id, clase, texto, det) { const e = $(id); e.className = 'pc-ver ' + clase; e.textContent = texto; $('pc-d' + id.slice(-1)).innerHTML = det; }
+
+  function panel() {
+    const k = lip(), A = Amat(), fp = fijo(), id = esId(), m = potencia();
+    /* ecuación de T */
+    let eq;
+    if (S.map === 'strict') eq = '<div><span class="pc-lbl">Aplicación</span>T(x, y) = (√(x²+1), y/2)</div><div><span class="pc-lbl">Lipschitz</span>‖T(u) − T(v)‖ &lt; ‖u − v‖ si u ≠ v, pero sup del cociente = 1</div>';
+    else { const b = bvec();
+      eq = '<div><span class="pc-lbl">Aplicación</span>T(x) = A x + b, &nbsp; A = [[' + fm(A[0][0], 2) + ', ' + fm(A[0][1], 2) + '], [' + fm(A[1][0], 2) + ', ' + fm(A[1][1], 2) + ']], &nbsp; b = (' + fm(b[0], 2) + ', ' + fm(b[1], 2) + ')</div>' +
+           '<div><span class="pc-lbl">Constante</span>k = ‖A‖₂ = ' + fm(k, 3) + ' &nbsp;·&nbsp; radio espectral ρ(A) = ' + fm(rho(A), 3) + (m > 1 ? ' &nbsp;·&nbsp; ‖Aᵐ‖ &lt; 1 desde m = ' + m : '') + '</div>'; }
+    $('pc-eq').innerHTML = eq;
+    /* H1 */
+    const completo = S.reg !== 'punct';
+    veredicto('pc-v1', completo ? 'good' : 'bad', completo ? 'M completo' : 'M no completo',
+      completo ? 'M es cerrado en ℝ², que es completo.' : 'Al quitar un punto M deja de ser cerrado: una sucesión de Cauchy puede tender al hueco.');
+    /* H2 */
+    const h2 = revisaH2();
+    veredicto('pc-v2', h2.ok ? 'good' : 'bad', h2.ok ? 'T(M) ⊂ M' : 'T(M) ⊄ M',
+      h2.ok ? (S.reg === 'plane' ? 'M = ℝ²: se cumple trivialmente.' : 'Se probaron ' + h2.total + ' puntos de M y de su frontera.') :
+              h2.mal + ' de ' + h2.total + ' puntos de prueba salen de M al aplicar T.');
+    /* H3 */
+    const estricta = S.map === 'strict';
+    let c3, t3, d3;
+    if (k < 1 - 1e-9) { c3 = 'good'; t3 = 'k = ' + fm(k, 3) + ' < 1'; d3 = 'T es una contracción con constante k.'; }
+    else if (!estricta && m > 1) { c3 = 'warn'; t3 = 'k ≥ 1, pero Tᵐ contrae'; d3 = '‖A‖₂ = ' + fm(k, 3) + ' ≥ 1 y sin embargo ‖Aᵐ‖ < 1 para m = ' + m + ': vale el corolario con Tᵐ.'; }
+    else if (estricta) { c3 = 'bad'; t3 = 'k = 1 (no es < 1)'; d3 = 'd(Tu, Tv) < d(u, v) estricto, pero el sup del cociente es 1: no hay k &lt; 1 uniforme.'; }
+    else { c3 = 'bad'; t3 = 'k = ' + fm(k, 3) + ' ≥ 1'; d3 = id ? 'T es la identidad: todo punto es fijo.' : 'Ninguna potencia de T es contracción.'; }
+    veredicto('pc-v3', c3, t3, d3);
+    /* conclusión */
+    const todas = completo && h2.ok && k < 1 - 1e-9, corolario = completo && h2.ok && c3 === 'warn';
+    let html = '';
+    if (todas || corolario) {
+      html = '<p><b>Se cumplen las hipótesis' + (corolario ? ' (con Tᵐ)' : '') + '.</b> Existe un único x* en M con T x* = x*' + (fp ? ', a saber x* = (' + fm(fp[0], 3) + ', ' + fm(fp[1], 3) + ')' : '') + ', y toda órbita converge a él.</p>' +
+             (todas ? '<p>Cota a priori: ‖xₙ − x*‖ ≤ kⁿ/(1 − k) ‖x₁ − x₀‖ (línea azul de la gráfica inferior).</p>' : '<p>La convergencia es más lenta al principio porque T misma no contrae.</p>');
+    } else {
+      html = '<p><b>No se puede garantizar el punto fijo.</b></p>';
+      if (!completo) html += '<p>El punto fijo de T' + (fp ? ' (' + fm(fp[0], 2) + ', ' + fm(fp[1], 2) + ')' : '') + ' es precisamente el hueco: las órbitas se acercan a él pero no pertenecen a M.</p>';
+      else if (!h2.ok && k < 1) html += '<p>' + (fp && !enM(fp) ? 'T tiene un punto fijo, pero queda fuera de M: ' : '') + 'las órbitas abandonan M (círculos rojos) y la iteración deja de estar definida dentro de M.</p>';
+      else if (id) html += '<p>Todos los puntos son fijos: existencia sin unicidad.</p>';
+      else if (estricta) html += '<p>T no tiene ningún punto fijo en ℝ²: x₁ = √(x₀²+1) &gt; x₀ en cada paso y la órbita se escapa a infinito en x, pese a que d(Tu, Tv) &lt; d(u, v).</p>';
+      else if (!fp) html += '<p>T no tiene punto fijo (ni siquiera existe un x con (I − A)x = b).</p>';
+      else if (k > 1 + 1e-9 && rho(A) >= 1) html += '<p>T expande en alguna dirección: las órbitas que no empiezan en x* se alejan.</p>';
+      else html += '<p>No hay convergencia garantizada.</p>';
+    }
+    $('pc-concl').className = 'pc-concl ' + ((todas || corolario) ? 'good' : 'bad'); $('pc-concl').innerHTML = html;
+    return { k: k, fp: fp };
+  }
+
+  function tabla(k, fp) {
+    const s = S.pts.find(p => p.k === 'o'); const tb = $('pc-tbody'); tb.innerHTML = '';
+    $('pc-stats').innerHTML = 'k = <b>' + (k < 1e6 ? fm(k, 3) : '∞') + '</b> &nbsp;·&nbsp; x* = <b>' + (fp ? '(' + fm(fp[0], 3) + ', ' + fm(fp[1], 3) + ')' : (esId() ? 'cualquiera' : 'no existe')) + '</b>';
+    if (!s) return;
+    const ob = orbita([s.x, s.y], Math.min(S.steps, 8)), d01 = ob.length > 1 ? dist(ob[1], ob[0]) : 0;
+    ob.forEach((p, n) => {
+      const e = fp ? dist(p, fp) : NaN, c = (k < 1 && fp) ? Math.pow(k, n)/(1-k)*d01 : NaN;
+      const tr = document.createElement('tr');
+      tr.innerHTML = '<td>' + n + '</td><td>(' + fm(p[0], 4) + ', ' + fm(p[1], 4) + ')</td><td>' + (fp ? fm(e, 5) : 'n/d') + '</td><td>' + (isFinite(c) ? fm(c, 5) : 'n/d') + '</td>';
+      tb.appendChild(tr);
+    });
+  }
+
+  function refrescar() {
+    sincronizar(); const r = panel(); tabla(r.k, r.fp); dibujar(); dibujarError(r.k, r.fp);
+  }
+
+  /* ---------- animación ---------- */
+  function parar() { if (timer) { clearInterval(timer); timer = null; } shown = null; $('pc-play').textContent = 'Animar órbitas'; }
+  $('pc-play').addEventListener('click', () => {
+    if (timer) { parar(); dibujar(); return; }
+    shown = 0; $('pc-play').textContent = 'Detener'; dibujar();
+    timer = setInterval(() => { shown++; if (shown > S.steps) { parar(); } dibujar(); }, 220);
+  });
+  $('pc-reset').addEventListener('click', () => cargar(caso));
+
+  /* ---------- arrastre ---------- */
+  const cv = $('pc-cv');
+  function coords(e) {
+    const r = cv.getBoundingClientRect(), w = r.width, sc = w/(2*S.view);
+    return { px: e.clientX - r.left, py: e.clientY - r.top, x: (e.clientX - r.left - w/2)/sc, y: (w/2 - (e.clientY - r.top))/sc };
+  }
+  cv.addEventListener('pointerdown', e => {
+    const c = coords(e); let best = null, bd = 16;
+    MANIJAS.forEach(m => { const d = Math.hypot(m.x - c.px, m.y - c.py); if (d < bd) { bd = d; best = m.p; } });
+    if (best) { arrastre = best; cv.setPointerCapture(e.pointerId); parar(); }
+    else if (S.pts.filter(p => p.k === 'o').length < 6) { S.pts.push({ k: 'o', x: c.x, y: c.y }); refrescar(); }
+  });
+  cv.addEventListener('pointermove', e => {
+    if (!arrastre) return; const c = coords(e); arrastre.x = Math.round(c.x*100)/100; arrastre.y = Math.round(c.y*100)/100; refrescar();
+  });
+  const suelta = () => { arrastre = null; };
+  cv.addEventListener('pointerup', suelta); cv.addEventListener('pointercancel', suelta);
+  cv.addEventListener('dblclick', e => {
+    const c = coords(e); const os = S.pts.filter(p => p.k === 'o'); if (os.length < 2) return;
+    let best = null, bd = 16; MANIJAS.forEach(m => { if (m.p.k !== 'o') return; const d = Math.hypot(m.x - c.px, m.y - c.py); if (d < bd) { bd = d; best = m.p; } });
+    if (best) { S.pts.splice(S.pts.indexOf(best), 1); refrescar(); }
+  });
+
+  window.addEventListener('resize', () => { const r = panel(); dibujar(); dibujarError(r.k, r.fp); });
+  cargar(0);
+})();
+</script>
+</body>
+</html>
