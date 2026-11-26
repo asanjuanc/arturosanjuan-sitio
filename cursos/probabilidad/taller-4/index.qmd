@@ -1,0 +1,126 @@
+---
+title: "Taller 4"
+subtitle: "Un domiciliario en Bogotá: vectores aleatorios, convolución, Chebyshev, ley débil y teorema del límite central"
+description: ""
+date: 2026-11-25
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 18
+---
+
+Un domiciliario de una plataforma de reparto recorre Bogotá en bicicleta. Los valores de dinero están en miles de pesos y los tiempos en minutos. En cada entrega observamos $X$, que vale $1$ si llovió durante la entrega y $0$ si no, y $Y$, el pago que recibe por ella. La función de masa conjunta de $(X,Y)$ es
+
+| $y \backslash x$ | $0$ | $1$ |
+|:---:|:---:|:---:|
+| $4$ | $6/20$ | $1/20$ |
+| $6$ | $4/20$ | $3/20$ |
+| $8$ | $2/20$ | $4/20$ |
+
+Entregas distintas son independientes y todas tienen esta misma distribución conjunta.
+
+1. Hallen las marginales de $X$ y de $Y$ y calculen $E[X]$ y $E[Y]$. Comparando una celda de la tabla con el producto de sus marginales, muestren que $X$ y $Y$ no son independientes. (5 puntos)
+
+::: {.callout-tip title="Solución"}
+Sumando por columnas y por filas,
+
+$$f_X(0)=\frac{12}{20}=0{,}6,\qquad f_X(1)=\frac8{20}=0{,}4$$
+
+$$f_Y(4)=\frac7{20},\qquad f_Y(6)=\frac7{20},\qquad f_Y(8)=\frac6{20}$$
+
+Entonces
+
+$$E[X]=0\cdot0{,}6+1\cdot0{,}4=0{,}4$$
+
+$$E[Y]=\frac{4\cdot7+6\cdot7+8\cdot6}{20}=\frac{118}{20}=5{,}9$$
+
+Si fueran independientes, la masa conjunta sería el producto de las marginales. Pero $f_{X,Y}(0,4)=6/20=0{,}30$, mientras que $f_X(0)\,f_Y(4)=0{,}6\cdot0{,}35=0{,}21$, así que no lo son. Con lluvia el pago tiende a ser mayor: $P(Y=8\mid X=1)=\dfrac48=0{,}5$, mientras que $P(Y=8\mid X=0)=\dfrac2{12}\approx0{,}167$.
+:::
+
+2. Recuerden que $\operatorname{Cov}(X,Y)=E[XY]-E[X]\,E[Y]$ y que $\rho(X,Y)=\dfrac{\operatorname{Cov}(X,Y)}{\sqrt{\text{Var}(X)\,\text{Var}(Y)}}$. Calculen $\operatorname{Cov}(X,Y)$ y $\rho(X,Y)$, sabiendo que $\text{Var}(Y)=2{,}59$, e interpreten el signo y el tamaño de $\rho$. (5 puntos)
+
+::: {.callout-tip title="Solución"}
+En $E[XY]$ solo contribuye la columna $x=1$:
+
+$$E[XY]=\frac{1\cdot4\cdot1+1\cdot6\cdot3+1\cdot8\cdot4}{20}=\frac{54}{20}=2{,}7$$
+
+Entonces $\operatorname{Cov}(X,Y)=2{,}7-0{,}4\cdot5{,}9=0{,}34$. Como $X^2=X$, se tiene $\text{Var}(X)=E[X^2]-E[X]^2=0{,}4-0{,}16=0{,}24$, y
+
+$$\rho(X,Y)=\frac{0{,}34}{\sqrt{0{,}24\cdot2{,}59}}=\frac{0{,}34}{0{,}7884}\approx0{,}431$$
+
+El signo es positivo: la lluvia y el pago alto aparecen juntos con más frecuencia que por separado. Como $\rho$ está lejos de $1$, la relación es apenas moderada y está lejos de ser lineal con probabilidad uno.
+:::
+
+3. Cada entrega con lluvia le cuesta además $2$ en impermeable y mantenimiento, así que su ganancia neta por entrega es $W=Y-2X$. Calculen $E[W]$ y $\text{Var}(W)$. ¿Cuánto valdría $\text{Var}(W)$ si $X$ y $Y$ fueran independientes con las mismas marginales? Expliquen por qué la covarianza positiva reduce la varianza de $W$. (10 puntos)
+
+::: {.callout-tip title="Solución"}
+Por linealidad, $E[W]=E[Y]-2E[X]=5{,}9-0{,}8=5{,}1$. Para la varianza,
+
+$$\begin{aligned}\text{Var}(W)&=\text{Var}(Y)+2\operatorname{Cov}(Y,-2X)+\text{Var}(-2X)\\&=2{,}59-4\,(0{,}34)+4\,(0{,}24)=2{,}59-1{,}36+0{,}96=2{,}19\end{aligned}$$
+
+Si $X$ y $Y$ fueran independientes la covarianza sería $0$ y quedaría $2{,}59+0{,}96=3{,}55$. La covarianza positiva reduce la varianza porque en $W=Y-2X$ los dos términos se restan: cuando llueve, $Y$ tiende a ser alto pero $-2X$ baja, y las dos fluctuaciones se compensan en parte.
+
+Como comprobación, $W$ toma los valores $2,4,6,8$ con probabilidades $\frac1{20},\frac9{20},\frac8{20},\frac2{20}$, de donde $E[W]=5{,}1$, $E[W^2]=28{,}2$ y $\text{Var}(W)=28{,}2-5{,}1^2=2{,}19$.
+:::
+
+4. El tiempo total de una entrega es $Z=A+B$, donde $A$ es la espera en el restaurante y $B$ el recorrido hasta el cliente. Supongan que $A$ y $B$ son independientes, con $A$ uniforme en $(0,10)$ y $B$ uniforme en $(0,20)$. Recuerden que si $A$ y $B$ son independientes con densidades $f_A$ y $f_B$, la densidad de la suma es la convolución $f_Z(z)=\displaystyle\int_{-\infty}^{\infty}f_A(x)\,f_B(z-x)\,dx$. Hallen $f_Z$. (10 puntos)
+
+::: {.callout-tip title="Solución"}
+Las densidades son $f_A=\frac1{10}$ en $(0,10)$ y $f_B=\frac1{20}$ en $(0,20)$. El integrando vale $\frac1{200}$ cuando $x\in(0,10)\cap(z-20,\,z)$ y $0$ en otro caso, así que $f_Z(z)$ es $\frac1{200}$ por la longitud de ese intervalo. Si $z\le0$ o $z\ge30$ el intervalo es vacío. Si $0<z<10$ es $(0,z)$, de longitud $z$. Si $10\le z\le20$ es $(0,10)$ completo, de longitud $10$. Si $20<z<30$ es $(z-20,10)$, de longitud $30-z$. Por lo tanto
+
+$$f_Z(z)=\begin{cases}\dfrac{z}{200}&0<z<10\\[6pt]\dfrac1{20}&10\le z\le20\\[6pt]\dfrac{30-z}{200}&20<z<30\\[6pt]0&\text{en otro caso}\end{cases}$$
+:::
+
+5. Comprueben, calculando áreas y sin integrar, que la $f_Z$ del punto anterior integra $1$, y calculen $P(Z>25)$. (5 puntos)
+
+::: {.callout-tip title="Solución"}
+La gráfica es un trapecio: dos triángulos de base $10$ y altura $\frac1{20}$, con área $\frac12\cdot10\cdot\frac1{20}=\frac14$ cada uno, y un rectángulo de base $10$ y altura $\frac1{20}$, con área $\frac12$. La suma es $\frac14+\frac12+\frac14=1$. Para $P(Z>25)$ queda el triángulo sobre $(25,30)$, de base $5$ y altura $f_Z(25)=\frac5{200}=\frac1{40}$:
+
+$$P(Z>25)=\frac12\cdot5\cdot\frac1{40}=\frac1{16}=0{,}0625$$
+
+Por la simetría de la gráfica respecto de $z=15$, la media de $Z$ es $15=E[A]+E[B]=5+10$, como dice la linealidad.
+:::
+
+6. Pasemos a una jornada completa. El domiciliario hace $40$ entregas, con ganancias netas $W_1,\dots,W_{40}$ independientes y distribuidas como el $W$ del punto 3, y sea $T=W_1+\cdots+W_{40}$ su ganancia neta del día. Recuerden la desigualdad de Chebyshev, $P(|Z-E[Z]|\ge\varepsilon)\le\text{Var}(Z)/\varepsilon^2$. Calculen $E[T]$ y $\text{Var}(T)$, indiquen qué propiedad de las entregas permite sumar las varianzas, y acoten $P(T\ge220)$ con Chebyshev. Les sirve que $\{T\ge220\}\subset\{|T-204|\ge16\}$. (5 puntos)
+
+::: {.callout-tip title="Solución"}
+Por linealidad, $E[T]=40\cdot5{,}1=204$. Como las entregas son independientes, las covarianzas entre ellas son cero y la varianza de la suma es la suma de las varianzas:
+
+$$\text{Var}(T)=40\cdot2{,}19=87{,}6$$
+
+Como un evento contenido en otro tiene probabilidad menor o igual,
+
+$$\begin{aligned}P(T\ge220)&\le P\big(|T-204|\ge16\big)\\&\le\frac{\text{Var}(T)}{16^2}=\frac{87{,}6}{256}\approx0{,}342\end{aligned}$$
+:::
+
+7. Por el teorema del límite central, $T$ se aproxima por una normal con su misma media y su misma varianza, con corrección de continuidad porque $T$ solo toma valores enteros. Aproximen $P(T\ge220)$ con el teorema del límite central. Les sirve saber que $\Phi(1{,}66)=0{,}9515$ y $\Phi(1{,}71)=0{,}9564$. El valor exacto, calculado con la distribución completa de $T$, es $0{,}0551$. Comparen los tres valores, el del punto anterior, el del límite central y el exacto, y expliquen en una frase por qué difieren tanto. (5 puntos)
+
+::: {.callout-tip title="Solución"}
+La normal tiene media $204$ y desviación estándar $\sqrt{87{,}6}\approx9{,}36$. Como $T$ es entera, $P(T\ge220)=P(T\ge219{,}5)$, que se aproxima por
+
+$$\begin{aligned}P\Big(Z\ge\frac{219{,}5-204}{9{,}36}\Big)&=P(Z\ge1{,}656)\\&=1-\Phi(1{,}66)=1-0{,}9515=0{,}0485\end{aligned}$$
+
+Sin la corrección, con frontera en $220$, se obtendría $z=16/9{,}36=1{,}71$ y $1-0{,}9564=0{,}0436$, más lejos del valor exacto. Los tres valores son $0{,}342$ (cota de Chebyshev), $0{,}0485$ (límite central) y $0{,}0551$ (exacto). La cota es verdadera pero gruesa, porque solo usa la media y la varianza y no mira la forma de la distribución de $T$. El teorema del límite central sí usa esa forma, la campana, y por eso queda mucho más cerca. El precio es que aproxima en lugar de garantizar.
+:::
+
+8. Sea $\bar W_n=\frac1n(W_1+\cdots+W_n)$ el promedio de las primeras $n$ entregas, que tiene media $5{,}1$ y varianza $\text{Var}(W)/n$. Hallen cuántas entregas $n$ bastan para que $P(|\bar W_n-5{,}1|<0{,}5)\ge0{,}95$ usando Chebyshev, que es la ley débil de los grandes números en acción, y cuántas bastan para que esa probabilidad sea aproximadamente $0{,}95$ usando el teorema del límite central. Les sirve $\Phi(1{,}96)=0{,}975$. Comparen los dos valores de $n$. (5 puntos)
+
+::: {.callout-tip title="Solución"}
+Con Chebyshev, queremos $P(|\bar W_n-5{,}1|\ge0{,}5)\le0{,}05$ y
+
+$$\begin{aligned}P\big(|\bar W_n-5{,}1|\ge0{,}5\big)&\le\frac{\text{Var}(W)/n}{0{,}5^2}\\&=\frac{2{,}19}{0{,}25\,n}=\frac{8{,}76}{n}\end{aligned}$$
+
+así que basta con $\dfrac{8{,}76}{n}\le0{,}05$, es decir $n\ge175{,}2$. Con $n=176$ entregas se garantiza lo pedido sin saber nada más de la distribución de $W$.
+
+Con el teorema del límite central, $\sigma=\sqrt{2{,}19}\approx1{,}480$ y $\dfrac{\bar W_n-5{,}1}{\sigma/\sqrt n}$ es aproximadamente $N(0,1)$, de modo que
+
+$$\begin{aligned}P\big(|\bar W_n-5{,}1|<0{,}5\big)&\approx2\,\Phi\Big(\frac{0{,}5\sqrt n}{\sigma}\Big)-1=0{,}95\\\Longleftrightarrow\qquad\frac{0{,}5\sqrt n}{\sigma}&=1{,}96\\\Longleftrightarrow\qquad n&=\Big(\frac{1{,}96\,\sigma}{0{,}5}\Big)^2\approx33{,}65\end{aligned}$$
+
+Bastan $n=34$ entregas, menos de una jornada, frente a las $176$ de Chebyshev, unas cinco veces más. Se gana mucho en tamaño de muestra porque se usa la forma de la distribución del promedio, y se pierde la garantía: el teorema del límite central da una probabilidad aproximada, sin una cota del error.
+:::

@@ -15,7 +15,205 @@
 <link>https://arturosanjuan.xyz/cursos/probabilidad/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Wed, 18 Nov 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 25 Nov 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Taller 4</title>
+  <link>https://arturosanjuan.xyz/cursos/probabilidad/taller-4/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Un domiciliario de una plataforma de reparto recorre Bogotá en bicicleta. Los valores de dinero están en miles de pesos y los tiempos en minutos. En cada entrega observamos <img src="https://latex.codecogs.com/png.latex?X">, que vale <img src="https://latex.codecogs.com/png.latex?1"> si llovió durante la entrega y <img src="https://latex.codecogs.com/png.latex?0"> si no, y <img src="https://latex.codecogs.com/png.latex?Y">, el pago que recibe por ella. La función de masa conjunta de <img src="https://latex.codecogs.com/png.latex?(X,Y)"> es</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?y%20%5Cbackslash%20x"></th>
+<th style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?0"></th>
+<th style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?4"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?6/20"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?1/20"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?6"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?4/20"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?3/20"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?8"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?2/20"></td>
+<td style="text-align: center;"><img src="https://latex.codecogs.com/png.latex?4/20"></td>
+</tr>
+</tbody>
+</table>
+<p>Entregas distintas son independientes y todas tienen esta misma distribución conjunta.</p>
+<ol type="1">
+<li>Hallen las marginales de <img src="https://latex.codecogs.com/png.latex?X"> y de <img src="https://latex.codecogs.com/png.latex?Y"> y calculen <img src="https://latex.codecogs.com/png.latex?E%5BX%5D"> y <img src="https://latex.codecogs.com/png.latex?E%5BY%5D">. Comparando una celda de la tabla con el producto de sus marginales, muestren que <img src="https://latex.codecogs.com/png.latex?X"> y <img src="https://latex.codecogs.com/png.latex?Y"> no son independientes. (5 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sumando por columnas y por filas,</p>
+<p><img src="https://latex.codecogs.com/png.latex?f_X(0)=%5Cfrac%7B12%7D%7B20%7D=0%7B,%7D6,%5Cqquad%20f_X(1)=%5Cfrac8%7B20%7D=0%7B,%7D4"></p>
+<p><img src="https://latex.codecogs.com/png.latex?f_Y(4)=%5Cfrac7%7B20%7D,%5Cqquad%20f_Y(6)=%5Cfrac7%7B20%7D,%5Cqquad%20f_Y(8)=%5Cfrac6%7B20%7D"></p>
+<p>Entonces</p>
+<p><img src="https://latex.codecogs.com/png.latex?E%5BX%5D=0%5Ccdot0%7B,%7D6+1%5Ccdot0%7B,%7D4=0%7B,%7D4"></p>
+<p><img src="https://latex.codecogs.com/png.latex?E%5BY%5D=%5Cfrac%7B4%5Ccdot7+6%5Ccdot7+8%5Ccdot6%7D%7B20%7D=%5Cfrac%7B118%7D%7B20%7D=5%7B,%7D9"></p>
+<p>Si fueran independientes, la masa conjunta sería el producto de las marginales. Pero <img src="https://latex.codecogs.com/png.latex?f_%7BX,Y%7D(0,4)=6/20=0%7B,%7D30">, mientras que <img src="https://latex.codecogs.com/png.latex?f_X(0)%5C,f_Y(4)=0%7B,%7D6%5Ccdot0%7B,%7D35=0%7B,%7D21">, así que no lo son. Con lluvia el pago tiende a ser mayor: <img src="https://latex.codecogs.com/png.latex?P(Y=8%5Cmid%20X=1)=%5Cdfrac48=0%7B,%7D5">, mientras que <img src="https://latex.codecogs.com/png.latex?P(Y=8%5Cmid%20X=0)=%5Cdfrac2%7B12%7D%5Capprox0%7B,%7D167">.</p>
+</div>
+</div>
+<ol start="2" type="1">
+<li>Recuerden que <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7BCov%7D(X,Y)=E%5BXY%5D-E%5BX%5D%5C,E%5BY%5D"> y que <img src="https://latex.codecogs.com/png.latex?%5Crho(X,Y)=%5Cdfrac%7B%5Coperatorname%7BCov%7D(X,Y)%7D%7B%5Csqrt%7B%5Ctext%7BVar%7D(X)%5C,%5Ctext%7BVar%7D(Y)%7D%7D">. Calculen <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7BCov%7D(X,Y)"> y <img src="https://latex.codecogs.com/png.latex?%5Crho(X,Y)">, sabiendo que <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BVar%7D(Y)=2%7B,%7D59">, e interpreten el signo y el tamaño de <img src="https://latex.codecogs.com/png.latex?%5Crho">. (5 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En <img src="https://latex.codecogs.com/png.latex?E%5BXY%5D"> solo contribuye la columna <img src="https://latex.codecogs.com/png.latex?x=1">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?E%5BXY%5D=%5Cfrac%7B1%5Ccdot4%5Ccdot1+1%5Ccdot6%5Ccdot3+1%5Ccdot8%5Ccdot4%7D%7B20%7D=%5Cfrac%7B54%7D%7B20%7D=2%7B,%7D7"></p>
+<p>Entonces <img src="https://latex.codecogs.com/png.latex?%5Coperatorname%7BCov%7D(X,Y)=2%7B,%7D7-0%7B,%7D4%5Ccdot5%7B,%7D9=0%7B,%7D34">. Como <img src="https://latex.codecogs.com/png.latex?X%5E2=X">, se tiene <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BVar%7D(X)=E%5BX%5E2%5D-E%5BX%5D%5E2=0%7B,%7D4-0%7B,%7D16=0%7B,%7D24">, y</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Crho(X,Y)=%5Cfrac%7B0%7B,%7D34%7D%7B%5Csqrt%7B0%7B,%7D24%5Ccdot2%7B,%7D59%7D%7D=%5Cfrac%7B0%7B,%7D34%7D%7B0%7B,%7D7884%7D%5Capprox0%7B,%7D431"></p>
+<p>El signo es positivo: la lluvia y el pago alto aparecen juntos con más frecuencia que por separado. Como <img src="https://latex.codecogs.com/png.latex?%5Crho"> está lejos de <img src="https://latex.codecogs.com/png.latex?1">, la relación es apenas moderada y está lejos de ser lineal con probabilidad uno.</p>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Cada entrega con lluvia le cuesta además <img src="https://latex.codecogs.com/png.latex?2"> en impermeable y mantenimiento, así que su ganancia neta por entrega es <img src="https://latex.codecogs.com/png.latex?W=Y-2X">. Calculen <img src="https://latex.codecogs.com/png.latex?E%5BW%5D"> y <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BVar%7D(W)">. ¿Cuánto valdría <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BVar%7D(W)"> si <img src="https://latex.codecogs.com/png.latex?X"> y <img src="https://latex.codecogs.com/png.latex?Y"> fueran independientes con las mismas marginales? Expliquen por qué la covarianza positiva reduce la varianza de <img src="https://latex.codecogs.com/png.latex?W">. (10 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Por linealidad, <img src="https://latex.codecogs.com/png.latex?E%5BW%5D=E%5BY%5D-2E%5BX%5D=5%7B,%7D9-0%7B,%7D8=5%7B,%7D1">. Para la varianza,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7D%5Ctext%7BVar%7D(W)&amp;=%5Ctext%7BVar%7D(Y)+2%5Coperatorname%7BCov%7D(Y,-2X)+%5Ctext%7BVar%7D(-2X)%5C%5C&amp;=2%7B,%7D59-4%5C,(0%7B,%7D34)+4%5C,(0%7B,%7D24)=2%7B,%7D59-1%7B,%7D36+0%7B,%7D96=2%7B,%7D19%5Cend%7Baligned%7D"></p>
+<p>Si <img src="https://latex.codecogs.com/png.latex?X"> y <img src="https://latex.codecogs.com/png.latex?Y"> fueran independientes la covarianza sería <img src="https://latex.codecogs.com/png.latex?0"> y quedaría <img src="https://latex.codecogs.com/png.latex?2%7B,%7D59+0%7B,%7D96=3%7B,%7D55">. La covarianza positiva reduce la varianza porque en <img src="https://latex.codecogs.com/png.latex?W=Y-2X"> los dos términos se restan: cuando llueve, <img src="https://latex.codecogs.com/png.latex?Y"> tiende a ser alto pero <img src="https://latex.codecogs.com/png.latex?-2X"> baja, y las dos fluctuaciones se compensan en parte.</p>
+<p>Como comprobación, <img src="https://latex.codecogs.com/png.latex?W"> toma los valores <img src="https://latex.codecogs.com/png.latex?2,4,6,8"> con probabilidades <img src="https://latex.codecogs.com/png.latex?%5Cfrac1%7B20%7D,%5Cfrac9%7B20%7D,%5Cfrac8%7B20%7D,%5Cfrac2%7B20%7D">, de donde <img src="https://latex.codecogs.com/png.latex?E%5BW%5D=5%7B,%7D1">, <img src="https://latex.codecogs.com/png.latex?E%5BW%5E2%5D=28%7B,%7D2"> y <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BVar%7D(W)=28%7B,%7D2-5%7B,%7D1%5E2=2%7B,%7D19">.</p>
+</div>
+</div>
+<ol start="4" type="1">
+<li>El tiempo total de una entrega es <img src="https://latex.codecogs.com/png.latex?Z=A+B">, donde <img src="https://latex.codecogs.com/png.latex?A"> es la espera en el restaurante y <img src="https://latex.codecogs.com/png.latex?B"> el recorrido hasta el cliente. Supongan que <img src="https://latex.codecogs.com/png.latex?A"> y <img src="https://latex.codecogs.com/png.latex?B"> son independientes, con <img src="https://latex.codecogs.com/png.latex?A"> uniforme en <img src="https://latex.codecogs.com/png.latex?(0,10)"> y <img src="https://latex.codecogs.com/png.latex?B"> uniforme en <img src="https://latex.codecogs.com/png.latex?(0,20)">. Recuerden que si <img src="https://latex.codecogs.com/png.latex?A"> y <img src="https://latex.codecogs.com/png.latex?B"> son independientes con densidades <img src="https://latex.codecogs.com/png.latex?f_A"> y <img src="https://latex.codecogs.com/png.latex?f_B">, la densidad de la suma es la convolución <img src="https://latex.codecogs.com/png.latex?f_Z(z)=%5Cdisplaystyle%5Cint_%7B-%5Cinfty%7D%5E%7B%5Cinfty%7Df_A(x)%5C,f_B(z-x)%5C,dx">. Hallen <img src="https://latex.codecogs.com/png.latex?f_Z">. (10 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Las densidades son <img src="https://latex.codecogs.com/png.latex?f_A=%5Cfrac1%7B10%7D"> en <img src="https://latex.codecogs.com/png.latex?(0,10)"> y <img src="https://latex.codecogs.com/png.latex?f_B=%5Cfrac1%7B20%7D"> en <img src="https://latex.codecogs.com/png.latex?(0,20)">. El integrando vale <img src="https://latex.codecogs.com/png.latex?%5Cfrac1%7B200%7D"> cuando <img src="https://latex.codecogs.com/png.latex?x%5Cin(0,10)%5Ccap(z-20,%5C,z)"> y <img src="https://latex.codecogs.com/png.latex?0"> en otro caso, así que <img src="https://latex.codecogs.com/png.latex?f_Z(z)"> es <img src="https://latex.codecogs.com/png.latex?%5Cfrac1%7B200%7D"> por la longitud de ese intervalo. Si <img src="https://latex.codecogs.com/png.latex?z%5Cle0"> o <img src="https://latex.codecogs.com/png.latex?z%5Cge30"> el intervalo es vacío. Si <img src="https://latex.codecogs.com/png.latex?0%3Cz%3C10"> es <img src="https://latex.codecogs.com/png.latex?(0,z)">, de longitud <img src="https://latex.codecogs.com/png.latex?z">. Si <img src="https://latex.codecogs.com/png.latex?10%5Cle%20z%5Cle20"> es <img src="https://latex.codecogs.com/png.latex?(0,10)"> completo, de longitud <img src="https://latex.codecogs.com/png.latex?10">. Si <img src="https://latex.codecogs.com/png.latex?20%3Cz%3C30"> es <img src="https://latex.codecogs.com/png.latex?(z-20,10)">, de longitud <img src="https://latex.codecogs.com/png.latex?30-z">. Por lo tanto</p>
+<p><img src="https://latex.codecogs.com/png.latex?f_Z(z)=%5Cbegin%7Bcases%7D%5Cdfrac%7Bz%7D%7B200%7D&amp;0%3Cz%3C10%5C%5C%5B6pt%5D%5Cdfrac1%7B20%7D&amp;10%5Cle%20z%5Cle20%5C%5C%5B6pt%5D%5Cdfrac%7B30-z%7D%7B200%7D&amp;20%3Cz%3C30%5C%5C%5B6pt%5D0&amp;%5Ctext%7Ben%20otro%20caso%7D%5Cend%7Bcases%7D"></p>
+</div>
+</div>
+<ol start="5" type="1">
+<li>Comprueben, calculando áreas y sin integrar, que la <img src="https://latex.codecogs.com/png.latex?f_Z"> del punto anterior integra <img src="https://latex.codecogs.com/png.latex?1">, y calculen <img src="https://latex.codecogs.com/png.latex?P(Z%3E25)">. (5 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La gráfica es un trapecio: dos triángulos de base <img src="https://latex.codecogs.com/png.latex?10"> y altura <img src="https://latex.codecogs.com/png.latex?%5Cfrac1%7B20%7D">, con área <img src="https://latex.codecogs.com/png.latex?%5Cfrac12%5Ccdot10%5Ccdot%5Cfrac1%7B20%7D=%5Cfrac14"> cada uno, y un rectángulo de base <img src="https://latex.codecogs.com/png.latex?10"> y altura <img src="https://latex.codecogs.com/png.latex?%5Cfrac1%7B20%7D">, con área <img src="https://latex.codecogs.com/png.latex?%5Cfrac12">. La suma es <img src="https://latex.codecogs.com/png.latex?%5Cfrac14+%5Cfrac12+%5Cfrac14=1">. Para <img src="https://latex.codecogs.com/png.latex?P(Z%3E25)"> queda el triángulo sobre <img src="https://latex.codecogs.com/png.latex?(25,30)">, de base <img src="https://latex.codecogs.com/png.latex?5"> y altura <img src="https://latex.codecogs.com/png.latex?f_Z(25)=%5Cfrac5%7B200%7D=%5Cfrac1%7B40%7D">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?P(Z%3E25)=%5Cfrac12%5Ccdot5%5Ccdot%5Cfrac1%7B40%7D=%5Cfrac1%7B16%7D=0%7B,%7D0625"></p>
+<p>Por la simetría de la gráfica respecto de <img src="https://latex.codecogs.com/png.latex?z=15">, la media de <img src="https://latex.codecogs.com/png.latex?Z"> es <img src="https://latex.codecogs.com/png.latex?15=E%5BA%5D+E%5BB%5D=5+10">, como dice la linealidad.</p>
+</div>
+</div>
+<ol start="6" type="1">
+<li>Pasemos a una jornada completa. El domiciliario hace <img src="https://latex.codecogs.com/png.latex?40"> entregas, con ganancias netas <img src="https://latex.codecogs.com/png.latex?W_1,%5Cdots,W_%7B40%7D"> independientes y distribuidas como el <img src="https://latex.codecogs.com/png.latex?W"> del punto 3, y sea <img src="https://latex.codecogs.com/png.latex?T=W_1+%5Ccdots+W_%7B40%7D"> su ganancia neta del día. Recuerden la desigualdad de Chebyshev, <img src="https://latex.codecogs.com/png.latex?P(%7CZ-E%5BZ%5D%7C%5Cge%5Cvarepsilon)%5Cle%5Ctext%7BVar%7D(Z)/%5Cvarepsilon%5E2">. Calculen <img src="https://latex.codecogs.com/png.latex?E%5BT%5D"> y <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BVar%7D(T)">, indiquen qué propiedad de las entregas permite sumar las varianzas, y acoten <img src="https://latex.codecogs.com/png.latex?P(T%5Cge220)"> con Chebyshev. Les sirve que <img src="https://latex.codecogs.com/png.latex?%5C%7BT%5Cge220%5C%7D%5Csubset%5C%7B%7CT-204%7C%5Cge16%5C%7D">. (5 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Por linealidad, <img src="https://latex.codecogs.com/png.latex?E%5BT%5D=40%5Ccdot5%7B,%7D1=204">. Como las entregas son independientes, las covarianzas entre ellas son cero y la varianza de la suma es la suma de las varianzas:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Ctext%7BVar%7D(T)=40%5Ccdot2%7B,%7D19=87%7B,%7D6"></p>
+<p>Como un evento contenido en otro tiene probabilidad menor o igual,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7DP(T%5Cge220)&amp;%5Cle%20P%5Cbig(%7CT-204%7C%5Cge16%5Cbig)%5C%5C&amp;%5Cle%5Cfrac%7B%5Ctext%7BVar%7D(T)%7D%7B16%5E2%7D=%5Cfrac%7B87%7B,%7D6%7D%7B256%7D%5Capprox0%7B,%7D342%5Cend%7Baligned%7D"></p>
+</div>
+</div>
+<ol start="7" type="1">
+<li>Por el teorema del límite central, <img src="https://latex.codecogs.com/png.latex?T"> se aproxima por una normal con su misma media y su misma varianza, con corrección de continuidad porque <img src="https://latex.codecogs.com/png.latex?T"> solo toma valores enteros. Aproximen <img src="https://latex.codecogs.com/png.latex?P(T%5Cge220)"> con el teorema del límite central. Les sirve saber que <img src="https://latex.codecogs.com/png.latex?%5CPhi(1%7B,%7D66)=0%7B,%7D9515"> y <img src="https://latex.codecogs.com/png.latex?%5CPhi(1%7B,%7D71)=0%7B,%7D9564">. El valor exacto, calculado con la distribución completa de <img src="https://latex.codecogs.com/png.latex?T">, es <img src="https://latex.codecogs.com/png.latex?0%7B,%7D0551">. Comparen los tres valores, el del punto anterior, el del límite central y el exacto, y expliquen en una frase por qué difieren tanto. (5 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La normal tiene media <img src="https://latex.codecogs.com/png.latex?204"> y desviación estándar <img src="https://latex.codecogs.com/png.latex?%5Csqrt%7B87%7B,%7D6%7D%5Capprox9%7B,%7D36">. Como <img src="https://latex.codecogs.com/png.latex?T"> es entera, <img src="https://latex.codecogs.com/png.latex?P(T%5Cge220)=P(T%5Cge219%7B,%7D5)">, que se aproxima por</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7DP%5CBig(Z%5Cge%5Cfrac%7B219%7B,%7D5-204%7D%7B9%7B,%7D36%7D%5CBig)&amp;=P(Z%5Cge1%7B,%7D656)%5C%5C&amp;=1-%5CPhi(1%7B,%7D66)=1-0%7B,%7D9515=0%7B,%7D0485%5Cend%7Baligned%7D"></p>
+<p>Sin la corrección, con frontera en <img src="https://latex.codecogs.com/png.latex?220">, se obtendría <img src="https://latex.codecogs.com/png.latex?z=16/9%7B,%7D36=1%7B,%7D71"> y <img src="https://latex.codecogs.com/png.latex?1-0%7B,%7D9564=0%7B,%7D0436">, más lejos del valor exacto. Los tres valores son <img src="https://latex.codecogs.com/png.latex?0%7B,%7D342"> (cota de Chebyshev), <img src="https://latex.codecogs.com/png.latex?0%7B,%7D0485"> (límite central) y <img src="https://latex.codecogs.com/png.latex?0%7B,%7D0551"> (exacto). La cota es verdadera pero gruesa, porque solo usa la media y la varianza y no mira la forma de la distribución de <img src="https://latex.codecogs.com/png.latex?T">. El teorema del límite central sí usa esa forma, la campana, y por eso queda mucho más cerca. El precio es que aproxima en lugar de garantizar.</p>
+</div>
+</div>
+<ol start="8" type="1">
+<li>Sea <img src="https://latex.codecogs.com/png.latex?%5Cbar%20W_n=%5Cfrac1n(W_1+%5Ccdots+W_n)"> el promedio de las primeras <img src="https://latex.codecogs.com/png.latex?n"> entregas, que tiene media <img src="https://latex.codecogs.com/png.latex?5%7B,%7D1"> y varianza <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BVar%7D(W)/n">. Hallen cuántas entregas <img src="https://latex.codecogs.com/png.latex?n"> bastan para que <img src="https://latex.codecogs.com/png.latex?P(%7C%5Cbar%20W_n-5%7B,%7D1%7C%3C0%7B,%7D5)%5Cge0%7B,%7D95"> usando Chebyshev, que es la ley débil de los grandes números en acción, y cuántas bastan para que esa probabilidad sea aproximadamente <img src="https://latex.codecogs.com/png.latex?0%7B,%7D95"> usando el teorema del límite central. Les sirve <img src="https://latex.codecogs.com/png.latex?%5CPhi(1%7B,%7D96)=0%7B,%7D975">. Comparen los dos valores de <img src="https://latex.codecogs.com/png.latex?n">. (5 puntos)</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con Chebyshev, queremos <img src="https://latex.codecogs.com/png.latex?P(%7C%5Cbar%20W_n-5%7B,%7D1%7C%5Cge0%7B,%7D5)%5Cle0%7B,%7D05"> y</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7DP%5Cbig(%7C%5Cbar%20W_n-5%7B,%7D1%7C%5Cge0%7B,%7D5%5Cbig)&amp;%5Cle%5Cfrac%7B%5Ctext%7BVar%7D(W)/n%7D%7B0%7B,%7D5%5E2%7D%5C%5C&amp;=%5Cfrac%7B2%7B,%7D19%7D%7B0%7B,%7D25%5C,n%7D=%5Cfrac%7B8%7B,%7D76%7D%7Bn%7D%5Cend%7Baligned%7D"></p>
+<p>así que basta con <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7B8%7B,%7D76%7D%7Bn%7D%5Cle0%7B,%7D05">, es decir <img src="https://latex.codecogs.com/png.latex?n%5Cge175%7B,%7D2">. Con <img src="https://latex.codecogs.com/png.latex?n=176"> entregas se garantiza lo pedido sin saber nada más de la distribución de <img src="https://latex.codecogs.com/png.latex?W">.</p>
+<p>Con el teorema del límite central, <img src="https://latex.codecogs.com/png.latex?%5Csigma=%5Csqrt%7B2%7B,%7D19%7D%5Capprox1%7B,%7D480"> y <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7B%5Cbar%20W_n-5%7B,%7D1%7D%7B%5Csigma/%5Csqrt%20n%7D"> es aproximadamente <img src="https://latex.codecogs.com/png.latex?N(0,1)">, de modo que</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cbegin%7Baligned%7DP%5Cbig(%7C%5Cbar%20W_n-5%7B,%7D1%7C%3C0%7B,%7D5%5Cbig)&amp;%5Capprox2%5C,%5CPhi%5CBig(%5Cfrac%7B0%7B,%7D5%5Csqrt%20n%7D%7B%5Csigma%7D%5CBig)-1=0%7B,%7D95%5C%5C%5CLongleftrightarrow%5Cqquad%5Cfrac%7B0%7B,%7D5%5Csqrt%20n%7D%7B%5Csigma%7D&amp;=1%7B,%7D96%5C%5C%5CLongleftrightarrow%5Cqquad%20n&amp;=%5CBig(%5Cfrac%7B1%7B,%7D96%5C,%5Csigma%7D%7B0%7B,%7D5%7D%5CBig)%5E2%5Capprox33%7B,%7D65%5Cend%7Baligned%7D"></p>
+<p>Bastan <img src="https://latex.codecogs.com/png.latex?n=34"> entregas, menos de una jornada, frente a las <img src="https://latex.codecogs.com/png.latex?176"> de Chebyshev, unas cinco veces más. Se gana mucho en tamaño de muestra porque se usa la forma de la distribución del promedio, y se pierde la garantía: el teorema del límite central da una probabilidad aproximada, sin una cota del error.</p>
+</div>
+</div>
+
+
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/probabilidad/taller-4/</guid>
+  <pubDate>Wed, 25 Nov 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Parcial 2</title>
   <dc:creator>Arturo Sanjuán</dc:creator>

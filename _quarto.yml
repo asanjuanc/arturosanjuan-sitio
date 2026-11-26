@@ -124,6 +124,7 @@ website:
         - cursos/probabilidad/leydebil/index.qmd
         - cursos/probabilidad/leyfuerte/index.qmd
         - cursos/probabilidad/parical-2/index.qmd
+        - cursos/probabilidad/taller-4/index.qmd
 
 format:
   html:
