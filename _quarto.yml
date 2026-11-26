@@ -98,6 +98,7 @@ website:
         - cursos/numerico/derivacion/index.qmd
         - cursos/numerico/integracion/index.qmd
         - cursos/numerico/parcial-2/index.qmd
+        - cursos/numerico/taller-4/index.qmd
 
     - id: probabilidad
       title: "Probabilidad"

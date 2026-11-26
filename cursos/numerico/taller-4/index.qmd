@@ -1,0 +1,129 @@
+---
+title: "Taller 4"
+subtitle: "Derivar e integrar a través del interpolante"
+description: "Taller con solución sobre derivación e integración a partir del polinomio interpolante: fórmulas de diferencias con fdweights, regla del trapecio y efecto del redondeo, con f(x) = 1/(1 + x²)."
+author: "Arturo Sanjuán"
+date: 2026-11-22
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 20
+---
+
+Sea
+
+$$f(x) = \frac{1}{1 + x^2}, \tag{1}$$
+
+cuya derivada es
+
+$$f'(x) = -\frac{2x}{(1 + x^2)^2} \tag{2}$$
+
+y cuya integral en $[0, 1]$ vale
+
+$$\int_0^1 f(x)\,dx = \frac{\pi}{4}. \tag{3}$$
+
+Con la ecuación (2) se tiene $f'(0.5) = -0.64$ y con la ecuación (3) se tiene $4\int_0^1 f(x)\,dx = \pi$. Esos dos son los valores exactos contra los que van a medir sus errores. Todo el taller se hace en Julia, sin cálculos a mano, con el código del libro (`fdweights` de la sección 5.4 y `trapezoid` de la sección 5.6) y lo que está en las notas de derivación e integración de la página del curso. En cada punto entreguen el código y la tabla que se pide, con los errores en notación científica, y respondan las preguntas en una o dos frases.
+
+La derivada de $f$ en $0.5$ se puede aproximar derivando el polinomio que interpola a $f$ en nodos equiespaciados alrededor de $0.5$. La función `fdweights(t, 1)` entrega los pesos $a_k$ de esa derivada para los nodos relativos $t_k$, de modo que la aproximación es $\sum_k a_k\, f(0.5 + t_k)$. Usen los nodos `t = [-h, 0, h]`, que corresponden al polinomio cuadrático, y `t = [-2h, -h, 0, h, 2h]`, que corresponden al de grado $4$, con $h = 0.2/2^k$ para $k = 0, 1, \dots, 7$. Armen una tabla con $h$, el error absoluto de cada una de las dos fórmulas respecto de $-0.64$ y, para cada fórmula, el cociente entre el error del $h$ anterior y el del $h$ actual. A partir de esos cocientes digan qué orden de precisión tiene cada fórmula. *(20 pts)*
+
+::: {.callout-tip title="Solución"}
+```julia
+using FundamentalsNumericalComputation
+
+f(x) = 1 / (1 + x^2)
+exacta = -0.64
+
+aprox(t) = sum(fdweights(t, 1) .* f.(0.5 .+ t))
+
+h  = [0.2 / 2^k for k in 0:7]
+e3 = [abs(aprox([-hk, 0, hk]) - exacta) for hk in h]
+e5 = [abs(aprox([-2hk, -hk, 0, hk, 2hk]) - exacta) for hk in h]
+
+c3 = e3[1:end-1] ./ e3[2:end]
+c5 = e5[1:end-1] ./ e5[2:end]
+```
+
+| $k$ | $h$ | error, 3 nodos | cociente | error, 5 nodos | cociente |
+|---:|---:|---:|---:|---:|---:|
+| 0 | 0.2 | $2.427\cdot10^{-2}$ | | $1.371\cdot10^{-3}$ | |
+| 1 | 0.1 | $6.126\cdot10^{-3}$ | 3.96 | $7.623\cdot10^{-5}$ | 17.99 |
+| 2 | 0.05 | $1.535\cdot10^{-3}$ | 3.99 | $4.573\cdot10^{-6}$ | 16.67 |
+| 3 | 0.025 | $3.839\cdot10^{-4}$ | 4.00 | $2.827\cdot10^{-7}$ | 16.18 |
+| 4 | 0.0125 | $9.600\cdot10^{-5}$ | 4.00 | $1.762\cdot10^{-8}$ | 16.05 |
+| 5 | 0.00625 | $2.400\cdot10^{-5}$ | 4.00 | $1.100\cdot10^{-9}$ | 16.01 |
+| 6 | 0.003125 | $6.000\cdot10^{-6}$ | 4.00 | $6.870\cdot10^{-11}$ | 16.02 |
+| 7 | 0.0015625 | $1.500\cdot10^{-6}$ | 4.00 | $4.163\cdot10^{-12}$ | 16.50 |
+
+Los cocientes tienden a $4 = 2^2$ para la fórmula de tres nodos y a $16 = 2^4$ para la de cinco. Al dividir $h$ entre $2$ el error se divide entre $2^s$, así que el orden de precisión es $2$ para tres nodos y $4$ para cinco. En $k = 7$ el error de la fórmula de cinco nodos ($4.2\cdot10^{-12}$) ya está cerca del nivel del redondeo, y por eso el cociente se separa de $16$.
+:::
+
+La fórmula del trapecio es la integral del interpolante lineal a trozos de $f$ en los nodos. Con `trapezoid(f, 0, 1, n)`, cuya primera salida es la estimación $T_n$, calculen $4T_n$ para $n = 5\cdot 2^k$, con $k = 0, 1, \dots, 8$; por la ecuación (3), esto aproxima a $\pi$. Hagan una tabla con $n$, $4T_n$, el error absoluto respecto de `π` y el cociente entre errores consecutivos, y digan qué orden tiene el trapecio. Con lo que vean en la tabla, predigan sin calcular nuevos valores el menor $n$ para el que el error es menor que $10^{-6}$, y luego encuentren ese $n$ exacto con un ciclo en Julia y compárenlo con su predicción. *(20 pts)*
+
+::: {.callout-tip title="Solución"}
+```julia
+n  = [5 * 2^k for k in 0:8]
+T  = [first(trapezoid(f, 0, 1, m)) for m in n]
+eT = abs.(4 .* T .- π)
+c  = eT[1:end-1] ./ eT[2:end]
+
+function menor_n(tol)
+    m = 5
+    while abs(4 * first(trapezoid(f, 0, 1, m)) - π) >= tol
+        m += 1
+    end
+    return m
+end
+menor_n(1e-6)
+```
+
+| $n$ | $4T_n$ | error | cociente |
+|---:|---:|---:|---:|
+| 5 | 3.1349261138 | $6.667\cdot10^{-3}$ | |
+| 10 | 3.1399259889 | $1.667\cdot10^{-3}$ | 4.00 |
+| 20 | 3.1411759870 | $4.167\cdot10^{-4}$ | 4.00 |
+| 40 | 3.1414884869 | $1.042\cdot10^{-4}$ | 4.00 |
+| 80 | 3.1415666119 | $2.604\cdot10^{-5}$ | 4.00 |
+| 160 | 3.1415861432 | $6.510\cdot10^{-6}$ | 4.00 |
+| 320 | 3.1415910260 | $1.628\cdot10^{-6}$ | 4.00 |
+| 640 | 3.1415922467 | $4.069\cdot10^{-7}$ | 4.00 |
+| 1280 | 3.1415925519 | $1.017\cdot10^{-7}$ | 4.00 |
+
+El cociente es $4$ en todas las filas: el trapecio tiene orden $2$, es decir $E(n) \approx C/n^2$. Con la fila $n = 40$, donde el error es $1.04\cdot10^{-4}$, se pide $C/n^2 < 10^{-6}$, o sea $n > 40\sqrt{104} \approx 408.3$, así que se predice $n = 409$. El ciclo devuelve $409$: el error con $n = 408$ es $1.0012\cdot10^{-6}$ y con $n = 409$ es $9.963\cdot10^{-7}$.
+:::
+
+Repitan la fórmula de tres nodos del primer punto con $h = 10^{-p}$ para $p = 1, 2, \dots, 16$ y tabulen el error. ¿Para qué $p$ es mínimo? ¿Por qué el error vuelve a crecer aunque $h$ siga disminuyendo? Respondan en dos frases, usando el condicionamiento de la resta que aparece en la fórmula. *(10 pts)*
+
+::: {.callout-tip title="Solución"}
+```julia
+p = 1:16
+e = [abs(aprox([-10.0^-pk, 0, 10.0^-pk]) - exacta) for pk in p]
+argmin(e)
+```
+
+| $p$ | error |
+|---:|---:|
+| 1 | $6.126\cdot10^{-3}$ |
+| 2 | $6.144\cdot10^{-5}$ |
+| 3 | $6.144\cdot10^{-7}$ |
+| 4 | $6.144\cdot10^{-9}$ |
+| 5 | $4.424\cdot10^{-11}$ |
+| 6 | $1.397\cdot10^{-11}$ |
+| 7 | $3.353\cdot10^{-10}$ |
+| 8 | $8.047\cdot10^{-9}$ |
+| 9 | $4.530\cdot10^{-8}$ |
+| 10 | $6.104\cdot10^{-7}$ |
+| 11 | $6.104\cdot10^{-7}$ |
+| 12 | $1.367\cdot10^{-4}$ |
+| 13 | $8.398\cdot10^{-4}$ |
+| 14 | $6.250\cdot10^{-4}$ |
+| 15 | $7.750\cdot10^{-2}$ |
+| 16 | $6.400\cdot10^{-1}$ |
+
+El error es mínimo en $p = 6$, con un valor de unos $1.4\cdot10^{-11}$. Los valores con $p \ge 5$ dependen del redondeo y sus últimas cifras pueden cambiar de una máquina a otra. Hasta ahí domina el error de truncamiento, que baja como $h^2$. Después domina el redondeo: la fórmula contiene la resta $f(0.5 + h) - f(0.5 - h)$ de dos números casi iguales, cuyo número de condicionamiento crece como $1/h$, y además se divide entre $2h$, así que el error de redondeo crece como $\varepsilon/h$ con $\varepsilon \approx 2.2\cdot10^{-16}$. Ambos errores se igualan cuando $h^3 \approx \varepsilon$, es decir $h \approx 6\cdot10^{-6}$, y a partir de ahí hacer $h$ más pequeño empeora la aproximación.
+:::

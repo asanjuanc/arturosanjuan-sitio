@@ -15,7 +15,623 @@
 <link>https://arturosanjuan.xyz/cursos/numerico/</link>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Thu, 19 Nov 2026 05:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 22 Nov 2026 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Taller 4</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/numerico/taller-4/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Sea</p>
+<p><img src="https://latex.codecogs.com/png.latex?f(x)%20=%20%5Cfrac%7B1%7D%7B1%20+%20x%5E2%7D,%20%5Ctag%7B1%7D"></p>
+<p>cuya derivada es</p>
+<p><img src="https://latex.codecogs.com/png.latex?f'(x)%20=%20-%5Cfrac%7B2x%7D%7B(1%20+%20x%5E2)%5E2%7D%20%5Ctag%7B2%7D"></p>
+<p>y cuya integral en <img src="https://latex.codecogs.com/png.latex?%5B0,%201%5D"> vale</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cint_0%5E1%20f(x)%5C,dx%20=%20%5Cfrac%7B%5Cpi%7D%7B4%7D.%20%5Ctag%7B3%7D"></p>
+<p>Con la ecuación (2) se tiene <img src="https://latex.codecogs.com/png.latex?f'(0.5)%20=%20-0.64"> y con la ecuación (3) se tiene <img src="https://latex.codecogs.com/png.latex?4%5Cint_0%5E1%20f(x)%5C,dx%20=%20%5Cpi">. Esos dos son los valores exactos contra los que van a medir sus errores. Todo el taller se hace en Julia, sin cálculos a mano, con el código del libro (<code>fdweights</code> de la sección 5.4 y <code>trapezoid</code> de la sección 5.6) y lo que está en las notas de derivación e integración de la página del curso. En cada punto entreguen el código y la tabla que se pide, con los errores en notación científica, y respondan las preguntas en una o dos frases.</p>
+<p>La derivada de <img src="https://latex.codecogs.com/png.latex?f"> en <img src="https://latex.codecogs.com/png.latex?0.5"> se puede aproximar derivando el polinomio que interpola a <img src="https://latex.codecogs.com/png.latex?f"> en nodos equiespaciados alrededor de <img src="https://latex.codecogs.com/png.latex?0.5">. La función <code>fdweights(t, 1)</code> entrega los pesos <img src="https://latex.codecogs.com/png.latex?a_k"> de esa derivada para los nodos relativos <img src="https://latex.codecogs.com/png.latex?t_k">, de modo que la aproximación es <img src="https://latex.codecogs.com/png.latex?%5Csum_k%20a_k%5C,%20f(0.5%20+%20t_k)">. Usen los nodos <code>t = [-h, 0, h]</code>, que corresponden al polinomio cuadrático, y <code>t = [-2h, -h, 0, h, 2h]</code>, que corresponden al de grado <img src="https://latex.codecogs.com/png.latex?4">, con <img src="https://latex.codecogs.com/png.latex?h%20=%200.2/2%5Ek"> para <img src="https://latex.codecogs.com/png.latex?k%20=%200,%201,%20%5Cdots,%207">. Armen una tabla con <img src="https://latex.codecogs.com/png.latex?h">, el error absoluto de cada una de las dos fórmulas respecto de <img src="https://latex.codecogs.com/png.latex?-0.64"> y, para cada fórmula, el cociente entre el error del <img src="https://latex.codecogs.com/png.latex?h"> anterior y el del <img src="https://latex.codecogs.com/png.latex?h"> actual. A partir de esos cocientes digan qué orden de precisión tiene cada fórmula. <em>(20 pts)</em></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">using</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">FundamentalsNumericalComputation</span></span>
+<span id="cb1-2"></span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">f</span>(x) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> (<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">^</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb1-4">exacta <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.64</span></span>
+<span id="cb1-5"></span>
+<span id="cb1-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aprox</span>(t) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sum</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">fdweights</span>(t, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.*</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">f</span>.(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.+</span> t))</span>
+<span id="cb1-7"></span>
+<span id="cb1-8">h  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">^</span>k for k <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>]</span>
+<span id="cb1-9">e3 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">abs</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aprox</span>([<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>hk, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, hk]) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> exacta) for hk <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> h]</span>
+<span id="cb1-10">e5 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">abs</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aprox</span>([<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>hk, <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>hk, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, hk, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>hk]) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> exacta) for hk <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> h]</span>
+<span id="cb1-11"></span>
+<span id="cb1-12">c3 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> e3[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">./</span> e3[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span>]</span>
+<span id="cb1-13">c5 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> e5[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">./</span> e5[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span>]</span></code></pre></div></div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?k"></th>
+<th style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?h"></th>
+<th style="text-align: right;">error, 3 nodos</th>
+<th style="text-align: right;">cociente</th>
+<th style="text-align: right;">error, 5 nodos</th>
+<th style="text-align: right;">cociente</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?2.427%5Ccdot10%5E%7B-2%7D"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.371%5Ccdot10%5E%7B-3%7D"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?6.126%5Ccdot10%5E%7B-3%7D"></td>
+<td style="text-align: right;">3.96</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?7.623%5Ccdot10%5E%7B-5%7D"></td>
+<td style="text-align: right;">17.99</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.535%5Ccdot10%5E%7B-3%7D"></td>
+<td style="text-align: right;">3.99</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?4.573%5Ccdot10%5E%7B-6%7D"></td>
+<td style="text-align: right;">16.67</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.025</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?3.839%5Ccdot10%5E%7B-4%7D"></td>
+<td style="text-align: right;">4.00</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?2.827%5Ccdot10%5E%7B-7%7D"></td>
+<td style="text-align: right;">16.18</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0.0125</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?9.600%5Ccdot10%5E%7B-5%7D"></td>
+<td style="text-align: right;">4.00</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.762%5Ccdot10%5E%7B-8%7D"></td>
+<td style="text-align: right;">16.05</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0.00625</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?2.400%5Ccdot10%5E%7B-5%7D"></td>
+<td style="text-align: right;">4.00</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.100%5Ccdot10%5E%7B-9%7D"></td>
+<td style="text-align: right;">16.01</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.003125</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?6.000%5Ccdot10%5E%7B-6%7D"></td>
+<td style="text-align: right;">4.00</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?6.870%5Ccdot10%5E%7B-11%7D"></td>
+<td style="text-align: right;">16.02</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0.0015625</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.500%5Ccdot10%5E%7B-6%7D"></td>
+<td style="text-align: right;">4.00</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?4.163%5Ccdot10%5E%7B-12%7D"></td>
+<td style="text-align: right;">16.50</td>
+</tr>
+</tbody>
+</table>
+<p>Los cocientes tienden a <img src="https://latex.codecogs.com/png.latex?4%20=%202%5E2"> para la fórmula de tres nodos y a <img src="https://latex.codecogs.com/png.latex?16%20=%202%5E4"> para la de cinco. Al dividir <img src="https://latex.codecogs.com/png.latex?h"> entre <img src="https://latex.codecogs.com/png.latex?2"> el error se divide entre <img src="https://latex.codecogs.com/png.latex?2%5Es">, así que el orden de precisión es <img src="https://latex.codecogs.com/png.latex?2"> para tres nodos y <img src="https://latex.codecogs.com/png.latex?4"> para cinco. En <img src="https://latex.codecogs.com/png.latex?k%20=%207"> el error de la fórmula de cinco nodos (<img src="https://latex.codecogs.com/png.latex?4.2%5Ccdot10%5E%7B-12%7D">) ya está cerca del nivel del redondeo, y por eso el cociente se separa de <img src="https://latex.codecogs.com/png.latex?16">.</p>
+</div>
+</div>
+<p>La fórmula del trapecio es la integral del interpolante lineal a trozos de <img src="https://latex.codecogs.com/png.latex?f"> en los nodos. Con <code>trapezoid(f, 0, 1, n)</code>, cuya primera salida es la estimación <img src="https://latex.codecogs.com/png.latex?T_n">, calculen <img src="https://latex.codecogs.com/png.latex?4T_n"> para <img src="https://latex.codecogs.com/png.latex?n%20=%205%5Ccdot%202%5Ek">, con <img src="https://latex.codecogs.com/png.latex?k%20=%200,%201,%20%5Cdots,%208">; por la ecuación (3), esto aproxima a <img src="https://latex.codecogs.com/png.latex?%5Cpi">. Hagan una tabla con <img src="https://latex.codecogs.com/png.latex?n">, <img src="https://latex.codecogs.com/png.latex?4T_n">, el error absoluto respecto de <code>π</code> y el cociente entre errores consecutivos, y digan qué orden tiene el trapecio. Con lo que vean en la tabla, predigan sin calcular nuevos valores el menor <img src="https://latex.codecogs.com/png.latex?n"> para el que el error es menor que <img src="https://latex.codecogs.com/png.latex?10%5E%7B-6%7D">, y luego encuentren ese <img src="https://latex.codecogs.com/png.latex?n"> exacto con un ciclo en Julia y compárenlo con su predicción. <em>(20 pts)</em></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1">n  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">^</span>k for k <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>]</span>
+<span id="cb2-2">T  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">first</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">trapezoid</span>(f, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, m)) for m <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> n]</span>
+<span id="cb2-3">eT <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">abs</span>.(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.*</span> T <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.-</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">π</span>)</span>
+<span id="cb2-4">c  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> eT[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">./</span> eT[<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span>]</span>
+<span id="cb2-5"></span>
+<span id="cb2-6"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">menor_n</span>(tol)</span>
+<span id="cb2-7">    m <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span></span>
+<span id="cb2-8">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">while</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">abs</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">first</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">trapezoid</span>(f, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, m)) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">π</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;=</span> tol</span>
+<span id="cb2-9">        m <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb2-10">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span>
+<span id="cb2-11">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> m</span>
+<span id="cb2-12"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">end</span></span>
+<span id="cb2-13"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">menor_n</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1e-6</span>)</span></code></pre></div></div>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?n"></th>
+<th style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?4T_n"></th>
+<th style="text-align: right;">error</th>
+<th style="text-align: right;">cociente</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">3.1349261138</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?6.667%5Ccdot10%5E%7B-3%7D"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">3.1399259889</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.667%5Ccdot10%5E%7B-3%7D"></td>
+<td style="text-align: right;">4.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">3.1411759870</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?4.167%5Ccdot10%5E%7B-4%7D"></td>
+<td style="text-align: right;">4.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">3.1414884869</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.042%5Ccdot10%5E%7B-4%7D"></td>
+<td style="text-align: right;">4.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">3.1415666119</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?2.604%5Ccdot10%5E%7B-5%7D"></td>
+<td style="text-align: right;">4.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">3.1415861432</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?6.510%5Ccdot10%5E%7B-6%7D"></td>
+<td style="text-align: right;">4.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">320</td>
+<td style="text-align: right;">3.1415910260</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.628%5Ccdot10%5E%7B-6%7D"></td>
+<td style="text-align: right;">4.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">640</td>
+<td style="text-align: right;">3.1415922467</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?4.069%5Ccdot10%5E%7B-7%7D"></td>
+<td style="text-align: right;">4.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1280</td>
+<td style="text-align: right;">3.1415925519</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.017%5Ccdot10%5E%7B-7%7D"></td>
+<td style="text-align: right;">4.00</td>
+</tr>
+</tbody>
+</table>
+<p>El cociente es <img src="https://latex.codecogs.com/png.latex?4"> en todas las filas: el trapecio tiene orden <img src="https://latex.codecogs.com/png.latex?2">, es decir <img src="https://latex.codecogs.com/png.latex?E(n)%20%5Capprox%20C/n%5E2">. Con la fila <img src="https://latex.codecogs.com/png.latex?n%20=%2040">, donde el error es <img src="https://latex.codecogs.com/png.latex?1.04%5Ccdot10%5E%7B-4%7D">, se pide <img src="https://latex.codecogs.com/png.latex?C/n%5E2%20%3C%2010%5E%7B-6%7D">, o sea <img src="https://latex.codecogs.com/png.latex?n%20%3E%2040%5Csqrt%7B104%7D%20%5Capprox%20408.3">, así que se predice <img src="https://latex.codecogs.com/png.latex?n%20=%20409">. El ciclo devuelve <img src="https://latex.codecogs.com/png.latex?409">: el error con <img src="https://latex.codecogs.com/png.latex?n%20=%20408"> es <img src="https://latex.codecogs.com/png.latex?1.0012%5Ccdot10%5E%7B-6%7D"> y con <img src="https://latex.codecogs.com/png.latex?n%20=%20409"> es <img src="https://latex.codecogs.com/png.latex?9.963%5Ccdot10%5E%7B-7%7D">.</p>
+</div>
+</div>
+<p>Repitan la fórmula de tres nodos del primer punto con <img src="https://latex.codecogs.com/png.latex?h%20=%2010%5E%7B-p%7D"> para <img src="https://latex.codecogs.com/png.latex?p%20=%201,%202,%20%5Cdots,%2016"> y tabulen el error. ¿Para qué <img src="https://latex.codecogs.com/png.latex?p"> es mínimo? ¿Por qué el error vuelve a crecer aunque <img src="https://latex.codecogs.com/png.latex?h"> siga disminuyendo? Respondan en dos frases, usando el condicionamiento de la resta que aparece en la fórmula. <em>(10 pts)</em></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb3-1">p <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">16</span></span>
+<span id="cb3-2"><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">e</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> [<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">abs</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aprox</span>([<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10.0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">^-</span>pk, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10.0</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">^-</span>pk]) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> exacta) for pk <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> p]</span>
+<span id="cb3-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">argmin</span>(<span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">e</span>)</span></code></pre></div></div>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?p"></th>
+<th style="text-align: right;">error</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?6.126%5Ccdot10%5E%7B-3%7D"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?6.144%5Ccdot10%5E%7B-5%7D"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?6.144%5Ccdot10%5E%7B-7%7D"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?6.144%5Ccdot10%5E%7B-9%7D"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?4.424%5Ccdot10%5E%7B-11%7D"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.397%5Ccdot10%5E%7B-11%7D"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?3.353%5Ccdot10%5E%7B-10%7D"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?8.047%5Ccdot10%5E%7B-9%7D"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?4.530%5Ccdot10%5E%7B-8%7D"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?6.104%5Ccdot10%5E%7B-7%7D"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?6.104%5Ccdot10%5E%7B-7%7D"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">12</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?1.367%5Ccdot10%5E%7B-4%7D"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">13</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?8.398%5Ccdot10%5E%7B-4%7D"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">14</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?6.250%5Ccdot10%5E%7B-4%7D"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">15</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?7.750%5Ccdot10%5E%7B-2%7D"></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">16</td>
+<td style="text-align: right;"><img src="https://latex.codecogs.com/png.latex?6.400%5Ccdot10%5E%7B-1%7D"></td>
+</tr>
+</tbody>
+</table>
+<p>El error es mínimo en <img src="https://latex.codecogs.com/png.latex?p%20=%206">, con un valor de unos <img src="https://latex.codecogs.com/png.latex?1.4%5Ccdot10%5E%7B-11%7D">. Los valores con <img src="https://latex.codecogs.com/png.latex?p%20%5Cge%205"> dependen del redondeo y sus últimas cifras pueden cambiar de una máquina a otra. Hasta ahí domina el error de truncamiento, que baja como <img src="https://latex.codecogs.com/png.latex?h%5E2">. Después domina el redondeo: la fórmula contiene la resta <img src="https://latex.codecogs.com/png.latex?f(0.5%20+%20h)%20-%20f(0.5%20-%20h)"> de dos números casi iguales, cuyo número de condicionamiento crece como <img src="https://latex.codecogs.com/png.latex?1/h">, y además se divide entre <img src="https://latex.codecogs.com/png.latex?2h">, así que el error de redondeo crece como <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon/h"> con <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon%20%5Capprox%202.2%5Ccdot10%5E%7B-16%7D">. Ambos errores se igualan cuando <img src="https://latex.codecogs.com/png.latex?h%5E3%20%5Capprox%20%5Cvarepsilon">, es decir <img src="https://latex.codecogs.com/png.latex?h%20%5Capprox%206%5Ccdot10%5E%7B-6%7D">, y a partir de ahí hacer <img src="https://latex.codecogs.com/png.latex?h"> más pequeño empeora la aproximación.</p>
+</div>
+</div>
+
+
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/numerico/taller-4/</guid>
+  <pubDate>Sun, 22 Nov 2026 05:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Parcial 2</title>
   <dc:creator>Arturo Sanjuán</dc:creator>
