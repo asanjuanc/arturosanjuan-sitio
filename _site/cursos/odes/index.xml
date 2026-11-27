@@ -142,6 +142,145 @@
   <pubDate>Tue, 17 Nov 2026 05:00:00 GMT</pubDate>
 </item>
 <item>
+  <title>Taller 4</title>
+  <dc:creator>Arturo Sanjuán</dc:creator>
+  <link>https://arturosanjuan.xyz/cursos/odes/taller-4/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>En la página de reducción de orden vimos que un péndulo simple de longitud <img src="https://latex.codecogs.com/png.latex?a">, soltado desde el reposo con un ángulo <img src="https://latex.codecogs.com/png.latex?%5Calpha"> respecto de la vertical hacia abajo, tiene período exacto</p>
+<p><img src="https://latex.codecogs.com/png.latex?T=4%5Csqrt%7B%5Cfrac%7Ba%7D%7Bg%7D%7D%5C;K(k),%5Cqquad%20k=%5Csin%5Cfrac%7B%5Calpha%7D%7B2%7D,%5Cqquad%20K(k)=%5Cint_0%5E%7B%5Cpi/2%7D%5Cfrac%7Bd%5Cvarphi%7D%7B%5Csqrt%7B1-k%5E2%5Csin%5E2%5Cvarphi%7D%7D%20%5Ctag%7B1%7D"></p>
+<p>y que <img src="https://latex.codecogs.com/png.latex?K">, que se llama la <strong>integral elíptica completa de primera especie</strong>, no se puede escribir con funciones elementales. Eso no quiere decir que no se pueda decir nada sobre ella. Con paciencia se puede mostrar que <img src="https://latex.codecogs.com/png.latex?K"> es solución de una ecuación diferencial lineal de segundo orden. En este taller partimos de esa ecuación para encontrar la expansión en serie de <img src="https://latex.codecogs.com/png.latex?K"> (que también se podría obtener directamente de la integral) y una segunda solución que lleva un logaritmo, y cerramos interpretando ese logaritmo cuando <img src="https://latex.codecogs.com/png.latex?%5Calpha"> se acerca a <img src="https://latex.codecogs.com/png.latex?%5Cpi">, es decir, cuando el péndulo se suelta casi desde arriba. El taller se trabaja en equipos de hasta tres personas y vale 50 puntos. Escribimos <img src="https://latex.codecogs.com/png.latex?T_0=2%5Cpi%5Csqrt%7Ba/g%7D"> para el período de ángulo pequeño, de modo que <img src="https://latex.codecogs.com/png.latex?T/T_0=%5Cfrac%7B2%7D%7B%5Cpi%7DK(k)">.</p>
+<section id="la-ecuación-de-k-y-su-segunda-solución" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="la-ecuación-de-k-y-su-segunda-solución"><span class="header-section-number">1</span> La ecuación de <img src="https://latex.codecogs.com/png.latex?K"> y su segunda solución</h2>
+<p>Con paciencia se puede mostrar, derivando (1) bajo el signo integral, que <img src="https://latex.codecogs.com/png.latex?K"> es solución de la ecuación diferencial</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bd%7D%7Bdk%7D%5C!%5Cleft%5Bk%5C,(1-k%5E2)%5C,%5Cfrac%7BdK%7D%7Bdk%7D%5Cright%5D=k%5C,K.%20%5Ctag%7B2%7D"></p>
+<p>Vamos a usarla para encontrar la expansión en serie de <img src="https://latex.codecogs.com/png.latex?K"> (que también se podría obtener directamente de la integral, con la serie binomial de <img src="https://latex.codecogs.com/png.latex?(1-u)%5E%7B-1/2%7D">) y una segunda solución independiente.</p>
+<p><strong>Cambio de variable.</strong> Sea <img src="https://latex.codecogs.com/png.latex?x=k%5E2"> y <img src="https://latex.codecogs.com/png.latex?y(x)=K(%5Csqrt%7Bx%7D)">. Muestren que (2) se convierte en</p>
+<p><img src="https://latex.codecogs.com/png.latex?x(1-x)%5C,y''+(1-2x)%5C,y'-%5Cfrac14%5C,y=0.%20%5Ctag%7B3%7D"></p>
+<p>Llamen <img src="https://latex.codecogs.com/png.latex?%5Cmathcal%20L%5By%5D"> al lado izquierdo de (3). Muestren que <img src="https://latex.codecogs.com/png.latex?x=0"> y <img src="https://latex.codecogs.com/png.latex?x=1"> son puntos singulares regulares. <em>(5 pts)</em></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con <img src="https://latex.codecogs.com/png.latex?x=k%5E2">, <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7BdK%7D%7Bdk%7D=2k%5C,y'"> y <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7Bd%5E2K%7D%7Bdk%5E2%7D=2y'+4x%5C,y''">. Al desarrollar (2) queda <img src="https://latex.codecogs.com/png.latex?k(1-k%5E2)K''+(1-3k%5E2)K'-kK=0">, y sustituyendo,</p>
+<p><img src="https://latex.codecogs.com/png.latex?k(1-x)%5C,(2y'+4xy'')+(1-3x)%5C,2k%5C,y'-k%5C,y=0."></p>
+<p>Dividiendo entre <img src="https://latex.codecogs.com/png.latex?4k"> se obtiene <img src="https://latex.codecogs.com/png.latex?x(1-x)y''+%5Ctfrac12%5Cbig%5B(1-x)+(1-3x)%5Cbig%5Dy'-%5Ctfrac14y=0">, y como <img src="https://latex.codecogs.com/png.latex?%5Ctfrac12%5Cbig%5B(1-x)+(1-3x)%5Cbig%5D=1-2x">, esta es (3).</p>
+<p>En forma estándar, <img src="https://latex.codecogs.com/png.latex?y''+P%5C,y'+Q%5C,y=0"> con <img src="https://latex.codecogs.com/png.latex?P=%5Cdfrac%7B1-2x%7D%7Bx(1-x)%7D"> y <img src="https://latex.codecogs.com/png.latex?Q=-%5Cdfrac%7B1%7D%7B4x(1-x)%7D">. En <img src="https://latex.codecogs.com/png.latex?x=0">: <img src="https://latex.codecogs.com/png.latex?xP=%5Cdfrac%7B1-2x%7D%7B1-x%7D"> y <img src="https://latex.codecogs.com/png.latex?x%5E2Q=-%5Cdfrac%7Bx%7D%7B4(1-x)%7D"> son analíticas. En <img src="https://latex.codecogs.com/png.latex?x=1">: <img src="https://latex.codecogs.com/png.latex?(x-1)P=-%5Cdfrac%7B1-2x%7D%7Bx%7D"> y <img src="https://latex.codecogs.com/png.latex?(x-1)%5E2Q=%5Cdfrac%7Bx-1%7D%7B4x%7D"> son analíticas. Entonces ambos son puntos singulares regulares.</p>
+</div>
+</div>
+<p><strong>Serie de potencias en <img src="https://latex.codecogs.com/png.latex?x=0">.</strong> Sustituyan <img src="https://latex.codecogs.com/png.latex?y=%5Csum_%7Bm%5Cge0%7Da_mx%5Em"> y muestren que</p>
+<p><img src="https://latex.codecogs.com/png.latex?a_%7Bm+1%7D=%5Cleft(%5Cfrac%7B2m+1%7D%7B2m+2%7D%5Cright)%5E2a_m,"></p>
+<p>de modo que todo queda determinado por <img src="https://latex.codecogs.com/png.latex?a_0">, y que una solución es <img src="https://latex.codecogs.com/png.latex?y_1(x)=%5Csum_%7Bm%5Cge0%7Dc_mx%5Em">, con</p>
+<p><img src="https://latex.codecogs.com/png.latex?c_m=%5Cleft%5B%5Cfrac%7B(2m)!%7D%7B4%5Em(m!)%5E2%7D%5Cright%5D%5E2."></p>
+<p>Expliquen por qué este método no puede dar una segunda solución independiente. <em>(15 pts)</em></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para cualquier exponente <img src="https://latex.codecogs.com/png.latex?s">, con <img src="https://latex.codecogs.com/png.latex?y=x%5Es">: <img src="https://latex.codecogs.com/png.latex?x(1-x)s(s-1)x%5E%7Bs-2%7D+(1-2x)%5C,s%5C,x%5E%7Bs-1%7D-%5Ctfrac14x%5Es=%5Cbig%5Bs(s-1)+s%5Cbig%5Dx%5E%7Bs-1%7D-%5Cbig%5Bs(s-1)+2s+%5Ctfrac14%5Cbig%5Dx%5Es">, es decir,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cmathcal%20L%5Bx%5Es%5D=s%5E2x%5E%7Bs-1%7D-%5Cbig(s+%5Ctfrac12%5Cbig)%5E2x%5Es."></p>
+<p>Por linealidad,</p>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cmathcal%20L%5CBig%5B%5Csum_%7Bm%5Cge0%7Da_mx%5Em%5CBig%5D=%5Csum_%7Bm%5Cge0%7Da_m%5CBig%5Bm%5E2x%5E%7Bm-1%7D-%5Cbig(m+%5Ctfrac12%5Cbig)%5E2x%5Em%5CBig%5D."></p>
+<p>El coeficiente de <img src="https://latex.codecogs.com/png.latex?x%5E%7B-1%7D"> es <img src="https://latex.codecogs.com/png.latex?0%5Ccdot%20a_0">, que se anula para cualquier <img src="https://latex.codecogs.com/png.latex?a_0">. El coeficiente de <img src="https://latex.codecogs.com/png.latex?x%5Em">, con <img src="https://latex.codecogs.com/png.latex?m%5Cge0">, es <img src="https://latex.codecogs.com/png.latex?(m+1)%5E2a_%7Bm+1%7D-(m+%5Ctfrac12)%5E2a_m=0">, de donde</p>
+<p><img src="https://latex.codecogs.com/png.latex?a_%7Bm+1%7D=%5Cleft(%5Cfrac%7Bm+%5Cfrac12%7D%7Bm+1%7D%5Cright)%5E2a_m=%5Cleft(%5Cfrac%7B2m+1%7D%7B2m+2%7D%5Cright)%5E2a_m."></p>
+<p>Con <img src="https://latex.codecogs.com/png.latex?a_0=1"> se obtiene <img src="https://latex.codecogs.com/png.latex?a_m=%5Cleft%5B%5Cdfrac%7B1%5Ccdot3%5Ccdots(2m-1)%7D%7B2%5Ccdot4%5Ccdots(2m)%7D%5Cright%5D%5E2=%5Cleft%5B%5Cdfrac%7B(2m)!%7D%7B4%5Em(m!)%5E2%7D%5Cright%5D%5E2=c_m">. El cociente de coeficientes consecutivos tiende a 1, así que el radio de convergencia es 1 (la distancia al punto singular <img src="https://latex.codecogs.com/png.latex?x=1">).</p>
+<p>Todo queda determinado por <img src="https://latex.codecogs.com/png.latex?a_0">, que solo multiplica a <img src="https://latex.codecogs.com/png.latex?y_1">: no hay un segundo parámetro libre, y por eso una serie de potencias no puede dar una segunda solución independiente. La ecuación del coeficiente de <img src="https://latex.codecogs.com/png.latex?x%5E%7B-1%7D">, <img src="https://latex.codecogs.com/png.latex?0%5Ccdot%20a_0=0">, es la ecuación indicial <img src="https://latex.codecogs.com/png.latex?r%5E2a_0=0"> evaluada en <img src="https://latex.codecogs.com/png.latex?r=0">, y la raíz doble no deja otra opción.</p>
+<p><em>Observación.</em> <img src="https://latex.codecogs.com/png.latex?K"> es analítica en <img src="https://latex.codecogs.com/png.latex?x=0"> con <img src="https://latex.codecogs.com/png.latex?K(0)=%5Cpi/2">, y por la unicidad anterior <img src="https://latex.codecogs.com/png.latex?K(%5Csqrt%20x)=%5Cdfrac%7B%5Cpi%7D%7B2%7D%5C,y_1(x)">. La misma serie sale directamente de la integral (1), con la serie binomial de <img src="https://latex.codecogs.com/png.latex?(1-u)%5E%7B-1/2%7D"> y las integrales <img src="https://latex.codecogs.com/png.latex?%5Cint_0%5E%7B%5Cpi/2%7D%5Csin%5E%7B2m%7D%5Cvarphi%5C,d%5Cvarphi=%5Cfrac%7B%5Cpi%7D%7B2%7D%5Cbinom%7B2m%7D%7Bm%7D4%5E%7B-m%7D">.</p>
+</div>
+</div>
+<p><strong>La segunda solución tiene logaritmo.</strong> La serie de potencias solo da una solución, porque la ecuación indicial en <img src="https://latex.codecogs.com/png.latex?x=0"> es <img src="https://latex.codecogs.com/png.latex?r%5E2=0"> (raíz doble). Se busca entonces una segunda solución de la forma</p>
+<p><img src="https://latex.codecogs.com/png.latex?y_2=y_1%5Cln%20x+%5Csum_%7Bm%5Cge1%7Dd_m%5C,x%5Em.%20%5Ctag%7B4%7D"></p>
+<ol type="a">
+<li>Muestren que <img src="https://latex.codecogs.com/png.latex?%5Cmathcal%20L%5By_1%5Cln%20x%5D=2(1-x)%5C,y_1'-y_1">, y que por tanto los <img src="https://latex.codecogs.com/png.latex?d_m"> deben cumplir</li>
+</ol>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cmathcal%20L%5CBig%5B%5Csum_%7Bm%5Cge1%7Dd_mx%5Em%5CBig%5D=-2(1-x)%5C,y_1'+y_1.%20%5Ctag%7B5%7D"></p>
+<p><em>Ayuda</em>: factorice los términos con <img src="https://latex.codecogs.com/png.latex?%5Cln%20x"> y use el hecho de que <img src="https://latex.codecogs.com/png.latex?y_1"> es solución. <em>(5 pts)</em></p>
+<ol start="2" type="a">
+<li>Demuestre que el lado derecho de (5) tiene la forma <img src="https://latex.codecogs.com/png.latex?%5Cdisplaystyle%5Csum_%7Bm%5Cge0%7D%5Cfrac%7Bm+%5Cfrac12%7D%7Bm+1%7D%5C,c_m%5C,x%5Em">, y que los <img src="https://latex.codecogs.com/png.latex?d_m"> cumplen, con <img src="https://latex.codecogs.com/png.latex?d_0=0">, la recurrencia <em>(10 pts)</em></li>
+</ol>
+<p><img src="https://latex.codecogs.com/png.latex?(m+1)%5E2d_%7Bm+1%7D-%5Cbig(m+%5Ctfrac12%5Cbig)%5E2d_m=%5Cfrac%7Bm+%5Cfrac12%7D%7Bm+1%7D%5C,c_m.%20%5Ctag%7B6%7D"></p>
+<ol start="3" type="a">
+<li>Con <img src="https://latex.codecogs.com/png.latex?c_0=1">, calculen <img src="https://latex.codecogs.com/png.latex?d_1,d_2,d_3">. <em>(5 pts)</em></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>Como <img src="https://latex.codecogs.com/png.latex?%5Cmathcal%20L%5By_1%5D=0">,</li>
+</ol>
+<p><img src="https://latex.codecogs.com/png.latex?%5Cmathcal%20L%5By_1%5Cln%20x%5D=x(1-x)%5CBig(y_1''%5Cln%20x+%5Cfrac%7B2y_1'%7D%7Bx%7D-%5Cfrac%7By_1%7D%7Bx%5E2%7D%5CBig)+(1-2x)%5CBig(y_1'%5Cln%20x+%5Cfrac%7By_1%7D%7Bx%7D%5CBig)-%5Cfrac14y_1%5Cln%20x=2(1-x)%5C,y_1'+%5Cfrac%7B-(1-x)+(1-2x)%7D%7Bx%7D%5C,y_1,"></p>
+<p>porque los términos con <img src="https://latex.codecogs.com/png.latex?%5Cln%20x"> suman <img src="https://latex.codecogs.com/png.latex?%5Cln%20x%5C,%5Cmathcal%20L%5By_1%5D=0">. Como <img src="https://latex.codecogs.com/png.latex?-(1-x)+(1-2x)=-x">, queda <img src="https://latex.codecogs.com/png.latex?2(1-x)%5C,y_1'-y_1">. Para que <img src="https://latex.codecogs.com/png.latex?%5Cmathcal%20L%5By_2%5D=0"> hace falta entonces (5).</p>
+<ol start="2" type="a">
+<li>El coeficiente de <img src="https://latex.codecogs.com/png.latex?x%5Em"> en el lado derecho de (5) es <img src="https://latex.codecogs.com/png.latex?-2(m+1)c_%7Bm+1%7D+2m%5C,c_m+c_m">. Usando <img src="https://latex.codecogs.com/png.latex?c_%7Bm+1%7D=%5Cdfrac%7B(m+%5Cfrac12)%5E2%7D%7B(m+1)%5E2%7D%5C,c_m">,</li>
+</ol>
+<p><img src="https://latex.codecogs.com/png.latex?-2(m+1)c_%7Bm+1%7D+(2m+1)c_m=2%5Cbig(m+%5Ctfrac12%5Cbig)c_m%5Cleft%5B1-%5Cfrac%7Bm+%5Cfrac12%7D%7Bm+1%7D%5Cright%5D=%5Cfrac%7Bm+%5Cfrac12%7D%7Bm+1%7D%5C,c_m."></p>
+<p>Por la fórmula de <img src="https://latex.codecogs.com/png.latex?%5Cmathcal%20L%5Bx%5Es%5D"> del ítem anterior, el coeficiente de <img src="https://latex.codecogs.com/png.latex?x%5Em"> en <img src="https://latex.codecogs.com/png.latex?%5Cmathcal%20L%5Cbig%5B%5Csum%20d_mx%5Em%5Cbig%5D"> es <img src="https://latex.codecogs.com/png.latex?(m+1)%5E2d_%7Bm+1%7D-(m+%5Ctfrac12)%5E2d_m">, lo que da (6). Se toma <img src="https://latex.codecogs.com/png.latex?d_0=0"> porque un término constante sumaría un múltiplo de <img src="https://latex.codecogs.com/png.latex?y_1">, que ya es solución.</p>
+<ol start="3" type="a">
+<li>Con <img src="https://latex.codecogs.com/png.latex?c_0=1">, <img src="https://latex.codecogs.com/png.latex?c_1=%5Ctfrac14">, <img src="https://latex.codecogs.com/png.latex?c_2=%5Ctfrac%7B9%7D%7B64%7D">:</li>
+</ol>
+<p><img src="https://latex.codecogs.com/png.latex?d_1=%5Ctfrac12,%5Cqquad%204d_2=%5Ctfrac94%5Ccdot%5Ctfrac12+%5Ctfrac34%5Ccdot%5Ctfrac14%5C%20%5CRightarrow%5C%20d_2=%5Ctfrac%7B21%7D%7B64%7D,%5Cqquad%209d_3=%5Ctfrac%7B25%7D%7B4%7D%5Ccdot%5Ctfrac%7B21%7D%7B64%7D+%5Ctfrac56%5Ccdot%5Ctfrac%7B9%7D%7B64%7D%5C%20%5CRightarrow%5C%20d_3=%5Ctfrac%7B185%7D%7B768%7D."></p>
+</div>
+</div>
+</section>
+<section id="interpretación-el-péndulo-casi-invertido" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="interpretación-el-péndulo-casi-invertido"><span class="header-section-number">2</span> Interpretación: el péndulo casi invertido</h2>
+<p>Si <img src="https://latex.codecogs.com/png.latex?%5Calpha%5Cto%5Cpi">, el péndulo se suelta casi exactamente sobre el punto más alto, que es un equilibrio inestable, y pasa cada vez más tiempo cerca de él, tanto al empezar a caer como al llegar al otro lado, donde casi se detiene antes de devolverse: <img src="https://latex.codecogs.com/png.latex?T%5Cto%5Cinfty">. La serie de <img src="https://latex.codecogs.com/png.latex?K"> que obtuvimos en <img src="https://latex.codecogs.com/png.latex?x=0"> no sirve ahí: es una serie en <img src="https://latex.codecogs.com/png.latex?x=k%5E2"> con radio de convergencia 1, y para <img src="https://latex.codecogs.com/png.latex?%5Calpha=170%5E%5Ccirc"> harían falta unos 900 términos para tener cuatro decimales correctos. Veamos qué dice sobre esto lo que acabamos de hacer. Sea <img src="https://latex.codecogs.com/png.latex?t=1-x=%5Ccos%5E2(%5Calpha/2)">.</p>
+<p><strong>Lo que dice el logaritmo.</strong> (a) Muestren que (3) conserva su forma al cambiar <img src="https://latex.codecogs.com/png.latex?x"> por <img src="https://latex.codecogs.com/png.latex?t=1-x">. Concluyan que cerca de <img src="https://latex.codecogs.com/png.latex?x=1"> las soluciones son <img src="https://latex.codecogs.com/png.latex?y_1(t)=%5Csum%20c_mt%5Em"> y <img src="https://latex.codecogs.com/png.latex?y_2(t)=y_1(t)%5Cln%20t+%5Csum%20d_mt%5Em">, con los mismos <img src="https://latex.codecogs.com/png.latex?c_m"> y <img src="https://latex.codecogs.com/png.latex?d_m"> de la sección anterior, y que <img src="https://latex.codecogs.com/png.latex?K(%5Csqrt%7Bx%7D)=A%5C,y_1(t)+B%5C,y_2(t)"> para ciertas constantes <img src="https://latex.codecogs.com/png.latex?A"> y <img src="https://latex.codecogs.com/png.latex?B">.</p>
+<ol start="2" type="a">
+<li>Expliquen por qué tiene que ser <img src="https://latex.codecogs.com/png.latex?B%5Cneq0"> y qué dice eso sobre el período cuando <img src="https://latex.codecogs.com/png.latex?%5Calpha%5Cto%5Cpi">. <em>(10 pts)</em></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>Con <img src="https://latex.codecogs.com/png.latex?x=1-t">: <img src="https://latex.codecogs.com/png.latex?x(1-x)=t(1-t)">, <img src="https://latex.codecogs.com/png.latex?1-2x=2t-1">, <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7Bd%7D%7Bdx%7D=-%5Cdfrac%7Bd%7D%7Bdt%7D"> y <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7Bd%5E2%7D%7Bdx%5E2%7D=%5Cdfrac%7Bd%5E2%7D%7Bdt%5E2%7D">. Entonces (3) queda</li>
+</ol>
+<p><img src="https://latex.codecogs.com/png.latex?t(1-t)%5C,y_%7Btt%7D+(1-2t)%5C,y_t-%5Cfrac14%5C,y=0,"></p>
+<p>la misma ecuación. Todo lo hecho en la sección 1 vale entonces en la variable <img src="https://latex.codecogs.com/png.latex?t">, con los mismos coeficientes. La solución general cerca de <img src="https://latex.codecogs.com/png.latex?x=1"> es <img src="https://latex.codecogs.com/png.latex?A%5C,y_1(t)+B%5C,y_2(t)">, y como <img src="https://latex.codecogs.com/png.latex?K"> es solución, tiene esa forma.</p>
+<ol start="2" type="a">
+<li>Si fuera <img src="https://latex.codecogs.com/png.latex?B=0">, <img src="https://latex.codecogs.com/png.latex?K%5Cto%20A"> cuando <img src="https://latex.codecogs.com/png.latex?t%5Cto0">, es decir, <img src="https://latex.codecogs.com/png.latex?K"> sería acotada en <img src="https://latex.codecogs.com/png.latex?k=1">, y entonces <img src="https://latex.codecogs.com/png.latex?T=4%5Csqrt%7Ba/g%7D%5C,K"> también. Pero un péndulo soltado en la posición más alta no cae nunca, así que <img src="https://latex.codecogs.com/png.latex?T%5Cto%5Cinfty"> cuando <img src="https://latex.codecogs.com/png.latex?%5Calpha%5Cto%5Cpi"> (en la integral (1), el integrando con <img src="https://latex.codecogs.com/png.latex?k=1"> es <img src="https://latex.codecogs.com/png.latex?1/%5Ccos%5Cvarphi">, que no es integrable en <img src="https://latex.codecogs.com/png.latex?%5Cvarphi=%5Cpi/2">). La raíz doble en <img src="https://latex.codecogs.com/png.latex?x=1"> implica que la única solución analítica allí es <img src="https://latex.codecogs.com/png.latex?y_1">, y <img src="https://latex.codecogs.com/png.latex?K"> no lo es: el logaritmo es inevitable. Como <img src="https://latex.codecogs.com/png.latex?y_2%5Csim%5Cln%20t%5Cto-%5Cinfty">, que <img src="https://latex.codecogs.com/png.latex?K"> crezca exige <img src="https://latex.codecogs.com/png.latex?B%3C0">, y el período diverge de forma logarítmica. Es la forma matemática de decir que el péndulo pasa cada vez más tiempo cerca del equilibrio inestable.</li>
+</ol>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <guid>https://arturosanjuan.xyz/cursos/odes/taller-4/</guid>
+  <pubDate>Mon, 09 Nov 2026 05:00:00 GMT</pubDate>
+</item>
+<item>
   <title>¿Puedes oír la forma de un tambor?</title>
   <dc:creator>Arturo Sanjuán</dc:creator>
   <link>https://arturosanjuan.xyz/cursos/odes/tambor/</link>
@@ -14173,955 +14312,6 @@ font-style: inherit;">/* debe dar exactamente 1 */</span></span></code></pre></d
   <guid>https://arturosanjuan.xyz/cursos/odes/familiasortogonales/</guid>
   <pubDate>Fri, 21 Aug 2026 05:00:00 GMT</pubDate>
   <media:content url="https://arturosanjuan.xyz/cursos/odes/familiasortogonales/circulos.png" medium="image" type="image/png" height="144" width="144"/>
-</item>
-<item>
-  <title>Modelación con Ecuaciones Diferenciales</title>
-  <dc:creator>Arturo Sanjuán</dc:creator>
-  <link>https://arturosanjuan.xyz/cursos/odes/modelacion/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="modelo-interés-compuesto-y-el-número-e" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="modelo-interés-compuesto-y-el-número-e"><span class="header-section-number">1</span> Modelo — interés compuesto y el número <img src="https://latex.codecogs.com/png.latex?e"></h2>
-<p>Las cajitas de Nu funcionan con interés compuesto <strong>capitalizado diariamente</strong>: el interés del día se calcula sobre el capital más el interés ya acumulado. Si la tasa efectiva anual es <img src="https://latex.codecogs.com/png.latex?i_%7BEA%7D">, la tasa diaria <img src="https://latex.codecogs.com/png.latex?i_d"> satisface</p>
-<p><img src="https://latex.codecogs.com/png.latex?(1+i_d)%5E%7B365%7D%20=%201+i_%7BEA%7D"></p>
-<p>Con <img src="https://latex.codecogs.com/png.latex?i_%7BEA%7D=9.25%5C%25">, despejando obtenemos <img src="https://latex.codecogs.com/png.latex?i_d%5Capprox%200.02458%5C%25">, y la tasa nominal anual asociada es</p>
-<p><img src="https://latex.codecogs.com/png.latex?r%20=%20365%5C,i_d%20%5Capprox%208.97%5C%25"></p>
-<p>Si <img src="https://latex.codecogs.com/png.latex?n"> es el número de días transcurridos y <img src="https://latex.codecogs.com/png.latex?A_0"> el capital inicial (sin nuevos aportes), el capital en el día <img src="https://latex.codecogs.com/png.latex?n"> es</p>
-<p><img src="https://latex.codecogs.com/png.latex?A(n)%20=%20A_0%5Cleft(1+%5Cfrac%7Br%7D%7B365%7D%5Cright)%5E%7Bn%7D"></p>
-<div class="callout callout-style-default callout-note callout-titled" title="¿Qué pasa si en vez de 365 capitalizamos $n$ veces, con $n\to\infty$?">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>¿Qué pasa si en vez de 365 capitalizamos <img src="https://latex.codecogs.com/png.latex?n"> veces, con <img src="https://latex.codecogs.com/png.latex?n%5Cto%5Cinfty">?
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Esta es exactamente la pregunta que se hizo <strong>Jacob Bernoulli</strong> en 1683, estudiando el mismo problema de interés compuesto: ¿converge <img src="https://latex.codecogs.com/png.latex?%5Cleft(1+%5Cdfrac%7Br%7D%7Bn%7D%5Cright)%5En"> cuando <img src="https://latex.codecogs.com/png.latex?n%5Cto%5Cinfty">? Bernoulli mostró que sí, y que para <img src="https://latex.codecogs.com/png.latex?r=1"> el límite está entre 2 y 3 — el primer encuentro documentado con lo que hoy llamamos <img src="https://latex.codecogs.com/png.latex?e">, sin nombre ni notación todavía.</p>
-<p>Fue <strong>Euler</strong>, en 1748 (<em>Introductio in analysin infinitorum</em>), quien le dio el nombre <img src="https://latex.codecogs.com/png.latex?e">, demostró que es irracional (vía fracciones continuas — la prueba rigurosa con la serie <img src="https://latex.codecogs.com/png.latex?%5Csum%201/k!"> es de <strong>Fourier</strong>, 1815), y notó la propiedad crucial: <img src="https://latex.codecogs.com/png.latex?(e%5Ex)'%20=%20e%5Ex">. Es decir, <img src="https://latex.codecogs.com/png.latex?e%5E%7Bkt%7D"> satisface la ecuación diferencial <img src="https://latex.codecogs.com/png.latex?y'=ky">.</p>
-</div>
-</div>
-<p><strong>Comparación numérica.</strong> Si depositamos $100.000 en una cajita a <img src="https://latex.codecogs.com/png.latex?i_%7BEA%7D=9.25%5C%25"> y lo dejamos un año:</p>
-<p><img src="https://latex.codecogs.com/png.latex?100%7B.%7D000%5Ccdot(1+i_%7BEA%7D)%20=%20100%7B.%7D000%5Ccdot(1+9.25%5C%25)%20=%20%5C$109%7B.%7D250"></p>
-<p>Si en cambio capitalizáramos <strong>continuamente</strong> (el límite <img src="https://latex.codecogs.com/png.latex?n%5Cto%5Cinfty">), usando <img src="https://latex.codecogs.com/png.latex?A(t)=A_0%20e%5E%7Brt%7D"> con la tasa nominal <img src="https://latex.codecogs.com/png.latex?r%5Capprox%208.97%5C%25">:</p>
-<p><img src="https://latex.codecogs.com/png.latex?100%7B.%7D000%5Ccdot%20e%5E%7B0.0897%7D%20%5Capprox%20%5C$109%7B.%7D385"></p>
-<p>La diferencia es de apenas $135 sobre cien mil pesos en un año — el modelo continuo aproxima extraordinariamente bien al discreto, aun con solo 365 capitalizaciones.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="De dónde sale la EDO">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>De dónde sale la EDO
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Si <img src="https://latex.codecogs.com/png.latex?A(t)%20=%20A_0%20e%5E%7Bkt%7D">, entonces <img src="https://latex.codecogs.com/png.latex?A'(t)%20=%20k%20A_0%20e%5E%7Bkt%7D%20=%20kA(t)">, es decir</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7BdA%7D%7Bdt%7D%20=%20kA%20%5Cqquad%5CLongleftrightarrow%5Cqquad%20%5Cfrac%7B1%7D%7BA%7D%5Cfrac%7BdA%7D%7Bdt%7D%20=%20k"></p>
-<p>El cambio <strong>fraccional</strong> (el error relativo) de <img src="https://latex.codecogs.com/png.latex?A"> respecto al tiempo es constante, y esa constante es justamente la tasa de interés nominal <img src="https://latex.codecogs.com/png.latex?100k%5C,%5C%25">.</p>
-</div>
-</div>
-</section>
-<section id="ejercicio-tiempo-para-duplicar-un-capital" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="ejercicio-tiempo-para-duplicar-un-capital"><span class="header-section-number">2</span> Ejercicio — tiempo para duplicar un capital</h2>
-<p><em>(Simmons, ejercicio 2, p.&nbsp;27)</em> Se invierte un capital <img src="https://latex.codecogs.com/png.latex?P"> a una tasa nominal anual <img src="https://latex.codecogs.com/png.latex?r">, con capitalización continua. ¿Cuánto tiempo debe pasar para duplicar el capital inicial?</p>
-<p>Partimos de <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7BdA%7D%7Bdt%7D=rA">, <img src="https://latex.codecogs.com/png.latex?A(0)=P">, cuya solución es <img src="https://latex.codecogs.com/png.latex?A(t)=Pe%5E%7Brt%7D">. Queremos <img src="https://latex.codecogs.com/png.latex?Pe%5E%7Brt%7D=2P">:</p>
-<p><img src="https://latex.codecogs.com/png.latex?e%5E%7Brt%7D=2%20%5Cquad%5CLongrightarrow%5Cquad%20rt=%5Clog%202%20%5Cquad%5CLongrightarrow%5Cquad%20t=%5Cfrac%7B%5Clog%202%7D%7Br%7D"></p>
-<p>Para la tasa nominal de Nu (<img src="https://latex.codecogs.com/png.latex?r%5Capprox%208.97%5C%25">):</p>
-<p><img src="https://latex.codecogs.com/png.latex?t%20=%20%5Cfrac%7B%5Clog%202%7D%7B0.0897%7D%5Capprox%207.73%20%5Ctext%7B%20a%C3%B1os%7D"></p>
-<p>— poco más de 7 años y 8 meses.</p>
-<p><strong>Variante — ¿qué tasa se necesita para duplicar en exactamente 10 años?</strong> Despejamos <img src="https://latex.codecogs.com/png.latex?r"> de <img src="https://latex.codecogs.com/png.latex?e%5E%7B10r%7D=2">:</p>
-<p><img src="https://latex.codecogs.com/png.latex?r%20=%20%5Cfrac%7B%5Clog%202%7D%7B10%7D%20%5Capprox%200.0693%20=%206.93%5C%25%5C%20%5Ctext%7B(nominal%20anual)%7D"></p>
-<p>lo que corresponde a una tasa diaria <img src="https://latex.codecogs.com/png.latex?i_d%5Capprox%200.01894%5C%25"> y una tasa efectiva anual <img src="https://latex.codecogs.com/png.latex?i_%7BEA%7D%5Capprox%207.1%5C%25">.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb1-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">kill</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">all</span>);</span>
-<span id="cb1-2"></span>
-<span id="cb1-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/* tiempo para duplicar, dada la tasa nominal r */</span></span>
-<span id="cb1-4"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">ode</span>: <span class="do" style="color: #5E5E5E;
-background-color: null;
-font-style: italic;">'</span><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">A</span>,<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">t</span>) = <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">r</span>*<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">A</span>;</span>
-<span id="cb1-5"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">sol</span>: <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ode2</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">ode</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">A</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">t</span>);</span>
-<span id="cb1-6"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">sol</span>: <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ic1</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">sol</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">t</span>=<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">A</span>=<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">P</span>);</span>
-<span id="cb1-7"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/* sol: A = P*%e^(r*t) */</span></span>
-<span id="cb1-8"></span>
-<span id="cb1-9"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/* despejar t tal que A = 2P */</span></span>
-<span id="cb1-10"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">t_duplicar</span>: <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">solve</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>*<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">P</span> = <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">rhs</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">sol</span>), <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">t</span>);</span>
-<span id="cb1-11"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ev</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">t_duplicar</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">r</span> = <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.0897</span>), <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">numer</span>;</span>
-<span id="cb1-12"></span>
-<span id="cb1-13"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/* variante: despejar r para duplicar en 10 años */</span></span>
-<span id="cb1-14"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">r_necesaria</span>: <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">solve</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>*<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">P</span> = <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">subst</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">t</span>=<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>, <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">rhs</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">sol</span>)), <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">r</span>);</span>
-<span id="cb1-15"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ev</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">r_necesaria</span>), <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">numer</span>;</span></code></pre></div></div>
-</div>
-</div>
-</section>
-<section id="modelo-crecimiento-exponencial-y-el-absurdo-de-malthus" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="modelo-crecimiento-exponencial-y-el-absurdo-de-malthus"><span class="header-section-number">3</span> Modelo — crecimiento exponencial y el absurdo de Malthus</h2>
-<p>Un cultivo de bacterias se reproduce por fisión celular: en cada ciclo cada bacteria se divide en dos. Si empezamos con <img src="https://latex.codecogs.com/png.latex?N_0"> bacterias sincronizadas, tras <img src="https://latex.codecogs.com/png.latex?n"> ciclos hay</p>
-<p><img src="https://latex.codecogs.com/png.latex?N(n)%20=%202%5En%20N_0"></p>
-<p><strong>Un ejemplo que se vuelve absurdo.</strong> La <em>E. coli</em> se divide cada 20 minutos y vive (en cultivo) unos 10 días. Empezando con una sola bacteria, al cabo de 10 días habría aproximadamente <img src="https://latex.codecogs.com/png.latex?2%5E%7B720%7D%5Capprox%202.9%5Ctimes%2010%5E%7B216%7D"> bacterias. Comparando volúmenes (universo observable <img src="https://latex.codecogs.com/png.latex?%5Capprox%204%5Ctimes%2010%5E%7B80%7D%5C,%5Ctext%7Bm%7D%5E3">, una <em>E. coli</em> <img src="https://latex.codecogs.com/png.latex?%5Capprox%201.3%5Ctimes%2010%5E%7B-18%7D%5C,%5Ctext%7Bm%7D%5E3">), esa cantidad de bacterias llenaría el equivalente a <strong><img src="https://latex.codecogs.com/png.latex?9.4%5Ccdot%2010%5E%7B210%7D"> universos observables</strong>. Absurdo — y la conclusión pedagógica es clara: <strong>los modelos puramente exponenciales solo son razonables en periodos cortos</strong>, mientras los recursos disponibles no sean una restricción real.</p>
-<p><strong>Pasando al modelo continuo.</strong> Si <img src="https://latex.codecogs.com/png.latex?h"> es la duración de un ciclo,</p>
-<p><img src="https://latex.codecogs.com/png.latex?N(t+h)-N(t)%20=%20%5Cleft(2%5E%7B(t+h)/h%7D-2%5E%7Bt/h%7D%5Cright)N_0%20=%202%5E%7Bt/h%7D%5Cleft(2%5E%7Bh/h%5Ccdot%201%7D-1%5Cright)N_0"></p>
-<p>Dividiendo por <img src="https://latex.codecogs.com/png.latex?h"> y tomando el límite <img src="https://latex.codecogs.com/png.latex?h%5Cto%200"> (usando <img src="https://latex.codecogs.com/png.latex?%5Clog%202"> como la tasa instantánea, que llamamos <img src="https://latex.codecogs.com/png.latex?k">), se llega a</p>
-<p><img src="https://latex.codecogs.com/png.latex?N'(t)%20=%20kN(t),%20%5Cqquad%20N(0)=N_0%20%5Cqquad%5CLongrightarrow%5Cqquad%20N(t)%20=%20N_0e%5E%7Bkt%7D"></p>
-<p>Si <img src="https://latex.codecogs.com/png.latex?k%3E0"> la población crece sin cota; si <img src="https://latex.codecogs.com/png.latex?k%3C0"> decrece hacia cero; si <img src="https://latex.codecogs.com/png.latex?k=0"> es constante.</p>
-<p><strong>Malthus (1798)</strong> usó exactamente esta ecuación, <img src="https://latex.codecogs.com/png.latex?N'=kN">, para argumentar que el crecimiento poblacional (geométrico) superaría inevitablemente al crecimiento de la producción de alimentos (que él asumía lineal) — de ahí su predicción de crisis recurrentes por hambruna, guerra o enfermedad (ver la nota histórica más abajo sobre qué tan literal era esa predicción). En Colombia, la tasa de crecimiento poblacional actual es de aproximadamente <img src="https://latex.codecogs.com/png.latex?k%5Capprox%200.0102"> (1.02% anual).</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb2-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">kill</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">all</span>);</span>
-<span id="cb2-2"></span>
-<span id="cb2-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/* fisión celular de E. coli: 10 días, ciclos de 20 min */</span></span>
-<span id="cb2-4"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">ciclos</span>: <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>*<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">24</span>*<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">60</span>/<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">20</span>;   <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/* 720 ciclos */</span></span>
-<span id="cb2-5"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">N_final</span>: <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>^<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">ciclos</span>;      <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/* ~2.9e216 */</span></span>
-<span id="cb2-6"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">float</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">N_final</span>);</span>
-<span id="cb2-7"></span>
-<span id="cb2-8"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">vol_universo</span>: <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">4e80</span>;      <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/* m^3 */</span></span>
-<span id="cb2-9"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">vol_ecoli</span>: <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1.3e-18</span>;      <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/* m^3 */</span></span>
-<span id="cb2-10"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">universos_llenos</span>: <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">float</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">N_final</span>*<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">vol_ecoli</span>/<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">vol_universo</span>);</span>
-<span id="cb2-11"></span>
-<span id="cb2-12"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/* modelo continuo N' = kN */</span></span>
-<span id="cb2-13"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">depends</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">N</span>,<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">t</span>);</span>
-<span id="cb2-14"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">ode</span>: <span class="do" style="color: #5E5E5E;
-background-color: null;
-font-style: italic;">'</span><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">N</span>,<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">t</span>) = <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">k</span>*<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">N</span>;</span>
-<span id="cb2-15"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">sol</span>: <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ode2</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">ode</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">N</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">t</span>);</span>
-<span id="cb2-16"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">sol</span>: <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ic1</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">sol</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">t</span>=<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">N</span>=<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">N0</span>);</span>
-<span id="cb2-17"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/* sol: N = N0*%e^(k*t) */</span></span></code></pre></div></div>
-</div>
-</div>
-</section>
-<section id="modelo-crecimiento-logístico-con-capacidad-de-carga" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="modelo-crecimiento-logístico-con-capacidad-de-carga"><span class="header-section-number">4</span> Modelo — crecimiento logístico (con capacidad de carga)</h2>
-<p><em>(Ejercicio 10)</em> El crecimiento exponencial ignora que los recursos son limitados. Si existe una <strong>capacidad de carga</strong> <img src="https://latex.codecogs.com/png.latex?K"> (el tamaño máximo que el entorno puede sostener), un modelo más realista es</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7BdN%7D%7Bdt%7D%20=%20%5Calpha%5C,%20N(K-N),%20%5Cqquad%20N(0)=N_0"></p>
-<p>Cuando <img src="https://latex.codecogs.com/png.latex?N"> es pequeño comparado con <img src="https://latex.codecogs.com/png.latex?K">, el término <img src="https://latex.codecogs.com/png.latex?(K-N)%5Capprox%20K"> y la ecuación se comporta casi como la exponencial pura; cuando <img src="https://latex.codecogs.com/png.latex?N"> se acerca a <img src="https://latex.codecogs.com/png.latex?K">, el crecimiento se frena y se detiene.</p>
-<p><strong>Resolviendo por variables separables.</strong> Separando y usando fracciones parciales,</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7BdN%7D%7BN(K-N)%7D%20=%20%5Calpha%5C,dt%20%5Cqquad%5CLongrightarrow%5Cqquad%20%5Cfrac%7B1%7D%7BK%7D%5Clog%5Cleft%7C%5Cfrac%7BN%7D%7BN-K%7D%5Cright%7C%20=%20%5Calpha%20t%20+%20C"></p>
-<p>Exponenciando y aplicando la condición inicial <img src="https://latex.codecogs.com/png.latex?N(0)=N_0">, se llega a la forma cerrada</p>
-<p><img src="https://latex.codecogs.com/png.latex?N(t)%20=%20%5Cfrac%7BK%7D%7B1+%5Cleft(%5Cdfrac%7BK-N_0%7D%7BN_0%7D%5Cright)e%5E%7B-K%5Calpha%20t%7D%7D"></p>
-<p>— la clásica <strong>curva sigmoide</strong> (forma de S): arranca cerca de <img src="https://latex.codecogs.com/png.latex?N_0">, crece con concavidad hacia arriba, pasa por un punto de inflexión en <img src="https://latex.codecogs.com/png.latex?N=K/2">, y se aplana asintóticamente hacia <img src="https://latex.codecogs.com/png.latex?K">.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima — versión completa, paso a paso">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima — versión completa, paso a paso
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb3-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">kill</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">all</span>);</span>
-<span id="cb3-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">depends</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">N</span>,<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">t</span>);</span>
-<span id="cb3-3"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">diffeq</span>: <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">N</span>,<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">t</span>) = <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">alpha</span>*<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">N</span>*(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">K</span>-<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">N</span>);</span>
-<span id="cb3-4"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">diffeq</span>;</span>
-<span id="cb3-5"></span>
-<span id="cb3-6"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">solucion</span>: <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ode2</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">diffeq</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">N</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">t</span>);</span>
-<span id="cb3-7"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">solucion</span>: (<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">logcontract</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">solucion</span>)*<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">K</span>*<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">alpha</span>);</span>
-<span id="cb3-8"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">solucion</span>: <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">exp</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">lhs</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">solucion</span>))=<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">exp</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">rhs</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">solucion</span>));</span>
-<span id="cb3-9"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">solucion</span>: <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ic1</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">solucion</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">t</span>=<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">N</span>=<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">N0</span>);</span>
-<span id="cb3-10"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">solucion</span>: <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">solve</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">solucion</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">N</span>);</span>
-<span id="cb3-11"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/* solucion: [N=(K*N0*%e^(K*alpha*t))/(N0*%e^(K*alpha*t)-N0+K)] */</span></span>
-<span id="cb3-12"></span>
-<span id="cb3-13"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/* IMPORTANTE: solve() siempre devuelve una LISTA, incluso con</span></span>
-<span id="cb3-14"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">   una sola solución. Hay que indexar solucion[1] antes de pedir rhs(). */</span></span>
-<span id="cb3-15"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">N_explicita</span>: <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">rhs</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">solucion</span>[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>]);</span>
-<span id="cb3-16"></span>
-<span id="cb3-17"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/* Chequeo rápido: en t=0 debe dar N0 */</span></span>
-<span id="cb3-18"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ev</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">N_explicita</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">t</span>=<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>);</span>
-<span id="cb3-19"></span>
-<span id="cb3-20"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/* Graficar: si plot2d abre una ventana interactiva (gnuplot_pipes),</span></span>
-<span id="cb3-21"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">   eso falla en un entorno sin pantalla (batch/consola) y plot2d</span></span>
-<span id="cb3-22"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">   devuelve "false" sin dibujar nada. La solución es forzar la</span></span>
-<span id="cb3-23"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">   salida a un archivo PNG en vez de una ventana: */</span></span>
-<span id="cb3-24"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">load</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">draw</span>);</span>
-<span id="cb3-25"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">draw2d</span>(</span>
-<span id="cb3-26">    <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">explicit</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ev</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">N_explicita</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">K</span>=<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">alpha</span>=<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">N0</span>=<span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.2</span>), <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">t</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span>),</span>
-<span id="cb3-27">    <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">xlabel</span> = <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"t"</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">ylabel</span> = <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"N(t)"</span>,</span>
-<span id="cb3-28">    <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">proportional_axes</span> = <span class="do" style="color: #5E5E5E;
-background-color: null;
-font-style: italic;">'</span><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">xy</span>,</span>
-<span id="cb3-29">    <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">terminal</span> = <span class="do" style="color: #5E5E5E;
-background-color: null;
-font-style: italic;">'</span><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">png</span>,</span>
-<span id="cb3-30">    <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">file_name</span> = <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"logistica"</span></span>
-<span id="cb3-31">)$</span>
-<span id="cb3-32"></span>
-<span id="cb3-33"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/* Alternativa con plot2d clásico, forzando el terminal PNG a mano: */</span></span>
-<span id="cb3-34"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">plot2d</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ev</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">N_explicita</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">K</span>=<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">alpha</span>=<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">N0</span>=<span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.2</span>), [<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">t</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span>])$</span></code></pre></div></div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="Video explicativo">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Video explicativo
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div style="max-width:640px;margin:1em auto;">
-  <video controls="" style="width:100%;border-radius:8px;border:1px solid #ddd;">
-    <source src="https://www.dropbox.com/scl/fi/v5oesfarbtti1evrfjnrc/explicacion-maxima.mp4?rlkey=vt046u8zejwzeiqj1udbff34u&amp;st=ejcsmmri&amp;raw=1" type="video/mp4">
-    Tu navegador no soporta la reproducción de video en línea. Puedes descargarlo directamente
-    <a href="https://www.dropbox.com/scl/fi/v5oesfarbtti1evrfjnrc/explicacion-maxima.mp4?rlkey=vt046u8zejwzeiqj1udbff34u&amp;st=ejcsmmri&amp;dl=1">aquí</a>.
-  </video>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="Applet — la trampa de $\ln(K-N)$ vs. $\ln(N-K)$">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Applet — la trampa de <img src="https://latex.codecogs.com/png.latex?%5Cln(K-N)"> vs.&nbsp;<img src="https://latex.codecogs.com/png.latex?%5Cln(N-K)">
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Al integrar <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7B1%7D%7BK-N%7D"> hay dos antiderivadas igualmente válidas (<img src="https://latex.codecogs.com/png.latex?-%5Clog(K-N)"> o <img src="https://latex.codecogs.com/png.latex?-%5Clog(N-K)">, que difieren en una constante que la condición inicial absorbe), así que si tu cuenta a mano da un signo distinto al de Maxima, <strong>ambas pueden ser correctas</strong> — lo importante es que, tras aplicar la condición inicial, ambas dan exactamente la misma curva <img src="https://latex.codecogs.com/png.latex?N(t)">.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="Simulador — curva logística (sigmoide) para distintos $K$, $\alpha$ y $N_0$">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Simulador — curva logística (sigmoide) para distintos <img src="https://latex.codecogs.com/png.latex?K">, <img src="https://latex.codecogs.com/png.latex?%5Calpha"> y <img src="https://latex.codecogs.com/png.latex?N_0">
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div style="border:1px solid #ddd;border-radius:8px;padding:16px;max-width:640px;margin:1em auto;font-family:sans-serif;">
-  <canvas id="log-canvas" width="580" height="380" style="width:100%;height:auto;background:#fff;"></canvas>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;margin-top:10px;">
-    <label>Capacidad de carga $K$: <span id="log-K-val">10</span>
-      <input type="range" id="log-K" min="1" max="20" step="0.5" value="10" style="width:100%;">
-    </label>
-    <label>Tasa $\alpha$: <span id="log-alpha-val">0.05</span>
-      <input type="range" id="log-alpha" min="0.01" max="0.5" step="0.01" value="0.05" style="width:100%;">
-    </label>
-    <label>Población inicial $N_0$: <span id="log-N0-val">1</span>
-      <input type="range" id="log-N0" min="0.1" max="20" step="0.1" value="1" style="width:100%;">
-    </label>
-    <label>Ventana de tiempo $t_{max}$: <span id="log-T-val">40</span>
-      <input type="range" id="log-T" min="5" max="100" step="1" value="40" style="width:100%;">
-    </label>
-  </div>
-  <p style="font-size:0.9em;color:#555;margin-top:10px;">
-    La curva roja es $N(t)=\dfrac{K}{1+\left(\frac{K-N_0}{N_0}\right)e^{-K\alpha t}}$. La línea gris punteada marca la capacidad de carga $K$; el punto verde marca el punto de inflexión en $N=K/2$. Prueba mover $N_0$ por <em>encima</em> de $K$: la curva decrece hacia $K$ en vez de crecer — el modelo funciona igual en ambos casos.
-  </p>
-</div>
-<script>
-(function(){
-  const canvas = document.getElementById('log-canvas');
-  const ctx = canvas.getContext('2d');
-  const Ks = document.getElementById('log-K');
-  const As = document.getElementById('log-alpha');
-  const N0s = document.getElementById('log-N0');
-  const Ts = document.getElementById('log-T');
-  const KvalEl = document.getElementById('log-K-val');
-  const AvalEl = document.getElementById('log-alpha-val');
-  const N0valEl = document.getElementById('log-N0-val');
-  const TvalEl = document.getElementById('log-T-val');
-
-  const W = canvas.width, H = canvas.height;
-  const margin = {left: 55, right: 20, top: 20, bottom: 40};
-
-  function N(t, K, alpha, N0) {
-    const ratio = (K - N0) / N0;
-    return K / (1 + ratio * Math.exp(-K * alpha * t));
-  }
-
-  function draw(){
-    const K = parseFloat(Ks.value);
-    const alpha = parseFloat(As.value);
-    const N0 = parseFloat(N0s.value);
-    const Tmax = parseFloat(Ts.value);
-    KvalEl.textContent = K.toFixed(1);
-    AvalEl.textContent = alpha.toFixed(2);
-    N0valEl.textContent = N0.toFixed(1);
-    TvalEl.textContent = Tmax.toFixed(0);
-
-    ctx.clearRect(0,0,W,H);
-
-    // rango vertical: cubrir min(N0,0) .. max(K,N0) con margen
-    const plotW = W - margin.left - margin.right;
-    const plotH = H - margin.top - margin.bottom;
-    let yMax = Math.max(K, N0) * 1.15;
-    let yMin = 0;
-
-    function toPx(t, n){
-      const px = margin.left + (t / Tmax) * plotW;
-      const py = margin.top + plotH - ((n - yMin) / (yMax - yMin)) * plotH;
-      return [px, py];
-    }
-
-    // ejes
-    ctx.strokeStyle = '#333'; ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(margin.left, margin.top);
-    ctx.lineTo(margin.left, margin.top + plotH);
-    ctx.lineTo(margin.left + plotW, margin.top + plotH);
-    ctx.stroke();
-
-    // linea K (capacidad de carga)
-    ctx.strokeStyle = '#999'; ctx.setLineDash([5,4]); ctx.lineWidth = 1;
-    const [,pyK] = toPx(0, K);
-    ctx.beginPath(); ctx.moveTo(margin.left, pyK); ctx.lineTo(margin.left+plotW, pyK); ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillStyle = '#777'; ctx.font = '12px sans-serif';
-    ctx.fillText('K = ' + K.toFixed(1), margin.left + plotW - 55, pyK - 6);
-
-    // curva logistica
-    ctx.strokeStyle = '#d62728'; ctx.lineWidth = 2.5;
-    ctx.beginPath();
-    let first = true;
-    for (let t = 0; t <= Tmax; t += Tmax/300) {
-      const n = N(t, K, alpha, N0);
-      const [px, py] = toPx(t, n);
-      if (first) { ctx.moveTo(px,py); first = false; } else ctx.lineTo(px,py);
-    }
-    ctx.stroke();
-
-    // punto de inflexion en N = K/2, si esta dentro de la ventana visible
-    const ratio = (K - N0) / N0;
-    if (ratio > 0) {
-      const tInfl = Math.log(ratio) / (K * alpha);
-      if (tInfl >= 0 && tInfl <= Tmax) {
-        const [ix, iy] = toPx(tInfl, K/2);
-        ctx.fillStyle = '#2ca02c';
-        ctx.beginPath(); ctx.arc(ix, iy, 4.5, 0, 2*Math.PI); ctx.fill();
-        ctx.fillStyle = '#2ca02c'; ctx.font = '12px sans-serif';
-        ctx.fillText('inflexión', ix+8, iy-8);
-      }
-    }
-
-    // punto inicial N0
-    const [p0x, p0y] = toPx(0, N0);
-    ctx.fillStyle = '#1f77b4';
-    ctx.beginPath(); ctx.arc(p0x, p0y, 4, 0, 2*Math.PI); ctx.fill();
-
-    // etiquetas de ejes
-    ctx.fillStyle = '#333'; ctx.font = '12px sans-serif';
-    ctx.fillText('t', margin.left + plotW - 8, margin.top + plotH + 20);
-    ctx.save();
-    ctx.translate(14, margin.top + plotH/2);
-    ctx.rotate(-Math.PI/2);
-    ctx.fillText('N(t)', 0, 0);
-    ctx.restore();
-
-    // marcas numericas en eje y (0 y K)
-    ctx.fillText('0', margin.left - 18, margin.top + plotH + 4);
-  }
-
-  [Ks, As, N0s, Ts].forEach(el => el.addEventListener('input', draw));
-  draw();
-})();
-</script>
-</div>
-</div>
-</section>
-<section id="modelo-decaimiento-radioactivo" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="modelo-decaimiento-radioactivo"><span class="header-section-number">5</span> Modelo — decaimiento radioactivo</h2>
-<p>La descomposición radioactiva se rige por <img src="https://latex.codecogs.com/png.latex?%5Cdfrac%7BdA%7D%7Bdt%7D=-kA"> (<img src="https://latex.codecogs.com/png.latex?k%3E0">), donde <img src="https://latex.codecogs.com/png.latex?A"> mide la cantidad de sustancia. La solución es <img src="https://latex.codecogs.com/png.latex?A(t)=A_0e%5E%7B-kt%7D">, y la <strong>vida media</strong> <img src="https://latex.codecogs.com/png.latex?%5Ctau"> (tiempo para que decaiga la mitad) satisface <img src="https://latex.codecogs.com/png.latex?%5Cdfrac12=e%5E%7B-k%5Ctau%7D">, de donde <img src="https://latex.codecogs.com/png.latex?k=%5Cdfrac%7B%5Clog%202%7D%7B%5Ctau%7D">.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Ejercicio 13 — vida media de 20 días">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Ejercicio 13 — vida media de 20 días
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Si la vida media de una sustancia radioactiva es 20 días, ¿cuánto tardará en decaer el 99% de la sustancia?</p>
-</div>
-</div>
-<p>Con <img src="https://latex.codecogs.com/png.latex?%5Ctau=20">: <img src="https://latex.codecogs.com/png.latex?k=%5Cdfrac%7B%5Clog%202%7D%7B20%7D%5Capprox%200.03466">. Que decaiga el 99% significa que queda el 1%:</p>
-<p><img src="https://latex.codecogs.com/png.latex?0.01%20=%20e%5E%7B-kt%7D%20%5Cquad%5CLongrightarrow%5Cquad%20t%20=%20%5Cfrac%7B%5Clog(100)%7D%7Bk%7D%20=%20%5Cfrac%7B20%5Clog(100)%7D%7B%5Clog%202%7D%20%5Capprox%20133%20%5Ctext%7B%20d%C3%ADas%7D"></p>
-<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb4-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">kill</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">all</span>);</span>
-<span id="cb4-2"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">tau</span>: <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">20</span>;</span>
-<span id="cb4-3"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">k</span>: <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">log</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>)/<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">tau</span>;</span>
-<span id="cb4-4"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">t99</span>: <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">log</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">100</span>)/<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">k</span>;</span>
-<span id="cb4-5"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">float</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">t99</span>);   <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/* ~132.9 dias */</span></span></code></pre></div></div>
-</div>
-</div>
-</section>
-<section id="modelo-mezclas-en-un-tanque" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="modelo-mezclas-en-un-tanque"><span class="header-section-number">6</span> Modelo — mezclas en un tanque</h2>
-<p>Un tanque contiene 50 galones de salmuera con 75 libras de sal disueltas. Entra salmuera con 3 lb/gal a razón de 2 gal/min, y la mezcla (bien agitada) sale a la misma tasa de 2 gal/min. ¿Cuándo habrá 125 libras de sal en el tanque?</p>
-<p>Sea <img src="https://latex.codecogs.com/png.latex?x(t)"> la cantidad de sal (en libras) en el instante <img src="https://latex.codecogs.com/png.latex?t">. Como el volumen se mantiene constante en 50 galones, la concentración de salida es <img src="https://latex.codecogs.com/png.latex?x/50"> lb/gal:</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bdx%7D%7Bdt%7D%20=%20%5Cunderbrace%7B3%5Ccdot%202%7D_%7B%5Ctext%7Bentra%7D%7D%20-%20%5Cunderbrace%7B%5Cfrac%7Bx%7D%7B50%7D%5Ccdot%202%7D_%7B%5Ctext%7Bsale%7D%7D%20=%206-%5Cfrac%7Bx%7D%7B25%7D"></p>
-<p>Separando variables:</p>
-<p><img src="https://latex.codecogs.com/png.latex?%5Cfrac%7Bdx%7D%7B6-x/25%7D%20=%20dt%20%5Cquad%5CLongrightarrow%5Cquad%20-25%5Clog(150-x)%20=%20t+C%20%5Cquad%5CLongrightarrow%5Cquad%20x(t)%20=%20150-Ce%5E%7B-t/25%7D"></p>
-<p>Con <img src="https://latex.codecogs.com/png.latex?x(0)=75">: <img src="https://latex.codecogs.com/png.latex?75=150-C%20%5CRightarrow%20C=75">. Entonces</p>
-<p><img src="https://latex.codecogs.com/png.latex?x(t)%20=%2075%5Cleft(2-e%5E%7B-t/25%7D%5Cright)"></p>
-<p>Buscamos <img src="https://latex.codecogs.com/png.latex?t"> tal que <img src="https://latex.codecogs.com/png.latex?x(t)=125">:</p>
-<p><img src="https://latex.codecogs.com/png.latex?125%20=%2075%5Cleft(2-e%5E%7B-t/25%7D%5Cright)%20%5Cquad%5CLongrightarrow%5Cquad%20t%20%5Capprox%2027.46%20%5Ctext%7B%20min%7D"></p>
-<div class="callout callout-style-default callout-note callout-titled" title="Haciendo las cuentas con Maxima">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Haciendo las cuentas con Maxima
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode maxima code-with-copy"><code class="sourceCode maxima"><span id="cb5-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">kill</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">all</span>);</span>
-<span id="cb5-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">depends</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>,<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">t</span>);</span>
-<span id="cb5-3"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">ode</span>: <span class="do" style="color: #5E5E5E;
-background-color: null;
-font-style: italic;">'</span><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">diff</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>,<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">t</span>) = <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">6</span> - <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>/<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">25</span>;</span>
-<span id="cb5-4"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">sol</span>: <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ode2</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">ode</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">t</span>);</span>
-<span id="cb5-5"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">sol</span>: <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ic1</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">sol</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">t</span>=<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>=<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">75</span>);</span>
-<span id="cb5-6"><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">sol_t</span>: <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">solve</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">subst</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">x</span>=<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">125</span>, <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">sol</span>), <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">t</span>);</span>
-<span id="cb5-7"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">float</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">rhs</span>(<span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">sol_t</span>[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>]));   <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">/* ~27.46 min */</span></span></code></pre></div></div>
-</div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled" title="Tarea">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>Tarea
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Hacer todos los ejercicios de esa sección, usando máxima para comprobar los resultados y teniendo cuidado con las magnitudes físicas.</p>
-</div>
-</div>
-
-
-</section>
-
- ]]></description>
-  <guid>https://arturosanjuan.xyz/cursos/odes/modelacion/</guid>
-  <pubDate>Mon, 17 Aug 2026 05:00:00 GMT</pubDate>
-  <media:content url="https://arturosanjuan.xyz/cursos/odes/modelacion/sigmoides.png" medium="image" type="image/png" height="89" width="144"/>
 </item>
 </channel>
 </rss>

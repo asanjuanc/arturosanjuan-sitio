@@ -1,0 +1,129 @@
+---
+title: "Taller 4"
+subtitle: "El péndulo casi invertido: de la serie para ángulos pequeños al logaritmo cerca de la vertical"
+description: ""
+author: "Arturo Sanjuán"
+date: 2026-11-09
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contenido"
+    number-sections: true
+    code-fold: false
+    smooth-scroll: true
+    highlight-style: github
+order: 19
+---
+
+En la página de reducción de orden vimos que un péndulo simple de longitud $a$, soltado desde el reposo con un ángulo $\alpha$ respecto de la vertical hacia abajo, tiene período exacto
+
+$$T=4\sqrt{\frac{a}{g}}\;K(k),\qquad k=\sin\frac{\alpha}{2},\qquad K(k)=\int_0^{\pi/2}\frac{d\varphi}{\sqrt{1-k^2\sin^2\varphi}} \tag{1}$$
+
+y que $K$, que se llama la **integral elíptica completa de primera especie**, no se puede escribir con funciones elementales. Eso no quiere decir que no se pueda decir nada sobre ella. Con paciencia se puede mostrar que $K$ es solución de una ecuación diferencial lineal de segundo orden. En este taller partimos de esa ecuación para encontrar la expansión en serie de $K$ (que también se podría obtener directamente de la integral) y una segunda solución que lleva un logaritmo, y cerramos interpretando ese logaritmo cuando $\alpha$ se acerca a $\pi$, es decir, cuando el péndulo se suelta casi desde arriba. El taller se trabaja en equipos de hasta tres personas y vale 50 puntos. Escribimos $T_0=2\pi\sqrt{a/g}$ para el período de ángulo pequeño, de modo que $T/T_0=\frac{2}{\pi}K(k)$.
+
+## La ecuación de $K$ y su segunda solución
+
+Con paciencia se puede mostrar, derivando (1) bajo el signo integral, que $K$ es solución de la ecuación diferencial
+
+$$\frac{d}{dk}\!\left[k\,(1-k^2)\,\frac{dK}{dk}\right]=k\,K. \tag{2}$$
+
+Vamos a usarla para encontrar la expansión en serie de $K$ (que también se podría obtener directamente de la integral, con la serie binomial de $(1-u)^{-1/2}$) y una segunda solución independiente.
+
+**Cambio de variable.** Sea $x=k^2$ y $y(x)=K(\sqrt{x})$. Muestren que (2) se convierte en
+
+$$x(1-x)\,y''+(1-2x)\,y'-\frac14\,y=0. \tag{3}$$
+
+Llamen $\mathcal L[y]$ al lado izquierdo de (3). Muestren que $x=0$ y $x=1$ son puntos singulares regulares. *(5 pts)*
+
+::: {.callout-tip title="Solución"}
+Con $x=k^2$, $\dfrac{dK}{dk}=2k\,y'$ y $\dfrac{d^2K}{dk^2}=2y'+4x\,y''$. Al desarrollar (2) queda $k(1-k^2)K''+(1-3k^2)K'-kK=0$, y sustituyendo,
+
+$$k(1-x)\,(2y'+4xy'')+(1-3x)\,2k\,y'-k\,y=0.$$
+
+Dividiendo entre $4k$ se obtiene $x(1-x)y''+\tfrac12\big[(1-x)+(1-3x)\big]y'-\tfrac14y=0$, y como $\tfrac12\big[(1-x)+(1-3x)\big]=1-2x$, esta es (3).
+
+En forma estándar, $y''+P\,y'+Q\,y=0$ con $P=\dfrac{1-2x}{x(1-x)}$ y $Q=-\dfrac{1}{4x(1-x)}$. En $x=0$: $xP=\dfrac{1-2x}{1-x}$ y $x^2Q=-\dfrac{x}{4(1-x)}$ son analíticas. En $x=1$: $(x-1)P=-\dfrac{1-2x}{x}$ y $(x-1)^2Q=\dfrac{x-1}{4x}$ son analíticas. Entonces ambos son puntos singulares regulares.
+:::
+
+**Serie de potencias en $x=0$.** Sustituyan $y=\sum_{m\ge0}a_mx^m$ y muestren que
+
+$$a_{m+1}=\left(\frac{2m+1}{2m+2}\right)^2a_m,$$
+
+de modo que todo queda determinado por $a_0$, y que una solución es $y_1(x)=\sum_{m\ge0}c_mx^m$, con
+
+$$c_m=\left[\frac{(2m)!}{4^m(m!)^2}\right]^2.$$
+
+Expliquen por qué este método no puede dar una segunda solución independiente. *(15 pts)*
+
+::: {.callout-tip title="Solución"}
+Para cualquier exponente $s$, con $y=x^s$: $x(1-x)s(s-1)x^{s-2}+(1-2x)\,s\,x^{s-1}-\tfrac14x^s=\big[s(s-1)+s\big]x^{s-1}-\big[s(s-1)+2s+\tfrac14\big]x^s$, es decir,
+
+$$\mathcal L[x^s]=s^2x^{s-1}-\big(s+\tfrac12\big)^2x^s.$$
+
+Por linealidad,
+
+$$\mathcal L\Big[\sum_{m\ge0}a_mx^m\Big]=\sum_{m\ge0}a_m\Big[m^2x^{m-1}-\big(m+\tfrac12\big)^2x^m\Big].$$
+
+El coeficiente de $x^{-1}$ es $0\cdot a_0$, que se anula para cualquier $a_0$. El coeficiente de $x^m$, con $m\ge0$, es $(m+1)^2a_{m+1}-(m+\tfrac12)^2a_m=0$, de donde
+
+$$a_{m+1}=\left(\frac{m+\frac12}{m+1}\right)^2a_m=\left(\frac{2m+1}{2m+2}\right)^2a_m.$$
+
+Con $a_0=1$ se obtiene $a_m=\left[\dfrac{1\cdot3\cdots(2m-1)}{2\cdot4\cdots(2m)}\right]^2=\left[\dfrac{(2m)!}{4^m(m!)^2}\right]^2=c_m$. El cociente de coeficientes consecutivos tiende a 1, así que el radio de convergencia es 1 (la distancia al punto singular $x=1$).
+
+Todo queda determinado por $a_0$, que solo multiplica a $y_1$: no hay un segundo parámetro libre, y por eso una serie de potencias no puede dar una segunda solución independiente. La ecuación del coeficiente de $x^{-1}$, $0\cdot a_0=0$, es la ecuación indicial $r^2a_0=0$ evaluada en $r=0$, y la raíz doble no deja otra opción.
+
+*Observación.* $K$ es analítica en $x=0$ con $K(0)=\pi/2$, y por la unicidad anterior $K(\sqrt x)=\dfrac{\pi}{2}\,y_1(x)$. La misma serie sale directamente de la integral (1), con la serie binomial de $(1-u)^{-1/2}$ y las integrales $\int_0^{\pi/2}\sin^{2m}\varphi\,d\varphi=\frac{\pi}{2}\binom{2m}{m}4^{-m}$.
+:::
+
+**La segunda solución tiene logaritmo.** La serie de potencias solo da una solución, porque la ecuación indicial en $x=0$ es $r^2=0$ (raíz doble). Se busca entonces una segunda solución de la forma
+
+$$y_2=y_1\ln x+\sum_{m\ge1}d_m\,x^m. \tag{4}$$
+
+(a) Muestren que $\mathcal L[y_1\ln x]=2(1-x)\,y_1'-y_1$, y que por tanto los $d_m$ deben cumplir
+
+$$\mathcal L\Big[\sum_{m\ge1}d_mx^m\Big]=-2(1-x)\,y_1'+y_1. \tag{5}$$
+
+*Ayuda*: factorice los términos con $\ln x$ y use el hecho de que $y_1$ es solución. *(5 pts)*
+
+(b) Demuestre que el lado derecho de (5) tiene la forma $\displaystyle\sum_{m\ge0}\frac{m+\frac12}{m+1}\,c_m\,x^m$, y que los $d_m$ cumplen, con $d_0=0$, la recurrencia *(10 pts)*
+
+$$(m+1)^2d_{m+1}-\big(m+\tfrac12\big)^2d_m=\frac{m+\frac12}{m+1}\,c_m. \tag{6}$$
+
+(c) Con $c_0=1$, calculen $d_1,d_2,d_3$. *(5 pts)*
+
+::: {.callout-tip title="Solución"}
+(a) Como $\mathcal L[y_1]=0$,
+
+$$\mathcal L[y_1\ln x]=x(1-x)\Big(y_1''\ln x+\frac{2y_1'}{x}-\frac{y_1}{x^2}\Big)+(1-2x)\Big(y_1'\ln x+\frac{y_1}{x}\Big)-\frac14y_1\ln x=2(1-x)\,y_1'+\frac{-(1-x)+(1-2x)}{x}\,y_1,$$
+
+porque los términos con $\ln x$ suman $\ln x\,\mathcal L[y_1]=0$. Como $-(1-x)+(1-2x)=-x$, queda $2(1-x)\,y_1'-y_1$. Para que $\mathcal L[y_2]=0$ hace falta entonces (5).
+
+(b) El coeficiente de $x^m$ en el lado derecho de (5) es $-2(m+1)c_{m+1}+2m\,c_m+c_m$. Usando $c_{m+1}=\dfrac{(m+\frac12)^2}{(m+1)^2}\,c_m$,
+
+$$-2(m+1)c_{m+1}+(2m+1)c_m=2\big(m+\tfrac12\big)c_m\left[1-\frac{m+\frac12}{m+1}\right]=\frac{m+\frac12}{m+1}\,c_m.$$
+
+Por la fórmula de $\mathcal L[x^s]$ del ítem anterior, el coeficiente de $x^m$ en $\mathcal L\big[\sum d_mx^m\big]$ es $(m+1)^2d_{m+1}-(m+\tfrac12)^2d_m$, lo que da (6). Se toma $d_0=0$ porque un término constante sumaría un múltiplo de $y_1$, que ya es solución.
+
+(c) Con $c_0=1$, $c_1=\tfrac14$, $c_2=\tfrac{9}{64}$:
+
+$$d_1=\tfrac12,\qquad 4d_2=\tfrac94\cdot\tfrac12+\tfrac34\cdot\tfrac14\ \Rightarrow\ d_2=\tfrac{21}{64},\qquad 9d_3=\tfrac{25}{4}\cdot\tfrac{21}{64}+\tfrac56\cdot\tfrac{9}{64}\ \Rightarrow\ d_3=\tfrac{185}{768}.$$
+:::
+
+## Interpretación: el péndulo casi invertido
+
+Si $\alpha\to\pi$, el péndulo se suelta casi exactamente sobre el punto más alto, que es un equilibrio inestable, y pasa cada vez más tiempo cerca de él, tanto al empezar a caer como al llegar al otro lado, donde casi se detiene antes de devolverse: $T\to\infty$. La serie de $K$ que obtuvimos en $x=0$ no sirve ahí: es una serie en $x=k^2$ con radio de convergencia 1, y para $\alpha=170^\circ$ harían falta unos 900 términos para tener cuatro decimales correctos. Veamos qué dice sobre esto lo que acabamos de hacer. Sea $t=1-x=\cos^2(\alpha/2)$.
+
+**Lo que dice el logaritmo.** (a) Muestren que (3) conserva su forma al cambiar $x$ por $t=1-x$. Concluyan que cerca de $x=1$ las soluciones son $y_1(t)=\sum c_mt^m$ y $y_2(t)=y_1(t)\ln t+\sum d_mt^m$, con los mismos $c_m$ y $d_m$ de la sección anterior, y que $K(\sqrt{x})=A\,y_1(t)+B\,y_2(t)$ para ciertas constantes $A$ y $B$.
+
+(b) Expliquen por qué tiene que ser $B\neq0$ y qué dice eso sobre el período cuando $\alpha\to\pi$. *(10 pts)*
+
+::: {.callout-tip title="Solución"}
+(a) Con $x=1-t$: $x(1-x)=t(1-t)$, $1-2x=2t-1$, $\dfrac{d}{dx}=-\dfrac{d}{dt}$ y $\dfrac{d^2}{dx^2}=\dfrac{d^2}{dt^2}$. Entonces (3) queda
+
+$$t(1-t)\,y_{tt}+(1-2t)\,y_t-\frac14\,y=0,$$
+
+la misma ecuación. Todo lo hecho en la sección 1 vale entonces en la variable $t$, con los mismos coeficientes. La solución general cerca de $x=1$ es $A\,y_1(t)+B\,y_2(t)$, y como $K$ es solución, tiene esa forma.
+
+(b) Si fuera $B=0$, $K\to A$ cuando $t\to0$, es decir, $K$ sería acotada en $k=1$, y entonces $T=4\sqrt{a/g}\,K$ también. Pero un péndulo soltado en la posición más alta no cae nunca, así que $T\to\infty$ cuando $\alpha\to\pi$ (en la integral (1), el integrando con $k=1$ es $1/\cos\varphi$, que no es integrable en $\varphi=\pi/2$). La raíz doble en $x=1$ implica que la única solución analítica allí es $y_1$, y $K$ no lo es: el logaritmo es inevitable. Como $y_2\sim\ln t\to-\infty$, que $K$ crezca exige $B<0$, y el período diverge de forma logarítmica. Es la forma matemática de decir que el péndulo pasa cada vez más tiempo cerca del equilibrio inestable.
+:::

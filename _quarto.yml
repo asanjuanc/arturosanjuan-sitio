@@ -72,6 +72,7 @@ website:
         - cursos/odes/tambor/index.qmd
         - cursos/odes/orbitales/index.qmd
         - cursos/odes/parcial-2/index.qmd
+        - curso/odes/taller-4/index.qmd
     - id: numerico
       title: "Análisis Numérico"
       style: docked

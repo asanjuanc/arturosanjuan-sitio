@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Arturo Sanjuán">
+
+<title>Taller 4 – Arturo Sanjuán</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../favicon.png" rel="icon" type="image/png">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-dark-5a1953863e1f72ef3b996ef827f01ca7.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-06ef128ffaab2aaffa18b1038abc86f3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../../site_libs/bootstrap/bootstrap-dark-979bd06565eab1ad32ed49e916b209dc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../../site_libs/bootstrap/bootstrap-06ef128ffaab2aaffa18b1038abc86f3.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="docked nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Arturo Sanjuán</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../research/index.html"> 
+<span class="menu-text">research</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../cursos/index.html"> 
+<span class="menu-text">cursos</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../trabajos/index.html"> 
+<span class="menu-text">trabajos</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../research/genealogy/index.html"> 
+<span class="menu-text">genealogy</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../links.html"> 
+<span class="menu-text">contacto</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../files/cv_sanjuan.pdf"> 
+<span class="menu-text">CV</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo oscuro"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#la-ecuación-de-k-y-su-segunda-solución" id="toc-la-ecuación-de-k-y-su-segunda-solución" class="nav-link active" data-scroll-target="#la-ecuación-de-k-y-su-segunda-solución"><span class="header-section-number">1</span> La ecuación de <span class="math inline">\(K\)</span> y su segunda solución</a></li>
+  <li><a href="#interpretación-el-péndulo-casi-invertido" id="toc-interpretación-el-péndulo-casi-invertido" class="nav-link" data-scroll-target="#interpretación-el-péndulo-casi-invertido"><span class="header-section-number">2</span> Interpretación: el péndulo casi invertido</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Taller 4</h1>
+<p class="subtitle lead">El péndulo casi invertido: de la serie para ángulos pequeños al logaritmo cerca de la vertical</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor</div>
+    <div class="quarto-title-meta-contents">
+             <p>Arturo Sanjuán </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">9 de noviembre de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>En la página de reducción de orden vimos que un péndulo simple de longitud <span class="math inline">\(a\)</span>, soltado desde el reposo con un ángulo <span class="math inline">\(\alpha\)</span> respecto de la vertical hacia abajo, tiene período exacto</p>
+<p><span class="math display">\[T=4\sqrt{\frac{a}{g}}\;K(k),\qquad k=\sin\frac{\alpha}{2},\qquad K(k)=\int_0^{\pi/2}\frac{d\varphi}{\sqrt{1-k^2\sin^2\varphi}} \tag{1}\]</span></p>
+<p>y que <span class="math inline">\(K\)</span>, que se llama la <strong>integral elíptica completa de primera especie</strong>, no se puede escribir con funciones elementales. Eso no quiere decir que no se pueda decir nada sobre ella. Con paciencia se puede mostrar que <span class="math inline">\(K\)</span> es solución de una ecuación diferencial lineal de segundo orden. En este taller partimos de esa ecuación para encontrar la expansión en serie de <span class="math inline">\(K\)</span> (que también se podría obtener directamente de la integral) y una segunda solución que lleva un logaritmo, y cerramos interpretando ese logaritmo cuando <span class="math inline">\(\alpha\)</span> se acerca a <span class="math inline">\(\pi\)</span>, es decir, cuando el péndulo se suelta casi desde arriba. El taller se trabaja en equipos de hasta tres personas y vale 50 puntos. Escribimos <span class="math inline">\(T_0=2\pi\sqrt{a/g}\)</span> para el período de ángulo pequeño, de modo que <span class="math inline">\(T/T_0=\frac{2}{\pi}K(k)\)</span>.</p>
+<section id="la-ecuación-de-k-y-su-segunda-solución" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="la-ecuación-de-k-y-su-segunda-solución"><span class="header-section-number">1</span> La ecuación de <span class="math inline">\(K\)</span> y su segunda solución</h2>
+<p>Con paciencia se puede mostrar, derivando (1) bajo el signo integral, que <span class="math inline">\(K\)</span> es solución de la ecuación diferencial</p>
+<p><span class="math display">\[\frac{d}{dk}\!\left[k\,(1-k^2)\,\frac{dK}{dk}\right]=k\,K. \tag{2}\]</span></p>
+<p>Vamos a usarla para encontrar la expansión en serie de <span class="math inline">\(K\)</span> (que también se podría obtener directamente de la integral, con la serie binomial de <span class="math inline">\((1-u)^{-1/2}\)</span>) y una segunda solución independiente.</p>
+<p><strong>Cambio de variable.</strong> Sea <span class="math inline">\(x=k^2\)</span> y <span class="math inline">\(y(x)=K(\sqrt{x})\)</span>. Muestren que (2) se convierte en</p>
+<p><span class="math display">\[x(1-x)\,y''+(1-2x)\,y'-\frac14\,y=0. \tag{3}\]</span></p>
+<p>Llamen <span class="math inline">\(\mathcal L[y]\)</span> al lado izquierdo de (3). Muestren que <span class="math inline">\(x=0\)</span> y <span class="math inline">\(x=1\)</span> son puntos singulares regulares. <em>(5 pts)</em></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con <span class="math inline">\(x=k^2\)</span>, <span class="math inline">\(\dfrac{dK}{dk}=2k\,y'\)</span> y <span class="math inline">\(\dfrac{d^2K}{dk^2}=2y'+4x\,y''\)</span>. Al desarrollar (2) queda <span class="math inline">\(k(1-k^2)K''+(1-3k^2)K'-kK=0\)</span>, y sustituyendo,</p>
+<p><span class="math display">\[k(1-x)\,(2y'+4xy'')+(1-3x)\,2k\,y'-k\,y=0.\]</span></p>
+<p>Dividiendo entre <span class="math inline">\(4k\)</span> se obtiene <span class="math inline">\(x(1-x)y''+\tfrac12\big[(1-x)+(1-3x)\big]y'-\tfrac14y=0\)</span>, y como <span class="math inline">\(\tfrac12\big[(1-x)+(1-3x)\big]=1-2x\)</span>, esta es (3).</p>
+<p>En forma estándar, <span class="math inline">\(y''+P\,y'+Q\,y=0\)</span> con <span class="math inline">\(P=\dfrac{1-2x}{x(1-x)}\)</span> y <span class="math inline">\(Q=-\dfrac{1}{4x(1-x)}\)</span>. En <span class="math inline">\(x=0\)</span>: <span class="math inline">\(xP=\dfrac{1-2x}{1-x}\)</span> y <span class="math inline">\(x^2Q=-\dfrac{x}{4(1-x)}\)</span> son analíticas. En <span class="math inline">\(x=1\)</span>: <span class="math inline">\((x-1)P=-\dfrac{1-2x}{x}\)</span> y <span class="math inline">\((x-1)^2Q=\dfrac{x-1}{4x}\)</span> son analíticas. Entonces ambos son puntos singulares regulares.</p>
+</div>
+</div>
+<p><strong>Serie de potencias en <span class="math inline">\(x=0\)</span>.</strong> Sustituyan <span class="math inline">\(y=\sum_{m\ge0}a_mx^m\)</span> y muestren que</p>
+<p><span class="math display">\[a_{m+1}=\left(\frac{2m+1}{2m+2}\right)^2a_m,\]</span></p>
+<p>de modo que todo queda determinado por <span class="math inline">\(a_0\)</span>, y que una solución es <span class="math inline">\(y_1(x)=\sum_{m\ge0}c_mx^m\)</span>, con</p>
+<p><span class="math display">\[c_m=\left[\frac{(2m)!}{4^m(m!)^2}\right]^2.\]</span></p>
+<p>Expliquen por qué este método no puede dar una segunda solución independiente. <em>(15 pts)</em></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para cualquier exponente <span class="math inline">\(s\)</span>, con <span class="math inline">\(y=x^s\)</span>: <span class="math inline">\(x(1-x)s(s-1)x^{s-2}+(1-2x)\,s\,x^{s-1}-\tfrac14x^s=\big[s(s-1)+s\big]x^{s-1}-\big[s(s-1)+2s+\tfrac14\big]x^s\)</span>, es decir,</p>
+<p><span class="math display">\[\mathcal L[x^s]=s^2x^{s-1}-\big(s+\tfrac12\big)^2x^s.\]</span></p>
+<p>Por linealidad,</p>
+<p><span class="math display">\[\mathcal L\Big[\sum_{m\ge0}a_mx^m\Big]=\sum_{m\ge0}a_m\Big[m^2x^{m-1}-\big(m+\tfrac12\big)^2x^m\Big].\]</span></p>
+<p>El coeficiente de <span class="math inline">\(x^{-1}\)</span> es <span class="math inline">\(0\cdot a_0\)</span>, que se anula para cualquier <span class="math inline">\(a_0\)</span>. El coeficiente de <span class="math inline">\(x^m\)</span>, con <span class="math inline">\(m\ge0\)</span>, es <span class="math inline">\((m+1)^2a_{m+1}-(m+\tfrac12)^2a_m=0\)</span>, de donde</p>
+<p><span class="math display">\[a_{m+1}=\left(\frac{m+\frac12}{m+1}\right)^2a_m=\left(\frac{2m+1}{2m+2}\right)^2a_m.\]</span></p>
+<p>Con <span class="math inline">\(a_0=1\)</span> se obtiene <span class="math inline">\(a_m=\left[\dfrac{1\cdot3\cdots(2m-1)}{2\cdot4\cdots(2m)}\right]^2=\left[\dfrac{(2m)!}{4^m(m!)^2}\right]^2=c_m\)</span>. El cociente de coeficientes consecutivos tiende a 1, así que el radio de convergencia es 1 (la distancia al punto singular <span class="math inline">\(x=1\)</span>).</p>
+<p>Todo queda determinado por <span class="math inline">\(a_0\)</span>, que solo multiplica a <span class="math inline">\(y_1\)</span>: no hay un segundo parámetro libre, y por eso una serie de potencias no puede dar una segunda solución independiente. La ecuación del coeficiente de <span class="math inline">\(x^{-1}\)</span>, <span class="math inline">\(0\cdot a_0=0\)</span>, es la ecuación indicial <span class="math inline">\(r^2a_0=0\)</span> evaluada en <span class="math inline">\(r=0\)</span>, y la raíz doble no deja otra opción.</p>
+<p><em>Observación.</em> <span class="math inline">\(K\)</span> es analítica en <span class="math inline">\(x=0\)</span> con <span class="math inline">\(K(0)=\pi/2\)</span>, y por la unicidad anterior <span class="math inline">\(K(\sqrt x)=\dfrac{\pi}{2}\,y_1(x)\)</span>. La misma serie sale directamente de la integral (1), con la serie binomial de <span class="math inline">\((1-u)^{-1/2}\)</span> y las integrales <span class="math inline">\(\int_0^{\pi/2}\sin^{2m}\varphi\,d\varphi=\frac{\pi}{2}\binom{2m}{m}4^{-m}\)</span>.</p>
+</div>
+</div>
+<p><strong>La segunda solución tiene logaritmo.</strong> La serie de potencias solo da una solución, porque la ecuación indicial en <span class="math inline">\(x=0\)</span> es <span class="math inline">\(r^2=0\)</span> (raíz doble). Se busca entonces una segunda solución de la forma</p>
+<p><span class="math display">\[y_2=y_1\ln x+\sum_{m\ge1}d_m\,x^m. \tag{4}\]</span></p>
+<ol type="a">
+<li>Muestren que <span class="math inline">\(\mathcal L[y_1\ln x]=2(1-x)\,y_1'-y_1\)</span>, y que por tanto los <span class="math inline">\(d_m\)</span> deben cumplir</li>
+</ol>
+<p><span class="math display">\[\mathcal L\Big[\sum_{m\ge1}d_mx^m\Big]=-2(1-x)\,y_1'+y_1. \tag{5}\]</span></p>
+<p><em>Ayuda</em>: factorice los términos con <span class="math inline">\(\ln x\)</span> y use el hecho de que <span class="math inline">\(y_1\)</span> es solución. <em>(5 pts)</em></p>
+<ol start="2" type="a">
+<li>Demuestre que el lado derecho de (5) tiene la forma <span class="math inline">\(\displaystyle\sum_{m\ge0}\frac{m+\frac12}{m+1}\,c_m\,x^m\)</span>, y que los <span class="math inline">\(d_m\)</span> cumplen, con <span class="math inline">\(d_0=0\)</span>, la recurrencia <em>(10 pts)</em></li>
+</ol>
+<p><span class="math display">\[(m+1)^2d_{m+1}-\big(m+\tfrac12\big)^2d_m=\frac{m+\frac12}{m+1}\,c_m. \tag{6}\]</span></p>
+<ol start="3" type="a">
+<li>Con <span class="math inline">\(c_0=1\)</span>, calculen <span class="math inline">\(d_1,d_2,d_3\)</span>. <em>(5 pts)</em></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>Como <span class="math inline">\(\mathcal L[y_1]=0\)</span>,</li>
+</ol>
+<p><span class="math display">\[\mathcal L[y_1\ln x]=x(1-x)\Big(y_1''\ln x+\frac{2y_1'}{x}-\frac{y_1}{x^2}\Big)+(1-2x)\Big(y_1'\ln x+\frac{y_1}{x}\Big)-\frac14y_1\ln x=2(1-x)\,y_1'+\frac{-(1-x)+(1-2x)}{x}\,y_1,\]</span></p>
+<p>porque los términos con <span class="math inline">\(\ln x\)</span> suman <span class="math inline">\(\ln x\,\mathcal L[y_1]=0\)</span>. Como <span class="math inline">\(-(1-x)+(1-2x)=-x\)</span>, queda <span class="math inline">\(2(1-x)\,y_1'-y_1\)</span>. Para que <span class="math inline">\(\mathcal L[y_2]=0\)</span> hace falta entonces (5).</p>
+<ol start="2" type="a">
+<li>El coeficiente de <span class="math inline">\(x^m\)</span> en el lado derecho de (5) es <span class="math inline">\(-2(m+1)c_{m+1}+2m\,c_m+c_m\)</span>. Usando <span class="math inline">\(c_{m+1}=\dfrac{(m+\frac12)^2}{(m+1)^2}\,c_m\)</span>,</li>
+</ol>
+<p><span class="math display">\[-2(m+1)c_{m+1}+(2m+1)c_m=2\big(m+\tfrac12\big)c_m\left[1-\frac{m+\frac12}{m+1}\right]=\frac{m+\frac12}{m+1}\,c_m.\]</span></p>
+<p>Por la fórmula de <span class="math inline">\(\mathcal L[x^s]\)</span> del ítem anterior, el coeficiente de <span class="math inline">\(x^m\)</span> en <span class="math inline">\(\mathcal L\big[\sum d_mx^m\big]\)</span> es <span class="math inline">\((m+1)^2d_{m+1}-(m+\tfrac12)^2d_m\)</span>, lo que da (6). Se toma <span class="math inline">\(d_0=0\)</span> porque un término constante sumaría un múltiplo de <span class="math inline">\(y_1\)</span>, que ya es solución.</p>
+<ol start="3" type="a">
+<li>Con <span class="math inline">\(c_0=1\)</span>, <span class="math inline">\(c_1=\tfrac14\)</span>, <span class="math inline">\(c_2=\tfrac{9}{64}\)</span>:</li>
+</ol>
+<p><span class="math display">\[d_1=\tfrac12,\qquad 4d_2=\tfrac94\cdot\tfrac12+\tfrac34\cdot\tfrac14\ \Rightarrow\ d_2=\tfrac{21}{64},\qquad 9d_3=\tfrac{25}{4}\cdot\tfrac{21}{64}+\tfrac56\cdot\tfrac{9}{64}\ \Rightarrow\ d_3=\tfrac{185}{768}.\]</span></p>
+</div>
+</div>
+</section>
+<section id="interpretación-el-péndulo-casi-invertido" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="interpretación-el-péndulo-casi-invertido"><span class="header-section-number">2</span> Interpretación: el péndulo casi invertido</h2>
+<p>Si <span class="math inline">\(\alpha\to\pi\)</span>, el péndulo se suelta casi exactamente sobre el punto más alto, que es un equilibrio inestable, y pasa cada vez más tiempo cerca de él, tanto al empezar a caer como al llegar al otro lado, donde casi se detiene antes de devolverse: <span class="math inline">\(T\to\infty\)</span>. La serie de <span class="math inline">\(K\)</span> que obtuvimos en <span class="math inline">\(x=0\)</span> no sirve ahí: es una serie en <span class="math inline">\(x=k^2\)</span> con radio de convergencia 1, y para <span class="math inline">\(\alpha=170^\circ\)</span> harían falta unos 900 términos para tener cuatro decimales correctos. Veamos qué dice sobre esto lo que acabamos de hacer. Sea <span class="math inline">\(t=1-x=\cos^2(\alpha/2)\)</span>.</p>
+<p><strong>Lo que dice el logaritmo.</strong> (a) Muestren que (3) conserva su forma al cambiar <span class="math inline">\(x\)</span> por <span class="math inline">\(t=1-x\)</span>. Concluyan que cerca de <span class="math inline">\(x=1\)</span> las soluciones son <span class="math inline">\(y_1(t)=\sum c_mt^m\)</span> y <span class="math inline">\(y_2(t)=y_1(t)\ln t+\sum d_mt^m\)</span>, con los mismos <span class="math inline">\(c_m\)</span> y <span class="math inline">\(d_m\)</span> de la sección anterior, y que <span class="math inline">\(K(\sqrt{x})=A\,y_1(t)+B\,y_2(t)\)</span> para ciertas constantes <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span>.</p>
+<ol start="2" type="a">
+<li>Expliquen por qué tiene que ser <span class="math inline">\(B\neq0\)</span> y qué dice eso sobre el período cuando <span class="math inline">\(\alpha\to\pi\)</span>. <em>(10 pts)</em></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="a">
+<li>Con <span class="math inline">\(x=1-t\)</span>: <span class="math inline">\(x(1-x)=t(1-t)\)</span>, <span class="math inline">\(1-2x=2t-1\)</span>, <span class="math inline">\(\dfrac{d}{dx}=-\dfrac{d}{dt}\)</span> y <span class="math inline">\(\dfrac{d^2}{dx^2}=\dfrac{d^2}{dt^2}\)</span>. Entonces (3) queda</li>
+</ol>
+<p><span class="math display">\[t(1-t)\,y_{tt}+(1-2t)\,y_t-\frac14\,y=0,\]</span></p>
+<p>la misma ecuación. Todo lo hecho en la sección 1 vale entonces en la variable <span class="math inline">\(t\)</span>, con los mismos coeficientes. La solución general cerca de <span class="math inline">\(x=1\)</span> es <span class="math inline">\(A\,y_1(t)+B\,y_2(t)\)</span>, y como <span class="math inline">\(K\)</span> es solución, tiene esa forma.</p>
+<ol start="2" type="a">
+<li>Si fuera <span class="math inline">\(B=0\)</span>, <span class="math inline">\(K\to A\)</span> cuando <span class="math inline">\(t\to0\)</span>, es decir, <span class="math inline">\(K\)</span> sería acotada en <span class="math inline">\(k=1\)</span>, y entonces <span class="math inline">\(T=4\sqrt{a/g}\,K\)</span> también. Pero un péndulo soltado en la posición más alta no cae nunca, así que <span class="math inline">\(T\to\infty\)</span> cuando <span class="math inline">\(\alpha\to\pi\)</span> (en la integral (1), el integrando con <span class="math inline">\(k=1\)</span> es <span class="math inline">\(1/\cos\varphi\)</span>, que no es integrable en <span class="math inline">\(\varphi=\pi/2\)</span>). La raíz doble en <span class="math inline">\(x=1\)</span> implica que la única solución analítica allí es <span class="math inline">\(y_1\)</span>, y <span class="math inline">\(K\)</span> no lo es: el logaritmo es inevitable. Como <span class="math inline">\(y_2\sim\ln t\to-\infty\)</span>, que <span class="math inline">\(K\)</span> crezca exige <span class="math inline">\(B&lt;0\)</span>, y el período diverge de forma logarítmica. Es la forma matemática de decir que el péndulo pasa cada vez más tiempo cerca del equilibrio inestable.</li>
+</ol>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/arturosanjuan\.xyz");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="preferred_color_scheme">
+<input type="hidden" id="giscus-alt-theme" value="preferred_color_scheme">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      if (authorPrefersDark) {
+          [baseTheme, altTheme] = [altTheme, baseTheme];
+      }
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "asanjuanc/arturosanjuan-sitio";
+    script.dataset.repoId = "R_kgDOTzuHrw";
+    script.dataset.category = "Comentarios";
+    script.dataset.categoryId = "DIC_kwDOTzuHr84DD_eD";
+    script.dataset.mapping = "pathname";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "es";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
